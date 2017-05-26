@@ -2,14 +2,14 @@
 author = hsz
 author_email = hsz1273327@gmail.com
 
-[form]
-form = command
-
 [project]
-version = 0.0.2
+version = 0.0.3
 keywords = tools,package manager
 url = https://github.com/Python-Tools/pmfp
 project_name = pmfp
 description = a simple package manager for python like npm.
 license = MIT
+
+[form]
+form = command
 

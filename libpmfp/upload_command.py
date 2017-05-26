@@ -33,11 +33,11 @@ def upload(args):
             if args.localpypi:
                 command +=["-r",args.localpypi]
             subprocess.check_call(command)
-            # command = copy.copy(COMMAND)
-            # command += ["setup.py","bdist_wheel","upload"]
-            # if args.localpypi:
-            #     command +=["-r",args.localpypi]
-            # subprocess.check_call(command)
+            command = copy.copy(COMMAND)
+            command += ["setup.py","bdist_wheel","upload"]
+            if args.localpypi:
+                command +=["-r",args.localpypi]
+            subprocess.check_call(command)
             print("upload package to {path} done!".format(path=path))
     elif args.git:
         if not has_pointgit():
