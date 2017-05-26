@@ -1,9 +1,5 @@
-[author]
-author = hsz
-author_email = hsz1273327@gmail.com
-
 [project]
-version = 0.0.3
+version = 0.0.4
 keywords = tools,package manager
 url = https://github.com/Python-Tools/pmfp
 project_name = pmfp
@@ -12,4 +8,8 @@ license = MIT
 
 [form]
 form = command
+
+[author]
+author = hsz
+author_email = hsz1273327@gmail.com
 

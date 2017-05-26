@@ -52,7 +52,8 @@ def upload(args):
             time_ = time.ctime(now_timestamp)
             subprocess.check_call(["git", "commit", "-m", "'{time}'".format(time = time_)])
             subprocess.check_call("git pull".split(" "))
-            subprocess.check_call(["git", 'tag', '-a', "{version}", '-m', "'version {version}'".format(
+            subprocess.check_call(["git", 'tag', '-a', "{version}".format(
+                version = version), '-m', "'version {version}'".format(
                 version = version)])
             subprocess.check_call("git push --tag".split(" "))
             print("push done")
