@@ -1,0 +1,4 @@
+sphinx
+sphinxcontrib_httpdomain
+sphinxcontrib_jsoncall
+recommonmark

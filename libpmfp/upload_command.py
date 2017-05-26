@@ -1,0 +1,59 @@
+from .utils import has_pypirc, has_pointgit,get_git_url,get_command,read_ppmrc
+import subprocess
+import copy
+import time
+
+def upload(args):
+    if args.regist:
+        if not has_pypirc():
+            print("pypi upload should have a .pypirc file in home path")
+            return 0
+        else:
+            path = args.regist
+            _, COMMAND,_,_= get_command()
+            print("regist package to {path}".format(path=path))
+            command = copy.copy(COMMAND)
+            command += ["setup.py","register"]
+            if args.regist != "pypi":
+                command +=["-r",args.regist]
+            subprocess.check_call(command)
+            print("regist package to {path} done!".format(path=path))
+
+    if args.pypi or args.localpypi:
+        if not has_pypirc():
+            print("pypi upload should have a .pypirc file in home path")
+            return 0
+        else:
+            path = args.localpypi or "pypi"
+            _, COMMAND,_,_= get_command()
+
+            print("upload package to {path}".format(path=path))
+            command = copy.copy(COMMAND)
+            command += ["setup.py","sdist","upload"]
+            if args.localpypi:
+                command +=["-r",args.localpypi]
+            subprocess.check_call(command)
+            # command = copy.copy(COMMAND)
+            # command += ["setup.py","bdist_wheel","upload"]
+            # if args.localpypi:
+            #     command +=["-r",args.localpypi]
+            # subprocess.check_call(command)
+            print("upload package to {path} done!".format(path=path))
+    elif args.git:
+        if not has_pointgit():
+            print("upload should have a .git dir in root path")
+            return 0
+        else:
+            path= get_git_url()
+            version = read_ppmrc()["project"]["version"]
+            print("push package to {path}".format(path=path))
+            subprocess.check_call("git add .".split(" "))
+            now_timestamp = time.time()
+            time_ = time.ctime(now_timestamp)
+            subprocess.check_call(["git", "commit", "-m", "'{time}'".format(time = time_)])
+            subprocess.check_call("git pull".split(" "))
+            subprocess.check_call("git tag -a {version} -m 'version {version}'".format(
+                version = version).split(" "))
+            subprocess.check_call("git push --tag".split(" "))
+            print("push done")
+            return 0
