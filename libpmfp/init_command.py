@@ -2,7 +2,7 @@ from pathlib import Path
 from string import Template
 import shutil
 from .utils import get_command, write_ppmrc, is_inited, clean_init
-from .Data import SETUPPY, COMMAND_MAIN, CONF, READMERST, PACKAGEJSON, SCRIPT
+from .Data import SETUPPY, COMMAND_MAIN, CONF, READMERST, PACKAGEJSON, SCRIPT,MANIFEST
 from .install_command import pip_install, write_requirement
 import subprocess
 import sys
@@ -15,13 +15,13 @@ dir_path = file_path.parent
 local_path = Path(".").absolute()
 
 
-# def init_git(giturl):
-#     print('cloning git')
-#     PYTHON, _, _, _ = get_command()
-#     command = ['git', 'clone', giturl]
-#     subprocess.check_call(command)
-#     print('cloning git done!')
-#     return 0
+def init_manifest(project_name):
+    print('create MANIFEST.in')
+    with open("MANIFEST.in", "w") as f:
+        f.write(MANIFEST.substitute(
+            project_name=project_name))
+    print('create MANIFEST.in done!')
+    return 0
 
 
 def create_env():
@@ -73,7 +73,15 @@ def input_info():
     project_name = project_name or local_path.name
     author = author or getpass.getuser()
     author_email = author_email or "author_email"
-    license_ = license_ or "MIT"
+    here = Path(".").absolute()
+    license_path =  here.joinpath("LICENSE")
+    if license_path.exists():
+        with license_path.open("r") as f:
+            i = next(f)
+        license_def = i.split(" ")[0]
+    else:
+        license_def = "MIT"
+    license_ = license_ or license_def
     keywords = keywords or "'tools'"
     version = version or "0.0.1"
     description = description or "simple tools"
@@ -339,6 +347,7 @@ def init(args):
             init_setuppy(project_name, author, author_email, license_, keywords, version, description, url,
                          entry_points=entry_points
                          )
+            init_manifest("lib"+project_name)
             init_app(project_name, ky="command")
             init_requirements("")
             cmd = "command"
@@ -346,6 +355,7 @@ def init(args):
             init_ppmrc(rc, "model")
             init_setuppy(project_name, author, author_email,
                          license_, keywords, version, description, url)
+            init_manifest(project_name)
             init_app(project_name)
             init_requirements("")
             cmd = "model"

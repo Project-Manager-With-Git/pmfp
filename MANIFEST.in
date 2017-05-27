@@ -1,0 +1,13 @@
+include LICENSE
+include README.rst
+recursive-include libpmfp *.py
+recursive-include libpmfp/commandapp *
+recursive-include libpmfp/flaskapp *
+recursive-include libpmfp/guiapp *
+recursive-include libpmfp/sanicapp *
+recursive-include libpmfp/zerorpcapp *
+recursive-include libpmfp/requirements *
+recursive-include libpmfp/requirementsflask *
+recursive-include libpmfp/requirementssanic *
+recursive-include libpmfp/requirementsscript *
+recursive-include libpmfp/requirementszerorpc *

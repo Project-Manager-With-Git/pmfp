@@ -1,5 +1,12 @@
 from string import Template
 
+MANIFEST = Template("""
+include LICENSE
+include README.rst
+recursive-include $project_name *.py
+""")
+
+
 SCRIPT = """
 def main():
     pass
@@ -119,6 +126,7 @@ setup(
     classifiers=CLASSIFIERS,
     keywords=KEYWORDS,
     packages=PACKAGES,
+    include_package_data=True,
     install_requires=REQUIREMETS,
     extras_require={
         'dev': REQUIREMETS_DEV,
