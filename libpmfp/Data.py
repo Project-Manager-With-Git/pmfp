@@ -27,7 +27,9 @@ $project_name
 ===============================
 
 version: $version
+
 author: $author
+
 email: $author_email
 
 
