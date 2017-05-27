@@ -4,7 +4,7 @@ if sys.version_info[0] != 3:
 if sys.version_info[0] == 3 and sys.version_info[1] < 5:
     raise OSError("only for python 3.5+")
 import argparse
-from . import init, doc, test, install, clean, update, build, upload,rename
+from . import init, doc, test, install, clean, update, build, upload,rename,run
 from pathlib import Path
 
 
@@ -59,6 +59,10 @@ def main(argv=sys.argv[1:]):
     build_parsers.add_argument(
         '-w', '--wheel', action="store_true")
     build_parsers.set_defaults(func=build)
+
+    run_parsers = subparsers.add_parser("run")
+    run_parsers.add_argument('args', type=str, nargs='+')
+    run_parsers.set_defaults(func=run)
 
     test_parsers = subparsers.add_parser("test")
     test_parsers.add_argument(

@@ -7,3 +7,4 @@ from .update_command import update
 from .build_command import build
 from .upload_command import upload
 from .rename_command import rename
+from .run_command import run
