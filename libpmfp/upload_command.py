@@ -56,5 +56,6 @@ def upload(args):
                 version = version), '-m', "'version {version}'".format(
                 version = version)])
             subprocess.check_call("git push --tag".split(" "))
+            subprocess.check_call("git push".split(" "))
             print("push done")
             return 0

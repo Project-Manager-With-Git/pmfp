@@ -6,7 +6,7 @@ REQUIREMETS_DEV_FILE = 'requirements_dev.txt'
 REQUIREMETS_TEST_FILE = 'requirements_test.txt'
 REQUIREMETS_FILE = 'requirements.txt'
 PROJECTNAME = 'pmfp'
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 DESCRIPTION = 'a simple package manager for python like npm.'
 URL = 'https://github.com/Python-Tools/pmfp'
 AUTHOR = 'hsz'
@@ -54,7 +54,7 @@ setup(
         'dev': REQUIREMETS_DEV,
         'test': REQUIREMETS_TEST
     },
-    entry_points={'console_scripts': ['ppm = libpmfp.pmfp:main']},
+    entry_points={'console_scripts': ['ppm = libpmfp.main:main']},
     zip_safe=ZIP_SAFE,
     data_files=[('requirements', ['requirements/requirements.txt', 'requirements/requirements_dev.txt', 'requirements/requirements_test.txt'])]
 )

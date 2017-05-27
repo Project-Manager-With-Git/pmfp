@@ -334,7 +334,7 @@ def init(args):
         elif args.command:
             init_ppmrc(rc, "command")
             entry_points_T = Template(
-                "entry_points={'console_scripts': ['ppm = lib$project_name.$project_name:main']},")
+                "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
             init_setuppy(project_name, author, author_email, license_, keywords, version, description, url,
                          entry_points=entry_points
