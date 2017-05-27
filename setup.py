@@ -6,7 +6,7 @@ REQUIREMETS_DEV_FILE = 'requirements_dev.txt'
 REQUIREMETS_TEST_FILE = 'requirements_test.txt'
 REQUIREMETS_FILE = 'requirements.txt'
 PROJECTNAME = 'pmfp'
-VERSION = '0.0.9'
+VERSION = '0.0.10'
 DESCRIPTION = 'a simple package manager for python like npm.'
 URL = 'https://github.com/Python-Tools/pmfp'
 AUTHOR = 'hsz'
@@ -56,7 +56,7 @@ setup(
     },
     entry_points={'console_scripts': ['ppm = libpmfp.main:main']},
     zip_safe=ZIP_SAFE,
-    include_package_data=True
+    include_package_data=True,
     # package_data={'libpmfp': ['libpmfp/commandapp/*',
     #                           'libpmfp/flaskapp/*',
     #                           'libpmfp/guiapp/*',
