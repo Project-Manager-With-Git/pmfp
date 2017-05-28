@@ -53,7 +53,7 @@ def upload(args):
             if args.git == []:
                 msg = ""
             else:
-                msg = args.git
+                msg = "".join(args.git)
             subprocess.check_call(["git", "commit", "-m", "{msg}:{time}".format(msg =msg ,time = time_)])
             subprocess.check_call("git pull".split(" "))
             subprocess.check_call(["git", 'tag', '-a', "{version}".format(
