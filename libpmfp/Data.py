@@ -1,5 +1,14 @@
 from string import Template
 
+Dockerfile = Template("""
+FROM python:$v1:$v2
+ADD requirements/requirements.txt /code/requirements.txt
+ADD $project_name.$suffix /code/$project_name.$suffix
+WORKDIR /code
+RUN pip install -r requirements.txt
+""")
+
+
 MANIFEST = Template("""
 include LICENSE
 include README.rst

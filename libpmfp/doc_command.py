@@ -5,7 +5,7 @@ import subprocess
 from .utils import get_command, find_package_form
 import copy
 PYTHON, COMMAND, sphinx_apidoc, make = get_command()
-
+from pathlib import Path
 
 def build():
     make1 = copy.copy(make)
@@ -14,6 +14,12 @@ def build():
     print("building")
     subprocess.check_call(command)
     print("build Document done!")
+    here = Path(".").absolute()
+    docs = here.joinpath("docs")
+    nojekyll = docs.joinpath(".nojekyll")
+    if not nojekyll.exists():
+        with nojekyll.open("w") as f:
+            pass
 
     # subprocess.check_call(command)
 

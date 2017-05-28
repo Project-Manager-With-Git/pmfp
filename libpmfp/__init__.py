@@ -9,3 +9,4 @@ from .upload_command import upload
 from .rename_command import rename
 from .run_command import run
 from .status_command import status
+from .docker_command import docker

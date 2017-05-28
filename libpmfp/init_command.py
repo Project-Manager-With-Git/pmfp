@@ -15,6 +15,8 @@ dir_path = file_path.parent
 local_path = Path(".").absolute()
 
 
+
+
 def init_manifest(project_name):
     print('create MANIFEST.in')
     with open("MANIFEST.in", "w") as f:
