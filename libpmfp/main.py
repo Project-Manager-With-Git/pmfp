@@ -4,7 +4,7 @@ if sys.version_info[0] != 3:
 if sys.version_info[0] == 3 and sys.version_info[1] < 5:
     raise OSError("only for python 3.5+")
 import argparse
-from . import init, doc, test, install, clean, update, build, upload,rename,run
+from . import init, doc, test, install, clean, update, build, upload,rename,run,status
 from pathlib import Path
 
 
@@ -14,7 +14,6 @@ def main(argv=sys.argv[1:]):
     subparsers = parser.add_subparsers()
     init_parsers = subparsers.add_parser("init")
     init_parsers.add_argument("-M", "--math", action="store_true")
-    init_parsers.add_argument("-G","--git",type=str)
     init_group = init_parsers.add_mutually_exclusive_group(required=False)
     init_group.add_argument('-w', '--web', type=str,
                             choices=["sanic", "flask", "zerorpc"])
@@ -75,8 +74,12 @@ def main(argv=sys.argv[1:]):
                             choices=["pypi", "local"])
     upload_group.add_argument('-p','--pypi', action="store_true")
     upload_group.add_argument('-l','--localpypi', type=str)
-    upload_group.add_argument('-g','--git', action="store_true")
+    upload_group.add_argument('-g','--git', type=str,nargs='*',required=False)
     upload_parsers.set_defaults(func=upload)
+
+    test_parsers = subparsers.add_parser("status")
+    test_parsers.set_defaults(func=status)
+
 
     args = parser.parse_args()
     args.func(args)

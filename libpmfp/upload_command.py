@@ -39,7 +39,7 @@ def upload(args):
                 command +=["-r",args.localpypi]
             subprocess.check_call(command)
             print("upload package to {path} done!".format(path=path))
-    elif args.git:
+    elif args.git or args.git==[]:
         if not has_pointgit():
             print("upload should have a .git dir in root path")
             return 0
@@ -47,10 +47,14 @@ def upload(args):
             path= get_git_url()
             version = read_ppmrc()["project"]["version"]
             print("push package to {path}".format(path=path))
-            subprocess.check_call("git add .".split(" "))
+            subprocess.check_call(["git", "add", "."])
             now_timestamp = time.time()
             time_ = time.ctime(now_timestamp)
-            subprocess.check_call(["git", "commit", "-m", "'{time}'".format(time = time_)])
+            if args.git == []:
+                msg = ""
+            else:
+                msg = args.git
+            subprocess.check_call(["git", "commit", "-m", "{msg}:{time}".format(msg =msg ,time = time_)])
             subprocess.check_call("git pull".split(" "))
             subprocess.check_call(["git", 'tag', '-a', "{version}".format(
                 version = version), '-m', "'version {version}'".format(
