@@ -1,3 +1,4 @@
+wheel
 sphinx
 sphinxcontrib_httpdomain
 sphinxcontrib_jsoncall
