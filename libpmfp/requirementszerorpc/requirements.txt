@@ -1,1 +1,3 @@
-zerorpc
+zmq
+msgpack-python
+aiozmq

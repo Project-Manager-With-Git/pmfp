@@ -308,7 +308,27 @@ def init_packagejson(project_name, version, description, author, license_):
 def init(args):
     if is_inited():
         print("already inited")
+        python, command, _, _ = get_command()
+        comd = input("use virtual env?enter y to install")
+        if comd in ["y","Y"]:
+            subprocess.check_call([python ,"-m","venv","env"])
+        comd = input("install the requirements?enter y to install")
+        if comd in ["y","Y"]:
+            command1 = copy.copy(command)
+            command1 += ["-m","pip","install","-r","requirements/requirements.txt"]
+            subprocess.check_call(command1)
+        comd = input("install the test requirements?enter y to install")
+        if comd in ["y","Y"]:
+            command1 = copy.copy(command)
+            command1 += ["-m","pip","install","-r","requirements/requirements_test.txt"]
+            subprocess.check_call(command1)
+        comd = input("install the dev requirements?enter y to install")
+        if comd in ["y","Y"]:
+            command1 = copy.copy(command)
+            command1 += ["-m","pip","install","-r","requirements/requirements_dev.txt"]
+            subprocess.check_call(command1)
         sys.exit(0)
+
     try:
         # if args.git:
         #     giturl = args.git
