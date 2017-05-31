@@ -35,7 +35,7 @@ def runtypecheck():
         elif form == "script":
             package_name = package_name+".py"
         command1 = copy.copy(COMMAND)
-        command1 += ["-m","mypy",package_name]
+        command1 += ["-m","mypy",package_name, "--html-report",'typecheck']
         subprocess.check_call(command1)
 
     else:
@@ -45,7 +45,7 @@ def runtypecheck():
         elif form == "script":
             package_name = package_name+".py"
         command1 = copy.copy(COMMAND)
-        command1 += ["-m","mypy",package_name+"/app"]
+        command1 += ["-m","mypy",package_name+"/app", "--html-report",'typecheck']
         subprocess.check_call(command1)
     print("type check done!")
 
