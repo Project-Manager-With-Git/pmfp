@@ -64,6 +64,7 @@ def main(argv=sys.argv[1:]):
     run_parsers.set_defaults(func=run)
 
     test_parsers = subparsers.add_parser("test")
+    test_parsers.add_argument('-t', '--typecheck', action="store_true")
     test_parsers.add_argument(
         '-c', '--coverage', type=str, choices=["report", "html"])
     test_parsers.set_defaults(func=test)
