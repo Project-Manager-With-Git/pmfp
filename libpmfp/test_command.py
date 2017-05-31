@@ -26,9 +26,9 @@ def runcoverage(com):
 
 
 def runtypecheck():
+    print("type check start")
     form = project_form()
     if form in ["command","script","model"]:
-        print("type check start")
         package_name = find_package_name()
         if form == "command":
             package_name = "lib"+package_name
@@ -37,8 +37,17 @@ def runtypecheck():
         command1 = copy.copy(COMMAND)
         command1 += "-m mypy "+package_name
         subprocess.check_call(command1)
-        print("type check done!")
 
+    else:
+        package_name = find_package_name()
+        if form == "command":
+            package_name = "lib"+package_name
+        elif form == "script":
+            package_name = package_name+".py"
+        command1 = copy.copy(COMMAND)
+        command1 += "-m mypy "+package_name
+        subprocess.check_call(command1)
+    print("type check done!")
 
 def test(args):
     if args.typecheck:

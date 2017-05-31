@@ -2,7 +2,7 @@
 pmfp
 ===============================
 
-version: 0.1.3
+version: 0.1.4
 author: hsz
 email: hsz1273327@gmail.com
 
