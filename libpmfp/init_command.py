@@ -36,7 +36,7 @@ def create_env():
 
 def create_conda_env():
     print('creating conda env')
-    command = ["conda", 'create',"-p", 'env',"python="+sys.version_info[0]+"."+sys.version_info[1]]
+    command = ["conda", 'create',"-p", 'env',"python="+str(sys.version_info[0])+"."+str(sys.version_info[1])]
     subprocess.check_call(command)
     print('creating conda env done!')
     return 0
@@ -444,6 +444,20 @@ def init(args):
                 init_packagejson(project_name, version,
                                  description, author, license_)
                 cmd = 'flask'
+
+        else:
+            if args.conda:
+                create_conda_env()
+                init_ppmrc(rc, "model",conda=True)
+            else:
+                create_env()
+                init_ppmrc(rc, "model")
+            init_setuppy(project_name, author, author_email,
+                         license_, keywords, version, description, url)
+            init_manifest(project_name)
+            init_app(project_name)
+            init_requirements("")
+            cmd = "model"
         init_test()
         init_install()
         init_doc(args, project_name, author, version, ky=cmd)

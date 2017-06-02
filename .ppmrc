@@ -1,5 +1,5 @@
 [project]
-version = 0.1.11
+version = 0.1.12
 keywords = tools,package manager
 url = https://github.com/Python-Tools/pmfp
 project_name = pmfp
@@ -15,3 +15,4 @@ author_email = hsz1273327@gmail.com
 
 [env]
 env = venv
+
