@@ -13,3 +13,5 @@ form = command
 author = hsz
 author_email = hsz1273327@gmail.com
 
+[env]
+env = venv
