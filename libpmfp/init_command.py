@@ -1,7 +1,7 @@
 from pathlib import Path
 from string import Template
 import shutil
-from .utils import get_command, write_ppmrc, is_inited, clean_init
+from .utils import get_command, write_ppmrc, is_inited, clean_init,is_conda
 from .Data import SETUPPY, COMMAND_MAIN, CONF, READMERST, PACKAGEJSON, SCRIPT,MANIFEST
 from .install_command import pip_install, write_requirement
 import subprocess
@@ -44,11 +44,12 @@ def create_conda_env():
 
 def install_math():
     print("install math libs")
-    pip_install(["numpy"])
-    write_requirement(["numpy"])
     pip_install(["mkl"])
     write_requirement(["mkl"])
-    if platform.system() == 'Windows':
+    pip_install(["numpy"])
+    write_requirement(["numpy"])
+
+    if platform.system() == 'Windows' and (not is_conda()):
         print("""windoescan not install scipy and sklearn through pip,
               please go to http://www.lfd.uci.edu/~gohlke/pythonlibs
               and download the packages you need,then install""")

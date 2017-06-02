@@ -1,6 +1,6 @@
 import subprocess
 import copy
-from .utils import get_command
+from .utils import get_command,is_conda
 PYTHON, COMMAND, sphinx_apidoc, make = get_command()
 
 
@@ -15,11 +15,15 @@ def pip_install_requirement(env=""):
 
 
 def pip_install(packages):
-    command = copy.copy(COMMAND)
-    command += ["-m", "pip", "install"]
-    command += packages
-    subprocess.check_call(command)
-    print("pip installed " + " ".join(packages))
+    if is_conda():
+        subprocess.check_call(["conda","install","-y","-p","env"]+packages)
+        print("conda installed " + " ".join(packages))
+    else:
+        command = copy.copy(COMMAND)
+        command += ["-m", "pip", "install"]
+        command += packages
+        subprocess.check_call(command)
+        print("pip installed " + " ".join(packages))
 
 
 def write_requirement(package, env=""):
