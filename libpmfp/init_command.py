@@ -157,16 +157,16 @@ def init_doc(args, project_name, author, version, ky):
 
 def init_install():
     _, command, _, _ = get_command()
-    print('update pip')
-    command0 = copy.copy(command)
-    command0 += ["-m", "pip", "install", "--upgrade", "pip"]
-    subprocess.check_call(command0)
-    print('update pip done')
-    print('update setuptools')
-    command0 = copy.copy(command)
-    command0 += ["-m", "pip", "install", "setuptools", "--upgrade"]
-    subprocess.check_call(command0)
-    print('update setuptools done!')
+    # print('update pip')
+    # command0 = copy.copy(command)
+    # command0 += ["-m", "pip", "install", "--upgrade", "pip"]
+    # subprocess.check_call(command0)
+    # print('update pip done')
+    # print('update setuptools')
+    # command0 = copy.copy(command)
+    # command0 += ["-m", "pip", "install", "setuptools", "--upgrade"]
+    # subprocess.check_call(command0)
+    # print('update setuptools done!')
     print('install wheel')
     command0 = copy.copy(command)
     command0 += ["-m", "pip", "install", "wheel"]
