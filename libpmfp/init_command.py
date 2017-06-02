@@ -34,6 +34,13 @@ def create_env():
     print('creating env done!')
     return 0
 
+def create_conda_env():
+    print('creating conda env')
+    command = ["conda", 'create',"-p", 'env',"python="+sys.version_info[0]+"."+sys.version_info[1]]
+    subprocess.check_call(command)
+    print('creating conda env done!')
+    return 0
+
 
 def install_math():
     print("install math libs")
@@ -182,13 +189,18 @@ def init_install():
     return 0
 
 
-def init_ppmrc(rc, ky):
+def init_ppmrc(rc, ky,conda=False):
     if local_path.joinpath(".ppmrc").exists():
         print("already inited")
     else:
         rccontent = copy.copy(rc)
         rccontent.update(form={'form': ky})
+        if conda:
+            rccontent.update(env={'env': "conda"})
+        else:
+            rccontent.update(env={'env': "venv"})
         write_ppmrc(rccontent)
+
     return 0
 
 
@@ -333,7 +345,7 @@ def init(args):
         # if args.git:
         #     giturl = args.git
         #     init_git(giturl)
-        create_env()
+
         project_name, author, author_email, license_, keywords, version, description, url = input_info()
         rc = {
             "project": {
@@ -350,19 +362,35 @@ def init(args):
             }
         }
         init_readme(project_name, author, author_email, version, url)
+
         cmd = None
         if args.script:
-            init_ppmrc(rc, "script")
+            if args.conda:
+                create_conda_env()
+                init_ppmrc(rc, "script",conda=True)
+            else:
+                create_env()
+                init_ppmrc(rc, "script")
             init_app(project_name, ky="script")
             init_requirements("script")
             cmd = "script"
         elif args.gui:
-            init_ppmrc(rc, "gui")
+            if args.conda:
+                create_conda_env()
+                init_ppmrc(rc, "gui",conda=True)
+            else:
+                create_env()
+                init_ppmrc(rc, "gui")
             init_app(project_name, ky="gui")
             init_requirements("")
             cmd = "gui"
         elif args.command:
-            init_ppmrc(rc, "command")
+            if args.conda:
+                create_conda_env()
+                init_ppmrc(rc, "command",conda=True)
+            else:
+                create_env()
+                init_ppmrc(rc, "command")
             entry_points_T = Template(
                 "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
@@ -374,7 +402,12 @@ def init(args):
             init_requirements("")
             cmd = "command"
         elif args.model:
-            init_ppmrc(rc, "model")
+            if args.conda:
+                create_conda_env()
+                init_ppmrc(rc, "model",conda=True)
+            else:
+                create_env()
+                init_ppmrc(rc, "model")
             init_setuppy(project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
@@ -382,7 +415,12 @@ def init(args):
             init_requirements("")
             cmd = "model"
         elif args.web:
-            init_ppmrc(rc, "web")
+            if args.conda:
+                create_conda_env()
+                init_ppmrc(rc, "web",conda=True)
+            else:
+                create_env()
+                init_ppmrc(rc, "web")
             if args.web == "sanic":
                 init_app(project_name, ky="sanic")
                 init_requirements("sanic")

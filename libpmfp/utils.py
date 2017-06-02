@@ -5,6 +5,8 @@ import configparser
 import shutil
 import os
 
+
+
 def get_git_url():
     pointgit = Path(".git")
     gitconfig = pointgit.joinpath('config')
@@ -64,6 +66,9 @@ def write_ppmrc(pyrc_dict):
     print("write .ppmrc done!")
     return True
 
+def is_conda():
+    parser = read_ppmrc()
+    return parser["env"]['env'] == "conda"
 
 def find_package_name():
     parser = read_ppmrc()
@@ -82,7 +87,10 @@ def get_command():
         PYTHON = 'python'
         p = Path(".\env")
         if p.exists():
-            COMMAND = ['env\Scripts\python']
+            if is_conda():
+                COMMAND = ['env\python']
+            else:
+                COMMAND = ['env\Scripts\python']
             sphinx_apidoc = ['env\Scripts\sphinx-apidoc']
             make = ['env\Scripts\sphinx-build']
         else:
@@ -93,7 +101,10 @@ def get_command():
         PYTHON = 'python3'
         p = Path("./env")
         if p.exists():
-            COMMAND = ['env/bin/python']
+            if is_conda():
+                COMMAND = ['env/python']
+            else:
+                COMMAND = ['env/bin/python']
             sphinx_apidoc = ['env/bin/sphinx-apidoc']
             make = ['env/bin/sphinx-build']
         else:

@@ -14,6 +14,7 @@ def main(argv=sys.argv[1:]):
     subparsers = parser.add_subparsers()
     init_parsers = subparsers.add_parser("init")
     init_parsers.add_argument("-M", "--math", action="store_true")
+    init_parsers.add_argument("-a", "--conda", action="store_true")
     init_group = init_parsers.add_mutually_exclusive_group(required=False)
     init_group.add_argument('-w', '--web', type=str,
                             choices=["sanic", "flask", "zerorpc"])
