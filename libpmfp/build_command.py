@@ -4,8 +4,10 @@ import copy
 import shutil
 from pathlib import Path
 
+from argparse import Namespace
 
-def build(args):
+def build(args:Namespace)->int:
+    print(type(args))
     _, COMMAND, _, _ = get_command()
     form = find_package_form()
     name = find_package_name()
@@ -16,6 +18,7 @@ def build(args):
                      "main:main", "-p", "/usr/bin/env python3"]
         subprocess.check_call(command0)
         print('build app to pyz file done!')
+        return 1
     elif form in ["web"]:
         print('move template and static files')
         here = Path(".").absolute()
@@ -52,6 +55,7 @@ def build(args):
             shutil.copytree(str(dir_templates),
                             str(templates))
             print("move template files done!")
+        return 1
 
     elif form in ["command"]:
         if args.egg:
@@ -75,7 +79,7 @@ def build(args):
                          "-p", "/usr/bin/env python3", "-o", name + ".pyz"]
             subprocess.check_call(command0)
             print('build app to pyz file done!')
-        return 0
+        return 1
     elif form in ["model"]:
         print('build model to wheel file')
         command0 = copy.copy(COMMAND)
@@ -88,7 +92,7 @@ def build(args):
             command0 += ["setup.py", 'bdist_egg']
             subprocess.check_call(command0)
             print('build model to egg file done!')
-        return 0
+        return 1
 
     elif form in ["script"]:
         print("script do not need to build")

@@ -2,8 +2,9 @@ from .utils import has_pypirc, has_pointgit,get_git_url,get_command,read_ppmrc
 import subprocess
 import copy
 import time
+from argparse import Namespace
 
-def upload(args):
+def upload(args:Namespace)->int:
     if args.regist:
         if not has_pypirc():
             print("pypi upload should have a .pypirc file in home path")
@@ -18,7 +19,7 @@ def upload(args):
                 command +=["-r",args.regist]
             subprocess.check_call(command)
             print("regist package to {path} done!".format(path=path))
-
+            return 1
     if args.pypi or args.localpypi:
         if not has_pypirc():
             print("pypi upload should have a .pypirc file in home path")
@@ -39,6 +40,7 @@ def upload(args):
                 command +=["-r",args.localpypi]
             subprocess.check_call(command)
             print("upload package to {path} done!".format(path=path))
+            return 1
     elif args.git or args.git==[]:
         if not has_pointgit():
             print("upload should have a .git dir in root path")
@@ -62,4 +64,4 @@ def upload(args):
             subprocess.check_call("git push --tag".split(" "))
             subprocess.check_call("git push".split(" "))
             print("push done")
-            return 0
+            return 1

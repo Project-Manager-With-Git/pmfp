@@ -7,8 +7,9 @@ import argparse
 from . import init, doc, test, install, clean, update, build, upload,rename,run,status,docker
 from pathlib import Path
 
+from typing import Sequence
 
-def main(argv=sys.argv[1:]):
+def main(argv:Sequence[str]=sys.argv[1:]):
 
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
@@ -87,8 +88,6 @@ def main(argv=sys.argv[1:]):
     upload_group.add_argument('-i','--init',action="store_true")
     upload_group.add_argument('-b','--build', action="store_true")
     upload_group.add_argument('-p','--push', type=str,nargs='*',required=False)
-
-
 
     upload_parsers.set_defaults(func=docker)
 

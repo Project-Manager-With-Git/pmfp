@@ -2,7 +2,10 @@ from .Data import Dockerfile
 from .utils import read_ppmrc,project_form
 from pathlib import Path
 import subprocess
-def project_info():
+from typing import Dict,Optional
+from argparse import Namespace
+
+def project_info()->Dict[str, Dict[str, str]]:
     conf = read_ppmrc()
     project = conf.items("project")
     form = project_form()
@@ -10,14 +13,14 @@ def project_info():
     result.update(form = project_form())
     return result
 
-def dockerfile_exist():
+def dockerfile_exist()->bool:
     dockerfilepath = Path(".").absolute().joinpath("Dockerfile")
     if dockerfilepath.exists():
         return True
     else:
         return False
 
-def init_dockerfile():
+def init_dockerfile()->int:
 
     if dockerfile_exist():
         print('dockerfile already exists!')
@@ -42,16 +45,18 @@ def init_dockerfile():
         suffix=suffix)
     with open('Dockerfile' ,"w") as f:
         f.write(dockerfile)
+    return 1
 
-def build_docker():
+def build_docker()->int:
     if not dockerfile_exist():
         print("need a dockerfile!")
         return 0
 
     info = project_info()
     subprocess.check_call(['docker','build',"-t",info["project_name"]+":"+info["version"],"."])
+    return 1
 
-def push_docker(url=None):
+def push_docker(url:Optional[str]=None)->int:
     if not dockerfile_exist():
         print("need a dockerfile!")
         return 0
@@ -68,7 +73,7 @@ def push_docker(url=None):
         print("push the img to "+url+" done!")
 
 
-def docker(args):
+def docker(args:Namespace)->int:
     if args.init:
         init_dockerfile()
 
@@ -80,3 +85,4 @@ def docker(args):
         else:
             url = args.push
             push_docker(url)
+    return 1

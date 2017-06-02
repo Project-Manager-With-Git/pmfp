@@ -2,7 +2,7 @@
 pmfp
 ===============================
 
-version: 0.1.16
+version: 0.1.17
 author: hsz
 email: hsz1273327@gmail.com
 
@@ -10,7 +10,19 @@ email: hsz1273327@gmail.com
 Example
 -------------------------------
 
-.. code:: python
+.. code:: shell
+    ppm init
+    ppm install
+    ppm build
+    ppm doc
+    ppm test
+    ppm clean
+    ppm status
+    ppm update
+    ppm rename
+    ppm upload
+    ppm run
+    ppm docker
 
 
 
@@ -31,12 +43,10 @@ Documentation
 
 TODO
 -----------------------------------
-* todo
+* more tests
 
 
 
 Limitations
 -----------
-* limit
-
-
+* only support python3.5+

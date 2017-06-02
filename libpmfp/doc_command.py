@@ -4,10 +4,13 @@ import socketserver
 import subprocess
 from .utils import get_command, find_package_form
 import copy
-PYTHON, COMMAND, sphinx_apidoc, make = get_command()
 from pathlib import Path
+from argparse import Namespace
 
-def build():
+PYTHON, COMMAND, sphinx_apidoc, make = get_command()
+
+
+def build()->int:
     make1 = copy.copy(make)
     command = make1 + ["-b", "html", "apidoc", "docs"]
     print(command)
@@ -20,10 +23,7 @@ def build():
     if not nojekyll.exists():
         with nojekyll.open("w") as f:
             pass
-
-    # subprocess.check_call(command)
-
-
+    return 1
 def serve():
     build()
     os.chdir("./docs")
@@ -33,8 +33,7 @@ def serve():
         print("serving at port", PORT)
         httpd.serve_forever()
 
-
-def doc(args):
+def doc(args:Namespace)->bool:
     if find_package_form() == "script":
         print("script have no apidoc")
         return 0
@@ -50,3 +49,4 @@ def doc(args):
     else:
         print("build")
         build()
+    return 1

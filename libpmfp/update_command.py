@@ -1,9 +1,9 @@
 from .utils import read_ppmrc, write_ppmrc
 import re
 from pathlib import Path
+from argparse import Namespace
 
-
-def update(args):
+def update(args:Namespace)->int:
     path = Path(".").absolute()
     apidoc = Path('apidoc')
     readme = Path('README.rst')
@@ -44,3 +44,4 @@ def update(args):
         with open("setup.py", "w") as f:
             for i in lines:
                 f.write(i)
+    return 1

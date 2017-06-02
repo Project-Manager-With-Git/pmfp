@@ -9,40 +9,40 @@ import sys
 import copy
 import platform
 import getpass
+from argparse import Namespace
+from typing import Dict
 
 file_path = Path(__file__).absolute()
 dir_path = file_path.parent
 local_path = Path(".").absolute()
 
 
-
-
-def init_manifest(project_name):
+def init_manifest(project_name:str)->int:
     print('create MANIFEST.in')
     with open("MANIFEST.in", "w") as f:
         f.write(MANIFEST.substitute(
             project_name=project_name))
     print('create MANIFEST.in done!')
-    return 0
+    return 1
 
 
-def create_env():
+def create_env()->int:
     print('creating env')
     PYTHON, _, _, _ = get_command()
     command = [PYTHON, '-m', 'venv', 'env']
     subprocess.check_call(command)
     print('creating env done!')
-    return 0
+    return 1
 
-def create_conda_env():
+def create_conda_env()->int:
     print('creating conda env')
     command = ["conda", 'create',"-p", 'env',"python="+str(sys.version_info[0])+"."+str(sys.version_info[1])]
     subprocess.check_call(command)
     print('creating conda env done!')
-    return 0
+    return 1
 
 
-def install_math():
+def install_math()->int:
     print("install math libs")
     pip_install(["mkl"])
     write_requirement(["mkl"])
@@ -60,9 +60,10 @@ def install_math():
         pip_install(["scikit_learn"])
         write_requirement(["scikit_learn"])
     print("install math libs done!")
+    return 1
 
 
-def input_info():
+def input_info()->Tuple[str,str,str, str, str, str, str, str]:
     while True:
         project_name = input("project name:")
         if project_name in ["app"]:
@@ -70,7 +71,6 @@ def input_info():
                 project_name=project_name))
         else:
             break
-
     author = input("author:")
     author_email = input("author_email:")
     license_ = input("license:")
@@ -99,7 +99,7 @@ def input_info():
     return project_name, author, author_email, license_, keywords, version, description, url
 
 
-def init_test():
+def init_test()->int:
     print("copy test template")
     if local_path.joinpath("test").exists():
         print(str(local_path.joinpath("test")) + " exists")
@@ -107,10 +107,10 @@ def init_test():
         shutil.copytree(str(dir_path.joinpath("test")),
                         str(local_path.joinpath("test")))
     print("copy test template done!")
-    return 0
+    return 1
 
 
-def init_doc(args, project_name, author, version, ky):
+def init_doc(args, project_name:str, author:str, version:str, ky:str)->int:
     if args.script:
         return 0
     _, _, auto_api, _ = get_command()
@@ -152,10 +152,10 @@ def init_doc(args, project_name, author, version, ky):
                     ky, ("sys.path.insert(0, str(p.parent.parent))", "'sphinx.ext.autodoc'"))[1]
             ))
     print('building apidoc done')
-    return 0
+    return 1
 
 
-def init_install():
+def init_install()->int:
     _, command, _, _ = get_command()
     # print('update pip')
     # command0 = copy.copy(command)
@@ -187,10 +187,10 @@ def init_install():
     subprocess.check_call(command2)
     subprocess.check_call(command3)
     print("install requirements done!")
-    return 0
+    return 1
 
 
-def init_ppmrc(rc, ky,conda=False):
+def init_ppmrc(rc:Dict[str,str], ky:str,conda:bool=False)->int:
     if local_path.joinpath(".ppmrc").exists():
         print("already inited")
     else:
@@ -202,10 +202,10 @@ def init_ppmrc(rc, ky,conda=False):
             rccontent.update(env={'env': "venv"})
         write_ppmrc(rccontent)
 
-    return 0
+    return 1
 
 
-def init_readme(project_name, author, author_email, version, url):
+def init_readme(project_name:str, author:str, author_email:str, version:str, url:str)->int:
     print("writing readme.")
     if local_path.joinpath("README.rst").exists():
         print("already have README.rst")
@@ -217,10 +217,18 @@ def init_readme(project_name, author, author_email, version, url):
                                          version=version,
                                          url=url))
     print("writing readme done")
-    return 0
+    return 1
 
 
-def init_setuppy(project_name, author, author_email, license_, keywords, version, description, url, entry_points=""):
+def init_setuppy(project_name:str,
+                 author:str,
+                 author_email:str,
+                 license_:str,
+                 keywords:str,
+                 version:str,
+                 description:str,
+                 url:str,
+                 entry_points:str="")->int:
     setup = SETUPPY.substitute(project_name=project_name,
                                author=author,
                                author_email=author_email,
@@ -238,10 +246,10 @@ def init_setuppy(project_name, author, author_email, license_, keywords, version
         with open("setup.py", "w") as f:
             f.write(setup)
     print("writing setup.py done!")
-    return 0
+    return 1
 
 
-def init_requirements(ky=""):
+def init_requirements(ky:str="")->int:
     print("copy requirements template")
     if local_path.joinpath("requirements").exists():
         print(str(local_path.joinpath("requirements")) + " exists")
@@ -249,10 +257,10 @@ def init_requirements(ky=""):
         shutil.copytree(str(dir_path.joinpath("requirements" + ky)),
                         str(local_path.joinpath("requirements")))
     print("copy requirements template done!")
-    return 0
+    return 1
 
 
-def init_app(project_name, ky="model"):
+def init_app(project_name:str, ky:str="model")->int:
     if ky == 'model':
         print("copy model template")
         if local_path.joinpath(project_name).exists():
@@ -297,14 +305,15 @@ def init_app(project_name, ky="model"):
                 local_path.joinpath(project_name)))
         print("copy {ky} template done!".format(ky=ky))
 
-    return 0
+    return 1
 
 
-def init_packagejson(project_name, version, description, author, license_):
+def init_packagejson(project_name:str, version:str, description:str, author:str, license_:str)->int:
 
     print("writing package.json")
     if local_path.joinpath("package.json").exists():
         print("already have package.json")
+        return 0
     else:
         package = PACKAGEJSON.substitute(
             project_name=project_name,
@@ -315,32 +324,33 @@ def init_packagejson(project_name, version, description, author, license_):
         with open("package.json", "w") as f:
             f.write(package)
     print("writing  package.json done!")
-    return 0
+    return 1
 
 
-def init(args):
+def init(args:Namespace)->int:
     if is_inited():
         print("already inited")
         python, command, _, _ = get_command()
-        comd = input("use virtual env?enter y to install")
+        comd = input("use virtual env?enter y to install\n")
         if comd in ["y","Y"]:
             subprocess.check_call([python ,"-m","venv","env"])
-        comd = input("install the requirements?enter y to install")
+        comd = input("install the requirements?enter y to install\n")
         if comd in ["y","Y"]:
             command1 = copy.copy(command)
             command1 += ["-m","pip","install","-r","requirements/requirements.txt"]
             subprocess.check_call(command1)
-        comd = input("install the test requirements?enter y to install")
+        comd = input("install the test requirements?enter y to install\n")
         if comd in ["y","Y"]:
             command1 = copy.copy(command)
             command1 += ["-m","pip","install","-r","requirements/requirements_test.txt"]
             subprocess.check_call(command1)
-        comd = input("install the dev requirements?enter y to install")
+        comd = input("install the dev requirements?enter y to install\n")
         if comd in ["y","Y"]:
             command1 = copy.copy(command)
             command1 += ["-m","pip","install","-r","requirements/requirements_dev.txt"]
             subprocess.check_call(command1)
         sys.exit(0)
+        return 0
 
     try:
         # if args.git:
@@ -463,6 +473,7 @@ def init(args):
         init_doc(args, project_name, author, version, ky=cmd)
         if args.math:
             install_math()
+        return 1
 
     except:
         clean_init()

@@ -1,10 +1,12 @@
 
 from pathlib import Path
 from .utils import get_command
+
+from argparse import Namespace
+
 PYTHON, _, _, _ = get_command()
 
-
-def clean(args):
+def clean(args:Namespace)->int:
     path = Path(".").absolute()
     apidoc = Path('apidoc')
     docs = Path('docs')
@@ -26,3 +28,4 @@ def clean(args):
             print(e)
             print("skip " + str(path.joinpath(i)))
             continue
+    return 0

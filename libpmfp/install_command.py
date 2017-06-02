@@ -1,10 +1,12 @@
 import subprocess
 import copy
 from .utils import get_command,is_conda
+from typing import List
 PYTHON, COMMAND, sphinx_apidoc, make = get_command()
 
+from argparse import Namespace
 
-def pip_install_requirement(env=""):
+def pip_install_requirement(env:str="")->int:
     if env:
         env = "_" + env
     command = copy.copy(COMMAND)
@@ -12,9 +14,10 @@ def pip_install_requirement(env=""):
                 "requirements/requirements" + env + ".txt"]
     subprocess.check_call(command)
     print("pip install requirements" + env + ".txt")
+    return 1
 
 
-def pip_install(packages):
+def pip_install(packages:List[str])->int:
     if is_conda():
         subprocess.check_call(["conda","install","-y","-p","env"]+packages)
         print("conda installed " + " ".join(packages))
@@ -24,9 +27,10 @@ def pip_install(packages):
         command += packages
         subprocess.check_call(command)
         print("pip installed " + " ".join(packages))
+    return 1
 
 
-def write_requirement(package, env=""):
+def write_requirement(package:List[str], env:str="")->int:
     if env:
         env = "_" + env
     exit_ = True
@@ -46,15 +50,17 @@ def write_requirement(package, env=""):
             i = i.split("-")[0]
         f.write(i + "\n")
     print("updated requirements" + env + ".txt")
+    return 1
 
 
-def install(args):
+def install(args:Namespace)->int:
     if args.self:
         print("install self to local")
         python = COMMAND[0]
         subprocess.check_call(
             "{PYTHON} setup.py install".format(PYTHON=python).split(" "))
         #subprocess.check_call("{PYTHON} setup.py install".split(" "))
+        return 0
     else:
         if args.dev or args.dev == []:
             print("args.dev")
@@ -78,3 +84,4 @@ def install(args):
                 print(args.requirements)
                 pip_install(args.requirements)
                 write_requirement(args.requirements, "")
+        return 1
