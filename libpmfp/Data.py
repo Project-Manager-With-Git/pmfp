@@ -48,6 +48,10 @@ author: $author
 
 email: $author_email
 
+Feature
+----------------------
+* Feature1
+* Feature2
 
 Example
 -------------------------------
