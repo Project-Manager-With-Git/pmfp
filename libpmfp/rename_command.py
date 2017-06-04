@@ -3,7 +3,8 @@ import re
 from pathlib import Path
 from argparse import Namespace
 
-def rename(args:Namespace)->int:
+
+def rename(args: Namespace)->int:
     path = Path(".").absolute()
     apidoc = Path('apidoc')
     readme = Path('README.rst')

@@ -6,7 +6,8 @@ from argparse import Namespace
 
 PYTHON, _, _, _ = get_command()
 
-def clean(args:Namespace)->int:
+
+def clean(args: Namespace)->int:
     path = Path(".").absolute()
     apidoc = Path('apidoc')
     docs = Path('docs')

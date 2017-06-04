@@ -1,12 +1,13 @@
 import subprocess
 import copy
-from .utils import get_command,is_conda
+from .utils import get_command, is_conda
 from typing import List
 PYTHON, COMMAND, sphinx_apidoc, make = get_command()
 
 from argparse import Namespace
 
-def pip_install_requirement(env:str="")->int:
+
+def pip_install_requirement(env: str="")->int:
     if env:
         env = "_" + env
     command = copy.copy(COMMAND)
@@ -17,9 +18,10 @@ def pip_install_requirement(env:str="")->int:
     return 1
 
 
-def pip_install(packages:List[str])->int:
+def pip_install(packages: List[str])->int:
     if is_conda():
-        subprocess.check_call(["conda","install","-y","-p","env"]+packages)
+        subprocess.check_call(
+            ["conda", "install", "-y", "-p", "env"] + packages)
         print("conda installed " + " ".join(packages))
     else:
         command = copy.copy(COMMAND)
@@ -30,7 +32,7 @@ def pip_install(packages:List[str])->int:
     return 1
 
 
-def write_requirement(package:List[str], env:str="")->int:
+def write_requirement(package: List[str], env: str="")->int:
     if env:
         env = "_" + env
     exit_ = True
@@ -53,7 +55,7 @@ def write_requirement(package:List[str], env:str="")->int:
     return 1
 
 
-def install(args:Namespace)->int:
+def install(args: Namespace)->int:
     if args.self:
         print("install self to local")
         python = COMMAND[0]

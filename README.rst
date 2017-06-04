@@ -3,7 +3,9 @@ pmfp
 ===============================
 
 version: 0.1.17
+
 author: hsz
+
 email: hsz1273327@gmail.com
 
 Feature
@@ -11,10 +13,23 @@ Feature
 
 * python's package manager support venv and conda
 
-* code template with test, document, requirements and virtual environment for different situation
-such as script, model, GUI, web.
+* code template with test, document, requirements and virtual environment for
+different situation such as script, model, GUI, web.
 
 * easy to build a python application or model
+
+* easy to test a python application or model, include static type check
+
+* project status manager
+
+* run script with virtual env  in project's root
+
+* upload project to git repository
+
+* upload model to pypi
+
+* docker support
+
 
 Example
 -------------------------------

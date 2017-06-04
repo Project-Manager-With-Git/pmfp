@@ -7,9 +7,7 @@ Welcome to libpmfp's documentation!
 ===================================
 
 version: 0.1.17
-
 author: hsz
-
 email: hsz1273327@gmail.com
 
 Feature
@@ -49,13 +47,6 @@ Contents
    :caption: Contents:
 
    init.md
-   install.md
-   doc.md
-   test.md
-   project_manager.md
-   build.md
-   upload.md
-   docker.md
 
 TODO
 -----------------------------------

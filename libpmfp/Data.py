@@ -88,7 +88,7 @@ Limitations
 
 """)
 
-SETUPPY =  Template("""from codecs import open
+SETUPPY = Template("""from codecs import open
 from setuptools import setup, find_packages
 from os import path
 
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 
 """
 
-CONF =  Template("""
+CONF = Template("""
 import os
 import sys
 from pathlib import Path

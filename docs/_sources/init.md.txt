@@ -1,0 +1,3 @@
+# init
+
+init subcommand can build a basic template for different kinds of situation.

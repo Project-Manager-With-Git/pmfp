@@ -24,6 +24,8 @@ def build()->int:
         with nojekyll.open("w") as f:
             pass
     return 1
+
+
 def serve():
     build()
     os.chdir("./docs")
@@ -33,7 +35,8 @@ def serve():
         print("serving at port", PORT)
         httpd.serve_forever()
 
-def doc(args:Namespace)->bool:
+
+def doc(args: Namespace)->bool:
     if find_package_form() == "script":
         print("script have no apidoc")
         return 0

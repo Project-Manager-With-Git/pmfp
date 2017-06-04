@@ -5,7 +5,8 @@ import configparser
 import shutil
 import os
 
-from typing import Dict,Tuple,List,Any
+from typing import Dict, Tuple, List, Any
+
 
 def get_git_url()->str:
     pointgit = Path(".git")
@@ -21,13 +22,14 @@ def has_pypirc()->bool:
         return True
     else:
         return False
+
+
 def has_pointgit()->bool:
     here = Path(".").absolute()
     if here.joinpath(".git").exists():
         return True
     else:
         return False
-
 
 
 def clean_init():
@@ -56,7 +58,7 @@ def read_ppmrc()->configparser.ConfigParser:
     return parser
 
 
-def write_ppmrc(pyrc_dict:Dict[str,Dict[str,Any]])->bool:
+def write_ppmrc(pyrc_dict: Dict[str, Dict[str, Any]])->bool:
     print(pyrc_dict)
     print("write .ppmrc")
     parser = configparser.ConfigParser(allow_no_value=True)
@@ -66,9 +68,11 @@ def write_ppmrc(pyrc_dict:Dict[str,Dict[str,Any]])->bool:
     print("write .ppmrc done!")
     return True
 
+
 def is_conda()->bool:
     parser = read_ppmrc()
     return parser["env"]['env'] == "conda"
+
 
 def find_package_name()->str:
     parser = read_ppmrc()
@@ -82,7 +86,7 @@ def find_package_form()->str:
     return name
 
 
-def get_command()->Tuple[str,List[str],List[str],List[str]]:
+def get_command()->Tuple[str, List[str], List[str], List[str]]:
     if platform.system() == 'Windows':
         PYTHON = 'python'
         p = Path(".\env")

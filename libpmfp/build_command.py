@@ -6,7 +6,8 @@ from pathlib import Path
 
 from argparse import Namespace
 
-def build(args:Namespace)->int:
+
+def build(args: Namespace)->int:
     print(type(args))
     _, COMMAND, _, _ = get_command()
     form = find_package_form()

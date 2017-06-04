@@ -4,12 +4,13 @@ if sys.version_info[0] != 3:
 if sys.version_info[0] == 3 and sys.version_info[1] < 5:
     raise OSError("only for python 3.5+")
 import argparse
-from . import init, doc, test, install, clean, update, build, upload,rename,run,status,docker
+from . import init, doc, test, install, clean, update, build, upload, rename, run, status, docker
 from pathlib import Path
 
 from typing import Sequence
 
-def main(argv:Sequence[str]=sys.argv[1:]):
+
+def main(argv: Sequence[str]=sys.argv[1:]):
 
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
@@ -73,11 +74,12 @@ def main(argv:Sequence[str]=sys.argv[1:]):
 
     upload_parsers = subparsers.add_parser("upload")
     upload_group = upload_parsers.add_mutually_exclusive_group(required=False)
-    upload_group.add_argument('-r','--regist', type=str,
-                            choices=["pypi", "local"])
-    upload_group.add_argument('-p','--pypi', action="store_true")
-    upload_group.add_argument('-l','--localpypi', type=str)
-    upload_group.add_argument('-g','--git', type=str,nargs='*',required=False)
+    upload_group.add_argument('-r', '--regist', type=str,
+                              choices=["pypi", "local"])
+    upload_group.add_argument('-p', '--pypi', action="store_true")
+    upload_group.add_argument('-l', '--localpypi', type=str)
+    upload_group.add_argument('-g', '--git', type=str,
+                              nargs='*', required=False)
     upload_parsers.set_defaults(func=upload)
 
     test_parsers = subparsers.add_parser("status")
@@ -85,12 +87,12 @@ def main(argv:Sequence[str]=sys.argv[1:]):
 
     upload_parsers = subparsers.add_parser("docker")
     upload_group = upload_parsers.add_mutually_exclusive_group(required=False)
-    upload_group.add_argument('-i','--init',action="store_true")
-    upload_group.add_argument('-b','--build', action="store_true")
-    upload_group.add_argument('-p','--push', type=str,nargs='*',required=False)
+    upload_group.add_argument('-i', '--init', action="store_true")
+    upload_group.add_argument('-b', '--build', action="store_true")
+    upload_group.add_argument('-p', '--push', type=str,
+                              nargs='*', required=False)
 
     upload_parsers.set_defaults(func=docker)
-
 
     args = parser.parse_args()
     args.func(args)
