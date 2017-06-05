@@ -2,7 +2,7 @@ import os
 import http.server
 import socketserver
 import subprocess
-from .utils import get_command, find_package_form
+from .utils import get_command, find_package_form,find_package_name
 import copy
 from pathlib import Path
 from argparse import Namespace
@@ -11,10 +11,17 @@ PYTHON, COMMAND, sphinx_apidoc, make = get_command()
 
 
 def build()->int:
+    sphinx_apidoc1 = copy.copy(sphinx_apidoc1)
+    command = sphinx_apidoc1 + ["-o", "apidoc", find_package_name()]
+    print(command)
+    print("building apidoc")
+    subprocess.check_call(command)
+    print("build apidoc done!")
+
     make1 = copy.copy(make)
     command = make1 + ["-b", "html", "apidoc", "docs"]
     print(command)
-    print("building")
+    print("building document")
     subprocess.check_call(command)
     print("build Document done!")
     here = Path(".").absolute()
