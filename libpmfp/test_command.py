@@ -38,7 +38,7 @@ def runtypecheck()->int:
         elif form == "script":
             package_name = package_name + ".py"
         command1 = copy.copy(COMMAND)
-        command1 += ["-m", "mypy", "--html-report", 'typecheck', package_name]
+        command1 += ["-m", "mypy",'--ignore-missing-imports', "--html-report", 'typecheck', package_name]
         subprocess.check_call(command1)
 
     else:
