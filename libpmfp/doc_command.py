@@ -11,7 +11,7 @@ PYTHON, COMMAND, sphinx_apidoc, make = get_command()
 
 
 def build()->int:
-    sphinx_apidoc1 = copy.copy(sphinx_apidoc1)
+    sphinx_apidoc1 = copy.copy(sphinx_apidoc)
     command = sphinx_apidoc1 + ["-o", "apidoc", find_package_name()]
     print(command)
     print("building apidoc")
