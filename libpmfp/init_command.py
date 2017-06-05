@@ -64,7 +64,6 @@ def install_math()->int:
     print("install math libs done!")
     return 1
 
-
 def input_info()->Tuple[str, str, str, str, str, str, str, str]:
     while True:
         project_name = input("project name:")

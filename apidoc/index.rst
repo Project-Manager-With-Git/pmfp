@@ -48,11 +48,8 @@ Contents
    :maxdepth: 4
    :caption: Contents:
 
-   init.md
-   install.md
-   doc.md
-   test.md
    project_manager.md
+   install.md
    build.md
    upload.md
    docker.md
