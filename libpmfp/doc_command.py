@@ -12,7 +12,10 @@ PYTHON, COMMAND, sphinx_apidoc, make = get_command()
 
 def build()->int:
     sphinx_apidoc1 = copy.copy(sphinx_apidoc)
-    command = sphinx_apidoc1 + ["-o", "apidoc", find_package_name()]
+    name = find_package_name()
+    if find_package_form() == "command":
+        name = 'lib'+ name
+    command = sphinx_apidoc1 + ["-o", "apidoc", name]
     print(command)
     print("building apidoc")
     subprocess.check_call(command)
