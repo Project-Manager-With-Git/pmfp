@@ -11,7 +11,7 @@ def runtest()->int:
     print("unittest start")
     package_name = find_package_name()
     command1 = copy.copy(COMMAND)
-    command1 += "-m coverage run --source {package_name} unittest discover -v -s test".format(
+    command1 += "-m coverage run --source {package_name} -m unittest discover -v -s test".format(
         package_name=package_name).split(" ")
     subprocess.check_call(command1)
     print("unittest done!")
