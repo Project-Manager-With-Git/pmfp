@@ -34,7 +34,7 @@ you can use the flag `-M` to install `numpy`,`scipy`,`sklearn` Automatically.
 
 ### init a exist project
 
-If you want to init a exist project with some code ,requirements and `.ppmrc`.
+If you want to init an exist project with some code ,requirements and `.ppmrc`.
 you can just run `ppm init`, and then follow the questions.
 
 

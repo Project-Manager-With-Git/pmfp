@@ -71,7 +71,7 @@ Apis
   :maxdepth: 3
   :caption: Api:
 
-  libpmfp
+  modules
 
 Indices and tables
 ==================
