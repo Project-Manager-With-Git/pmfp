@@ -59,8 +59,8 @@ def install_math()->int:
     else:
         pip_install(["scipy"])
         write_requirement(["scipy"])
-        pip_install(["scikit_learn"])
-        write_requirement(["scikit_learn"])
+        pip_install(["scikit-learn"])
+        write_requirement(["scikit-learn"])
     print("install math libs done!")
     return 1
 
