@@ -1,5 +1,6 @@
 include LICENSE
 include README.rst
+recursive-include requirements *.txt
 recursive-include libpmfp *.py
 recursive-include libpmfp/commandapp *
 recursive-include libpmfp/flaskapp *
