@@ -12,6 +12,7 @@ RUN pip install -r requirements.txt
 MANIFEST = Template("""
 include LICENSE
 include README.rst
+recursive-include requirements *.txt
 recursive-include $project_name *.py
 """)
 
