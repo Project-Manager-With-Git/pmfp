@@ -80,7 +80,9 @@ def input_info()->Tuple[str, str, str, str, str, str, str, str]:
     description = input("description:")
     url = input("url:")
     if keywords:
-        keywords = ["'" + i + "'"for i in keywords.split(',')]
+        keywords = [i for i in keywords.split(',')]
+    else:
+        keywords = []
     project_name = project_name or local_path.name
     author = author or getpass.getuser()
     author_email = author_email or "author_email"
