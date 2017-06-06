@@ -105,10 +105,7 @@ def get_command()->Tuple[str, List[str], List[str], List[str]]:
         PYTHON = 'python3'
         p = Path("./env")
         if p.exists():
-            if is_conda():
-                COMMAND = ['env/python']
-            else:
-                COMMAND = ['env/bin/python']
+            COMMAND = ['env/bin/python']
             sphinx_apidoc = ['env/bin/sphinx-apidoc']
             make = ['env/bin/sphinx-build']
         else:
