@@ -2,7 +2,7 @@
 pmfp
 ===============================
 
-version: 0.2.1
+version: 0.2.2
 
 author: hsz
 
