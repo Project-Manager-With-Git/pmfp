@@ -43,7 +43,6 @@ def create_conda_env()->int:
     print('creating conda env done!')
     return 1
 
-
 def install_math()->int:
     print("install math libs")
     pip_install(["mkl"])
@@ -500,6 +499,10 @@ def init(args: Namespace)->int:
         init_doc(args, project_name, author, version, ky=cmd)
         if args.math:
             install_math()
+        if args.cython:
+            print("install cython")
+            pip_install(["cython"])
+            print("install cython done")
         return 1
 
     except:
