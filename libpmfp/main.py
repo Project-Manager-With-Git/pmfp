@@ -17,6 +17,7 @@ def main(argv: Sequence[str]=sys.argv[1:]):
     init_parsers = subparsers.add_parser("init")
     init_parsers.add_argument("-M", "--math", action="store_true")
     init_parsers.add_argument("-C", "--conda", action="store_true")
+    init_parsers.add_argument("--cython", action="store_true")
     init_group = init_parsers.add_mutually_exclusive_group(required=False)
     init_group.add_argument('-w', '--web', type=str,
                             choices=["sanic", "flask", "zerorpc"])

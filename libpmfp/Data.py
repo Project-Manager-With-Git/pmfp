@@ -92,6 +92,7 @@ Limitations
 SETUPPY = Template("""from codecs import open
 from setuptools import setup, find_packages
 from os import path
+$cython_import
 
 REQUIREMETS_DEV_FILE = 'requirements_dev.txt'
 REQUIREMETS_TEST_FILE = 'requirements_test.txt'
@@ -111,7 +112,7 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.6',
     'Topic :: Documentation :: Sphinx',
 ]
-KEYWORDS = [$keywords]
+KEYWORDS = $keywords
 PACKAGES = find_packages(exclude=['contrib', 'docs', 'test'])
 ZIP_SAFE = False
 
@@ -128,6 +129,7 @@ with open(path.join(REQUIREMETS_DIR, REQUIREMETS_DEV_FILE), encoding='utf-8') as
 
 with open(path.join(REQUIREMETS_DIR, REQUIREMETS_TEST_FILE), encoding='utf-8') as f:
     REQUIREMETS_TEST = f.readlines()
+$cython_ext_mode
 setup(
     name=PROJECTNAME,
     version=VERSION,
@@ -146,6 +148,7 @@ setup(
         'dev': REQUIREMETS_DEV,
         'test': REQUIREMETS_TEST
     },
+    $cython_ext
     $entry_points
     zip_safe=ZIP_SAFE,
     data_files=[('requirements', ['requirements/requirements.txt', 'requirements/requirements_dev.txt', 'requirements/requirements_test.txt'])]
