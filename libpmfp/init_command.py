@@ -245,7 +245,7 @@ Extension("name",
         """
         cython_import = """from Cython.Build import cythonize
 from Cython.Compiler import Options"""
-        cython_ext = "ext_modules=cythonize(extensions)"
+        cython_ext = "ext_modules=cythonize(extensions),"
     setup = SETUPPY.substitute(cython_ext_mode = cython_ext_mode,
                                 cython_import = cython_import,
                                 cython_ext = cython_ext,
