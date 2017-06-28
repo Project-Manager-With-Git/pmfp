@@ -223,7 +223,8 @@ def init_readme(project_name: str, author: str, author_email: str, version: str,
     return 1
 
 
-def init_setuppy(project_name: str,
+def init_setuppy(cython,
+                 project_name: str,
                  author: str,
                  author_email: str,
                  license_: str,
@@ -232,7 +233,24 @@ def init_setuppy(project_name: str,
                  description: str,
                  url: str,
                  entry_points: str="")->int:
-    setup = SETUPPY.substitute(project_name=project_name,
+    cython_ext_mode = ""
+    cython_import = ""
+    cython_ext = ""
+
+    if cython:
+        cython_ext_mode = """extensions = [
+Extension("name",
+          sources = [name.pyx,name.cpp],
+          language = "c++")
+]
+        """
+        cython_import = """from Cython.Build import cythonize
+from Cython.Compiler import Options"""
+        cython_ext = "ext_modules=cythonize(extensions)"
+    setup = SETUPPY.substitute(cython_ext_mode = cython_ext_mode,
+                                cython_import = cython_import,
+                                cython_ext = cython_ext,
+                                project_name=project_name,
                                author=author,
                                author_email=author_email,
                                license_=license_,
@@ -414,7 +432,7 @@ def init(args: Namespace)->int:
             entry_points_T = Template(
                 "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
-            init_setuppy(project_name, author, author_email, license_, keywords, version, description, url,
+            init_setuppy(args.cython,project_name, author, author_email, license_, keywords, version, description, url,
                          entry_points=entry_points
                          )
             init_manifest("lib" + project_name)
@@ -428,7 +446,7 @@ def init(args: Namespace)->int:
             else:
                 create_env()
                 init_ppmrc(rc, "model")
-            init_setuppy(project_name, author, author_email,
+            init_setuppy(args.cython,project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
             init_app(project_name)
@@ -471,7 +489,7 @@ def init(args: Namespace)->int:
             else:
                 create_env()
                 init_ppmrc(rc, "model")
-            init_setuppy(project_name, author, author_email,
+            init_setuppy(args.cython,project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
             init_app(project_name)
