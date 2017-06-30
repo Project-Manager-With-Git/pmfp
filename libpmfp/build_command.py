@@ -1,4 +1,4 @@
-from .utils import find_package_form, get_command, find_package_name
+from .utils import find_package_form, get_command, find_package_name,project_compiler
 import subprocess
 import copy
 import shutil
@@ -82,17 +82,25 @@ def build(args: Namespace)->int:
             print('build app to pyz file done!')
         return 1
     elif form in ["model"]:
-        print('build model to wheel file')
-        command0 = copy.copy(COMMAND)
-        command0 += ["setup.py", "bdist_wheel"]
-        subprocess.check_call(command0)
-        print('build model to wheel file done!')
-        if args.egg:
-            print('build model to egg file')
+        if project_compiler() == "python":
+            print('build model to wheel file')
             command0 = copy.copy(COMMAND)
-            command0 += ["setup.py", 'bdist_egg']
+            command0 += ["setup.py", "bdist_wheel"]
             subprocess.check_call(command0)
-            print('build model to egg file done!')
+            print('build model to wheel file done!')
+            if args.egg:
+                print('build model to egg file')
+                command0 = copy.copy(COMMAND)
+                command0 += ["setup.py", 'bdist_egg']
+                subprocess.check_call(command0)
+                print('build model to egg file done!')
+        elif project_compiler() == "cython":
+            print('build cython model')
+            command0 = copy.copy(COMMAND)
+            command0 += ["setup.py",'build_ext','--inplace']
+            subprocess.check_call(command0)
+            print('build cython model done!')
+
         return 1
 
     elif form in ["script"]:

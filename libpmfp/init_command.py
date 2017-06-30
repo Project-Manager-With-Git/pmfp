@@ -192,7 +192,7 @@ def init_install()->int:
     return 1
 
 
-def init_ppmrc(rc: Dict[str, str], ky: str, conda: bool=False)->int:
+def init_ppmrc(rc: Dict[str, str], ky: str, conda: bool=False,cython=False)->int:
     if local_path.joinpath(".ppmrc").exists():
         print("already inited")
     else:
@@ -202,6 +202,10 @@ def init_ppmrc(rc: Dict[str, str], ky: str, conda: bool=False)->int:
             rccontent.update(env={'env': "conda"})
         else:
             rccontent.update(env={'env': "venv"})
+        if cython:
+            rccontent.update(env={'compiler': "cython"})
+        else:
+            rccontent.update(env={'compiler': "python"})
         write_ppmrc(rccontent)
 
     return 1
@@ -431,7 +435,7 @@ def init(args: Namespace)->int:
             entry_points_T = Template(
                 "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
-            init_setuppy(args.cython,project_name, author, author_email, license_, keywords, version, description, url,
+            init_setuppy(False,project_name, author, author_email, license_, keywords, version, description, url,
                          entry_points=entry_points
                          )
             init_manifest("lib" + project_name)
@@ -441,10 +445,10 @@ def init(args: Namespace)->int:
         elif args.model:
             if args.conda:
                 create_conda_env()
-                init_ppmrc(rc, "model", conda=True)
+                init_ppmrc(rc, "model", conda=True,cython=args.cython)
             else:
                 create_env()
-                init_ppmrc(rc, "model")
+                init_ppmrc(rc, "model".cython=args.cython)
             init_setuppy(args.cython,project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
@@ -484,10 +488,10 @@ def init(args: Namespace)->int:
         else:
             if args.conda:
                 create_conda_env()
-                init_ppmrc(rc, "model", conda=True)
+                init_ppmrc(rc, "model", conda=True,cython=args.cython)
             else:
                 create_env()
-                init_ppmrc(rc, "model")
+                init_ppmrc(rc, "model",cython=args.cython)
             init_setuppy(args.cython,project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
@@ -503,6 +507,7 @@ def init(args: Namespace)->int:
             print("install cython")
             pip_install(["cython"])
             print("install cython done")
+
         return 1
 
     except:

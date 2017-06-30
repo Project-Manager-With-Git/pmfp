@@ -51,6 +51,8 @@ def is_inited()->bool:
 def project_form()->str:
     return read_ppmrc()["form"]['form']
 
+def project_compiler()->str:
+    return read_ppmrc()["env"]['compiler']
 
 def read_ppmrc()->configparser.ConfigParser:
     parser = configparser.ConfigParser(allow_no_value=True)
