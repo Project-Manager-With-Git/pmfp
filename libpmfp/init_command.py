@@ -448,7 +448,7 @@ def init(args: Namespace)->int:
                 init_ppmrc(rc, "model", conda=True,cython=args.cython)
             else:
                 create_env()
-                init_ppmrc(rc, "model".cython=args.cython)
+                init_ppmrc(rc, "model",cython=args.cython)
             init_setuppy(args.cython,project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
