@@ -199,13 +199,14 @@ def init_ppmrc(rc: Dict[str, str], ky: str, conda: bool=False,cython=False)->int
         rccontent = copy.copy(rc)
         rccontent.update(form={'form': ky})
         if conda:
-            rccontent.update(env={'env': "conda"})
+            env = {'env': "conda"}
         else:
-            rccontent.update(env={'env': "venv"})
+            env ={'env': "venv"}
         if cython:
-            rccontent.update(env={'compiler': "cython"})
+            env.update(**{'compiler': "cython"})
         else:
-            rccontent.update(env={'compiler': "python"})
+            env.update(**{'compiler': "python"})
+        rccontent.update(env=env)
         write_ppmrc(rccontent)
 
     return 1
