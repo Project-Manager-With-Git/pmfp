@@ -16,33 +16,33 @@ def update(args: Namespace)->int:
     conf = dict(conf)
     write_ppmrc(conf)
     if path.joinpath(readme).exists():
-        with open("README.rst", "r") as f:
+        with open("README.rst", "r", encoding="utf-8") as f:
             lines = []
             for i in f:
                 if re.match(r"version:", i):
                     i = "version: " + args.vers + "\n"
                 lines.append(i)
-        with open("README.rst", "w") as f:
+        with open("README.rst", "w", encoding="utf-8") as f:
             for i in lines:
                 f.write(i)
     if path.joinpath(apidoc).exists():
-        with open("apidoc/conf.py", "r") as f:
+        with open("apidoc/conf.py", "r", encoding="utf-8") as f:
             lines = []
             for i in f:
                 if re.match(r"version =", i):
                     i = "version = '" + args.vers + "'\n"
                 lines.append(i)
-        with open("apidoc/conf.py", "w") as f:
+        with open("apidoc/conf.py", "w", encoding="utf-8") as f:
             for i in lines:
                 f.write(i)
     if path.joinpath(setup).exists():
-        with open("setup.py", "r") as f:
+        with open("setup.py", "r", encoding="utf-8") as f:
             lines = []
             for i in f:
                 if re.match(r"VERSION =", i):
                     i = "VERSION = '" + args.vers + "'\n"
                 lines.append(i)
-        with open("setup.py", "w") as f:
+        with open("setup.py", "w", encoding="utf-8") as f:
             for i in lines:
                 f.write(i)
     return 1
