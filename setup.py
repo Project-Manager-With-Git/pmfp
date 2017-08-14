@@ -11,7 +11,7 @@ DESCRIPTION = 'a simple package manager for python like npm.'
 URL = 'https://github.com/Python-Tools/pmfp'
 AUTHOR = 'hsz'
 AUTHOR_EMAIL = 'hsz1273327@gmail.com'
-LICENSE = 'MIT'
+LICENSE = 'MIT License'
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
