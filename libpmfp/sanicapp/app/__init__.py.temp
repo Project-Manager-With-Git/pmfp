@@ -1,0 +1,22 @@
+
+from sanic import Sanic
+from sanic import response
+from sanic.response import json
+from api import api
+from view import *
+
+def create_app(env):
+    app = Sanic("auth-center")
+    app.config.from_object(env)
+    
+    app.blueprint(api, url_prefix='/api')
+
+    app.add_route(view, '/')
+
+    @app.listener('after_server_start')
+    async def simple_listener(app, loop):
+        print("start ...")
+
+    
+
+    return app

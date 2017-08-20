@@ -10,11 +10,26 @@ import copy
 import platform
 import getpass
 from argparse import Namespace
-from typing import Dict,Tuple
+from typing import Dict, Tuple
 
 file_path = Path(__file__).absolute()
 dir_path = file_path.parent
 local_path = Path(".").absolute()
+
+
+def init_docker(project_name: str):
+    print("copy dockerfile template")
+    if local_path.joinpath("Dockerfile").exists():
+        print(str(local_path.joinpath("Dockerfile")) + " exists")
+    else:
+        with open(str(local_path.joinpath("Dockerfile")), "w") as f:
+            content = """FROM python:3.6
+ADD ./project_name.pyz /code/project_name.pyz
+ADD ./requirements/requirements.txt /code/requirements.txt
+WORKDIR /code
+RUN pip install -r requirements.txt
+            """
+    print("copy dockerfile template done!")
 
 
 def init_manifest(project_name: str)->int:
@@ -43,6 +58,7 @@ def create_conda_env()->int:
     print('creating conda env done!')
     return 1
 
+
 def install_math()->int:
     print("install math libs")
     pip_install(["mkl"])
@@ -62,6 +78,7 @@ def install_math()->int:
         write_requirement(["scikit-learn"])
     print("install math libs done!")
     return 1
+
 
 def input_info()->Tuple[str, str, str, str, str, str, str, str]:
     while True:
@@ -192,7 +209,7 @@ def init_install()->int:
     return 1
 
 
-def init_ppmrc(rc: Dict[str, str], ky: str, conda: bool=False,cython=False)->int:
+def init_ppmrc(rc: Dict[str, str], ky: str, conda: bool=False, cython=False)->int:
     if local_path.joinpath(".ppmrc").exists():
         print("already inited")
     else:
@@ -201,7 +218,7 @@ def init_ppmrc(rc: Dict[str, str], ky: str, conda: bool=False,cython=False)->int
         if conda:
             env = {'env': "conda"}
         else:
-            env ={'env': "venv"}
+            env = {'env': "venv"}
         if cython:
             env.update(**{'compiler': "cython"})
         else:
@@ -251,10 +268,10 @@ Extension("name",
         cython_import = """from Cython.Build import cythonize
 from Cython.Compiler import Options"""
         cython_ext = "ext_modules=cythonize(extensions),"
-    setup = SETUPPY.substitute(cython_ext_mode = cython_ext_mode,
-                                cython_import = cython_import,
-                                cython_ext = cython_ext,
-                                project_name=project_name,
+    setup = SETUPPY.substitute(cython_ext_mode=cython_ext_mode,
+                               cython_import=cython_import,
+                               cython_ext=cython_ext,
+                               project_name=project_name,
                                author=author,
                                author_email=author_email,
                                license_=license_,
@@ -436,7 +453,7 @@ def init(args: Namespace)->int:
             entry_points_T = Template(
                 "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
-            init_setuppy(False,project_name, author, author_email, license_, keywords, version, description, url,
+            init_setuppy(False, project_name, author, author_email, license_, keywords, version, description, url,
                          entry_points=entry_points
                          )
             init_manifest("lib" + project_name)
@@ -446,11 +463,11 @@ def init(args: Namespace)->int:
         elif args.model:
             if args.conda:
                 create_conda_env()
-                init_ppmrc(rc, "model", conda=True,cython=args.cython)
+                init_ppmrc(rc, "model", conda=True, cython=args.cython)
             else:
                 create_env()
-                init_ppmrc(rc, "model",cython=args.cython)
-            init_setuppy(args.cython,project_name, author, author_email,
+                init_ppmrc(rc, "model", cython=args.cython)
+            init_setuppy(args.cython, project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
             init_app(project_name)
@@ -465,11 +482,12 @@ def init(args: Namespace)->int:
                 init_ppmrc(rc, "web")
             if args.web == "sanic":
                 init_app(project_name, ky="sanic")
+                init_docker()
                 init_requirements("sanic")
                 init_packagejson(project_name, version,
                                  description, author, license_)
                 cmd = "web"
-            elif args.web == "zerorpc":
+            elif args.web == "zmq":
                 init_app(project_name, ky='zerorpc')
                 init_requirements("zerorpc")
                 cmd = 'zerorpc'
@@ -489,11 +507,11 @@ def init(args: Namespace)->int:
         else:
             if args.conda:
                 create_conda_env()
-                init_ppmrc(rc, "model", conda=True,cython=args.cython)
+                init_ppmrc(rc, "model", conda=True, cython=args.cython)
             else:
                 create_env()
-                init_ppmrc(rc, "model",cython=args.cython)
-            init_setuppy(args.cython,project_name, author, author_email,
+                init_ppmrc(rc, "model", cython=args.cython)
+            init_setuppy(args.cython, project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
             init_app(project_name)
