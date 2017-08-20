@@ -1,6 +1,6 @@
 import sys
 import argparse
-from app import create_app
+from App import create_app
 from conf import env_factory
 
 def run(args):

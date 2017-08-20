@@ -29,6 +29,7 @@ ADD ./requirements/requirements.txt /code/requirements.txt
 WORKDIR /code
 RUN pip install -r requirements.txt
             """
+            f.write(content)
     print("copy dockerfile template done!")
 
 
