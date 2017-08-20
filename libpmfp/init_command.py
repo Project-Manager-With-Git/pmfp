@@ -482,7 +482,7 @@ def init(args: Namespace)->int:
                 init_ppmrc(rc, "web")
             if args.web == "sanic":
                 init_app(project_name, ky="sanic")
-                init_docker()
+                init_docker(project_name)
                 init_requirements("sanic")
                 init_packagejson(project_name, version,
                                  description, author, license_)
