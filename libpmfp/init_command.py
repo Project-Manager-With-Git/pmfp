@@ -490,6 +490,7 @@ def init(args: Namespace)->int:
                 cmd = "web"
             elif args.web == "zmq":
                 init_app(project_name, ky='zerorpc')
+                init_docker(project_name)
                 init_requirements("zerorpc")
                 cmd = 'zerorpc'
             elif args.web == "flask":
