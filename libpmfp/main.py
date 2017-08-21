@@ -61,6 +61,10 @@ def main(argv: Sequence[str]=sys.argv[1:]):
         '-e', '--egg', action="store_true")
     build_parsers.add_argument(
         '-w', '--wheel', action="store_true")
+
+    build_parsers.add_argument(
+        '-d', '--docker', action="store_true")
+
     build_parsers.set_defaults(func=build)
 
     run_parsers = subparsers.add_parser("run")

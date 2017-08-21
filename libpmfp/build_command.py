@@ -47,6 +47,17 @@ def build(args: Namespace)->int:
                      "main:main", "-p", "/usr/bin/env python3"]
         subprocess.check_call(command0)
         print('build app to pyz file done!')
+
+        if args.docker:
+            print('build app to docker img')
+            command = ["docker", "build","-t",name, "." ]
+            try:
+                subprocess.check_call(command)
+            except Exception as e:
+                print("error:",str(e))
+            else:
+                print('build app to docker img done!')
+            
         if dir_static.exists():
             shutil.copytree(str(dir_static),
                             str(static))
