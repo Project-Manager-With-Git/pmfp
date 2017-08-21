@@ -20,7 +20,7 @@ def main(argv: Sequence[str]=sys.argv[1:]):
     init_parsers.add_argument("--cython", action="store_true")
     init_group = init_parsers.add_mutually_exclusive_group(required=False)
     init_group.add_argument('-w', '--web', type=str,
-                            choices=["sanic", "flask", "zerorpc"])
+                            choices=["sanic", "flask", "zmq"])
     init_group.add_argument('-g', '--gui', action="store_true")
     init_group.add_argument('-c', '--command', action="store_true")
     init_group.add_argument('-m', '--model', action="store_true")

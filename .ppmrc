@@ -1,5 +1,5 @@
 [project]
-version = 0.3.4
+version = 0.3.5
 keywords = tools,package manager
 url = https://github.com/Python-Tools/pmfp
 project_name = pmfp
