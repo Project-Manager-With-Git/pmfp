@@ -1,0 +1,14 @@
+import zmq
+from zmq.asyncio import Context
+
+zmq.asyncio.install()
+ctx = Context.instance()
+
+async def sub(env):
+    s = ctx.socket(zmq.SUB)
+    s.connect(env.URL)
+    s.subscribe(b'')
+    while True:
+        msg = await s.recv()
+        print('received', msg)
+    s.close()
