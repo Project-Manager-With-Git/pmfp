@@ -25,6 +25,7 @@ def main(argv: Sequence[str]=sys.argv[1:]):
     init_group.add_argument('-c', '--command', action="store_true")
     init_group.add_argument('-m', '--model', action="store_true")
     init_group.add_argument('-s', '--script', action="store_true")
+    init_group.add_argument('--celery', action="store_true")
     init_parsers.set_defaults(func=init)
 
     doc_parsers = subparsers.add_parser("doc")

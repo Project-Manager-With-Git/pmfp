@@ -17,19 +17,28 @@ dir_path = file_path.parent
 local_path = Path(".").absolute()
 
 
-def init_docker(project_name: str):
+def init_docker(project_name: str, celery_project=False):
     print("copy dockerfile template")
     if local_path.joinpath("Dockerfile").exists():
         print(str(local_path.joinpath("Dockerfile")) + " exists")
     else:
+        
         with open(str(local_path.joinpath("Dockerfile")), "w") as f:
-            content = """FROM python:3.6
+            if celery_project is False:
+                content = """FROM python:3.6
 ADD ./project_name.pyz /code/project_name.pyz
 ADD ./requirements/requirements.txt /code/requirements.txt
 WORKDIR /code
 RUN pip install -r requirements.txt
             """
+            else:
+                content = """FROM python:3.6
+ADD ./* /code
+WORKDIR /code
+RUN python setup.py install"""
             f.write(content)
+        
+            
     print("copy dockerfile template done!")
 
 
@@ -144,6 +153,8 @@ def init_doc(args, project_name: str, author: str, version: str, ky: str)->int:
         "zerorpc": ("sys.path.insert(0, str(p.parent.parent.joinpath('{project_name}')))".format(
             project_name=project_name),
             "'sphinx.ext.autodoc'"),
+        'celery':("sys.path.insert(0, str(p.parent.parent))",
+                    "'sphinx.ext.autodoc'"),
         "flask": ("", "'sphinxcontrib.httpdomain','sphinxcontrib.autohttp.flask','sphinxcontrib.autohttp.flaskqref'")
     }
     print('building apidoc')
@@ -295,9 +306,9 @@ from Cython.Compiler import Options"""
 def init_requirements(ky: str="")->int:
     print("copy requirements template")
     if local_path.joinpath("requirements").exists():
-        print(str(local_path.joinpath("requirements")) + " exists")
+        print(str(local_path.joinpath("requirements/requirements")) + " exists")
     else:
-        shutil.copytree(str(dir_path.joinpath("requirements" + ky)),
+        shutil.copytree(str(dir_path.joinpath("requirements/requirements" + ky)),
                         str(local_path.joinpath("requirements")))
     print("copy requirements template done!")
     return 1
@@ -309,7 +320,7 @@ def init_app(project_name: str, ky: str="model")->int:
         if local_path.joinpath(project_name).exists():
             print(str(local_path.joinpath(project_name)) + " exists")
         else:
-            shutil.copytree(str(dir_path.joinpath("model")),
+            shutil.copytree(str(dir_path.joinpath("templates/model")),
                             str(local_path.joinpath(project_name)))
         print("copy model template done!")
 
@@ -335,7 +346,7 @@ def init_app(project_name: str, ky: str="model")->int:
         if local_path.joinpath("lib" + project_name).exists():
             print(str(local_path.joinpath("lib" + project_name)) + " exists")
         else:
-            shutil.copytree(str(dir_path.joinpath("commandapp")), str(
+            shutil.copytree(str(dir_path.joinpath("templates/commandapp")), str(
                 local_path.joinpath("lib" + project_name)))
         print("copy command template")
 
@@ -344,7 +355,7 @@ def init_app(project_name: str, ky: str="model")->int:
         if local_path.joinpath(project_name).exists():
             print(str(local_path.joinpath(project_name)) + " exists")
         else:
-            shutil.copytree(str(dir_path.joinpath("{ky}app".format(ky=ky))), str(
+            shutil.copytree(str(dir_path.joinpath("templates/{ky}app".format(ky=ky))), str(
                 local_path.joinpath(project_name)))
         print("copy {ky} template done!".format(ky=ky))
 
@@ -474,6 +485,25 @@ def init(args: Namespace)->int:
             init_app(project_name)
             init_requirements("")
             cmd = "model"
+        elif args.celery:
+            if args.conda:
+                create_conda_env()
+                init_ppmrc(rc, "celery", conda=True, cython=args.cython)
+            else:
+                create_env()
+                init_ppmrc(rc, "celery", cython=args.cython)
+            entry_points_T = Template(
+                "entry_points={'console_scripts': ['$project_name = $project_name.main:main']},")
+            entry_points = entry_points_T.substitute(project_name=project_name)
+
+            init_setuppy(args.cython, project_name, author, author_email,
+                         license_, keywords, version, description, url,
+                         entry_points=entry_points)
+            init_manifest(project_name)
+            init_app(project_name)
+            init_requirements("celery")
+            init_docker(project_name, celery_project=True)
+            cmd = "celery"
         elif args.web:
             if args.conda:
                 create_conda_env()
