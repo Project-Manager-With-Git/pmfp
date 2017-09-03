@@ -1,7 +1,8 @@
 from pathlib import Path
+import platform
 from string import Template
 import shutil
-from .utils import get_command, write_ppmrc, is_inited, clean_init, is_conda
+from .utils import get_command, write_ppmrc, is_inited, clean_init, is_conda,temp2py
 from .Data import SETUPPY, COMMAND_MAIN, CONF, READMERST, PACKAGEJSON, SCRIPT, MANIFEST
 from .install_command import pip_install, write_requirement
 import subprocess
@@ -54,10 +55,13 @@ def init_manifest(project_name: str)->int:
 def create_env()->int:
     print('creating env')
     PYTHON, _, _, _ = get_command()
+    
     command = [PYTHON, '-m', 'venv', 'env']
     subprocess.check_call(command)
     print('creating env done!')
     return 1
+    
+
 
 
 def create_conda_env()->int:
@@ -271,12 +275,16 @@ def init_setuppy(cython,
     cython_ext = ""
 
     if cython:
+        print("write lib{project_name}.pyx".format(project_name=project_name))
+        loc= str(local_path.joinpath("{project_name}/lib{project_name}.pyx".format(
+            project_name=project_name)))
+        with open(loc ,"w") as f:
+            f.write("cimport cython")
         cython_ext_mode = """extensions = [
-Extension("name",
-          sources = [name.pyx,name.cpp],
+Extension("{project_name}.lib{project_name}",
+          sources = ["{project_name}/lib{project_name}.pyx"],
           language = "c++")
-]
-        """
+]""".format(project_name=project_name)
         cython_import = """from Cython.Build import cythonize
 from Cython.Compiler import Options"""
         cython_ext = "ext_modules=cythonize(extensions),"
@@ -300,6 +308,7 @@ from Cython.Compiler import Options"""
         with open("setup.py", "w") as f:
             f.write(setup)
     print("writing setup.py done!")
+
     return 1
 
 
@@ -358,7 +367,9 @@ def init_app(project_name: str, ky: str="model")->int:
             shutil.copytree(str(dir_path.joinpath("templates/{ky}app".format(ky=ky))), str(
                 local_path.joinpath(project_name)))
         print("copy {ky} template done!".format(ky=ky))
-
+    print("temp2pyfiles")
+    temp2py(local_path.joinpath(project_name))
+    print("done!")
     return 1
 
 
@@ -458,18 +469,18 @@ def init(args: Namespace)->int:
         elif args.command:
             if args.conda:
                 create_conda_env()
-                init_ppmrc(rc, "command", conda=True)
+                init_ppmrc(rc, "command", conda=True,cython=args.cython)
             else:
                 create_env()
-                init_ppmrc(rc, "command")
+                init_ppmrc(rc, "command",cython=args.cython)
+            init_app(project_name, ky="command")
             entry_points_T = Template(
                 "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
-            init_setuppy(False, project_name, author, author_email, license_, keywords, version, description, url,
+            init_setuppy(args.cython, project_name, author, author_email, license_, keywords, version, description, url,
                          entry_points=entry_points
                          )
             init_manifest("lib" + project_name)
-            init_app(project_name, ky="command")
             init_requirements("")
             cmd = "command"
         elif args.model:
@@ -479,10 +490,10 @@ def init(args: Namespace)->int:
             else:
                 create_env()
                 init_ppmrc(rc, "model", cython=args.cython)
+            init_app(project_name)
             init_setuppy(args.cython, project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
-            init_app(project_name)
             init_requirements("")
             cmd = "model"
         elif args.celery:
@@ -492,18 +503,21 @@ def init(args: Namespace)->int:
             else:
                 create_env()
                 init_ppmrc(rc, "celery", cython=args.cython)
+            
+            init_app(project_name, ky="celery")
+            init_requirements("celery")
+
             entry_points_T = Template(
                 "entry_points={'console_scripts': ['$project_name = $project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
 
             init_setuppy(args.cython, project_name, author, author_email,
-                         license_, keywords, version, description, url,
-                         entry_points=entry_points)
+                        license_, keywords, version, description, url,
+                        entry_points = entry_points)
             init_manifest(project_name)
-            init_app(project_name)
-            init_requirements("celery")
             init_docker(project_name, celery_project=True)
             cmd = "celery"
+
         elif args.web:
             if args.conda:
                 create_conda_env()
@@ -543,10 +557,10 @@ def init(args: Namespace)->int:
             else:
                 create_env()
                 init_ppmrc(rc, "model", cython=args.cython)
+            init_app(project_name)
             init_setuppy(args.cython, project_name, author, author_email,
                          license_, keywords, version, description, url)
             init_manifest(project_name)
-            init_app(project_name)
             init_requirements("")
             cmd = "model"
         init_test()

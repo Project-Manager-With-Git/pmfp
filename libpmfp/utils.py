@@ -115,3 +115,14 @@ def get_command()->Tuple[str, List[str], List[str], List[str]]:
             sphinx_apidoc = ['sphinx-apidoc']
             make = ['sphinx-build']
     return PYTHON, COMMAND, sphinx_apidoc, make
+
+
+def temp2py(path):
+    if path.is_dir():
+        for child in path.iterdir():
+            temp2py(child)
+    if path.is_file():
+        if path.suffix==".temp":
+            path.rename(str(path)[:-5])
+
+        

@@ -18,14 +18,16 @@ def main(argv: Sequence[str]=sys.argv[1:]):
     init_parsers.add_argument("-M", "--math", action="store_true")
     init_parsers.add_argument("-C", "--conda", action="store_true")
     init_parsers.add_argument("--cython", action="store_true")
+
     init_group = init_parsers.add_mutually_exclusive_group(required=False)
     init_group.add_argument('-w', '--web', type=str,
                             choices=["sanic", "flask", "zmq"])
+                            
     init_group.add_argument('-g', '--gui', action="store_true")
     init_group.add_argument('-c', '--command', action="store_true")
     init_group.add_argument('-m', '--model', action="store_true")
     init_group.add_argument('-s', '--script', action="store_true")
-    init_group.add_argument('--celery', action="store_true")
+    init_group.add_argument('--celery',action="store_true")
     init_parsers.set_defaults(func=init)
 
     doc_parsers = subparsers.add_parser("doc")

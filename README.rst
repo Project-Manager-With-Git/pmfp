@@ -2,7 +2,7 @@
 pmfp
 ===============================
 
-version: 0.3.7
+version: 0.4.0
 
 author: hsz
 
@@ -64,6 +64,14 @@ Documentation
 `Documentation on Readthedocs <https://github.com/Python-Tools/pmfp>`_.
 
 
+#Bug
+--------------------------------
+
+if you can not init your project,you should try to create the env by yourself first
+
+`python3 -m venv env`
+
+then run the `ppm init` 
 
 TODO
 -----------------------------------

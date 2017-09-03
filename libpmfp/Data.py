@@ -13,7 +13,7 @@ MANIFEST = Template("""
 include LICENSE
 include README.rst
 recursive-include requirements *.txt
-recursive-include $project_name *.py
+recursive-include $project_name *.pyx *.pxd *.pxi *.py *.c *.h
 """)
 
 
