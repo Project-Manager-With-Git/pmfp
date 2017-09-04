@@ -375,8 +375,8 @@ CELERY_RESULT_BACKEND = 'redis://localhost'
 CELERY_TASK_RESULT_EXPIRES = 30 * 60
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
-CELERY_IMPORTS = ('AsyncTaskWorker.tasks')
-            """)
+CELERY_IMPORTS = ('{project_name}.tasks')
+            """.format(project_name=project_name))
     else:
         print("copy {ky} template".format(ky=ky))
         if local_path.joinpath(project_name).exists():
