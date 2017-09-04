@@ -358,7 +358,25 @@ def init_app(project_name: str, ky: str="model")->int:
             shutil.copytree(str(dir_path.joinpath("templates/commandapp")), str(
                 local_path.joinpath("lib" + project_name)))
         print("copy command template")
-
+    elif ky == "celery":
+        print("copy {ky} template".format(ky=ky))
+        if local_path.joinpath(project_name).exists():
+            print(str(local_path.joinpath(project_name)) + " exists")
+        else:
+            shutil.copytree(str(dir_path.joinpath("templates/{ky}app".format(ky=ky))), str(
+                local_path.joinpath(project_name)))
+        print("copy {ky} template done!".format(ky=ky))
+        print("create config")
+        with open("config.py", "w") as f:
+            f.write("""
+BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+CELERY_DISABLE_RATE_LIMITS = True
+CELERY_RESULT_BACKEND = 'redis://localhost'
+CELERY_TASK_RESULT_EXPIRES = 30 * 60
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+CELERY_IMPORTS = ('AsyncTaskWorker.tasks')
+            """)
     else:
         print("copy {ky} template".format(ky=ky))
         if local_path.joinpath(project_name).exists():
