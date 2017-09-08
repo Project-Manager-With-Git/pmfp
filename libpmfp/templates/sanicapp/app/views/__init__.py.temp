@@ -1,5 +1,5 @@
 from sanic.views import CompositionView
-from get_handler import get_handler
+from .get_handler import get_handler
 
 
 view = CompositionView()

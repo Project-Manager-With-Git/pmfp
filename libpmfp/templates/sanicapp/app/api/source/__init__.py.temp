@@ -1,2 +1,2 @@
 
-from sample_source import SimpleView
+from .sample_source import SimpleView

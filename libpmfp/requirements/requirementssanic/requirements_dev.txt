@@ -1,7 +1,3 @@
 wheel
-sphinx
-sphinxcontrib_httpdomain
-sphinxcontrib_jsoncall
-recommonmark
 memory_profiler
 line_profiler
