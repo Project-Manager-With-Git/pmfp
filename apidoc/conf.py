@@ -27,7 +27,7 @@ project = 'pmfp'
 copyright = '2017, hsz'
 author = 'hsz'
 
-version = '0.4.4'
+version = '0.4.5'
 
 release = ''
 

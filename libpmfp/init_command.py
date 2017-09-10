@@ -581,10 +581,12 @@ def init(args: Namespace)->int:
             init_manifest(project_name)
             init_requirements("")
             cmd = "model"
+        
+        print(cmd)
+        if cmd in ["model", "celery", "command", "script", "gui"]:
+            init_doc(args, project_name, author, version, ky=cmd)
         init_test()
         init_install()
-        if cmd in ["model","celery","command","script","gui"]:
-            init_doc(args, project_name, author, version, ky=cmd)
         if args.math:
             install_math()
         if args.cython:

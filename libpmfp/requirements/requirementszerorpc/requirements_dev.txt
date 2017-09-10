@@ -1,5 +1,3 @@
 wheel
-sphinx
-recommonmark
 memory_profiler
 line_profiler
