@@ -1,8 +1,4 @@
-pymysql
 Flask
-Flask-Admin
-peewee
-wtf-peewee
-mongoengine
-flask-mongoengine
-flask-security
+gevent
+tornado
+import_tool

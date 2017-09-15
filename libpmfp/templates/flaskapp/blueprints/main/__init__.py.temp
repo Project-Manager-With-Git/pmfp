@@ -1,7 +1,6 @@
-__all__ = ["main"]
+
 from flask import Blueprint, redirect
 main = Blueprint('main', __name__)
-
 
 @main.route('/')
 def index():
@@ -18,3 +17,4 @@ def change_password():
 @main.route('/add_account',methods=["POST"] )
 def add_account():
     redirect("/login/add_account")
+__all__ = ["main"]

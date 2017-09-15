@@ -1,8 +1,10 @@
-from flask import Flask,url_for
+from flask import Flask
 import blueprints
 
 
 def blueprint_register(app: Flask)->Flask:
+    """将blueprints模块中的蓝图注册到app中
+    """
     for i in blueprints.__all__:
         app.register_blueprint(blueprints.__dict__.get(i))
     return app
