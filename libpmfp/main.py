@@ -55,10 +55,6 @@ def main(argv: Sequence[str]=sys.argv[1:]):
     update_parsers.add_argument('vers', type=str)
     update_parsers.set_defaults(func=update)
 
-    rename_parsers = subparsers.add_parser("rename")
-    rename_parsers.add_argument('name', type=str)
-    rename_parsers.set_defaults(func=rename)
-
     build_parsers = subparsers.add_parser("build")
     build_parsers.add_argument(
         '-e', '--egg', action="store_true")
