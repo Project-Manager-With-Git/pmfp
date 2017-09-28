@@ -64,6 +64,9 @@ The most commonly used ppm commands are:
     def status(self):
         return status()
 
+    def clean(self):
+        pass
+
     # def update(self):
     #     parser = argparse.ArgumentParser(
     #         description='Download objects and refs from another repository')
@@ -86,8 +89,7 @@ The most commonly used ppm commands are:
     # def build(self):
     #     pass
 
-    # def clean(self):
-    #     pass
+    
 
 
 def main(argv: Sequence[str]=sys.argv[1:]):

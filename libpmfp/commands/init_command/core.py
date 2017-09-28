@@ -1,6 +1,8 @@
 import argparse
+
+
 class InitCore:
-    def __init__(self,argv):
+    def __init__(self, argv):
         parser = argparse.ArgumentParser(
             description='Project initialisation tool for Pythoner',
             usage='''ppm init <command> [<args>]
@@ -23,4 +25,3 @@ The most commonly used ppm init commands are:
             exit(1)
         # use dispatch pattern to invoke method with same name
         getattr(self, args.command)()
-    
