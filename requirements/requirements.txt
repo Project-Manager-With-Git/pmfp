@@ -1,1 +1,4 @@
-
+sphinx
+sphinxcontrib-napoleon
+recommonmark
+wheel

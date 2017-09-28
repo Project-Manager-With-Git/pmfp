@@ -1,7 +1,7 @@
 from string import Template
 from pathlib import Path
 
-WEB_DOCKER_TEMPLATE = Template("""FROM python:last
+PYTHON_WEB_DOCKER_TEMPLATE = Template("""FROM python:last
 ADD ./$project_name.pyz /code/$project_name.pyz
 ADD ./requirements/requirements.txt /code/requirements.txt
 WORKDIR /code
@@ -16,16 +16,19 @@ RUN python setup.py install
 
 FRONTEND_DOCKER_TEMPLATE = Template("""""")
 
-DOCKER_TEMPLATES = {
-    "web": WEB_DOCKER_TEMPLATE,
-    "celery": CELERY_DOCKER_TEMPLATE,
+PYTHON_DOCKER_TEMPLATES = {
+    "web": PYTHON_WEB_DOCKER_TEMPLATE,
+    "celery": CELERY_DOCKER_TEMPLATE
+}
+
+NODE_DOCKER_TEMPLATES = {
     "frontend": FRONTEND_DOCKER_TEMPLATE
 }
 
 
 class InitDockerMixin:
 
-    def init_docker(self)-> bool:
+    def _init_docker(self)-> bool:
         '''
         初始化一个dockerfile
         Parameters:
@@ -46,8 +49,16 @@ class InitDockerMixin:
                 return False
             else:
                 try:
-                    content = DOCKER_TEMPLATES[self.form.project_type].substitute(
-                        project_name=self.meta.project_name)
+                    if self.form.compiler == 'python':
+                        content = PYTHON_DOCKER_TEMPLATES[self.form.project_type].substitute(
+                            project_name=self.meta.project_name)
+                    elif self.form.compiler == "node":
+                        content = NODE_DOCKER_TEMPLATES[self.form.project_type].substitute(
+                            project_name=self.meta.project_name)
+                        print("now there are no docker template")
+                    else:
+                        content = ""
+                        print("unknown compiler")
                 except:
                     raise AttributeError("unknown project type")
                 else:

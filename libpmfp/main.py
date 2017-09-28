@@ -1,102 +1,94 @@
 import sys
+import argparse
+from pathlib import Path
+from typing import Sequence
+from libpmfp.projectinfo import ProjectInfo
+from libpmfp.commands.status_command import status
+from libpmfp.commands.init_command import Init
+ 
 if sys.version_info[0] != 3:
     raise OSError("only for python 3.5+")
 if sys.version_info[0] == 3 and sys.version_info[1] < 5:
     raise OSError("only for python 3.5+")
-import argparse
-from . import init, doc, test, install, clean, update, build, upload, rename, run, status, docker
-from pathlib import Path
 
-from typing import Sequence
+
+class PPM:
+
+    def __init__(self,argv):
+        parser = argparse.ArgumentParser(
+            description='Project Manager for Pythoner',
+            usage='''ppm <command> [<args>]
+
+The most commonly used ppm commands are:
+   init        initialise a project
+   clean       clean a project
+   status      see the project's info
+   update      update the project's version
+   upload      upload your project to a git repository, a docker repository,
+               a pypi server
+   test        test your project
+   build       build your python project to a pyz file, wheel,egg,docker image,
+               build your cpp project to a lib or a executable file
+''')
+        parser.add_argument('command', help='Subcommand to run')
+        # parse_args defaults to [1:] for args, but you need to
+        # exclude the rest of the args too, or validation will fail
+        self.argv = argv
+        args = parser.parse_args(argv[0:1])
+        if not hasattr(self, args.command):
+            print('Unrecognized command')
+            parser.print_help()
+            exit(1)
+        # use dispatch pattern to invoke method with same name
+        getattr(self, args.command)()
+
+    def init(self):
+        print('Running ppm init')
+        if len(self.argv) == 1:
+            path = Path(".pmfprc")
+            if path.exists():
+                if len([i for i in path.parent.iterdir() if not i.name.startswith(".")]) == 0:
+                    obj = ProjectInfo.from_json(str(path))
+                    obj.init_project()
+                    return True
+                else:
+                    print("dir is not empty! if you want to rebuild the project run command clean first!")
+                    return False
+            else:
+                print("please run this command in the root of the project, and initialise first")
+                return False
+        else:
+            Init(self.argv[1:])
+        print('Running ppm init done')
+
+    def status(self):
+        return status()
+
+    # def update(self):
+    #     parser = argparse.ArgumentParser(
+    #         description='Download objects and refs from another repository')
+    #     # NOT prefixing the argument with -- means it's not optional
+    #     parser.add_argument('repository')
+    #     args = parser.parse_args(self.argv[1:])
+    #     print 'Running git fetch, repository=%s' % args.repository
+
+    # def upload(self):
+    #     parser = argparse.ArgumentParser(
+    #         description='Download objects and refs from another repository')
+    #     # NOT prefixing the argument with -- means it's not optional
+    #     parser.add_argument('repository')
+    #     args = parser.parse_args(self.argv[1:])
+    #     print 'Running git fetch, repository=%s' % args.repository
+
+    # def test(self):
+    #     pass
+
+    # def build(self):
+    #     pass
+
+    # def clean(self):
+    #     pass
 
 
 def main(argv: Sequence[str]=sys.argv[1:]):
-
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers()
-    init_parsers = subparsers.add_parser("init")
-    init_parsers.add_argument("-M", "--math", action="store_true")
-    init_parsers.add_argument("-C", "--conda", action="store_true")
-    init_parsers.add_argument("--cython", action="store_true")
-
-    init_group = init_parsers.add_mutually_exclusive_group(required=False)
-    init_group.add_argument('-w', '--web', type=str,
-                            choices=["sanic", "flask", "zmq"])
-                            
-    init_group.add_argument('-g', '--gui', action="store_true")
-    init_group.add_argument('-c', '--command', action="store_true")
-    init_group.add_argument('-m', '--model', action="store_true")
-    init_group.add_argument('-s', '--script', action="store_true")
-    init_group.add_argument('--celery',action="store_true")
-    init_parsers.set_defaults(func=init)
-
-    doc_parsers = subparsers.add_parser("doc")
-    doc_group = doc_parsers.add_mutually_exclusive_group(required=False)
-    doc_group.add_argument('-s', '--serve', action="store_true")
-    doc_group.add_argument('-b', '--build', action="store_true")
-    doc_parsers.set_defaults(func=doc)
-
-    install_parsers = subparsers.add_parser("install")
-    install_group = install_parsers.add_mutually_exclusive_group(required=True)
-    install_group.add_argument('-d', '--dev', nargs='*', required=False)
-    install_group.add_argument('-t', '--test', nargs='*', required=False)
-    install_group.add_argument(
-        '-r', '--requirements', nargs='*', required=False)
-    install_group.add_argument('--self', action="store_true")
-    install_parsers.set_defaults(func=install)
-
-    clean_parsers = subparsers.add_parser("clean")
-    clean_group = clean_parsers.add_mutually_exclusive_group(required=False)
-    clean_group.add_argument('-s', '--leave_source', action="store_true")
-    clean_group.add_argument('-a', '--all', action="store_true")
-    clean_parsers.set_defaults(func=clean)
-
-    update_parsers = subparsers.add_parser("update")
-    update_parsers.add_argument('vers', type=str)
-    update_parsers.set_defaults(func=update)
-
-    build_parsers = subparsers.add_parser("build")
-    build_parsers.add_argument(
-        '-e', '--egg', action="store_true")
-    build_parsers.add_argument(
-        '-w', '--wheel', action="store_true")
-
-    build_parsers.add_argument(
-        '-d', '--docker', action="store_true")
-
-    build_parsers.set_defaults(func=build)
-
-    run_parsers = subparsers.add_parser("run")
-    run_parsers.add_argument('args', type=str, nargs='+')
-    run_parsers.set_defaults(func=run)
-
-    test_parsers = subparsers.add_parser("test")
-    test_parsers.add_argument('-t', '--typecheck', action="store_true")
-    test_parsers.add_argument(
-        '-c', '--coverage', type=str, choices=["report", "html"])
-    test_parsers.set_defaults(func=test)
-
-    upload_parsers = subparsers.add_parser("upload")
-    upload_group = upload_parsers.add_mutually_exclusive_group(required=False)
-    upload_group.add_argument('-r', '--regist', type=str,
-                              choices=["pypi", "local"])
-    upload_group.add_argument('-p', '--pypi', action="store_true")
-    upload_group.add_argument('-l', '--localpypi', type=str)
-    upload_group.add_argument('-g', '--git', type=str,
-                              nargs='*', required=False)
-    upload_parsers.set_defaults(func=upload)
-
-    test_parsers = subparsers.add_parser("status")
-    test_parsers.set_defaults(func=status)
-
-    upload_parsers = subparsers.add_parser("docker")
-    upload_group = upload_parsers.add_mutually_exclusive_group(required=False)
-    upload_group.add_argument('-i', '--init', action="store_true")
-    upload_group.add_argument('-b', '--build', action="store_true")
-    upload_group.add_argument('-p', '--push', type=str,
-                              nargs='*', required=False)
-
-    upload_parsers.set_defaults(func=docker)
-
-    args = parser.parse_args()
-    args.func(args)
+    PPM(argv)

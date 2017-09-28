@@ -28,9 +28,16 @@ class CreateMixin:
         return obj
 
     @classmethod
-    def input_info(cls, env: str=env, language: str=python, project_type: str=script,with_test, with_docs, with_dockerfile):
+    def input_info(cls, with_test,
+                   with_docs,
+                   with_dockerfile,
+                   template: str,
+                   env: str='env',
+                   compiler: str='python',
+                   project_type: str='script'
+                   ):
         local_path = Path(".").absolute()
-        form = FormInfo(env, language, project_type)
+        form = FormInfo(env, compiler, project_type, template)
         while True:
             project_name = input("project name:")
             if project_name in IGNOR_PROJECT_NAME:
@@ -74,3 +81,6 @@ class CreateMixin:
         obj = cls(meta, author, desc, form,
                   with_test, with_docs, with_dockerfile)
         return obj
+
+
+__all__ = ["CreateMixin"]

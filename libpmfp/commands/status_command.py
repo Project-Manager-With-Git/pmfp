@@ -1,7 +1,7 @@
-import re
 from pathlib import Path
 from argparse import Namespace
-from .projectinfo import ProjectInfo
+from libpmfp.projectinfo import ProjectInfo
+
 
 def status(args: Namespace)->bool:
     path = Path(".ppmrc")

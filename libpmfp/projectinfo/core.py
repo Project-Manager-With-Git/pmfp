@@ -8,7 +8,7 @@ class MetaInfo(ToDictMixin):
     """用于描述项目元数据的类
     """
 
-    def __init__(self, project_name: str, url: str,license: str="MIT", version: str="0.0.1"):
+    def __init__(self, project_name: str, url: str, license: str="MIT", version: str="0.0.1"):
         self.project_name = project_name
         self.license = license
         self.version = version
@@ -37,12 +37,11 @@ class FormInfo(ToDictMixin):
     """用于记录项目类型的类
     """
 
-    def __init__(self, env: str, language: str, project_type: str,template:str):
+    def __init__(self, env: str, compiler: str, project_type: str, template: str):
         self.env = env
-        self.language = language
+        self.compiler = compiler
         self.project_type = project_type
         self.template = template
 
 
-
-__all__=["MetaInfo","AuthorInfo","DescriptionInfo","FormInfo"]
+__all__ = ["MetaInfo", "AuthorInfo", "DescriptionInfo", "FormInfo"]
