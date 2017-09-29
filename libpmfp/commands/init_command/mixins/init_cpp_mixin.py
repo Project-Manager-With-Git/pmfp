@@ -70,7 +70,7 @@ class InitCppMixin:
         command_parsers.add_argument(
             '-e', '--env', type=str, choices=["gcc", "clang"], default="gcc")
         command_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
+            "simple"],
             default="simple")
         command_parsers.add_argument(
             '--without_test', action='store_false')
@@ -102,7 +102,7 @@ class InitCppMixin:
         small_tool_parsers.add_argument(
             '-e', '--env', type=str, choices=["gcc", "clang"], default="gcc")
         small_tool_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
+            "simple"],
             default="simple")
         small_tool_parsers.add_argument(
             '--without_test', action='store_false')

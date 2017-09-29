@@ -11,8 +11,8 @@ class InitNodeMixin:
         obj = ProjectInfo.input_info(
             template=args.template,
             env=args.env,
-            compiler="cython",
-            project_type="celery",
+            compiler="node",
+            project_type="frontend",
             with_test=args.without_test,
             with_docs=args.without_docs,
             with_dockerfile=args.without_dockerfile)

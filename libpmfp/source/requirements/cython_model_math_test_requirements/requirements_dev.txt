@@ -1,5 +1,6 @@
+wheel
 sphinx
 sphinxcontrib-napoleon
 recommonmark
-wheel
-conan
+memory_profiler
+line_profiler
