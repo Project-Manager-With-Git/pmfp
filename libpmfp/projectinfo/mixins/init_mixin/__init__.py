@@ -20,8 +20,7 @@ class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
     def _init_packagejson(self):
         raise NotImplementedError
 
-    def _init_makefile(self):
-        raise NotImplementedError
 
     def init_project(self):
-        pass
+        if self.form.com.compiler == "cpp":
+            
