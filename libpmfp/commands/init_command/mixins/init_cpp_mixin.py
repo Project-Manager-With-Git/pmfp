@@ -38,28 +38,27 @@ class InitCppMixin:
         print("init cpp model done!")
         return True
 
-    def _init_cpp_small_tool(self, args):
+    def _cpp_default(self,args):
         obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
+            template="source",
+            env="g++",
             compiler="cpp",
-            project_type="small_tool",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
-            with_dockerfile=args.without_dockerfile)
+            project_type="model",
+            with_test=False,
+            with_docs=False,
+            with_dockerfile=False)
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
         obj.init_project()
-        print("init cpp small tool done!")
+        print("init cpp default done!")
         return True
-
 
 
     def cpp(self):
         parser = argparse.ArgumentParser(
             description='initialise a cpp project')
-        parser.set_defaults(func=lambda args: print("default"))
+        parser.set_defaults(func=self._cpp_default)
 
         subparsers = parser.add_subparsers(
             dest='project_type', help="init a cpp project")
@@ -68,10 +67,10 @@ class InitCppMixin:
         command_parsers = subparsers.add_parser(
             "command-line", aliases=["command", "C"], help="init a cpp command-line project")
         command_parsers.add_argument(
-            '-e', '--env', type=str, choices=["gcc", "clang"], default="gcc")
+            '-e', '--env', type=str, choices=["g++", "clang"], default="g++")
         command_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple"],
-            default="simple")
+            "source"],
+            default="source")
         command_parsers.add_argument(
             '--without_test', action='store_false')
         command_parsers.add_argument(
@@ -86,32 +85,15 @@ class InitCppMixin:
         model_parsers.add_argument(
             '-e', '--env', type=str, choices=["gcc", "clang"], default="gcc")
         model_parsers.add_argument('-t', '--template', type=str, choices=[
-            "static", "dynamic"],
-            default="static")
+            "source","header"],
+            default="source")
         model_parsers.add_argument(
             '--without_test', action='store_false')
         model_parsers.add_argument(
             '--without_docs', action='store_false')
         model_parsers.add_argument(
             '--without_dockerfile', action='store_false')
-        model_parsers.set_defaults(func=self._init_cython_model)
-
-        # init python script command
-        small_tool_parsers = subparsers.add_parser(
-            "small_tool", aliases=["S"], help="init a cpp small tool")
-        small_tool_parsers.add_argument(
-            '-e', '--env', type=str, choices=["gcc", "clang"], default="gcc")
-        small_tool_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple"],
-            default="simple")
-        small_tool_parsers.add_argument(
-            '--without_test', action='store_false')
-        small_tool_parsers.add_argument(
-            '--without_docs', action='store_false')
-        small_tool_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        script_parsers.set_defaults(func=self._init_cpp_small_tool)
-
+        model_parsers.set_defaults(func=self._init_cpp_model)
 
         args = parser.parse_args(self.argv[1:])
         args.func(args)
