@@ -1,10 +1,10 @@
 """描述project类的模块
 """
-from .mixins import ToDictMixin, CreateMixin
+from .mixins import ToDictMixin, CreateMixin, InitProjectMixin
 from .core import MetaInfo, AuthorInfo, DescriptionInfo, FormInfo
 
 
-class ProjectInfo(ToDictMixin):
+class ProjectInfo(ToDictMixin, CreateMixin, InitProjectMixin):
     """项目对象,记录针对项目的特征和方法
     """
 

@@ -117,6 +117,12 @@ class InitRequirementMixin:
                     shutil.copytree(str(dir_path.joinpath(form_str)),
                                 str(local_path.joinpath("requirements")))
                 elif self.form.compiler in ["node"]:
+                    if self.form.template == "vue":
+                        subprocess.call('vue init webpack', shell=True)
+                elif self.form.compiler == "cpp":
+                    subprocess.call('conan install', shell=True)
+                else:
+                    print("unkown compiler!")
 
 
             else:
