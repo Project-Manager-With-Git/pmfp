@@ -6,6 +6,8 @@ from pathlib import Path
 
 class InitEnvMixin:
     def _init_env(self):
+        """初始化虚拟环境,只对python,cython有用
+        """
         if self.form.compiler not in ("python", "cython"):
             print(self.form.compiler, "do not need to set a env")
             return False

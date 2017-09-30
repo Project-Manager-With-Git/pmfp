@@ -1,6 +1,6 @@
 """用于组合projectinfo的对象
 """
-from typing import List
+from typing import List, Optional
 from .mixins import ToDictMixin
 
 
@@ -37,11 +37,15 @@ class FormInfo(ToDictMixin):
     """用于记录项目类型的类
     """
 
-    def __init__(self, env: str, compiler: str, project_type: str, template: str):
+    def __init__(self, env: str, compiler: str, project_type: str,
+                 template: str, install_remote: Optional[str]=None, 
+                 upload_remote: Optional[str]=None):
         self.env = env
         self.compiler = compiler
         self.project_type = project_type
         self.template = template
+        self.install_remote = install_remote
+        self.upload_remote = upload_remote
 
 
 __all__ = ["MetaInfo", "AuthorInfo", "DescriptionInfo", "FormInfo"]

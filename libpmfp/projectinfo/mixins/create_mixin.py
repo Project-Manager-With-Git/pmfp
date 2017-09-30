@@ -37,7 +37,7 @@ class CreateMixin:
                    project_type: str='script'
                    ):
         local_path = Path(".").absolute()
-        form = FormInfo(env, compiler, project_type, template)
+
         while True:
             project_name = input("project name:")
             if project_name in IGNOR_PROJECT_NAME:
@@ -78,6 +78,23 @@ class CreateMixin:
         description = input("description:")
         description = description or "simple tools"
         desc = DescriptionInfo(keywords=keywords, description=description)
+
+        install_remote = input(
+            "use a special remote repository to install packages:")
+        if not install_remote:
+            if compiler == "cpp":
+                install_remote = "conan-transit"
+            else:
+                install_remote = None
+
+        upload_remote = input("use a special remote repository to upload:")
+        if not upload_remote:
+            if compiler == "cpp":
+                upload_remote = "conan-transit"
+            else:
+                upload_remote = None
+        form = FormInfo(env, compiler, project_type, template,
+                        install_remote, upload_remote)
         obj = cls(meta, author, desc, form,
                   with_test, with_docs, with_dockerfile)
         return obj

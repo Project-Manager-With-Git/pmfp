@@ -106,7 +106,8 @@ Documentation on github page <$url>
 class InitReadmeMixin:
 
     def _init_readme(self):
-        """只有md文件和rst文件都被初始化了才返回True
+        """初始化readme文件
+        只有md文件和rst文件都被初始化了才返回True
         """
         print("writing readme.")
         local_path = Path(".")

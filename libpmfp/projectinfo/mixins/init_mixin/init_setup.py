@@ -150,6 +150,7 @@ setup(
 
 class InitSetupMixin:
     def _init_manifest(self):
+        """初始化setup.py上传用的manifest文件"""
         print('create MANIFEST.in')
         with open("MANIFEST.in", "w") as f:
             f.write(MANIFEST.substitute(
@@ -158,6 +159,8 @@ class InitSetupMixin:
         return 1
 
     def _init_cython_setuppy(self):
+        """初始化cython的setup.py
+        """
         path = Path("setup.py")
         if path.exists():
             print("already have setup.py")
@@ -193,6 +196,8 @@ class InitSetupMixin:
         return True
 
     def _init_python_setuppy(self):
+        """初始化python的setup.py
+        """
         path = Path("setup.py")
         if path.exists():
             print("already have setup.py")
@@ -223,6 +228,7 @@ class InitSetupMixin:
         return True
 
     def _init_setuppy(self):
+        """初始化python/cython的setup.py"""
         if self.form.compiler == "python":
             self._init_manifest()
             self._init_python_setuppy()

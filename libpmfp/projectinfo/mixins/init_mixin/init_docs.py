@@ -91,6 +91,7 @@ def setup(app):
 
 class InitDocsMixin:
     def _init_docs(self):
+        """初始化sphinx文档"""
         KY = {
             "python": ("sys.path.insert(0, str(p.parent.parent))",
                        "'sphinx.ext.autodoc'"),
