@@ -1,3 +1,6 @@
+import subprocess
+
+
 from .init_docker import InitDockerMixin
 from .init_readme import InitReadmeMixin
 from .init_docs import InitDocsMixin
@@ -23,4 +26,6 @@ class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
 
     def init_project(self):
         if self.form.com.compiler == "cpp":
-            
+            command = "conan new {self.meta.project_name}/{self.meta.version}@{self.author.author}"
+            subprocess.call(command, shell=True)
+
