@@ -5,7 +5,12 @@ from typing import Sequence
 from libpmfp.projectinfo import ProjectInfo
 from libpmfp.commands.status_command import status
 from libpmfp.commands.init_command import Init
- 
+from libpmfp.commands.clean_command import clean
+from libpmfp.commands.install_command import install
+from libpmfp.commands.update_command import update
+from libpmfp.commands.upload_command import upload
+#from libpmfp.commands.run_command import run
+
 if sys.version_info[0] != 3:
     raise OSError("only for python 3.5+")
 if sys.version_info[0] == 3 and sys.version_info[1] < 5:
@@ -14,7 +19,7 @@ if sys.version_info[0] == 3 and sys.version_info[1] < 5:
 
 class PPM:
 
-    def __init__(self,argv):
+    def __init__(self, argv):
         parser = argparse.ArgumentParser(
             description='Project Manager for Pythoner',
             usage='''ppm <command> [<args>]
@@ -22,13 +27,18 @@ class PPM:
 The most commonly used ppm commands are:
    init        initialise a project
    clean       clean a project
+   install     install a package
    status      see the project's info
-   update      update the project's version
+   update      update the project's version and status
    upload      upload your project to a git repository, a docker repository,
                a pypi server
-   test        test your project
+   
+   run         run scripts for python and node
    build       build your python project to a pyz file, wheel,egg,docker image,
                build your cpp project to a lib or a executable file
+   test        test your project
+   doc         build your project's document
+   
 ''')
         parser.add_argument('command', help='Subcommand to run')
         # parse_args defaults to [1:] for args, but you need to
@@ -52,10 +62,12 @@ The most commonly used ppm commands are:
                     obj.init_project()
                     return True
                 else:
-                    print("dir is not empty! if you want to rebuild the project run command clean first!")
+                    print(
+                        "dir is not empty! if you want to rebuild the project run command clean first!")
                     return False
             else:
-                print("please run this command in the root of the project, and initialise first")
+                print(
+                    "please run this command in the root of the project, and initialise first")
                 return False
         else:
             Init(self.argv[1:])
@@ -65,29 +77,86 @@ The most commonly used ppm commands are:
         return status()
 
     def clean(self):
+        parser = argparse.ArgumentParser(
+            description='clean a project')
+        parser.add_argument(
+            '-A', '--all', action='store_true')
+        parser.set_defaults(func=clean)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+
+    def install(self):
+        parser = argparse.ArgumentParser(
+            description='install a package for this project')
+        parser.add_argument('packages', nargs='?', type=str, default="DEFAULT")
+        parser.add_argument(
+            '-D', '--dev', action='store_true')
+        parser.add_argument(
+            '-T', '--test', action='store_true')
+        parser.add_argument(
+            '-A', '--all', action='store_true')
+        parser.set_defaults(func=install)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("install done!")
+
+    def update(self):
+        parser = argparse.ArgumentParser(
+            description="update this project's version and status")
+        # NOT prefixing the argument with -- means it's not optional
+        parser.add_argument('version', type=str)
+        parser.add_argument('-S', "--status", type=str,
+                            choices=["dev", "testing", "release", "stable"], default="dev")
+        parser.set_defaults(func=update)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("update done!")
+
+    def upload(self):
+        parser = argparse.ArgumentParser(
+            description='upload project to a remote repository')
+        parser.add_argument('-g', '--git', type=str,
+                                  nargs='*', required=False)
+        parser.set_defaults(func=upload)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("upload done!")
+
+
+    def run(self):
+        parser = argparse.ArgumentParser(
+            description='upload project to a remote repository')
+        parser.add_argument('script', type=str,
+                                  nargs='*', required=False)
+        parser.set_defaults(func=run)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("run script done!")
+
+    def build(self):
         pass
 
-    # def update(self):
-    #     parser = argparse.ArgumentParser(
-    #         description='Download objects and refs from another repository')
-    #     # NOT prefixing the argument with -- means it's not optional
-    #     parser.add_argument('repository')
-    #     args = parser.parse_args(self.argv[1:])
-    #     print 'Running git fetch, repository=%s' % args.repository
 
-    # def upload(self):
-    #     parser = argparse.ArgumentParser(
-    #         description='Download objects and refs from another repository')
-    #     # NOT prefixing the argument with -- means it's not optional
-    #     parser.add_argument('repository')
-    #     args = parser.parse_args(self.argv[1:])
-    #     print 'Running git fetch, repository=%s' % args.repository
+    def test(self):
+        parser = argparse.ArgumentParser(
+            description='upload project to a remote repository')
+        parser.add_argument('-g', '--git', type=str,
+                                  nargs='*', required=False)
+        parser.set_defaults(func=upload)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("upload done!")
 
-    # def test(self):
-    #     pass
+    def doc(self):
+        parser = argparse.ArgumentParser(
+            description='upload project to a remote repository')
+        parser.add_argument('-g', '--git', type=str,
+                                  nargs='*', required=False)
+        parser.set_defaults(func=upload)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("upload done!")
 
-    # def build(self):
-    #     pass
 
     
 

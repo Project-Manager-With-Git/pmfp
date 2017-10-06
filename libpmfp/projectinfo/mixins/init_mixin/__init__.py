@@ -6,11 +6,12 @@ from .init_env import InitEnvMixin
 from .init_setup import InitSetupMixin
 from .init_test import InitTestMixin
 from .init_requirements import InitRequirementMixin
+from .init_template import InitTemplateMixin
 
 
 class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
                        InitEnvMixin, InitSetupMixin, InitTestMixin,
-                       InitRequirementMixin):
+                       InitRequirementMixin, InitTemplateMixin):
     """需要InstallMixin,CleanMixin
     """
 
@@ -21,7 +22,7 @@ class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
             self._init_docs()
         if self.with_test:
             self._init_test(install)
-        if self.with_docker:
+        if self.with_dockerfile:
             self._init_docker()
         return True
 
@@ -34,11 +35,20 @@ class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
             self._init_readme()
             self._init_template()
             self._init_requirements(install=install)
+            if install:
+                self._install_python_requirements(record="dev")
+                print("#################################################")
+                print("dev installed")
+                print("#################################################")
             self._init_sup(install=install)
+            
         except Exception as e:
             traceback.print_exc()
-            print("")
-        
+            print(str(e))
+            self.clean(all=True)
+            raise e
+        else:
+            return True
 
 
 __all__ = ["InitProjectMixin"]

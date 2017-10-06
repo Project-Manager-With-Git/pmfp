@@ -20,9 +20,16 @@ PYTHON_REQUIREMENTS_PATH = {
 
 class InstallMixin:
     def _install_node(self, line, record=False):
-        pass
+        if record == "requirement":
+            command = "npm install {line} --save".format(line=line)
+        elif record in ["dev", "test"]:
+            command = "npm install {line} --save-dev".format(line=line)
+        else:
+            command = "npm install {line}".format(line=line)
+        subprocess.call(command, shell=True)
+        return True
 
-    def _install_cpp(self, line):
+    def _install_cpp(self, line, record=False):
         pass
 
     def _install_python(self, line, record=False):
@@ -71,7 +78,7 @@ class InstallMixin:
                 p = PYTHON_REQUIREMENTS_PATH.get(
                     record, "requirements/requirements.txt")
                 with open(p) as f:
-                    lines = f.read_lines()
+                    lines = f.readlines()
                 for i in lines:
                     if line == i.strip():
                         print(line, "already registed in ", p)
@@ -86,7 +93,7 @@ class InstallMixin:
         p = PYTHON_REQUIREMENTS_PATH.get(
             record, "requirements/requirements.txt")
         with open(p) as f:
-            lines = f.read_lines()
+            lines = f.readlines()
         for i in lines:
             line = i.strip()
             if line:
@@ -99,3 +106,41 @@ class InstallMixin:
             else:
                 continue
         return True
+
+    def _install_node_requirements(self, record):
+        if record == "requirement":
+            command = "npm install --save"
+        elif record in ["dev", "test"]:
+            command = "npm install --save-dev"
+        elif record == "all":
+            command = "npm install"
+        subprocess.call(command, shell=True)
+        return True
+
+    def _install_cpp_requirements(self, record):
+        pass
+
+    def install_requirements(self, record="requirement"):
+        if self.form.compiler == "node":
+            return self._install_node_requirements(record=record)
+        elif self.form.compiler == "cpp":
+            return self._install_cpp_requirements(record=record)
+        elif self.form.compiler in ["python", "cython"]:
+            return self._install_python_requirements(record=record)
+        else:
+            print("unknown compiler!")
+            return False
+
+    def install(self, line, record="requirement"):
+        if self.form.compiler == "node":
+            return self._install_node(line, record=record)
+        elif self.form.compiler == "cpp":
+            return self._install_cpp(line, record=record)
+        elif self.form.compiler in ["python", "cython"]:
+            return self._install_python(line, record=record)
+        else:
+            print("unknown compiler!")
+            return False
+
+
+__all__ = ["InstallMixin"]

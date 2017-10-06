@@ -7,6 +7,8 @@ $project_name
 
 version: $version
 
+status: $status
+
 author: $author
 
 email: $author_email
@@ -59,6 +61,7 @@ README_MARKDOWN = Template("""
 # $project_name
 
 + version: $version
++ status: $status
 + author: $author
 + email: $author_email
 
@@ -121,6 +124,7 @@ class InitReadmeMixin:
                                               author=self.author.author,
                                               author_email=self.author.author_email,
                                               version=self.meta.version,
+                                              status=self.meta.status,
                                               url=self.meta.url,
                                               description=self.desc.description,
                                               keywords=",".join(self.desc.keywords)))
@@ -140,6 +144,7 @@ class InitReadmeMixin:
                                                author=self.author.author,
                                                author_email=self.author.author_email,
                                                version=self.meta.version,
+                                               status=self.meta.status,
                                                url=self.meta.url,
                                                description=self.desc.description,
                                                keywords=",".join(self.desc.keywords)))

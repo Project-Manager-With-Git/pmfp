@@ -30,6 +30,17 @@ different situation such as script, model, GUI, web.
 
 * docker support
 
+requirements
+-------------------------------
+
++ python 3.5+
++ npm
++ gcc
++ cmake
++ conan
++ sphinx
++ sphinxcontrib-napoleon
++ recommonmark
 
 Example
 -------------------------------

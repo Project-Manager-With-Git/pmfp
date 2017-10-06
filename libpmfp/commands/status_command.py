@@ -1,10 +1,9 @@
 from pathlib import Path
-from argparse import Namespace
 from libpmfp.projectinfo import ProjectInfo
 
 
-def status(args: Namespace)->bool:
-    path = Path(".ppmrc")
+def status()->bool:
+    path = Path(".pmfprc")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
         print(obj)

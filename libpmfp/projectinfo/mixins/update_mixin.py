@@ -1,0 +1,72 @@
+import re
+import json
+from pathlib import Path
+
+
+class UpdateMixin:
+    def update(self, version, status="dev"):
+        path = Path(".").absolute()
+        doc = Path('document')
+        readme_rst = Path('README.rst')
+        readme_md = Path('README.md')
+        package = Path("package.json")
+        setup = Path("setup.py")
+        self.meta.version = version
+        self.meta.status = status
+
+        if readme_rst.exists():
+            with open(str(readme_rst), "r", encoding="utf-8") as f:
+                lines = []
+                for i in f:
+                    if re.match(r"version:", i):
+                        i = "* version: " + version + "\n"
+                    if re.match(r"status:", i):
+                        i = "* status: " + status + "\n"
+                    lines.append(i)
+            with open(str(readme_rst), "w", encoding="utf-8") as f:
+                for i in lines:
+                    f.write(i)
+        if readme_md.exists():
+            with open(str(readme_md), "r", encoding="utf-8") as f:
+                lines = []
+                for i in f:
+                    if re.match(r"version:", i):
+                        i = "+ version: " + version + "\n"
+                    if re.match(r"status:", i):
+                        i = "+ status: " + stauts + "\n"
+                    lines.append(i)
+            with open(str(readme_md), "w", encoding="utf-8") as f:
+                for i in lines:
+                    f.write(i)
+
+        if doc.exists():
+            with open("document/conf.py", "r", encoding="utf-8") as f:
+                lines = []
+                for i in f:
+                    if re.match(r"version =", i):
+                        i = "version = '" + version + "'\n"
+                    lines.append(i)
+            with open("document/conf.py", "w", encoding="utf-8") as f:
+                for i in lines:
+                    f.write(i)
+        if setup.exists():
+            with open("setup.py", "r", encoding="utf-8") as f:
+                lines = []
+                for i in f:
+                    if re.match(r"VERSION =", i):
+                        i = "VERSION = '" + version + "'\n"
+                    lines.append(i)
+            with open("setup.py", "w", encoding="utf-8") as f:
+                for i in lines:
+                    f.write(i)
+        if package.exists():
+            with open(str(package), "r") as f:
+                pak = json.load(f)
+            pak.update({"version": version})
+            with open(str(package), "w") as f:
+                json.load(pak, f)
+
+        return True
+
+
+__all__ = ["UpdateMixin"]

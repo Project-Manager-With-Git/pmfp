@@ -1,0 +1,17 @@
+{
+    "name": "ex1",
+    "version": "1.0.0",
+    "description": "test",
+    "main": "index.ts",
+    "scripts": {
+        "run": "./node_modules/.bin/ts-node index.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "hsz",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "^7.0.0",
+        "ts-node": "^2.0.0",
+        "typescript": "^2.1.5"
+    }
+}

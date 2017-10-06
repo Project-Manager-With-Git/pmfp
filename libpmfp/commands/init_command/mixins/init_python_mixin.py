@@ -18,7 +18,7 @@ class InitPythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init python web application done!")
         return True
 
@@ -34,7 +34,7 @@ class InitPythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init python gui application done!")
         return True
 
@@ -50,7 +50,7 @@ class InitPythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init python command-line application done!")
         return True
 
@@ -66,7 +66,7 @@ class InitPythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init python model done!")
         return True
 
@@ -82,7 +82,7 @@ class InitPythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init python script done!")
         return True
 
@@ -98,14 +98,30 @@ class InitPythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init python celery project done!")
+        return True
+
+    def _python_default(self, args):
+        obj = ProjectInfo.input_info(
+            template="simple",
+            env="env",
+            compiler="python",
+            project_type="script",
+            with_test=False,
+            with_docs=False,
+            with_dockerfile=False)
+        path = Path(".pmfprc")
+        with open(str(path), "w") as f:
+            json.dump(obj.to_dict(), f)
+        obj.init_project(install=True)
+        print("init python default script done!")
         return True
 
     def python(self):
         parser = argparse.ArgumentParser(
             description='initialise a python project')
-        parser.set_defaults(func=lambda args: print("default"))
+        parser.set_defaults(func=self._python_default)
 
         subparsers = parser.add_subparsers(
             dest='project_type', help="init a python project")
@@ -124,6 +140,8 @@ class InitPythonMixin:
         web_parsers.add_argument('--without_docs', action='store_false')
         web_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        web_parsers.add_argument(
+            '--install', action='store_true')
         web_parsers.set_defaults(func=self._init_python_web)
 
         # init python gui command
@@ -140,6 +158,8 @@ class InitPythonMixin:
             '--without_docs', action='store_false')
         gui_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        gui_parsers.add_argument(
+            '--install', action='store_true')
         gui_parsers.set_defaults(func=self._init_python_gui)
 
         # init python command-line command
@@ -156,6 +176,8 @@ class InitPythonMixin:
             '--without_docs', action='store_false')
         command_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        command_parsers.add_argument(
+            '--install', action='store_true')
         command_parsers.set_defaults(func=self._init_python_command)
 
         # init python model command
@@ -172,6 +194,8 @@ class InitPythonMixin:
             '--without_docs', action='store_false')
         model_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        model_parsers.add_argument(
+            '--install', action='store_true')
         model_parsers.set_defaults(func=self._init_python_model)
 
         # init python script command
@@ -188,6 +212,8 @@ class InitPythonMixin:
             '--without_docs', action='store_false')
         script_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        script_parsers.add_argument(
+            '--install', action='store_true')
         script_parsers.set_defaults(func=self._init_python_script)
 
         # init python celery command
@@ -204,6 +230,8 @@ class InitPythonMixin:
             '--without_docs', action='store_false')
         celery_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        celery_parsers.add_argument(
+            '--install', action='store_true')
         celery_parsers.set_defaults(func=self._init_python_celery)
 
         args = parser.parse_args(self.argv[1:])

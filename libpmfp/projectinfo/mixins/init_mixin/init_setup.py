@@ -167,7 +167,7 @@ class InitSetupMixin:
             return False
         if self.form.project_type == "command":
             entry_points_T = Template(
-                "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
+                "entry_points={'console_scripts': ['$project_name = $project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=project_name)
         else:
             entry_points = ""
@@ -180,7 +180,7 @@ class InitSetupMixin:
             project_name=self.meta.project_name,
             author=self.author.author,
             author_email=self.author.author_email,
-            license_=self.meta.license_,
+            license_=self.meta.license,
             keywords="(" + ",".join(
                 ['"' + i + '"' for i in self.desc.keywords]) + ",)",
             version=self.meta.version,
@@ -213,7 +213,7 @@ class InitSetupMixin:
             project_name=self.meta.project_name,
             author=self.author.author,
             author_email=self.author.author_email,
-            license_=self.meta.license_,
+            license_=self.meta.license,
             keywords="(" + ",".join(
                 ['"' + i + '"' for i in self.desc.keywords]) + ",)",
             version=self.meta.version,
@@ -227,7 +227,7 @@ class InitSetupMixin:
         print("writing setup.py for python done!")
         return True
 
-    def _init_setuppy(self):
+    def _init_setup(self):
         """初始化python/cython的setup.py"""
         if self.form.compiler == "python":
             self._init_manifest()

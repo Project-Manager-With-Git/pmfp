@@ -60,8 +60,10 @@ class CreateMixin:
         url = url or ""
         version = input("project version:")
         version = version or "0.0.1"
+        status = input("project status:")
+        status = status or "dev"
         meta = MetaInfo(project_name=project_name,
-                        license=license_, url=url, version=version)
+                        license=license_, url=url, version=version, status=status)
 
         author_ = input("author:")
         author_email = input("author_email:")
@@ -74,7 +76,7 @@ class CreateMixin:
             keywords = [i for i in keywords.split(',')]
         else:
             keywords = []
-        keywords = keywords or "'tools'"
+        keywords = keywords or ['tools']
         description = input("description:")
         description = description or "simple tools"
         desc = DescriptionInfo(keywords=keywords, description=description)

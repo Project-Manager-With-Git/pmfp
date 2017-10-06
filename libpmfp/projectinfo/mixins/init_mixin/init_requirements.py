@@ -18,13 +18,21 @@ class InitRequirementMixin:
                 print(str(local_path.joinpath("requirements")) + " exists")
             else:
                 form_str = self.form.compiler + "_" + \
-                    self.project_type + "_" + self.template + "_" + "requirements"
+                    self.form.project_type + "_" + self.form.template + "_" + "requirements"
                 if dir_path.joinpath(form_str).exists():
                     shutil.copytree(str(dir_path.joinpath(form_str)),
                                     str(local_path.joinpath("requirements")))
                 else:
                     print('init ' + form_str + " not support now!")
                     return False
+
+            if install:
+                self._install_python_requirements(record="requirement")
+                print("#################################################")
+                print("requirement installed")
+                print("#################################################")
+                return True
+            
 
         elif self.form.compiler in ["node"]:
             print("node do not need to init requirements")

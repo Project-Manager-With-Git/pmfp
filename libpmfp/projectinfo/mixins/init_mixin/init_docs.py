@@ -107,16 +107,17 @@ class InitDocsMixin:
         else:
             if self.with_docs:
                 if self.form.compiler in ["python", "cython"]:
-                    if self.form.project_type == "command":
-                        package_name = "lib" + self.meta.project_name
+                    package_name = self.meta.project_name
+                    if Path(package_name).exists():
+                        command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
+                                   '-V', self.meta.version, "-a", '-o', 'document', package_name]
                     else:
-                        package_name = self.meta.project_name
-                    command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
-                               '-V', self.meta.version, "-a", '-o', 'document', package_name]
+                        command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
+                                   '-V', self.meta.version, "-a", '-o', 'document', '.']
                 else:
                     package_name = self.meta.project_name
                     command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
-                               '-V', self.meta.version, '-o', 'document', package_name]
+                               '-V', self.meta.version, '-o', 'document', '.']
 
             subprocess.check_call(command)
             with open("document/conf.py", "w") as f:
@@ -132,4 +133,5 @@ class InitDocsMixin:
         print('building apidoc done')
         return True
 
-__all__= ["InitDocsMixin"]
+
+__all__ = ["InitDocsMixin"]

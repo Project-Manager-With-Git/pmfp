@@ -1,10 +1,12 @@
 """描述project类的模块
 """
-from .mixins import ToDictMixin, CreateMixin, InitProjectMixin
+from .mixins import (ToDictMixin, CreateMixin, InitProjectMixin,
+                     CleanMixin, InstallMixin, Temp2pyMixin, UpdateMixin, UploadMixin)
 from .core import MetaInfo, AuthorInfo, DescriptionInfo, FormInfo
 
 
-class ProjectInfo(ToDictMixin, CreateMixin, InitProjectMixin):
+class ProjectInfo(ToDictMixin, CreateMixin, InitProjectMixin,
+                  CleanMixin, InstallMixin, Temp2pyMixin, UpdateMixin, UploadMixin):
     """项目对象,记录针对项目的特征和方法
     """
 
@@ -12,10 +14,12 @@ class ProjectInfo(ToDictMixin, CreateMixin, InitProjectMixin):
         return self.__repr__()
 
     def __repr__(self):
-        content = """project:{self.meta.name}
-        version:{self.meta.name}
-        license:{self.meta.license}
-        """.format(self=self)
+        content = """
+project: {self.meta.project_name}
+version: {self.meta.version}
+status:  {self.meta.status}
+license: {self.meta.license}
+""".format(self=self)
         return content
 
     def __init__(self, meta: MetaInfo, author: AuthorInfo, desc: DescriptionInfo, form: FormInfo,
@@ -27,6 +31,8 @@ class ProjectInfo(ToDictMixin, CreateMixin, InitProjectMixin):
         self.desc = desc
         self.form = form
         self.with_test = with_test
+        if self.form.compiler == "cpp":
+            self.with_test = True
         if self.with_test != with_test:
             print(self.form.compiler, " do not support test now")
         self.with_docs = with_docs
