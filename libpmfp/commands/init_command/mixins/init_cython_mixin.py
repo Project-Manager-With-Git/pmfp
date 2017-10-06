@@ -18,7 +18,7 @@ class InitCythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init cython command-line application done!")
         return True
 
@@ -34,7 +34,7 @@ class InitCythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init cython model done!")
         return True
 
@@ -44,13 +44,13 @@ class InitCythonMixin:
             env=args.env,
             compiler="cython",
             project_type="script",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
-            with_dockerfile=args.without_dockerfile)
+            with_test=False,
+            with_docs=False,
+            with_dockerfile=False)
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init cython script done!")
         return True
 
@@ -66,7 +66,7 @@ class InitCythonMixin:
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project()
+        obj.init_project(args.install)
         print("init cython celery project done!")
         return True
 
@@ -92,6 +92,8 @@ class InitCythonMixin:
             '--without_docs', action='store_false')
         command_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        command_parsers.add_argument(
+            '--install', action='store_true')
         command_parsers.set_defaults(func=self._init_cython_command)
 
         # init python model command
@@ -108,6 +110,8 @@ class InitCythonMixin:
             '--without_docs', action='store_false')
         model_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        model_parsers.add_argument(
+            '--install', action='store_true')
         model_parsers.set_defaults(func=self._init_cython_model)
 
         # init python script command
@@ -118,12 +122,9 @@ class InitCythonMixin:
         script_parsers.add_argument('-t', '--template', type=str, choices=[
             "simple", "math"],
             default="simple")
+
         script_parsers.add_argument(
-            '--without_test', action='store_false')
-        script_parsers.add_argument(
-            '--without_docs', action='store_false')
-        script_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
+            '--install', action='store_true')
         script_parsers.set_defaults(func=self._init_cython_script)
 
         # init python celery command
@@ -140,6 +141,8 @@ class InitCythonMixin:
             '--without_docs', action='store_false')
         celery_parsers.add_argument(
             '--without_dockerfile', action='store_false')
+        celery_parsers.add_argument(
+            '--install', action='store_true')
         celery_parsers.set_defaults(func=self._init_cython_celery)
 
         args = parser.parse_args(self.argv[1:])

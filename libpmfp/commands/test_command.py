@@ -2,11 +2,11 @@ from pathlib import Path
 from libpmfp.projectinfo import ProjectInfo
 
 
-def run(argv):
+def test(argv):
     path = Path(".pmfprc")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
-        obj.run(cmd=" ".join(argv.script))
+        obj.test(typecheck=argv.typecheck)
 
     else:
         print("please run this command in the root of the  project, and initialise first")

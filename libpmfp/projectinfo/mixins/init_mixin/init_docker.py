@@ -50,7 +50,7 @@ class InitDockerMixin:
             else:
                 try:
                     if self.form.compiler == 'python':
-                        content = PYTHON_DOCKER_TEMPLATES[self.form.project_type].substitute(
+                        content = PYTHON_DOCKER_TEMPLATES.get(self.form.project_type, "").substitute(
                             project_name=self.meta.project_name)
                     elif self.form.compiler == "node":
                         content = NODE_DOCKER_TEMPLATES[self.form.project_type].substitute(

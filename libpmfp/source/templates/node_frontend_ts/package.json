@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "docs": "typedoc --out ./doc/ js/src/*.ts",
-        "start": "gulp",
+        "build": "gulp",
         "test": "istanbul cover _mocha -- --compilers ts:ts-node/register"
     },
     "author": "hsz",

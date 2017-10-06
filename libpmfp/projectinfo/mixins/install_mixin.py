@@ -5,7 +5,7 @@ from pathlib import Path
 
 WINDOWS_ENV_BLACKLIST = ["mkl", 'numpy', 'scipy', 'scikit-learn']
 WINDOWS_ENV_BLACKDICT = {
-    "sanic": "set "
+    "sanic": "set SANIC_NO_UVLOOP=true&set SANIC_NO_UJSON=true&{python_path} -m pip install git+https://github.com/channelcat/sanic.git"
 }
 WINDOWS_CONDA_BLACKDICT = {
     "sanic": "set SANIC_NO_UVLOOP=true&set SANIC_NO_UJSON=true&{python_path} -m pip install git+https://github.com/channelcat/sanic.git"
@@ -30,15 +30,17 @@ class InstallMixin:
         return True
 
     def _install_cpp(self, line, record=False):
-        pass
+        command = "conan install {line} -r conan-transit".format(line=line)
+        subprocess.call(command, shell=True)
+        return True
 
     def _install_python(self, line, record=False):
         if self.form.compiler not in ["python", "cython"]:
             print(self.form.compiler, "can not install with pip or conda")
             return False
+        python_path = self._get_python_path()
         if platform.system() == 'Windows':
             if self.form.env == "env":
-                python_path = Path("env\Scripts\python").absolute()
                 if line in WINDOWS_ENV_BLACKLIST:
                     print("""windowsc an not install {line} through pip,
                     please go to http://www.lfd.uci.edu/~gohlke/pythonlibs and 
@@ -52,7 +54,8 @@ class InstallMixin:
                         python_path=python_path, line=line)
             elif self.form.env == "conda":
                 if line in WINDOWS_ENV_BLACKDICT.keys():
-                    command = WINDOWS_ENV_BLACKDICT[line]
+                    command = WINDOWS_ENV_BLACKDICT[line].format(
+                        python_path=python_path)
                 else:
                     command = "conda install -y {line}".format(line=line)
             else:
@@ -69,6 +72,7 @@ class InstallMixin:
                 print("unknown env!")
                 return False
         try:
+            print(command)
             subprocess.call(command, shell=True)
         except:
             raise

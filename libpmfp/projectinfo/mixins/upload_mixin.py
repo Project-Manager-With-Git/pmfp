@@ -73,7 +73,7 @@ class UploadMixin:
                         self=self)
                 subprocess.call(command, shell=True)
 
-            elif self.form.compiler == "js":
+            elif self.form.compiler == "node":
                 if remote:
                     command = "npm publish --registry {self.form.upload_remote}".formmat(
                         self=self)

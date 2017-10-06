@@ -15,31 +15,34 @@ class UpdateMixin:
         self.meta.status = status
 
         if readme_rst.exists():
+            print("update readme.rst")
             with open(str(readme_rst), "r", encoding="utf-8") as f:
                 lines = []
                 for i in f:
-                    if re.match(r"version:", i):
+                    if re.match(r"\* version:", i):
                         i = "* version: " + version + "\n"
-                    if re.match(r"status:", i):
+                    if re.match(r"\* status:", i):
                         i = "* status: " + status + "\n"
                     lines.append(i)
             with open(str(readme_rst), "w", encoding="utf-8") as f:
                 for i in lines:
                     f.write(i)
         if readme_md.exists():
+            print("update readme.md")
             with open(str(readme_md), "r", encoding="utf-8") as f:
                 lines = []
                 for i in f:
-                    if re.match(r"version:", i):
+                    if re.match(r"\+ version:", i):
                         i = "+ version: " + version + "\n"
-                    if re.match(r"status:", i):
-                        i = "+ status: " + stauts + "\n"
+                    if re.match(r"\+ status:", i):
+                        i = "+ status: " + status + "\n"
                     lines.append(i)
             with open(str(readme_md), "w", encoding="utf-8") as f:
                 for i in lines:
                     f.write(i)
 
         if doc.exists():
+            print("update document/conf.py")
             with open("document/conf.py", "r", encoding="utf-8") as f:
                 lines = []
                 for i in f:
@@ -50,6 +53,7 @@ class UpdateMixin:
                 for i in lines:
                     f.write(i)
         if setup.exists():
+            print("update setup.py")
             with open("setup.py", "r", encoding="utf-8") as f:
                 lines = []
                 for i in f:
@@ -60,6 +64,7 @@ class UpdateMixin:
                 for i in lines:
                     f.write(i)
         if package.exists():
+            print("update package.json")
             with open(str(package), "r") as f:
                 pak = json.load(f)
             pak.update({"version": version})

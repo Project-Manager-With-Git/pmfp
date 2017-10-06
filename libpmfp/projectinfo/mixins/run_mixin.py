@@ -1,10 +1,10 @@
-import sys
-import platform
 import subprocess
 from pathlib import Path
 
 
 class RunMixin:
+    """需要PythonPathMixin
+    """
 
     def run(self, cmd=""):
         if self.form.compiler in ["cython", "python"]:
@@ -17,33 +17,28 @@ class RunMixin:
                 print("need a cmd")
                 raise AttributeError("need a cmd")
 
-            if platform.system() == 'Windows':
-                if self.form.env == "env":
-                    python_path = Path("env/Scripts/python")
-                elif self.form.env == "conda":
-                    python_path = Path("env/python")
-                else:
-                    print("unknown env for python/cython!")
-                    return False
+            python_path = self._get_python_path()
+            if python_path:
+                command = "{python_path} {cmd}".format(
+                    python_path=python_path, cmd=cmd)
+                subprocess.call(command, shell=True)
             else:
-                if self.form.env == "env":
-                    python_path = Path("env/bin/python")
-                elif self.form.env == "conda":
-                    python_path = Path("env/bin/python")
-                else:
-                    print("unknown env for python/cython!")
-                    return False
-
-            command = "{python_path} {cmd}".formmat(
-                python_path=python_path, cmd=cmd)
-            subprocess.call(command, shell=True)
+                print("no python path")
+                return False
 
         elif self.form.compiler == "cpp":
             command = "conan create demo/testing"
             subprocess.call(command, shell=True)
-        elif self.form.compiler == "js:
-            command = "npm run {cmd}".formmat(cmd=cmd)
+        elif self.form.compiler == "node":
+            # 注意要先将es6或者typescript 编译为node可运行的代码
+            if cmd == "":
+                command = "npm run"
+            else:
+                command = "node --use_strict {cmd}".formmat(cmd=cmd)
             subprocess.call(command, shell=True)
         else:
             print("unknown compiler!")
             return False
+
+
+__all__ = ["RunMixin"]

@@ -1,12 +1,14 @@
 """描述project类的模块
 """
 from .mixins import (ToDictMixin, CreateMixin, InitProjectMixin,
-                     CleanMixin, InstallMixin, Temp2pyMixin, UpdateMixin, UploadMixin)
+                     CleanMixin, InstallMixin, Temp2pyMixin, PythonPathMixin, UpdateMixin, UploadMixin,
+                     RunMixin, SearchMixin, BuildMixin, TestMixin, DocMixin)
 from .core import MetaInfo, AuthorInfo, DescriptionInfo, FormInfo
 
 
 class ProjectInfo(ToDictMixin, CreateMixin, InitProjectMixin,
-                  CleanMixin, InstallMixin, Temp2pyMixin, UpdateMixin, UploadMixin):
+                  CleanMixin, InstallMixin, Temp2pyMixin, PythonPathMixin, UpdateMixin, UploadMixin,
+                  RunMixin, SearchMixin, BuildMixin, TestMixin, DocMixin):
     """项目对象,记录针对项目的特征和方法
     """
 
@@ -25,7 +27,7 @@ license: {self.meta.license}
     def __init__(self, meta: MetaInfo, author: AuthorInfo, desc: DescriptionInfo, form: FormInfo,
                  with_test: bool=True,
                  with_docs: bool=True,
-                 with_dockerfile: bool=True):
+                 with_dockerfile: bool=True)->None:
         self.meta = meta
         self.author = author
         self.desc = desc
@@ -42,4 +44,4 @@ license: {self.meta.license}
             'python', "node"] and self.form.project_type in ["web", "celery", 'frontend']
         if self.with_dockerfile != with_dockerfile:
             print(self.form.compiler, self.form.project_type,
-                  " do not support test now")
+                  " not support test now")

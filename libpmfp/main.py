@@ -9,7 +9,12 @@ from libpmfp.commands.clean_command import clean
 from libpmfp.commands.install_command import install
 from libpmfp.commands.update_command import update
 from libpmfp.commands.upload_command import upload
-#from libpmfp.commands.run_command import run
+from libpmfp.commands.run_command import run
+from libpmfp.commands.search_command import search
+from libpmfp.commands.build_command import build
+from libpmfp.commands.test_command import test
+from libpmfp.commands.doc_command import doc
+from libpmfp.commands.new_command import new
 
 if sys.version_info[0] != 3:
     raise OSError("only for python 3.5+")
@@ -32,12 +37,14 @@ The most commonly used ppm commands are:
    update      update the project's version and status
    upload      upload your project to a git repository, a docker repository,
                a pypi server
+   search      search for a package
    
    run         run scripts for python and node
    build       build your python project to a pyz file, wheel,egg,docker image,
                build your cpp project to a lib or a executable file
    test        test your project
    doc         build your project's document
+   new         new a document,setup.py,test,dockerfile for a project
    
 ''')
         parser.add_argument('command', help='Subcommand to run')
@@ -122,43 +129,65 @@ The most commonly used ppm commands are:
         args.func(args)
         print("upload done!")
 
+    def search(self):
+        parser = argparse.ArgumentParser(
+            description='search for a package')
+        parser.add_argument('package', type=str)
+        parser.set_defaults(func=search)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
 
     def run(self):
         parser = argparse.ArgumentParser(
-            description='upload project to a remote repository')
+            description='run a script')
         parser.add_argument('script', type=str,
-                                  nargs='*', required=False)
+                            nargs='*')
         parser.set_defaults(func=run)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
         print("run script done!")
 
     def build(self):
-        pass
+        parser = argparse.ArgumentParser(
+            description='build project to a remote repository')
 
+        parser.add_argument(
+            '-e', '--egg', action="store_true")
+        parser.add_argument(
+            '-w', '--wheel', action="store_true")
+
+        parser.set_defaults(func=build)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("build package done!")
 
     def test(self):
         parser = argparse.ArgumentParser(
-            description='upload project to a remote repository')
-        parser.add_argument('-g', '--git', type=str,
-                                  nargs='*', required=False)
-        parser.set_defaults(func=upload)
+            description='test project')
+        parser.add_argument('-T', '--typecheck', action="store_true")
+        parser.set_defaults(func=test)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("upload done!")
+        print("test done!")
 
     def doc(self):
         parser = argparse.ArgumentParser(
-            description='upload project to a remote repository')
-        parser.add_argument('-g', '--git', type=str,
-                                  nargs='*', required=False)
-        parser.set_defaults(func=upload)
+            description="build project's document")
+        parser.add_argument('-s', '--serve', action="store_true")
+        parser.set_defaults(func=doc)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("upload done!")
+        print("doc done!")
 
-
-    
+    def new(self):
+        parser = argparse.ArgumentParser(
+            description='new a document,setup.py,test,dockerfile for a project')
+        parser.add_argument("command", type=str, choices=[
+                            'document', 'setup.py', 'test', 'dockerfile', 'main'])
+        parser.set_defaults(func=new)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("doc done!")
 
 
 def main(argv: Sequence[str]=sys.argv[1:]):

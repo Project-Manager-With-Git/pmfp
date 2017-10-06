@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "docs": "esdoc -c esdoc.json",
-    "start": "gulp",
+    "build": "gulp",
     "lint": "gulp lint",
     "test":"./node_modules/.bin/babel-node ./node_modules/.bin/isparta cover --report html ./node_modules/.bin/_mocha "
   },

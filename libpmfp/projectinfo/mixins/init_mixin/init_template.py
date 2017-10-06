@@ -21,7 +21,7 @@ class InitTemplateMixin:
         else:
             form_str = self.form.compiler + "_" + \
                 self.form.project_type + "_" + self.form.template
-            shutil.copy(str(dir_path.joinpath(form_str)), str(
+            shutil.copytree(str(dir_path.joinpath(form_str)), str(
                 local_path.joinpath(self.meta.project_name)))
             self.temp2py(local_path.joinpath(self.meta.project_name))
             if self.form.project_type == "command":

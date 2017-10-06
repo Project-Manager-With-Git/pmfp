@@ -7,11 +7,12 @@ from .init_setup import InitSetupMixin
 from .init_test import InitTestMixin
 from .init_requirements import InitRequirementMixin
 from .init_template import InitTemplateMixin
+from .init_main import InitMainMixin
 
 
 class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
                        InitEnvMixin, InitSetupMixin, InitTestMixin,
-                       InitRequirementMixin, InitTemplateMixin):
+                       InitRequirementMixin, InitTemplateMixin, InitMainMixin):
     """需要InstallMixin,CleanMixin
     """
 
@@ -31,7 +32,9 @@ class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
         """
         try:
             self._init_env()
-            self._init_setup()
+            if self.form.compiler in ["cython", "python"]:
+                if self.form.project_type not in ["script", 'web', "gui"]:
+                    self._init_setup()
             self._init_readme()
             self._init_template()
             self._init_requirements(install=install)
@@ -41,7 +44,7 @@ class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
                 print("dev installed")
                 print("#################################################")
             self._init_sup(install=install)
-            
+
         except Exception as e:
             traceback.print_exc()
             print(str(e))

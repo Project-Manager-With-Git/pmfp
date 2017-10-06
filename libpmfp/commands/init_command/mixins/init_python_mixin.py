@@ -12,8 +12,8 @@ class InitPythonMixin:
             env=args.env,
             compiler="python",
             project_type="web",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
+            with_test=False,
+            with_docs=False,
             with_dockerfile=args.without_dockerfile)
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
@@ -28,8 +28,8 @@ class InitPythonMixin:
             env=args.env,
             compiler="python",
             project_type="gui",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
+            with_test=False,
+            with_docs=False,
             with_dockerfile=args.without_dockerfile)
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
@@ -76,9 +76,9 @@ class InitPythonMixin:
             env=args.env,
             compiler="python",
             project_type="script",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
-            with_dockerfile=args.without_dockerfile)
+            with_test=False,
+            with_docs=False,
+            with_dockerfile=False)
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
@@ -136,8 +136,6 @@ class InitPythonMixin:
             "sanic_blueprints",
             "flask_blueprints"],
             default="flask")
-        web_parsers.add_argument('--without_test', action='store_false')
-        web_parsers.add_argument('--without_docs', action='store_false')
         web_parsers.add_argument(
             '--without_dockerfile', action='store_false')
         web_parsers.add_argument(
@@ -152,10 +150,7 @@ class InitPythonMixin:
         gui_parsers.add_argument('-t', '--template', type=str, choices=[
             "tk", "tk_mvc"],
             default="tk")
-        gui_parsers.add_argument(
-            '--without_test', action='store_false')
-        gui_parsers.add_argument(
-            '--without_docs', action='store_false')
+
         gui_parsers.add_argument(
             '--without_dockerfile', action='store_false')
         gui_parsers.add_argument(
@@ -206,12 +201,6 @@ class InitPythonMixin:
         script_parsers.add_argument('-t', '--template', type=str, choices=[
             "simple", "math"],
             default="simple")
-        script_parsers.add_argument(
-            '--without_test', action='store_false')
-        script_parsers.add_argument(
-            '--without_docs', action='store_false')
-        script_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
         script_parsers.add_argument(
             '--install', action='store_true')
         script_parsers.set_defaults(func=self._init_python_script)
