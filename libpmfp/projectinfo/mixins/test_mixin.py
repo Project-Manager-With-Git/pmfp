@@ -7,9 +7,9 @@ class TestMixin:
     def _run_python_test(self):
         print("unittest start")
         python_path = self._get_python_path()
-        command = "{python_path} -m coverage run --source {package_name} -m unittest discover -v -s test".format(
+        command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
             python_path=python_path,
-            package_name=self.meta.package_name)
+            package_name=self.meta.project_name)
         subprocess.check_call(command)
         print("unittest done!")
         return True

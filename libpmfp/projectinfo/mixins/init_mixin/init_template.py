@@ -9,15 +9,39 @@ class InitTemplateMixin:
     """
 
     def _init_template_python(self):
-        dir_path = Path(__file__).parent.parent.parent.parent.joinpath(
-            "source/templates")
+        dir_path = Path(__file__).parent.parent.parent.parent.joinpath("source/templates")
         local_path = Path(".")
-
-        if self.form.project_type == "script" or self.form.template in ["flask", "sanic", "tk"]:
+        if self.form.project_type == "script":
             form_str = self.form.compiler + "_" + self.form.project_type + \
                 "_" + self.form.template + ".py.temp"
             shutil.copy(str(dir_path.joinpath(form_str)), str(
                 local_path.joinpath(self.meta.project_name + ".py")))
+
+        elif self.form.project_type == "gui":
+            if self.form.template in ["tk"]:
+                form_str = self.form.compiler + "_" + self.form.project_type + \
+                    "_" + self.form.template + ".py.temp"
+                shutil.copy(str(dir_path.joinpath(form_str)), str(
+                    local_path.joinpath(self.meta.project_name + ".py")))
+            else:
+                form_str = self.form.compiler + "_" + \
+                    self.form.project_type + "_" + self.form.template
+                shutil.copytree(str(dir_path.joinpath(form_str)), str(
+                    local_path.joinpath(self.meta.project_name)))
+                self.temp2py(local_path.joinpath(self.meta.project_name))
+
+        elif self.form.project_type == "web":
+            if self.form.template in ["flask", "sanic"]:
+                form_str = self.form.compiler + "_" + self.form.project_type + \
+                    "_" + self.form.template + ".py.temp"
+                shutil.copy(str(dir_path.joinpath(form_str)), str(
+                    local_path.joinpath(self.meta.project_name + ".py")))
+            else:
+                form_str = self.form.compiler + "_" + \
+                    self.form.project_type + "_" + self.form.template
+                shutil.copytree(str(dir_path.joinpath(form_str)), str(
+                    local_path.joinpath(self.meta.project_name)))
+                self.temp2py(local_path.joinpath(self.meta.project_name))
         else:
             form_str = self.form.compiler + "_" + \
                 self.form.project_type + "_" + self.form.template
@@ -25,14 +49,7 @@ class InitTemplateMixin:
                 local_path.joinpath(self.meta.project_name)))
             self.temp2py(local_path.joinpath(self.meta.project_name))
             if self.form.project_type == "command":
-                with open("main.py", "w") as f:
-                    content = """#!/usr/bin/env python3
-import sys
-
-if __name__ == '__main__':
-    from {project_name}.main import main
-    sys.exit(main(sys.argv[1:]))""".format(project_name=self.meta.project_name)
-                    f.write(content)
+                self._init_main()
 
     def _init_template_node(self):
         dir_path = Path(__file__).parent.parent.parent.parent.joinpath(

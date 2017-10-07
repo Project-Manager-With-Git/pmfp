@@ -1,7 +1,7 @@
 import os
-import App
 import unittest
 import tempfile
+from .get_app.py import app
 
 def setUpModule():
     print("setUpModule")
@@ -22,15 +22,10 @@ class FlaskTest(unittest.TestCase):
 
     def setUp(self):
         self.db_fd, App.app.config['DATABASE'] = tempfile.mkstemp()
-        App.app.config['TESTING'] = True
-        self.app = App.app.test_client()
-        flaskr.init_db()
+        self.client = app.test_client()
 
-    def tearDown(self):
-        os.close(self.db_fd)
-        os.unlink(App.app.config['DATABASE'])
 
-    def test_empty_db(self):
+    def test_index(self):
         rv = self.app.get('/')
         print(rv.data)
         assert 'No entries here so far' in rv.data

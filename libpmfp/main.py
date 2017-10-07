@@ -15,6 +15,9 @@ from libpmfp.commands.build_command import build
 from libpmfp.commands.test_command import test
 from libpmfp.commands.doc_command import doc
 from libpmfp.commands.new_command import new
+from libpmfp.commands.flask_command import flask
+from libpmfp.commands.sanic_command import sanic
+from libpmfp.commands.vue_command import vue
 
 if sys.version_info[0] != 3:
     raise OSError("only for python 3.5+")
@@ -38,13 +41,18 @@ The most commonly used ppm commands are:
    upload      upload your project to a git repository, a docker repository,
                a pypi server
    search      search for a package
-   
    run         run scripts for python and node
    build       build your python project to a pyz file, wheel,egg,docker image,
                build your cpp project to a lib or a executable file
    test        test your project
    doc         build your project's document
    new         new a document,setup.py,test,dockerfile for a project
+
+shortcut:
+   flask       init flask
+   sanic       init sanic
+   vue         init vue
+
    
 ''')
         parser.add_argument('command', help='Subcommand to run')
@@ -188,6 +196,48 @@ The most commonly used ppm commands are:
         args = parser.parse_args(self.argv[1:])
         args.func(args)
         print("doc done!")
+
+    def flask(self):
+        parser = argparse.ArgumentParser(
+            description='initialise a flask project')
+        parser.add_argument(
+            '-e', '--env', type=str, choices=["env", "conda"], default="env")
+        parser.add_argument('-t', '--template', type=str, choices=[
+            "simple"
+            "api",
+            "mvc",
+            "blueprints"],
+            default="simple")
+        parser.set_defaults(func=flask)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("flask init done!")
+
+    def sanic(self):
+        parser = argparse.ArgumentParser(
+            description='initialise a sanic project')
+        parser.add_argument(
+            '-e', '--env', type=str, choices=["env", "conda"], default="env")
+        parser.add_argument('-t', '--template', type=str, choices=[
+            "simple"
+            "api",
+            "mvc",
+            "blueprints"],
+            default="simple")
+        parser.set_defaults(func=sanic)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("sanic init done!")
+
+    def vue(self):
+        parser = argparse.ArgumentParser(
+            description='initialise a sanic project')
+        parser.add_argument('-t', '--template', type=str,
+                            choices=["simple", "webpack", "webpack-simple"], default="webpack")
+        parser.set_defaults(func=vue)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("vue init done!")
 
 
 def main(argv: Sequence[str]=sys.argv[1:]):

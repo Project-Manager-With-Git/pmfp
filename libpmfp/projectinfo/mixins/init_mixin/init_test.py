@@ -1,10 +1,40 @@
 import shutil
+from string import Template
 from pathlib import Path
+
+PYTHON_WEB_TEST = Template("""import sys
+from pathlib import Path
+file_path = Path(__file__)
+target_pyz_path = file_path.parent.parent.joinpath("$project_name.pyz")
+target_project_path = file_path.parent.parent.joinpath("$project_name")
+if target_pyz_path.exists():
+    target = str(target_pyz_path)
+else:
+    target = str(target_project_path)
+sys.path.insert(0, target)
+
+from app_creater import create_app
+from config import choose_conf
+
+app = create_app(choose_conf("testing"))
+
+""")
 
 
 class InitTestMixin:
     """需要InstallMixin,Temp2pyMixin
     """
+
+    def _init_test_python_web(self):
+        if self.form.compiler in ["python", "cython"]:
+            if self.form.project_type == "web":
+                if self.form.template not in ["flask", "sanic"]:
+                    with open("test/get_app.py", "w") as f:
+                        content = PYTHON_WEB_TEST.substitute(
+                            project_name=self.meta.project_name)
+                        f.write(content)
+                    return True
+        return False
 
     def _init_test(self, install=False):
         """初始化测试
@@ -32,6 +62,9 @@ class InitTestMixin:
                     return False
             self.temp2py(local_path.joinpath('test'))
             print("copy test template done!")
+            print("write get_app.py in test")
+            self._init_test_python_web()
+            print("write get_app.py in test done")
             if install:
                 self._install_python_requirements(record="test")
                 print("#################################################")
