@@ -204,7 +204,8 @@ shortcut:
         parser.add_argument(
             '-e', '--env', type=str, choices=["env", "conda"], default="env")
         parser.add_argument('-t', '--template', type=str, choices=[
-            "simple"
+            "simple",
+            "socketio",
             "api",
             "mvc",
             "blueprints"],

@@ -1,0 +1,19 @@
+from importlib import import_module
+from pathlib import Path
+
+namespace = globals()
+path = Path(__file__).absolute().parent
+_all = []
+for i in path.iterdir():
+    if i.is_dir() and i.name != "__pycache__":
+        mod = import_module("." + i.name, __package__)
+    elif i.is_file() and i.suffix == ".py" and i.name != "__init__.py":
+        mod = import_module("." + i.stem, __package__)
+    else:
+        continue
+    if hasattr(mod,'__all__'):
+        for j in mod.__all__:
+            namespace[j] = getattr(mod, j)
+        _all += mod.__all__
+    else:
+        continue

@@ -1,3 +1,1 @@
 Flask
-gevent
-tornado

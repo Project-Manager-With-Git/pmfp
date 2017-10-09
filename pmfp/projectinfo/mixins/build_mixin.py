@@ -8,7 +8,7 @@ class BuildMixin:
         if self.form.compiler == "python":
             if self.form.project_type in ["gui"] and self.form.template not in ["tk"]:
                 print('build self.meta.peoject_name to pyz file'.format(self=self))
-                command = "python -m zipapp {self.meta.peoject_name} -m main:main -p /usr/bin/env python3".format(
+                command = 'python -m zipapp {self.meta.peoject_name} -m "main:main" -p "/usr/bin/env python3"'.format(
                     self=self)
                 subprocess.call(command, shell=True)
                 print('build self.meta.peoject_name to pyz file done!'.format(self=self))
@@ -16,6 +16,7 @@ class BuildMixin:
             elif self.form.project_type in ["web"] and self.form.template not in ["flask", "sanic"]:
                 print('move template and static files')
                 here = Path(".").absolute()
+                name = self.meta.project_name
                 static = here.joinpath(name).joinpath("static")
                 templates = here.joinpath(name).joinpath("templates")
                 dir_static = here.joinpath("static")
@@ -35,7 +36,7 @@ class BuildMixin:
 
                 print('move template and static files done!')
                 print('build self.meta.peoject_name to pyz file'.format(self=self))
-                command = "python -m zipapp {self.meta.peoject_name} -m main:main -p /usr/bin/env python3".format(
+                command = 'python -m zipapp {self.meta.project_name} -m "main:main" -p "/usr/bin/env python3"'.format(
                     self=self)
                 subprocess.call(command, shell=True)
                 print('build self.meta.peoject_name to pyz file done!'.format(self=self))

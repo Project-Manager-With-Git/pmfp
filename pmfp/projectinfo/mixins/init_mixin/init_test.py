@@ -2,10 +2,10 @@ import shutil
 from string import Template
 from pathlib import Path
 
-PYTHON_WEB_SIMPLE = Template("""
-from $project_name import app
+PYTHON_WEB_SIMPLE = Template("""from $project_name import app
 import unittest
 import tempfile
+import json
 
 def setUpModule():
     print("setUpModule")
@@ -31,16 +31,15 @@ class FlaskTest(unittest.TestCase):
     def tearDown(self):
         print("tear down")
 
-    def test_empty_db(self):
+    def test_ping(self):
         rv = self.app.get('/ping')
-        print(rv.data)
-        self.assertEqual(echo('hello'), 'pong')
+        self.assertEqual(json.loads(rv.data)["msg"], 'pong')
 
 
 
 def add_suite():
     suite = unittest.TestSuite()
-    suite.addTest(TestAdd("test_empty_db"))
+    suite.addTest(TestAdd("test_ping"))
     return suite
 
 

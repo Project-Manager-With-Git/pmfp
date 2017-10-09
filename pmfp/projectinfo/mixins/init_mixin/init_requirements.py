@@ -27,12 +27,20 @@ class InitRequirementMixin:
                     return False
 
             if install:
-                self._install_python_requirements(record="requirement")
-                print("#################################################")
-                print("requirement installed")
-                print("#################################################")
+                try:
+                    result = self._install_python_requirements(record="requirement")
+                except:
+                    raise
+                else:
+                    if result:
+                        print("#################################################")
+                        print("requirement installed")
+                        print("#################################################")
+                    else:
+                        print("#################################################")
+                        print("requirement install failed")
+                        print("#################################################")
                 return True
-            
 
         elif self.form.compiler in ["node"]:
             print("node do not need to init requirements")

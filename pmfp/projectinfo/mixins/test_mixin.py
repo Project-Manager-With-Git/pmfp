@@ -7,22 +7,27 @@ class TestMixin:
     def _run_python_test(self, html):
         print("unittest start")
         python_path = self._get_python_path()
-        command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
-            python_path=python_path,
-            package_name=self.meta.project_name)
+        if self.form.project_type == "web":
+            command = "{python_path} -m unittest discover -v -s test".format(
+                python_path=python_path)
+        else:
+            command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
+                python_path=python_path,
+                package_name=self.meta.project_name)
         try:
             subprocess.check_call(command)
         except Exception as e:
             print("error")
         else:
-            command = "{python_path} -m coverage report".format(
-                python_path=python_path)
-            subprocess.check_call(command)
-            if html:
-                command = "{python_path} -m coverage html -d covhtml".format(
+            if self.form.project_type != "web":
+                command = "{python_path} -m coverage report".format(
                     python_path=python_path)
                 subprocess.check_call(command)
-            self._run_python_typecheck(html=html)
+                if html:
+                    command = "{python_path} -m coverage html -d covhtml".format(
+                        python_path=python_path)
+                    subprocess.check_call(command)
+                self._run_python_typecheck(html=html)
         print("unittest done!")
         return True
 

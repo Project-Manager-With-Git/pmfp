@@ -13,15 +13,15 @@ class InitEnvMixin:
             return False
         path = Path("env")
         if path.exists():
-            
             for i in path.iterdir():
-                if i.name in ("python","python.exe"):
+                if i.name in ("python", "python.exe"):
                     true_env = "conda"
                     break
             else:
                 true_env = "env"
             if true_env != self.form.env:
-                raise AttributeError("the exist env does not match with the project's setting")
+                raise AttributeError(
+                    "the exist env does not match with the project's setting")
             else:
                 print("already have a env")
                 return False
@@ -34,7 +34,7 @@ class InitEnvMixin:
                 python = "python3"
             command = [python, "-m", "venv", "env"]
         elif self.form.env == "conda":
-            command = ["conda", 'create', "-p", 'env', "python=" +
+            command = ["conda", 'create', '-y', "-p", 'env', "python=" +
                        str(sys.version_info[0]) + "." + str(sys.version_info[1])]
         else:
             print("unknown env")

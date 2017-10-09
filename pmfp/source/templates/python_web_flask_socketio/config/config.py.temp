@@ -1,0 +1,6 @@
+class Config:
+    SECRET_KEY = ""
+
+    @staticmethod
+    def init_app(app):
+        pass

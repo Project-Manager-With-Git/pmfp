@@ -57,7 +57,7 @@ class InstallMixin:
                     command = WINDOWS_ENV_BLACKDICT[line].format(
                         python_path=python_path)
                 else:
-                    command = "conda install -y {line}".format(line=line)
+                    command = "conda install -y {line} -p env".format(line=line)
             else:
                 print("unknown env!")
                 return False
@@ -98,6 +98,7 @@ class InstallMixin:
             record, "requirements/requirements.txt")
         with open(p) as f:
             lines = f.readlines()
+        error = False
         for i in lines:
             line = i.strip()
             if line:
@@ -106,9 +107,12 @@ class InstallMixin:
                 except Exception as e:
                     print(line, "install failed")
                     print(str(e))
+                    error = True
                     continue
             else:
                 continue
+        if error:
+            return False
         return True
 
     def _install_node_requirements(self, record):
