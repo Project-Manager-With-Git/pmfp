@@ -2,6 +2,56 @@ import shutil
 from string import Template
 from pathlib import Path
 
+PYTHON_WEB_SIMPLE = Template("""
+from $project_name import app
+import unittest
+import tempfile
+
+def setUpModule():
+    print("setUpModule")
+
+
+def tearDownModule():
+    print("tearUpModule")
+
+
+class FlaskTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print("setUpClass")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("tearDownClass")
+
+    def setUp(self):
+        self.app = app.test_client()
+        print('set up')
+
+    def tearDown(self):
+        print("tear down")
+
+    def test_empty_db(self):
+        rv = self.app.get('/ping')
+        print(rv.data)
+        self.assertEqual(echo('hello'), 'pong')
+
+
+
+def add_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(TestAdd("test_empty_db"))
+    return suite
+
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)
+    test_suite = add_suite()
+    runner.run(test_suite)
+
+""")
+
+
 PYTHON_WEB_TEST = Template("""import sys
 from pathlib import Path
 file_path = Path(__file__)
@@ -82,6 +132,8 @@ class InitTestMixin:
                             project_name=self.meta.project_name)
                         f.write(content)
                     return True
+                else:
+
 
             elif self.form.project_type in ["command", "model", "script"]:
                 with open("test/test_echo.py", "w") as f:
