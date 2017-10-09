@@ -133,7 +133,11 @@ class InitTestMixin:
                         f.write(content)
                     return True
                 else:
-
+                    with open("test/test_ping.py", "w") as f:
+                        content = PYTHON_WEB_SIMPLE.substitute(
+                            project_name=self.meta.project_name)
+                        f.write(content)
+                    return True
 
             elif self.form.project_type in ["command", "model", "script"]:
                 with open("test/test_echo.py", "w") as f:
