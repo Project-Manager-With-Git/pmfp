@@ -1,4 +1,5 @@
-def testing(app:any,host:str,port:int)->None:
-    app.run(host=host,port=port)
+def testing(app: any, host: str, port: int)->None:
+    app.extensions['socketio'].run(app, host=host, port=port, debug=True)
 
-__all__=['testing']
+
+__all__ = ['testing']

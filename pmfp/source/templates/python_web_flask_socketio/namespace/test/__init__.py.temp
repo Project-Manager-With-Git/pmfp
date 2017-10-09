@@ -1,6 +1,7 @@
 from flask import render_template, session, request
-from flask_socketio import (Namespace, emit, join_room, leave_room, 
-    close_room, rooms, disconnect)
+from flask_socketio import (Namespace, emit, join_room, leave_room,
+                            close_room, rooms, disconnect)
+
 
 class TestNamespace(Namespace):
     def on_my_event(self, message):

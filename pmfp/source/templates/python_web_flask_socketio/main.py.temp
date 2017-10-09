@@ -8,7 +8,7 @@ ENV = ("development", "testing", "production")
 
 def parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-e", "--environment", type=str, help="默认为debug模式,可选的环境:\n" + ",".join(ENV))
+    parser.add_argument("-e", "--environment", type=str, default="testing", help="默认为debug模式,可选的环境:\n" + ",".join(ENV))
     parser.add_argument("-p", "--port", type=int, default=5000, help="使用的端口")
     parser.add_argument("-H", "--host", type=str, default="localhost", help="使用的主机名")
     args = parser.parse_args()
