@@ -1,0 +1,4 @@
+mkl
+numpy
+scipy
+scikit-learn

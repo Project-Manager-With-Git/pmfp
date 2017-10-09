@@ -1,0 +1,8 @@
+from . import app
+
+def main():
+    app.config_from_object('config')
+    app.start()
+
+if __name__ == '__main__':
+    main()

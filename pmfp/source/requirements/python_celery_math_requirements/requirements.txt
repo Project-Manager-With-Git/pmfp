@@ -1,0 +1,7 @@
+mkl
+numpy
+scipy
+scikit-learn
+celery
+redis
+flower

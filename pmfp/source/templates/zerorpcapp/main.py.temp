@@ -1,0 +1,25 @@
+import sys
+import argparse
+import asyncio
+import zmq
+from handlers import handler
+from conf import env_factory
+zmq.asyncio.install()
+
+def run(args):
+    env = env_factory(args.env)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(handler(env))
+    
+def main(argv=sys.argv[1:]):
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
+    run_parsers = subparsers.add_parser("run")
+    run_group = run_parsers.add_mutually_exclusive_group(required=False)
+    run_group.add_argument('-e','--env',choices=["local","debug","testing","production"],default="local")
+    run_parsers.set_defaults(func=run)
+    args = parser.parse_args()
+    args.func(args)
+
+if __name__ == '__main__':
+    main()

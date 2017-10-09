@@ -1,0 +1,44 @@
+import os
+import unittest
+import tempfile
+from .get_app.py import app
+
+def setUpModule():
+    print("setUpModule")
+
+
+def tearDownModule():
+    print("tearUpModule")
+
+
+class FlaskTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print("setUpClass")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("tearDownClass")
+
+    def setUp(self):
+        self.db_fd, App.app.config['DATABASE'] = tempfile.mkstemp()
+        self.client = app.test_client()
+
+
+    def test_index(self):
+        rv = self.app.get('/')
+        print(rv.data)
+        assert 'No entries here so far' in rv.data
+
+
+
+def add_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(TestAdd("test_empty_db"))
+    return suite
+
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)
+    test_suite = add_suite()
+    runner.run(test_suite)

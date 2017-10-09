@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outFile": "../../built/local/tsc.js",
+        "types": ["node"],
+        "sourceMap": true
+    },
+    "files": [
+        "index.ts"
+    ]
+}

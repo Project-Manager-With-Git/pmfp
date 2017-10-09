@@ -1,0 +1,7 @@
+from .app_creater import app
+from .tasks import *
+
+
+def init_app(**kws):
+    app.conf.update(**kws)
+    return app
