@@ -6,17 +6,14 @@ import sys
 
 
 if __name__ == '__main__':
-    from {project_name}.main import main
+    from $project_name.main import main
     sys.exit(main(sys.argv[1:]))
 """)
 
-PYTHON_PROJECT_MAIN = Template("""
-import sys
+PYTHON_PROJECT_MAIN = Template("""import sys
 import argparse
-
-
-def echo(args):
-    print(args.command)
+from .command.echo import echo_command
+from typing import Sequence
 
 
 class Command:
@@ -24,7 +21,11 @@ class Command:
     def __init__(self, argv):
         parser = argparse.ArgumentParser(
             description='Project Manager for Pythoner',
-            usage='''''')
+            usage='''$project_name.py <command> [<args>]
+
+The most commonly used ppm commands are:
+   echo        echo a string
+''')
         parser.add_argument('command', help='Subcommand to run')
         
         self.argv = argv
@@ -38,11 +39,15 @@ class Command:
 
     def echo(self):
         parser = argparse.ArgumentParser(
-            description='echo')
+            description='echo string')
         parser.add_argument("command", type=str)
-        parser.set_defaults(func=echo)
+        parser.set_defaults(func=echo_command)
         args = parser.parse_args(self.argv[1:])
-        args.func(args)        
+        args.func(args) 
+
+
+def main(argv: Sequence[str]=sys.argv[1:]):
+    Command(argv)
 """)
 
 CPP_MAIN = Template("""/*

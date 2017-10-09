@@ -20,12 +20,60 @@ app = create_app(choose_conf("testing"))
 
 """)
 
+PYTHON_PROJECTS = {"command": '{project_name}.lib.echo',
+                   "model": '{project_name}.echo',
+                   "script": "{project_name}"
+                   }
+
+PYTHON_TEST = Template("""from $project import echo
+import unittest
+
+
+def setUpModule():
+    print("setUpModule")
+
+
+def tearDownModule():
+    print("tearUpModule")
+
+
+class TestAdd(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print("setUpClass")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("tearDownClass")
+
+    def setUp(self):
+        print("instance setUp")
+
+    def tearDown(self):
+        print("instance tearDown")
+
+    def test_echo(self):
+        self.assertEqual(echo('hello'), 'hello')
+
+
+def add_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(TestAdd("test_echo"))
+    return suite
+
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)
+    test_suite = add_suite()
+    runner.run(test_suite)
+""")
+
 
 class InitTestMixin:
     """需要InstallMixin,Temp2pyMixin
     """
 
-    def _init_test_python_web(self):
+    def _init_test_python(self):
         if self.form.compiler in ["python", "cython"]:
             if self.form.project_type == "web":
                 if self.form.template not in ["flask", "sanic"]:
@@ -34,6 +82,18 @@ class InitTestMixin:
                             project_name=self.meta.project_name)
                         f.write(content)
                     return True
+
+            elif self.form.project_type in ["command", "model", "script"]:
+                with open("test/test_echo.py", "w") as f:
+                    content = PYTHON_TEST.substitute(
+                        project=PYTHON_PROJECTS.get(
+                            self.form.project_type).format(
+                                project_name=self.meta.project_name))
+                    f.write(content)
+                return True
+
+            else:
+                print("noting to do")
         return False
 
     def _init_test(self, install=False):
@@ -61,10 +121,8 @@ class InitTestMixin:
                     print('init ' + form_str + " not support now!")
                     return False
             self.temp2py(local_path.joinpath('test'))
+            self._init_test_python()
             print("copy test template done!")
-            print("write get_app.py in test")
-            self._init_test_python_web()
-            print("write get_app.py in test done")
             if install:
                 self._install_python_requirements(record="test")
                 print("#################################################")

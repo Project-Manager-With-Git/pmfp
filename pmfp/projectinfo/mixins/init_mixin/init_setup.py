@@ -205,7 +205,7 @@ class InitSetupMixin:
         if self.form.project_type == "command":
             entry_points_T = Template(
                 "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
-            entry_points = entry_points_T.substitute(project_name=project_name)
+            entry_points = entry_points_T.substitute(project_name=self.meta.project_name)
         else:
             entry_points = ""
 
