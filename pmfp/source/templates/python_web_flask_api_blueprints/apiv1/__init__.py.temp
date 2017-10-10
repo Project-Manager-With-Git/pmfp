@@ -1,0 +1,14 @@
+from flask_restplus import Api
+from flask import Blueprint
+from .namespaces import ping
+
+blueprint = Blueprint('api', __name__, url_prefix='/api/v1')
+api = Api(blueprint,
+    title='Test Api',
+    version='1.0',
+    description='A description',
+    # All API metadatas
+)
+
+api.add_namespace(ping, path='/test/ping')
+

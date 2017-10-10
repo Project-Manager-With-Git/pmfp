@@ -35,11 +35,11 @@ class BuildMixin:
                     print("remove original templates files done!")
 
                 print('move template and static files done!')
-                print('build self.meta.peoject_name to pyz file'.format(self=self))
+                print('build {self.meta.project_name} to pyz file'.format(self=self))
                 command = 'python -m zipapp {self.meta.project_name} -m "main:main" -p "/usr/bin/env python3"'.format(
                     self=self)
                 subprocess.call(command, shell=True)
-                print('build self.meta.peoject_name to pyz file done!'.format(self=self))
+                print('build {self.meta.project_name} to pyz file done!'.format(self=self))
                 return True
 
             elif self.form.project_type in ["command", "celery", "model"]:

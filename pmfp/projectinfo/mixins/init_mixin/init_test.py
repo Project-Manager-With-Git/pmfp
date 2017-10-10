@@ -4,7 +4,6 @@ from pathlib import Path
 
 PYTHON_WEB_SIMPLE = Template("""from $project_name import app
 import unittest
-import tempfile
 import json
 
 def setUpModule():
@@ -65,7 +64,7 @@ sys.path.insert(0, target)
 from app_creater import create_app
 from config import choose_conf
 
-app = create_app(choose_conf("testing"))
+app = create_app(choose_conf("default"))
 
 """)
 

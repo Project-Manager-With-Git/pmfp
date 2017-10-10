@@ -1,0 +1,14 @@
+from flask_restplus import Api
+from flask import Blueprint
+from .namespaces import cat
+
+blueprint = Blueprint('api', __name__, url_prefix='/api/v2')
+api = Api(blueprint,
+    title='Test Api',
+    version='2.0',
+    description='A description',
+    # All API metadatas
+)
+
+api.add_namespace(cat, path='/test/cat')
+

@@ -133,9 +133,9 @@ class InitPythonMixin:
             "sanic", "flask",
             "sanic_socketio", "flask_socketio"
             "sanic_api", "flask_api",
+            "sanic_api_blueprints", "flask_api_blueprints",
             "sanic_mvc", "flask_mvc",
-            "sanic_blueprints",
-            "flask_blueprints"],
+            "sanic_blueprints", "flask_blueprints"],
             default="flask")
         web_parsers.add_argument(
             '--without_dockerfile', action='store_false')

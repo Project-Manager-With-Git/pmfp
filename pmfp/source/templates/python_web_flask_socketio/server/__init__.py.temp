@@ -7,9 +7,11 @@ from server.testing import testing
 from typing import Callable
 
 
-ENV={"development":development,
-     "testing":testing,
-     "production":production
+ENV={"development": development,
+     "dev": development,
+     "test": testing,
+     "testing": testing,
+     "production": production
      }
 def choose_server(env:str)->Callable:
     return ENV.get(env,default)
