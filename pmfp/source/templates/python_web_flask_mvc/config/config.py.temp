@@ -1,0 +1,7 @@
+class Config:
+    SECRET_KEY = ""
+    DB_URL = {"test": "sqlite:///test.db"}
+
+    @staticmethod
+    def init_app(app):
+        pass

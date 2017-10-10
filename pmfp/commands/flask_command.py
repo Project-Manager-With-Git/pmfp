@@ -4,6 +4,7 @@ from pmfp.projectinfo import ProjectInfo
 
 FLASK_TEMPLATE = {
     "simple": "flask",
+    "admin": 'flask_admin',
     "socketio": "flask_socketio",
     "api": "flask_api",
     "mvc": "flask_mvc",
