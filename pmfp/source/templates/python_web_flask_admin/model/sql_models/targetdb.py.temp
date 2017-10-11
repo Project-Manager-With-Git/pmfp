@@ -1,0 +1,19 @@
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy import MetaData
+from .db import db
+
+
+def reflect_db(db, *, table_name=None):
+    metadata = MetaData()
+    engine = db.get_engine()
+    if table_name is None:
+        metadata.reflect(engine)
+    else:
+        try:
+            table_name = list(table_name)
+        except:
+            table_name = list([table_name])
+        metadata.reflect(engine, only=table_name)
+    Base = automap_base(metadata=metadata)
+    Base.prepare(engine, reflect=True)
+    return Base.classes

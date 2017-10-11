@@ -19,12 +19,13 @@ def flask(argv):
         print("already have a .pmfprc file.")
         return False
     else:
+
         obj = ProjectInfo.input_info(
             template=FLASK_TEMPLATE.get(argv.template, "flask"),
             env=argv.env,
             compiler="python",
             project_type="web",
-            with_test=True,
+            with_test=True if argv.template in ('admin', 'mvc') elae True,
             with_docs=False,
             with_dockerfile=True)
         path = Path(".pmfprc")
