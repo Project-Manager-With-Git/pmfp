@@ -25,7 +25,7 @@ def flask(argv):
             env=argv.env,
             compiler="python",
             project_type="web",
-            with_test=True if argv.template in ('admin', 'mvc') elae True,
+            with_test=True if argv.template in ('admin', 'mvc') else True,
             with_docs=False,
             with_dockerfile=True)
         path = Path(".pmfprc")

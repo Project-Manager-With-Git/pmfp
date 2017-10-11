@@ -1,6 +1,10 @@
+import os
+basedir = os.path.abspath(os.path.dirname("."))
+
+
 class Config:
     SQLALCHEMY_BINDS = {
-       'admin_users': 'mysql+pymysql://root:rstrst@localhost:3306/admin'
+       'admin_users': 'sqlite:///' + os.path.join(basedir, 'admin.db')
     }
     SECRET_KEY = '123456790'
 

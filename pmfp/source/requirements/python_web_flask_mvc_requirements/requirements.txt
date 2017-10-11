@@ -1,2 +1,12 @@
 Flask
 gevent
+Flask-Bootstrap
+Flask-Mail
+Flask-Moment
+Flask-SQLAlchemy
+Flask-WTF
+Jinja2
+MarkupSafe
+SQLAlchemy
+WTForms
+python-editor==1.0.3
