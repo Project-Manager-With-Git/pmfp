@@ -1,5 +1,0 @@
-from importlib import import_module
-from pathlib import Path
-
-from .test import TestNamespace
-__all__ = ["TestNamespace"]

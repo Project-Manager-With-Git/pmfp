@@ -22,6 +22,9 @@ def create_app(conf: str)->Flask:
         0] + "/admin_users.db"
     app = Flask(__name__, template_folder=template_folder,
                 static_folder=static_folder)
+    app.config.setdefault('MANAGE_TABLES', None)
+    app.config.setdefault('MANAGE_PROJECT', 'Target')
+
     conf = choose_conf(conf)
     app.config.from_object(conf)
 
@@ -32,9 +35,9 @@ def create_app(conf: str)->Flask:
     security = Security(app, datastore=user_datastore)
     babel = Babel(app)
 
-    add_db_views(admin, database)
+    add_db_views(admin, app, database)
 
-    if not os.path.exists(database_path):
+    if conf not in ("testing", "test", "production"):
         database.drop_all(bind="admin_users")
         database.create_all(bind="admin_users")
         build_sample_db(database, app, user_datastore)
