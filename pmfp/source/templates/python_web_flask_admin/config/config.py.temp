@@ -9,7 +9,7 @@ class Config:
     SECRET_KEY = '123456790'
 
     # Create in-memory database
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:rstrst@localhost:3306/world'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'static/target.db')
     SQLALCHEMY_ECHO = True
 
     # Flask-Security config
