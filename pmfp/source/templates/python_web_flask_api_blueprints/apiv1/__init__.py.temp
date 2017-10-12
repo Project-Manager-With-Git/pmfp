@@ -1,14 +1,15 @@
 from flask_restplus import Api
 from flask import Blueprint
-from .namespaces import ping
+from namespaces import ping
+from .namespaces import echo
 
-blueprint = Blueprint('api', __name__, url_prefix='/api/v1')
+blueprint = Blueprint('apiv1', __name__, url_prefix='/api/v1')
 api = Api(blueprint,
-    title='Test Api',
-    version='1.0',
-    description='A description',
-    # All API metadatas
-)
+          title='Test Api',
+          version='1.0',
+          description='A description'
+          )
 
+api.add_namespace(echo, path='/test/echo')
 api.add_namespace(ping, path='/test/ping')
 

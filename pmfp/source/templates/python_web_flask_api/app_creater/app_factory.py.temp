@@ -12,6 +12,7 @@ def create_app(conf: str)->Flask:
     app = Flask(__name__)
     conf = choose_conf(conf)
     app.config.from_object(conf)
+    conf.init_app(app)
     db_urls = app.config.get("DB_URL")
     for k, v in db_urls.items():
         if k in database_proxys.keys():

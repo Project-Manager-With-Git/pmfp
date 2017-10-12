@@ -3,14 +3,16 @@ import sys
 from server import choose_server
 from app_creater import create_app
 
-ENV = ("development", "testing", "production","test","dev","default")
+ENV = ("development", "testing", "production", "test", "dev", "default")
 
 
 def parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-e", "--environment", type=str, default="default", help="默认为debug模式,可选的环境:\n" + ",".join(ENV))
+    parser.add_argument("-e", "--environment", type=str,
+                        default="default", help="默认为debug模式,可选的环境:\n" + ",".join(ENV))
     parser.add_argument("-p", "--port", type=int, default=5000, help="使用的端口")
-    parser.add_argument("-H", "--host", type=str, default="localhost", help="使用的主机名")
+    parser.add_argument("-H", "--host", type=str,
+                        default="localhost", help="使用的主机名")
     args = parser.parse_args()
 
     if args.environment and args.environment not in ENV:

@@ -7,13 +7,10 @@ class TestMixin:
     def _run_python_test(self, html):
         print("unittest start")
         python_path = self._get_python_path()
-        if self.form.project_type == "web":
-            command = "{python_path} -m unittest discover -v -s test".format(
-                python_path=python_path)
-        else:
-            command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
-                python_path=python_path,
-                package_name=self.meta.project_name)
+
+        command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
+            python_path=python_path,
+            package_name=self.meta.project_name)
         try:
             subprocess.check_call(command)
         except Exception as e:

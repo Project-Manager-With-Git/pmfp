@@ -27,7 +27,7 @@ def create_app(conf: str)->Flask:
 
     conf = choose_conf(conf)
     app.config.from_object(conf)
-
+    conf.init_app(app)
     database.init_app(app)
     database.app = app
     admin.init_app(app)
