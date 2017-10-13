@@ -1,0 +1,8 @@
+Flask
+flask-restplus
+gevent
+peewee
+inflect
+flask-admin
+flask-security
+flask-sqlalchemy
