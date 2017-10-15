@@ -8,10 +8,12 @@ from flask_security import (Security,
 from admin import admin
 from config import choose_conf
 from playhouse.db_url import connect
-from apis import api
-from model.peewee_models import database_proxys, init_db
 from model.sql_models import User, Role, database, build_sample_db
 from admin import add_db_views
+
+from apiv1 import blueprint as apiv1
+from apiv2 import blueprint as apiv2
+from model.peewee_models import database_proxys, init_db
 
 
 def create_app(conf: str)->Flask:
@@ -59,8 +61,10 @@ def create_app(conf: str)->Flask:
             h=admin_helpers,
             get_url=url_for
         )
-    api.init_app(app)
+    app.register_blueprint(apiv1)
+    app.register_blueprint(apiv2)
     return app
 
 
 __all__ = ["create_app"]
+
