@@ -1,0 +1,15 @@
+from flask_restplus import Namespace, Resource, fields
+
+api = Namespace('echo', description='echo related operations')
+
+
+@api.doc('get_echo')
+@api.param('msg', 'message')
+@api.route('/<msg>')
+class Echo(Resource):
+    @api.doc('get_pong')
+    def get(self, msg):
+        return {'msg': msg}
+
+
+__all__ = ["api"]
