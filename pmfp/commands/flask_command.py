@@ -7,8 +7,8 @@ FLASK_TEMPLATE = {
     "admin": 'flask_admin',
     "socketio": "flask_socketio",
     "api": "flask_api",
+    "api_admin": "flask_api_admin",
     "mvc": "flask_mvc",
-    "blueprints": "flask_blueprints",
     "api_blueprints": "flask_api_blueprints"
 }
 

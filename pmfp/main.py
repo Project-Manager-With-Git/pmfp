@@ -208,6 +208,7 @@ shortcut:
             "admin",
             "socketio",
             "api",
+            "api_admin",
             "api_blueprints",
             "mvc",
             "blueprints"],

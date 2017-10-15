@@ -1,9 +1,15 @@
 # 模板说明
 
-这个模板用于定义多版本的api服务,返回的默认是json. 如果写好文档,会在对应版本api的uri地址上显示api文档. api服务器可能会接收来自许多不同源的频繁调用,因此使用线程模型的flask可能并不是最好的选择,即便结合gevent,恐怕也不能与使用uvloop的sanic相比.但如果服务并不是特别需要高并发,其实也是可以用的.毕竟python3.5后的协程配套工具还不成熟.
+这个模板用于定义带一定限制的简单的api服务,返回的默认是json. 如果写好文档,会在主页显示api文档. api服务器可能会接收来自许多不同源的频繁调用,因此使用线程模型的flask可能并不是最好的选择,即便结合gevent,恐怕也不能与使用uvloop的sanic相比.但如果服务并不是特别需要高并发,其实也是可以用的.毕竟python3.5后的协程配套工具还不成熟.
 
-很多时候我们的api会有版本迭代.新旧版本需要同时运营.这种时候就很适合用这个模板.
+这个模板有管理员工具,适合开放读取权限,而其他权限受限的服务.可以使用管理员权限登录`/admin`,之后再在界面上管理资源
 
+## 特性
+
++ 设置`SQLALCHEMY_BINDS`的`admin_users`的数据库来作为存储管理员账户的数据库数据库使用
++ 自动映射`SQLALCHEMY_DATABASE_URI`指定的数据库中的表格
++ 可以通过设置`MANAGE_TABLES`指定管理的的表
++ 可以通过设置`MANAGE_PROJECT`指定管理项目名,默认名为`Target`
 
 ## 结构和用法描述
 
@@ -12,14 +18,22 @@
 + model 定义数据库orm
 
     其中的
+    + `sql_model.admin`定义管理员用户和相关权限
+    + `sql_model.targetdb`则是要管理的目标数据库的映射
     + `peewee_model`定义peewee的orm映射,推荐使用peewee主要是因为轻量
     + `DB_URL`需要定义一个字典来指定数据库的名字和对应的dburi
+
++ admin 定义视图admin中的视图
+
+    其中
+    + `admin.modelview.sql_view`用于定义model对应的view
+    + `admin.modelview.my_model_view`可以直接用,也可以作为基类结合`admin.modelview.mixins`中的mixin构建指定view
+    + `admin.__init__`中有方法`add_db_views`,可以对其进行修改来应用自己定义的view
 
 + apivx 用blueprint来注册namespace从而描述source.
     
     比如一般一个表的描述,会包括对表整体的描述和对表中某元素的描述,往往会使用不同的uri描述.一个类继承Source,只能绑定一个uri.namspace用来归类一组对同一source的描述更便于管理.
 
-+ namespaces  用于存放可复用的的namespace
 
 + config 定义环境设置.
 
@@ -42,6 +56,6 @@
 
 ## 限制
 
-+ 没有权限管理和用户管理
++ 目标数据库外键并没有设置显示,初版只能显示python对象的字符串输出
++ 如果`SQLALCHEMY_BINDS`的`admin_users`和`SQLALCHEMY_DATABASE_URI`指定的数据库一致,那么很可能会出现冲突,因此建议`admin_users`独立使用一个数据库.本身管理员一般不会有大量用户的数据,因此完全可以用sqlite来做,这样迁移还方便些
 
-    用户管理要看架构和用途,有的架构用户管理是有专门的服务器的,而有的架构则更倾向于自治,是单独维护的.像对外暴露的接口就适合统一的管理用户权限,而且颗粒度需要细些,而如果是为前端提供的则不需要很细的颗粒度,如果是内部处理数据代替rpc用的则可以不需要权限管理,毕竟这也要消耗资源的.
