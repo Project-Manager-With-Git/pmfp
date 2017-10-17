@@ -10,3 +10,6 @@ api = Api(
 
 api.add_namespace(ping, path='/api/test/ping')
 api.add_namespace(cat, path='/api/test/cat')
+
+
+__all__=["api"]

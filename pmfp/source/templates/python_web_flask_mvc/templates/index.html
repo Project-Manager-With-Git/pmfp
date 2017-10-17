@@ -1,7 +1,20 @@
-<html>
-    <body>
-        <div>
-            <a href="{{ url_for('admin.index') }}">Go to admin!</a>
-        </div>
-    </body>
-</html>
+{% extends "components/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Example{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello</h1>
+    <ul class="nav nav-tabs">
+        {% for cat in cats %}
+        <li class="active">
+            <p>{{ cat.name }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
