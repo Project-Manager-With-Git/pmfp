@@ -67,4 +67,3 @@ def create_app(conf: str)->Flask:
 
 
 __all__ = ["create_app"]
-
