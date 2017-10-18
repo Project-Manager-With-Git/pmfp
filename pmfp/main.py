@@ -172,8 +172,12 @@ shortcut:
     def test(self):
         parser = argparse.ArgumentParser(
             description='test project')
-        parser.add_argument('-H', '--html', action="store_false")
-        parser.add_argument('-T', '--typecheck', action="store_true")
+        parser.add_argument('-H', '--html', action="store_false",
+                            help="export the html report")
+        parser.add_argument(
+            '-T', '--typecheck', action="store_true", help="check python's typehints")
+        parser.add_argument('-S', '--stress', action="store_true",
+                            help="stress test for web server")
         parser.set_defaults(func=test)
         args = parser.parse_args(self.argv[1:])
         args.func(args)

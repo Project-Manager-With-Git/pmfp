@@ -2,29 +2,68 @@ from config.config import Config
 
 
 class ProductionConfig(Config):
-    
+
+    MAIL_LOG = False
+    MAIL_SENDER_USERNAME = ""
+    MAIL_SENDER_PASSWORD = ""
+    MAIL_USE_TLS = ""
+    MAIL_SERVER = ""
+    MAIL_PORT = ""
+    MAIL_SENDER = ""
+    MANAGER_MAIL = ""
+    MAIL_SUBJECT_PREFIX = ""
+
     @classmethod
     def init_app(cls, app):
-        Config.init_app(app)
-
-        # 把错误通过电子邮件发送给管理员
         import logging
-        from logging.handlers import SMTPHandler
-        credentials = None
-        secure = None
-        if getattr(cls, 'MAIL_USERNAME', None) is not None:
-            credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
-            if getattr(cls, 'MAIL_USE_TLS', None):
-                secure = ()
-        mail_handler = SMTPHandler(
-            mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
-            fromaddr=cls.FLASKY_MAIL_SENDER,
-            toaddrs=[cls.FLASKY_ADMIN],
-            subject=cls.FLASKY_MAIL_SUBJECT_PREFIX + ' Application Error',
-            credentials=credentials,
-            secure=secure)
-        mail_handler.setLevel(logging.ERROR)
-        app.logger.addHandler(mail_handler)
+        from logging.handlers import TimedRotatingFileHandler
+        from logging import Formatter
+        filehandler = logging.handlers.TimedRotatingFileHandler(
+            "{name}.log".format(name=app.name),
+            when='midnight',
+            interval=1,
+            backupCount=7,
+            utc=True)
+        filehandler.suffix = "%Y-%m-%d"
+        filehandler.setLevel(logging.WARNING)
+        filehandler.setFormatter(Formatter(
+            '%(asctime)s %(levelname)s: %(message)s '
+            '[in %(pathname)s: module:%(module)s - function: %(funcName)s-line: %(lineno)d]'
+        ))
+        app.logger.addHandler(filehandler)
+        if cls.MAIL_LOG:
+            from logging.handlers import SMTPHandler
+            credentials = None
+            secure = None
+            if getattr(cls, 'MAIL_SENDER_USERNAME', None) is not None:
+                credentials = (cls.MAIL_SENDER_USERNAME,
+                               cls.MAIL_SENDER_PASSWORD)
+                if getattr(cls, 'MAIL_USE_TLS', None):
+                    secure = ()
+            mail_handler = SMTPHandler(
+                mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
+                fromaddr=cls.MAIL_SENDER,
+                toaddrs=[cls.MANAGER_MAIL],
+                subject=cls.MAIL_SUBJECT_PREFIX + ' Application Error',
+                credentials=credentials,
+                secure=secure)
+            mail_handler.setLevel(logging.ERROR)
+            mail_handler.setFormatter(Formatter('''
+Message type:       %(levelname)s
+Location:           %(pathname)s:%(lineno)d
+Module:             %(module)s
+Function:           %(funcName)s
+Time:               %(asctime)s
+
+Message:
+
+%(message)s
+'''))
+            app.logger.addHandler(mail_handler)
+
+
+__all__ = ["ProductionConfig"]
+
 
 
 __all__ = ["ProductionConfig"]

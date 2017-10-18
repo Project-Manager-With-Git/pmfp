@@ -8,7 +8,9 @@ WINDOWS_ENV_BLACKDICT = {
     "sanic": "set SANIC_NO_UVLOOP=true&set SANIC_NO_UJSON=true&{python_path} -m pip install git+https://github.com/channelcat/sanic.git"
 }
 WINDOWS_CONDA_BLACKDICT = {
-    "sanic": "set SANIC_NO_UVLOOP=true&set SANIC_NO_UJSON=true&{python_path} -m pip install git+https://github.com/channelcat/sanic.git"
+    "sanic": "set SANIC_NO_UVLOOP=true&set SANIC_NO_UJSON=true&{python_path} -m pip install git+https://github.com/channelcat/sanic.git",
+    "flask-bootstrap": "{python_path} -m pip install flask-bootstrap",
+    "boom": "{python_path} -m pip install boom"
 }
 
 PYTHON_REQUIREMENTS_PATH = {
@@ -53,11 +55,12 @@ class InstallMixin:
                     command = "{python_path} -m pip install {line}".format(
                         python_path=python_path, line=line)
             elif self.form.env == "conda":
-                if line in WINDOWS_ENV_BLACKDICT.keys():
-                    command = WINDOWS_ENV_BLACKDICT[line].format(
+                if line in WINDOWS_CONDA_BLACKDICT.keys():
+                    command = WINDOWS_CONDA_BLACKDICT[line].format(
                         python_path=python_path)
                 else:
-                    command = "conda install -y {line} -p env".format(line=line)
+                    command = "conda install -y {line} -p env".format(
+                        line=line)
             else:
                 print("unknown env!")
                 return False

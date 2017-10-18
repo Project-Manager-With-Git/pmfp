@@ -1,4 +1,5 @@
 import shutil
+import json
 from string import Template
 from pathlib import Path
 
@@ -116,12 +117,28 @@ if __name__ == '__main__':
     runner.run(test_suite)
 """)
 
+WEB_STRESS_TEST = dict(url="http://localhost:5000/",
+                       requests=100,
+                       concurrency=10,
+                       duration=0,
+                       method="GET",
+                       data=None,
+                       ct='text/plain',
+                       auth=None,
+                       headers=None, 
+                       pre_hook=None, 
+                       post_hook=None, 
+                       quiet=False)
+
 
 class InitTestMixin:
     """需要InstallMixin,Temp2pyMixin
     """
 
     def _init_test_python(self):
+        if self.form.project_type == "web":
+            with open("stress_test.json", "w") as f:
+                json.dump(WEB_STRESS_TEST, f)
         if self.form.compiler in ["python", "cython"]:
             if self.form.project_type == "web":
                 if self.form.template not in ["flask", "sanic"]:
