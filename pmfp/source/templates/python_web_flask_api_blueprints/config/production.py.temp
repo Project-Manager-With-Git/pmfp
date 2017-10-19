@@ -19,7 +19,7 @@ class ProductionConfig(Config):
         from logging.handlers import TimedRotatingFileHandler
         from logging import Formatter
         filehandler = logging.handlers.TimedRotatingFileHandler(
-            "{name}.log".format(name=app.name),
+            "{name}.log".format(name=cls.PROJECT_NAME),
             when='midnight',
             interval=1,
             backupCount=7,

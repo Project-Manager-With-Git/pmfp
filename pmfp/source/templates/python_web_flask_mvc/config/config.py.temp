@@ -3,6 +3,7 @@ basedir = os.path.abspath(os.path.dirname("."))
 
 
 class Config:
+    PROJECT_NAME = "black box server"
     SECRET_KEY = ""
     DB_URL = {"test": 'sqlite:///' + os.path.join(basedir, 'test.db')}
     SQLALCHEMY_BINDS = {

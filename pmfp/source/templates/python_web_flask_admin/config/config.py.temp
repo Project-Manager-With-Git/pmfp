@@ -3,10 +3,11 @@ basedir = os.path.abspath(os.path.dirname("."))
 
 
 class Config:
+    PROJECT_NAME = "black box server"
+    SECRET_KEY = ""
     SQLALCHEMY_BINDS = {
        'admin_users': 'sqlite:///' + os.path.join(basedir, 'admin.db')
     }
-    SECRET_KEY = '123456790'
 
     # Create in-memory database
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'static/target.db')

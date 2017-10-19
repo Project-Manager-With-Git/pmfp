@@ -1,4 +1,5 @@
 class Config:
+    PROJECT_NAME = "black box server"
     SECRET_KEY = ""
 
     @staticmethod
