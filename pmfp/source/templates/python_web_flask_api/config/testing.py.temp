@@ -1,8 +1,6 @@
-from config.config import Config
+from config.development import DevelopementConfig
 
 
-class TestingConfig(Config):
-    pass
-
-
+class TestingConfig(DevelopementConfig):
+    SQLALCHEMY_ECHO = False
 __all__ = ["TestingConfig"]

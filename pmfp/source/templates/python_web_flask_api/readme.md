@@ -22,7 +22,7 @@
     设置了默认的环境有`default`,`dev/development`,`test/testing`,`production`4种,服务启动的时候只能使用指定的环境之一,其他的默认会使用`default`环境
 
     + `default` 环境用于开发调试和单元测试
-    + `dev/development` 环境用于性能优化和试运行
+    + `dev/development` 环境用于性能优化和试运行,使用的测试用的`werkzeug.contrib.profiler import ProfilerMiddleware`用以分析调用情况
     + `test/testing` 环境用于压力测试和线上运行测试
     + `production` 环境用于线上正式运行
 

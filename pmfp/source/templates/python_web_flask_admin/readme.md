@@ -32,11 +32,19 @@
 
     设置了默认的环境有`default`,`dev/development`,`test/testing`,`production`4种,服务启动的时候只能使用指定的环境之一,其他的默认会使用`default`环境
 
+    + `default` 环境用于开发调试和单元测试
+    + `dev/development` 环境用于性能优化和试运行,使用的测试用的`werkzeug.contrib.profiler import ProfilerMiddleware`用以分析调用情况
+    + `test/testing` 环境用于压力测试和线上运行测试
+    + `production` 环境用于线上正式运行
+
 + server 定义使用的服务器
 
     设置了默认的环境有`default`,`dev/development`,`test/testing`,`production`4种,服务启动的时候只能使用指定的环境之一,其他的默认会使用`default`环境.
 
-    `test/testing`和`production`设置的是默认使用gevent来跑服务,而其他两个都是使用自带的服务器,并且是debug模式
+    + `test/testing`和`production`设置的是默认使用gevent来跑服务,而其他两个都是使用自带的服务器,
+    + `default`使用debug模式
+    + `dev`则使用`werkzeug`的`ProfilerMiddleware`进行调用的cpu资源使用检测
+
 
 + static 静态文件地址
 
