@@ -86,22 +86,6 @@ class InitPythonMixin:
         print("init python script done!")
         return True
 
-    def _init_python_celery(self, args):
-        obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
-            compiler="python",
-            project_type="celery",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
-            with_dockerfile=args.without_dockerfile)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init python celery project done!")
-        return True
-
     def _python_default(self, args):
         obj = ProjectInfo.input_info(
             template="simple",
@@ -136,7 +120,8 @@ class InitPythonMixin:
             "sanic_api", "flask_api",
             "sanic_api_blueprints", "flask_api_blueprints",
             "sanic_mvc", "flask_mvc",
-            "sanic_blueprints", "flask_blueprints"],
+            "sanic_blueprints", "flask_blueprints",
+            'celery'],
             default="flask")
         web_parsers.add_argument(
             '--without_dockerfile', action='store_false')
@@ -206,24 +191,6 @@ class InitPythonMixin:
         script_parsers.add_argument(
             '--install', action='store_true')
         script_parsers.set_defaults(func=self._init_python_script)
-
-        # init python celery command
-        celery_parsers = subparsers.add_parser(
-            "celery", aliases=["C"], help="init a celery project")
-        celery_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        celery_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
-            default="simple")
-        celery_parsers.add_argument(
-            '--without_test', action='store_false')
-        celery_parsers.add_argument(
-            '--without_docs', action='store_false')
-        celery_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        celery_parsers.add_argument(
-            '--install', action='store_true')
-        celery_parsers.set_defaults(func=self._init_python_celery)
 
         args = parser.parse_args(self.argv[1:])
         args.func(args)

@@ -17,6 +17,7 @@ from pmfp.commands.doc_command import doc
 from pmfp.commands.new_command import new
 from pmfp.commands.flask_command import flask
 from pmfp.commands.sanic_command import sanic
+from pmfp.commands.celery_command import celery
 from pmfp.commands.vue_command import vue
 
 if sys.version_info[0] != 3:
@@ -236,6 +237,16 @@ shortcut:
             "blueprints"],
             default="simple")
         parser.set_defaults(func=sanic)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("sanic init done!")
+
+    def celery(self):
+        parser = argparse.ArgumentParser(
+            description='initialise a celery project')
+        parser.add_argument(
+            '-e', '--env', type=str, choices=["env", "conda"], default="env")
+        parser.set_defaults(func=celery)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
         print("sanic init done!")
