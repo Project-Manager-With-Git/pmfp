@@ -21,5 +21,5 @@ def celery(argv):
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
         obj.init_project(install=True)
-        print("init sanic application done!")
+        print("init celery application done!")
         return True
