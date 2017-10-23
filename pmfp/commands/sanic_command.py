@@ -6,7 +6,8 @@ SANIC_TEMPLATE = {
     "simple": "sanic",
     "api": "sanic_api",
     "mvc": "sanic_mvc",
-    "blueprints": "sanic_blueprints"
+    "blueprints": "sanic_api_blueprints",
+    "socketio":"sanic_socketio"
 }
 
 

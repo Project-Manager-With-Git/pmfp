@@ -115,12 +115,11 @@ class InitPythonMixin:
             '-e', '--env', type=str, choices=["env", "conda"], default="env")
         web_parsers.add_argument('-t', '--template', type=str, choices=[
             "sanic", "flask",
-            "sanic_admin", "flask_admin", "flask_api_admin",
+            "flask_admin", "flask_api_admin",
             "sanic_socketio", "flask_socketio"
             "sanic_api", "flask_api",
             "sanic_api_blueprints", "flask_api_blueprints",
             "sanic_mvc", "flask_mvc",
-            "sanic_blueprints", "flask_blueprints",
             'celery'],
             default="flask")
         web_parsers.add_argument(
