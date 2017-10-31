@@ -15,13 +15,13 @@ class DocMixin:
 
             if self.form.project_type == "script":
                 print("building apidoc")
-                command = "sphinx-apidoc -o apidoc {self.meta.project_name}".format(
+                command = "sphinx-apidoc -o document {self.meta.project_name}".format(
                     self=self)
                 subprocess.call(command, shell=True)
-                print("build apidoc done!")
+                print("build document done!")
             else:
                 print("building apidoc")
-                command = "sphinx-apidoc -o apidoc {self.meta.project_name}".format(
+                command = "sphinx-apidoc -o document {self.meta.project_name}".format(
                     self=self)
                 subprocess.call(command, shell=True)
                 print("build apidoc done!")
