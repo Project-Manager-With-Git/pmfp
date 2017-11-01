@@ -40,6 +40,7 @@ class UploadMixin:
         else:
             if self.form.compiler in ["cython", "python"]:
                 if remote:
+                    print("remote")
                     path = self.form.upload_remote
                     command = "python setup.py sdist upload -r {self.form.upload_remote}".format(
                         self=self)
