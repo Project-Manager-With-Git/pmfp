@@ -16,7 +16,7 @@ a simple scaffold for pythoner
 ## Feature
 
 + python's scaffold for model, command-line tool, flask, sanic, tk
-+ cpp's scaffold for header/source model
++ cython's scaffold for model, command-line tool, C/C++ wrap
 + javascript's scaffold for vue.js, simple frontend/node.js project
 
 ## Example
@@ -60,10 +60,8 @@ Documentation on github page <https://github.com/Python-Tools/pmfp/>
 
 ## TODO
 
-+ more cpp template
 + more js template
 + template for tensorflow
 + template for cuda,opencv,opencl
 + template for gitbook
-
 

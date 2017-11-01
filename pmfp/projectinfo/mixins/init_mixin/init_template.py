@@ -78,27 +78,27 @@ class InitTemplateMixin:
             print("unknown template")
             return False
 
-    def _init_template_cpp(self):
-        if self.form.template == "source":
-            if self.with_test:
-                command = "conan new -s -t {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
-                    self=self)
-            else:
-                command = "conan new -s {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
-                    self=self)
+    # def _init_template_cpp(self):
+    #     if self.form.template == "source":
+    #         if self.with_test:
+    #             command = "conan new -s -t {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
+    #                 self=self)
+    #         else:
+    #             command = "conan new -s {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
+    #                 self=self)
 
-        elif self.form.template == "header":
-            if self.with_test:
-                command = "conan new -i -t {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
-                    self=self)
-            else:
-                command = "conan new -i {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
-                    self=self)
-        else:
-            print("unknown template")
-            return False
-        subprocess.call(command, shell=True)
-        return True
+    #     elif self.form.template == "header":
+    #         if self.with_test:
+    #             command = "conan new -i -t {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
+    #                 self=self)
+    #         else:
+    #             command = "conan new -i {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status}".format(
+    #                 self=self)
+    #     else:
+    #         print("unknown template")
+    #         return False
+    #     subprocess.call(command, shell=True)
+    #     return True
 
     def _init_template(self):
         """初始化模板
@@ -107,10 +107,10 @@ class InitTemplateMixin:
             "source/templates")
         local_path = Path(".")
 
-        if self.form.compiler == "cpp":
-            self._init_template_cpp()
+        # if self.form.compiler == "cpp":
+        #     self._init_template_cpp()
 
-        elif self.form.compiler == "node":
+        if self.form.compiler == "node":
             self._init_template_node()
 
         elif self.form.compiler in ["python", "cython"]:

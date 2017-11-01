@@ -21,6 +21,7 @@ class PythonPathMixin:
                 print("unknown env for python/cython!")
                 return False
         return str(python_path)
+
     def _get_python_path(self):
         if platform.system() == 'Windows':
             if self.form.env == "env":

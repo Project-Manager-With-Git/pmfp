@@ -1,12 +1,13 @@
 import time
 import subprocess
+import configparser
 from pathlib import Path
 
 
 class UploadMixin:
 
-    def upload(self, remote=False):
-        if argv.git or args.git == []:
+    def upload(self, git=None, remote=False):
+        if git or git == [] or git == "":
             here = Path(".").absolute()
             if not here.joinpath(".git").exists():
                 print("upload to git should have a .git dir in root path")
@@ -22,10 +23,10 @@ class UploadMixin:
                 subprocess.check_call(["git", "add", "."])
                 now_timestamp = time.time()
                 time_ = time.ctime(now_timestamp)
-                if args.git == []:
+                if git == []:
                     msg = ""
                 else:
-                    msg = "".join(args.git) + ":"
+                    msg = "".join(git) + ":"
                 subprocess.check_call(
                     ["git", "commit", "-m", "{msg}{time}".format(msg=msg, time=time_)])
                 subprocess.check_call("git pull".split(" "))
@@ -38,40 +39,32 @@ class UploadMixin:
                 return True
         else:
             if self.form.compiler in ["cython", "python"]:
-                home = Path.home()
-                if not home.joinpath(".pypirc").exists():
-                    print("pypi upload should have a .pypirc file in home path")
-                    return False
+                if remote:
+                    path = self.form.upload_remote
+                    command = "python setup.py sdist upload -r {self.form.upload_remote}".format(
+                        self=self)
+                    subprocess.call(command, shell=True)
+
+                    command = "python setup.py bdist_wheel upload -r {self.form.upload_remote}".format(
+                        self=self)
+                    subprocess.call(command, shell=True)
+                    print("upload package to {path} done!".format(path=path))
+                    return True
                 else:
-                    if remote:
-                        path = self.form.upload_remote
-                        command = "python setup.py sdist upload -r {self.form.upload_remote}".format(
-                            self=self)
-                        subprocess.call(command, shell=True)
-
-                        command = "python setup.py bdist_wheel upload -r {self.form.upload_remote}".format(
-                            self=self)
-                        subprocess.call(command, shell=True)
-
-                    else:
+                    home = Path.home()
+                    if home.joinpath(".pypirc").exists():
                         path = "pypi"
                         command = "python setup.py sdist upload"
                         subprocess.call(command, shell=True)
 
                         command = "python setup.py bdist_wheel upload"
                         subprocess.call(command, shell=True)
-
-                    print("upload package to {path} done!".format(path=path))
-                    return True
-
-            elif self.form.compiler == "cpp":
-                if remote:
-                    command = "conan upload {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status} --all -r {self.form.upload_remote}".format(
-                        self=self)
-                else:
-                    command = "conan upload {self.meta.project_name}/{self.meta.version}@{self.author.author}/{self.meta.status} --all -r conan-transit".format(
-                        self=self)
-                subprocess.call(command, shell=True)
+                        print(
+                            "upload package to {path} done!".format(path=path))
+                        return True
+                    else:
+                        print("pypi upload should have a .pypirc file in home path")
+                        return False
 
             elif self.form.compiler == "node":
                 if remote:

@@ -66,7 +66,7 @@ class BuildMixin:
         elif self.form.compiler == "cython":
             print('build cython model')
             command = 'python setup.py build_ext --inplace'
-            subprocess.check_call(command0)
+            subprocess.check_call(command)
             print('build cython model done!')
             if self.form.project_type in ["script"]:
                 print("script do not need to build")

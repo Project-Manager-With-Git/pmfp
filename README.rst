@@ -22,7 +22,6 @@ keywords:scaffold,tool,python,js,cpp
 Feature
 ----------------------
 * python's scaffold for model, command-line tool, flask, sanic, tk
-* cpp's scaffold for header/source model
 * javascript's scaffold for vue.js, simple frontend/node.js project
 
 Example

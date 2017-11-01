@@ -54,21 +54,21 @@ class InitCythonMixin:
         print("init cython script done!")
         return True
 
-    def _init_cython_celery(self, args):
-        obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
-            compiler="cython",
-            project_type="celery",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
-            with_dockerfile=args.without_dockerfile)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init cython celery project done!")
-        return True
+    # def _init_cython_celery(self, args):
+    #     obj = ProjectInfo.input_info(
+    #         template=args.template,
+    #         env=args.env,
+    #         compiler="cython",
+    #         project_type="celery",
+    #         with_test=args.without_test,
+    #         with_docs=args.without_docs,
+    #         with_dockerfile=args.without_dockerfile)
+    #     path = Path(".pmfprc")
+    #     with open(str(path), "w") as f:
+    #         json.dump(obj.to_dict(), f)
+    #     obj.init_project(args.install)
+    #     print("init cython celery project done!")
+    #     return True
 
     def cython(self):
         parser = argparse.ArgumentParser(
@@ -102,7 +102,7 @@ class InitCythonMixin:
         model_parsers.add_argument(
             '-e', '--env', type=str, choices=["env", "conda"], default="env")
         model_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
+            "simple", "math", "wrap"],
             default="simple")
         model_parsers.add_argument(
             '--without_test', action='store_false')
@@ -128,22 +128,22 @@ class InitCythonMixin:
         script_parsers.set_defaults(func=self._init_cython_script)
 
         # init python celery command
-        celery_parsers = subparsers.add_parser(
-            "celery", aliases=["C"], help="init a celery project for cython")
-        celery_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        celery_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
-            default="simple")
-        celery_parsers.add_argument(
-            '--without_test', action='store_false')
-        celery_parsers.add_argument(
-            '--without_docs', action='store_false')
-        celery_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        celery_parsers.add_argument(
-            '--install', action='store_true')
-        celery_parsers.set_defaults(func=self._init_cython_celery)
+        # celery_parsers = subparsers.add_parser(
+        #     "celery", aliases=["C"], help="init a celery project for cython")
+        # celery_parsers.add_argument(
+        #     '-e', '--env', type=str, choices=["env", "conda"], default="env")
+        # celery_parsers.add_argument('-t', '--template', type=str, choices=[
+        #     "simple", "math"],
+        #     default="simple")
+        # celery_parsers.add_argument(
+        #     '--without_test', action='store_false')
+        # celery_parsers.add_argument(
+        #     '--without_docs', action='store_false')
+        # celery_parsers.add_argument(
+        #     '--without_dockerfile', action='store_false')
+        # celery_parsers.add_argument(
+        #     '--install', action='store_true')
+        # celery_parsers.set_defaults(func=self._init_cython_celery)
 
         args = parser.parse_args(self.argv[1:])
         args.func(args)

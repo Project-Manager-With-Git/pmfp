@@ -133,6 +133,7 @@ shortcut:
             description='upload project to a remote repository')
         parser.add_argument('-g', '--git', type=str,
                                   nargs='*', required=False)
+        parser.add_argument('-r', '--remote', action='store_true',required=False)
         parser.set_defaults(func=upload)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
