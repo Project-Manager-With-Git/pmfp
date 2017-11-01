@@ -16,7 +16,7 @@ Desc
 a simple scaffold for pythoner
 
 
-keywords:scaffold,tool,python,js,cpp
+keywords:scaffold,tool,python,js
 
 
 Feature
@@ -78,7 +78,8 @@ then run the `ppm init`
 
 TODO
 -----------------------------------
-* more cpp template
+
+* C/C++ support
 * more js template
 * template for tensorflow
 * template for cuda,opencv,opencl

@@ -60,6 +60,7 @@ Documentation on github page <https://github.com/Python-Tools/pmfp/>
 
 ## TODO
 
++ C/C++ support
 + more js template
 + template for tensorflow
 + template for cuda,opencv,opencl
