@@ -2,53 +2,55 @@
 pmfp
 ===============================
 
-version: 0.4.7
+version: 1.0.0
+
+status: dev
 
 author: hsz
 
 email: hsz1273327@gmail.com
 
+Desc
+--------------------------------
+
+a simple scaffold for pythoner
+
+
+keywords:scaffold,tool,python,js,cpp
+
+
 Feature
 ----------------------
-
-* python's package manager support venv and conda
-
-* code template with test, document, requirements and virtual environment for
-different situation such as script, model, GUI, web.
-
-* easy to build a python application or model
-
-* easy to test a python application or model, include static type check
-
-* project status manager
-
-* run script with virtual env  in project's root
-
-* upload project to git repository
-
-* upload model to pypi
-
-* docker support
-
+* python's scaffold for model, command-line tool, flask, sanic, tk
+* javascript's scaffold for vue.js, simple frontend/node.js project
 
 Example
 -------------------------------
 
 .. code:: shell
-    ppm init
-    ppm install
-    ppm build
-    ppm doc
-    ppm test
-    ppm clean
-    ppm status
-    ppm update
-    ppm rename
-    ppm upload
-    ppm run
-    ppm docker
 
+usage: ppm <command> [<args>]
 
+The most commonly used ppm commands are:
+   init        initialise a project
+   clean       clean a project
+   install     install a package
+   status      see the project's info
+   update      update the project's version and status
+   upload      upload your project to a git repository, a docker repository,
+               a pypi server
+   search      search for a package
+   run         run scripts for python and node
+   build       build your python project to a pyz file, wheel,egg,docker image,
+               build your cpp project to a lib or a executable file
+   test        test your project
+   doc         build your project's document
+   new         new a document,setup.py,test,dockerfile for a project
+
+shortcut:
+   flask       init flask
+   sanic       init sanic
+   vue         init vue
 
 
 
@@ -61,10 +63,11 @@ Install
 Documentation
 --------------------------------
 
-`Documentation on Readthedocs <https://github.com/Python-Tools/pmfp>`_.
+`Documentation on Readthedocs <https://github.com/Python-Tools/pmfp/>`_.
 
 
-#Bug
+
+BUG
 --------------------------------
 
 if you can not init your project,you should try to create the env by yourself first
@@ -75,10 +78,10 @@ then run the `ppm init`
 
 TODO
 -----------------------------------
-* more tests
+* more cpp template
+* more js template
+* template for tensorflow
+* template for cuda,opencv,opencl
+* template for gitbook
 
 
-
-Limitations
------------
-* only support python3.5+

@@ -1,0 +1,34 @@
+{
+    "name": "ts_exa",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "docs": "typedoc --out ./doc/ js/src/*.ts",
+        "build": "gulp",
+        "test": "istanbul cover _mocha -- --compilers ts:ts-node/register"
+    },
+    "author": "hsz",
+    "license": "ISC",
+    "devDependencies": {
+        "istanbul":"^1.0.0",
+        "typedoc":"0.5.5",
+        "@types/node": "^7.0.0",
+        "@types/chai":"^3.4.34",
+        "@types/mocha":"^2.2.37",
+        "ts-loader": "^1.3.3",
+        "ts-node":"^2.0.0",
+        "typescript": "^2.1.5",
+        "chai": "^3.5.0",
+        "gulp": "^3.9.1",
+        "gulp-clean": "^0.3.2",
+        "gulp-minify-html": "^1.0.6",
+        "gulp-notify": "^2.2.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-uglify": "^1.5.3",
+        "gulp-util": "^3.0.7",
+        "mocha": "^2.4.5",
+        "mochawesome": "^1.3.2",
+        "webpack": "^1.12.14"
+    }
+}

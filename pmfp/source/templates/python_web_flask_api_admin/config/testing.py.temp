@@ -1,0 +1,8 @@
+from config.development import DevelopementConfig
+
+
+class TestingConfig(DevelopementConfig):
+    SQLALCHEMY_ECHO = False
+    
+
+__all__ = ["TestingConfig"]

@@ -1,0 +1,16 @@
+from flask_restplus import Api
+from flask import Blueprint
+from apis.namespaces import ping
+from .namespaces import cat
+
+blueprint = Blueprint('apiv2', __name__, url_prefix='/api/v2')
+api = Api(blueprint,
+          title='Test Api',
+          version='2.0',
+          description='A description'
+          )
+
+api.add_namespace(cat, path='/test/cat')
+api.add_namespace(ping, path='/test/ping')
+
+

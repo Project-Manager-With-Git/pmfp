@@ -1,0 +1,17 @@
+{
+"compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "module": "commonjs",
+        "removeComments": true,
+        "sourceMap": false,
+        "types": ["chai","mocha"]
+    },
+    "include": [
+        "js/src/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -1,0 +1,24 @@
+class Config:
+    SECRET_KEY = ""
+    DB_URL = {"test": "sqlite:///test.db"}
+
+    @staticmethod
+    def init_app(app):
+        if not app.debug:
+            import logging
+            from logging.handlers import TimedRotatingFileHandler
+            from logging import Formatter
+            filehandler = logging.handlers.TimedRotatingFileHandler(
+                "{name}.log".format(name=app.name),
+                when='midnight',
+                interval=1,
+                backupCount=7,
+                utc=True)
+            # 设置后缀名称，跟strftime的格式一样
+            filehandler.suffix = "%Y-%m-%d"
+            filehandler.setLevel(logging.WARNING)
+            filehandler.setFormatter(Formatter(
+                '%(asctime)s %(levelname)s: %(message)s '
+                '[in %(pathname)s: module:%(module)s - function: %(funcName)s-line: %(lineno)d]'
+            ))
+            app.logger.addHandler(filehandler)
