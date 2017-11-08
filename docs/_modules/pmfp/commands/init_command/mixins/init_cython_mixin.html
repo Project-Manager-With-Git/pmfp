@@ -1,0 +1,242 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pmfp.commands.init_command.mixins.init_cython_mixin &#8212; pmfp  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.commands.init_command.mixins.init_cython_mixin</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">pmfp.projectinfo</span> <span class="k">import</span> <span class="n">ProjectInfo</span>
+
+
+<div class="viewcode-block" id="InitCythonMixin"><a class="viewcode-back" href="../../../../../pmfp.commands.init_command.mixins.html#pmfp.commands.init_command.mixins.init_cython_mixin.InitCythonMixin">[docs]</a><span class="k">class</span> <span class="nc">InitCythonMixin</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">_init_cython_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">ProjectInfo</span><span class="o">.</span><span class="n">input_info</span><span class="p">(</span>
+            <span class="n">template</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">template</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">env</span><span class="p">,</span>
+            <span class="n">compiler</span><span class="o">=</span><span class="s2">&quot;cython&quot;</span><span class="p">,</span>
+            <span class="n">project_type</span><span class="o">=</span><span class="s2">&quot;command&quot;</span><span class="p">,</span>
+            <span class="n">with_test</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">without_test</span><span class="p">,</span>
+            <span class="n">with_docs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">without_docs</span><span class="p">,</span>
+            <span class="n">with_dockerfile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">without_dockerfile</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.pmfprc&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">init_project</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;init cython command-line application done!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_init_cython_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">ProjectInfo</span><span class="o">.</span><span class="n">input_info</span><span class="p">(</span>
+            <span class="n">template</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">template</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">env</span><span class="p">,</span>
+            <span class="n">compiler</span><span class="o">=</span><span class="s2">&quot;cython&quot;</span><span class="p">,</span>
+            <span class="n">project_type</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
+            <span class="n">with_test</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">without_test</span><span class="p">,</span>
+            <span class="n">with_docs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">without_docs</span><span class="p">,</span>
+            <span class="n">with_dockerfile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">without_dockerfile</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.pmfprc&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">init_project</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;init cython model done!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_init_cython_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">ProjectInfo</span><span class="o">.</span><span class="n">input_info</span><span class="p">(</span>
+            <span class="n">template</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">template</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">env</span><span class="p">,</span>
+            <span class="n">compiler</span><span class="o">=</span><span class="s2">&quot;cython&quot;</span><span class="p">,</span>
+            <span class="n">project_type</span><span class="o">=</span><span class="s2">&quot;script&quot;</span><span class="p">,</span>
+            <span class="n">with_test</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">with_docs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">with_dockerfile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.pmfprc&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">init_project</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">install</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;init cython script done!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># def _init_cython_celery(self, args):</span>
+    <span class="c1">#     obj = ProjectInfo.input_info(</span>
+    <span class="c1">#         template=args.template,</span>
+    <span class="c1">#         env=args.env,</span>
+    <span class="c1">#         compiler=&quot;cython&quot;,</span>
+    <span class="c1">#         project_type=&quot;celery&quot;,</span>
+    <span class="c1">#         with_test=args.without_test,</span>
+    <span class="c1">#         with_docs=args.without_docs,</span>
+    <span class="c1">#         with_dockerfile=args.without_dockerfile)</span>
+    <span class="c1">#     path = Path(&quot;.pmfprc&quot;)</span>
+    <span class="c1">#     with open(str(path), &quot;w&quot;) as f:</span>
+    <span class="c1">#         json.dump(obj.to_dict(), f)</span>
+    <span class="c1">#     obj.init_project(args.install)</span>
+    <span class="c1">#     print(&quot;init cython celery project done!&quot;)</span>
+    <span class="c1">#     return True</span>
+
+<div class="viewcode-block" id="InitCythonMixin.cython"><a class="viewcode-back" href="../../../../../pmfp.commands.init_command.mixins.html#pmfp.commands.init_command.mixins.init_cython_mixin.InitCythonMixin.cython">[docs]</a>    <span class="k">def</span> <span class="nf">cython</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s1">&#39;initialise a cython project&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">args</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">))</span>
+
+        <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+            <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;project_type&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;init a cython project&quot;</span><span class="p">)</span>
+
+        <span class="c1"># init python command-line command</span>
+        <span class="n">command_parsers</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+            <span class="s2">&quot;command-line&quot;</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;init a cython command-line project&quot;</span><span class="p">)</span>
+        <span class="n">command_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="s1">&#39;--env&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="s2">&quot;conda&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+        <span class="n">command_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--template&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="s2">&quot;math&quot;</span><span class="p">],</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span>
+        <span class="n">command_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--without_test&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">)</span>
+        <span class="n">command_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--without_docs&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">)</span>
+        <span class="n">command_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--without_dockerfile&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">)</span>
+        <span class="n">command_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--install&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+        <span class="n">command_parsers</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_init_cython_command</span><span class="p">)</span>
+
+        <span class="c1"># init python model command</span>
+        <span class="n">model_parsers</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;init a cython model project&quot;</span><span class="p">)</span>
+        <span class="n">model_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="s1">&#39;--env&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="s2">&quot;conda&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+        <span class="n">model_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--template&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="s2">&quot;wrap&quot;</span><span class="p">],</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span>
+        <span class="n">model_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--without_test&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">)</span>
+        <span class="n">model_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--without_docs&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">)</span>
+        <span class="n">model_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--without_dockerfile&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">)</span>
+        <span class="n">model_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--install&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+        <span class="n">model_parsers</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_init_cython_model</span><span class="p">)</span>
+
+        <span class="c1"># init python script command</span>
+        <span class="n">script_parsers</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+            <span class="s2">&quot;script&quot;</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;init a cython script&quot;</span><span class="p">)</span>
+        <span class="n">script_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;-e&#39;</span><span class="p">,</span> <span class="s1">&#39;--env&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="s2">&quot;conda&quot;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+        <span class="n">script_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--template&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="s2">&quot;math&quot;</span><span class="p">],</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span>
+
+        <span class="n">script_parsers</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s1">&#39;--install&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+        <span class="n">script_parsers</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_init_cython_script</span><span class="p">)</span>
+
+        <span class="c1"># init python celery command</span>
+        <span class="c1"># celery_parsers = subparsers.add_parser(</span>
+        <span class="c1">#     &quot;celery&quot;, aliases=[&quot;C&quot;], help=&quot;init a celery project for cython&quot;)</span>
+        <span class="c1"># celery_parsers.add_argument(</span>
+        <span class="c1">#     &#39;-e&#39;, &#39;--env&#39;, type=str, choices=[&quot;env&quot;, &quot;conda&quot;], default=&quot;env&quot;)</span>
+        <span class="c1"># celery_parsers.add_argument(&#39;-t&#39;, &#39;--template&#39;, type=str, choices=[</span>
+        <span class="c1">#     &quot;simple&quot;, &quot;math&quot;],</span>
+        <span class="c1">#     default=&quot;simple&quot;)</span>
+        <span class="c1"># celery_parsers.add_argument(</span>
+        <span class="c1">#     &#39;--without_test&#39;, action=&#39;store_false&#39;)</span>
+        <span class="c1"># celery_parsers.add_argument(</span>
+        <span class="c1">#     &#39;--without_docs&#39;, action=&#39;store_false&#39;)</span>
+        <span class="c1"># celery_parsers.add_argument(</span>
+        <span class="c1">#     &#39;--without_dockerfile&#39;, action=&#39;store_false&#39;)</span>
+        <span class="c1"># celery_parsers.add_argument(</span>
+        <span class="c1">#     &#39;--install&#39;, action=&#39;store_true&#39;)</span>
+        <span class="c1"># celery_parsers.set_defaults(func=self._init_cython_celery)</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InitCythonMixin.cy"><a class="viewcode-back" href="../../../../../pmfp.commands.init_command.mixins.html#pmfp.commands.init_command.mixins.init_cython_mixin.InitCythonMixin.cy">[docs]</a>    <span class="k">def</span> <span class="nf">cy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cython</span><span class="p">()</span></div></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;InitCythonMixin&quot;</span><span class="p">]</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../index.html">Module code</a><ul>
+  <li><a href="../../init_command.html">pmfp.commands.init_command</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

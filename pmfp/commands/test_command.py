@@ -4,6 +4,7 @@ from pmfp.projectinfo import ProjectInfo
 from boom.boom import load, print_stats
 
 
+
 def test(argv):
     path = Path(".pmfprc")
     if path.exists():

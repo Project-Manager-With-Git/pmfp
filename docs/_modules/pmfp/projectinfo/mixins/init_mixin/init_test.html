@@ -1,0 +1,351 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pmfp.projectinfo.mixins.init_mixin.init_test &#8212; pmfp  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.projectinfo.mixins.init_mixin.init_test</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">Template</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+
+<span class="n">PYTHON_WEB_FLASK_SIMPLE</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;from $project_name import app</span>
+<span class="s2">import unittest</span>
+<span class="s2">import json</span>
+
+<span class="s2">def setUpModule():</span>
+<span class="s2">    print(&quot;setUpModule&quot;)</span>
+
+
+<span class="s2">def tearDownModule():</span>
+<span class="s2">    print(&quot;tearUpModule&quot;)</span>
+
+
+<span class="s2">class FlaskTest(unittest.TestCase):</span>
+<span class="s2">    @classmethod</span>
+<span class="s2">    def setUpClass(cls):</span>
+<span class="s2">        print(&quot;setUpClass&quot;)</span>
+
+<span class="s2">    @classmethod</span>
+<span class="s2">    def tearDownClass(cls):</span>
+<span class="s2">        print(&quot;tearDownClass&quot;)</span>
+
+<span class="s2">    def setUp(self):</span>
+<span class="s2">        self.app = app.test_client()</span>
+<span class="s2">        print(&#39;set up&#39;)</span>
+
+<span class="s2">    def tearDown(self):</span>
+<span class="s2">        print(&quot;tear down&quot;)</span>
+
+<span class="s2">    def test_ping(self):</span>
+<span class="s2">        rv = self.app.get(&#39;/ping&#39;)</span>
+<span class="s2">        self.assertEqual(json.loads(rv.data)[&quot;msg&quot;], &#39;pong&#39;)</span>
+
+
+
+<span class="s2">def add_suite():</span>
+<span class="s2">    suite = unittest.TestSuite()</span>
+<span class="s2">    suite.addTest(TestAdd(&quot;test_ping&quot;))</span>
+<span class="s2">    return suite</span>
+
+
+<span class="s2">if __name__ == &#39;__main__&#39;:</span>
+<span class="s2">    runner = unittest.TextTestRunner(verbosity=2)</span>
+<span class="s2">    test_suite = add_suite()</span>
+<span class="s2">    runner.run(test_suite)</span>
+
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">PYTHON_WEB_SANIC_SIMPLE</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;from $project_name import app</span>
+<span class="s2">import unittest</span>
+
+
+<span class="s2">def setUpModule():</span>
+<span class="s2">    print(&quot;setUpModule&quot;)</span>
+
+
+<span class="s2">def tearDownModule():</span>
+<span class="s2">    print(&quot;tearUpModule&quot;)</span>
+
+
+<span class="s2">class FlaskTest(unittest.TestCase):</span>
+<span class="s2">    @classmethod</span>
+<span class="s2">    def setUpClass(cls):</span>
+<span class="s2">        print(&quot;setUpClass&quot;)</span>
+
+<span class="s2">    @classmethod</span>
+<span class="s2">    def tearDownClass(cls):</span>
+<span class="s2">        print(&quot;tearDownClass&quot;)</span>
+
+<span class="s2">    def setUp(self):</span>
+<span class="s2">        self.app = app.test_client</span>
+<span class="s2">        print(&#39;set up&#39;)</span>
+
+<span class="s2">    def tearDown(self):</span>
+<span class="s2">        print(&quot;tear down&quot;)</span>
+
+<span class="s2">    def test_ping(self):</span>
+<span class="s2">        request, response = self.app.get(&#39;/ping&#39;)</span>
+<span class="s2">        self.assertEqual(response.json[&quot;msg&quot;], &#39;pong&#39;)</span>
+
+
+<span class="s2">def add_suite():</span>
+<span class="s2">    suite = unittest.TestSuite()</span>
+<span class="s2">    suite.addTest(TestAdd(&quot;test_ping&quot;))</span>
+<span class="s2">    return suite</span>
+
+
+<span class="s2">if __name__ == &#39;__main__&#39;:</span>
+<span class="s2">    runner = unittest.TextTestRunner(verbosity=2)</span>
+<span class="s2">    test_suite = add_suite()</span>
+<span class="s2">    runner.run(test_suite)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+
+<span class="n">PYTHON_WEB_TEST</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;import sys</span>
+<span class="s2">from pathlib import Path</span>
+<span class="s2">file_path = Path(__file__)</span>
+<span class="s2">target_pyz_path = file_path.parent.parent.joinpath(&quot;$project_name.pyz&quot;)</span>
+<span class="s2">target_project_path = file_path.parent.parent.joinpath(&quot;$project_name&quot;)</span>
+<span class="s2">if target_pyz_path.exists():</span>
+<span class="s2">    target = str(target_pyz_path)</span>
+<span class="s2">else:</span>
+<span class="s2">    target = str(target_project_path)</span>
+<span class="s2">sys.path.insert(0, target)</span>
+
+<span class="s2">from app_creater import create_app</span>
+<span class="s2">from config import choose_conf</span>
+
+<span class="s2">app = create_app(choose_conf(&quot;default&quot;))</span>
+
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">PYTHON_PROJECTS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{project_name}</span><span class="s1">.lib.echo&#39;</span><span class="p">,</span>
+                   <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{project_name}</span><span class="s1">.echo&#39;</span><span class="p">,</span>
+                   <span class="s2">&quot;script&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{project_name}</span><span class="s2">&quot;</span>
+                   <span class="p">}</span>
+
+<span class="n">PYTHON_TEST</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;from $project import echo</span>
+<span class="s2">import unittest</span>
+
+
+<span class="s2">def setUpModule():</span>
+<span class="s2">    print(&quot;setUpModule&quot;)</span>
+
+
+<span class="s2">def tearDownModule():</span>
+<span class="s2">    print(&quot;tearUpModule&quot;)</span>
+
+
+<span class="s2">class TestAdd(unittest.TestCase):</span>
+<span class="s2">    @classmethod</span>
+<span class="s2">    def setUpClass(cls):</span>
+<span class="s2">        print(&quot;setUpClass&quot;)</span>
+
+<span class="s2">    @classmethod</span>
+<span class="s2">    def tearDownClass(cls):</span>
+<span class="s2">        print(&quot;tearDownClass&quot;)</span>
+
+<span class="s2">    def setUp(self):</span>
+<span class="s2">        print(&quot;instance setUp&quot;)</span>
+
+<span class="s2">    def tearDown(self):</span>
+<span class="s2">        print(&quot;instance tearDown&quot;)</span>
+
+<span class="s2">    def test_echo(self):</span>
+<span class="s2">        self.assertEqual(echo(&#39;hello&#39;), &#39;hello&#39;)</span>
+
+
+<span class="s2">def add_suite():</span>
+<span class="s2">    suite = unittest.TestSuite()</span>
+<span class="s2">    suite.addTest(TestAdd(&quot;test_echo&quot;))</span>
+<span class="s2">    return suite</span>
+
+
+<span class="s2">if __name__ == &#39;__main__&#39;:</span>
+<span class="s2">    runner = unittest.TextTestRunner(verbosity=2)</span>
+<span class="s2">    test_suite = add_suite()</span>
+<span class="s2">    runner.run(test_suite)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">WEB_STRESS_TEST</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://localhost:5000/&quot;</span><span class="p">,</span>
+                       <span class="n">requests</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                       <span class="n">concurrency</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                       <span class="n">duration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+                       <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">ct</span><span class="o">=</span><span class="s1">&#39;text/plain&#39;</span><span class="p">,</span>
+                       <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                       <span class="n">pre_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                       <span class="n">post_hook</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                       <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="InitTestMixin"><a class="viewcode-back" href="../../../../../pmfp.projectinfo.mixins.init_mixin.html#pmfp.projectinfo.mixins.init_mixin.init_test.InitTestMixin">[docs]</a><span class="k">class</span> <span class="nc">InitTestMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;需要InstallMixin,Temp2pyMixin</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_init_test_python</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span> <span class="o">==</span> <span class="s2">&quot;web&quot;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;stress_test.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">WEB_STRESS_TEST</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;cython&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span> <span class="o">==</span> <span class="s2">&quot;web&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">template</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;flask&quot;</span><span class="p">,</span> <span class="s2">&quot;sanic&quot;</span><span class="p">]:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;test/get_app.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="n">PYTHON_WEB_TEST</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                            <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">template</span> <span class="o">==</span> <span class="s2">&quot;flask&quot;</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;test/test_ping.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">content</span> <span class="o">=</span> <span class="n">PYTHON_WEB_FLASK_SIMPLE</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                                <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
+                            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;test/test_ping.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">content</span> <span class="o">=</span> <span class="n">PYTHON_WEB_SANIC_SIMPLE</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                                <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
+                            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;script&quot;</span><span class="p">]:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;test/test_echo.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">content</span> <span class="o">=</span> <span class="n">PYTHON_TEST</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                        <span class="n">project</span><span class="o">=</span><span class="n">PYTHON_PROJECTS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">))</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;noting to do&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_init_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">install</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化测试</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;cpp&quot;</span><span class="p">:</span>
+            <span class="c1"># cpp的测试在模板初始化那一步做</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s1">&#39;cython&#39;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;copy test template&quot;</span><span class="p">)</span>
+            <span class="n">dir_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
+                <span class="s2">&quot;source/tests&quot;</span><span class="p">)</span>
+            <span class="n">local_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">local_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">local_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; exists&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">form_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">template</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="s2">&quot;test&quot;</span>
+                <span class="k">if</span> <span class="n">dir_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">form_str</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dir_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">form_str</span><span class="p">)),</span>
+                                    <span class="nb">str</span><span class="p">(</span><span class="n">local_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;init &#39;</span> <span class="o">+</span> <span class="n">form_str</span> <span class="o">+</span> <span class="s2">&quot; not support now!&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">temp2py</span><span class="p">(</span><span class="n">local_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_test_python</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;copy test template done!&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">install</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_install_python_requirements</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#################################################&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test installed&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#################################################&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;node&quot;</span><span class="p">:</span>
+            <span class="c1"># todo node的测试先放着</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unknown compiler to init test&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;InitTestMixin&quot;</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../index.html">Module code</a><ul>
+  <li><a href="../../../projectinfo.html">pmfp.projectinfo</a><ul>
+  <li><a href="../init_mixin.html">pmfp.projectinfo.mixins.init_mixin</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

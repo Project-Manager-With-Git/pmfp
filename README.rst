@@ -2,7 +2,7 @@
 pmfp
 ===============================
 
-* version: 1.0.3
+* version: 1.0.5
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
@@ -67,11 +67,14 @@ Documentation
 BUG
 --------------------------------
 
-if you can not init your project,you should try to create the env by yourself first
+
+1. if you can not init your project,you should try to create the env by yourself first
 
 `python3 -m venv env`
 
 then run the `ppm init` 
+
+2. ppm test now can run correctly.
 
 TODO
 -----------------------------------
