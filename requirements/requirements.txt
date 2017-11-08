@@ -3,4 +3,3 @@ sphinx
 sphinxcontrib-napoleon
 recommonmark
 wheel
-conan

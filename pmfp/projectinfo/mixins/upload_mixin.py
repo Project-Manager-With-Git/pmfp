@@ -19,6 +19,8 @@ class UploadMixin:
                 parser.read(str(gitconfig))
                 path = parser['remote "origin"']['url']
                 version = self.meta.version
+                status = self.meta.status
+                timestemp = int(time.time())
                 print("push package to {path}".format(path=path))
                 subprocess.check_call(["git", "add", "."])
                 now_timestamp = time.time()
@@ -28,11 +30,21 @@ class UploadMixin:
                 else:
                     msg = "".join(git) + ":"
                 subprocess.check_call(
-                    ["git", "commit", "-m", "{msg}{time}".format(msg=msg, time=time_)])
+                    ["git", "commit", "-m", "{msg}{time}".format(msg=msg,
+                                                                 time=time_)])
                 subprocess.check_call("git pull".split(" "))
-                subprocess.check_call(["git", 'tag', '-a', "{version}".format(
-                    version=version), '-m', "'version {version}'".format(
-                    version=version)])
+                subprocess.check_call(["git",
+                                       'tag',
+                                       '-a',
+                                       "{version}-{timestemp}-{status}".format(
+                                           version=version,
+                                           status=status,
+                                           timestemp=timestemp),
+                                       '-m',
+                                       "'version: {version}-{timestemp}-{status}'".format(
+                                           version=version,
+                                           status=status,
+                                           timestemp=timestemp)])
                 subprocess.check_call("git push --tag".split(" "))
                 subprocess.check_call("git push".split(" "))
                 print("push done")

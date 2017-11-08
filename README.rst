@@ -2,13 +2,10 @@
 pmfp
 ===============================
 
-version: 1.0.0
-
-status: dev
-
-author: hsz
-
-email: hsz1273327@gmail.com
+* version: 1.0.3
+* status: dev
+* author: hsz
+* email: hsz1273327@gmail.com
 
 Desc
 --------------------------------
@@ -16,7 +13,7 @@ Desc
 a simple scaffold for pythoner
 
 
-keywords:scaffold,tool,python,js,cpp
+keywords:scaffold,tool,python,js
 
 
 Feature
@@ -78,7 +75,8 @@ then run the `ppm init`
 
 TODO
 -----------------------------------
-* more cpp template
+
+* C/C++ support
 * more js template
 * template for tensorflow
 * template for cuda,opencv,opencl

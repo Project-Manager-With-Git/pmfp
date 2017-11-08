@@ -1,7 +1,7 @@
 
 # pmfp
 
-+ version: 1.0.0
++ version: 1.0.3
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -60,6 +60,7 @@ Documentation on github page <https://github.com/Python-Tools/pmfp/>
 
 ## TODO
 
++ C/C++ support
 + more js template
 + template for tensorflow
 + template for cuda,opencv,opencl
