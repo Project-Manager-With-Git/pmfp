@@ -1,0 +1,334 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pmfp.projectinfo.mixins.init_mixin.init_setup &#8212; pmfp  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.projectinfo.mixins.init_mixin.init_setup</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">Template</span>
+
+<span class="n">MANIFEST</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">include LICENSE</span>
+<span class="s2">include README.rst</span>
+<span class="s2">recursive-include requirements *.txt</span>
+<span class="s2">recursive-include $project_name *.pyx *.pxd *.pxi *.py *.c *.h</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">PY_SETUP</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;from codecs import open</span>
+<span class="s2">from setuptools import setup, find_packages</span>
+<span class="s2">from os import path</span>
+
+<span class="s2">REQUIREMETS_DEV_FILE = &#39;requirements_dev.txt&#39;</span>
+<span class="s2">REQUIREMETS_TEST_FILE = &#39;requirements_test.txt&#39;</span>
+<span class="s2">REQUIREMETS_FILE = &#39;requirements.txt&#39;</span>
+<span class="s2">PROJECTNAME = &#39;$project_name&#39;</span>
+<span class="s2">VERSION = &#39;$version&#39;</span>
+<span class="s2">DESCRIPTION = &#39;$description&#39;</span>
+<span class="s2">URL = &#39;$url&#39;</span>
+<span class="s2">AUTHOR = &#39;$author&#39;</span>
+<span class="s2">AUTHOR_EMAIL = &#39;$author_email&#39;</span>
+<span class="s2">LICENSE = &#39;$license_&#39;</span>
+<span class="s2">CLASSIFIERS = [</span>
+<span class="s2">    &#39;Development Status :: 3 - Alpha&#39;,</span>
+<span class="s2">    &#39;Intended Audience :: Developers&#39;,</span>
+<span class="s2">    &#39;License :: OSI Approved :: $license_ License&#39;,</span>
+<span class="s2">    &#39;Programming Language :: Python :: 3.5&#39;,</span>
+<span class="s2">    &#39;Programming Language :: Python :: 3.6&#39;,</span>
+<span class="s2">    &#39;Topic :: Documentation :: Sphinx&#39;,</span>
+<span class="s2">]</span>
+<span class="s2">KEYWORDS = $keywords</span>
+<span class="s2">PACKAGES = find_packages(exclude=[&#39;contrib&#39;, &#39;docs&#39;, &#39;test&#39;])</span>
+<span class="s2">ZIP_SAFE = False</span>
+
+<span class="s2">HERE = path.abspath(path.dirname(__file__))</span>
+<span class="s2">with open(path.join(HERE, &#39;README.rst&#39;), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    LONG_DESCRIPTION = f.read()</span>
+<span class="s2">REQUIREMETS_DIR = path.join(HERE,&quot;requirements&quot;)</span>
+
+<span class="s2">with open(path.join(REQUIREMETS_DIR, REQUIREMETS_FILE), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    REQUIREMETS = f.readlines()</span>
+
+<span class="s2">with open(path.join(REQUIREMETS_DIR, REQUIREMETS_DEV_FILE), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    REQUIREMETS_DEV = f.readlines()</span>
+
+<span class="s2">with open(path.join(REQUIREMETS_DIR, REQUIREMETS_TEST_FILE), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    REQUIREMETS_TEST = f.readlines()</span>
+
+<span class="s2">setup(</span>
+<span class="s2">    name=PROJECTNAME,</span>
+<span class="s2">    version=VERSION,</span>
+<span class="s2">    description=DESCRIPTION,</span>
+<span class="s2">    long_description=LONG_DESCRIPTION,</span>
+<span class="s2">    url=URL,</span>
+<span class="s2">    author=AUTHOR,</span>
+<span class="s2">    author_email=AUTHOR_EMAIL,</span>
+<span class="s2">    license=LICENSE,</span>
+<span class="s2">    classifiers=CLASSIFIERS,</span>
+<span class="s2">    keywords=KEYWORDS,</span>
+<span class="s2">    packages=PACKAGES,</span>
+<span class="s2">    include_package_data=True,</span>
+<span class="s2">    install_requires=REQUIREMETS,</span>
+<span class="s2">    extras_require={</span>
+<span class="s2">        &#39;dev&#39;: REQUIREMETS_DEV,</span>
+<span class="s2">        &#39;test&#39;: REQUIREMETS_TEST</span>
+<span class="s2">    },</span>
+<span class="s2">    $entry_points</span>
+<span class="s2">    zip_safe=ZIP_SAFE,</span>
+<span class="s2">    data_files=[(&#39;requirements&#39;, [&#39;requirements/requirements.txt&#39;,</span>
+<span class="s2">        &#39;requirements/requirements_dev.txt&#39;,</span>
+<span class="s2">        &#39;requirements/requirements_test.txt&#39;])]</span>
+<span class="s2">)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">CYTHON_SETUP</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;from codecs import open</span>
+<span class="s2">from setuptools import setup, find_packages</span>
+<span class="s2">from os import path</span>
+<span class="s2">from Cython.Build import cythonize</span>
+<span class="s2">from Cython.Compiler import Options</span>
+
+<span class="s2">REQUIREMETS_DEV_FILE = &#39;requirements_dev.txt&#39;</span>
+<span class="s2">REQUIREMETS_TEST_FILE = &#39;requirements_test.txt&#39;</span>
+<span class="s2">REQUIREMETS_FILE = &#39;requirements.txt&#39;</span>
+<span class="s2">PROJECTNAME = &#39;$project_name&#39;</span>
+<span class="s2">VERSION = &#39;$version&#39;</span>
+<span class="s2">DESCRIPTION = &#39;$description&#39;</span>
+<span class="s2">URL = &#39;$url&#39;</span>
+<span class="s2">AUTHOR = &#39;$author&#39;</span>
+<span class="s2">AUTHOR_EMAIL = &#39;$author_email&#39;</span>
+<span class="s2">LICENSE = &#39;$license_&#39;</span>
+<span class="s2">CLASSIFIERS = [</span>
+<span class="s2">    &#39;Development Status :: 3 - Alpha&#39;,</span>
+<span class="s2">    &#39;Intended Audience :: Developers&#39;,</span>
+<span class="s2">    &#39;License :: OSI Approved :: $license_ License&#39;,</span>
+<span class="s2">    &#39;Programming Language :: Python :: 3.5&#39;,</span>
+<span class="s2">    &#39;Programming Language :: Python :: 3.6&#39;,</span>
+<span class="s2">    &#39;Topic :: Documentation :: Sphinx&#39;,</span>
+<span class="s2">]</span>
+<span class="s2">KEYWORDS = $keywords</span>
+<span class="s2">PACKAGES = find_packages(exclude=[&#39;contrib&#39;, &#39;docs&#39;, &#39;test&#39;])</span>
+<span class="s2">ZIP_SAFE = False</span>
+
+<span class="s2">HERE = path.abspath(path.dirname(__file__))</span>
+<span class="s2">with open(path.join(HERE, &#39;README.rst&#39;), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    LONG_DESCRIPTION = f.read()</span>
+<span class="s2">REQUIREMETS_DIR = path.join(HERE,&quot;requirements&quot;)</span>
+
+<span class="s2">with open(path.join(REQUIREMETS_DIR, REQUIREMETS_FILE), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    REQUIREMETS = f.readlines()</span>
+
+<span class="s2">with open(path.join(REQUIREMETS_DIR, REQUIREMETS_DEV_FILE), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    REQUIREMETS_DEV = f.readlines()</span>
+
+<span class="s2">with open(path.join(REQUIREMETS_DIR, REQUIREMETS_TEST_FILE), encoding=&#39;utf-8&#39;) as f:</span>
+<span class="s2">    REQUIREMETS_TEST = f.readlines()</span>
+
+<span class="s2">extensions = [</span>
+<span class="s2">    Extension(&quot;$project_name.lib$project_name&quot;,</span>
+<span class="s2">          sources = [&quot;$project_name/lib$project_name.pyx&quot;],</span>
+<span class="s2">          $numpy_include</span>
+<span class="s2">          language = &quot;c++&quot;)</span>
+<span class="s2">]</span>
+<span class="s2">setup(</span>
+<span class="s2">    name=PROJECTNAME,</span>
+<span class="s2">    version=VERSION,</span>
+<span class="s2">    description=DESCRIPTION,</span>
+<span class="s2">    long_description=LONG_DESCRIPTION,</span>
+<span class="s2">    url=URL,</span>
+<span class="s2">    author=AUTHOR,</span>
+<span class="s2">    author_email=AUTHOR_EMAIL,</span>
+<span class="s2">    license=LICENSE,</span>
+<span class="s2">    classifiers=CLASSIFIERS,</span>
+<span class="s2">    keywords=KEYWORDS,</span>
+<span class="s2">    packages=PACKAGES,</span>
+<span class="s2">    include_package_data=True,</span>
+<span class="s2">    install_requires=REQUIREMETS,</span>
+<span class="s2">    extras_require={</span>
+<span class="s2">        &#39;dev&#39;: REQUIREMETS_DEV,</span>
+<span class="s2">        &#39;test&#39;: REQUIREMETS_TEST</span>
+<span class="s2">    },</span>
+<span class="s2">    ext_modules=cythonize(extensions),</span>
+<span class="s2">    $entry_points</span>
+<span class="s2">    zip_safe=ZIP_SAFE,</span>
+<span class="s2">    data_files=[(&#39;requirements&#39;, [&#39;requirements/requirements.txt&#39;, &#39;requirements/requirements_dev.txt&#39;, &#39;requirements/requirements_test.txt&#39;])]</span>
+<span class="s2">)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="InitSetupMixin"><a class="viewcode-back" href="../../../../../pmfp.projectinfo.mixins.init_mixin.html#pmfp.projectinfo.mixins.init_mixin.init_setup.InitSetupMixin">[docs]</a><span class="k">class</span> <span class="nc">InitSetupMixin</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_init_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化setup.py上传用的manifest文件&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;create MANIFEST.in&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;MANIFEST.in&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MANIFEST</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;create MANIFEST.in done!&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_init_cython_setuppy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化cython的setup.py</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;already have setup.py&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span> <span class="o">==</span> <span class="s2">&quot;command&quot;</span><span class="p">:</span>
+            <span class="n">entry_points_T</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span>
+                <span class="s2">&quot;entry_points={&#39;console_scripts&#39;: [&#39;$project_name = $project_name.main:main&#39;]},&quot;</span><span class="p">)</span>
+            <span class="n">entry_points</span> <span class="o">=</span> <span class="n">entry_points_T</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">entry_points</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">template</span> <span class="o">==</span> <span class="s2">&quot;math&quot;</span><span class="p">:</span>
+            <span class="n">numpy_include</span> <span class="o">=</span> <span class="s2">&quot;include_dirs=[numpy.get_include()],&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">numpy_include</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">setup</span> <span class="o">=</span> <span class="n">CYTHON_SETUP</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+            <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+            <span class="n">author_email</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author_email</span><span class="p">,</span>
+            <span class="n">license_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">license</span><span class="p">,</span>
+            <span class="n">keywords</span><span class="o">=</span><span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">desc</span><span class="o">.</span><span class="n">keywords</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,)&quot;</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">desc</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">numpy_include</span><span class="o">=</span><span class="n">numpy_include</span><span class="p">,</span>
+            <span class="n">entry_points</span><span class="o">=</span><span class="n">entry_points</span>
+        <span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">setup</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;writing setup.py for cython done!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_init_python_setuppy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化python的setup.py</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;already have setup.py&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span> <span class="o">==</span> <span class="s2">&quot;command&quot;</span><span class="p">:</span>
+            <span class="n">entry_points_T</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span>
+                <span class="s2">&quot;entry_points={&#39;console_scripts&#39;: [&#39;$project_name = lib$project_name.main:main&#39;]},&quot;</span><span class="p">)</span>
+            <span class="n">entry_points</span> <span class="o">=</span> <span class="n">entry_points_T</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">entry_points</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">setup</span> <span class="o">=</span> <span class="n">PY_SETUP</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+            <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+            <span class="n">author_email</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author_email</span><span class="p">,</span>
+            <span class="n">license_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">license</span><span class="p">,</span>
+            <span class="n">keywords</span><span class="o">=</span><span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">desc</span><span class="o">.</span><span class="n">keywords</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,)&quot;</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">desc</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">entry_points</span><span class="o">=</span><span class="n">entry_points</span>
+        <span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">setup</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;writing setup.py for python done!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_init_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化python/cython的setup.py&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;python&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_manifest</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_python_setuppy</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;cython&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_manifest</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_cython_setuppy</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span><span class="p">,</span> <span class="s2">&quot;not need a setup.py file !&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;InitSetupMixin&quot;</span><span class="p">]</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../index.html">Module code</a><ul>
+  <li><a href="../../../projectinfo.html">pmfp.projectinfo</a><ul>
+  <li><a href="../init_mixin.html">pmfp.projectinfo.mixins.init_mixin</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

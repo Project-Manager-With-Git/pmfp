@@ -1,0 +1,252 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pmfp.projectinfo.mixins.init_mixin.init_main &#8212; pmfp  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.projectinfo.mixins.init_mixin.init_main</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">Template</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+
+<span class="n">PYTHON_MAIN</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;# !/usr/bin/env python3</span>
+<span class="s2">import sys</span>
+
+
+<span class="s2">if __name__ == &#39;__main__&#39;:</span>
+<span class="s2">    from $project_name.main import main</span>
+<span class="s2">    sys.exit(main(sys.argv[1:]))</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">PYTHON_PROJECT_MAIN</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;import sys</span>
+<span class="s2">import argparse</span>
+<span class="s2">from .command.echo import echo_command</span>
+<span class="s2">from typing import Sequence</span>
+
+
+<span class="s2">class Command:</span>
+
+<span class="s2">    def __init__(self, argv):</span>
+<span class="s2">        parser = argparse.ArgumentParser(</span>
+<span class="s2">            description=&#39;Project Manager for Pythoner&#39;,</span>
+<span class="s2">            usage=&#39;&#39;&#39;$project_name.py &lt;command&gt; [&lt;args&gt;]</span>
+
+<span class="s2">The most commonly used ppm commands are:</span>
+<span class="s2">   echo        echo a string</span>
+<span class="s2">&#39;&#39;&#39;)</span>
+<span class="s2">        parser.add_argument(&#39;command&#39;, help=&#39;Subcommand to run&#39;)</span>
+<span class="s2">        </span>
+<span class="s2">        self.argv = argv</span>
+<span class="s2">        args = parser.parse_args(argv[0:1])</span>
+<span class="s2">        if not hasattr(self, args.command):</span>
+<span class="s2">            print(&#39;Unrecognized command&#39;)</span>
+<span class="s2">            parser.print_help()</span>
+<span class="s2">            exit(1)</span>
+<span class="s2">        # use dispatch pattern to invoke method with same name</span>
+<span class="s2">        getattr(self, args.command)()</span>
+
+<span class="s2">    def echo(self):</span>
+<span class="s2">        parser = argparse.ArgumentParser(</span>
+<span class="s2">            description=&#39;echo string&#39;)</span>
+<span class="s2">        parser.add_argument(&quot;command&quot;, type=str)</span>
+<span class="s2">        parser.set_defaults(func=echo_command)</span>
+<span class="s2">        args = parser.parse_args(self.argv[1:])</span>
+<span class="s2">        args.func(args) </span>
+
+
+<span class="s2">def main(argv: Sequence[str]=sys.argv[1:]):</span>
+<span class="s2">    Command(argv)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">CPP_MAIN</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;/*</span>
+<span class="s2">name:$project_name</span>
+<span class="s2">author:$author</span>
+<span class="s2">description:$description</span>
+<span class="s2">*/</span>
+<span class="s2">#include &lt;unistd.h&gt;</span>
+<span class="s2">#include &lt;iostream&gt;</span>
+<span class="s2">#include &lt;string&gt;</span>
+
+<span class="s2">using std::string;</span>
+<span class="s2">using std::cout;</span>
+<span class="s2">using std::endl;</span>
+
+<span class="s2">namespace $project_name {</span>
+<span class="s2">    int helloworld(void){</span>
+<span class="s2">        string words = &quot;hello world!&quot;;</span>
+<span class="s2">        cout &lt;&lt; words &lt;&lt; endl;</span>
+<span class="s2">        return 0;</span>
+<span class="s2">    }</span>
+<span class="s2">}</span>
+
+
+<span class="s2">int main(int argc, char **argv){</span>
+
+<span class="s2">    int ch;</span>
+<span class="s2">    opterr = 0;</span>
+<span class="s2">    while ((ch = getopt(argc,argv,&quot;s:v</span><span class="se">\n</span><span class="s2">&quot;)) != -1){</span>
+<span class="s2">        switch(ch){</span>
+<span class="s2">            case &quot;e&quot;:</span>
+<span class="s2">                cout &lt;&lt; (&quot;option echo: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;,optarg)&lt;&lt;endl;</span>
+<span class="s2">                break;</span>
+<span class="s2">            default:</span>
+<span class="s2">                $project_name::helloworld();</span>
+<span class="s2">        }</span>
+<span class="s2">    }  </span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">NODE_MAIN</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;#!/usr/bin/env node  </span>
+<span class="s2">let program = require(&#39;commander&#39;)</span>
+<span class="s2">const appInfo = require(&#39;./package.json&#39;)</span>
+
+
+<span class="s2">program</span>
+<span class="s2">    .version(appInfo.version)</span>
+<span class="s2">    .usage(&#39;$project_name [options] &lt;package&gt;&#39;)</span>
+
+<span class="s2">program</span>
+<span class="s2">    .command(&#39;echo &lt;cmd&gt;&#39;)</span>
+<span class="s2">    .alias(&quot;ec&quot;)</span>
+<span class="s2">    .description(&#39;回音&#39;)</span>
+<span class="s2">    .option(&quot;-n, --name &lt;mode&gt;&quot;, &quot;with name&quot;)</span>
+<span class="s2">    .action((cmd, options)=&gt;{</span>
+<span class="s2">        let nm = typeof options.name==&#39;string&#39;?options.name:&quot;&quot;</span>
+<span class="s2">        console.log(&#39;echo &quot;</span><span class="si">%s</span><span class="s2">&quot; with name </span><span class="si">%s</span><span class="s2"> &#39;, cmd, nm)</span>
+<span class="s2">    }).on(&#39;--help&#39;, function() {</span>
+<span class="s2">        //这里输出子命令的帮助</span>
+<span class="s2">        console.log(&#39;Examples:&#39;)</span>
+<span class="s2">        console.log(&#39;  run：&#39;)</span>
+<span class="s2">        console.log(&#39;    $ ./main.js echo ss -n aaaaa&#39;)</span>
+<span class="s2">        console.log(&#39;    $ ./main.js echo ss&#39;)</span>
+<span class="s2">        console.log()</span>
+<span class="s2">    })</span>
+
+<span class="s2">program.parse(process.argv)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="InitMainMixin"><a class="viewcode-back" href="../../../../../pmfp.projectinfo.mixins.init_mixin.html#pmfp.projectinfo.mixins.init_mixin.init_main.InitMainMixin">[docs]</a><span class="k">class</span> <span class="nc">InitMainMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;需要InstallMixin&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_init_main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;cython&quot;</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;main.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">PYTHON_MAIN</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                        <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">))</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{self.meta.project_name}</span><span class="s2">/main.py&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">PYTHON_PROJECT_MAIN</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                        <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;main.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">PYTHON_PROJECT_MAIN</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                        <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;cpp&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;src/main.cpp&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">CPP_MAIN</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                        <span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+                        <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">desc</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                        <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;node&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;main.js&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;commander&#39;</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;main.js&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="n">NODE_MAIN</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                            <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unknown compiler!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<span class="n">__all__</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;InitMainMixin&quot;</span><span class="p">]</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../index.html">Module code</a><ul>
+  <li><a href="../../../projectinfo.html">pmfp.projectinfo</a><ul>
+  <li><a href="../init_mixin.html">pmfp.projectinfo.mixins.init_mixin</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
