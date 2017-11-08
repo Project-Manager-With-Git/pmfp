@@ -7,24 +7,24 @@ class TestMixin:
     def _run_python_test(self, html):
         print("unittest start")
         python_path = self._get_python_path()
-
         command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
             python_path=python_path,
             package_name=self.meta.project_name)
         try:
-            subprocess.check_call(command)
+            subprocess.check_call(command, shell=True)
         except Exception as e:
             print("error")
+            raise e
         else:
             if self.form.project_type != "web":
                 command = "{python_path} -m coverage report".format(
                     python_path=python_path)
-                subprocess.check_call(command)
+                subprocess.check_call(command, shell=True)
                 if html:
                     command = "{python_path} -m coverage html -d covhtml".format(
                         python_path=python_path)
-                    subprocess.check_call(command)
-                self._run_python_typecheck(html=html)
+                    subprocess.check_call(command, shell=True)
+                #self._run_python_typecheck(html=html)
         print("unittest done!")
         return True
 
@@ -53,10 +53,6 @@ class TestMixin:
                 except Exception as e:
                     print("error")
             else:
-                # command = "{python_path} -m mypy --ignore-missing-imports --html-report typecheck {package_name}/App".format(
-                #     python_path=python_path,
-                #     package_name=package_name)
-                # subprocess.check_call(command)
                 print("type check not support the project type now")
             print("type check done!")
             return True

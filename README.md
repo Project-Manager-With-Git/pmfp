@@ -1,7 +1,7 @@
 
 # pmfp
 
-+ version: 1.0.4
++ version: 1.0.5
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -57,6 +57,9 @@ shortcut:
 Documentation on github page <https://github.com/Python-Tools/pmfp/>
 
 
+## Bug Fix
+
+ppm test now can run correctly.
 
 ## TODO
 
