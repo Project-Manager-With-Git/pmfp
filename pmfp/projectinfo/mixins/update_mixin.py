@@ -1,4 +1,5 @@
 import re
+import os
 import json
 from pathlib import Path
 
@@ -20,9 +21,9 @@ class UpdateMixin:
                 lines = []
                 for i in f:
                     if re.match(r"\* version:", i):
-                        i = "* version: " + version + "\n"
+                        i = "* version: " + version + "\n" #os.linesep
                     if re.match(r"\* status:", i):
-                        i = "* status: " + status + "\n"
+                        i = "* status: " + status + "\n" #os.linesep
                     lines.append(i)
             with open(str(readme_rst), "w", encoding="utf-8") as f:
                 for i in lines:
@@ -33,9 +34,9 @@ class UpdateMixin:
                 lines = []
                 for i in f:
                     if re.match(r"\+ version:", i):
-                        i = "+ version: " + version + "\n"
+                        i = "+ version: " + version + "\n" #os.linesep
                     if re.match(r"\+ status:", i):
-                        i = "+ status: " + status + "\n"
+                        i = "+ status: " + status + "\n" #os.linesep
                     lines.append(i)
             with open(str(readme_md), "w", encoding="utf-8") as f:
                 for i in lines:

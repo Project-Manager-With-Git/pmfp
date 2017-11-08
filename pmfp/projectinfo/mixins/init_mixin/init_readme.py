@@ -5,13 +5,13 @@ README_RST = Template("""
 $project_name
 ===============================
 
-version: $version
+* version: $version
 
-status: $status
+* status: $status
 
-author: $author
+* author: $author
 
-email: $author_email
+* email: $author_email
 
 Desc
 --------------------------------
