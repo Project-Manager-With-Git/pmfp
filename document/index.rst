@@ -6,7 +6,7 @@
 Welcome to pmfp's documentation!
 ================================
 
-* version: 1.0.6
+* version: 1.0.8
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
@@ -52,6 +52,7 @@ Example
     flask       init flask
     sanic       init sanic
     vue         init vue
+    celery      init celery
 
 
 
@@ -70,6 +71,11 @@ if you can not init your project,you should try to create the env by yourself fi
 `python3 -m venv env`
 
 then run the `ppm init` 
+
+Change
+------------------------------
+
+* a better celery template with test
 
 TODO
 -----------------------------------

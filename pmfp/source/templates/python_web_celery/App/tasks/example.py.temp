@@ -1,6 +1,6 @@
 from App.celery_app import app
 
 
-@app.task
-def add(x, y):
+@app.task(bind=True, name=__name__.split(".")[-1]+'::add')
+def add(self, x, y):
     return x + y

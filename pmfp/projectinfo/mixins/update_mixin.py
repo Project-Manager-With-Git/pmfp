@@ -21,9 +21,9 @@ class UpdateMixin:
                 lines = []
                 for i in f:
                     if re.match(r"\* version:", i):
-                        i = "* version: " + version + "\n" #os.linesep
+                        i = "* version: " + version + "\n"  # os.linesep
                     if re.match(r"\* status:", i):
-                        i = "* status: " + status + "\n" #os.linesep
+                        i = "* status: " + status + "\n"  # os.linesep
                     lines.append(i)
             with open(str(readme_rst), "w", encoding="utf-8") as f:
                 for i in lines:
@@ -34,9 +34,9 @@ class UpdateMixin:
                 lines = []
                 for i in f:
                     if re.match(r"\+ version:", i):
-                        i = "+ version: " + version + "\n" #os.linesep
+                        i = "+ version: " + version + "\n"  # os.linesep
                     if re.match(r"\+ status:", i):
-                        i = "+ status: " + status + "\n" #os.linesep
+                        i = "+ status: " + status + "\n"  # os.linesep
                     lines.append(i)
             with open(str(readme_md), "w", encoding="utf-8") as f:
                 for i in lines:
@@ -53,6 +53,19 @@ class UpdateMixin:
             with open("document/conf.py", "w", encoding="utf-8") as f:
                 for i in lines:
                     f.write(i)
+
+            with open("document/index.rst", "r", encoding="utf-8") as f:
+                lines = []
+                for i in f:
+                    if re.match(r"\* version:", i):
+                        i = "* version: " + version + "\n"  # os.linesep
+                    if re.match(r"\* status:", i):
+                        i = "* status: " + status + "\n"  # os.linesep
+                    lines.append(i)
+            with open("document/index.rst", "w", encoding="utf-8") as f:
+                for i in lines:
+                    f.write(i)
+
         if setup.exists():
             print("update setup.py")
             with open("setup.py", "r", encoding="utf-8") as f:
