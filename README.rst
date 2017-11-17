@@ -77,10 +77,13 @@ then run the `ppm init`
 
 2. ppm test now can run correctly.
 
+3. init cython commandline now can run correctly. 1.0.9
+
 Change
 ------------------------------
 
 * a better celery template with test
+
 
 TODO
 -----------------------------------
