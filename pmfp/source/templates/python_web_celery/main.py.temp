@@ -40,7 +40,12 @@ def worker(args):
     app.config_from_object(env)
     command = ["-l info"]
     if args.command:
-        command += args.command.split(" ")
+        pr_cmd = [i for i in args.command.split(" ") if i.find(
+            "--port=") == -1 and i.find(
+                "--address=") == -1 and i.find(
+                    "--broker_api=") == -1 and i.find('--basic-auth=') == -1]
+        print(pr_cmd)
+        command += pr_cmd
     app.worker_main(command)
 
 

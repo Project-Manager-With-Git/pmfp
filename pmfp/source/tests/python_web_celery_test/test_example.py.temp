@@ -1,22 +1,24 @@
 import unittest
+import requests
 
 
 def setUpModule():
-    print("setUpModule")
+    print("setUp " + __name__.split(".")[-1])
 
 
 def tearDownModule():
-    print("tearUpModule")
+    print("tearDown " + __name__.split(".")[-1])
 
 
 class TestAdd(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        print("setUpClass")
+        print("setUpClass" + cls.__name__)
+        cls.BASE_URL = 'http://localhost:5555/api/task/apply'
 
     @classmethod
     def tearDownClass(cls):
-        print("tearDownClass")
+        print("tearDownClass" + cls.__name__)
 
     def setUp(self):
         print("instance setUp")
@@ -24,17 +26,16 @@ class TestAdd(unittest.TestCase):
     def tearDown(self):
         print("instance tearDown")
 
-    def test_add_3_4(self):
-        self.assertEqual(3 + 4, 7)
-
-    def test_add_3_5(self):
-        self.assertEqual(3 + 5, 7)
+    def test_add_1_2(self):
+        q = requests.post(self.BASE_URL + "/example::add", json={
+            "args": [1, 2]
+        })
+        self.assertEqual(q.json().get("result"), 3)
 
 
 def add_suite():
     suite = unittest.TestSuite()
-    suite.addTest(TestAdd("test_add_3_4"))
-    suite.addTest(TestAdd("test_add_3_5"))
+    suite.addTest(TestAdd("test_add_1_2"))
     return suite
 
 

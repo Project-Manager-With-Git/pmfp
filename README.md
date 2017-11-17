@@ -1,7 +1,7 @@
 
 # pmfp
 
-+ version: 1.0.6
++ version: 1.0.8
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -44,6 +44,7 @@ shortcut:
    flask       init flask
    sanic       init sanic
    vue         init vue
+   celery      init celery
 
 ```
 
@@ -59,7 +60,12 @@ Documentation on github page <https://github.com/Python-Tools/pmfp/>
 
 ## Bug Fix
 
-ppm test now can run correctly.
++ ppm test now can run correctly.
++ init cython commandline now can run correctly. 
+
+## Change
+
++ a better celery template with test
 
 ## TODO
 

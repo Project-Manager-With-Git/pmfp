@@ -1,6 +1,7 @@
 
 def setUpModule():
     print("setUp test")
+    print("please run the server first")
 
 
 def tearDownModule():

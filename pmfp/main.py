@@ -53,7 +53,7 @@ shortcut:
    flask       init flask
    sanic       init sanic
    vue         init vue
-
+   celery      init celery
    
 ''')
         parser.add_argument('command', help='Subcommand to run')
@@ -250,7 +250,7 @@ shortcut:
         parser.set_defaults(func=celery)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("sanic init done!")
+        print("celery init done!")
 
     def vue(self):
         parser = argparse.ArgumentParser(

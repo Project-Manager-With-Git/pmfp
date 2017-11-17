@@ -6,7 +6,7 @@
 Welcome to pmfp's documentation!
 ================================
 
-* version: 1.0.6
+* version: 1.0.9
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
@@ -52,6 +52,7 @@ Example
     flask       init flask
     sanic       init sanic
     vue         init vue
+    celery      init celery
 
 
 
@@ -65,11 +66,19 @@ Install
 BUG
 --------------------------------
 
-if you can not init your project,you should try to create the env by yourself first
+1. if you can not init your project,you should try to create the env by yourself first
 
 `python3 -m venv env`
 
 then run the `ppm init` 
+
+2. ppm test now can run correctly.
+
+3. init cython commandline now can run correctly. 1.0.9
+Change
+------------------------------
+
+* a better celery template with test
 
 TODO
 -----------------------------------
