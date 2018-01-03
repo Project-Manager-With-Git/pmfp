@@ -58,6 +58,6 @@ setup(
     zip_safe=ZIP_SAFE,
     include_package_data=True,  # use MANIFEST.in during install
     data_files=[('requirements', ['requirements/requirements.txt',
-                                  'requirements/requirements_dev.txt', 
+                                  'requirements/requirements_dev.txt',
                                   'requirements/requirements_test.txt'])]
 )
