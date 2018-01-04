@@ -149,7 +149,7 @@ class InitPythonMixin:
         command_parsers.add_argument(
             '-e', '--env', type=str, choices=["env", "conda"], default="env")
         command_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
+            "simple", "math", "keras"],
             default="simple")
         command_parsers.add_argument(
             '--without_test', action='store_false')

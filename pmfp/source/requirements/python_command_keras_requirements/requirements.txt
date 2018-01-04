@@ -1,0 +1,10 @@
+numpy
+scipy
+scikit-learn
+cython
+python_speech_features
+tensorflow
+keras
+tqdm
+h5py
+keras_attention_block
