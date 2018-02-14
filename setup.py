@@ -6,7 +6,7 @@ REQUIREMETS_DEV_FILE = 'requirements_dev.txt'
 REQUIREMETS_TEST_FILE = 'requirements_test.txt'
 REQUIREMETS_FILE = 'requirements.txt'
 PROJECTNAME = 'pmfp'
-VERSION = '1.0.9'
+VERSION = '1.1.1'
 DESCRIPTION = 'a simple package manager for python like npm.'
 URL = 'https://github.com/Python-Tools/pmfp'
 AUTHOR = 'hsz'
@@ -58,6 +58,6 @@ setup(
     zip_safe=ZIP_SAFE,
     include_package_data=True,  # use MANIFEST.in during install
     data_files=[('requirements', ['requirements/requirements.txt',
-                                  'requirements/requirements_dev.txt', 
+                                  'requirements/requirements_dev.txt',
                                   'requirements/requirements_test.txt'])]
 )

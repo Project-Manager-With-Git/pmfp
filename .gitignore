@@ -103,3 +103,4 @@ typecheck/
 
 # vscode
 .vscode/
+setup.py

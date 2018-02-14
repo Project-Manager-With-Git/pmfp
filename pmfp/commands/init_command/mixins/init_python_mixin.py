@@ -22,6 +22,22 @@ class InitPythonMixin:
         print("init python web application done!")
         return True
 
+    def _init_python_rpc(self, args):
+        obj = ProjectInfo.input_info(
+            template=args.template,
+            env=args.env,
+            compiler="python",
+            project_type="rpc",
+            with_test=True,
+            with_docs=False,
+            with_dockerfile=args.without_dockerfile)
+        path = Path(".pmfprc")
+        with open(str(path), "w") as f:
+            json.dump(obj.to_dict(), f)
+        obj.init_project(args.install)
+        print("init python rpc application done!")
+        return True
+
     def _init_python_gui(self, args):
         obj = ProjectInfo.input_info(
             template=args.template,
@@ -128,6 +144,21 @@ class InitPythonMixin:
             '--install', action='store_true')
         web_parsers.set_defaults(func=self._init_python_web)
 
+        # init python rpc command
+        rpc_parsers = subparsers.add_parser(
+            "rpc", aliases=["R"], help="init a python rpc project")
+        rpc_parsers.add_argument(
+            '-e', '--env', type=str, choices=["env", "conda"], default="env")
+        rpc_parsers.add_argument('-t', '--template', type=str, choices=[
+            "xmlrpc", "mprpc"],
+            default="xmlrpc")
+
+        rpc_parsers.add_argument(
+            '--without_dockerfile', action='store_false')
+        rpc_parsers.add_argument(
+            '--install', action='store_true')
+        rpc_parsers.set_defaults(func=self._init_python_rpc)
+
         # init python gui command
         gui_parsers = subparsers.add_parser(
             "gui", aliases=["G"], help="init a python gui project")
@@ -149,7 +180,7 @@ class InitPythonMixin:
         command_parsers.add_argument(
             '-e', '--env', type=str, choices=["env", "conda"], default="env")
         command_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
+            "simple", "math", "keras"],
             default="simple")
         command_parsers.add_argument(
             '--without_test', action='store_false')

@@ -17,6 +17,12 @@ class InitTemplateMixin:
             shutil.copy(str(dir_path.joinpath(form_str)), str(
                 local_path.joinpath(self.meta.project_name + ".py")))
 
+        elif self.form.project_type == "rpc":
+            form_str = self.form.compiler + "_" + self.form.project_type + \
+                "_" + self.form.template + ".py.temp"
+            shutil.copy(str(dir_path.joinpath(form_str)), str(
+                local_path.joinpath(self.meta.project_name + ".py")))
+
         elif self.form.project_type == "gui":
             if self.form.template in ["tk"]:
                 form_str = self.form.compiler + "_" + self.form.project_type + \

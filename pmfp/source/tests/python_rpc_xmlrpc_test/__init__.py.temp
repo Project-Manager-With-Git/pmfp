@@ -1,0 +1,12 @@
+import xmlrpc.client
+with xmlrpc.client.ServerProxy('http://localhost:5000') as s:
+    # Print list of available methods
+    print(s.system.listMethods())
+    print(s.system.methodHelp('hello'))
+    print(s.add(123,1))
+    multi = xmlrpc.client.MultiCall(s)
+    multi.add(1,2)
+    multi.hello("qwe")
+    result = multi()
+    for i in result:
+        print(i)
