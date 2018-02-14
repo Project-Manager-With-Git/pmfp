@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pmfp.projectinfo.mixins.test_mixin &#8212; pmfp  documentation</title>
     <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -49,24 +40,24 @@
     <span class="k">def</span> <span class="nf">_run_python_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unittest start&quot;</span><span class="p">)</span>
         <span class="n">python_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_python_path</span><span class="p">()</span>
-
         <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{python_path}</span><span class="s2"> -m coverage run --source=</span><span class="si">{package_name}</span><span class="s2"> -m unittest discover -v -s test&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">python_path</span><span class="o">=</span><span class="n">python_path</span><span class="p">,</span>
             <span class="n">package_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_type</span> <span class="o">!=</span> <span class="s2">&quot;web&quot;</span><span class="p">:</span>
                 <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{python_path}</span><span class="s2"> -m coverage report&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">python_path</span><span class="o">=</span><span class="n">python_path</span><span class="p">)</span>
-                <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">html</span><span class="p">:</span>
                     <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{python_path}</span><span class="s2"> -m coverage html -d covhtml&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                         <span class="n">python_path</span><span class="o">=</span><span class="n">python_path</span><span class="p">)</span>
-                    <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_run_python_typecheck</span><span class="p">(</span><span class="n">html</span><span class="o">=</span><span class="n">html</span><span class="p">)</span>
+                    <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="c1">#self._run_python_typecheck(html=html)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unittest done!&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
 
@@ -95,10 +86,6 @@
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># command = &quot;{python_path} -m mypy --ignore-missing-imports --html-report typecheck {package_name}/App&quot;.format(</span>
-                <span class="c1">#     python_path=python_path,</span>
-                <span class="c1">#     package_name=package_name)</span>
-                <span class="c1"># subprocess.check_call(command)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;type check not support the project type now&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;type check done!&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -123,8 +110,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unknown compiler!&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;this project do not have test&#39;</span><span class="p">)</span></div></div>
+        <span class="k">else</span><span class="p">:</span></div></div>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;this project do not have test&#39;</span><span class="p">)</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TestMixin&quot;</span><span class="p">]</span>
@@ -147,12 +134,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -163,7 +152,7 @@
       &copy;2017, hsz.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

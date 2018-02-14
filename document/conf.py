@@ -26,7 +26,7 @@ project = 'pmfp'
 copyright = '2017, hsz'
 author = 'hsz'
 
-version = '1.0.9'
+version = '1.1.0'
 
 release = ''
 
@@ -42,14 +42,14 @@ html_theme = 'alabaster'
 
 html_static_path = ['_static']
 
-htmlhelp_basename = 'score_card_modeldoc'
+htmlhelp_basename = 'pmfpdoc'
 
 latex_elements = {
 
 }
 
 latex_documents = [
-    (master_doc, 'score_card_model.tex', 'score\_card\_model Documentation',
+    (master_doc, 'pmfp.tex', 'pmfp Documentation',
      'Author', 'manual'),
 ]
 
@@ -59,8 +59,8 @@ man_pages = [
 ]
 
 texinfo_documents = [
-    (master_doc, 'score_card_model', 'score_card_model Documentation',
-     author, 'score_card_model', 'One line description of project.',
+    (master_doc, 'pmfp', 'pmfp Documentation',
+     author, 'pmfp_model', 'One line description of project.',
      'Miscellaneous'),
 ]
 
