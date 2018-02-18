@@ -14,6 +14,13 @@ WORKDIR /code
 RUN python setup.py install
 """)
 
+PYTHON_DOCKER_TEMPLATE = Template("""FROM python:last
+ADD ./$project_name.py /code/$project_name.py
+ADD ./requirements/requirements.txt /code/requirements.txt
+WORKDIR /code
+RUN pip install -r requirements.txt
+""")
+
 FRONTEND_DOCKER_TEMPLATE = Template("""""")
 
 PYTHON_DOCKER_TEMPLATES = {
@@ -50,7 +57,9 @@ class InitDockerMixin:
             else:
                 try:
                     if self.form.compiler == 'python':
-                        content = PYTHON_DOCKER_TEMPLATES.get(self.form.project_type, "").substitute(
+                        content = PYTHON_DOCKER_TEMPLATES.get(
+                            self.form.project_type,
+                            PYTHON_DOCKER_TEMPLATE).substitute(
                             project_name=self.meta.project_name)
                     elif self.form.compiler == "node":
                         content = NODE_DOCKER_TEMPLATES[self.form.project_type].substitute(
