@@ -26,15 +26,15 @@ class TestMixin:
             print("error")
             raise e
         else:
-            if self.form.project_type != "web":
-                command = "{python_path} -m coverage report".format(
+            
+            command = "{python_path} -m coverage report".format(
+                python_path=python_path)
+            subprocess.check_call(command, shell=True)
+            if html:
+                command = "{python_path} -m coverage html -d covhtml".format(
                     python_path=python_path)
                 subprocess.check_call(command, shell=True)
-                if html:
-                    command = "{python_path} -m coverage html -d covhtml".format(
-                        python_path=python_path)
-                    subprocess.check_call(command, shell=True)
-                # self._run_python_typecheck(html=html)
+            # self._run_python_typecheck(html=html)
         print("unittest done!")
         return True
 
