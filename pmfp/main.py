@@ -133,7 +133,7 @@ shortcut:
             description='upload project to a remote repository')
         parser.add_argument('-g', '--git', type=str,
                                   nargs='*', required=False)
-        parser.add_argument('-r', '--remote', action='store_true',required=False)
+        parser.add_argument('-r', '--remote', action='store_true', required=False)
         parser.set_defaults(func=upload)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -176,6 +176,8 @@ shortcut:
             description='test project')
         parser.add_argument('-H', '--html', action="store_false",
                             help="export the html report")
+        parser.add_argument('-g', action="store_true", default=True,
+                            help="use global env")
         parser.add_argument(
             '-T', '--typecheck', action="store_true", help="check python's typehints")
         parser.add_argument('-S', '--stress', action="store_true",
