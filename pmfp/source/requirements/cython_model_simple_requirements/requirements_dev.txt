@@ -1,2 +1,6 @@
 wheel
+pydocstyle
+pep8
+autopep8
+
 

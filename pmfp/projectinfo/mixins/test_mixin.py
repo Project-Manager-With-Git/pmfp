@@ -8,7 +8,7 @@ class TestMixin:
         print("unittest start")
         python_path = self._get_python_path()
         if self.form.template in (
-            'sanic_api_blueprints'
+            'sanic_api_blueprints',
             ):
         command = "{python_path} -m coverage run --source={package_name}/App, -m unittest discover -v -s test".format(
             python_path=python_path,
