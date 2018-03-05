@@ -7,9 +7,19 @@ class TestMixin:
     def _run_python_test(self, html):
         print("unittest start")
         python_path = self._get_python_path()
-        command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
+        if self.form.template in (
+            'sanic_api_blueprints'
+            ):
+        command = "{python_path} -m coverage run --source={package_name}/App, -m unittest discover -v -s test".format(
             python_path=python_path,
-            package_name=self.meta.project_name)
+            package_name=self.meta.project_name
+            )
+        
+        else:
+            command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
+            python_path=python_path,
+            package_name=self.meta.project_name
+            )
         try:
             subprocess.check_call(command, shell=True)
         except Exception as e:
