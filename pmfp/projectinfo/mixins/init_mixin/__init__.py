@@ -1,49 +1,24 @@
+"""项目初始化使用的mixin汇总."""
 import traceback
-from .init_docker import InitDockerMixin
 from .init_readme import InitReadmeMixin
-from .init_docs import InitDocsMixin
 from .init_env import InitEnvMixin
-from .init_setup import InitSetupMixin
-from .init_test import InitTestMixin
-from .init_requirements import InitRequirementMixin
 from .init_template import InitTemplateMixin
-from .init_main import InitMainMixin
+from .init_dev_requirements import InitDevRequirementMixin
 
 
-class InitProjectMixin(InitDockerMixin, InitReadmeMixin, InitDocsMixin,
-                       InitEnvMixin, InitSetupMixin, InitTestMixin,
-                       InitRequirementMixin, InitTemplateMixin, InitMainMixin):
-    """需要InstallMixin,CleanMixin
+class InitProjectMixin(InitReadmeMixin, InitEnvMixin, InitTemplateMixin, InitDevRequirementMixin):
+    """项目初始化使用的mixin汇总.
+
+    需要CleanMixin.会执行步骤:`初始化env->初始化模板->初始化readme`
     """
 
-    def _init_sup(self, install):
-        """初始化周边配套
-        """
-        if self.with_docs:
-            self._init_docs()
-        if self.with_test:
-            self._init_test(install)
-        if self.with_dockerfile:
-            self._init_docker()
-        return True
-
-    def init_project(self, install=False):
-        """创建项目
-        """
+    def init_project(self):
+        """创建项目."""
         try:
-            self._init_env()
-            if self.form.compiler in ["cython", "python"]:
-                if self.form.project_type not in ["script", 'web', "gui"]:
-                    self._init_setup()
-            self._init_readme()
             self._init_template()
-            self._init_requirements(install=install)
-            if install:
-                self._install_python_requirements(record="dev")
-                print("#################################################")
-                print("dev installed")
-                print("#################################################")
-            self._init_sup(install=install)
+            if self.form.compiler in ("python", 'node'):
+                self._init_env()
+            self._init_readme()
 
         except Exception as e:
             traceback.print_exc()

@@ -1,3 +1,4 @@
+"""command for initializing node project."""
 import argparse
 import json
 from pathlib import Path

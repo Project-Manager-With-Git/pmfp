@@ -1,3 +1,4 @@
+"""将项目上传至github或者pypi"""
 import time
 import subprocess
 import configparser
@@ -6,7 +7,7 @@ from pathlib import Path
 
 class UploadMixin:
 
-    def upload(self, git=None, remote=False):
+    def upload(self, git=None):
         if git or git == [] or git == "":
             here = Path(".").absolute()
             if not here.joinpath(".git").exists():
@@ -50,41 +51,24 @@ class UploadMixin:
                 print("push done")
                 return True
         else:
-            if self.form.compiler in ["cython", "python"]:
-                if remote:
-                    print("remote")
-                    path = self.form.upload_remote
-                    command = "python setup.py sdist upload -r {self.form.upload_remote}".format(
-                        self=self)
+            if self.form.compiler == "python":
+                home = Path.home()
+                if home.joinpath(".pypirc").exists():
+                    path = "pypi"
+                    command = "python setup.py sdist upload"
                     subprocess.call(command, shell=True)
 
-                    command = "python setup.py bdist_wheel upload -r {self.form.upload_remote}".format(
-                        self=self)
+                    command = "python setup.py bdist_wheel upload"
                     subprocess.call(command, shell=True)
-                    print("upload package to {path} done!".format(path=path))
+                    print(
+                        "upload package to {path} done!".format(path=path))
                     return True
                 else:
-                    home = Path.home()
-                    if home.joinpath(".pypirc").exists():
-                        path = "pypi"
-                        command = "python setup.py sdist upload"
-                        subprocess.call(command, shell=True)
-
-                        command = "python setup.py bdist_wheel upload"
-                        subprocess.call(command, shell=True)
-                        print(
-                            "upload package to {path} done!".format(path=path))
-                        return True
-                    else:
-                        print("pypi upload should have a .pypirc file in home path")
-                        return False
+                    print("pypi upload should have a .pypirc file in home path")
+                    return False
 
             elif self.form.compiler == "node":
-                if remote:
-                    command = "npm publish --registry {self.form.upload_remote}".formmat(
-                        self=self)
-                else:
-                    command = "npm publish"
+                command = "npm publish"
                 subprocess.call(command, shell=True)
 
             else:

@@ -1,2 +1,4 @@
 wheel
-
+mypy
+mypy-extensions
+lxml

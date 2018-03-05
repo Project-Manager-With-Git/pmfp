@@ -41,7 +41,6 @@ The most commonly used ppm commands are:
    update      update the project's version and status
    upload      upload your project to a git repository, a docker repository,
                a pypi server
-   search      search for a package
    run         run scripts for python and node
    build       build your python project to a pyz file, wheel,egg,docker image,
                build your cpp project to a lib or a executable file
@@ -139,14 +138,6 @@ shortcut:
         args.func(args)
         print("upload done!")
 
-    def search(self):
-        parser = argparse.ArgumentParser(
-            description='search for a package')
-        parser.add_argument('package', type=str)
-        parser.set_defaults(func=search)
-        args = parser.parse_args(self.argv[1:])
-        args.func(args)
-
     def run(self):
         parser = argparse.ArgumentParser(
             description='run a script')
@@ -207,62 +198,16 @@ shortcut:
         print("doc done!")
 
     def flask(self):
-        parser = argparse.ArgumentParser(
-            description='initialise a flask project')
-        parser.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        parser.add_argument('-t', '--template', type=str, choices=[
-            "simple",
-            "admin",
-            "socketio",
-            "api",
-            "api_admin",
-            "api_blueprints",
-            "mvc",
-            "blueprints"],
-            default="simple")
-        parser.set_defaults(func=flask)
-        args = parser.parse_args(self.argv[1:])
-        args.func(args)
-        print("flask init done!")
+        pass
 
     def sanic(self):
-        parser = argparse.ArgumentParser(
-            description='initialise a sanic project')
-        parser.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        parser.add_argument('-t', '--template', type=str, choices=[
-            "simple",
-            "socketio",
-            "api",
-            "api_blueprints",
-            "mvc",
-            "blueprints"],
-            default="simple")
-        parser.set_defaults(func=sanic)
-        args = parser.parse_args(self.argv[1:])
-        args.func(args)
-        print("sanic init done!")
+        pass
 
     def celery(self):
-        parser = argparse.ArgumentParser(
-            description='initialise a celery project')
-        parser.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        parser.set_defaults(func=celery)
-        args = parser.parse_args(self.argv[1:])
-        args.func(args)
-        print("celery init done!")
+        pass
 
     def vue(self):
-        parser = argparse.ArgumentParser(
-            description='initialise a sanic project')
-        parser.add_argument('-t', '--template', type=str,
-                            choices=["simple", "webpack", "webpack-simple"], default="webpack")
-        parser.set_defaults(func=vue)
-        args = parser.parse_args(self.argv[1:])
-        args.func(args)
-        print("vue init done!")
+        pass
 
 
 def main(argv: Sequence[str]=sys.argv[1:]):

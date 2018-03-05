@@ -15,13 +15,13 @@ WINDOWS_CONDA_BLACKDICT = {
 
 PYTHON_REQUIREMENTS_PATH = {
     "requirement": "requirements/requirements.txt",
-    "dev": "requirements/requirements_dev.txt",
-    "test": "requirements/requirements_test.txt"
+    "dev": "requirements/requirements_dev.txt"
 }
 
 
 class InstallMixin:
     def _install_node(self, line, record=False):
+        """node 安装一条依赖."""
         if record == "requirement":
             command = "npm install {line} --save".format(line=line)
         elif record in ["dev", "test"]:
@@ -37,7 +37,15 @@ class InstallMixin:
         return True
 
     def _install_python(self, line, record=False):
-        if self.form.compiler not in ["python", "cython"]:
+        """python 安装一条依赖.
+
+        Args:
+
+            line (line): - 依赖名
+            record (str): - 指定安装在dev还是执行环境默认为False,意味不记录
+
+        """
+        if self.form.compiler != "python":
             print(self.form.compiler, "can not install with pip or conda")
             return False
         python_path = self._get_python_path()
@@ -62,18 +70,21 @@ class InstallMixin:
                     command = "conda install -y {line} -p env".format(
                         line=line)
             else:
-                print("unknown env!")
-                return False
+                command = "{python_path} -m pip install {line}".format(
+                    python_path=python_path, line=line
+                )
         else:
             if self.form.env == "env":
                 python_path = Path("env/bin/python").absolute()
                 command = "{python_path} -m pip install {line}".format(
-                    python_path=python_path, line=line)
+                    python_path=python_path, line=line
+                )
             elif self.form.env == "conda":
                 command = "conda install -y -p env {}".format(line)
             else:
-                print("unknown env!")
-                return False
+                command = "{python_path} -m pip install {line}".format(
+                    python_path=python_path, line=line
+                )
         try:
             print(command)
             subprocess.call(command, shell=True)
@@ -83,7 +94,9 @@ class InstallMixin:
             print(line, "installed")
             if record:
                 p = PYTHON_REQUIREMENTS_PATH.get(
-                    record, "requirements/requirements.txt")
+                    record,
+                    "requirements/requirements.txt"
+                )
                 with open(p) as f:
                     lines = f.readlines()
                 for i in lines:
@@ -95,7 +108,16 @@ class InstallMixin:
                         f.write(line + "\n")
             return True
 
-    def _install_python_requirements(self, record="requirement"):
+    def _install_python_requirements(self, record="requirement")->bool:
+        """从依赖文件安装执行环境或者开发环境的依赖.
+
+        Args:
+            record (str, optional): 指定安装的依赖文件(Defaults to "requirement").
+
+        Returns:
+            (bool): 都安装正确返回True,否则False
+
+        """
         print("install python requirement")
         p = PYTHON_REQUIREMENTS_PATH.get(
             record, "requirements/requirements.txt")
@@ -136,7 +158,7 @@ class InstallMixin:
             return self._install_node_requirements(record=record)
         elif self.form.compiler == "cpp":
             return self._install_cpp_requirements(record=record)
-        elif self.form.compiler in ["python", "cython"]:
+        elif self.form.compiler == "python":
             return self._install_python_requirements(record=record)
         else:
             print("unknown compiler!")
@@ -147,7 +169,7 @@ class InstallMixin:
             return self._install_node(line, record=record)
         elif self.form.compiler == "cpp":
             return self._install_cpp(line, record=record)
-        elif self.form.compiler in ["python", "cython"]:
+        elif self.form.compiler == "python":
             return self._install_python(line, record=record)
         else:
             print("unknown compiler!")

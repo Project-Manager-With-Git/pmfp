@@ -4,6 +4,7 @@
 import json
 import getpass
 from pathlib import Path
+import yaml
 from ..core import MetaInfo, AuthorInfo, DescriptionInfo, FormInfo
 
 IGNOR_PROJECT_NAME = ["app"]
@@ -16,8 +17,7 @@ class CreateMixin:
         author = AuthorInfo(**info["author"])
         desc = DescriptionInfo(**info["desc"])
         form = FormInfo(**info["form"])
-        obj = cls(meta, author, desc, form,
-                  info['with_test'], info['with_docs'], info['with_dockerfile'])
+        obj = cls(meta, author, desc, form)
         return obj
 
     @classmethod
@@ -28,16 +28,20 @@ class CreateMixin:
         return obj
 
     @classmethod
-    def input_info(cls, with_test,
-                   with_docs,
-                   with_dockerfile,
-                   template: str,
-                   env: str='env',
-                   compiler: str='python',
-                   project_type: str='script'
-                   ):
-        local_path = Path(".").absolute()
+    def from_yaml(cls, path: str):
+        with open(path) as f:
+            info = yaml.load(f)
+        obj = cls.from_dict(info)
+        return obj
 
+    @classmethod
+    def input_info(
+            cls,
+            template: str,
+            env: str,
+            compiler: str,
+            project_form: str):
+        local_path = Path(".").absolute()
         while True:
             project_name = input("project name:")
             if project_name in IGNOR_PROJECT_NAME:
@@ -80,25 +84,8 @@ class CreateMixin:
         description = input("description:")
         description = description or "simple tools"
         desc = DescriptionInfo(keywords=keywords, description=description)
-
-        install_remote = input(
-            "use a special remote repository to install packages:")
-        if not install_remote:
-            if compiler == "cpp":
-                install_remote = "conan-transit"
-            else:
-                install_remote = None
-
-        upload_remote = input("use a special remote repository to upload:")
-        if not upload_remote:
-            if compiler == "cpp":
-                upload_remote = "conan-transit"
-            else:
-                upload_remote = None
-        form = FormInfo(env, compiler, project_type, template,
-                        install_remote, upload_remote)
-        obj = cls(meta, author, desc, form,
-                  with_test, with_docs, with_dockerfile)
+        form = FormInfo(env, compiler, project_form, template)
+        obj = cls(meta, author, desc, form)
         return obj
 
 

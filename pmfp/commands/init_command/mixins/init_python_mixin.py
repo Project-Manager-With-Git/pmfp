@@ -1,231 +1,145 @@
+"""command for initializing python project."""
 import argparse
-import json
+from functools import partial
 from pathlib import Path
+import yaml
 from pmfp.projectinfo import ProjectInfo
 
 
 class InitPythonMixin:
+    """initializing python project."""
 
-    def _init_python_web(self, args):
+    ENVS = ["env", "conda", "global"]
+
+    def _init_python_universal_create_project(self, form, args):
+        print("initializing python {} project!".format(form))
         obj = ProjectInfo.input_info(
             template=args.template,
             env=args.env,
             compiler="python",
-            project_type="web",
-            with_test=False,
-            with_docs=False,
-            with_dockerfile=args.without_dockerfile)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init python web application done!")
-        return True
+            project_form=form
+        )
+        path = Path(".pmfprc.yml")
+        with open(str(path), 'w') as f:
+            f.write(yaml.dump(obj.to_dict()))
+        if args.install:
+            obj.install_requirements("requirement")
+            if obj.env in ("env", "conda"):
+                obj.install_requirements("dev")
+        if args.with_docs:
+            obj.init_docs()
+        if args.with_dockerfile:
+            obj.init_docker()
+        if args.with_setup:
+            obj.init_setup(
+                manifesst=True,
+                cython=args.cython,
+                command=args.with_command,
+                math=args.math
+            )
+        print("init python {} project done!".format(form))
 
-    def _init_python_rpc(self, args):
-        obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
-            compiler="python",
-            project_type="rpc",
-            with_test=True,
-            with_docs=False,
-            with_dockerfile=args.without_dockerfile)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init python rpc application done!")
-        return True
-
-    def _init_python_gui(self, args):
-        obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
-            compiler="python",
-            project_type="gui",
-            with_test=False,
-            with_docs=False,
-            with_dockerfile=args.without_dockerfile)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init python gui application done!")
-        return True
-
-    def _init_python_command(self, args):
-        obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
-            compiler="python",
-            project_type="command",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
-            with_dockerfile=args.without_dockerfile)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init python command-line application done!")
-        return True
-
-    def _init_python_model(self, args):
-        obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
-            compiler="python",
-            project_type="model",
-            with_test=args.without_test,
-            with_docs=args.without_docs,
-            with_dockerfile=args.without_dockerfile)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init python model done!")
-        return True
-
-    def _init_python_script(self, args):
-        obj = ProjectInfo.input_info(
-            template=args.template,
-            env=args.env,
-            compiler="python",
-            project_type="script",
-            with_test=False,
-            with_docs=False,
-            with_dockerfile=False)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(args.install)
-        print("init python script done!")
-        return True
-
-    def _python_default(self, args):
-        obj = ProjectInfo.input_info(
-            template="simple",
-            env="env",
-            compiler="python",
-            project_type="script",
-            with_test=False,
-            with_docs=False,
-            with_dockerfile=False)
-        path = Path(".pmfprc")
-        with open(str(path), "w") as f:
-            json.dump(obj.to_dict(), f)
-        obj.init_project(install=True)
-        print("init python default script done!")
-        return True
+    def _python_universal_parser(self, parser):
+        parser.add_argument(
+            '-e', '--env', type=str, choices=self.ENVS, default="env")
+        parser.add_argument(
+            '--with_setup', action='store_true', default=False)
+        parser.add_argument(
+            '--with_command', action='store_true', default=False)
+        parser.add_argument(
+            '--cython', action='store_true', default=False)
+        parser.add_argument(
+            '--math', action='store_true', default=False)
+        parser.add_argument(
+            '--with_dockerfile', action='store_true', default=False)
+        parser.add_argument(
+            '--with_doc', action='store_true', default=False)
+        parser.add_argument(
+            '--with_test', action='store_true', default=False)
+        parser.add_argument(
+            '--install', action='store_true', default=False)
+        return parser
 
     def python(self):
+        """Python argparse parsers."""
         parser = argparse.ArgumentParser(
             description='initialise a python project')
         parser.set_defaults(func=self._python_default)
 
         subparsers = parser.add_subparsers(
             dest='project_type', help="init a python project")
-        web_parsers = subparsers.add_parser(
-            "web", aliases=["W"], help="init a python web project")
-        web_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        web_parsers.add_argument('-t', '--template', type=str, choices=[
-            "sanic", "flask",
-            "flask_admin", "flask_api_admin",
-            "sanic_socketio", "flask_socketio"
-            "sanic_api", "flask_api",
-            "sanic_api_blueprints", "flask_api_blueprints",
-            "sanic_mvc", "flask_mvc",
-            'celery'],
-            default="flask")
-        web_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        web_parsers.add_argument(
-            '--install', action='store_true')
-        web_parsers.set_defaults(func=self._init_python_web)
 
-        # init python rpc command
-        rpc_parsers = subparsers.add_parser(
-            "rpc", aliases=["R"], help="init a python rpc project")
-        rpc_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        rpc_parsers.add_argument('-t', '--template', type=str, choices=[
-            "xmlrpc", "mprpc"],
-            default="xmlrpc")
-
-        rpc_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        rpc_parsers.add_argument(
-            '--install', action='store_true')
-        rpc_parsers.set_defaults(func=self._init_python_rpc)
-
-        # init python gui command
-        gui_parsers = subparsers.add_parser(
-            "gui", aliases=["G"], help="init a python gui project")
-        gui_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        gui_parsers.add_argument('-t', '--template', type=str, choices=[
-            "tk", "tk_mvc"],
-            default="tk")
-
-        gui_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        gui_parsers.add_argument(
-            '--install', action='store_true')
-        gui_parsers.set_defaults(func=self._init_python_gui)
-
-        # init python command-line command
-        command_parsers = subparsers.add_parser(
-            "command-line", aliases=["command", "C"], help="init a python command-line project")
-        command_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        command_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math", "keras"],
-            default="simple")
-        command_parsers.add_argument(
-            '--without_test', action='store_false')
-        command_parsers.add_argument(
-            '--without_docs', action='store_false')
-        command_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        command_parsers.add_argument(
-            '--install', action='store_true')
-        command_parsers.set_defaults(func=self._init_python_command)
-
-        # init python model command
-        model_parsers = subparsers.add_parser(
-            "model", aliases=["M"], help="init a python model project")
-        model_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        model_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
-            default="simple")
-        model_parsers.add_argument(
-            '--without_test', action='store_false')
-        model_parsers.add_argument(
-            '--without_docs', action='store_false')
-        model_parsers.add_argument(
-            '--without_dockerfile', action='store_false')
-        model_parsers.add_argument(
-            '--install', action='store_true')
-        model_parsers.set_defaults(func=self._init_python_model)
-
-        # init python script command
+        # form is script
         script_parsers = subparsers.add_parser(
             "script", aliases=["S"], help="init a python script")
         script_parsers.add_argument(
-            '-e', '--env', type=str, choices=["env", "conda"], default="env")
-        script_parsers.add_argument('-t', '--template', type=str, choices=[
-            "simple", "math"],
-            default="simple")
-        script_parsers.add_argument(
-            '--install', action='store_true')
-        script_parsers.set_defaults(func=self._init_python_script)
+            '-t',
+            '--template',
+            type=str,
+            choices=[
+                "sanic",
+                "flask",
+                "simple",
+                "xmlrpc",
+                'tk'
+            ],
+            default="simple"
+        )
+        script_parsers = self._python_universal_parser(script_parsers)
 
-        args = parser.parse_args(self.argv[1:])
-        args.func(args)
+        _init_python_script = partial(self._init_python_universal_create_project, 'script')
+        script_parsers.set_defaults(func=_init_python_script)
+
+        # init python model
+        model_parsers = subparsers.add_parser(
+            "model", aliases=["M"], help="init a python model project")
+        model_parsers.add_argument(
+            '-t',
+            '--template',
+            type=str,
+            choices=["simple"],
+            default="simple"
+        )
+        model_parsers = self._python_universal_parser(model_parsers)
+        _init_python_model = partial(self._init_python_universal_create_project, 'model')
+        model_parsers.set_defaults(func=_init_python_model)
+
+        # init python rpc command
+        rpc_parsers = subparsers.add_parser(
+            "rpc",
+            aliases=["R"],
+            help="init a python rpc project"
+        )
+        rpc_parsers.add_argument(
+            '-t',
+            '--template',
+            type=str,
+            choices=["xmlrpc", "mprpc"],
+            default="xmlrpc"
+        )
+        rpc_parsers = self._python_universal_parser(rpc_parsers)
+        _init_python_rpc = partial(self._init_python_universal_create_project, 'rpc')
+        rpc_parsers.set_defaults(func=_init_python_rpc)
+
+        # init python TK command
+        gui_parsers = subparsers.add_parser(
+            "gui",
+            aliases=["G"],
+            help="init a python gui project"
+        )
+        gui_parsers.add_argument(
+            '-t',
+            '--template',
+            type=str,
+            choices=["tk"],
+            default="tk"
+        )
+        gui_parsers = self._python_universal_parser(gui_parsers)
+        _init_python_gui = partial(self._init_python_universal_create_project, 'gui')
+        gui_parsers.set_defaults(func=_init_python_gui)
 
     def py(self):
+        """Alias to python."""
         return self.python()
 
 

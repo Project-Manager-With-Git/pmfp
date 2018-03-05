@@ -1,7 +1,12 @@
+"""初始化readme的部件."""
 from string import Template
 from pathlib import Path
 
-README_RST = Template("""
+
+class InitReadmeMixin:
+    """初始化readme混入."""
+
+    README_RST = Template("""
 $project_name
 ===============================
 
@@ -57,7 +62,7 @@ Limitations
 
 """)
 
-README_MARKDOWN = Template("""
+    README_MARKDOWN = Template("""
 # $project_name
 
 + version: $version
@@ -79,10 +84,8 @@ keywords:$keywords
 
 ## Example
 
+```python
 ```
-
-
-````
 
 ## Install
 
@@ -93,62 +96,45 @@ keywords:$keywords
 
 Documentation on github page <$url>
 
-
-
 ## TODO
 
-+ todo
++ todo1
++ todo2
 
 ## Limitations
 
-+ limit
-
++ limit1
++ limit2
 """)
 
+    def _init_universal_readme(self, suffix):
+        up_suffix = suffix.upper()
+        local_path = Path(".")
+        if local_path.joinpath("README.{}".format(suffix)).exists():
+            print("already have README.{}".format(suffix))
 
-class InitReadmeMixin:
+        else:
+            with open(str(local_path.joinpath("README.{}".format(suffix))), "w") as f:
+                readme = getattr(self, "README_" + up_suffix)
+                f.write(
+                    readme.substitute(
+                        project_name=self.meta.project_name,
+                        author=self.author.author,
+                        author_email=self.author.author_email,
+                        version=self.meta.version,
+                        status=self.meta.status,
+                        url=self.meta.url,
+                        description=self.desc.description,
+                        keywords=",".join(self.desc.keywords)
+                    )
+                )
 
     def _init_readme(self):
-        """初始化readme文件
-        只有md文件和rst文件都被初始化了才返回True
-        """
+        """初始化readme文件."""
         print("writing readme.")
-        local_path = Path(".")
-        result = [True, True]
-        if local_path.joinpath("README.rst").exists():
-            print("already have README.rst")
-            result[0] = False
-        else:
-            with open(str(local_path.joinpath("README.rst")), "w") as f:
-                f.write(README_RST.substitute(project_name=self.meta.project_name,
-                                              author=self.author.author,
-                                              author_email=self.author.author_email,
-                                              version=self.meta.version,
-                                              status=self.meta.status,
-                                              url=self.meta.url,
-                                              description=self.desc.description,
-                                              keywords=",".join(self.desc.keywords)))
-            result[0] = True
-
-        if local_path.joinpath("README.md").exists():
-            with open(str(local_path.joinpath("README.md"))) as f:
-                n = len(f.readlines())
-            if n > 50:
-                print("already have README.md")
-                result[1] = False
-                return all(result)
-            else:
-                print("README.md changed")
-        with open("README.md", "w") as f:
-            f.write(README_MARKDOWN.substitute(project_name=self.meta.project_name,
-                                               author=self.author.author,
-                                               author_email=self.author.author_email,
-                                               version=self.meta.version,
-                                               status=self.meta.status,
-                                               url=self.meta.url,
-                                               description=self.desc.description,
-                                               keywords=",".join(self.desc.keywords)))
-        return all(result)
+        for i in ("md", "rst"):
+            self._init_universal_readme(i)
+        print("write readme done!")
 
 
 __all__ = ["InitReadmeMixin"]

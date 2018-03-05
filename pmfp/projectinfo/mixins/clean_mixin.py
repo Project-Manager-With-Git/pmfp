@@ -1,3 +1,4 @@
+"""删除项目."""
 import os
 import stat
 import shutil
@@ -8,20 +9,27 @@ things = [""]
 
 
 def remove_readonly(func, path, _):
-    "Clear the readonly bit and reattempt the removal"
+    """Clear the readonly bit and reattempt the removal."""
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
 
 class CleanMixin:
+    """删除项目混入."""
 
-    def clean(self, all=False):
+    def clean(self, total: bool=False):
+        """删除目录下的内容.
+
+        Args:
+
+            total (bool, optional): 是否删除目录下的全部内容(Defaults to False).
+        """
         path = Path(".").absolute()
         rms = ["document", "env", "dockerfile",
                "__pycache__", "test", "test_package",
                "CMakeFiles", "CMakeCache.txt"]
         for p in path.iterdir():
-            if all is False:
+            if total is False:
                 if p.name in rms:
                     if p.is_file():
                         try:
@@ -58,5 +66,3 @@ class CleanMixin:
                             print(e)
                             print("skip " + str(path.joinpath(p)))
                             continue
-        else:
-            return True

@@ -8,14 +8,13 @@ from .python_path_mixin import PythonPathMixin
 from .update_mixin import UpdateMixin
 from .upload_mixin import UploadMixin
 from .run_mixin import RunMixin
-from .search_mixin import SearchMixin
 from .build_mixin import BuildMixin
 from .test_mixin import TestMixin
 from .doc_mixin import DocMixin
+from .new_mixin import NewMixin
 
 __all__ = ["ToDictMixin", "CreateMixin",
-           "InitProjectMixin", "CleanMixin", "InstallMixin",
-           "Temp2pyMixin", "PythonPathMixin",
+           "InitProjectMixin", 'NewMixin', "CleanMixin",
+           "InstallMixin", "Temp2pyMixin", "PythonPathMixin",
            "UpdateMixin", "UploadMixin", "RunMixin",
-           "SearchMixin", "BuildMixin",
-           "TestMixin", "DocMixin"]
+           "BuildMixin", "TestMixin", "DocMixin"]

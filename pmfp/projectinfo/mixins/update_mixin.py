@@ -1,5 +1,5 @@
+"""更新项目版本."""
 import re
-import os
 import json
 from pathlib import Path
 
@@ -84,8 +84,6 @@ class UpdateMixin:
             pak.update({"version": version})
             with open(str(package), "w") as f:
                 json.load(pak, f)
-
-        return True
 
 
 __all__ = ["UpdateMixin"]
