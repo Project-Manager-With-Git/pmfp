@@ -60,13 +60,13 @@ latex_documents = [
 ]
 
 man_pages = [
-    (master_doc, '$project_name model', '$project_name model Documentation',
+    (master_doc, '$project_name', '$project_name Documentation',
      [author], 1)
 ]
 
 texinfo_documents = [
-    (master_doc, '$project_name model', '$project_name model Documentation',
-     author, '$project_name_model', 'One line description of project.',
+    (master_doc, '$project_name', '$project_name Documentation',
+     author, '$project_name', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -101,19 +101,18 @@ class InitDocsMixin:
             print("document exists")
             return False
         else:
-            if self.with_docs:
-                if self.form.compiler == "python":
-                    package_name = self.meta.project_name
-                    if Path(package_name).exists():
-                        command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
-                                   '-V', self.meta.version, "-a", '-o', 'document', package_name]
-                    else:
-                        command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
-                                   '-V', self.meta.version, "-a", '-o', 'document', '.']
-                else:
-                    package_name = self.meta.project_name
+            if self.form.compiler == "python":
+                package_name = self.meta.project_name
+                if Path(package_name).exists():
                     command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
-                               '-V', self.meta.version, '-o', 'document', '.']
+                               '-V', self.meta.version, "-a", '-o', 'document', package_name]
+                else:
+                    command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
+                               '-V', self.meta.version, "-a", '-o', 'document', '.']
+            else:
+                package_name = self.meta.project_name
+                command = ["sphinx-apidoc", "-F", "-H", self.meta.project_name, '-A', self.author.author,
+                           '-V', self.meta.version, '-o', 'document', '.']
 
             subprocess.check_call(command)
             with open("document/conf.py", "w") as f:

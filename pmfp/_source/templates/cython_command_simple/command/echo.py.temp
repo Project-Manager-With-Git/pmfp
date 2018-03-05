@@ -1,6 +1,0 @@
-from ..lib.echo import echo
-from argparse import Namespace
-
-
-def echo_command(args:Namespace)->None:
-    print(echo(args.command))

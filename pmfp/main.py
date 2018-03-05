@@ -70,19 +70,17 @@ shortcut:
     def init(self):
         print('Running ppm init')
         if len(self.argv) == 1:
-            path = Path(".pmfprc")
+            path = Path(".pmfprc.json")
             if path.exists():
                 if len([i for i in path.parent.iterdir() if not i.name.startswith(".")]) == 0:
                     obj = ProjectInfo.from_json(str(path))
                     obj.init_project()
                     return True
                 else:
-                    print(
-                        "dir is not empty! if you want to rebuild the project run command clean first!")
+                    print("dir is not empty! if you want to rebuild the project run command clean first!")
                     return False
             else:
-                print(
-                    "please run this command in the root of the project, and initialise first")
+                print("please run this command in the root of the project, and initialise first")
                 return False
         else:
             Init(self.argv[1:])

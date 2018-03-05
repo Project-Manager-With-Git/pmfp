@@ -9,7 +9,7 @@ class InitDevRequirementMixin:
         """初始化依赖,但不会安装依赖."""
         p = Path("./requirements")
         if p.is_dir():
-            with open(str(p.joinpath("requirement_dev.txt")), "w") as f:
+            with open(str(p.joinpath("requirements_dev.txt")), "w") as f:
                 content = ["coverage",
                            "mypy",
                            "mypy-extensions",
@@ -18,7 +18,7 @@ class InitDevRequirementMixin:
                            "pydocstyle",
                            "pep8",
                            "autopep8"]
-
+                content = [i + "\n" for i in content]
                 f.writelines(content)
         else:
             raise AttributeError("_dev_requirement need dir requirements")

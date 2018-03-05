@@ -9,8 +9,6 @@ class InitCore:
 
 The most commonly used ppm init commands are:
    python/py        initialise a python project
-   cython/cy        initialise a cython project
-   cpp              initialise a cpp project
    node             initialise a node project
 
 ''')

@@ -1,2 +1,0 @@
-def echo(string:str)->str:
-    return string

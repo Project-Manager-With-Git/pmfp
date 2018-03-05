@@ -155,8 +155,12 @@ class InitSetupMixin:
         if path.exists():
             raise AttributeError('already have setup.py')
         if command:
-            entry_points_T = Template(
-                "entry_points={'console_scripts': ['$project_name = $project_name.main:main']},")
+            if self.form.project_form == "script":
+                entry_points_T = Template(
+                    "entry_points={'console_scripts': ['$project_name = $project_name:main']},")
+            else:
+                entry_points_T = Template(
+                    "entry_points={'console_scripts': ['$project_name = $project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=self.meta.project_name)
         else:
             entry_points = ""
@@ -189,8 +193,12 @@ class InitSetupMixin:
         if path.exists():
             raise AttributeError('already have setup.py')
         if command:
-            entry_points_T = Template(
-                "entry_points={'console_scripts': ['$project_name = lib$project_name.main:main']},")
+            if self.form.project_form == "script":
+                entry_points_T = Template(
+                    "entry_points={'console_scripts': ['$project_name = $project_name:main']},")
+            else:
+                entry_points_T = Template(
+                    "entry_points={'console_scripts': ['$project_name = $project_name.main:main']},")
             entry_points = entry_points_T.substitute(project_name=self.meta.project_name)
         else:
             entry_points = ""

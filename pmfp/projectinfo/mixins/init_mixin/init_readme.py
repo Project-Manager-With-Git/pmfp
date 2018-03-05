@@ -62,7 +62,7 @@ Limitations
 
 """)
 
-    README_MARKDOWN = Template("""
+    README_MD = Template("""
 # $project_name
 
 + version: $version
@@ -115,7 +115,7 @@ Documentation on github page <$url>
 
         else:
             with open(str(local_path.joinpath("README.{}".format(suffix))), "w") as f:
-                readme = getattr(self, "README_" + up_suffix)
+                readme = getattr(self.__class__, "README_" + up_suffix)
                 f.write(
                     readme.substitute(
                         project_name=self.meta.project_name,

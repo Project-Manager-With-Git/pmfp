@@ -23,7 +23,7 @@ class InitProjectMixin(InitReadmeMixin, InitEnvMixin, InitTemplateMixin, InitDev
         except Exception as e:
             traceback.print_exc()
             print(str(e))
-            self.clean(all=True)
+            self.clean(total=True)
             raise e
         else:
             return True

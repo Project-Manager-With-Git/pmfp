@@ -14,7 +14,7 @@ class InitTemplateMixin:
         dir_path = Path(__file__).parent.parent.parent.parent.joinpath(
             "source/templates")
         local_path = Path(".")
-        template_path = dir_path.joinpath(self.form.project_form).joinpath(self.form.template)
+        template_path = dir_path.joinpath(self.form.compiler).joinpath(self.form.project_form).joinpath(self.form.template)
         if template_path.exists():
             for p in template_path.iterdir():
                 if p.is_dir():
@@ -30,9 +30,10 @@ class InitTemplateMixin:
                         )
                 else:
                     if p.name.startswith("__project_name__"):
+                        suffix = "."+p.name.split(".")[-2]
                         shutil.copy(
                             str(p),
-                            str(local_path.joinpath(self.meta.project_name + p.suffix))
+                            str(local_path.joinpath(self.meta.project_name + suffix))
                         )
 
                     else:
@@ -43,4 +44,4 @@ class InitTemplateMixin:
         else:
             raise AttributeError("Unsupport template!")
         for i in local_path.iterdir():
-            self.temp2py(str(i.absolute()))
+            self.temp2py(i.absolute())
