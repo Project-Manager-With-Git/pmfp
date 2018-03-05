@@ -10,7 +10,7 @@ def test(argv):
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
         if argv.typecheck:
-            obj._run_python_typecheck(html=argv.html)
+            obj._run_python_typecheck(html=argv.html,g=argv.g)
         elif argv.stress:
             if obj.form.project_type == "web":
                 with open("stress_test.json") as f:
@@ -21,7 +21,7 @@ def test(argv):
                 print("stress test is for web server")
                 return False
         else:
-            obj.test(html=argv.html)
+            obj.test(html=argv.html,g=argv.g)
 
     else:
         print("please run this command in the root of the  project, and initialise first")
