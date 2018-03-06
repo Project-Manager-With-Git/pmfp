@@ -25,9 +25,7 @@ class BuildMixin:
     def _build_pyz(self):
         print('build {self.meta.project_name} to pyz file'.format(self=self))
         if self.form.project_form == "script":
-            with open(self.meta.project_name + ".py") as source:
-            main = "{}:main".format(self.meta.project_name)
-            zipapp.create_archive(source, interpreter='/usr/bin/python3', main=main)
+            print("script can not build to pyz")
         else:
             source = self.meta.project_name
             main = "main:main"

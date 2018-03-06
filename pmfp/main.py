@@ -13,7 +13,7 @@ from pmfp.commands.upload_command import upload
 from pmfp.commands.run_command import run
 from pmfp.commands.search_command import search
 from pmfp.commands.build_command import build
-from pmfp.commands.test_command import test
+from pmfp.commands.test_command import testcmd
 from pmfp.commands.doc_command import doc
 from pmfp.commands.new_command import new
 from pmfp.commands.flask_command import flask

@@ -1,10 +1,9 @@
 from pathlib import Path
 import json
 from pmfp.projectinfo import ProjectInfo
-from boom.boom import load, print_stats
 
 
-def test(argv):
+def testcmd(argv):
     """测试命令的执行流程."""
     path = Path(".pmfprc.json")
     if path.exists():
@@ -13,6 +12,7 @@ def test(argv):
             obj.run_python_typecheck(html=argv.html)
         elif argv.stress:
             if obj.form.project_form in ["sanic", "flask"]:
+                from boom.boom import load, print_stats
                 with open("stress_test.json") as f:
                     pas = json.load(f)
                 result = load(**pas)
