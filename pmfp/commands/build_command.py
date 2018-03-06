@@ -3,10 +3,16 @@ from pmfp.projectinfo import ProjectInfo
 
 
 def build(argv):
-    path = Path(".pmfprc")
+    """编译指令的流程"""
+    path = Path(".pmfprc.json")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
-        obj.build(egg=argv.egg, wheel=argv.wheel)
+        if not any([argv.docker, argv.egg, argv.wheel, argv.cython, argv.pyz]):
+            raise AttributeError("need a type to build")
+        if argv.docker:
+            obj.build_docker()
+        else:
+            obj.build(egg=argv.egg, wheel=argv.wheel, cython=argv.cython, pyz=argv.pyz)
 
     else:
         print("please run this command in the root of the  project, and initialise first")

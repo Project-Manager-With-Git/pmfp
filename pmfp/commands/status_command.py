@@ -3,7 +3,7 @@ from pmfp.projectinfo import ProjectInfo
 
 
 def status()->bool:
-    path = Path(".pmfprc")
+    path = Path(".pmfprc.json")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
         print(obj)

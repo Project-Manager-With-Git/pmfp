@@ -1,105 +1,105 @@
 import shutil
 import subprocess
+import zipapp
 from pathlib import Path
 
 
 class BuildMixin:
-    def build(self, egg=False, wheel=False):
-        if self.form.compiler == "python":
-            if self.form.project_type in ["gui"] and self.form.template not in ["tk"]:
-                print('build self.meta.peoject_name to pyz file'.format(self=self))
-                command = 'python -m zipapp {self.meta.peoject_name} -m "main:main" -p "/usr/bin/env python3"'.format(
-                    self=self)
-                subprocess.call(command, shell=True)
-                print('build self.meta.peoject_name to pyz file done!'.format(self=self))
-                return True
-            elif self.form.project_type in ["web"] and self.form.template not in ["flask", "sanic"]:
-                print('move template and static files')
-                here = Path(".").absolute()
-                name = self.meta.project_name
-                static = here.joinpath(name).joinpath("static")
-                templates = here.joinpath(name).joinpath("templates")
-                dir_static = here.joinpath("static")
-                dir_templates = here.joinpath("templates")
-                if static.exists():
-                    shutil.copytree(str(static),
-                                    str(dir_static))
-                    print("move static files done!")
-                    shutil.rmtree(str(static))
-                    print("remove original static files done!")
-                if templates.exists():
-                    shutil.copytree(str(templates),
-                                    str(dir_templates))
-                    print("move template files done!")
-                    shutil.rmtree(str(templates))
-                    print("remove original templates files done!")
+    """编译项目的混入"""
 
-                print('move template and static files done!')
-                print('build {self.meta.project_name} to pyz file'.format(self=self))
-                command = 'python -m zipapp {self.meta.project_name} -m "main:main" -p "/usr/bin/env python3"'.format(
-                    self=self)
-                subprocess.call(command, shell=True)
-                print('build {self.meta.project_name} to pyz file done!'.format(self=self))
-                return True
-
-            elif self.form.project_type in ["command", "celery", "model"]:
-                if egg:
-                    print('build model to egg file')
-                    command = "python setup.py bdist_egg"
-                    subprocess.check_call(command)
-                    print('build model to egg file done!')
-
-                if wheel or not any([egg, wheel]):
-                    print('build model to wheel file')
-                    command = "python setup.py bdist_wheel"
-                    subprocess.check_call(command)
-                    print('build model to wheel file done!')
-                return True
-
-            elif self.form.project_type in ["script"]:
-                print("script do not need to build")
-                return False
-
-            else:
-                print("unkown form")
-                return False
-        elif self.form.compiler == "cython":
-            print('build cython model')
-            command = 'python setup.py build_ext --inplace'
+    def _build_egg(self):
+        if Path("setup.py").exists():
+            print('build model to egg file')
+            command = "python setup.py bdist_egg"
             subprocess.check_call(command)
-            print('build cython model done!')
-            if self.form.project_type in ["script"]:
-                print("script do not need to build")
-                return False
-            elif self.form.project_type in ["model", "command", "celery"]:
-                if egg:
-                    print('build model to egg file')
-                    command = "python setup.py bdist_egg"
-                    subprocess.check_call(command)
-                    print('build model to egg file done!')
-
-                if wheel or not any([egg, wheel]):
-                    print('build model to wheel file')
-                    command = "python setup.py bdist_wheel"
-                    subprocess.check_call(command)
-                    print('build model to wheel file done!')
-                return True
-            else:
-                print("unkown form")
-                return False
-
-        elif self.form.compiler == "cpp":
-            command = "conan build"
-            subprocess.call(command, shell=True)
-            return True
-        elif self.form.compiler == "node":
-            # 注意要先将es6或者typescript 编译为node可运行的代码
-
-            command = "npm run build"
-            subprocess.call(command, shell=True)
+            print('build model to egg file done!')
         else:
-            print("unknown compiler!")
-            return False
+            print("build model to egg need file setup.py")
+
+    def _build_wheel(self):
+        print('build model to wheel file')
+        command = "python setup.py bdist_wheel"
+        subprocess.check_call(command)
+        print('build model to wheel file done!')
+
+    def _build_pyz(self):
+        print('build {self.meta.project_name} to pyz file'.format(self=self))
+        if self.form.project_form == "script":
+            with open(self.meta.project_name + ".py") as source:
+            main = "{}:main".format(self.meta.project_name)
+            zipapp.create_archive(source, interpreter='/usr/bin/python3', main=main)
+        else:
+            source = self.meta.project_name
+            main = "main:main"
+            zipapp.create_archive(source, interpreter='/usr/bin/python3', main=main)
+        print('build self.meta.peoject_name to pyz file done!'.format(self=self))
+
+    def _build_cython(self):
+        print('build cython model')
+        command = 'python setup.py build_ext --inplace'
+        subprocess.check_call(command)
+        print('build cython model done!')
+
+    # def _build_c(self):
+    #     command = "conan build"
+    #     subprocess.call(command, shell=True)
+    #     return True
+
+    def _build_node(self):
+        print("build node project")
+        command = "npm run build"
+        subprocess.call(command, shell=True)
+        print("build node project done!")
+
+    def build_docker(self):
+        """将项目编译为docker的image."""
+        print("build docker image")
+        command = "sudo docker build -t {project_name}:v{version}-{status} .".format(
+            project_name=self.meta.project_name,
+            version=self.meta.version,
+            status=self.meta.status
+        )
+        subprocess.call(command, shell=True)
+        print("build docker image done!")
+
+    def build(self,
+              egg: bool=False,
+              wheel: bool=False,
+              pyz: bool=False,
+              cython: bool=False)->None:
+        """编译项目.
+
+        Args:
+            egg (bool, optional): 是否将python项目编译为egg(Defaults to False).
+            wheel (bool, optional): 是否将python项目编译为wheel(Defaults to False).
+            pyz (bool, optional): 是否将python项目编译为pyz文件(Defaults to False).
+            cython (bool, optional): 是否编译将cython项目(Defaults to False).
+
+        Raises:
+            AttributeError: 不支持的项目语言不编译
+
+        """
+        if self.form.compiler == "python":
+            if Path("setup.py").exists():
+                if cython:
+                    self._build_cython()
+                if egg:
+                    self._build_egg()
+                if wheel:
+                    self._build_wheel()
+            if pyz:
+                self._build_pyz()
+            else:
+                print("build model to egg,wheel,cython need file setup.py")
+
+        # elif self.form.compiler == "cpp":
+        #     self._build_c()
+
+        elif self.form.compiler == "node":
+            self._build_node()
+
+        else:
+            raise AttributeError("unknown compiler!")
 
 
 __all__ = ["BuildMixin"]

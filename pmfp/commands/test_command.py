@@ -4,15 +4,15 @@ from pmfp.projectinfo import ProjectInfo
 from boom.boom import load, print_stats
 
 
-
 def test(argv):
-    path = Path(".pmfprc")
+    """测试命令的执行流程."""
+    path = Path(".pmfprc.json")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
         if argv.typecheck:
-            obj._run_python_typecheck(html=argv.html,g=argv.g)
+            obj.run_python_typecheck(html=argv.html)
         elif argv.stress:
-            if obj.form.project_type == "web":
+            if obj.form.project_form in ["sanic", "flask"]:
                 with open("stress_test.json") as f:
                     pas = json.load(f)
                 result = load(**pas)
@@ -21,8 +21,10 @@ def test(argv):
                 print("stress test is for web server")
                 return False
         else:
-            obj.test(html=argv.html,g=argv.g)
-
+            if Path("test").exists():
+                obj.test(html=argv.html, g=argv.g)
+            else:
+                print("this project do not have test dir")
     else:
         print("please run this command in the root of the  project, and initialise first")
         return False

@@ -49,6 +49,9 @@ project: {self.meta.project_name}
 version: {self.meta.version}
 status:  {self.meta.status}
 license: {self.meta.license}
+language: {self.form.compiler}
+form: {self.form.project_form}
+template: {self.form.template}
 """.format(self=self)
         return content
 

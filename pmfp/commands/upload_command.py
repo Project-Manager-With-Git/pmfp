@@ -4,10 +4,14 @@ from pmfp.projectinfo import ProjectInfo
 
 
 def upload(argv):
-    path = Path(".pmfprc")
+    """上传数据命令的流程."""
+    path = Path(".pmfprc.json")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
-        obj.upload(argv.git, argv.remote)
+        if argv.git or [] or "":
+            obj.git_upload(argv.git)
+        else:
+            obj.upload()
         return True
 
     else:

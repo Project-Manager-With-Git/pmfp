@@ -3,14 +3,12 @@ from pmfp.projectinfo import ProjectInfo
 
 
 def install(argv):
-    path = Path(".pmfprc")
+    path = Path(".pmfprc.json")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
-        if not Path("env").exists():
+        if not Path("env").exists() and obj.form.env != "golbal":
             obj._init_env()
         record = "requirement"
-        if argv.test:
-            record = "test"
         if argv.dev:
             record = "dev"
         if argv.all:

@@ -1,3 +1,4 @@
+"""命令行命令定义."""
 import sys
 import argparse
 from pathlib import Path
@@ -27,6 +28,7 @@ if sys.version_info[0] == 3 and sys.version_info[1] < 5:
 
 
 class PPM:
+    """ppm命令的第一级子命令定义."""
 
     def __init__(self, argv):
         parser = argparse.ArgumentParser(
@@ -68,6 +70,7 @@ shortcut:
         getattr(self, args.command)()
 
     def init(self):
+        """创建对应模板项目的子命令"""
         print('Running ppm init')
         if len(self.argv) == 1:
             path = Path(".pmfprc.json")
@@ -87,9 +90,11 @@ shortcut:
         print('Running ppm init done')
 
     def status(self):
+        """查看项目状态的命令."""
         return status()
 
     def clean(self):
+        """清理项目,删除文件."""
         parser = argparse.ArgumentParser(
             description='clean a project')
         parser.add_argument(
@@ -99,13 +104,12 @@ shortcut:
         args.func(args)
 
     def install(self):
+        """为项目安装依赖.如果有参数就是安装到固定环境,没有就是按固定环境安装其中写的内容."""
         parser = argparse.ArgumentParser(
             description='install a package for this project')
         parser.add_argument('packages', nargs='?', type=str, default="DEFAULT")
         parser.add_argument(
             '-D', '--dev', action='store_true')
-        parser.add_argument(
-            '-T', '--test', action='store_true')
         parser.add_argument(
             '-A', '--all', action='store_true')
         parser.set_defaults(func=install)
@@ -114,29 +118,31 @@ shortcut:
         print("install done!")
 
     def update(self):
+        """更新项目元数据."""
         parser = argparse.ArgumentParser(
             description="update this project's version and status")
         # NOT prefixing the argument with -- means it's not optional
-        parser.add_argument('version', type=str)
+        parser.add_argument('-V', '--version', type=str)
         parser.add_argument('-S', "--status", type=str,
-                            choices=["dev", "testing", "release", "stable"], default="dev")
+                            choices=["dev", "testing", "release", "stable"])
         parser.set_defaults(func=update)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
         print("update done!")
 
     def upload(self):
+        """上传数据."""
         parser = argparse.ArgumentParser(
             description='upload project to a remote repository')
         parser.add_argument('-g', '--git', type=str,
                                   nargs='*', required=False)
-        parser.add_argument('-r', '--remote', action='store_true', required=False)
         parser.set_defaults(func=upload)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
         print("upload done!")
 
     def run(self):
+        """执行命令的命令."""
         parser = argparse.ArgumentParser(
             description='run a script')
         parser.add_argument('script', type=str,
@@ -147,13 +153,25 @@ shortcut:
         print("run script done!")
 
     def build(self):
+        """按需求编译项目为二进制文件.
+
+        包括编译dockerfile
+        python可以选择将包编译为egg或者wheel用于发布,或者编译为pyz文件用于部署.
+        node和c暂时不支持.
+        """
         parser = argparse.ArgumentParser(
             description='build project to a remote repository')
 
         parser.add_argument(
-            '-e', '--egg', action="store_true")
+            '-e', '--egg', action="store_true", default=False)
         parser.add_argument(
-            '-w', '--wheel', action="store_true")
+            '-w', '--wheel', action="store_true", default=False)
+        parser.add_argument(
+            '-c', '--cython', action="store_true", default=False)
+        parser.add_argument(
+            '-z', '--pyz', action="store_true", default=False)
+        parser.add_argument(
+            '-d', '--docker', action="store_true", default=False)
 
         parser.set_defaults(func=build)
         args = parser.parse_args(self.argv[1:])
@@ -161,9 +179,10 @@ shortcut:
         print("build package done!")
 
     def test(self):
+        """测试命令的参数设置."""
         parser = argparse.ArgumentParser(
             description='test project')
-        parser.add_argument('-H', '--html', action="store_false",
+        parser.add_argument('-H', '--html', action="store_true", default=False,
                             help="export the html report")
         parser.add_argument('-g', action="store_true", default=True,
                             help="use global env")

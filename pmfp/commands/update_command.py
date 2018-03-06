@@ -4,7 +4,8 @@ from pmfp.projectinfo import ProjectInfo
 
 
 def update(args):
-    path = Path(".pmfprc")
+    """更新项目版本的的流程."""
+    path = Path(".pmfprc.json")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
         obj.update(args.version, status=args.status)

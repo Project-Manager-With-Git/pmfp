@@ -119,10 +119,19 @@ class InstallMixin:
 
         """
         print("install python requirement")
-        p = PYTHON_REQUIREMENTS_PATH.get(
-            record, "requirements/requirements.txt")
-        with open(p) as f:
-            lines = f.readlines()
+        if record != "all":
+            p = PYTHON_REQUIREMENTS_PATH.get(
+                record, "requirements/requirements.txt")
+            with open(p) as f:
+                lines = f.readlines()
+        else:
+            for _, v in PYTHON_REQUIREMENTS_PATH.items():
+                lines = []
+                with open(v) as f:
+                    templines = f.readlines()
+                    for i in templines:
+                        lines.append(i)
+        print("Will install {}".format(lines))
         error = False
         for i in lines:
             line = i.strip()
