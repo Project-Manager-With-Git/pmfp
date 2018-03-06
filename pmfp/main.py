@@ -209,16 +209,17 @@ shortcut:
         parser = argparse.ArgumentParser(
             description='new a document,setup.py,test,dockerfile for a project')
         parser.add_argument("command", type=str, choices=[
-                            'document', 'setup.py', 'test', 'dockerfile', 'main'])
+                            'document', 'setup.py', 'test', 'dockerfile', 'main','cython'])
+        parser.add_argument("-n", "--name", type=str, help="指定cython模块的名字",default="cymodel")
         parser.add_argument("-t", "--to", type=str, help="setup.py指定一个存放的位置", default=".")
-        parser.add_argument("-y", "--cython", action="store_true", help="setup.py指定是否要使用cython", default=False)
+        parser.add_argument("-y", "--with_cython", action="store_true", help="setup.py指定是否要使用cython", default=False)
         parser.add_argument("-c", "--command", action="store_true", help="setup.py指定是否要设置endpoint", default=False)
         parser.add_argument("-m", "--math", action="store_true", help="为cython的setup.py指定是否引入numpy的头文件", default=False)
 
         parser.set_defaults(func=new)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("doc done!")
+        print("new done!")
 
     def flask(self):
         """快速构建sanic项目."""

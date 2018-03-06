@@ -4,13 +4,16 @@ from pmfp.projectinfo import ProjectInfo
 
 
 def new(argv):
+    if argv.command == 'cython':
+        ProjectInfo.init_cython(argv.name,dir_path=argv.to,math=argv.math)
+        return
     path = Path(".pmfprc.json")
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
         if argv.command == "document":
-            obj.init_docs()
+            obj.init_docs() 
         elif argv.command == "setup.py":
-            obj.init_setup(dir_path=argv.to, cython=argv.cython, command=argv.command, math=argv.math)
+            obj.init_setup(cython=argv.with_cython, command=argv.command, math=argv.math)
         elif argv.command == "test":
             obj.init_test()
         elif argv.command == "dockerfile":

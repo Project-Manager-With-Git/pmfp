@@ -1,4 +1,5 @@
 import shutil
+import platform
 import subprocess
 import zipapp
 from pathlib import Path
@@ -35,9 +36,11 @@ class BuildMixin:
     def _build_cython(self):
         print('build cython model')
         command = 'python setup.py build_ext --inplace'
+        if platform.system() == 'Windows':
+            command = 'python setup.py build_ext --inplace -c msvc'
         subprocess.check_call(command)
         print('build cython model done!')
-
+    
     # def _build_c(self):
     #     command = "conan build"
     #     subprocess.call(command, shell=True)

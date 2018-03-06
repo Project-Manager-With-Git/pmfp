@@ -137,7 +137,6 @@ setup(
 )
 """)
 
-
 class InitSetupMixin:
     """初始化setup.py."""
 
