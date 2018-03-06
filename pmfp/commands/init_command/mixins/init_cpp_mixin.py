@@ -5,7 +5,7 @@ from pmfp.projectinfo import ProjectInfo
 
 
 class InitCppMixin:
-
+    """初始化C/Cpp项目的混入;"""
     def _init_cpp_command(self, args):
         obj = ProjectInfo.input_info(
             template=args.template,

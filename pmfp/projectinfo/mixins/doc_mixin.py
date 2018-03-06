@@ -6,14 +6,11 @@ from pathlib import Path
 
 
 class DocMixin:
-
+    """用于处理项目文档的混入"""
     def _build_doc(self):
 
-        if self.form.compiler in ["python", "cython"]:
-            if self.form.template in ["tk", "sanic", "flask"]:
-                print("this template do not need to build apidoc")
-
-            if self.form.project_type == "script":
+        if self.form.compiler == "python":
+            if self.form.project_form == "script":
                 print("building apidoc")
                 command = "sphinx-apidoc -o document {self.meta.project_name}".format(
                     self=self)
@@ -48,15 +45,21 @@ class DocMixin:
             httpd.serve_forever()
         return True
 
-    def doc(self, command="build"):
-        if self.with_docs:
+    def doc(self, command="build")->None:
+        """操作文档生成或者预览的方法.
+
+        Args:
+            command (str, optional): - build,serve二选一(Defaults to "build"). 
+
+        """
+        if Path("document").is_dir():
             if command == "serve":
                 self._serve_doc()
                 return True
             else:
                 self._build_doc()
         else:
-            print('this project do not have document')
+            print("need to new a document first")
 
 
 __all__ = ["DocMixin"]

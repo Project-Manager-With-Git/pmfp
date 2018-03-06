@@ -11,7 +11,6 @@ from pmfp.commands.install_command import install
 from pmfp.commands.update_command import update
 from pmfp.commands.upload_command import upload
 from pmfp.commands.run_command import run
-from pmfp.commands.search_command import search
 from pmfp.commands.build_command import build
 from pmfp.commands.test_command import testcmd
 from pmfp.commands.doc_command import doc
@@ -45,10 +44,10 @@ The most commonly used ppm commands are:
                a pypi server
    run         run scripts for python and node
    build       build your python project to a pyz file, wheel,egg,docker image,
-               build your cpp project to a lib or a executable file
+               
    test        test your project
    doc         build your project's document
-   new         new a document,setup.py,test,dockerfile for a project
+   new         new a document,setup.py,test,dockerfile
 
 shortcut:
    flask       init flask
@@ -196,6 +195,7 @@ shortcut:
         print("test done!")
 
     def doc(self):
+        """用于构建文档"""
         parser = argparse.ArgumentParser(
             description="build project's document")
         parser.add_argument('-s', '--serve', action="store_true")
@@ -205,23 +205,65 @@ shortcut:
         print("doc done!")
 
     def new(self):
+        """创建一些单独的模块."""
         parser = argparse.ArgumentParser(
             description='new a document,setup.py,test,dockerfile for a project')
         parser.add_argument("command", type=str, choices=[
                             'document', 'setup.py', 'test', 'dockerfile', 'main'])
+        parser.add_argument("-t", "--to", type=str, help="setup.py指定一个存放的位置", default=".")
+        parser.add_argument("-y", "--cython", action="store_true", help="setup.py指定是否要使用cython", default=False)
+        parser.add_argument("-c", "--command", action="store_true", help="setup.py指定是否要设置endpoint", default=False)
+        parser.add_argument("-m", "--math", action="store_true", help="为cython的setup.py指定是否引入numpy的头文件", default=False)
+
         parser.set_defaults(func=new)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
         print("doc done!")
 
     def flask(self):
-        pass
+        """快速构建sanic项目."""
+        parser = argparse.ArgumentParser(
+            description='initialise a flask project')
+        parser.add_argument(
+            '-e', '--env', type=str, choices=["env", "conda", "global"], default="env")
+        parser.add_argument('-t', '--template', type=str, choices=[
+            "socketio",
+            "api",
+            "mvc",
+            "blueprints"],
+            default="api")
+        parser.set_defaults(func=flask)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("flask init done!")
 
     def sanic(self):
-        pass
+        """快速构造sanic项目."""
+        parser = argparse.ArgumentParser(
+            description='initialise a sanic project')
+        parser.add_argument(
+            '-e', '--env', type=str, choices=["env", "conda", "global"], default="env")
+        parser.add_argument('-t', '--template', type=str, choices=[
+            "socketio",
+            "api",
+            "mvc",
+            "blueprints"],
+            default="api")
+        parser.set_defaults(func=sanic)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("sanic init done!")
 
     def celery(self):
-        pass
+        """快速构造celery项目."""
+        parser = argparse.ArgumentParser(
+            description='initialise a celery project')
+        parser.add_argument(
+            '-e', '--env', type=str, choices=["env", "conda", "global"], default="env")
+        parser.set_defaults(func=celery)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+        print("celery init done!")
 
     def vue(self):
         pass

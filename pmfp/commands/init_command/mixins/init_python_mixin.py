@@ -85,7 +85,7 @@ class InitPythonMixin:
 
         # form is script
         script_parsers = subparsers.add_parser(
-            "script", help="init a python script")
+            "script", aliases=["S"], help="init a python script")
         script_parsers.add_argument(
             '-t',
             '--template',
@@ -122,7 +122,6 @@ class InitPythonMixin:
         # init python flask command
         flask_parsers = subparsers.add_parser(
             "flask",
-            aliases=["F"],
             help="init a python gui project"
         )
         flask_parsers.add_argument(
@@ -146,7 +145,6 @@ class InitPythonMixin:
         # init python sanic command
         sanic_parsers = subparsers.add_parser(
             "sanic",
-            aliases=["S"],
             help="init a python gui project"
         )
         sanic_parsers.add_argument(

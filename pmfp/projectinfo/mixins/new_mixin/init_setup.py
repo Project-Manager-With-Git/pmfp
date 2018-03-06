@@ -61,8 +61,7 @@ setup(
     include_package_data=True,
     install_requires=REQUIREMETS,
     extras_require={
-        'dev': REQUIREMETS_DEV,
-        'test': REQUIREMETS_TEST
+        'dev': REQUIREMETS_DEV
     },$entry_points
     zip_safe=ZIP_SAFE,
     data_files=[('requirements', ['requirements/requirements.txt',
@@ -73,8 +72,10 @@ setup(
 CYTHON_SETUP = Template("""from codecs import open
 from setuptools import setup, find_packages
 from os import path
+from distutils.extension import Extension
 from Cython.Build import cythonize
 from Cython.Compiler import Options
+$numpy_import
 
 REQUIREMETS_DEV_FILE = 'requirements_dev.txt'
 REQUIREMETS_FILE = 'requirements.txt'
@@ -128,8 +129,7 @@ setup(
     include_package_data=True,
     install_requires=REQUIREMETS,
     extras_require={
-        'dev': REQUIREMETS_DEV,
-        'test': REQUIREMETS_TEST
+        'dev': REQUIREMETS_DEV
     },
     ext_modules=cythonize(extensions),$entry_points
     zip_safe=ZIP_SAFE,
@@ -165,9 +165,11 @@ class InitSetupMixin:
         else:
             entry_points = ""
         if math:
+            numpy_import = "import numpy"
             numpy_include = "include_dirs=[numpy.get_include()],"
         else:
             numpy_include = ""
+            numpy_import = ""
 
         setup = CYTHON_SETUP.substitute(
             project_name=self.meta.project_name,
@@ -180,6 +182,7 @@ class InitSetupMixin:
             description=self.desc.description,
             url=self.meta.url,
             numpy_include=numpy_include,
+            numpy_import=numpy_import,
             entry_points=entry_points
         )
 

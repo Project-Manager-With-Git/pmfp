@@ -51,14 +51,17 @@ class BuildMixin:
 
     def build_docker(self):
         """将项目编译为docker的image."""
-        print("build docker image")
-        command = "sudo docker build -t {project_name}:v{version}-{status} .".format(
-            project_name=self.meta.project_name,
-            version=self.meta.version,
-            status=self.meta.status
-        )
-        subprocess.call(command, shell=True)
-        print("build docker image done!")
+        if Path("Dockfile").exists() or Path("dockerfile").exists():
+            print("build docker image")
+            command = "sudo docker build -t {project_name}:v{version}-{status} .".format(
+                project_name=self.meta.project_name,
+                version=self.meta.version,
+                status=self.meta.status
+            )
+            subprocess.call(command, shell=True)
+            print("build docker image done!")
+        else:
+            print("need a dockerfile")
 
     def build(self,
               egg: bool=False,
@@ -85,10 +88,10 @@ class BuildMixin:
                     self._build_egg()
                 if wheel:
                     self._build_wheel()
-            if pyz:
-                self._build_pyz()
             else:
                 print("build model to egg,wheel,cython need file setup.py")
+            if pyz:
+                self._build_pyz()
 
         # elif self.form.compiler == "cpp":
         #     self._build_c()

@@ -1,0 +1,23 @@
+{
+    "meta": {
+        "project_name": "pmfp",
+        "license": "MIT",
+        "version": "2.0.0",
+        "status": "dev",
+        "url": "https://github.com/Python-Tools/pmfp"
+    },
+    "author": {
+        "author": "hsz",
+        "author_email": "hsz1273327@gmail.com"
+    },
+    "desc": {
+        "keywords": ["tool", "project_manager"],
+        "description": "a simple package manager for python like npm."
+    },
+    "form": {
+        "env": "env",
+        "compiler": "python",
+        "project_form": "model",
+        "template": "command"
+    }
+}

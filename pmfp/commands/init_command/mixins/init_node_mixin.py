@@ -2,12 +2,13 @@
 import argparse
 import json
 from pathlib import Path
+from functools import partial
 from pmfp.projectinfo import ProjectInfo
 
 
 class InitNodeMixin:
-
-    def _init_Node_universal_create_project(self, form, args):
+    """初始化Node项目的混入."""
+    def _init_node_universal_create_project(self, form, args):
         print("initializing Node {} project!".format(form))
         obj = ProjectInfo.input_info(
             template=args.template,
@@ -76,8 +77,7 @@ class InitNodeMixin:
         # init node script
         script_parsers = subparsers.add_parser(
             "script", aliases=["S"], help="init a node script")
-        script_parsers.add_argument(
-            '-e', '--env', type=str, choices=["node"], default="node")
+
         script_parsers.add_argument(
             '-t', '--template', type=str, choices=["es6", "ts"], default="es6")
         script_parsers = self._node_universal_parser(script_parsers)
@@ -87,8 +87,7 @@ class InitNodeMixin:
         # init node frontend command
         frontend_parsers = subparsers.add_parser(
             "frontend", aliases=["F"], help="init a node frontend project")
-        frontend_parsers.add_argument(
-            '-e', '--env', type=str, choices=["frontend"], default="frontend")
+
         frontend_parsers.add_argument(
             '-t', '--template', type=str, choices=["es6", "ts"], default="es6")
         frontend_parsers = self._node_universal_parser(frontend_parsers)
@@ -98,8 +97,7 @@ class InitNodeMixin:
         # init node vue command
         vue_parsers = subparsers.add_parser(
             "vue", aliases=["V"], help="init a node vue project")
-        vue_parsers.add_argument(
-            '-e', '--env', type=str, choices=["frontend"], default="frontend")
+
         vue_parsers.add_argument('-t', '--template', type=str,
                                  choices=["webpack"], default="webpack")
         vue_parsers = self._node_universal_parser(vue_parsers)
