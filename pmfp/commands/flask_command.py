@@ -14,11 +14,14 @@ def flask(argv):
             template=argv.template,
             env=argv.env,
             compiler="python",
-            project_type="flask"
+            project_form="flask"
         )
         path = Path(".pmfprc.json")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project(install=True)
+        obj.init_project()
+        obj.install_requirements("all")
+        obj.init_docs()
+        obj.init_docker()
         print("init flask application done!")
         return True

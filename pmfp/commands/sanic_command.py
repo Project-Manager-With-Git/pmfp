@@ -15,11 +15,11 @@ def sanic(argv):
             template=argv.template,
             env=argv.env,
             compiler="python",
-            project_type="sanic")
+            project_form="sanic")
         path = Path(".pmfprc.json")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)
-        obj.init_project(install=True)
+        obj.init_project()
         obj.install_requirements("all")
         obj.init_docs()
         obj.init_docker()

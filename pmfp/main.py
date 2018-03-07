@@ -183,7 +183,7 @@ shortcut:
             description='test project')
         parser.add_argument('-H', '--html', action="store_true", default=False,
                             help="export the html report")
-        parser.add_argument('-g', action="store_true", default=True,
+        parser.add_argument('-g', action="store_true", default=False,
                             help="use global env")
         parser.add_argument(
             '-T', '--typecheck', action="store_true", help="check python's typehints")
@@ -209,8 +209,8 @@ shortcut:
         parser = argparse.ArgumentParser(
             description='new a document,setup.py,test,dockerfile for a project')
         parser.add_argument("command", type=str, choices=[
-                            'document', 'setup.py', 'test', 'dockerfile', 'main','cython'])
-        parser.add_argument("-n", "--name", type=str, help="指定cython模块的名字",default="cymodel")
+                            'document', 'setup.py', 'test', 'dockerfile', 'main', 'cython'])
+        parser.add_argument("-n", "--name", type=str, help="指定cython模块的名字", default="cymodel")
         parser.add_argument("-t", "--to", type=str, help="setup.py指定一个存放的位置", default=".")
         parser.add_argument("-y", "--with_cython", action="store_true", help="setup.py指定是否要使用cython", default=False)
         parser.add_argument("-c", "--command", action="store_true", help="setup.py指定是否要设置endpoint", default=False)

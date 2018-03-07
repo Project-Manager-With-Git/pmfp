@@ -13,7 +13,7 @@ def celery(argv):
             template="simple",
             env=argv.env,
             compiler="python",
-            project_type="celery")
+            project_form="celery")
         path = Path(".pmfprc.json")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)

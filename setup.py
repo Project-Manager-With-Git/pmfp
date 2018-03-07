@@ -3,7 +3,6 @@ from setuptools import setup, find_packages
 from os import path
 
 REQUIREMETS_DEV_FILE = 'requirements_dev.txt'
-REQUIREMETS_TEST_FILE = 'requirements_test.txt'
 REQUIREMETS_FILE = 'requirements.txt'
 PROJECTNAME = 'pmfp'
 VERSION = '1.1.1'
@@ -35,8 +34,6 @@ with open(path.join(REQUIREMETS_DIR, REQUIREMETS_FILE), encoding='utf-8') as f:
 with open(path.join(REQUIREMETS_DIR, REQUIREMETS_DEV_FILE), encoding='utf-8') as f:
     REQUIREMETS_DEV = f.readlines()
 
-with open(path.join(REQUIREMETS_DIR, REQUIREMETS_TEST_FILE), encoding='utf-8') as f:
-    REQUIREMETS_TEST = f.readlines()
 setup(
     name=PROJECTNAME,
     version=VERSION,
@@ -51,13 +48,11 @@ setup(
     packages=PACKAGES,
     install_requires=REQUIREMETS,
     extras_require={
-        'dev': REQUIREMETS_DEV,
-        'test': REQUIREMETS_TEST
+        'dev': REQUIREMETS_DEV
     },
     entry_points={'console_scripts': ['ppm = pmfp.main:main']},
     zip_safe=ZIP_SAFE,
     include_package_data=True,  # use MANIFEST.in during install
     data_files=[('requirements', ['requirements/requirements.txt',
-                                  'requirements/requirements_dev.txt',
-                                  'requirements/requirements_test.txt'])]
+                                  'requirements/requirements_dev.txt'])]
 )

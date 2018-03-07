@@ -125,8 +125,8 @@ class InstallMixin:
             with open(p) as f:
                 lines = f.readlines()
         else:
+            lines = []
             for _, v in PYTHON_REQUIREMENTS_PATH.items():
-                lines = []
                 with open(v) as f:
                     templines = f.readlines()
                     for i in templines:

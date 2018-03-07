@@ -13,10 +13,7 @@ def vue(self, args):
             template=args.template,
             env="frontend",
             compiler="node",
-            project_type="vue",
-            with_test=False,
-            with_docs=False,
-            with_dockerfile=False)
+            project_form="vue")
         path = Path(".pmfprc")
         with open(str(path), "w") as f:
             json.dump(obj.to_dict(), f)

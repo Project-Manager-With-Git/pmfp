@@ -10,6 +10,9 @@ class TestMixin:
 
     def _run_python_test(self, html, g=False):
         print("unittest start")
+        print("g")
+        print(g)
+
         if g:
             # if self.form.project_form in ('sanic', 'flask'):
             #     cov = coverage.coverage(source=['{}/App'.format(self.meta.project_name)])
@@ -30,27 +33,25 @@ class TestMixin:
                     cov.report()
         else:
             python_path = self._get_python_path()
-            # if self.form.project_form in ('sanic', 'flask'):
-            #     command = "{python_path} -m coverage run --source={package_name}/App, -m unittest discover -v -s .".format(
-            #         python_path=python_path,
-            #         package_name=self.meta.project_name
-            #     )
-
-            # else:
             command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s .".format(
                 python_path=python_path,
                 package_name=self.meta.project_name
             )
             try:
+                print("test in {}".format(self.form.env))
                 subprocess.check_call(command, shell=True)
             except Exception as e:
                 print("error")
                 raise e
             else:
                 if html:
-                    cov.html_report(directory='covhtml')
+                    command = "{python_path} -m coverage html -d covhtml".format(
+                        python_path=python_path)
+                    subprocess.check_call(command, shell=True)
                 else:
-                    cov.report()
+                    command = "{python_path} -m coverage report".format(
+                        python_path=python_path)
+                    subprocess.check_call(command, shell=True)
 
         print("unittest done!")
 
