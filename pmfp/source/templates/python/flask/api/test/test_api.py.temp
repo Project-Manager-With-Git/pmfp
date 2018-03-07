@@ -1,6 +1,6 @@
 import json
 import unittest
-from test.get_app import app
+from $project_name import app
 
 
 def setUpModule():
@@ -26,39 +26,18 @@ class ApiTest(unittest.TestCase):
 
     def test_ping(self):
         rv = self.client.get('/api/test/ping/')
+        print("#############")
+        print(json.loads(rv.data))
         self.assertEqual(json.loads(rv.data)["msg"], 'pong')
 
-    def test_catlist(self):
-        rv = self.client.get('/api/test/cat/')
-        self.assertListEqual(json.loads(rv.data), [
-            {
-                "id": "1",
-                "name": "hello"
-            },
-            {
-                "id": "2",
-                "name": "kitty"
-            }
-        ])
 
-    def test_cat(self):
-        rv = self.client.get('/api/test/cat/1')
-        self.assertDictEqual(json.loads(rv.data),
-                             {
-            "id": "1",
-            "name": "hello"
-        })
-
-
-def add_suite():
+def ping_suite():
     suite = unittest.TestSuite()
     suite.addTest(ApiTest("test_ping"))
-    suite.addTest(ApiTest("test_cat"))
-    suite.addTest(ApiTest("test_catlist"))
     return suite
 
 
 if __name__ == '__main__':
     runner = unittest.TextTestRunner(verbosity=2)
-    test_suite = add_suite()
+    test_suite = ping_suite()
     runner.run(test_suite)
