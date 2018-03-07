@@ -17,8 +17,7 @@ class Application(Frame):
             self, text='Quit', fg="red", command=self.quit)
         self.quitButton.pack()
 
-
-if __name__ == "__main__":
+def main():
     app = Application()
     # 设置窗口标题:
     app.master.title('Hello World')
@@ -26,3 +25,7 @@ if __name__ == "__main__":
     app.master.geometry("600x400+100+400")  # 长x宽+x+y
     # 主消息循环:
     app.mainloop()
+
+
+if __name__ == "__main__":
+    main()

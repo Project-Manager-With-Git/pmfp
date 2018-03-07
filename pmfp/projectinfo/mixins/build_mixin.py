@@ -1,8 +1,10 @@
 import shutil
 import platform
+import tempfile
 import subprocess
 import zipapp
 from pathlib import Path
+import shutil
 
 
 class BuildMixin:
@@ -25,13 +27,41 @@ class BuildMixin:
 
     def _build_pyz(self):
         print('build {self.meta.project_name} to pyz file'.format(self=self))
+        t = tempfile.mkdtemp(dir=".")
+        tp = Path(t)
+        # tp.mkdir()
         if self.form.project_form == "script":
-            print("script can not build to pyz")
+            project_path = Path(self.meta.project_name + ".py")
+            shutil.copy(
+                str(project_path),
+                str(tp.joinpath(self.meta.project_name + ".py"))
+            )
+            main = self.meta.project_name + ":main"
         else:
-            source = self.meta.project_name
+            project_path = Path(self.meta.project_name)
+            shutil.copytree(
+                str(project_path),
+                str(tp.joinpath(self.meta.project_name))
+            )
+            shutil.copy(
+                "main.py",
+                str(tp.joinpath('main.py'))
+            )
+
             main = "main:main"
-            zipapp.create_archive(source, interpreter='/usr/bin/python3', main=main)
-        print('build self.meta.peoject_name to pyz file done!'.format(self=self))
+        source = t
+        zipapp.create_archive(source, target=self.meta.project_name + ".pyz", interpreter='/usr/bin/python3', main=main)
+        print("1234")
+        if tp.exists():
+            shutil.rmtree(str(tp))
+
+        # if self.form.project_form == "script":
+        #     print("script can not build to pyz")
+        # else:
+        #     source = self.meta.project_name
+        #     main = "main:main"
+        #     zipapp.create_archive(source, interpreter='/usr/bin/python3', main=main)
+        # print('build self.meta.peoject_name to pyz file done!'.format(self=self))
 
     def _build_cython(self):
         print('build cython model')
@@ -40,7 +70,7 @@ class BuildMixin:
             command = 'python setup.py build_ext --inplace -c msvc'
         subprocess.check_call(command)
         print('build cython model done!')
-    
+
     # def _build_c(self):
     #     command = "conan build"
     #     subprocess.call(command, shell=True)

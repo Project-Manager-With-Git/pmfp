@@ -124,6 +124,9 @@ class InitMainMixin:
 
     def _init_main(self):
         if self.form.compiler == "python":
+            if Path("main.py").exists():
+                print("already have a main.py file")
+                return
             if Path(self.meta.project_name).is_dir:
                 with open("main.py", "w") as f:
                     f.write(PYTHON_MAIN.substitute(
@@ -152,7 +155,8 @@ class InitMainMixin:
                         NODE_MAIN.substitute(
                             project_name=self.meta.project_name)
                     )
-
+            else:
+                print("already have a main.js")
         else:
             print("unknown compiler!")
 

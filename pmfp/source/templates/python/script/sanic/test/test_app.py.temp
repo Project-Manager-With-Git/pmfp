@@ -1,5 +1,5 @@
 import unittest
-from {project_name} import app
+from $project_name import app
 
 
 def setUpModule():

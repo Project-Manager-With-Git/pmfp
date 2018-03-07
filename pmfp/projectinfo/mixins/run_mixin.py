@@ -27,10 +27,12 @@ class RunMixin:
         if cmd == "":
             if Path(self.meta.project_name + ".py").exists():
                 cmd = self.meta.project_name + ".py"
+            if Path(self.meta.project_name).exists() and Path(self.meta.project_name).is_dir():
+                cmd = Path("main.py")
             if Path(self.meta.project_name + ".pyz").exists():
                 cmd = self.meta.project_name + ".pyz"
-            if Path(self.meta.project_name).exists() and Path(self.meta.project_name).is_dir():
-                cmd = Path(self.meta.project_name).joinpath('main.py')
+            print("run:")
+            print(cmd)
         if cmd == "":
             print("need a cmd")
             raise AttributeError("need a cmd")

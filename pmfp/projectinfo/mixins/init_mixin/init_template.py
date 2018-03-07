@@ -1,6 +1,7 @@
 """初始化模板."""
 import shutil
 from pathlib import Path
+from string import Template
 
 
 class InitTemplateMixin:
@@ -8,6 +9,18 @@ class InitTemplateMixin:
 
     需要Temp2pyMixin.
     """
+
+    def _temp_test(self, path):
+        if path.is_dir():
+            for child in path.iterdir():
+                self._temp_test(child)
+        if path.is_file():
+            if path.name.startswith("test_"):
+                with open(str(path), "r", encoding="utf-8") as f:
+                    content = f.read()
+                content = Template(content)
+                with open(str(path), "w", encoding="utf-8") as f:
+                    f.write(content.substitute(project_name=self.meta.project_name))
 
     def _init_template(self):
         """初始化模板."""
@@ -30,7 +43,7 @@ class InitTemplateMixin:
                         )
                 else:
                     if p.name.startswith("__project_name__"):
-                        suffix = "."+p.name.split(".")[-2]
+                        suffix = "." + p.name.split(".")[-2]
                         shutil.copy(
                             str(p),
                             str(local_path.joinpath(self.meta.project_name + suffix))
@@ -45,3 +58,17 @@ class InitTemplateMixin:
             raise AttributeError("Unsupport template!")
         for i in local_path.iterdir():
             self.temp2py(i.absolute())
+        test_path = Path("test")
+        if test_path.is_dir():
+            self._temp_test(test_path)
+        main_path = Path("main.py")
+        if main_path.is_file():
+            with open(str(main_path), "r", encoding="utf-8") as f:
+                content = f.read()
+            content = Template(content)
+            with open(str(main_path), "w", encoding="utf-8") as f:
+                f.write(
+                    content.substitute(
+                        project_name=self.meta.project_name
+                    )
+                )

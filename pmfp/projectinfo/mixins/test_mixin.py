@@ -4,18 +4,19 @@ import unittest
 from mypy import api
 import coverage
 
+
 class TestMixin:
     """需要PythonPathMixin."""
 
     def _run_python_test(self, html, g=False):
         print("unittest start")
         if g:
-            if self.form.project_form in ('sanic', 'flask'):
-                cov = coverage.coverage(source=['{}/App'.format(self.meta.project_name)])
-                suite = unittest.TestLoader().discover("test")
-            else:
-                cov = coverage.coverage(source=['{}'.format(self.meta.project_name)])
-                suite = unittest.TestLoader().discover("test")
+            # if self.form.project_form in ('sanic', 'flask'):
+            #     cov = coverage.coverage(source=['{}/App'.format(self.meta.project_name)])
+            #     suite = unittest.TestLoader().discover(".")
+            # else:
+            cov = coverage.coverage(source=['{}'.format(self.meta.project_name)])
+            suite = unittest.TestLoader().discover(".")
             try:
                 cov.start()
                 unittest.TextTestRunner(verbosity=2).run(suite)
@@ -29,17 +30,17 @@ class TestMixin:
                     cov.report()
         else:
             python_path = self._get_python_path()
-            if self.form.project_form in ('sanic', 'flask'):
-                command = "{python_path} -m coverage run --source={package_name}/App, -m unittest discover -v -s test".format(
-                    python_path=python_path,
-                    package_name=self.meta.project_name
-                )
+            # if self.form.project_form in ('sanic', 'flask'):
+            #     command = "{python_path} -m coverage run --source={package_name}/App, -m unittest discover -v -s .".format(
+            #         python_path=python_path,
+            #         package_name=self.meta.project_name
+            #     )
 
-            else:
-                command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s test".format(
-                    python_path=python_path,
-                    package_name=self.meta.project_name
-                )
+            # else:
+            command = "{python_path} -m coverage run --source={package_name} -m unittest discover -v -s .".format(
+                python_path=python_path,
+                package_name=self.meta.project_name
+            )
             try:
                 subprocess.check_call(command, shell=True)
             except Exception as e:

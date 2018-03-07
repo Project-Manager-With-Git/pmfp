@@ -60,7 +60,8 @@ RUN python setup.py install
                     project_name=self.meta.project_name
                 )
             except:
-                raise AttributeError("unknown project type")
+                print("unknown project type")
+                return
             else:
                 with open(str(local_path.joinpath("Dockerfile")), "w") as f:
                     f.write(content)

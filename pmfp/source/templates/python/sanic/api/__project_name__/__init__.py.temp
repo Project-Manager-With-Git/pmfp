@@ -1,0 +1,22 @@
+
+from sanic import Sanic
+from sanic import response
+from sanic.response import json
+from .source.sample_source import SimpleView
+
+__VERSION__ = "0.0.1"
+
+app = Sanic("app")
+default_settings = {
+    'DEBUG': True,
+    'HOST': '0.0.0.0',
+    'PORT': 5000,
+    'WORKERS': 1,
+    'ACCESS_LOG': True,
+    'IMAGE_GENE_URI'
+    'LOGO_PATH': None,
+    "SSL": None
+}
+app.config.update(default_settings)
+
+app.add_route(SimpleView.as_view(), '/api/simple')

@@ -26,7 +26,8 @@ class InitCythonMixin:
         path = Path(dir_path)
         name_path = path.joinpath(name)
         if name_path.exists():
-            raise AttributeError('path already exist!')
+            print('path already exist!')
+            return
         name_path.mkdir()
         setup_path = name_path.joinpath("setup.py")
         src_path = name_path.joinpath("src")

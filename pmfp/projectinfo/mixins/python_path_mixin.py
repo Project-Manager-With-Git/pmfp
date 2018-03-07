@@ -32,16 +32,14 @@ class PythonPathMixin:
             elif self.form.env == "conda":
                 python_path = Path("env/python")
             else:
-                print("unknown env for python/cython!")
-                return False
+                python_path = Path("python")
         else:
             if self.form.env == "env":
                 python_path = Path("env/bin/python")
             elif self.form.env == "conda":
                 python_path = Path("env/bin/python")
             else:
-                print("unknown env for python/cython!")
-                return False
+                python_path = Path("python")
         return str(python_path)
 
 

@@ -137,11 +137,15 @@ setup(
 )
 """)
 
+
 class InitSetupMixin:
     """初始化setup.py."""
 
     def init_manifest(self):
         """初始化setup.py上传用的manifest文件."""
+        if Path("MANIFEST.in").exists():
+            print("already have a manifest.in file")
+            return
         print('create MANIFEST.in')
         with open("MANIFEST.in", "w") as f:
             f.write(MANIFEST.substitute(
@@ -152,7 +156,8 @@ class InitSetupMixin:
         """初始化cython的setup.py."""
         path = Path("{}/setup.py".format(dir_path))
         if path.exists():
-            raise AttributeError('already have setup.py')
+            print('already have setup.py')
+            return
         if command:
             if self.form.project_form == "script":
                 entry_points_T = Template(
@@ -193,7 +198,8 @@ class InitSetupMixin:
         """初始化python的setup.py."""
         path = Path("{}/setup.py".format(dir_path))
         if path.exists():
-            raise AttributeError('already have setup.py')
+            print('already have setup.py')
+            return
         if command:
             if self.form.project_form == "script":
                 entry_points_T = Template(
