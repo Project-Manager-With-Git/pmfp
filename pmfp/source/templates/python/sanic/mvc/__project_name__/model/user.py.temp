@@ -1,0 +1,11 @@
+from peewee import (
+    CharField,
+    IntegerField
+)
+
+from .base import BaseModel
+
+
+class User(BaseModel):
+    name = CharField()
+    age = IntegerField()

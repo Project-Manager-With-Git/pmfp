@@ -1,0 +1,20 @@
+from sanic import Blueprint
+from sanic_session import InMemorySessionInterface
+from sanic_jinja2 import SanicJinja2
+views = Blueprint('views', url_prefix='/')
+jinja = SanicJinja2()
+session = InMemorySessionInterface()
+
+
+@views.middleware('request')
+async def add_session_to_request(request):
+    # before each request initialize a session
+    # using the client's request
+    await session.open(request)
+
+
+@views.middleware('response')
+async def save_session(request, response):
+    # after each request save the session,
+    # pass the response to set client cookies
+    await session.save(request, response)
