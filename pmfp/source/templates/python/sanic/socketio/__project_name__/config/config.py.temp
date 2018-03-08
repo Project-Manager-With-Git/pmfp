@@ -1,4 +1,0 @@
-class Config:
-    PROJECT_NAME = "My App"
-    SECRET_KEY = ""
-    KEEP_ALIVE_TIMEOUT = 20

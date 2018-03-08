@@ -7,6 +7,7 @@ from aioorm.utils import AioDbFactory
 from $project_name import app, __VERSION__
 from $project_name.model import db
 
+
 def _load_conf(path):
     """指定地址加载配置文件为配置字典."""
     with open(path) as f:

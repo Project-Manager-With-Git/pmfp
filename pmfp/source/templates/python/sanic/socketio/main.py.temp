@@ -3,9 +3,8 @@ import sys
 import argparse
 from pathlib import Path
 import yaml
-from aioorm.utils import AioDbFactory
 from $project_name import app, __VERSION__
-from $project_name.model import db
+
 
 def _load_conf(path):
     """指定地址加载配置文件为配置字典."""
@@ -68,12 +67,6 @@ def _run_app():
     )
 
 
-def _init_db():
-    """初始化数据库连接."""
-    database = AioDbFactory(app.config.DB_URL)
-    db.initialize(database)
-
-
 def main(argv=sys.argv[1:]):
     """服务启动入口.
 
@@ -95,7 +88,6 @@ def main(argv=sys.argv[1:]):
         app.config.update(result)
     result = _make_conf(args)
     app.config.update(result)
-    _init_db()
     _run_app()
 
 

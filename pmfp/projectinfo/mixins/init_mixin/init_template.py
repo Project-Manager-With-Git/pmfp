@@ -10,17 +10,30 @@ class InitTemplateMixin:
     需要Temp2pyMixin.
     """
 
+    def _change_file_name(self, path):
+        if path.is_file():
+            with open(str(path), "r", encoding="utf-8") as f:
+                content = f.read()
+            content = Template(content)
+            with open(str(path), "w", encoding="utf-8") as f:
+                f.write(
+                    content.substitute(
+                        project_name=self.meta.project_name
+                    )
+                )
+
     def _temp_test(self, path):
         if path.is_dir():
             for child in path.iterdir():
                 self._temp_test(child)
-        if path.is_file():
-            if path.name.startswith("test_"):
-                with open(str(path), "r", encoding="utf-8") as f:
-                    content = f.read()
-                content = Template(content)
-                with open(str(path), "w", encoding="utf-8") as f:
-                    f.write(content.substitute(project_name=self.meta.project_name))
+        else:
+            self._change_file_name(path)
+        # if path.is_file():
+        #     with open(str(path), "r", encoding="utf-8") as f:
+        #         content = f.read()
+        #     content = Template(content)
+        #     with open(str(path), "w", encoding="utf-8") as f:
+        #         f.write(content.substitute(project_name=self.meta.project_name))
 
     def _init_template(self):
         """初始化模板."""
@@ -61,14 +74,6 @@ class InitTemplateMixin:
         test_path = Path("test")
         if test_path.is_dir():
             self._temp_test(test_path)
-        main_path = Path("main.py")
-        if main_path.is_file():
-            with open(str(main_path), "r", encoding="utf-8") as f:
-                content = f.read()
-            content = Template(content)
-            with open(str(main_path), "w", encoding="utf-8") as f:
-                f.write(
-                    content.substitute(
-                        project_name=self.meta.project_name
-                    )
-                )
+        self._change_file_name(Path("main.py"))
+        print("1234")
+        self._change_file_name(Path("Dockerfile"))

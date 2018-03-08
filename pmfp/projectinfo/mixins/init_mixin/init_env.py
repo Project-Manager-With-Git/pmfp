@@ -53,9 +53,9 @@ class InitEnvMixin:
                     raise AttributeError("unknown env")
                 subprocess.check_call(command)
                 print('creating env done!')
-                print("create dev requirement")
-                self._init_dev_requirements()
-                print("create dev requirement done!")
+            print("create dev requirement")
+            self._init_dev_requirements()
+            print("create dev requirement done!")
 
         elif self.form.compiler == "node":
             with open("package.json") as f:

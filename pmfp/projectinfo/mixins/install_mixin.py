@@ -127,10 +127,11 @@ class InstallMixin:
         else:
             lines = []
             for _, v in PYTHON_REQUIREMENTS_PATH.items():
-                with open(v) as f:
-                    templines = f.readlines()
-                    for i in templines:
-                        lines.append(i)
+                if Path(v).exists():
+                    with open(v) as f:
+                        templines = f.readlines()
+                        for i in templines:
+                            lines.append(i)
         print("Will install {}".format(lines))
         error = False
         for i in lines:

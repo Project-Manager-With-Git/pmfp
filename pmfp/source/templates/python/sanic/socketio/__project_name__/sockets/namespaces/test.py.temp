@@ -1,4 +1,6 @@
-from sockets.sockets import sockets as sio
+from ..sockets import sockets as sio
+
+
 @sio.on('my event', namespace='/test')
 async def test_message(sid, message):
     await sio.emit('my response', {'data': message['data']}, room=sid,
