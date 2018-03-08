@@ -2,7 +2,6 @@ Flask
 pyyaml
 inflect
 gevent
-flask-bootstrap
 peewee
 psycopg2
 pymysql

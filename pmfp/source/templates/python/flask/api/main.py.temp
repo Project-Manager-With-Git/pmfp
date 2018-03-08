@@ -2,7 +2,7 @@
 import sys
 import argparse
 from pathlib import Path
-from $project_name import app, __VERSION__
+from $project_name import init_app, __VERSION__
 from $project_name.server import SERVERS
 import yaml
 
@@ -23,6 +23,8 @@ def _make_conf(args):
         result['HOST'] = args.host
     if args.nodebug:
         result['DEBUG'] = False
+    if args.server:
+        result['SERVER'] = args.server
     return result
 
 
@@ -31,7 +33,7 @@ def _parser_args(params):
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, help="指定端口")
     parser.add_argument("--host", type=str, help="指定主机")
-    parser.add_argument("--sever", type=str,
+    parser.add_argument("--server", type=str,
                         choices=["default", "gevent", "profile"],
                         default="default", help="指定使用的服务器")
     parser.add_argument("--nodebug", action="store_true", help="是否使用debug模式")
@@ -42,7 +44,7 @@ def _parser_args(params):
     return args
 
 
-def _run_app():
+def _run_app(app):
     """执行启动服务的操作."""
     SERVERS.get(app.config['SERVER'])(app)
 
@@ -57,18 +59,20 @@ def main(argv=sys.argv[1:]):
         print("项目名:{}".format(app.name))
         print("项目版本号:{}".format(__VERSION__))
         return True
+    config = {}
     result = None
     p = Path("./config.ymal")
     if p.exists():
         result = _load_conf(str(p))
-        app.config.update(**result)
+        config.update(**result)
     result = None
     if args.config:
         result = _load_conf(args.config)
-        app.config.update(**result)
+        config.update(**result)
     result = _make_conf(args)
-    app.config.update(**result)
-    _run_app()
+    config.update(**result)
+    app = init_app(config)
+    _run_app(app)
 
 
 if __name__ == '__main__':

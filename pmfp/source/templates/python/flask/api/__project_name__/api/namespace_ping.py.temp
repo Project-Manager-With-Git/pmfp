@@ -1,7 +1,7 @@
 from flask_restplus import Namespace, Resource, fields
 
 ping_api = Namespace('ping', description='ping-pong related operations')
-
+print("import ping")
 
 @ping_api.doc('get_pong')
 @ping_api.route('/')
