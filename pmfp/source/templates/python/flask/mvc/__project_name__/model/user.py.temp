@@ -1,0 +1,17 @@
+from peewee import CharField, IntegerField
+from .base import BaseModel
+
+
+class User(BaseModel):
+    age = IntegerField()
+    name = CharField()
+
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "name": self.name
+
+        }
+
+
+__all__ = ["User"]
