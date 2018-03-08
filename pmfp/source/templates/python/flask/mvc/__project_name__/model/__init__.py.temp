@@ -1,1 +1,2 @@
-from model.peewee_models import *
+from .user import User
+from .base import db
