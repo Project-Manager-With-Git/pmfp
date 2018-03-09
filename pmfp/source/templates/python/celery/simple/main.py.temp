@@ -3,9 +3,9 @@ import sys
 import time
 import argparse
 from multiprocessing import Process
-from config import choose_conf
 from celery.utils.imports import instantiate
-from App.celery_app import app
+from $project_name.celery_app import app
+from $project_name.config import choose_conf
 
 ENV = ("development", "testing", "production", "test", "dev", "default")
 

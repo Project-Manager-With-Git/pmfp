@@ -1,5 +1,5 @@
 from flask_admin import Admin
-from model.sql_models import Role, User, reflect_db
+from ..model.sql_models import Role, User, reflect_db
 from .modelview import MyModelView
 
 admin = Admin(name='后台管理系统', base_template='my_master.html')

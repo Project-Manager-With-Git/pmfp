@@ -1,4 +1,4 @@
-from config.development import DevelopementConfig
+from .development import DevelopementConfig
 
 
 class ProductionConfig(DevelopementConfig):

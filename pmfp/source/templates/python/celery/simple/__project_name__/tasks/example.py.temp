@@ -1,4 +1,4 @@
-from App.celery_app import app
+from ..celery_app import app
 
 
 @app.task(bind=True, name=__name__.split(".")[-1]+'::add')
