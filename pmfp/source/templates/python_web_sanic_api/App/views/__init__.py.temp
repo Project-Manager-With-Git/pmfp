@@ -1,6 +1,0 @@
-from sanic.views import CompositionView
-from .get_handler import get_handler
-
-
-view = CompositionView()
-view.add(['GET'], get_handler)
