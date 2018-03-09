@@ -1,11 +1,11 @@
 import sys
 import argparse
-from speech_recognizer.command.train import train_command
-from speech_recognizer.command.predict import predict_command
-from speech_recognizer.command.predict_submit import predict_submit_command
-from speech_recognizer.command.summary import summary_command
-from speech_recognizer.command.tf_board import tf_board_command
-from speech_recognizer.process.utils import REGIST_PROCESS
+from $project_name.command.train import train_command
+from $project_name.command.predict import predict_command
+from $project_name.command.predict_submit import predict_submit_command
+from $project_name.command.summary import summary_command
+from $project_name.command.tf_board import tf_board_command
+from $project_name.process.utils import REGIST_PROCESS
 
 
 class Command:

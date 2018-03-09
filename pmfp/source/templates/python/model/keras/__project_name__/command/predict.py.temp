@@ -2,7 +2,7 @@ from argparse import Namespace
 from pathlib import Path
 import numpy as np
 from scipy.io import wavfile
-from speech_recognizer.process.utils import (
+from ..process.utils import (
     REGIST_PERPROCESS,
     REGIST_FEATURE_EXTRACT
 )

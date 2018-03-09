@@ -2,9 +2,9 @@ import glob
 from pathlib import Path
 from collections import Counter
 from keras.models import load_model
-from speech_recognizer.conf import MODEL_PATH
-from speech_recognizer.utils import vector_to_lab
-from speech_recognizer.process.utils import REGIST_PROCESS
+from conf import MODEL_PATH
+from utils import vector_to_lab
+from ..process.utils import REGIST_PROCESS
 
 
 def _load(process_name, mulit=False):

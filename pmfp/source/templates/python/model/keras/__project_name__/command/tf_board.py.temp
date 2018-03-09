@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 from argparse import Namespace
-from speech_recognizer.conf import LOG_PATH
+from conf import LOG_PATH
 
 
 def run_tf_board(process_name):

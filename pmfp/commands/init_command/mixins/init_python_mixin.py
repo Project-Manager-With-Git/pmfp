@@ -112,7 +112,7 @@ class InitPythonMixin:
             '-t',
             '--template',
             type=str,
-            choices=["simple", "keras", "command"],
+            choices=["simple", "keras", "command","pytorch"],
             default="simple"
         )
         model_parsers = self._python_universal_parser(model_parsers)

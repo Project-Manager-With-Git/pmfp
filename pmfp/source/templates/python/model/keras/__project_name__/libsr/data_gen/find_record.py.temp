@@ -1,11 +1,11 @@
 import math
 import random
 from pathlib import Path
-from speech_recognizer.conf import (
+from conf import (
     TRAIN_DATASET_PATH,
     WANTED_WORDS
 )
-from speech_recognizer.utils import lab_to_vector
+from utils import lab_to_vector
 
 
 def find_data(dataset_path=TRAIN_DATASET_PATH,

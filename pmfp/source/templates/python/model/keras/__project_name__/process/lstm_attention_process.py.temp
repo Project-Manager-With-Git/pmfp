@@ -1,17 +1,17 @@
 from functools import partial
-from speech_recognizer.libsr.preprocessing import (
+from ..libsr.preprocessing import (
     normalize_perprocess
 )
-from speech_recognizer.libsr.data_augmentation import(
+from ..libsr.data_augmentation import(
     aug_process
 )
-from speech_recognizer.libsr.feature_extract import (
+from ..libsr.feature_extract import (
     mfcc
 )
-from speech_recognizer.libsr.data_gen import TrainData
-from speech_recognizer.libsr.models import build_lstm_attention_model
-from speech_recognizer.libsr.train import train_generator
-from speech_recognizer.utils import vector_to_lab
+from ..libsr.data_gen import TrainData
+from ..libsr.models import build_lstm_attention_model
+from ..libsr.train import train_generator
+from ..utils import vector_to_lab
 from .utils import regist, tb_callback, model_report
 
 

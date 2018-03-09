@@ -10,8 +10,8 @@ from sklearn.metrics import (
     accuracy_score,
     confusion_matrix
 )
-from speech_recognizer.conf import MODEL_PATH, LOG_PATH, POSSIBLE_LABELS
-from speech_recognizer.utils import vector_to_lab
+from conf import MODEL_PATH, LOG_PATH, POSSIBLE_LABELS
+from utils import vector_to_lab
 
 REGIST_PROCESS = {}
 REGIST_PERPROCESS = {}
