@@ -1,0 +1,212 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pmfp.projectinfo.mixins.new_mixin.init_docs &#8212; pmfp  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.projectinfo.mixins.new_mixin.init_docs</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;初始化文档.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">Template</span>
+
+<span class="n">CONF</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">import os</span>
+<span class="s2">import sys</span>
+<span class="s2">from pathlib import Path</span>
+<span class="s2">import recommonmark</span>
+<span class="s2">from recommonmark.transform import AutoStructify</span>
+<span class="s2">from recommonmark.parser import CommonMarkParser</span>
+<span class="s2">p = Path(__file__).absolute()</span>
+<span class="s2">sys.path.insert(0, str(p.parent.parent))</span>
+
+<span class="s2">extensions = [&#39;sphinx.ext.autodoc&#39;,</span>
+<span class="s2">              &#39;sphinx.ext.todo&#39;,</span>
+<span class="s2">              &#39;sphinx.ext.viewcode&#39;,</span>
+<span class="s2">              &#39;sphinx.ext.napoleon&#39;,</span>
+<span class="s2">              &#39;sphinx.ext.mathjax&#39;]</span>
+
+<span class="s2">templates_path = [&#39;_templates&#39;]</span>
+
+<span class="s2">source_parsers = {</span>
+<span class="s2">    &#39;.md&#39;: &#39;recommonmark.parser.CommonMarkParser&#39;,</span>
+<span class="s2">}</span>
+<span class="s2">source_suffix = [&#39;.rst&#39;, &#39;.md&#39;]</span>
+
+<span class="s2">master_doc = &#39;index&#39;</span>
+
+<span class="s2">project = &#39;$project_name&#39;</span>
+<span class="s2">copyright = &#39;2017, $author&#39;</span>
+<span class="s2">author = &#39;$author&#39;</span>
+
+<span class="s2">version = &#39;$version&#39;</span>
+
+<span class="s2">release = &#39;&#39;</span>
+
+<span class="s2">language = &#39;en&#39;</span>
+
+<span class="s2">exclude_patterns = [&#39;_build&#39;, &#39;Thumbs.db&#39;, &#39;.DS_Store&#39;]</span>
+
+<span class="s2">pygments_style = &#39;sphinx&#39;</span>
+
+<span class="s2">todo_include_todos = True</span>
+
+<span class="s2">html_theme = &#39;alabaster&#39;</span>
+
+<span class="s2">html_static_path = [&#39;_static&#39;]</span>
+
+<span class="s2">htmlhelp_basename = &#39;$project_name&#39;</span>
+
+<span class="s2">latex_elements = {</span>
+
+<span class="s2">}</span>
+
+<span class="s2">latex_documents = [</span>
+<span class="s2">    (master_doc, &#39;$project_name.tex&#39;, &#39;$project_name Documentation&#39;,</span>
+<span class="s2">     &#39;Author&#39;, &#39;manual&#39;),</span>
+<span class="s2">]</span>
+
+<span class="s2">man_pages = [</span>
+<span class="s2">    (master_doc, &#39;$project_name&#39;, &#39;$project_name Documentation&#39;,</span>
+<span class="s2">     [author], 1)</span>
+<span class="s2">]</span>
+
+<span class="s2">texinfo_documents = [</span>
+<span class="s2">    (master_doc, &#39;$project_name&#39;, &#39;$project_name Documentation&#39;,</span>
+<span class="s2">     author, &#39;$project_name&#39;, &#39;One line description of project.&#39;,</span>
+<span class="s2">     &#39;Miscellaneous&#39;),</span>
+<span class="s2">]</span>
+
+<span class="s2">epub_title = project</span>
+<span class="s2">epub_author = author</span>
+<span class="s2">epub_publisher = author</span>
+<span class="s2">epub_copyright = copyright</span>
+
+<span class="s2">epub_exclude_files = [&#39;search.html&#39;]</span>
+
+<span class="s2">todo_include_todos = True</span>
+<span class="s2">url_doc_root = &quot;xxxx&quot;#</span>
+<span class="s2">def setup(app):</span>
+<span class="s2">    app.add_config_value(&#39;recommonmark_config&#39;, {</span>
+<span class="s2">        &#39;url_resolver&#39;: lambda url: url_doc_root + url,</span>
+<span class="s2">        &#39;auto_toc_tree_section&#39;:&#39;Contents&#39;,</span>
+<span class="s2">         &#39;enable_math&#39;:True,</span>
+<span class="s2">        &#39;enable_inline_math&#39;:True</span>
+<span class="s2">    }, True)</span>
+<span class="s2">    app.add_transform(AutoStructify)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="InitDocsMixin"><a class="viewcode-back" href="../../../../../pmfp.projectinfo.mixins.new_mixin.html#pmfp.projectinfo.mixins.new_mixin.init_docs.InitDocsMixin">[docs]</a><span class="k">class</span> <span class="nc">InitDocsMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;初始化文档的混入.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="InitDocsMixin.init_docs"><a class="viewcode-back" href="../../../../../pmfp.projectinfo.mixins.new_mixin.html#pmfp.projectinfo.mixins.new_mixin.init_docs.InitDocsMixin.init_docs">[docs]</a>    <span class="k">def</span> <span class="nf">init_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化sphinx文档.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;building document&#39;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;document&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;document exists&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;python&quot;</span><span class="p">:</span>
+                <span class="n">package_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span>
+                <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">package_name</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sphinx-apidoc&quot;</span><span class="p">,</span> <span class="s2">&quot;-F&quot;</span><span class="p">,</span> <span class="s2">&quot;-H&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+                               <span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">,</span> <span class="n">package_name</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sphinx-apidoc&quot;</span><span class="p">,</span> <span class="s2">&quot;-F&quot;</span><span class="p">,</span> <span class="s2">&quot;-H&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+                               <span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">package_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sphinx-apidoc&quot;</span><span class="p">,</span> <span class="s2">&quot;-F&quot;</span><span class="p">,</span> <span class="s2">&quot;-H&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="s1">&#39;-A&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+                           <span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]</span>
+
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;document/conf.py&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">CONF</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span>
+                        <span class="n">project_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span>
+                        <span class="n">author</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;building apidoc done&#39;</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;InitDocsMixin&quot;</span><span class="p">]</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../index.html">Module code</a><ul>
+  <li><a href="../../../projectinfo.html">pmfp.projectinfo</a><ul>
+  <li><a href="../new_mixin.html">pmfp.projectinfo.mixins.new_mixin</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
