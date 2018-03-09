@@ -1,7 +1,7 @@
 from flask import Flask
 from .api import apis
 __VERSION__ = "0.0.1"
-app = Flask(__name__)
+
 
 
 def init_app(config=None):
@@ -14,6 +14,7 @@ def init_app(config=None):
     }
     if config:
         default_settings.update(**config)
+    app = Flask(__name__)
     app.config.update(
         **default_settings
     )

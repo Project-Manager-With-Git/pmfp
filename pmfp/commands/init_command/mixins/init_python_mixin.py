@@ -68,11 +68,11 @@ class InitPythonMixin:
             compiler="python",
             project_form='script'
         )
-        path = Path(".pmfprc.yml")
+        path = Path(".pmfprc.json")
         with open(str(path), 'w') as f:
-            f.write(yaml.dump(obj.to_dict()))
+            json.dump(obj.to_dict(), f)
         obj.init_project()
-        print("init python default project done!".format(form))
+        print("init python default project done!")
 
     def python(self):
         """Python argparse parsers."""
@@ -131,7 +131,6 @@ class InitPythonMixin:
             choices=[
                 "admin",
                 "api",
-                "api_admin",
                 "blueprint",
                 "mvc",
                 "socketio"

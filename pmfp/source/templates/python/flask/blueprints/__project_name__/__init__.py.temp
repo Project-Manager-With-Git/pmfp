@@ -1,0 +1,33 @@
+from pathlib import Path
+from flask import Flask
+from .api import apis
+from .view import views
+__VERSION__ = "0.0.1"
+
+
+def init_app(config=None):
+    default_settings = {
+        'DEBUG': True,
+        'HOST': '0.0.0.0',
+        'SECRET_KEY': 'some secret words',
+        'PORT': 5000,
+        'SERVER': "default",
+        #'DB_URL': "postgresql://postgres:rstrst@127.0.0.1:5432/test",
+        'DB_URL': "mysql://root:hsz881224@127.0.0.1:3306/test1",
+        'TEST_DB_URL': "mysql://root:hsz881224@127.0.0.1:3306/test1",
+        "TEMPLATE_PATH": str(Path("./templates").absolute()),
+        "STATIC_FOLDER": str(Path("./static").absolute())
+    }
+    if config:
+        default_settings.update(**config)
+    app = Flask(
+        __name__,
+        template_folder=default_settings["TEMPLATE_PATH"],
+        static_folder=default_settings["STATIC_FOLDER"]
+    )
+    app.config.update(
+        **default_settings
+    )
+    app.register_blueprint(views)
+    apis.init_app(app)
+    return app

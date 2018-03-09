@@ -228,6 +228,7 @@ shortcut:
         parser.add_argument(
             '-e', '--env', type=str, choices=["env", "conda", "global"], default="env")
         parser.add_argument('-t', '--template', type=str, choices=[
+            'admin',
             "socketio",
             "api",
             "mvc",

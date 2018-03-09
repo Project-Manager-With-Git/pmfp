@@ -1,8 +1,8 @@
 Flask
-inflect
-gevent
-flask-admin
-flask-security
-flask-sqlalchemy
 flask-restplus
+gevent
+pyyaml
+inflect
 peewee
+psycopg2
+pymysql
