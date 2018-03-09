@@ -132,8 +132,7 @@ class InitPythonMixin:
                 "admin",
                 "api",
                 "blueprint",
-                "mvc",
-                "socketio"
+                "mvc"
             ],
             default="api"
         )

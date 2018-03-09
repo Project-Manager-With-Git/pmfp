@@ -33,12 +33,12 @@ class Core(unittest.TestCase):
     def tearDownClass(cls):
         print("tearDown model test context")
 
-    async def _create_table(self):
+    def _create_table(self):
         """创建表."""
         self.db.connect()
         self.db.create_tables([User], safe=True)
 
-    async def _drop_table(self):
+    def _drop_table(self):
         """删除表."""
         db.drop_tables([User], safe=True)
         db.close()
