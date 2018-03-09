@@ -1,0 +1,67 @@
+from functools import partial
+from ..libsr.preprocessing import (
+    normalize_perprocess
+)
+from ..libsr.data_augmentation import(
+    aug_process
+)
+from ..libsr.feature_extract import (
+    mfcc
+)
+from ..libsr.data_gen import TrainData
+from ..libsr.models import build_lstm_attention_model
+from ..libsr.train import train_generator
+from ..utils import vector_to_lab
+from .utils import regist, tb_callback, model_report
+
+
+per = normalize_perprocess
+fe = partial(mfcc, numcep=26, cnn=False)
+
+
+@regist(per, fe)
+def lstm_attention_process(
+        model_kwargs=dict(
+            input_shape=(99, 26),
+            lstm_layer={
+                'units': 100,
+                'return_sequences': True},
+            attention_3d_layer={
+                "time_step": 99,
+                "single_attention_vector": False}),
+        aug_process_kwargs=dict(
+            time_shift=2000,
+            background_volume_range=0.1,
+            background_frequency=0.1),  # 数据增强
+        optimizer='adam',
+        loss='categorical_crossentropy',  # 训练用的参数
+        metrics=['mae', 'accuracy'],
+        train_batch_size=140,
+        validation_batch_size=60,
+        epochs=1):
+    if aug_process_kwargs:
+        aug = partial(aug_process, **aug_process_kwargs)
+    else:
+        aug = None
+    data = TrainData(perprocess=per,
+                     feature_extract=fe,
+                     aug_process=aug)
+    train_gen = data.train_gen(train_batch_size)
+    lenght = next(train_gen)
+    validation_gen = data.validation_gen(validation_batch_size)
+    steps = next(validation_gen)
+
+    trained_model = train_generator(build_lstm_attention_model(**model_kwargs),
+                                    train_gen,
+                                    steps_per_epoch=lenght,
+                                    epochs=epochs,
+                                    optimizer=optimizer,
+                                    loss=loss,
+                                    metrics=metrics,
+                                    validation_data=validation_gen,
+                                    validation_steps=steps,
+                                    callbacks=[tb_callback(
+                                        "lstm_attention_process")]
+                                    )
+    acc = model_report(trained_model, data.test_data, average='macro')
+    return trained_model, acc

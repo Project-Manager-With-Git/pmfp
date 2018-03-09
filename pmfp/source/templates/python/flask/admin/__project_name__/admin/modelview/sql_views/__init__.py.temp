@@ -1,0 +1,1 @@
+from .my_model_view import MyModelView

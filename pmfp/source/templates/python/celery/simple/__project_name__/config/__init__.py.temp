@@ -1,0 +1,15 @@
+from .default import DefaultConfig
+from .testing import TestingConfig
+from .development import DevelopementConfig
+from .production import ProductionConfig
+ENV = {
+    "development": DevelopementConfig,
+    "testing": TestingConfig,
+    "dev": DevelopementConfig,
+    "test": TestingConfig,
+    "production": ProductionConfig
+}
+
+
+def choose_conf(env):
+    return ENV.get(env, DefaultConfig)

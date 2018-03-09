@@ -1,0 +1,12 @@
+def gevent_server(app: any)->None:
+    from gevent.wsgi import WSGIServer
+    from gevent import monkey
+    monkey.patch_all()
+    http_server = WSGIServer(
+        (app.config['HOST'], app.config['PORT']),
+        app
+    )
+    http_server.serve_forever()
+
+
+__all__ = ["production"]

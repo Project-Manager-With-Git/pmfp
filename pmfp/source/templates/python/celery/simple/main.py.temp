@@ -1,0 +1,112 @@
+import os
+import sys
+import time
+import argparse
+from multiprocessing import Process
+from celery.utils.imports import instantiate
+from $project_name.celery_app import app
+from $project_name.config import choose_conf
+
+ENV = ("development", "testing", "production", "test", "dev", "default")
+
+
+def run_flower():
+    env = choose_conf("default")
+    app.config_from_object(env)
+    time.sleep(3)
+    instantiate(
+        'flower.command:FlowerCommand', app=app
+    ).execute_from_commandline()
+
+
+def default(args):
+    env = choose_conf("default")
+    app.config_from_object(env)
+    print(u'parent process {}.'.format(os.getpid()))
+    p_flower = Process(target=run_flower)
+    print(u'flower process start.')
+    p_flower.daemon = True
+    p_flower.start()
+    app.worker_main(["-l info"])
+    p_flower.join()
+    p_flower.terminate()
+    print("flower down")
+
+
+def worker(args):
+    print("worker args:")
+    print(args)
+    env = choose_conf(args.environment)
+    app.config_from_object(env)
+    command = ["-l info"]
+    if args.command:
+        pr_cmd = [i for i in args.command.split(" ") if i.find(
+            "--port=") == -1 and i.find(
+                "--address=") == -1 and i.find(
+                    "--broker_api=") == -1 and i.find('--basic-auth=') == -1]
+        print(pr_cmd)
+        command += pr_cmd
+    app.worker_main(command)
+
+
+def flower(args):
+    env = choose_conf(args.environment)
+    app.config_from_object(env)
+    time.sleep(3)
+    if args.command:
+        command = args.command.split(" ")
+        print(command)
+        instantiate(
+            'flower.command:FlowerCommand', app=app
+        ).execute_from_commandline(command)
+
+    else:
+        instantiate(
+            'flower.command:FlowerCommand', app=app
+        ).execute_from_commandline()
+
+
+def all_command(args):
+    print(u'worker process start.')
+    p_flower = Process(target=flower, args=(args,))
+    print(u'flower process start.')
+    p_flower.daemon = True
+    p_flower.start()
+    worker(args)
+    p_flower.join()
+    p_flower.terminate()
+    print("flower shut down")
+
+
+def main(argv=sys.argv[1:]):
+    parser = argparse.ArgumentParser()
+
+    parser.set_defaults(func=default)
+    subparsers = parser.add_subparsers()
+    parser_worker = subparsers.add_parser('worker')
+    parser_worker.add_argument("-e", "--environment", type=str,
+                               default="default",
+                               help="默认为debug模式,可选的环境:\n" + ",".join(ENV))
+    parser_worker.add_argument('-c', '--command', type=str, default="")
+    parser_worker.set_defaults(func=worker)
+
+    parser_flower = subparsers.add_parser('flower')
+    parser_flower.add_argument("-e", "--environment", type=str,
+                               default="default",
+                               help="默认为debug模式,可选的环境:\n" + ",".join(ENV))
+    parser_flower.add_argument('-c', '--command', type=str)
+    parser_flower.set_defaults(func=flower)
+
+    parser_all = subparsers.add_parser('all')
+    parser_all.add_argument("-e", "--environment", type=str,
+                            default="default",
+                            help="默认为debug模式,可选的环境:\n" + ",".join(ENV))
+    parser_all.add_argument('-c', '--command', type=str)
+    parser_all.set_defaults(func=all_command)
+
+    args = parser.parse_args(argv)
+    args.func(args)
+
+
+if __name__ == '__main__':
+    main()

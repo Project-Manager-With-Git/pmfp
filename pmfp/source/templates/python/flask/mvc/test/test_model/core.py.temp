@@ -1,0 +1,44 @@
+import asyncio
+import unittest
+from playhouse.db_url import connect
+try:
+    from $project_name import init_app
+    from $project_name.model import db, User
+except:
+    import sys
+    from pathlib import Path
+    path = str(
+        Path(__file__).absolute().parent.parent.parent
+    )
+    if path not in sys.path:
+        sys.path.append(path)
+    from $project_name import init_app
+    from $project_name.model import db, User
+
+
+class Core(unittest.TestCase):
+    # 初始化数据库和连接
+    @classmethod
+    def setUpClass(cls):
+        app=init_app()
+        database = connect(app.config['TEST_DB_URL'])
+        database.salt = "qwe"
+        cls.name = 'huangsizhe'
+        cls.age = 16
+        db.initialize(database)
+        cls.db = db
+        print("setUp model test context")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("tearDown model test context")
+
+    def _create_table(self):
+        """创建表."""
+        self.db.connect()
+        self.db.create_tables([User], safe=True)
+
+    def _drop_table(self):
+        """删除表."""
+        db.drop_tables([User], safe=True)
+        db.close()

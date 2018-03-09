@@ -1,0 +1,87 @@
+import sys
+import argparse
+from model import Model
+
+
+class Command:
+    def __init__(self, argv):
+        parser = argparse.ArgumentParser(
+            description='Project Manager for Pythoner',
+            usage='''$project_name.py <command> [<args>]
+The most commonly used ppm commands are:
+   echo        echo a string
+''')
+        parser.add_argument('command', help='Subcommand to run')
+
+        self.argv = argv
+        args = parser.parse_args(argv[0:1])
+        if not hasattr(self, args.command):
+            print('Unrecognized command')
+            parser.print_help()
+            exit(1)
+        # use dispatch pattern to invoke method with same name
+        getattr(self, args.command)()
+
+    def predict(self):
+        parser = argparse.ArgumentParser(description='PyTorch MNIST predict script')
+        parser.add_argument('pic_path', type=str, help='predict pic')
+        parser.add_argument('--model-path', '-m', type=str, default="./model.pkl",
+                            help='save model to the path,(default:./model.pkl)')
+
+        _args = parser.parse_args(argv)
+
+        kwargs = {
+            "pic_path": _args.pic_path,
+            "model_path": _args.model_path
+        }
+        model = Model.load_pkl(kwargs["model_path"])
+        model.predict(kwargs["pic_path"])
+
+    def train(self):
+        parser = argparse.ArgumentParser(description='PyTorch MNIST train script')
+        parser.add_argument('--batch-size', type=int, default=64, metavar='N',
+                            help='input batch size for training (default: 64)')
+        parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N',
+                            help='input batch size for testing (default: 1000)')
+        parser.add_argument('--epochs', type=int, default=10, metavar='N',
+                            help='number of epochs to train (default: 10)')
+        parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
+                            help='learning rate (default: 0.01)')
+        parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
+                            help='SGD momentum (default: 0.5)')
+        parser.add_argument('--cuda', action='store_true', default=True,
+                            help='disables CUDA training')
+        parser.add_argument('--seed', type=int, default=1, metavar='S',
+                            help='random seed (default: 1)')
+        parser.add_argument('--log-interval', type=int, default=10, metavar='N',
+                            help='how many batches to wait before logging training status')
+        parser.add_argument('--log-detail', action='store_true', default=False,
+                            help='if show the detail of each epoch. (default: False)')
+        parser.add_argument('--model_path', type=str, default="./model.pkl",
+                            help='save model to the path,(default:./model.pkl)')
+        _args = parser.parse_args(argv)
+
+        kwargs = {
+            "batch_size": _args.batch_size,
+            "test_batch_size": _args.test_batch_size,
+            "epochs": _args.epochs,
+            "lr": _args.lr,
+            "momentum": _args.momentum,
+            "cuda": _args.cuda,
+            "seed": _args.seed,
+            "log_interval": _args.log_interval,
+            "log_detail": _args.log_detail,
+            "model_path": _args.model_path
+        }
+        model = Model(**kwargs)
+        if model.use_cuda:
+            print("using cuda!")
+        model.train()
+
+
+def main(argv: Sequence[str]=sys.argv[1:]):
+    Command(argv)
+
+
+if __name__ == '__main__':
+    main()

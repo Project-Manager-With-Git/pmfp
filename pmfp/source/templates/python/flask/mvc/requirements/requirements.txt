@@ -1,0 +1,7 @@
+Flask
+pyyaml
+inflect
+gevent
+peewee
+psycopg2
+pymysql

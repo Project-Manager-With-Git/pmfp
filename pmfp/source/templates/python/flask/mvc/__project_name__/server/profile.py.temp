@@ -1,0 +1,11 @@
+def profile_server(app: any)->None:
+    from werkzeug.contrib.profiler import ProfilerMiddleware
+    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[25],
+                                      profile_dir="profile")
+    app.run(
+        host=app.config['HOST'],
+        port=app.config['PORT']
+    )
+
+
+__all__ = ["development"]

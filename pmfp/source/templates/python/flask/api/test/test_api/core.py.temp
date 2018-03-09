@@ -1,0 +1,28 @@
+import asyncio
+import unittest
+
+try:
+    from $project_name import init_app
+except:
+    import sys
+    from pathlib import Path
+    path = str(
+        Path(__file__).absolute().parent.parent.parent
+    )
+    if path not in sys.path:
+        sys.path.append(path)
+    from $project_name import init_app
+
+
+class Core(unittest.TestCase):
+    # 初始化数据库和连接
+    @classmethod
+    def setUpClass(cls):
+        app = init_app()
+        app.testing = True
+        cls.client = app.test_client()
+        print("SetUp Api test context")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("TearDown Api test context")

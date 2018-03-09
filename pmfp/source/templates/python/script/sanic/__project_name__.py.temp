@@ -1,0 +1,15 @@
+from sanic import Sanic
+from sanic.response import json
+
+app = Sanic()
+
+
+@app.route("/ping")
+async def test(request):
+    return json({"msg": "pong"})
+
+def main():
+    app.run(host="0.0.0.0", port=5000)
+
+if __name__ == "__main__":
+    main()

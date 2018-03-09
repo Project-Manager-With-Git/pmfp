@@ -1,0 +1,67 @@
+import sys
+import unittest
+from pathlib import Path
+try:
+    from $project_name.model import User
+except:
+    path = str(
+        Path(__file__).absolute().parent.parent.parent.parent
+    )
+    if path not in sys.path:
+        sys.path.append(path)
+    from $project_name.model import User
+try:
+    from test.test_model.core import Core
+except:
+    path = str(
+        Path(__file__).absolute().parent.parent
+    )
+    if path not in sys.path:
+        sys.path.append(path)
+    from core import Core
+
+
+def setUpModule():
+    print("[SetUp Model User Create test]")
+
+
+def tearDownModule():
+    print("[TearDown model User Create test]")
+
+
+class CreateTest(Core):
+
+    def test_user_table_create(self):
+        self._create_table()
+        assert User.table_exists() is True
+        self._drop_table()
+
+    def test_user_create_single(self):
+        self._create_table()
+        try:
+            user = User.create(
+                name=self.name,
+                age=self.age
+            )
+            user.save()
+            user =User.get(User.name == self.name)
+            assert user.name == self.name
+            assert user.age == self.age
+        except Exception as e:
+            raise e
+        finally:
+            self._drop_table()
+       
+
+
+def create_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(CreateTest("test_user_table_create"))
+    suite.addTest(CreateTest("test_user_create_single"))
+    return suite
+
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)
+    test_suite = create_suite()
+    runner.run(test_suite)

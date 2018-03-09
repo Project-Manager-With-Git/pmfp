@@ -1,0 +1,2 @@
+import socketio
+sockets = socketio.AsyncServer(async_mode='sanic')

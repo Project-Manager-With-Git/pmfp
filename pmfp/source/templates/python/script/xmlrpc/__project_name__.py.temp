@@ -1,0 +1,45 @@
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.server import SimpleXMLRPCRequestHandler
+from socketserver import ThreadingMixIn
+
+class ThreadXMLRPCServer(ThreadingMixIn, SimpleXMLRPCServer):pass
+
+
+class Hello:
+    """用于测试"""
+    
+    def hello(self,name):
+        """测试类的方法hello"""
+        return "hello "+name
+    def bye(self,name):
+        """测试类的方法bye"""
+        return "bye "+name
+        
+def test_func(a,b):
+    """测试加法"""
+    return a+b
+
+
+def main():
+    with ThreadXMLRPCServer(("localhost", 5000),allow_none=True) as server:
+        # 注册所有可调用函数的名字到system.listMethods方法
+        # 注册可调用函数的docstring到system.methodHelp(func_name)方法
+        # 注册可调用函数的签名到system.methodSignature(func_name)方法
+        server.register_introspection_functions()
+        
+        # 这个函数的作用是可以使客户端同时调用服务端的的多个函数。
+        server.register_multicall_functions()
+        
+        # 注册一个类的实例,使其中的成员方法作为可调用的函数
+        server.register_instance(Hello())
+        
+        # 注册一个函数,使它可以被调用,后面的字符串就是被调用的函数名
+        server.register_function(test_func, 'add')
+        # Run the server's main loop
+        
+        print("star server @localhost:3456...")
+        server.serve_forever()
+
+
+    if __name__ == "__main__":
+        main()

@@ -1,0 +1,38 @@
+from pathlib import Path
+from sanic import Sanic
+from sanic import response
+from sanic.response import json
+from jinja2 import FileSystemLoader
+from sanic_jinja2 import SanicJinja2
+from .sockets import sockets, background_task
+
+
+__VERSION__ = '0.0.5'
+app = Sanic("pmfptest")
+jinja = SanicJinja2()
+default_settings = {
+    'DEBUG': True,
+    'HOST': '0.0.0.0',
+    'PORT': 5000,
+    'WORKERS': 1,
+    'ACCESS_LOG': True,
+    'LOGO_PATH': None,
+    "SSL": None,
+    "TEMPLATE_PATH": str(Path("./templates").absolute()),
+    "STATIC_FOLDER": str(Path("./static").absolute())
+}
+app.config.update(default_settings)
+loader = FileSystemLoader(app.config.TEMPLATE_PATH)
+jinja.init_app(app, loader=loader)
+sockets.attach(app)
+
+
+@app.listener('before_server_start')
+def before_server_start(app, loop):
+    sockets.start_background_task(background_task)
+
+
+@app.get("/")
+@jinja.template('index.html')
+async def helloword(request):
+    return

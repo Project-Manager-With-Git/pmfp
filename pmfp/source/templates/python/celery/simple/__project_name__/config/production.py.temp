@@ -1,0 +1,8 @@
+from .development import DevelopementConfig
+
+
+class ProductionConfig(DevelopementConfig):
+    SQLALCHEMY_ECHO = False
+
+
+__all__ = ["ProductionConfig"]

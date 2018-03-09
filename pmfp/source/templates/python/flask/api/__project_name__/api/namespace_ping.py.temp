@@ -1,0 +1,14 @@
+from flask_restplus import Namespace, Resource, fields
+
+ping_api = Namespace('ping', description='ping-pong related operations')
+print("import ping")
+
+@ping_api.doc('get_pong')
+@ping_api.route('/')
+class Ping(Resource):
+    @ping_api.doc('get_pong')
+    def get(self):
+        return {'msg': 'pong'}
+
+
+__all__ = ["ping_api"]

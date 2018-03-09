@@ -1,0 +1,13 @@
+from flask import render_template
+from .init import main
+from ..model import User
+
+
+@main.route('/', methods=['GET'])
+def index():
+    User.create_table()
+    bob = User(name='Bob', age=13)
+    bob.save()
+    users = ",".join([i.name for i in User.select()])
+    print(users)
+    return render_template('index.html', greetings="hello", users=users)

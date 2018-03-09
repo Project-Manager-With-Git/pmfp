@@ -1,0 +1,46 @@
+import asyncio
+import unittest
+from aioorm.utils import AioDbFactory
+try:
+    from $project_name import app
+    from $project_name.model import db, User
+except:
+    import sys
+    from pathlib import Path
+    path = str(
+        Path(__file__).absolute().parent.parent.parent
+    )
+    if path not in sys.path:
+        sys.path.append(path)
+    from $project_name import app
+    from $project_name.model import db, User
+
+
+class Core(unittest.TestCase):
+    # 初始化数据库和连接
+    @classmethod
+    def setUpClass(cls):
+        database = AioDbFactory(app.config.TEST_DB_URL)
+        database.salt = "qwe"
+        cls.name = 'huangsizhe'
+        cls.age = 16
+        db.initialize(database)
+        cls.loop = asyncio.new_event_loop()
+        cls.db = db
+        asyncio.set_event_loop(cls.loop)
+        print("setUp model test context")
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.loop.close()
+        print("tearDown model test context")
+
+    async def _create_table(self):
+        """创建表."""
+        await self.db.connect(self.loop)
+        await self.db.create_tables([User], safe=True)
+
+    async def _drop_table(self):
+        """删除表."""
+        await db.drop_tables([User], safe=True)
+        await db.close()

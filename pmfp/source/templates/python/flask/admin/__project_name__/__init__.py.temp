@@ -1,0 +1,88 @@
+import os
+from flask import Flask, url_for, render_template
+from pathlib import Path
+from flask_babelex import Babel
+from flask_admin import helpers as admin_helpers
+from flask_security import (
+    Security,
+    SQLAlchemyUserDatastore
+)
+from .admin import admin
+from .model.sql_models import User, Role, database, build_sample_db
+from .admin import add_db_views
+__VERSION__ = "0.0.1"
+basedir = os.path.abspath(os.path.dirname("."))
+
+
+def init_app(config=None):
+    basedir = Path(".").absolute()
+    default_settings = {
+        'DEBUG': True,
+        "TEST": True,
+        'HOST': '0.0.0.0',
+        'SECRET_KEY': 'some secret words',
+        'PORT': 5000,
+        'SERVER': "default",
+
+        "TEMPLATE_PATH": str(Path("./templates").absolute()),
+        "STATIC_FOLDER": str(Path("./static").absolute()),
+        'MANAGE_TABLES': None,
+        'SQLALCHEMY_BINDS': {
+            'admin_users': 'sqlite:///' + str(basedir.joinpath('admin.db'))
+        },
+        # Create in-memory database
+        'SQLALCHEMY_DATABASE_URI': 'sqlite:///' + str(basedir.joinpath('static/target.db')),
+        'SQLALCHEMY_ECHO': True,
+        # Flask-Security config
+        'SECURITY_URL_PREFIX': "/admin",
+        'SECURITY_PASSWORD_HASH': "pbkdf2_sha512",
+        'SECURITY_PASSWORD_SALT': "ATGUOHAELKiubahiughaerGOJAEGj",
+        # Flask-Security URLs, overridden because they don't put a / at the end
+        'SECURITY_LOGIN_URL': "/login/",
+        'SECURITY_LOGOUT_URL': "/logout/",
+        'SECURITY_REGISTER_URL': "/register/",
+        'SECURITY_POST_LOGIN_VIEW': "/admin/",
+        'SECURITY_POST_LOGOUT_VIEW': "/admin/",
+        'SECURITY_POST_REGISTER_VIEW': "/admin/",
+        # Flask-Security features
+        'SECURITY_REGISTERABLE': True,
+        'SECURITY_SEND_REGISTER_EMAIL': False,
+        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+        # flask_babelex
+        'BABEL_DEFAULT_LOCALE': 'zh_CN'
+    }
+    if config:
+        default_settings.update(**config)
+    app = Flask(
+        __name__,
+        template_folder=default_settings["TEMPLATE_PATH"],
+        static_folder=default_settings["STATIC_FOLDER"]
+    )
+    app.config.update(
+        **default_settings
+    )
+    database.init_app(app)
+    database.app = app
+    admin.init_app(app)
+    user_datastore = SQLAlchemyUserDatastore(database, User, Role)
+    security = Security(app, datastore=user_datastore)
+    babel = Babel(app)
+    add_db_views(admin, app, database)
+    if app.config["DEBUG"] is True and app.config["TEST"] is True:
+        database.drop_all(bind="admin_users")
+        database.create_all(bind="admin_users")
+        build_sample_db(database, app, user_datastore)
+
+    @security.context_processor
+    def security_context_processor():
+        return dict(
+            admin_base_template=admin.base_template,
+            admin_view=admin.index_view,
+            h=admin_helpers,
+            get_url=url_for
+        )
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
+    return app

@@ -1,0 +1,79 @@
+"""程序入口,用于启动服务."""
+import sys
+import argparse
+from pathlib import Path
+from $project_name import init_app, __VERSION__
+from $project_name.server import SERVERS
+import yaml
+
+
+def _load_conf(path):
+    """指定地址加载配置文件为配置字典."""
+    with open(path) as f:
+        result = yaml.load(f)
+    return result
+
+
+def _make_conf(args):
+    """通过命令行参数创建配置字典."""
+    result = {}
+    if args.port:
+        result["PORT"] = args.port
+    if args.host:
+        result['HOST'] = args.host
+    if args.nodebug:
+        result['DEBUG'] = False
+    if args.server:
+        result['SERVER'] = args.server
+    return result
+
+
+def _parser_args(params):
+    """解析命令行参数."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, help="指定端口")
+    parser.add_argument("--host", type=str, help="指定主机")
+    parser.add_argument("--server", type=str,
+                        choices=["default", "gevent", "profile"],
+                        default="default", help="指定使用的服务器")
+    parser.add_argument("--nodebug", action="store_true", help="是否使用debug模式")
+    parser.add_argument("-c", '--config', type=str, help="指定配置文件,使用yaml进行配置")
+    parser.add_argument("--version", help="查看服务的版本号", action="store_true")
+
+    args = parser.parse_args(params)
+    return args
+
+
+def _run_app(app):
+    """执行启动服务的操作."""
+    SERVERS.get(app.config['SERVER'])(app)
+
+
+def main(argv=sys.argv[1:]):
+    """服务启动入口.
+
+    设置覆盖顺序`命令行参数`>`'-c'指定的配置文件`>`项目启动位置的配置文件`>默认配置.
+    """
+    args = _parser_args(argv)
+    if args.version:
+        print("项目名:{}".format(app.name))
+        print("项目版本号:{}".format(__VERSION__))
+        return True
+    config = {}
+    result = None
+    p = Path("./config.ymal")
+    if p.exists():
+        result = _load_conf(str(p))
+        config.update(**result)
+    result = None
+    if args.config:
+        result = _load_conf(args.config)
+        config.update(**result)
+    result = _make_conf(args)
+    config.update(**result)
+    app = init_app(config)
+    _run_app(app)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,10 @@
+def echo(string: str)->str:
+    return string
+
+
+def main()->None:
+    print(echo("hello world"))
+
+
+if __name__ == "__main__":
+    main()

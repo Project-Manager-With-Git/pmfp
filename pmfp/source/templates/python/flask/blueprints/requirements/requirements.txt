@@ -1,0 +1,8 @@
+Flask
+flask-restplus
+gevent
+pyyaml
+inflect
+peewee
+psycopg2
+pymysql

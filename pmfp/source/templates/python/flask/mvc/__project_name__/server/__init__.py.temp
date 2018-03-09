@@ -1,0 +1,9 @@
+from .default import default
+from .gevent_server import gevent_server
+from .profile import profile_server
+
+SERVERS = {
+    "default": default,
+    "gevent": gevent_server,
+    "profile": profile_server
+}

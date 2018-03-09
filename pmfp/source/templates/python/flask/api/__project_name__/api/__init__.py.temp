@@ -1,0 +1,9 @@
+from flask_restplus import Api
+from .namespace_ping import ping_api
+apis = Api(
+    title='Test Api',
+    version='1.0',
+    description='A description'
+)
+
+apis.add_namespace(ping_api, path='/api/test/ping')
