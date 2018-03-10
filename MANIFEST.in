@@ -1,0 +1,6 @@
+include LICENSE
+include README.rst
+recursive-include libpmfp/templates *
+recursive-include libpmfp/requirements *.txt
+recursive-include libpmfp *.py
+
