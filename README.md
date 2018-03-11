@@ -1,10 +1,6 @@
 # pmfp
 
-<<<<<<< HEAD
-+ version: 2.0.1
-=======
 + version: 2.0.2
->>>>>>> dev
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
