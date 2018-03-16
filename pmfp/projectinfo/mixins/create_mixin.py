@@ -50,6 +50,8 @@ class CreateMixin:
             else:
                 break
         project_name = project_name or local_path.name
+        if "-" in project_name:
+            project_name.replace("-","_")
         license_path = local_path.joinpath("LICENSE")
         if license_path.exists():
             with license_path.open("r") as f:
