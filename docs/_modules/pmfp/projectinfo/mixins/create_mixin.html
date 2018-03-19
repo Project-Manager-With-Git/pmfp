@@ -83,6 +83,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">break</span>
         <span class="n">project_name</span> <span class="o">=</span> <span class="n">project_name</span> <span class="ow">or</span> <span class="n">local_path</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">project_name</span><span class="p">:</span>
+            <span class="n">project_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
         <span class="n">license_path</span> <span class="o">=</span> <span class="n">local_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;LICENSE&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">license_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">with</span> <span class="n">license_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
