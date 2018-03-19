@@ -111,7 +111,11 @@
     <span class="sd">&quot;&quot;&quot;A string class for supporting $-substitutions.&quot;&quot;&quot;</span>
 
     <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39;$&#39;</span>
-    <span class="n">idpattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;[_a-z][_a-z0-9]*&#39;</span>
+    <span class="c1"># r&#39;[a-z]&#39; matches to non-ASCII letters when used with IGNORECASE,</span>
+    <span class="c1"># but without ASCII flag.  We can&#39;t add re.ASCII to flags because of</span>
+    <span class="c1"># backward compatibility.  So we use local -i flag and [a-zA-Z] pattern.</span>
+    <span class="c1"># See https://bugs.python.org/issue31672</span>
+    <span class="n">idpattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(?-i:[_a-zA-Z][_a-zA-Z0-9]*)&#39;</span>
     <span class="n">flags</span> <span class="o">=</span> <span class="n">_re</span><span class="o">.</span><span class="n">IGNORECASE</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>

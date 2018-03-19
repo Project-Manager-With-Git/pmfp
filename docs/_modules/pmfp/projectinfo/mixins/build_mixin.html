@@ -31,13 +31,37 @@
           <div class="body" role="main">
             
   <h1>Source code for pmfp.projectinfo.mixins.build_mixin</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">shutil</span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">compileall</span>
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">zipapp</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
+
+
+<span class="k">def</span> <span class="nf">remove_readonly</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Clear the readonly bit and reattempt the removal.&quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWRITE</span><span class="p">)</span>
+    <span class="n">func</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">delete_py_source</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.py&quot;</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;__pycache__&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+                <span class="n">delete_py_source</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="BuildMixin"><a class="viewcode-back" href="../../../../pmfp.projectinfo.mixins.html#pmfp.projectinfo.mixins.build_mixin.BuildMixin">[docs]</a><span class="k">class</span> <span class="nc">BuildMixin</span><span class="p">:</span>
@@ -80,8 +104,9 @@
                 <span class="s2">&quot;main.py&quot;</span><span class="p">,</span>
                 <span class="nb">str</span><span class="p">(</span><span class="n">tp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;main.py&#39;</span><span class="p">))</span>
             <span class="p">)</span>
-
             <span class="n">main</span> <span class="o">=</span> <span class="s2">&quot;main:main&quot;</span>
+        <span class="n">compileall</span><span class="o">.</span><span class="n">compile_dir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tp</span><span class="p">),</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">legacy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">delete_py_source</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
         <span class="n">source</span> <span class="o">=</span> <span class="n">t</span>
         <span class="n">zipapp</span><span class="o">.</span><span class="n">create_archive</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">project_name</span> <span class="o">+</span> <span class="s2">&quot;.pyz&quot;</span><span class="p">,</span> <span class="n">interpreter</span><span class="o">=</span><span class="s1">&#39;/usr/bin/python3&#39;</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="n">main</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1234&quot;</span><span class="p">)</span>

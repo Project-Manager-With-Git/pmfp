@@ -1,10 +1,34 @@
+import os
+import stat
 import shutil
+import compileall
 import platform
 import tempfile
 import subprocess
 import zipapp
 from pathlib import Path
 import shutil
+
+
+def remove_readonly(func, path, _):
+    """Clear the readonly bit and reattempt the removal."""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
+def delete_py_source(p):
+    if p.is_file():
+        if p.suffix == ".py":
+            os.remove(str(p))
+    else:
+        if p.name == "__pycache__":
+            try:
+                shutil.rmtree(str(p), onerror=remove_readonly)
+            except Exception as e:
+                print(e)
+        else:
+            for i in p.iterdir():
+                delete_py_source(i)
 
 
 class BuildMixin:
@@ -47,8 +71,9 @@ class BuildMixin:
                 "main.py",
                 str(tp.joinpath('main.py'))
             )
-
             main = "main:main"
+        compileall.compile_dir(str(tp), force=True, legacy=True, optimize=2)
+        delete_py_source(tp)
         source = t
         zipapp.create_archive(source, target=self.meta.project_name + ".pyz", interpreter='/usr/bin/python3', main=main)
         print("1234")

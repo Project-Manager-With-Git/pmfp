@@ -39,13 +39,13 @@
 <span class="kn">from</span> <span class="nn">.init_dev_requirements</span> <span class="k">import</span> <span class="n">InitDevRequirementMixin</span>
 
 
-<div class="viewcode-block" id="InitProjectMixin"><a class="viewcode-back" href="../../../../pmfp.projectinfo.mixins.html#pmfp.projectinfo.mixins.InitProjectMixin">[docs]</a><span class="k">class</span> <span class="nc">InitProjectMixin</span><span class="p">(</span><span class="n">InitReadmeMixin</span><span class="p">,</span> <span class="n">InitEnvMixin</span><span class="p">,</span> <span class="n">InitTemplateMixin</span><span class="p">,</span> <span class="n">InitDevRequirementMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="InitProjectMixin"><a class="viewcode-back" href="../../../../pmfp.projectinfo.mixins.init_mixin.html#pmfp.projectinfo.mixins.InitProjectMixin">[docs]</a><span class="k">class</span> <span class="nc">InitProjectMixin</span><span class="p">(</span><span class="n">InitReadmeMixin</span><span class="p">,</span> <span class="n">InitEnvMixin</span><span class="p">,</span> <span class="n">InitTemplateMixin</span><span class="p">,</span> <span class="n">InitDevRequirementMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;项目初始化使用的mixin汇总.</span>
 
 <span class="sd">    需要CleanMixin.会执行步骤:`初始化env-&gt;初始化模板-&gt;初始化readme`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="InitProjectMixin.init_project"><a class="viewcode-back" href="../../../../pmfp.projectinfo.mixins.html#pmfp.projectinfo.mixins.InitProjectMixin.init_project">[docs]</a>    <span class="k">def</span> <span class="nf">init_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InitProjectMixin.init_project"><a class="viewcode-back" href="../../../../pmfp.projectinfo.mixins.init_mixin.html#pmfp.projectinfo.mixins.InitProjectMixin.init_project">[docs]</a>    <span class="k">def</span> <span class="nf">init_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;创建项目.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init_template</span><span class="p">()</span>
