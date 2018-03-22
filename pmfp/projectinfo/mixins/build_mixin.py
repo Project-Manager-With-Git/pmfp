@@ -49,6 +49,22 @@ class BuildMixin:
         subprocess.check_call(command)
         print('build model to wheel file done!')
 
+    def _build_app(self):
+        """将gui项目打包为app,windows下也就是exe."""
+        python_path = self._get_python_path()
+        if self.form.project_form == "script" and self.form.template in ("tk",):
+            command = f"{python_path} -OO -m PyInstaller -F {self.meta.project_name} --noconsole"
+            subprocess.check_call(command)
+            return
+        elif self.form.project_form == "gui":
+            command = f"{python_path} -OO -m PyInstaller -F  -n {self.meta.project_name} main.py --noconsole"
+            subprocess.check_call(command)
+            return
+        else:
+            print("only gui can build to a app")
+            return
+
+
     def _build_pyz(self):
         print('build {self.meta.project_name} to pyz file'.format(self=self))
         t = tempfile.mkdtemp(dir=".")
@@ -125,6 +141,7 @@ class BuildMixin:
               egg: bool=False,
               wheel: bool=False,
               pyz: bool=False,
+              app: bool=False,
               cython: bool=False)->None:
         """编译项目.
 
@@ -150,6 +167,8 @@ class BuildMixin:
                 print("build model to egg,wheel,cython need file setup.py")
             if pyz:
                 self._build_pyz()
+            if app:
+                self._build_app()
 
         # elif self.form.compiler == "cpp":
         #     self._build_c()
