@@ -1,0 +1,28 @@
+import base64
+from tkinter import Tk
+from .config import RC, LOGO, LOGO_B64
+
+
+class Core:
+
+    def __init__(self, view, model):
+        self.main_win = Tk()
+        self.main_win.title("MyRedis")
+        self.main_win.geometry("650x500+100+400")
+        # self.main_win.wm_maxsize(width=800, height=600)
+        # self.main_win.wm_minsize(width=400, height=300)
+        self._load_ico()
+        self.view = view(self.main_win)
+        self.model = model
+
+    def _load_ico(self):
+        if not RC.exists():
+            RC.mkdir()
+        if not LOGO.is_file():
+            logo_bytes = base64.b64decode(LOGO_B64)
+            with open(str(LOGO), "wb") as f:
+                f.write(logo_bytes)
+        self.main_win.iconbitmap(str(LOGO))
+
+    def run(self):
+        self.main_win.mainloop()

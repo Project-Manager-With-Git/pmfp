@@ -1,0 +1,10 @@
+from tkinter import Menu
+
+
+class MenuMixin:
+    def __init__(self, master,):
+        # 主菜单
+        menubar = Menu(master)
+        menubar.add_command(label="新建连接")
+        self.menubar = menubar
+        master.config(menu=menubar)

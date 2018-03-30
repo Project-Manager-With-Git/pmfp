@@ -170,6 +170,8 @@ shortcut:
         parser.add_argument(
             '-z', '--pyz', action="store_true", default=False)
         parser.add_argument(
+            '-a', '--app', action="store_true", default=False)
+        parser.add_argument(
             '-d', '--docker', action="store_true", default=False)
 
         parser.set_defaults(func=build)

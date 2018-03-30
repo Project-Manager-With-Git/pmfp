@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 2.0.5
++ version: 2.0.6
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
