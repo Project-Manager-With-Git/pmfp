@@ -1,0 +1,13 @@
+from .core import Core
+from .views import View
+from .bind_mixin import BindMixin
+from .model import model
+
+
+class Application(Core, BindMixin):
+    def __init__(self, view, model):
+        Core.__init__(self, view, model)
+        BindMixin.__init__(self)
+
+
+app = Application(View, model)

@@ -52,12 +52,20 @@ class BuildMixin:
     def _build_app(self):
         """将gui项目打包为app,windows下也就是exe."""
         python_path = self._get_python_path()
+        logo_path = str(Path("./logo.ico"))
         if self.form.project_form == "script" and self.form.template in ("tk",):
-            command = f"{python_path} -OO -m PyInstaller -F {self.meta.project_name} --noconsole"
+            if logo_path.is_file():
+                command = f"{python_path} -OO -m PyInstaller -F {self.meta.project_name} --noconsole --icon {logo_path}"
+            else:
+                command = f"{python_path} -OO -m PyInstaller -F {self.meta.project_name} --noconsole"
             subprocess.check_call(command)
             return
         elif self.form.project_form == "gui":
-            command = f"{python_path} -OO -m PyInstaller -F  -n {self.meta.project_name} main.py --noconsole"
+            if logo_path.is_file():
+                command = f"{python_path} -OO -m PyInstaller -F  -n {self.meta.project_name} main.py --noconsole --icon {logo_path}"
+            else:
+                command = f"{python_path} -OO -m PyInstaller -F  -n {self.meta.project_name} main.py --noconsole"
+            
             subprocess.check_call(command)
             return
         else:
@@ -146,6 +154,7 @@ class BuildMixin:
         """编译项目.
 
         Args:
+            app (bool,optional): 是否打包成可执行文件(Defaults to False).
             egg (bool, optional): 是否将python项目编译为egg(Defaults to False).
             wheel (bool, optional): 是否将python项目编译为wheel(Defaults to False).
             pyz (bool, optional): 是否将python项目编译为pyz文件(Defaults to False).

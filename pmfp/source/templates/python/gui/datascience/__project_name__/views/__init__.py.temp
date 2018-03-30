@@ -1,0 +1,9 @@
+from .menu import MenuMixin
+from .main_frame import MainFrameMixin
+
+
+class View(MenuMixin, MainFrameMixin):
+    def __init__(self, master):
+        self.master = master
+        MenuMixin.__init__(self, master)
+        MainFrameMixin.__init__(self, master)
