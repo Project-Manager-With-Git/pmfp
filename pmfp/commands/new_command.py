@@ -14,12 +14,10 @@ def new(argv):
             obj.init_docs() 
         elif argv.command == "setup.py":
             obj.init_setup(cython=argv.with_cython, command=argv.command, math=argv.math)
-        elif argv.command == "test":
-            obj.init_test()
         elif argv.command == "dockerfile":
             obj.init_docker()
         elif argv.command == "main":
-            obj.init_main()
+            obj._init_main()
         else:
             print("unknown command")
             return False

@@ -6,7 +6,7 @@
 Welcome to pmfp's documentation!
 ================================
 
-* version: 2.0.6
+* version: 2.0.8
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
