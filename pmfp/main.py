@@ -211,7 +211,7 @@ shortcut:
         parser = argparse.ArgumentParser(
             description='new a document,setup.py,test,dockerfile for a project')
         parser.add_argument("command", type=str, choices=[
-                            'document', 'setup.py', 'test', 'dockerfile', 'main', 'cython'])
+                            'document', 'setup.py', 'dockerfile', 'main', 'cython'])
         parser.add_argument("-n", "--name", type=str, help="指定cython模块的名字", default="cymodel")
         parser.add_argument("-t", "--to", type=str, help="setup.py指定一个存放的位置", default=".")
         parser.add_argument("-y", "--with_cython", action="store_true", help="setup.py指定是否要使用cython", default=False)
