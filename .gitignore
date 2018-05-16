@@ -105,3 +105,4 @@ typecheck/
 .vscode/
 setup.py
 docs/.DS_Store
+.DS_Store
