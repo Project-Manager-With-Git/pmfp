@@ -9,7 +9,9 @@ def upload(argv):
     if path.exists():
         obj = ProjectInfo.from_json(str(path))
         if argv.git or [] or "":
-            obj.git_upload(argv.git)
+            obj.git_upload(argv.git,argv.git_tag)
+        elif argv.git_tag:
+            obj.git_tag()
         else:
             obj.upload()
         return True

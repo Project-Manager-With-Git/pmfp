@@ -3,12 +3,79 @@ import time
 import subprocess
 import configparser
 from pathlib import Path
+from typing import Dict,List
 
 
 class UploadMixin:
     """上传项目至git或者pypi服务器上."""
 
-    def git_upload(self, git):
+    def _git_check(self)->bool:
+        """检测项目有没有.git可以用于上传和打标签等操作."""
+        here = Path(".").absolute()
+        if not here.joinpath(".git").exists():
+            return False
+        else:
+            return True
+
+    def _git_check_and_find_remote(self)->str:
+        """从项目的.git中找到远端仓库url."""
+        if not self._git_check():
+            raise AttributeError("upload to git should have a .git dir in root path")
+        else:
+            pointgit = Path(".git")
+            gitconfig = pointgit.joinpath('config')
+            parser = configparser.ConfigParser(allow_no_value=True)
+            parser.read(str(gitconfig))
+            path = parser['remote "origin"']['url']
+            return path
+
+    def git_tag(self):
+        """为项目打标签."""
+        remote = self._git_check_and_find_remote()
+        version = self.meta.version
+        status = self.meta.status
+        tag = "{status}-{version}".format(version=version, status=status)
+        subprocess.check_call(
+            ["git",
+             'tag',
+             '-a',
+             tag,
+             '-m',
+             "'version: " + tag]
+        )
+        subprocess.check_call("git push --tag".split(" "))
+        print("push tag {tag} for package to {remote} done".format(remote=remote, tag=tag))
+
+    def git_push(self, git: List[str]):
+        """对项目推代码."""
+        remote = self._git_check_and_find_remote()
+        version = self.meta.version
+        status = self.meta.status
+        timestemp = int(time.time())
+        subprocess.check_call(["git", "add", "."])
+        now_timestamp = time.time()
+        time_ = time.ctime(now_timestamp)
+        if git == []:
+            msg = ""
+        else:
+            msg = "".join(git)
+        subprocess.check_call(
+            ["git",
+             "commit",
+             "-m",
+             "{msg}@{time}".format(msg=msg, time=time_)]
+        )
+        subprocess.check_call("git pull".split(" "))
+        subprocess.check_call("git push".split(" "))
+        print("push code to {remote} done".format(remote=remote))
+
+    def git_upload(self, git: List[str], tag: bool):
+        """将代码上传至远端git仓库."""
+        self.git_push(git)
+        if tag:
+            self.git_tag()
+
+    def git_upload_bak(self, git):
         """将项目上传至git仓库."""
         here = Path(".").absolute()
         if not here.joinpath(".git").exists():
