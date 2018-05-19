@@ -180,40 +180,7 @@ class InitPythonMixin:
         _init_python_celery = partial(self._init_python_universal_create_project, 'celery')
         celery_parsers.set_defaults(func=_init_python_celery)
 
-        # init python rpc command
-        # rpc_parsers = subparsers.add_parser(
-        #     "rpc",
-        #     aliases=["R"],
-        #     help="init a python rpc project"
-        # )
-        # rpc_parsers.add_argument(
-        #     '-t',
-        #     '--template',
-        #     type=str,
-        #     choices=["xmlrpc", "mprpc"],
-        #     default="xmlrpc"
-        # )
-        # rpc_parsers = self._python_universal_parser(rpc_parsers)
-        # _init_python_rpc = partial(self._init_python_universal_create_project, 'rpc')
-        # rpc_parsers.set_defaults(func=_init_python_rpc)
-
-        # init python gui command
-        # gui_parsers = subparsers.add_parser(
-        #     "gui",
-        #     aliases=["G"],
-        #     help="init a python gui project"
-        # )
-        # gui_parsers.add_argument(
-        #     '-t',
-        #     '--template',
-        #     type=str,
-        #     choices=["tk"],
-        #     default="tk"
-        # )
-        # gui_parsers = self._python_universal_parser(gui_parsers)
-        # _init_python_gui = partial(self._init_python_universal_create_project, 'gui')
-        # gui_parsers.set_defaults(func=_init_python_gui)
-
+      
         args = parser.parse_args(self.argv[1:])
         args.func(args)
 

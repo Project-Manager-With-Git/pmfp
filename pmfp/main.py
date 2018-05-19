@@ -123,7 +123,7 @@ shortcut:
         # NOT prefixing the argument with -- means it's not optional
         parser.add_argument('-V', '--version', type=str)
         parser.add_argument('-S', "--status", type=str,
-                            choices=["dev", "testing", "release", "stable"])
+                            choices=["dev", "testing", "release", "production"])
         parser.set_defaults(func=update)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -135,6 +135,7 @@ shortcut:
             description='upload project to a remote repository')
         parser.add_argument('-g', '--git', type=str,
                                   nargs='*', required=False)
+        parser.add_argument('-t', '--git_tag', action="store_true", default=False)
         parser.set_defaults(func=upload)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
