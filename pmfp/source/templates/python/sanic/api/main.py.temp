@@ -2,14 +2,14 @@
 import sys
 import argparse
 from pathlib import Path
-import yaml
+import json
 from $project_name import app, __VERSION__
 
 
 def _load_conf(path):
     """指定地址加载配置文件为配置字典."""
     with open(path) as f:
-        result = yaml.load(f)
+        result = json.load(f)
     return result
 
 
@@ -45,7 +45,7 @@ def _parser_args(params):
     parser.add_argument("--ssl_cert", type=str, help="指定ssl证书")
     parser.add_argument("--ssl_key", type=str, help="指定ssl密钥")
 
-    parser.add_argument("-c", '--config', type=str, help="指定配置文件,使用yaml进行配置")
+    parser.add_argument("-c", '--config', type=str, help="指定配置文件,使用json进行配置")
     parser.add_argument("--version", help="查看服务的版本号", action="store_true")
 
     args = parser.parse_args(params)
