@@ -4,12 +4,20 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pmfp.projectinfo.mixins.build_mixin &#8212; pmfp  documentation</title>
     <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
@@ -22,7 +30,8 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
@@ -81,6 +90,30 @@
         <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;python setup.py bdist_wheel&quot;</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;build model to wheel file done!&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;将gui项目打包为app,windows下也就是exe.&quot;&quot;&quot;</span>
+        <span class="n">python_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_python_path</span><span class="p">()</span>
+        <span class="n">logo_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./logo.ico&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_form</span> <span class="o">==</span> <span class="s2">&quot;script&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">template</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;tk&quot;</span><span class="p">,):</span>
+            <span class="k">if</span> <span class="n">logo_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{python_path}</span><span class="s2"> -OO -m PyInstaller -F </span><span class="si">{self.meta.project_name}</span><span class="s2"> --noconsole --icon </span><span class="si">{logo_path}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{python_path}</span><span class="s2"> -OO -m PyInstaller -F </span><span class="si">{self.meta.project_name}</span><span class="s2"> --noconsole&quot;</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">project_form</span> <span class="o">==</span> <span class="s2">&quot;gui&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">logo_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{python_path}</span><span class="s2"> -OO -m PyInstaller -F  -n </span><span class="si">{self.meta.project_name}</span><span class="s2"> main.py --noconsole --icon </span><span class="si">{logo_path}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{python_path}</span><span class="s2"> -OO -m PyInstaller -F  -n </span><span class="si">{self.meta.project_name}</span><span class="s2"> main.py --noconsole&quot;</span>
+            
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;only gui can build to a app&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
 
     <span class="k">def</span> <span class="nf">_build_pyz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;build </span><span class="si">{self.meta.project_name}</span><span class="s1"> to pyz file&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
@@ -151,17 +184,19 @@
             <span class="p">)</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;build docker image done!&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span></div>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;need a dockerfile&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;need a dockerfile&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BuildMixin.build"><a class="viewcode-back" href="../../../../pmfp.projectinfo.mixins.html#pmfp.projectinfo.mixins.build_mixin.BuildMixin.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
               <span class="n">egg</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
               <span class="n">wheel</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
               <span class="n">pyz</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">app</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
               <span class="n">cython</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;编译项目.</span>
 
 <span class="sd">        Args:</span>
+<span class="sd">            app (bool,optional): 是否打包成可执行文件(Defaults to False).</span>
 <span class="sd">            egg (bool, optional): 是否将python项目编译为egg(Defaults to False).</span>
 <span class="sd">            wheel (bool, optional): 是否将python项目编译为wheel(Defaults to False).</span>
 <span class="sd">            pyz (bool, optional): 是否将python项目编译为pyz文件(Defaults to False).</span>
@@ -183,6 +218,8 @@
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;build model to egg,wheel,cython need file setup.py&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pyz</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_build_pyz</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">app</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_build_app</span><span class="p">()</span>
 
         <span class="c1"># elif self.form.compiler == &quot;cpp&quot;:</span>
         <span class="c1">#     self._build_c()</span>
@@ -190,8 +227,8 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">compiler</span> <span class="o">==</span> <span class="s2">&quot;node&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_build_node</span><span class="p">()</span>
 
-        <span class="k">else</span><span class="p">:</span></div></div>
-            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;unknown compiler!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;unknown compiler!&quot;</span><span class="p">)</span></div></div>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BuildMixin&quot;</span><span class="p">]</span>
@@ -214,14 +251,12 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="../../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -232,7 +267,7 @@
       &copy;2017, hsz.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

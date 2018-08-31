@@ -2,9 +2,9 @@
 pmfp
 ===============================
 
-* version: 2.0.11
+* version: 2.1.0
 
-* status: dev
+* status: production
 
 * author: hsz
 
