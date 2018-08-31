@@ -7,17 +7,24 @@
 
 ## Description
 
-一个用于管理python及相关开发的工具
+一个用于管理开发的脚手架
 
 keywords:tool,project_manager
 
 ## 特点
 
-+ 根据模板快速构建python,node项目,支持flask,sanic,celery
-+ 简单的编译和打包指令,支持wheel,egg,cython,和docker编译
-+ Cython支持良好
-+ 快速测试
-+ 文档维护,支持github page
++ 根据模板快速构建python,node项目(init)
++ 版本号维护(update)
++ 快速清理项目(clean)
++ 快速本地执行项目(run)
++ 快速编译(build))
++ 快速打包指令(package)
++ 快速上传代码(upload)
++ 快速测试(test)
++ 快速静态检验(check)
++ 快速依赖安装(install)
++ 文档维护,支持github page(doc)
++ 快速添加模块(new)
 
 ## Example
 
