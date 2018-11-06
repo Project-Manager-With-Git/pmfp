@@ -1,0 +1,6 @@
+def setUpModule():
+    print("SetUp View test")
+
+
+def tearDownModule():
+    print("TearDown View test")

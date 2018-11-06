@@ -1,0 +1,33 @@
+def show(kwargs):
+    name = kwargs["name"]
+    if kwargs.get("type") == "x":
+        print(f"x----{name}")
+    elif kwargs.get("type") = "y":
+        print(f"y----{name}")
+    else:
+        raise AttributeError("unknown type")
+
+
+def show_x_cmd(args):
+    kwargs = _parser_args(args)
+    kwargs.update({
+        "type": "x"
+    })
+    show(kwargs)
+
+
+def show_y_cmd(args):
+    kwargs = _parser_args(args)
+    kwargs.update({
+        "type": "y"
+    })
+    show(kwargs)
+
+
+def _parser_args(args):
+    result = {
+        "name": None
+    }
+    if args.name:
+        result["name"] = args.name
+    return result

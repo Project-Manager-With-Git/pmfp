@@ -1,0 +1,9 @@
+from core import App
+from views import Hello, test_func
+
+
+def init_app(config):
+    app = App()
+    app.register_instance(Hello())
+    app.register_function("add", test_func)
+    return app

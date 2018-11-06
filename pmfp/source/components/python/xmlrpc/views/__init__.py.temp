@@ -1,0 +1,2 @@
+from .class_sample import Hello
+from .func_sample import test_func

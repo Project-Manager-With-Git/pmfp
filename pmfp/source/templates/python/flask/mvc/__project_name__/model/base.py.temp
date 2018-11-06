@@ -1,7 +1,0 @@
-from peewee import Model, Proxy
-db = Proxy()
-
-
-class BaseModel(Model):
-    class Meta:
-        database = db

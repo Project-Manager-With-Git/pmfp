@@ -1,0 +1,30 @@
+{
+    "name": "module-cmd",
+    "desc": "带命令行工具的模块",
+    "project-language": "Python",
+    "project-type": "model",
+    "components": {
+        "simpleappscripts.py.temp": ["-", "scripts"],
+        "universal-config": ["-", ""],
+        "universal-__init__.py.temp": ["-", "__init__"],
+        "cmd_setup":[".", "setup"]
+    },
+    "requirement": [
+        "Flask",
+        "peewee",
+        "gevent",
+        "gunicorn",
+        "flask_sockets",
+        "voluptuous"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

@@ -1,4 +1,0 @@
-Flask
-flask-restplus
-gevent
-pyyaml

@@ -1,6 +1,4 @@
 include LICENSE
 include README.rst
-recursive-include pmfp/source *
-recursive-include pmfp/requirements *.txt
-recursive-include pmfp *.py
-
+include requirements.txt
+recursive-include pmfp *.pyx *.pxd *.pxi *.py *.c *.h

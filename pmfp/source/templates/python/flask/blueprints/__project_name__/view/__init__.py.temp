@@ -1,2 +1,0 @@
-from .init import main as views
-from .main_views import index

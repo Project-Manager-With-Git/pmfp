@@ -2,22 +2,22 @@ from codecs import open
 from setuptools import setup, find_packages
 from pathlib import Path
 REQUIREMETS_FILE = 'requirements.txt'
-PROJECTNAME = 'pmfp'
-VERSION = '3.0.0'
-DESCRIPTION = 'a simple package manager for python like npm.'
-URL = 'https://github.com/Python-Tools/pmfp'
-AUTHOR = 'hsz'
-AUTHOR_EMAIL = 'hsz1273327@gmail.com'
-LICENSE = 'MIT'
+PROJECTNAME = '$project_name'
+VERSION = '$version'
+DESCRIPTION = '$description'
+URL = '$url'
+AUTHOR = '$author'
+AUTHOR_EMAIL = '$author_email'
+LICENSE = '$license_'
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
+    'License :: OSI Approved :: $license_ License',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Topic :: Documentation :: Sphinx',
 ]
-KEYWORDS = ['tools', 'project_manager']
+KEYWORDS = $keywords
 PACKAGES = find_packages(exclude=['contrib', 'docs', 'test'])
 ZIP_SAFE = False
 HERE = Path(__file__).parent
@@ -44,7 +44,7 @@ setup(
     },
     entry_points={
         'console_scripts':
-        ['pmfp = pmfp.scripts:main']
+        ['$project_name = $project_name.scripts:main']
     },
     zip_safe=ZIP_SAFE
 )

@@ -1,0 +1,4 @@
+include LICENSE
+include README.rst
+include requirements.txt
+recursive-include $project_name *.pyx *.pxd *.pxi *.py *.c *.h

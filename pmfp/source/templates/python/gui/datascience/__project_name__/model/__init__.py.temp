@@ -1,3 +1,0 @@
-from pandastable import TableModel
-
-model = TableModel(dataframe=TableModel.getSampleData())
