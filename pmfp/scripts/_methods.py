@@ -172,8 +172,8 @@ grpc                     创建一个grpc用的protobuf文件
         parser = argparse.ArgumentParser(
             prog='ppm update',
             description="更新项目的版本号和开发状态")
-        parser.add_argument('-V', '--version', type=str)
-        parser.add_argument('-S', "--status", type=str,
+        parser.add_argument('-v', '--version', type=str)
+        parser.add_argument('-s', "--status", type=str,
                             choices=STATUS_RANGE)
         parser.set_defaults(func=update_cmd)
         args = parser.parse_args(self.argv[1:])
