@@ -10,8 +10,9 @@ def remove_readonly(func, path, _):
 
 
 def clean(total=False):
+    print("清理项目开始")
     if total:
-        EXCEPT = ["pmfprc.json"]
+        EXCEPT = ["pmfprc.json",".git",".gitignore"]
         for p in PROJECT_HOME.iterdir():
             if (p.name not in EXCEPT) and (not p.name.startswith(".")):
                 if p.is_file():
@@ -46,3 +47,4 @@ def clean(total=False):
                     except Exception as e:
                         print(f"因为错误{str(e)}跳过删除目录 {str(p)}")
                         continue
+    print("清理项目结束")

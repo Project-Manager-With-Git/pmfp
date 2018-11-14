@@ -5,7 +5,11 @@
 import time
 import logging
 import logging.config
-from typing import List
+import logging.handlers
+from typing import (
+    List,
+    Dict
+)
 logging.Formatter.converter = time.gmtime
 Formatters = {
     "model_json": logging.Formatter(**{
@@ -21,22 +25,22 @@ Formatters = {
 }
 Handlers = {
     "model_console": logging.StreamHandler(),
-    "model_file_size": logging.RotatingFileHandler(**{
-        "filename": "$project_name",
+    "model_file_size": logging.handlers.RotatingFileHandler(**{
+        "filename": "$project_name.log",
         "maxBytes": 1048576,
         "backupCount": 3,
-        "encoding"="utf-8",
+        "encoding": "utf-8",
         "delay": False
     }),
-    "model_file_date": logging.TimedRotatingFileHandler(**{
-        "filename": "$project_name.timed",
+    "model_file_date": logging.handlers.TimedRotatingFileHandler(**{
+        "filename": "$project_name.timed.log",
         "when": 'midnight',
-        "interval"=1,
+        "interval": 1,
         "backupCount": 3,
-        "encoding"="utf-8",
+        "encoding": "utf-8",
         "delay": False,
         "utc": True,
-        "atTime"=None
+        "atTime": None
     }),
     "model_email": logging.handlers.SMTPHandler(**{
         "mailhost": '127.0.0.1',
@@ -51,8 +55,8 @@ Handlers = {
 
 StreamHandlers = {
     "console": logging.StreamHandler,
-    "file_size": logging.RotatingFileHandler,
-    "file_date": logging.TimedRotatingFileHandler,
+    "file_size": logging.handlers.RotatingFileHandler,
+    "file_date": logging.handlers.TimedRotatingFileHandler,
     "email": logging.handlers.SMTPHandler
 }
 
@@ -109,4 +113,5 @@ def set_logger(form: str="json",
     return logger
 
 
-__all__ = ["set_logger"]
+model_logger = set_logger()
+__all__ = ["set_logger", "model_logger"]

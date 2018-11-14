@@ -4,7 +4,6 @@ from .show_cmd import (
     show_x_cmd,
     show_y_cmd
 )
-from config.verify import STATUS_RANGE
 
 
 
@@ -14,12 +13,12 @@ class Scripts:
     def __init__(self, argv):
         parser = argparse.ArgumentParser(
             prog='ppm',
-            epilog='除show命令和init命令外每个子命令都需要在根目录下有名为.pmfp.json的配置文件.',
-            description='Python用户的项目脚手架',
-            usage='''$project_name <command> [<args>]
+            epilog='epilog',
+            description='desc',
+            usage='''tempte <command> [<args>]
 
-$project_name工具的子命令有:
-   show        展示已有的模板和组件
+tempte工具的子命令有:
+   show        desc
 ''')
         parser.add_argument('command', help='执行子命令')
         self.argv = argv
@@ -35,27 +34,27 @@ $project_name工具的子命令有:
         """在以及子命令同名的函数中定义二级,3级甚至4级子命令."""
         parser = argparse.ArgumentParser(
             prog='ppm show',
-            description='展示已有的模板和组件',
-            epilog='子命令show可以用来查看模板和组件'
+            description='desc',
+            epilog='epilog'
         )
         parser.set_defaults(func=lambda x: parser.print_help())
 
         subparsers = parser.add_subparsers(
             title='show命令的子命令',
-            description='支持查看模板(template)和组件(component)',
-            help='子解析模板(template)和组件(component)')
+            description='desc',
+            help='helpstr')
 
         x_parsers = subparsers.add_parser(
             "x", aliases=["X"], help="查看X")
         x_parsers.add_argument(
-            "-n", "--name", type=str, help="查看对应名字的模板", default="")
+            "-n", "--name", type=str, help="helpstr", default="")
         x_parsers.set_defaults(func=show_x_cmd)
 
         y_parsers = subparsers.add_parser(
             "y", aliases=["Y"], help="查看Y")
         y_parsers.add_argument(
-            "-n", "--name", type=str, help="查看对应名字的组件", default="")
-        y_parsers.set_defaults(func=show_component_cmd)
+            "-n", "--name", type=str, help="helpstr", default="")
+        y_parsers.set_defaults(func=show_y_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
 

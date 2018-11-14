@@ -1,5 +1,5 @@
 {
-    "name": "flask-blueprint",
+    "name": "flask-websocket",
     "desc": "使用flask的websocket服务",
     "project-language": "Python",
     "project-type": "application",
@@ -10,8 +10,9 @@
         "flask-log.py.temp": ["-", "log"],
         "flask-ws": ["-", ""],
         "flask-config": ["-", ""],
+        "database-model": ["-", ""],
+        "cli-ws_cli.py.temp": [".","ws_cli"],
         "universal-data_schema": ["-", ""],
-        "universal-model": ["-", ""],
         "universal-__main__.py.temp": ["-", "__main__"],
         "docker-Dockerfile.temp": [".", "dockerfile"]
     },
@@ -21,6 +22,7 @@
         "gevent",
         "gunicorn",
         "flask_sockets",
+        "websocket-client",
         "voluptuous"
     ],
     "requirement-dev": [

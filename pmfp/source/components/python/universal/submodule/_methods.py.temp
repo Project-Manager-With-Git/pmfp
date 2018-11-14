@@ -1,0 +1,10 @@
+def show(kwargs):
+    name = kwargs["name"]
+    if kwargs.get("type") == "x":
+        result = f"x----{name}"
+    elif kwargs.get("type") == "y":
+        result = f"y----{name}"
+    else:
+        raise AttributeError("unknown type")
+    print(result)
+    return result

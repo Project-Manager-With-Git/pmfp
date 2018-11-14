@@ -1,0 +1,6 @@
+def setUpModule():
+    print("[SetUp Model test]")
+
+
+def tearDownModule():
+    print("[TearDown Model test]")

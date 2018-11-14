@@ -39,9 +39,6 @@ setup(
     packages=PACKAGES,
     include_package_data=True,
     install_requires=REQUIREMETS,
-    extras_require={
-        'dev': REQUIREMETS_DEV
-    },
     entry_points={
         'console_scripts':
         ['$project_name = $project_name.scripts:main']

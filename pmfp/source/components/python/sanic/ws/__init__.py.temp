@@ -1,0 +1,19 @@
+"""websocket蓝图模组.
+
+## 定义ws的方法
+
+在core模块引入 ws,之后使用`@ws.register(uri)`将地址注册到app中
+
+## 使用方法
+
+```python
+from ws import ws
+ws.init_app(app)
+```
+
+## 注意事项
+
+写好的view记得在本模块的`__init__.py`文件中import进来,如果不这样做,view无法注册到蓝图上
+"""
+from .core import ws
+from .echo import *

@@ -5,11 +5,20 @@ from collections.abc import Mapping
 from pmfp.const import PMFP_COMPONENTS_HOME
 from .find_path import find_path
 
+EXCEPT = ["doc","env","protobuf","readme","setup","test"]
 
 def show(name=None, language=None, category=None):
     if name is None:
         if language is None:
-            def _find(path, depth): return depth == 2
+            def _find(path, depth):
+                if depth == 2:
+                    result = True
+                else:
+                    result = False
+                for i in EXCEPT:
+                    if "/"+i+"/" in str(path):
+                        result = False
+                return result
             print("展示所有组件列表")
             result = find_path(PMFP_COMPONENTS_HOME, _find, max_depth=3)
         else:

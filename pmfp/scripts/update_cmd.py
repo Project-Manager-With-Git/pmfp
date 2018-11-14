@@ -3,7 +3,7 @@ from pmfp.config import load_rc, write_rc
 
 
 def update_cmd(args):
-    config = {}
+    config = load_rc()
     if config:
         if args.version:
             config.update({

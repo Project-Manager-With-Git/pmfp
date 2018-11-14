@@ -22,7 +22,7 @@ CLASSIFIERS = [
 KEYWORDS = $keywords
 PACKAGES = find_packages(exclude=['contrib', 'docs', 'test'])
 ZIP_SAFE = False
-HERE = Path(__file__)
+HERE = Path(__file__).parent
 with open(str(HERE.joinpath('README.rst')), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 with open(str(HERE.joinpath(REQUIREMETS_FILE)), encoding='utf-8') as f:

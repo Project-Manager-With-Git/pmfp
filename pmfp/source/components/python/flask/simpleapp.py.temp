@@ -6,9 +6,9 @@ app = Flask(__name__)
 def hello_world():
     return jsonify({"msg": "pong"})
 
-def main()
+def main():
     app.run(debug=True)
 
     
 if __name__ == '__main__':
-    def main()
+    main()

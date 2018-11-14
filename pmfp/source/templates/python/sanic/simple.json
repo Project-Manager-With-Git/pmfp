@@ -4,7 +4,8 @@
     "project-language": "Python",
     "project-type": "application",
     "components": {
-        "sanic-simple": "."
+        "sanic-simpleapp.py.temp": [".", "-"],
+        "docker-Dockerfile_singlefile.temp": [".", "dockerfile"]
     },
     "requirement": [
         "sanic"

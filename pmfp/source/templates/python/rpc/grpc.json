@@ -1,0 +1,29 @@
+{
+    "name": "rpc-grpc",
+    "desc": "xmlrpc的标准化模板",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "rpc-new_rpc_app.py.temp": ["-", "-"],
+        "rpc-grpccore.py.temp": ["-", "core"],
+        "rpc-grpc_view_clz.py.temp": ["-", "view_clz"],
+        "scripts-webscripts": ["-", "scripts"],
+        "cli-grpc_cli": [".", "grpc_cli"],
+        "grpc": ["pbschema", "data"],
+        "universal-webconfig": ["-", "config"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "universal-log.py.temp": ["-", "log"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": ["voluptuous", "protobuf", "grpcio"],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

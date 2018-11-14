@@ -1,0 +1,14 @@
+import data_pb2
+import data_pb2_grpc
+import grpc
+
+
+def run():
+    conn = grpc.insecure_channel("localhost:5000")
+    client = data_pb2_grpc.RPCStub(channel=conn)
+    response = client.DoFormat(data_pb2.Data(text='hello,world!'))
+    print("received: " + response.text)
+
+
+if __name__ == '__main__':
+    run()

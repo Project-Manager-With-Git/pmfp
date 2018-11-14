@@ -1,0 +1,36 @@
+{
+    "name": "sanic-single_page_socketio",
+    "desc": "使用flask的socketio服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "sanic-scripts": ["-", ""],
+        "sanic-log.py.temp": ["-", "log"],
+        "sanic-sio_app.py.temp": ["-", "-"],
+        "sanic-sio": ["-", ""],
+        "sanic-sio_static":[".", "static"],
+        "sanic-sio_templates": [".", "templates"],
+        "sanic-config": ["-", ""],
+        "socketio_cli.py.temp": [".", "socketio_cli"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "sanic",
+        "python-socketio",
+        "sanic_jinja2",
+        "voluptuous"
+    ],
+    "requirement-dev": [
+        "aiohttp",
+        "socketIO_client",
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

@@ -4,8 +4,6 @@ from pmfp.const import (
     PROJECT_HOME,
 )
 def new_setup(config,language,name):
-    print("#######")
-    
     if language == "Python":
         filename = name+".py.temp"
         tempfile = PMFP_SETUP_TEMP.joinpath(filename)

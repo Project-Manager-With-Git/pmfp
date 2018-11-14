@@ -6,20 +6,12 @@
     "components": {
         "scripts-complex_scripts": ["-", "scripts"],
         "universal-config": ["-", ""],
+        "universal-submodule": ["-", ""],
         "universal-main.py.temp": [".", "main"],
         "universal-__init__.py.temp": ["-", "__init__"],
         "cmd_setup": [".", "setup"]
     },
     "requirement": [
-        "boom",
-        "sphinx",
-        "sphinxcontrib-napoleon",
-        "recommonmark",
-        "wheel",
-        "coverage",
-        "mypy",
-        "mypy-extensions",
-        "lxml",
         "voluptuous"
     ],
     "requirement-dev": [

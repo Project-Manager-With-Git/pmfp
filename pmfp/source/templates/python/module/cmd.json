@@ -2,19 +2,16 @@
     "name": "module-cmd",
     "desc": "带命令行工具的模块",
     "project-language": "Python",
-    "project-type": "model",
+    "project-type": "module",
     "components": {
-        "simpleappscripts.py.temp": ["-", "scripts"],
+        "scripts-simplescripts.py.temp": ["-", "scripts"],
         "universal-config": ["-", ""],
+        "universal-submodule": ["-", ""],
+        "universal-main.py.temp": [".", "main"],
         "universal-__init__.py.temp": ["-", "__init__"],
-        "cmd_setup":[".", "setup"]
+        "cmd_setup": [".", "setup"]
     },
     "requirement": [
-        "Flask",
-        "peewee",
-        "gevent",
-        "gunicorn",
-        "flask_sockets",
         "voluptuous"
     ],
     "requirement-dev": [

@@ -1,0 +1,56 @@
+from ..core import socket
+
+
+@socket.io.on('my event', namespace='/test')
+async def test_message(sid, message):
+    await socket.io.emit('my response', {'data': message['data']}, room=sid,
+                   namespace='/test')
+
+
+@socket.io.on('my broadcast event', namespace='/test')
+async def test_broadcast_message(sid, message):
+    await socket.io.emit('my response', {'data': message['data']}, namespace='/test')
+
+
+@socket.io.on('join', namespace='/test')
+async def join(sid, message):
+    socket.io.enter_room(sid, message['room'], namespace='/test')
+    await socket.io.emit('my response', {'data': 'Entered room: ' + message['room']},
+                   room=sid, namespace='/test')
+
+
+@socket.io.on('leave', namespace='/test')
+async def leave(sid, message):
+    socket.io.leave_room(sid, message['room'], namespace='/test')
+    await socket.io.emit('my response', {'data': 'Left room: ' + message['room']},
+                   room=sid, namespace='/test')
+
+
+@socket.io.on('close room', namespace='/test')
+async def close(sid, message):
+    await socket.io.emit('my response',
+                   {'data': 'Room ' + message['room'] + ' is closing.'},
+                   room=message['room'], namespace='/test')
+    await socket.io.close_room(message['room'], namespace='/test')
+
+
+@socket.io.on('my room event', namespace='/test')
+async def send_room_message(sid, message):
+    await socket.io.emit('my response', {'data': message['data']},
+                   room=message['room'], namespace='/test')
+
+
+@socket.io.on('disconnect request', namespace='/test')
+async def disconnect_request(sid):
+    await socket.io.disconnect(sid, namespace='/test')
+
+
+@socket.io.on('connect', namespace='/test')
+async def test_connect(sid, environ):
+    await socket.io.emit('my response', {'data': 'Connected', 'count': 0}, room=sid,
+                   namespace='/test')
+
+
+@socket.io.on('disconnect', namespace='/test')
+def test_disconnect(sid):
+    print('Client disconnected')

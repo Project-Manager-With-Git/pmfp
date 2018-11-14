@@ -1,0 +1,13 @@
+import jsonrpclib
+with jsonrpclib.Server('http://localhost:5000') as s:
+    # Print list of available methods
+    print(s.system.listMethods())
+    print(s.system.methodHelp('hello'))
+    print(s.add(123, 1))
+    print(s.hello("hsz"))
+    multi = jsonrpclib.MultiCall(s)
+    multi.add(1, 2)
+    multi.hello("qwe")
+    result = multi()
+    for i in result:
+        print(i)

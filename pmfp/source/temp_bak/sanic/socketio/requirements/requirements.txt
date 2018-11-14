@@ -1,4 +1,0 @@
-sanic
-python-socketio
-aiohttp
-pyyaml

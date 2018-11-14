@@ -1,0 +1,5 @@
+import zerorpc
+
+c = zerorpc.Client()
+c.connect("tcp://localhost:5000")
+print(c.hello("RPC"))

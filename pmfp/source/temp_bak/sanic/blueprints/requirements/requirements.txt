@@ -1,7 +1,0 @@
-sanic
-python-socketio
-aiohttp
-pyyaml
-sanic_jinja2
-sanic_session
-aioorm

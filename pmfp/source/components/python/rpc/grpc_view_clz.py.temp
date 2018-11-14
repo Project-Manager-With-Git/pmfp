@@ -1,0 +1,8 @@
+from data_pb2_grpc import RPCServicer
+from data_pb2 import Data
+
+
+class RPC(RPCServicer):
+    def DoFormat(self, request, context):
+        str = request.text
+        return Data(text=str.upper())

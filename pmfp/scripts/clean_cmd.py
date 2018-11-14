@@ -1,5 +1,5 @@
 from pmfp.clean import clean
-
+from pmfp.config import load_rc
 
 def clean_cmd(args):
     config = load_rc()

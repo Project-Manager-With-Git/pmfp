@@ -1,3 +1,4 @@
+import re
 from pmfp.const import PROJECT_HOME
 
 

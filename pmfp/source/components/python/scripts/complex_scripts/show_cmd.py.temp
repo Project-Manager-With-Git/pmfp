@@ -1,11 +1,4 @@
-def show(kwargs):
-    name = kwargs["name"]
-    if kwargs.get("type") == "x":
-        print(f"x----{name}")
-    elif kwargs.get("type") = "y":
-        print(f"y----{name}")
-    else:
-        raise AttributeError("unknown type")
+from $project_name.submodule import show
 
 
 def show_x_cmd(args):

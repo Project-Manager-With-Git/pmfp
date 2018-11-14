@@ -5,10 +5,10 @@ from pmfp.utils import find_template_path
 from .verify import DEFAULT_AUTHOR, LANGUAGE_RANGE, NOT_NAME_RANGE
 
 
-def new_config(project_name, template=None):
+def new_config(project_name, template=None,language=None):
     config = {
         "project-name": project_name,
-        'project-language': None,
+        'project-language': language,
         'env': None,
         'project-type': None,
         'template': template,
@@ -38,28 +38,33 @@ def new_config(project_name, template=None):
                     print(f"名字{project_name}不可以是如下{NOT_NAME_RANGE},请重新输入")
                 else:
                     config.update({
-                        "project-name": project_name
+                        "project-name": project_name.replace("-","_")
                     })
                     break
+        if not language:
+            while True:
+                project_language = input("项目语言:")
+                project_language = project_language.capitalize()
+                if project_language not in LANGUAGE_RANGE:
+                    print(f"不支持的语言{project_language},目前只支持{LANGUAGE_RANGE},请重新输入")
+                else:
+                    config.update({
+                        "project-language": project_language
+                    })
+                    break
+    
+        if config.get("project-language") == "Python":
+            default_env = "env"
+        elif config.get("project-language")=="Javascript":
+            default_env = "node"
+        else:
+            print("不支持的项目语言")
+            return
+        env = input("环境:")
+        config.update({
+            "env": env or default_env
+        })
 
-        while True:
-            project_language = input("项目语言:")
-            if project_language not in LANGUAGE_RANGE:
-                print(f"不支持的语言{project_language},目前只支持{LANGUAGE_RANGE},请重新输入")
-            else:
-                config.update({
-                    "project-language": project_language
-                })
-                break
-        while True:
-            env = input("环境:")
-            if env:
-                config.update({
-                    "env": env
-                })
-                break
-            else:
-                print("env不能为空,请重新输入")
         if template is None:
             while True:
                 print("可选的模板有:")
@@ -126,6 +131,12 @@ def new_config(project_name, template=None):
         if description:
             config.update({
                 "description": description
+            })
+
+        if config["project-type"] == "application" and config["project-language"] == "Python":
+            entry = config["project-name"]
+            config.update({
+                "entry": entry
             })
 
         return config

@@ -1,0 +1,28 @@
+"""sanic专为基于socketio的单页应用app的构造组件.
+
+组件名字会被改为项目名.
+
+注册模块组件使用`xxx.init_app(app)`;
+
+使用数据库组件放在hooks模块中在启动项目时挂载
+"""
+from sanic import Sanic
+from sio import socket
+from log import (
+    LOGGING_CONFIG_JSON,
+    set_mail_log
+)
+
+
+def init_app(config):
+    log_config = None
+    if config["SET_LOG_FMT"] == "json":
+        log_config = LOGGING_CONFIG_JSON
+    app = Sanic(config["NAME"], log_config=log_config)
+    app.config.update(
+        config
+    )
+    if app.config.SET_LOG_MAIL_LOG is True:
+        set_mail_log(app)
+    socket.init_app(app)
+    return app

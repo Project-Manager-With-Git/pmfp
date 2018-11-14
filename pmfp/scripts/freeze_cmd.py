@@ -6,7 +6,7 @@ def freeze_cmd():
     freeze_range = ("Python",)
     config = load_rc()
     if config is False:
-        print("freeze命令需要目录下有.pmfprc.json配置文件.")
+        print("freeze命令需要目录下有pmfprc.json配置文件.")
         return
     else:
         if config['project-language'] not in freeze_range:

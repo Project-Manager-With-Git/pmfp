@@ -1,0 +1,12 @@
+from .core import ws
+
+
+@ws.register("/echo")
+async def echo(request, ws):
+    while True:
+        data = await ws.recv()
+        await ws.send(data)
+        print('Received: ' + data)
+
+
+__all__ = ["echo"]

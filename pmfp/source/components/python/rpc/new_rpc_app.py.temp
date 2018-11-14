@@ -1,0 +1,8 @@
+from core import App
+from view_clz import RPC
+
+
+def init_app(config):
+    app = App(config)
+    app.register_instance(RPC())
+    return app

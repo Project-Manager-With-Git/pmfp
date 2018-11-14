@@ -10,8 +10,8 @@
         "flask-log.py.temp": ["-", "log"],
         "flask-api": ["-", ""],
         "flask-config": ["-", ""],
+        "database-model": ["-", ""],
         "universal-data_schema": ["-", ""],
-        "universal-model": ["-", ""],
         "universal-__main__.py.temp": ["-", "__main__"],
         "docker-Dockerfile.temp": [".", "dockerfile"]
     },

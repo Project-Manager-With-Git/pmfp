@@ -62,7 +62,11 @@ def install(config: Dict[str, Any], package: Optional[str]=None, dev: bool=False
                     command = f"{python_path} -m pip install {package}"
                 elif config["env"] == "conda":
                     command = f"conda install -y -p env {package}"
-            subprocess.check_call(command, shell=True)
+            try:
+                subprocess.check_call(command, shell=True)
+            except Exception as e:
+                print(f"批量安装时执行安装命令{command}时出错")
+                raise e
         else:
             print("安装依赖成功")
             return True
@@ -92,8 +96,9 @@ def install(config: Dict[str, Any], package: Optional[str]=None, dev: bool=False
 
         try:
             subprocess.check_call(command, shell=True)
-        except:
-            raise
+        except Exception as e:
+            print(f"执行安装命令:{command}时出错")
+            raise e
         else:
             print(package, "installed")
             if dev is True:

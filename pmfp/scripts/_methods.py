@@ -17,7 +17,8 @@ from .build_cmd import build_cmd
 from .run_cmd import run_cmd
 from .test_cmd import test_cmd
 from .doc_cmd import doc_cmd
-
+from .release_cmd import release_cmd
+from .build_pb_cmd import build_pb_cmd
 
 class PPM:
     """ppm命令的第一级子命令定义."""
@@ -49,6 +50,8 @@ ppm工具的子命令有:
                
    test        执行测试
    doc         编译文档
+
+   build_pb    将pb编译为对应项目语言的文件
 ''')
         parser.add_argument('command', help='执行子命令')
         self.argv = argv
@@ -111,8 +114,18 @@ ppm工具的子命令有:
         parser = argparse.ArgumentParser(
             prog='ppm new',
             description='为项目新增组件',
-            epilog='子命令new用于新增组件'
-        )
+            epilog='''
+子命令new用于新增组件,其中特殊的有:
+document, doc            新建文档
+env                      创建虚拟环境
+readme                   创建markdown和rst格式的readme文件
+setup                    python的安装脚本
+cmd_setup                python的带命令行的安装脚本
+cython_setup             cython的安装脚本
+cython_numpy_setup       cython的安装脚本,带上numpy依赖
+pb                       创建一个protobuf 文件
+grpc                     创建一个grpc用的protobuf文件
+''')
         parser.add_argument("component_name", type=str)
         parser.add_argument("-l", "--language", type=str, help="指定组件的语言", default="-")
         parser.add_argument("-t", "--to", type=str, help="指定一个存放的位置", default="-")
@@ -131,6 +144,7 @@ ppm工具的子命令有:
             epilog='子命令init用于新建一个项目'
         )
         parser.add_argument("project_name", nargs='?', type=str, help="项目命名")
+        parser.add_argument("-l", "--language", type=str, help="指定一个项目语言", default="")
         parser.add_argument("-t", "--template", type=str, help="指定一个项目模板", default="")
         parser.add_argument('--test', action="store_true", default=False, help="是否有测试用的对应组件")
         parser.add_argument('--doc', action="store_true", default=False, help="是否带着文档")
@@ -185,26 +199,6 @@ ppm工具的子命令有:
         python可以选择将包编译为egg或者wheel用于发布,或者编译为pyz文件用于部署.
         node和c暂时不支持.
         """
-        # parser = argparse.ArgumentParser(
-        #     description='build project to a remote repository')
-
-        # parser.add_argument(
-        #     '-e', '--egg', action="store_true", default=False)
-        # parser.add_argument(
-        #     '-w', '--wheel', action="store_true", default=False)
-        # parser.add_argument(
-        #     '-c', '--cython', action="store_true", default=False)
-        # parser.add_argument(
-        #     '-z', '--pyz', action="store_true", default=False)
-        # parser.add_argument(
-        #     '-a', '--app', action="store_true", default=False)
-        # parser.add_argument(
-        #     '-d', '--docker', action="store_true", default=False)
-
-        # parser.set_defaults(func=build)
-        # args = parser.parse_args(self.argv[1:])
-        # args.func(args)
-
         build_cmd()
         print("build package done!")
 
@@ -251,6 +245,21 @@ ppm工具的子命令有:
         args = parser.parse_args(self.argv[1:])
         args.func(args)
         print("doc done!")
+
+    def build_pb(self):
+        parser = argparse.ArgumentParser(
+            prog='ppm build_pb',
+            description='编译pb文件',
+            epilog='子命令build_pb可以用来编译.proto文件对应语言'
+        )
+        parser.add_argument("-n", "--name", type=str, help="待编译的文件名", default="data.proto")
+        parser.add_argument("-d", "--dir", type=str, help="待编译的文件所在的地址", default="pbschema")
+        parser.add_argument("-l", "--language", type=str, help="编译为什么语言", default="")
+        parser.add_argument("--grpc", action="store_true", help="是否是grpc")
+        parser.add_argument("-t", "--to", type=str, help="存放的", default="")
+        parser.set_defaults(func=build_pb_cmd)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
 
 
 def main(argv=sys.argv[1:]):
