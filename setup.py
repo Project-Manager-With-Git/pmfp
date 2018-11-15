@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from pathlib import Path
 REQUIREMETS_FILE = 'requirements.txt'
 PROJECTNAME = 'pmfp'
-VERSION = '3.0.1'
+VERSION = '3.0.2'
 DESCRIPTION = 'a simple package manager for python like npm.'
 URL = 'https://github.com/Python-Tools/pmfp'
 AUTHOR = 'hsz'
@@ -41,7 +41,7 @@ setup(
     install_requires=REQUIREMETS,
     entry_points={
         'console_scripts':
-        ['pmfp = pmfp.scripts:main']
+        ['ppm = pmfp.scripts:main']
     },
     zip_safe=ZIP_SAFE
 )

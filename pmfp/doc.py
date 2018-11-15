@@ -12,7 +12,7 @@ def _build_doc(config):
     if project_name_path is False:
         print("未找到项目名同名的文件或文件夹")
         return
-    if config['project-language'] == "Python" and config['project-type'] == "application":
+    if config['project-language'] == "Python":
         if project_name_path.is_file():
             print("building apidoc")
             command = f"sphinx-apidoc -o document {project_name}.py"
@@ -34,6 +34,7 @@ def _build_doc(config):
             with nojekyll.open("w") as f:
                 pass
         return True
+
 
 def _serve_doc(config):
     _build_doc(config)
