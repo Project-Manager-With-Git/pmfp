@@ -1,0 +1,19 @@
+import os
+import json
+from pathlib import Path
+from $project_name import init_app
+from config import load_conf
+
+
+def worker_cmd(args):
+    config = load_conf(args)
+    app = init_app(config)
+    command = ["-l info"]
+    if args.command:
+        pr_cmd = [i for i in args.command.split(" ") if i.find(
+            "--port=") == -1 and i.find(
+                "--address=") == -1 and i.find(
+                    "--broker_api=") == -1 and i.find('--basic-auth=') == -1]
+        print(pr_cmd)
+        command += pr_cmd
+    app.worker_main(command)

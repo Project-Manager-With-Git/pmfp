@@ -1,7 +1,7 @@
 import sys
 import argparse
-from .run_cmd import run
-
+from .worker_cmd import worker_cmd
+from .flower_cmd import flower_cmd
 
 def parser_args(params):
     """[summary]
@@ -24,15 +24,17 @@ def parser_args(params):
         help='支持的子解析'
     )
     # 启动服务所用的解析
-    parser_run = subparsers.add_parser(
-        "run",
-        help='指定主机端口或配置文件启动http服务'
-    )
-    parser_run.add_argument("--port", type=int, help="指定端口")
-    parser_run.add_argument("--host", type=str, help="指定主机")
-    parser_run.add_argument("--nodebug", action="store_true", help="是否使用debug模式")
-    parser_run.add_argument("-c", '--config', type=str, help="指定配置文件,使用json进行配置")
-    parser_run.set_defaults(func=run)
+    parser_worker = subparsers.add_parser('worker')
+    parser_worker.add_argument("-c", "--config", type=str,
+                               help="指定配置文件")
+    parser_worker.add_argument('--command', type=str, default="")
+    parser_worker.set_defaults(func=worker_cmd)
+
+    parser_flower = subparsers.add_parser('flower')
+    parser_flower.add_argument("-c", "--config", type=str,help="指定配置文件")
+    parser_flower.add_argument('--command', type=str)
+    parser_flower.set_defaults(func=flower_cmd)
+
     args = parser.parse_args(params)
     args.func(args)
 

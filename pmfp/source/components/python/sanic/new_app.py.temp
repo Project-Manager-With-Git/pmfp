@@ -11,6 +11,7 @@ from api import restapi
 from views import main_view
 from ws import ws
 from hooks import hooks
+from exception import excep
 from log import (
     LOGGING_CONFIG_JSON,
     set_mail_log
@@ -31,4 +32,5 @@ def init_app(config):
     main_view.init_app(app)
     ws.init_app(app)
     hooks.init_app(app)
+    excep.init_app(app)
     return app

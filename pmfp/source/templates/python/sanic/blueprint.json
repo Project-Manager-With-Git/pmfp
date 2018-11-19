@@ -14,6 +14,7 @@
         "sanic-static": [".", ""],
         "sanic-config": ["-",""],
         "sanic-hooks": ["-", ""],
+        "sanic-exception": ["-", ""],
         "cli-ws_cli.py.temp": [".","ws_cli"],
         "database-model_async": ["-", "model"],
         "universal-data_schema":["-",""],

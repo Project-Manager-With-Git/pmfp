@@ -1,0 +1,9 @@
+from celery import Celery
+from tasks import task
+
+
+def init_app(config):
+    app = Celery('$project_name')
+    task.init_app(app)
+    app.config_from_object(config)
+    return app

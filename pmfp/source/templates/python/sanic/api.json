@@ -9,7 +9,7 @@
         "sanic-log.py.temp": ["-", "log"],
         "sanic-api": ["-", ""],
         "sanic-config": ["-", ""],
-        "sanic-hooks": ["-", ""],
+        "sanic-exception": ["-", ""],
         "database-model_async": ["-", "model"],
         "universal-data_schema": ["-", ""],
         "universal-__main__.py.temp": ["-", "__main__"],

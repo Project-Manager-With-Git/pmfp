@@ -34,9 +34,10 @@ def release_py(config):
                 print("打包项目为pyz")
                 build(config)
                 print("打包项目为pyz成功")
-            command = f"docker build --pull -t {remote_registry}/{project_name}:{status}-{version} ."
+            image_name = project_name.lower()
+            command = f"docker build --pull -t {remote_registry}/{image_name}:{status}-{version} ."
             subprocess.check_call(command, shell=True)
-            command = f"docker push {remote_registry}/{project_name}:{status}-{version}"
+            command = f"docker push {remote_registry}/{image_name}:{status}-{version}"
             subprocess.check_call(command, shell=True)
             print("release package to docker registry done!")
     else:

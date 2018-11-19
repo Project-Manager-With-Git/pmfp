@@ -1,0 +1,23 @@
+class CeleryTask:
+
+    def __init__(self, app=None):
+        self.TASKS = {}
+        if app:
+            self.init_app(app)
+
+    def register(self, **kwargs):
+        def wrap(func):
+            name = kwargs.get("name") if kwargs.get("name") else func.__name__
+            self.TASKS[name] = [func, kwargs]
+            return func
+        return wrap
+
+    def init_app(self, app):
+        for k, v in self.TASKS.items():
+            func, kwargs = v
+            app.task(**kwargs)(func)
+
+
+task = CeleryTask()
+
+__all__ = ["CeleryTask", "task"]

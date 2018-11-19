@@ -1,4 +1,4 @@
-from tempte import init_app
+from $project_name import init_app
 from config import load_conf
 
 

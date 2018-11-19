@@ -1,6 +1,6 @@
 from pathlib import Path
 DEFAULT_SETTING = {
-    "NAME": "tempte",
+    "NAME": "$project_name",
     "ACCESS_LOG": True,
     'DEBUG': True,
     'HOST': '0.0.0.0',

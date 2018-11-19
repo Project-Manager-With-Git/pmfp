@@ -1,0 +1,16 @@
+from voluptuous import Schema, ALLOW_EXTRA
+
+config_schema = Schema(
+    {
+        "BROKER_URL": str,
+        "CELERY_DISABLE_RATE_LIMITS": bool,
+        "CELERY_RESULT_BACKEND": str,
+        "CELERY_TASK_RESULT_EXPIRES": int,
+        "CELERY_RESULT_SERIALIZER": str,
+        "CELERY_TASK_SERIALIZER": str,
+        "CELERY_IMPORTS": str,
+        "CELERY_TASK_RESULT_EXPIRES": int,
+        "CELERYD_MAX_TASKS_PER_CHILD": int
+    },
+    extra=ALLOW_EXTRA
+)
