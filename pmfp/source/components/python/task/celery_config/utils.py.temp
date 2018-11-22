@@ -28,5 +28,5 @@ def load_conf(args):
     if p.exists():
         config.update(**_load_conf_from_json(str(p)))
     if args.config:
-        config.update(**load_conf_from_json(args.config))
+        config.update(**_load_conf_from_json(args.config))
     return config

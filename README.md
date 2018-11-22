@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.3
++ version: 3.0.4
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -39,7 +39,13 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 + 只支持python3.5+
 + mac osx下会有bug,venv的虚拟环境无法自动安装
 
-## 版本新增:
+## 版本更新:
+
+### 3.0.4
+
+1. 修正了config中导入json配置文件的一处bug
+
+### 3.0.3
 
 1. 新增对celery的支持
 2. 为sanic新增了exception组件,用于定义全局的异常

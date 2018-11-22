@@ -1,6 +1,6 @@
 pmfp
 ===============================
-* version: 3.0.3
+* version: 3.0.4
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
@@ -46,8 +46,16 @@ Limitations
 * 只支持python3.5+
 * mac osx下会有bug,venv的虚拟环境无法自动安装
 
+
+Version Update
+------------------
+
+New in 3.0.4
+^^^^^^^^^^^^^^^^
+* 修正了config中导入json配置文件的一处bug
+
 New in 3.0.3
------------------
+^^^^^^^^^^^^^^^^
 
 * 新增对celery的支持
 * 为sanic新增了exception组件,用于定义全局的异常
