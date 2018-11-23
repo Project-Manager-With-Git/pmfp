@@ -11,7 +11,7 @@
         "universal-__main__.py.temp": ["-", "__main__"],
         "docker-Dockerfile.temp": [".", "dockerfile"]
     },
-    "requirement": ["voluptuous", "celery", "flower", "redis"],
+    "requirement": ["voluptuous", "celery", "tornado==4.5.2", "flower", "redis"],
     "requirement-dev": [
         "coverage",
         "mypy",
