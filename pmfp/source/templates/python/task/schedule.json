@@ -4,16 +4,14 @@
     "project-language": "Python",
     "project-type": "application",
     "components": {
-        "task-script.py.temp":["-", "-"],
-        "scripts-simplescripts.py.temp": ["-", "scripts"],
-        "universal-submodule_class": ["-", "view_clz"],
-        "universal-submodule_func": ["-", "view_func"],
-        "universal-config": ["-", "config"],
+        "schedule_scripts.py.temp":["-", "scripts"],
+        "schedule_app": ["-", "-"],
+        "schedule_config":["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
         "universal-log.py.temp": ["-", "log"],
         "docker-Dockerfile.temp": [".", "dockerfile"]
     },
-    "requirement": ["voluptuous"],
+    "requirement": ["voluptuous","schedule"],
     "requirement-dev": [
         "coverage",
         "mypy",

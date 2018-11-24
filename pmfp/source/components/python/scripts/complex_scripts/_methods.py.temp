@@ -15,9 +15,9 @@ class Scripts:
             prog='ppm',
             epilog='epilog',
             description='desc',
-            usage='''tempte <command> [<args>]
+            usage='''$project_name <command> [<args>]
 
-tempte工具的子命令有:
+$project_name工具的子命令有:
    show        desc
 ''')
         parser.add_argument('command', help='执行子命令')

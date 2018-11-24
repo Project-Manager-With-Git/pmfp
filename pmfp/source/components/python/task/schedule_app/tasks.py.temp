@@ -1,0 +1,28 @@
+import time
+import traceback
+import functools
+
+
+def catch_exceptions(job_func, cancel_on_failure=False):
+    @functools.wraps(job_func)
+    def wrapper(*args, **kwargs):
+        try:
+            return job_func(*args, **kwargs)
+        except:
+            track = traceback.format_exc()
+            model_logger.error(f'"msg":"job catch error","tracback":"{track}"')
+            if cancel_on_failure:
+                return schedule.CancelJob
+    return wrapper
+
+
+@catch_exceptions
+def job():
+    print("job running")
+    time.sleep(2)
+    print("job done")
+    return True
+
+
+if __name__ == "__main__":
+    job()

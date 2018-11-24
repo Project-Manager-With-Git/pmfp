@@ -1,0 +1,6 @@
+from pathlib import Path
+DEFAULT_SETTING = {
+    "EVERY": 20,
+    "INTERVAL": "seconds"
+}
+DEFAULT_PATH = Path("./config.json")

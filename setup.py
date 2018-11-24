@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from pathlib import Path
 REQUIREMETS_FILE = 'requirements.txt'
 PROJECTNAME = 'pmfp'
-VERSION = '3.0.4'
+VERSION = '3.0.5'
 DESCRIPTION = 'a simple package manager for python like npm.'
 URL = 'https://github.com/Python-Tools/pmfp'
 AUTHOR = 'hsz'

@@ -17,7 +17,7 @@ def remove_readonly(func, path, _):
 
 def delete_py_source(p):
     if p.is_file():
-        if p.suffix == ".py" and p.name != "__main__.py":
+        if p.suffix == ".py" and p.name not in ("__main__.py","__init__.py") :
             os.remove(str(p))
     else:
         if p.name == "__pycache__":
