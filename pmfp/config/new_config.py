@@ -20,7 +20,7 @@ def new_config(project_name, template=None,language=None):
         'author-email': "",
         'keywords': ["tools"],
         'description': "simple tools",
-        'gcc': "gcc",
+        'gcc': "",
         'global-python': "python",
         'remote_registry': "",
         "requirement": [],

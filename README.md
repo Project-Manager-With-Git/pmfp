@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.5
++ version: 3.0.6
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -45,6 +45,15 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+### 3.0.6
+
+1. 增加了对cython的支持.现在支持两种模板:
+    1. module-cython_simple
+    2. module-cython_numpy
+    cython模板使用c语言编译器而非c++,需要的话可以自己改setup.py
+    
+2. build命令现在可以对module类型的python项目生效了
 
 ### 3.0.5
 

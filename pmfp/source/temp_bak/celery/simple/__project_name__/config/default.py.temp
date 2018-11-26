@@ -1,5 +1,0 @@
-from .config import Config
-
-
-class DefaultConfig(Config):
-    pass

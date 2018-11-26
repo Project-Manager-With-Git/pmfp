@@ -15,6 +15,6 @@ def build(config):
         if type_ == "application":
             build_python_app(project_name)
         else:
-            build_python_module(project_name)
+            build_python_module(config)
     elif language == "Javascript":
         build_js()

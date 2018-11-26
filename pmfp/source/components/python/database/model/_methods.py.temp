@@ -2,6 +2,7 @@
 
 避免让外部直接访问定义的对象,以此来进行解耦.
 """
+import contextlib
 from typing import Type
 from playhouse.db_url import connect
 from .user import User
@@ -71,4 +72,15 @@ def moke_data():
     User.insert_many(data_source).execute()
 
 
-__all__ = ["drop_tables", "bind_db", "get_table", "moke_data"]
+@contextlib.contextmanager
+def query():
+    """确保对数据库的请求有连接可用,并且在使用完后关闭连接的上下文管理器.
+    try:
+        db.connect()
+    except:
+        pass
+    yield db
+    db.close()
+
+
+__all__ = ["drop_tables", "bind_db", "get_table", "query"]

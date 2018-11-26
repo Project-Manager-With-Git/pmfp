@@ -3,10 +3,18 @@ import zipapp
 import shutil
 import platform
 import tempfile
+import subprocess
 import compileall
+from pmfp.freeze import freeze
 from pathlib import Path
-from pmfp.const import PROJECT_HOME
-from pmfp.utils import find_project_name_path
+from pmfp.const import (
+    PROJECT_HOME,
+    PLATFORM
+)
+from pmfp.utils import (
+    find_project_name_path,
+    get_python_path
+)
 
 
 def remove_readonly(func, path, _):
@@ -60,5 +68,21 @@ def build_python_app(project_name):
                     shutil.rmtree(str(temp_path))
 
 
-def build_python_module(project_name):
-    pass
+def build_python_module(config):
+    if not PROJECT_HOME.joinpath("requirements.txt").exists():
+        print("没有requirements.txt,创建")
+        freeze(config)
+    project_name = config["project-name"]
+    print(f'build {project_name} @ `build` ')
+    python_path = get_python_path(config)
+    command = f"{python_path} setup.py build"
+    cc = config.get("gcc")
+    if PLATFORM == 'Windows':
+        if cc:
+            command = command + f" -c {cc}"
+        else:
+            command = command + " -c msvc"
+    else:
+        if cc:
+            command = f"CC={cc} "+command
+    subprocess.check_call(command, shell=True)
