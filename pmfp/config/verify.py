@@ -16,7 +16,7 @@ from voluptuous import (
 NOT_NAME_RANGE = ["app", "application", "module", "project"]
 STATUS_RANGE = ["production", "release", "dev", "test"]
 LANGUAGE_RANGE = ["Python", "Javascript"]
-ENV_RANGE = ["env", "conda", "node", "ts-node"]
+ENV_RANGE = ["env", "conda", "node"]
 TYPE_RANGE = ["application", "module"]
 DEFAULT_AUTHOR = getpass.getuser()
 
@@ -27,8 +27,8 @@ def config_must_match(config):
     if language == "Python":
         if env not in ("env", "conda"):
             raise Invalid(f'{env}不是{language}允许的环境')
-    elif language in ("Javascript", "Typescript"):
-        if env not in ("node", "ts-node"):
+    elif language in ("Javascript", ):
+        if env not in ("node", ):
             raise Invalid(f'{env}不是{language}允许的环境')
     return config
 

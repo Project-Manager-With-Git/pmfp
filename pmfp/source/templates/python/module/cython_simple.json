@@ -4,6 +4,7 @@
     "project-language": "Python",
     "project-type": "module",
     "components": {
+        "cython-__init__.py.temp":["-", "__init__"],
         "cython-simple.pyx.temp":["-", "-"],
         "cython_setup": [".", "setup"]
     },

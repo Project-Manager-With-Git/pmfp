@@ -199,7 +199,18 @@ grpc                     创建一个grpc用的protobuf文件
         python可以选择将包编译为egg或者wheel用于发布,或者编译为pyz文件用于部署.
         node和c暂时不支持.
         """
-        build_cmd()
+        parser = argparse.ArgumentParser(
+            prog='ppm build',
+            description='执行脚本,脚本的入口由配置文件中的entry字段指定')
+        parser.add_argument(
+            '--inplace', 
+            action="store_true", 
+            default=False,
+            help="只有cython写的model有用"
+        )
+        parser.set_defaults(func=build_cmd)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
         print("build package done!")
 
     def run(self):

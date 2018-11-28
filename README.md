@@ -46,6 +46,21 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
 
+### 3.0.7
+
+1. 修改了cython模板,使之可以和纯python配合使用,如果要让application类型的项目支持,
+    1. 先修改`pmfp.json`中的`template`字段,只要里面有cython字样就可以编译
+    2. 使用new命令`new -t "-" -r <name without suffix> cython-simple.pyx.temp`
+    3. 使用new命令`new -r setup.py cython_numpy_setup`或者`new -r setup.py cython_setup`创建`setup.py`文件配置编译行为
+    4. 之后虽然是是application,但不会打包为.pyz
+2. build命令现在有参数`--inplace`,专为cython模块编译项目到本地使用
+3. todo 重构grpc的客户端组件,使之可以嵌入到项目中
+4. todo 重构zerorpc的客户端组件,使之可以嵌入到项目中
+5. todo 重构xmlrpc的客户端组件,使之可以嵌入到项目中
+6. todo 重构jsonrpc的客户端组件,使之可以嵌入到项目中
+7. todo 新增node支持,支持但不再打算支持typescript
+
+
 ### 3.0.6
 
 1. 增加了对cython的支持.现在支持两种模板:

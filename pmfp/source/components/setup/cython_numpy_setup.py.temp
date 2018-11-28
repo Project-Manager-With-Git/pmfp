@@ -34,7 +34,7 @@ with open(str(HERE.joinpath(REQUIREMETS_FILE)), encoding='utf-8') as f:
     REQUIREMETS = f.readlines()
 extensions = [
     Extension(
-        "$project_name",
+        "$project_name.public",
         sources = ["$project_name/$project_name.pyx"],
         include_dirs=[numpy.get_include()]
     )

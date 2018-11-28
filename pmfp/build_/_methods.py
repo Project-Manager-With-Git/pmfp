@@ -5,7 +5,7 @@ from .build_python import (
 )
 
 
-def build(config):
+def build(config,inplace=False):
     project_name = config["project-name"]
     language = config["project-language"]
     env = config["env"]
@@ -13,8 +13,8 @@ def build(config):
     type_ = config["project-type"]
     if language == "Python":
         if type_ == "application":
-            build_python_app(project_name)
+            build_python_app(config)
         else:
-            build_python_module(config)
+            build_python_module(config,inplace)
     elif language == "Javascript":
         build_js()
