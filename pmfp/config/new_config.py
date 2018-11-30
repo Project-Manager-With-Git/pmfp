@@ -138,5 +138,9 @@ def new_config(project_name, template=None,language=None):
             config.update({
                 "entry": entry
             })
+        if config["project-language"] == "Javascript":
+            config.update({
+                "entry": "es/index.js"
+            })
 
         return config

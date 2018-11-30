@@ -1,0 +1,11 @@
+import assert from "assert"
+import MyClass from "../../es"
+import {TEST} from "../const"
+
+export function echo_test() {
+    console.log("TEST="+TEST)
+    it('预期返回原来的值', function () {
+        let my_instance = new MyClass()
+        assert.equal(1, my_instance.echo(1))
+    })
+}

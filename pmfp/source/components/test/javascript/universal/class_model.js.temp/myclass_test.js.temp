@@ -1,0 +1,20 @@
+import {
+  echo_test
+} from "./echo_test"
+
+export function Myclass_test() {
+  before(function () {
+    console.log("before")
+  })
+  after(function () {
+    console.log("after")
+  })
+  beforeEach(function () {
+    console.log("before each")
+  })
+  afterEach(function () {
+    console.log("after each")
+  })
+  describe('#echo()', echo_test)
+  describe('#echo2()', echo_test)
+}

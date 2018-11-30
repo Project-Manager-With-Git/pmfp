@@ -1,0 +1,31 @@
+"""在编译好pb文件后需要修改`xxx_pb2_grpc.py`文件
+
+```python
+import data_pb2 as data__pb2
+```
+改为
+```python
+try:
+    import {客户端模块的的文件夹名}.data_pb2 as data__pb2
+except:
+    import data_pb2 as data__pb2
+```
+"""
+try:
+    from .data_pb2 import *
+    from .core import CliProxy
+except:
+    from data_pb2 import *
+    from core import CliProxy
+
+
+def test_run():
+    url = "localhost:5000"
+    cli = CliProxy(url)
+    response = cli.DoFormat(Data(text='hello,world!'))
+    print("received: " + response.text)
+
+
+if __name__ == '__main__':
+    test_run()
+

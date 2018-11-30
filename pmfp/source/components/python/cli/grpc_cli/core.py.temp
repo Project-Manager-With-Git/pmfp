@@ -1,13 +1,19 @@
-import zerorpc
+try:
+    from .data_pb2_grpc import RPCStub
+except:
+    from data_pb2_grpc import RPCStub
+import grpc
 
 
+
+    
 class CliProxy:
-    __slots__ = ('url', 'client', '_callbacks')
+    __slots__ = ('conn', 'client', '_callbacks')
 
     def __init__(self, url=None):
         self._callbacks = []
-        self.client = zerorpc.Client()
-        self.url = None
+        self.conn = None
+        self.client = None
         if url:
             self.initialize(url)
 
@@ -16,16 +22,18 @@ class CliProxy:
         Args:
             url ([type]): [description]
         """
-        self.url = url
-        self.client.connect(url)
+
+        self.conn = grpc.insecure_channel(url)
+        self.client = RPCStub(channel=self.conn)
+
         for callback in self._callbacks:
-            callback(url)
+            callback(self.client)
 
     def attach_callback(self, callback):
         self._callbacks.append(callback)
 
     def __getattr__(self, attr):
-        if self.url is None:
+        if self.client is None:
             raise AttributeError('Cannot use uninitialized Proxy.')
         return getattr(self.client, attr)
 
@@ -35,10 +43,5 @@ class CliProxy:
         return super().__setattr__(attr, value)
 
 
-__all__ = ["CliProxy"]
-
-if __name__ == "__main__":
-    url = "tcp://localhost:5000"
-    cli = CliProxy(url)
-    print(cli.hello("RPC"))
+    
 

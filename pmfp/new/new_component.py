@@ -16,7 +16,8 @@ def template_2_file(project_name, path):
         path ([type]): [description]
         rename ([type], optional): Defaults to None. [description]
     """
-
+    print(project_name)
+    print(path)
     if (".py" in path.name) or (
             ".js" in path.name) or (
             ".ts" in path.name) or (
@@ -56,8 +57,56 @@ def iter_template_2_file(project_name, path):
             iter_template_2_file(project_name, p)
 
 
+def python_test(project_name, rename, path):
+    test_init = TEST_PATH.joinpath("__init__.py")
+    if not test_init.exists():
+        shutil.copy(
+            str(PMFP_TEST_TEMP.joinpath("python/init.temp")),
+            str(TEST_PATH.joinpath("__init__.py"))
+        )
+    test_const = TEST_PATH.joinpath("const.py")
+    if not test_const.exists():
+        shutil.copy(
+            str(PMFP_TEST_TEMP.joinpath("python/const.py.temp")),
+            str(TEST_PATH.joinpath("const.py"))
+        )
+    test_path = TEST_PATH.joinpath(f"test_{rename}")
+    shutil.copytree(
+        str(PMFP_TEST_TEMP.joinpath(path)),
+        str(test_path)
+    )
+    iter_template_2_file(project_name, test_path)
+
+
+def js_test(project_name, rename, path):
+    print("test.js")
+    test_init = TEST_PATH.joinpath("test.js.temp")
+    if not test_init.exists():
+        shutil.copy(
+            str(PMFP_TEST_TEMP.joinpath("javascript/test.js.temp")),
+            str(TEST_PATH.joinpath("test.js"))
+        )
+    print("const.js")
+    test_const = TEST_PATH.joinpath("const.js.temp")
+    if not test_const.exists():
+        shutil.copy(
+            str(PMFP_TEST_TEMP.joinpath("javascript/const.js.temp")),
+            str(TEST_PATH.joinpath("const.js"))
+        )
+    print(f"test_{rename}")
+    test_path = TEST_PATH.joinpath(f"test_{rename}")
+    shutil.copytree(
+        str(PMFP_TEST_TEMP.joinpath(path)),
+        str(test_path)
+    )
+    print("template_2_file")
+    iter_template_2_file(project_name, test_path)
+    print("template_2_file")
+
+
 def new_component(config, path, to, rename, test):
     project_name = config["project-name"]
+    language = config["project-language"]
     c_path = PMFP_COMPONENTS_HOME.joinpath(path)
     t_path = PROJECT_HOME.joinpath(to)
     if not c_path.exists():
@@ -77,11 +126,11 @@ def new_component(config, path, to, rename, test):
             print(f"存在同名组件{rename}")
             return
         else:
-            # to = t_path.joinpath(name)
             shutil.copy(
                 str(c_path),
                 str(to_path)
             )
+
             template_2_file(project_name, to_path)
     else:
         to_path = t_path.joinpath(rename)
@@ -106,30 +155,9 @@ def new_component(config, path, to, rename, test):
         else:
             TEST_PATH.mkdir()
             print("创建测试文件夹")
-
         if config["project-language"] == "Python":
-            test_init = TEST_PATH.joinpath("__init__.py")
-            if not test_init.exists():
-                shutil.copy(
-                    str(PMFP_TEST_TEMP.joinpath("python/init.temp")),
-                    str(TEST_PATH.joinpath("__init__.py"))
-                )
-                # template_2_file(project_name, TEST_PATH.joinpath("__init__.py"))
-                # with open(str(test_init), "w") as f:
-                #     content = PMFP_TEST_TEMP.joinpath("python/init.temp").open().read()
-                #     f.write(content)
-            test_const = TEST_PATH.joinpath("const.py")
-            if not test_const.exists():
-                shutil.copy(
-                    str(PMFP_TEST_TEMP.joinpath("python/const.py.temp")),
-                    str(TEST_PATH.joinpath("const.py"))
-                )
-            test_path = TEST_PATH.joinpath(f"test_{rename}")
-            shutil.copytree(
-                str(PMFP_TEST_TEMP.joinpath(path)),
-                str(test_path)
-            )
-            iter_template_2_file(project_name, test_path)
-
+            python_test(project_name, rename, path)
+        elif config["project-language"] == "Javascript":
+            js_test(project_name, rename, path)
         else:
             print("语言不支持测试")

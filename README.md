@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.6
++ version: 3.0.7
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -54,12 +54,13 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
     3. 使用new命令`new -r setup.py cython_numpy_setup`或者`new -r setup.py cython_setup`创建`setup.py`文件配置编译行为
     4. 之后虽然是是application,但不会打包为.pyz
 2. build命令现在有参数`--inplace`,专为cython模块编译项目到本地使用
-3. todo 重构grpc的客户端组件,使之可以嵌入到项目中
-4. todo 重构zerorpc的客户端组件,使之可以嵌入到项目中
-5. todo 重构xmlrpc的客户端组件,使之可以嵌入到项目中
-6. todo 重构jsonrpc的客户端组件,使之可以嵌入到项目中
-7. todo 新增node支持,支持但不再打算支持typescript
-
+3. 重构grpc的客户端组件,使之可以嵌入到项目中
+4. 重构zerorpc的客户端组件,使之可以嵌入到项目中
+5. 重构xmlrpc的客户端组件,使之可以嵌入到项目中
+6. 重构jsonrpc的客户端组件,使之可以嵌入到项目中
+7. 新增node支持(babel),不再打算支持typescript,新增了相关模板:
+    1. `server-static_server`一个简易静态http服务器
+    2. `module-classmodel`一个简易的单文件node模块
 
 ### 3.0.6
 

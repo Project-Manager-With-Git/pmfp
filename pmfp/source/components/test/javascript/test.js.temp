@@ -1,0 +1,4 @@
+import {
+    Myclass_test
+} from "./test_index/myclass_test"
+describe('Myclass', Myclass_test)

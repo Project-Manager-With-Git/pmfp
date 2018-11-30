@@ -5,7 +5,7 @@ from .new_env import new_env
 from .new_setup import new_setup
 from .new_readme import new_readme
 from .new_pb import new_pb
-
+from .new_es_script import new_es_script
 
 def new(config, kwargs):
     if kwargs["language"] == "-":
@@ -36,6 +36,8 @@ def new(config, kwargs):
         else:
             rename = kwargs["rename"]
         new_pb(c_name,rename,to)
+    elif c_name == "es_script" and c_language=="Javascript":
+        new_es_script(config)
 
     else:
         spl_name = c_name.split("-")

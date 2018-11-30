@@ -1,0 +1,13 @@
+/**
+ * this is MyClass.
+ */
+class MyClass {
+    /**
+     * @param {number} param this is param.
+     * @return {number} this is return.
+     */
+    echo(param) {
+        return param
+    }
+}
+export default MyClass

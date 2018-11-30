@@ -1,0 +1,56 @@
+import fs from 'fs'
+import path from 'path'
+import args from "commander"
+import Application from "./application/application"
+
+function find_config(options) {
+    let config
+    if (options.config) {
+        if (fs.existsSync(option.config)) {
+            config = new Map(Object.entries(JSON.parse(fs.readFileSync(option.config))))
+        } else {
+            throw "config file not exist"
+        }
+    } else {
+        let configPath = path.resolve("./", "config.json")
+        if (fs.existsSync(configPath)) {
+            config = new Map(Object.entries(JSON.parse(fs.readFileSync(configPath))))
+        } else {
+            console.log("default config file not exist")
+            config = new Map()
+        }
+    }
+    return config
+}
+
+function run(options) {
+    //console.log(options)
+    let config = find_config(options)
+    if (options.port) {
+        config.set("port", options.port)
+    }
+    if (options.host) {
+        config.set("port", options.host)
+    }
+    const app = new Application(config)
+    if (options.debug) {
+        app.run()
+    } else {
+        app.run(false)
+    }
+}
+
+function main(argv) {
+    args.version('0.0.1')
+        .description('run a static http server')
+        .option('-P, --port [number]', 'port')
+        .option('-H, --host [string]', 'hostname')
+        .option('--no-debug', 'use debug mode')
+        .option('--config <path>', 'force a config file')
+        .parse(argv)
+    run(args)
+}
+
+if (process.mainModule.filename === __filename) {
+    main(process.argv)
+}

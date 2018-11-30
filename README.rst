@@ -1,6 +1,6 @@
 pmfp
 ===============================
-* version: 3.0.6
+* version: 3.0.7
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
@@ -55,6 +55,23 @@ Version Update
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+New in 3.0.7
+^^^^^^^^^^^^^^^^^
+
+* 修改了cython模板,使之可以和纯python配合使用,如果要让application类型的项目支持,
+    + 先修改`pmfp.json`中的`template`字段,只要里面有cython字样就可以编译
+    + 使用new命令`new -t "-" -r <name without suffix> cython-simple.pyx.temp`
+    + 使用new命令`new -r setup.py cython_numpy_setup`或者`new -r setup.py cython_setup`创建`setup.py`文件配置编译行为
+    + 之后虽然是是application,但不会打包为.pyz
+* build命令现在有参数`--inplace`,专为cython模块编译项目到本地使用
+* 重构grpc的客户端组件,使之可以嵌入到项目中
+* 重构zerorpc的客户端组件,使之可以嵌入到项目中
+* 重构xmlrpc的客户端组件,使之可以嵌入到项目中
+* 重构jsonrpc的客户端组件,使之可以嵌入到项目中
+* 新增node支持(babel),不再打算支持typescript,新增了相关模板:
+    + `server-static_server`一个简易静态http服务器
+    + `module-classmodel`一个简易的单文件node模块
 
 New in 3.0.6
 ^^^^^^^^^^^^^^^^

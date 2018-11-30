@@ -30,7 +30,7 @@ def clean(total=False):
             else:
                 continue
     else:
-        rms = ["document", "env", "dockerfile",
+        rms = ["document", "env", "dockerfile","node_modules",
                "__pycache__", "test", "test_package",
                "CMakeFiles", "CMakeCache.txt"]
         for p in PROJECT_HOME.iterdir():
