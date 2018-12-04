@@ -1,0 +1,84 @@
+import io from "./core";
+
+let test_nps = io.of("/test")
+io.on(
+  'connection',
+  function (socket) {
+    console.log("Connected")
+    socket.emit('my_response', {
+      'data': 'Connected',
+      'count': 0
+    })
+    setInterval(function () {
+      socket.emit(
+        'my_response', {
+          'data': 'Server generated event'
+        }
+      )
+    }, 10000)
+    socket.on('disconnect', function () {
+      console.log('Client disconnected')
+    })
+    socket.on('disconnect_request', function (message) {
+      test_nps.in(message['room']).emit('my_response', {
+        'data': message['data']
+      })
+    })
+    socket.on('my_event', function (message) {
+      socket.emit('my_response', {
+        'data': message['data']
+      })
+    })
+    socket.on('my_broadcast_event', function (message) {
+      test_nps.emit('my_response', {
+        'data': message['data']
+      })
+    })
+    socket.on('join', function (message) {
+      socket.join(message['room'], () => {
+        socket.emit(
+          'my_response', {
+            'data': 'Entered room: ' + message['room']
+          }
+        )
+      })
+    })
+    socket.on('leave', function (message) {
+      socket.leave(message['room'], () => {
+        socket.emit(
+          'my_response', {
+            'data': 'Left room: ' + message['room']
+          }
+        )
+      })
+    })
+    socket.on('close_room', function (message) {
+      test_nps.in(message['room']).emit(
+        'my_response', {
+          'data': 'Room ' + message['room'] + ' is closing.'
+        })
+      test_nps.in(message['room']).clients((error, socketIds) => {
+        if (error) {
+          throw error
+        }
+        socketIds.forEach(
+          socketId => io.sockets.sockets[socketId].leave(message['room'])
+        )
+      })
+    })
+    socket.on('my_room_event', function (message) {
+      console.log('my_room_event')
+      io.to(message['room']).emit(
+        'my_response', {
+          'data': message['data']
+        })
+    })
+    socket.on("error", function (error) {
+      console.log("error" + error)
+    })
+  }
+)
+
+
+
+export default test_nps

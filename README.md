@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.7
++ version: 3.0.8
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -45,6 +45,15 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+### 3.0.8
+
+1. 修改了install命令不会将包名写入配置的bug
+2. `server-static_server`模板代码结构进行了优化
+3. 新增了koa模板,包括
+    1. `server-koa`带socketio和restful接口的koa模板
+    2. `server-koa_rest`使用rest风格接口的koa模板
+    3. `server-koa_socketio`使用socketio的koa模板
 
 ### 3.0.7
 

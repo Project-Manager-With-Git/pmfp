@@ -1,0 +1,81 @@
+import http from 'http'
+import fs from 'fs'
+import url from 'url'
+import path from 'path'
+import log from 'pino'
+
+class Application {
+  /**
+   * 
+   * @param {string} name 
+   * @param {Map} config 
+   */
+  constructor(config = null, name = __filename) {
+    this.name = name
+    let defaultConfig = new Map([
+      ["static_path", "static"],
+      ["port", 5000],
+      ["host", "0.0.0.0"]
+    ])
+    this.config = defaultConfig
+    if (config instanceof Map) {
+      for (let [key, value] of config.entries()) {
+        this.config.set(key, value)
+      }
+    }
+    this.logger = log()
+    this.server = http.createServer(
+      function (request, response) {
+        let pathObj = url.parse(request.url, true);
+        //static文件夹的绝对路径
+        let staticPath = path.resolve(__dirname, this.config.get("static_path"))
+        //获取资源文件绝对路径
+        let filePath = path.join(staticPath, pathObj.pathname)
+        //同步读取file
+        fs.readFile(
+          filePath,
+          'binary',
+          function (err, fileContent) {
+            if (err) {
+              this.logger.error('404')
+              response.writeHead(
+                404, {
+                  "Content-Type": "application/json"
+                }
+              )
+              response.end(
+                JSON.stringify({
+                  "msg": "404 not found"
+                })
+              )
+            } else {
+              this.logger.info('ok')
+              response.write(fileContent, 'binary')
+              response.end()
+            }
+          }
+        )
+      }
+    )
+  }
+  /**
+   * 
+   * @param {string} host 
+   * @param {number} port 
+   * @param {boolean} debug 
+   */
+  run(debug = true, port = null, host = null) {
+    let h = host ? host : this.config.get("host")
+    let p = port ? port : this.config.get("port")
+    if (debug) {
+      //log.setLevel(log.levels.INFO)
+      this.logger.level = "debug"
+    } else {
+      this.logger.level = "error"
+    }
+    this.logger.info("Static Server running @ http://"+h+":"+p+"/ for path @"+this.config.get("static_path"))
+    this.server.listen(p, h)
+  }
+}
+
+export default Application

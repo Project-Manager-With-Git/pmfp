@@ -1,10 +1,14 @@
 import subprocess
+import json
 from typing import (
     Dict,
     Any,
     Optional
 )
-from pmfp.const import JS_ENV_PATH
+from pmfp.const import (
+    JS_ENV_PATH,
+    PMFPRC_PATH
+)
 
 
 def install_one(config: Dict[str, Any], package: str, dev: bool = False):
@@ -14,9 +18,18 @@ def install_one(config: Dict[str, Any], package: str, dev: bool = False):
     print(f"安装依赖{package}")
     if dev is False:
         command = f"npm install {package} --save"
+        subprocess.check_call(command, shell=True)
+        requirement = list(set(config["requirement"]))
+        requirement.append(package)
+        config["requirement"] = requirement
     else:
         command = f"npm install {package} --save-dev"
-    subprocess.check_call(command, shell=True)
+        subprocess.check_call(command, shell=True)
+        requirement = list(set(config["requirement-dev"]))
+        requirement.append(package)
+        config["requirement-dev"] = requirement
+    with open(str(PMFPRC_PATH), "w") as f:
+        json.dump(config, f)
     print(f"安装依赖{package}成功")
 
 
