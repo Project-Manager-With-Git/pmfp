@@ -3,6 +3,7 @@ import log from 'pino'
 import path from 'path'
 import stat from 'koa-static'
 import koaBody from 'koa-body'
+import Pino from 'koa-pino-logger'
 import {updateMap} from "./utils"
 
 class Application {
@@ -25,6 +26,7 @@ class Application {
     let static_middle = stat(staticPath)
     this.app.use(static_middle)
     this.app.use(koaBody())
+    this.app.use(Pino())
     this.server = require('http').createServer(this.app.callback())
     //this.io = require('socket.io')(this.server)
   }

@@ -1,11 +1,11 @@
 import json
 from pmfp.const import PMFPRC_PATH, PROJECT_HOME, PMFP_TEMPLATES_HOME
 from pmfp.show import show
-from pmfp.utils import find_template_path
+from pmfp.utils import find_template_path, _find_template_path
 from .verify import DEFAULT_AUTHOR, LANGUAGE_RANGE, NOT_NAME_RANGE
 
 
-def new_config(project_name, template=None,language=None):
+def new_config(project_name, template=None, language=None):
     config = {
         "project-name": project_name,
         'project-language': language,
@@ -27,6 +27,18 @@ def new_config(project_name, template=None,language=None):
         "requirement-dev": [],
         "entry": "",
     }
+    if template and language:
+        language = language.capitalize()
+        template_path = _find_template_path(language, template)
+        with open(str(template_path)) as f:
+            template_info = json.load(f)
+            if template_info.get("env"):
+                config.update({"env":template_info.get("env")})
+            if template_info.get("gcc"):
+                config.update({"gcc":template_info.get("gcc")})
+            if template_info.get("env"):
+                config.update({"entry":template_info.get("entry")})
+
     while True:
         if not project_name:
             while True:
@@ -38,7 +50,7 @@ def new_config(project_name, template=None,language=None):
                     print(f"名字{project_name}不可以是如下{NOT_NAME_RANGE},请重新输入")
                 else:
                     config.update({
-                        "project-name": project_name.replace("-","_")
+                        "project-name": project_name.replace("-", "_")
                     })
                     break
         if not language:
@@ -52,11 +64,11 @@ def new_config(project_name, template=None,language=None):
                         "project-language": project_language
                     })
                     break
-    
+
         if config.get("project-language") == "Python":
-            default_env = "env"
-        elif config.get("project-language")=="Javascript":
-            default_env = "node"
+            default_env = config.get("env") or "env"
+        elif config.get("project-language") == "Javascript":
+            default_env = config.get("env") or "node"
         else:
             print("不支持的项目语言")
             return
@@ -132,15 +144,15 @@ def new_config(project_name, template=None,language=None):
             config.update({
                 "description": description
             })
-
-        if config["project-type"] == "application" and config["project-language"] == "Python":
-            entry = config["project-name"]
-            config.update({
-                "entry": entry
-            })
-        if config["project-language"] == "Javascript":
-            config.update({
-                "entry": "es/index.js"
-            })
+        if not config.get("entry"):
+            if config["project-type"] == "application" and config["project-language"] == "Python":
+                entry = config["project-name"]
+                config.update({
+                    "entry": entry
+                })
+            if config["project-language"] == "Javascript":
+                config.update({
+                    "entry": "es/index.js"
+                })
 
         return config

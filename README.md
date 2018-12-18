@@ -46,6 +46,16 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
 
+### 3.0.9
+
+1. 修正了模板`task-schedule`的bug,现在可以正常生成
+2. 模板现在可以添加`env`,`gcc`和`entry`字段作为默认
+3. TODO 为vue设置env和对应操作
+4. python模板 rpc-grpc现在可以在实现接口时使用self.app获取到它注册的app信息
+5. python模板 rpc-zerorpc现在可以在实现接口时使用self.app获取到它注册的app信息
+6. 修复python组件 database-model的bug
+7. 现在new操作可以在没有配置文件的地方执行
+
 ### 3.0.8
 
 1. 修改了install命令不会将包名写入配置的bug

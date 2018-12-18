@@ -20,14 +20,16 @@ def get_python_path(config):
             python_path = ENV_PATH.joinpath("bin/python")
     return str(python_path)
 
-
-def find_template_path(config):
-    language = config["project-language"]
-    t_p = config["template"].split("-")
+def _find_template_path(language,t_p):
     category = t_p[0]
     filename = "".join(t_p[1:]) + ".json"
     file_path = PMFP_TEMPLATES_HOME.joinpath(f"{language}/{category}/{filename}")
     return file_path
+
+def find_template_path(config):
+    language = config["project-language"]
+    t_p = config["template"].split("-")
+    return _find_template_path(language,t_p)
 
 
 def find_project_name_path(project_name):

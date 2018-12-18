@@ -74,7 +74,7 @@ def moke_data():
 
 @contextlib.contextmanager
 def query():
-    """确保对数据库的请求有连接可用,并且在使用完后关闭连接的上下文管理器.
+    """确保对数据库的请求有连接可用,并且在使用完后关闭连接的上下文管理器."""
     try:
         db.connect()
     except:

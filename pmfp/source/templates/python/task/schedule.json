@@ -4,9 +4,9 @@
     "project-language": "Python",
     "project-type": "application",
     "components": {
-        "schedule_scripts.py.temp":["-", "scripts"],
-        "schedule_app": ["-", "-"],
-        "schedule_config":["-", "config"],
+        "task-schedule_scripts.py.temp":["-", "scripts"],
+        "task-schedule_app": ["-", "-"],
+        "task-schedule_config":["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
         "universal-log.py.temp": ["-", "log"],
         "docker-Dockerfile.temp": [".", "dockerfile"]

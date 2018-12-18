@@ -18,8 +18,6 @@ def new(config, kwargs):
     else:
         to = kwargs["to"]
     c_name = kwargs["component_name"]
-    
-
     if c_name in ("document", "doc"):
         new_document(config, c_language.lower())
     elif c_name == "env":
@@ -38,7 +36,6 @@ def new(config, kwargs):
         new_pb(c_name,rename,to)
     elif c_name == "es_script" and c_language=="Javascript":
         new_es_script(config)
-
     else:
         spl_name = c_name.split("-")
         c_category = spl_name[0]

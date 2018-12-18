@@ -24,6 +24,7 @@ class App:
         if not isinstance(instance,RPCServicer):
             raise AttributeError("需要rpcServer的实例")
         self.register_instances =instance
+        instance.app=self
 
     def run(self,host=None,port=None,debug=False):
         if self.register_instances is None:

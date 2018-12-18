@@ -105,7 +105,7 @@ def js_test(project_name, rename, path):
 
 
 def new_component(config, path, to, rename, test):
-    project_name = config["project-name"]
+    project_name = config.get("project-name") or "tempname"
     language = config["project-language"]
     c_path = PMFP_COMPONENTS_HOME.joinpath(path)
     t_path = PROJECT_HOME.joinpath(to)

@@ -25,11 +25,8 @@ def _new_python_env(config):
     subprocess.check_call(command, shell=True)
     print('creating python env done!')
 
-
-
-
-
-def _new_es6(config):
+def _new_node(config):
+    new_json_package(config)
     project_name = config["project-name"]
     command = "npm install --save-dev babel-cli"
     subprocess.check_call(command, shell=True)
@@ -55,15 +52,29 @@ def _new_es6(config):
         })
         json.dump(content, f)
 
+def _new_vue(config):
+    pass
+
+def _new_js_env(config):
+    env = config["env"]
+    print('creating env')
+    if JS_ENV_PATH.exists():
+        print("js虚拟环境已存在!")
+        return
+    if env == "node":
+        _new_node(config)
+    elif env == "vue":
+        _new_vue(config)
+    else:
+        raise AttributeError("unknown env")
+
+
 
 def new_env(config, language):
     if language == "python":
         _new_python_env(config)
-
     elif language == "javascript":
-        new_json_package(config)
-        _new_es6(config)
-        env = config["env"]
+        _new_js_env(config)
         print('creating env')
     else:
         print("暂时不支持")

@@ -18,6 +18,7 @@ class App:
 
     def register_instance(self, instance):
         self.register_instances =instance
+        instance.app = self
 
     def run(self,host=None,port=None,debug=False):
         if self.register_instances is None:
