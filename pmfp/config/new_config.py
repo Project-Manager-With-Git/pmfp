@@ -29,7 +29,8 @@ def new_config(project_name, template=None, language=None):
     }
     if template and language:
         language = language.capitalize()
-        template_path = _find_template_path(language, template)
+        t_p = template.split("-")
+        template_path = _find_template_path(language, t_p)
         with open(str(template_path)) as f:
             template_info = json.load(f)
             if template_info.get("env"):

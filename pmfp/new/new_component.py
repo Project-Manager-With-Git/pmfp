@@ -27,7 +27,7 @@ def template_2_file(project_name, path):
             "docker" in path.name) or (
             ".json" in path.name):
         try:
-            template_content = Template(path.open().read())
+            template_content = Template(path.open(encoding='utf-8').read())
             content = template_content.substitute(
                 project_name=project_name
             )
@@ -35,15 +35,15 @@ def template_2_file(project_name, path):
             print(f"path:{path} template2file error")
             raise
         else:
-            path.open("w").write(content)
+            path.open("w",encoding='utf-8').write(content)
     else:
         try:
-            content = path.open("r").read()
+            content = path.open("r",encoding='utf-8').read()
         except UnicodeDecodeError as e:
             content = path.open("rb").read()
             path.open("wb").write(content)
         else:
-            path.open("w").write(content)
+            path.open("w", encoding='utf-8').write(content)
     newpath = str(path).replace(".temp", "")
     path.rename(Path(newpath))
 

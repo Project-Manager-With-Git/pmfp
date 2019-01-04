@@ -13,8 +13,8 @@ def new_cmd(args):
         c_name = "".join(spl_name[1:])
         path = f"{c_language}/{c_category}/{c_name}"
         config = {
-            "project-language":c_language
-            "project-name":tempname
+            "project-language":c_language,
+            "project-name":"tempname"
         }
         to = "." if kwargs_o.get("to") == "-" else kwargs_o.get("to")
         new_component(

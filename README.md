@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.8
++ version: 3.0.9
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -17,6 +17,14 @@ keywords:tool,project_manager
 + 简单的编译和打包指令,支持wheel,egg,cython,和docker编译
 + 快速测试
 + 文档维护,支持github page
+
+## 注意
+
++ 要支持grpc或者protobuf需要安装相关依赖
+
+    + 通用的编译工具:protoc
+    + python: `grpcio`,`grpcio-tools`
+    + node: `@grpc/proto-loader`,`async`,`google-protobuf`,`grpc`,`lodash`,`minimist`
   
 ## Install
 
@@ -50,7 +58,7 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 1. 修正了模板`task-schedule`的bug,现在可以正常生成
 2. 模板现在可以添加`env`,`gcc`和`entry`字段作为默认
-3. TODO 为vue设置env和对应操作
+3. 修正了windows下python模板编码问题
 4. python模板 rpc-grpc现在可以在实现接口时使用self.app获取到它注册的app信息
 5. python模板 rpc-zerorpc现在可以在实现接口时使用self.app获取到它注册的app信息
 6. 修复python组件 database-model的bug

@@ -103,4 +103,4 @@ def init(config, test=False, doc=False):
     except Exception as e:
         print(f"初始化因{type(e)}错误{str(e)}中断")
         clean(total=True)
-        #raise e
+        raise e
