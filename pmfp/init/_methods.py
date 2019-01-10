@@ -33,7 +33,7 @@ def _init_readme(config, test=False, doc=False):
 
 def _init_requirement(config, test, doc):
     t_path = find_template_path(config)
-    with open(str(t_path)) as f:
+    with open(str(t_path),encoding="utf-8") as f:
         temp_info = json.load(f)
     print("安装开发依赖")
     for i in temp_info["requirement-dev"]:
@@ -49,7 +49,7 @@ def _init_requirement(config, test, doc):
 
 def _init_component(config, test, doc):
     t_path = find_template_path(config)
-    with open(str(t_path)) as f:
+    with open(str(t_path),encoding="utf-8") as f:
         temp_info = json.load(f)
     print("安装组件")
     for component_name, (to, rename) in temp_info["components"].items():

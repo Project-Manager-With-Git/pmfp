@@ -1,4 +1,5 @@
 import re
+import json
 from pmfp.const import PROJECT_HOME
 
 
@@ -64,10 +65,10 @@ def update_package_json(config):
     package = PROJECT_HOME.joinpath("package.json")
     if package.exists():
         print("update package.json")
-        with open(str(package), "r") as f:
+        with open(str(package), "r",encoding="utf-8") as f:
             pak = json.load(f)
         pak.update({"version": config["version"]})
-        with open(str(package), "w") as f:
+        with open(str(package), "w",encoding="utf-8") as f:
             json.dump(pak, f)
 
 

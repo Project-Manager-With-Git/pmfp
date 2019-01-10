@@ -12,7 +12,7 @@ def new_setup(config,language,name):
         else:
             print("setup.py组件")
             setup_path = PROJECT_HOME.joinpath("setup.py")
-            template_content = Template(tempfile.open().read())
+            template_content = Template(tempfile.open(encoding="utf-8").read())
             content = template_content.substitute(
                 project_name=config["project-name"],
                 version=config["version"],
@@ -23,15 +23,15 @@ def new_setup(config,language,name):
                 license_=config["license"],
                 keywords=str(config["keywords"])
             )
-            setup_path.open("w").write(content)
+            setup_path.open("w",encoding="utf-8").write(content)
             # manifest
             manifest_path = PROJECT_HOME.joinpath("MANIFEST.in")
             manifest_temp = PMFP_SETUP_TEMP.joinpath("MANIFEST.in.temp")
-            manifest_content = Template(manifest_temp.open().read())
+            manifest_content = Template(manifest_temp.open(encoding="utf-8").read())
             content = manifest_content.substitute(
                 project_name=config["project-name"]
             )
-            manifest_path.open("w").write(content)
+            manifest_path.open("w",encoding="utf-8").write(content)
     else:
         print("暂时不支持")
         return

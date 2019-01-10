@@ -8,7 +8,7 @@ from .verify import config_schema
 
 def load_conf(path):
     """指定地址加载配置文件为配置字典."""
-    with open(str(path)) as f:
+    with open(str(path),encoding="utf-8") as f:
         result = json.load(f)
     return config_schema(result)
 
@@ -27,6 +27,6 @@ def write_rc(config):
         old_conf.update(config)
         config = old_conf
     config = config_schema(config)
-    with open(str(PMFPRC_PATH), "w") as f:
+    with open(str(PMFPRC_PATH), "w",encoding="utf-8") as f:
         result = json.dump(config, f)
     print("配置文件")

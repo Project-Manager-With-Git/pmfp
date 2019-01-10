@@ -4,7 +4,7 @@ from pmfp.const import (
 )
 def new_json_package(config):
     if not JS_ENV_PATH.exists():
-        with open(str(JS_ENV_PATH), "w") as f:
+        with open(str(JS_ENV_PATH), "w",encoding="utf-8") as f:
             content = {
                 "name": config["project-name"],
                 "version": config["version"],

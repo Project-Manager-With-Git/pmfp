@@ -8,7 +8,7 @@ from .find_path import find_path
 
 def find_template_detail(name, path, depth):
     if path.suffix == ".json":
-        with open(str(path)) as f:
+        with open(str(path),encoding="utf-8") as f:
             content = json.load(f)
         if content["name"] == name:
             return True
@@ -89,7 +89,7 @@ def show(name=None, language=None, category=None):
         else:
             for path in result:
                 parts = "/".join(path.parts[-3:])
-                with open(str(path)) as f:
+                with open(str(path),encoding="utf-8") as f:
                     content = json.load(f)
                 print(f"-----{parts}---------------------")
                 for k, v in content.items():

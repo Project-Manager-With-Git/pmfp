@@ -31,7 +31,7 @@ def new_config(project_name, template=None, language=None):
         language = language.capitalize()
         t_p = template.split("-")
         template_path = _find_template_path(language, t_p)
-        with open(str(template_path)) as f:
+        with open(str(template_path),encoding="utf-8") as f:
             template_info = json.load(f)
             if template_info.get("env"):
                 config.update({"env":template_info.get("env")})
@@ -96,7 +96,7 @@ def new_config(project_name, template=None, language=None):
                     })
                     break
         template_path = find_template_path(config)
-        with open(str(template_path)) as f:
+        with open(str(template_path),encoding="utf-8") as f:
             template_info = json.load(f)
         config.update({
             "project-type": template_info["project-type"]

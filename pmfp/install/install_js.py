@@ -28,7 +28,7 @@ def install_one(config: Dict[str, Any], package: str, dev: bool = False):
         requirement = list(set(config["requirement-dev"]))
         requirement.append(package)
         config["requirement-dev"] = requirement
-    with open(str(PMFPRC_PATH), "w") as f:
+    with open(str(PMFPRC_PATH), "w",encoding="utf-8") as f:
         json.dump(config, f)
     print(f"安装依赖{package}成功")
 

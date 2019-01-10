@@ -109,7 +109,7 @@ def install(config: Dict[str, Any], package: Optional[str]=None, dev: bool=False
                 requirement = list(set(config["requirement"]))
                 requirement.append(package)
                 config["requirement"] = requirement
-            with open(str(PMFPRC_PATH), "w") as f:
+            with open(str(PMFPRC_PATH), "w",encoding="utf-8") as f:
                 json.dump(config, f)
             print("安装依赖成功")
             return True

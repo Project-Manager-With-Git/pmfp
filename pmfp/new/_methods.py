@@ -7,6 +7,7 @@ from .new_readme import new_readme
 from .new_pb import new_pb
 from .new_es_script import new_es_script
 
+
 def new(config, kwargs):
     if kwargs["language"] == "-":
         c_language = config["project-language"]

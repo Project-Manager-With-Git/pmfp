@@ -31,7 +31,7 @@ def _build_doc(config):
         docs = PROJECT_HOME.joinpath("docs")
         nojekyll = docs.joinpath(".nojekyll")
         if not nojekyll.exists():
-            with nojekyll.open("w") as f:
+            with nojekyll.open("w",encoding="utf-8") as f:
                 pass
         return True
 

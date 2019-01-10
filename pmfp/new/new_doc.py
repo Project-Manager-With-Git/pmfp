@@ -19,9 +19,9 @@ def js_document(config):
     docs = PROJECT_HOME.joinpath("docs")
     if not docs.exists():
         docs.mkdir(parents=True, exist_ok=False)
-    with open(str(JS_ENV_PATH)) as f:
+    with open(str(JS_ENV_PATH),encoding="utf-8") as f:
         content = json.load(f)
-    with open(str(JS_ENV_PATH), "w") as f:
+    with open(str(JS_ENV_PATH), "w",encoding="utf-8") as f:
         content.update({
             "esdoc": {
                 "destination": "./docs",
@@ -54,9 +54,9 @@ def default_document(config, language):
             command = f"sphinx-apidoc -F -H {project_name} -A {author} -V {version} -a -o document ."
 
         subprocess.check_call(command, shell=True)
-        doc_conf = PMFP_DOC_TEMP.joinpath(language).open().read()
+        doc_conf = PMFP_DOC_TEMP.joinpath(language).open(encoding="utf-8").read()
         doc_conf_temp = Template(doc_conf)
-        with open("document/conf.py", "w") as f:
+        with open("document/conf.py", "w",encoding="utf-8") as f:
             f.write(
                 doc_conf_temp.substitute(
                     project_name=project_name,
