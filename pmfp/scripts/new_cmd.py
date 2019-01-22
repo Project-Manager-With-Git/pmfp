@@ -27,7 +27,6 @@ def new_cmd(args):
     else:
         kwargs_o = _parser_args(args)
         language = config["project-language"]
-        
         new(config, kwargs_o)
 
 

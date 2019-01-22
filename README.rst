@@ -1,6 +1,6 @@
 pmfp
 ===============================
-* version: 3.0.9
+* version: 3.0.10
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
@@ -55,6 +55,26 @@ Version Update
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+New in 3.0.10
+^^^^^^^^^^^^^^^^^
+
+* 新增js的前端环境`webpack`
+* 新增js模板`frontend-webpack`
+* 修改js下`run`子命令,执行package.json中的`start`,即行为与`npm start`一致
+* 新增`version`子命令用于展示当前pmfp工具的版本
+* 新增`help`子命令用于展示pmfp工具的用法
+
+New in 3.0.9
+^^^^^^^^^^^^^^^^^
+
+* 修正了模板`task-schedule`的bug,现在可以正常生成
+* 模板现在可以添加`env`,`gcc`和`entry`字段作为默认
+* 修正了windows下python模板编码问题
+* python模板 rpc-grpc现在可以在实现接口时使用self.app获取到它注册的app信息
+* python模板 rpc-zerorpc现在可以在实现接口时使用self.app获取到它注册的app信息
+* 修复python组件 database-model的bug
+* 现在new操作可以在没有配置文件的地方执行
 
 New in 3.0.8
 ^^^^^^^^^^^^^^^^^

@@ -13,5 +13,8 @@ def run(config,cmd):
             command = f"{python} {entry}"
         subprocess.check_call(command, shell=True)
     elif config["project-language"] == "Javascript":
-        command = f"npm run run {cmd}"
+        if cmd:
+            command = f"npm start {cmd}"
+        else: 
+            command = f"npm start"
         subprocess.check_call(command, shell=True)

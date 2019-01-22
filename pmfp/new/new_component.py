@@ -19,8 +19,6 @@ def template_2_file(project_name, path):
     print(project_name)
     print(path)
     if (".py" in path.name) or (
-            ".js" in path.name) or (
-            ".ts" in path.name) or (
             ".c" in path.name) or (
             ".cpp" in path.name) or (
             ".go" in path.name) or (

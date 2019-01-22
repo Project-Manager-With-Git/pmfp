@@ -6,19 +6,26 @@ from pmfp.const import (
 
 def new_es_script(config):
     entry = config["entry"]
-    with open(str(JS_ENV_PATH),encoding="utf-8") as f:
+    with open(str(JS_ENV_PATH), encoding="utf-8") as f:
         content = json.load(f)
         old_scripts = content.get("scripts")
-    with open(str(JS_ENV_PATH), "w",encoding="utf-8") as f:
+    with open(str(JS_ENV_PATH), "w", encoding="utf-8") as f:
         if config.get("env") == "node":
             default_script = {
-                "run": f"./node_modules/.bin/babel-node {entry}",
+                "start": f"./node_modules/.bin/babel-node {entry}",
                 "build": f"./node_modules/.bin/babel es -d lib",
                 "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --require babel-polyfill --require babel-register"
             }
-        elif config.get("env") == "frontend":
+        elif config.get("env") == "webpack":
             default_script = {
-                "build": "./node_modules/.bin/webpack --config webpack.config.js",
+                "start": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.dev.js",
+                "serv:dev": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.dev.js",
+                "serv:test": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.test.js",
+                "serv:prod": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.prod.js",
+                "build": "./node_modules/.bin/webpack --config env/webpack.config.prod.js",
+                "build:dev": "./node_modules/.bin/webpack --config env/webpack.config.dev.js",
+                "build:test": "./node_modules/.bin/webpack --config env/webpack.config.test.js",
+                "build:prod": "./node_modules/.bin/webpack --config env/webpack.config.prod.js",
                 "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --require babel-polyfill --require babel-register"
             }
         elif config.get("env") == "vue":

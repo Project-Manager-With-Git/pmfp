@@ -1,10 +1,12 @@
+"""ppm工具的命令行入口定义."""
 import sys
 import argparse
+from pmfp.info import VERSION, PPM_HELP
+from pmfp.config.verify import STATUS_RANGE
 from .show_cmd import (
     show_template_cmd,
     show_component_cmd
 )
-from pmfp.config.verify import STATUS_RANGE
 from .install_cmd import install_cmd
 from .freeze_cmd import freeze_cmd
 from .new_cmd import new_cmd
@@ -20,6 +22,8 @@ from .doc_cmd import doc_cmd
 from .release_cmd import release_cmd
 from .build_pb_cmd import build_pb_cmd
 
+
+
 class PPM:
     """ppm命令的第一级子命令定义."""
 
@@ -28,39 +32,26 @@ class PPM:
             prog='ppm',
             epilog='除show命令和init命令外每个子命令都需要在根目录下有名为.pmfp.json的配置文件.',
             description='Python用户的项目脚手架',
-            usage='''ppm <command> [<args>]
-
-ppm工具的子命令有:
-   show        展示已有的模板和组件
-
-   install     安装依赖
-   freeze      (python专用)将依赖保存到requirements.txt
-
-   new         新增一个组件
-   init        初始化一个项目
-   clean       清空一个项目
-
-   status      查看项目状态
-   update      更新项目版本
-   upload      将项目上传至git仓库
-
-   run         执行项目,需要在配置文件中指定入口文件
-   build       将项目打包
-   release     将项目发表出去,app型的发表到docker的镜像仓库,module型的发表到包管理仓库
-               
-   test        执行测试
-   doc         编译文档
-
-   build_pb    将pb编译为对应项目语言的文件
-''')
+            usage=PPM_HELP)
         parser.add_argument('command', help='执行子命令')
         self.argv = argv
         args = parser.parse_args(argv[0:1])
+        if args.command == "help":
+            parser.print_help()
+            exit(1)
         if not hasattr(self, args.command):
             print('未知的子命令')
             parser.print_help()
             exit(1)
-        getattr(self, args.command)()
+        else:
+            getattr(self, args.command)()
+
+    def help(self):
+        print(PPM_HELP)
+        exit(1)
+    def version(self):
+        print(f"pmfp {VERSION}")
+        exit(1)
 
     def show(self):
         parser = argparse.ArgumentParser(
