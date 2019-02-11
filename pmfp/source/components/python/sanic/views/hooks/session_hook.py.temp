@@ -1,5 +1,5 @@
 from sanic_session import InMemorySessionInterface
-from ._method import hooks
+from .method import hooks
 session = InMemorySessionInterface()
 
 

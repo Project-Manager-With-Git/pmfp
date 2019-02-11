@@ -8,5 +8,5 @@
         "frontend-webpack": ["", "src"]
     },
     "requirement": [],
-    "requirement-dev": []
+    "requirement-dev": ["eslint"]
 }

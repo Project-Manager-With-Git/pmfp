@@ -1,1 +1,1 @@
-from ._methods import test
+from .methods import test

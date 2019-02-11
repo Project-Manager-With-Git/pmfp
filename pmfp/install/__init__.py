@@ -1,1 +1,1 @@
-from ._methods import install
+from .methods import install

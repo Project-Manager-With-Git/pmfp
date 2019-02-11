@@ -1,1 +1,1 @@
-from ._methods import release
+from .methods import release

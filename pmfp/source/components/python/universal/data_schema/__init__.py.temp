@@ -20,4 +20,4 @@
 {'name': 'qweq', 'age': 123}
 
 """
-from ._methods import get_schema
+from .methods import get_schema

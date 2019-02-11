@@ -12,5 +12,5 @@
         "server-index.js.temp": ["es", "index"]
     },
     "requirement": ["pino","commander","koa","koa-static","socket.io"],
-    "requirement-dev": []
+    "requirement-dev": ["eslint"]
 }

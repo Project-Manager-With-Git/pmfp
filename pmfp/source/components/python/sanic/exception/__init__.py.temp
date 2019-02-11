@@ -1,2 +1,2 @@
-from ._method import excep
+from .method import excep
 from .exceptions import *

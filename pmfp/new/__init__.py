@@ -1,1 +1,1 @@
-from ._methods import new,new_component
+from .methods import new,new_component

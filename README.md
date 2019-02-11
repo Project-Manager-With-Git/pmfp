@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.10
++ version: 3.0.11
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -37,6 +37,7 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 ## TODO
 
++ 增加对github release的支持
 + 添加更多模板
 + 添加node支持
 + 添加C语言支持
@@ -53,6 +54,13 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+### 3.0.11
+
+1. 新增js前端环境`frontend`
+2. 为js项目新增`eslint`作为dev依赖
+3. 为pmfp增加类型注解
+4. 部分代码微调
 
 ### 3.0.10
 

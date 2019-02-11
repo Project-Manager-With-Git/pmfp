@@ -1,5 +1,5 @@
 from model import bind_db, drop_tables, moke_data
-from ._method import hooks
+from .method import hooks
 
 
 @hooks.register('after_server_start')

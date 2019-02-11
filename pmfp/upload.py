@@ -1,6 +1,8 @@
+"""上传项目到git仓库."""
 import time
 import subprocess
 import configparser
+from typing import Dict, Any
 from pmfp.const import PROJECT_HOME
 
 
@@ -25,8 +27,12 @@ def _git_check_and_find_remote()->str:
         return path
 
 
-def git_tag(config):
-    """为项目打标签."""
+def git_tag(config: Dict[str, Any])->None:
+    """为项目打标签.
+
+    Args:
+        config (Dict[str, Any]): 项目的配置字典
+    """
     remote = _git_check_and_find_remote()
     version = config["version"]
     status = config["status"]
@@ -38,16 +44,21 @@ def git_tag(config):
     print(f"push tag {tag} for package to {remote} done")
 
 
-def git_push(config, msg: str=None):
-    """对项目推代码."""
+def git_push(msg: str = None)->None:
+    """对项目推代码.
+
+    Args:
+            config (Dict[str, Any]): 项目的配置字典
+            msg (str, optional): Defaults to None. 顺便的要添加的提交信息
+
+    Returns:
+            None: [description]
+
+    """
     remote = _git_check_and_find_remote()
-    version = config["version"]
-    status = config["status"]
-    timestemp = int(time.time())
+
     command = "git add ."
     subprocess.check_call(command, shell=True)
-    now_timestamp = time.time()
-    time_ = time.ctime(now_timestamp)
     command = f'git commit -m "{msg}@{time}"'
     subprocess.check_call(command, shell=True)
 
@@ -58,10 +69,15 @@ def git_push(config, msg: str=None):
     print(f"push code to {remote} done")
 
 
-def upload(config, kwargs):
-    """将代码上传至远端git仓库."""
+def upload(config: Dict[str, Any], kwargs: Dict[str, Any])->None:
+    """将代码上传至远端git仓库.
+    
+    Args:
+        config (Dict[str, Any]): 项目的配置字典
+        kwargs (Dict[str, Any]): 上传的关键字参数.
+    """
     msg = kwargs.get("msg")
     tag = kwargs.get("tag")
-    git_push(config, msg)
+    git_push(msg)
     if tag:
         git_tag(config)

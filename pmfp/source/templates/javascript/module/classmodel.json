@@ -7,5 +7,5 @@
         "universal-class_model.js.temp": ["es", "index"]
     },
     "requirement": [],
-    "requirement-dev": []
+    "requirement-dev": ["eslint"]
 }

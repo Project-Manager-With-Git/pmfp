@@ -1,9 +1,16 @@
+"""更新项目的版本信息."""
 import re
 import json
+from typing import Dict, Any
 from pmfp.const import PROJECT_HOME
 
 
-def update_readme(config):
+def update_readme(config: Dict[str, Any])->None:
+    """更新readme中的信息.
+
+    Args:
+        config (Dict[str, Any]): 项目信息字典.
+    """
     readme_rst = PROJECT_HOME.joinpath('README.rst')
     readme_md = PROJECT_HOME.joinpath('README.md')
     if readme_rst.exists():
@@ -34,7 +41,12 @@ def update_readme(config):
                 f.write(i)
 
 
-def update_doc(config):
+def update_doc(config: Dict[str, Any])->None:
+    """更新文档中的信息.
+
+    Args:
+        config (Dict[str, Any]): 项目信息字典.
+    """
     doc = PROJECT_HOME.joinpath('document')
     if doc.exists():
         print("update document/conf.py")
@@ -61,18 +73,28 @@ def update_doc(config):
                 f.write(i)
 
 
-def update_package_json(config):
+def update_package_json(config: Dict[str, Any])->None:
+    """更新js项目中package.json的信息.
+
+    Args:
+        config (Dict[str, Any]): 项目信息字典.
+    """
     package = PROJECT_HOME.joinpath("package.json")
     if package.exists():
         print("update package.json")
-        with open(str(package), "r",encoding="utf-8") as f:
+        with open(str(package), "r", encoding="utf-8") as f:
             pak = json.load(f)
         pak.update({"version": config["version"]})
-        with open(str(package), "w",encoding="utf-8") as f:
+        with open(str(package), "w", encoding="utf-8") as f:
             json.dump(pak, f)
 
 
-def update_setup_py(config):
+def update_setup_py(config: Dict[str, Any])->None:
+    """更新python项目中setuo.py中的信息.
+
+    Args:
+        config (Dict[str, Any]): 项目信息字典.
+    """
     setup = PROJECT_HOME.joinpath("setup.py")
     if setup.exists():
         print("update setup.py")
@@ -87,7 +109,12 @@ def update_setup_py(config):
                 f.write(i)
 
 
-def update(config):
+def update(config: Dict[str, Any])->None:
+    """更新项目的状态和版本信息.
+
+    Args:
+        config (Dict[str, Any]): 项目信息字典.
+    """
     update_doc(config)
     update_readme(config)
     update_package_json(config)

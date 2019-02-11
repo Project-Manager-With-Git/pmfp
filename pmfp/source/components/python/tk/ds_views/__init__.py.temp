@@ -1,1 +1,1 @@
-from ._methods import View
+from .methods import View

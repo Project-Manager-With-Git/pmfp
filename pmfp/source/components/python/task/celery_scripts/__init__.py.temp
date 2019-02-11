@@ -6,4 +6,4 @@
 
 其中已经包含对配置的读取操作,在其子模块`config`中
 """
-from ._methods import main
+from .methods import main

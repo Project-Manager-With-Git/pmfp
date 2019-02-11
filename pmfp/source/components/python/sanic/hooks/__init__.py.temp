@@ -1,2 +1,2 @@
-from ._method import hooks
+from .method import hooks
 from .db_hook import *

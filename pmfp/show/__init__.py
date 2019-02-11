@@ -1,2 +1,2 @@
-from ._methods import show
+from .methods import show
 

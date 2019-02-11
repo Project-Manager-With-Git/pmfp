@@ -14,5 +14,5 @@
         "server-index.js.temp": ["es", "index"]
     },
     "requirement": ["pino","commander","koa","koa-static","koa-body","sequelize","socket.io","koa-compose","koa-route","sqlite3"],
-    "requirement-dev": []
+    "requirement-dev": ["eslint"]
 }

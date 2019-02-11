@@ -11,5 +11,5 @@
         "server-index.js.temp": ["es", "index"]
     },
     "requirement": ["pino","commander"],
-    "requirement-dev": []
+    "requirement-dev": ["eslint"]
 }

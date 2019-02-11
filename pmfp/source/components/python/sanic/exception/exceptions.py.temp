@@ -1,6 +1,6 @@
 from sanic.response import json
 from sanic.exceptions import NotFound, ServerError
-from ._method import excep
+from .method import excep
 
 
 @excep.register(NotFound)
