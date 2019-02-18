@@ -1,0 +1,15 @@
+{
+    "name": "rpc-zerorpc",
+    "desc": "zerorpc模板.",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "cli-zerorpc_cli.js.temp": [".", "zerorpc_cli"],
+        "rpc-zerorpc": ["es", "application"],
+        "server-utils.js.temp": ["es/application", "utils"],
+        "rpc-config.js.temp": ["es/application", "config"],
+        "rpc-index.js.temp": ["es", "index"]
+    },
+    "requirement": ["pino", "commander","zeromq@4.6.0", "zerorpc"],
+    "requirement-dev": ["eslint"]
+}

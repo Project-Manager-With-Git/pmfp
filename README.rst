@@ -1,6 +1,6 @@
 pmfp
 ===============================
-* version: 3.0.11
+* version: 3.0.12
 * status: dev
 * author: hsz
 * email: hsz1273327@gmail.com
@@ -57,6 +57,14 @@ Version Update
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
 
+
+New in 3.0.12
+^^^^^^^^^^^^^^^^^
+
+* 修正创建python的module项目时因为entry字段引起的错误.
+* 新增python通用的test组件,现在可以在new中使用
+* TODO新增node.js对grpc的支持.
+* TODO新增node.js对zerorpc的支持.
 
 New in 3.0.11
 ^^^^^^^^^^^^^^^^^

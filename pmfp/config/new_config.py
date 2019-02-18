@@ -382,14 +382,23 @@ def _init_desc(config: Dict[str, Any])-> Dict[str, Any]:
 def _init_entry(config: Dict[str, Any])-> Dict[str, Any]:
     config = dict(config)
     if not config.get("entry"):
-        if config["project-type"] == "application" and config["project-language"] == "Python":
-            entry = config["project-name"]
-            config.update({
-                "entry": entry
-            })
+        if config["project-language"] == "Python":
+            if config["project-type"] == "application":
+                entry = config["project-name"]
+                config.update({
+                    "entry": entry
+                })
+            else:
+                config.update({
+                    "entry": ""
+                })
         if config["project-language"] == "Javascript":
             config.update({
                 "entry": "es/index.js"
+            })
+        else:
+            config.update({
+                "entry": ""
             })
     else:
         config.update({

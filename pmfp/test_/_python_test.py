@@ -83,11 +83,11 @@ def _run_python_typecheck(
                 TYPECHECK_PATH.mkdir()
             print(package_name)
             result = api.run(
-                ["--ignore-missing-imports", '--html-report', TYPECHECK_PATH.name] + package_name
+                ["--no-site-packages","--ignore-missing-imports", '--html-report', TYPECHECK_PATH.name] + package_name
             )
         else:
             result = api.run(
-                ["--ignore-missing-imports"] + package_name
+                ["--no-site-packages","--ignore-missing-imports"] + package_name
             )
         if result[0]:
             print('\nType checking report:\n')

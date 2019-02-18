@@ -8,6 +8,7 @@ from ._new_setup import new_setup
 from ._new_readme import new_readme
 from ._new_pb import new_pb
 from ._new_es_script import new_es_script
+from ._new_test import new_test
 
 
 def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
@@ -47,6 +48,15 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
         else:
             rename = kwargs["rename"]
         new_pb(c_name, rename, to)
+    elif c_name == "test":
+        project_name = config["project-name"]
+        if kwargs["rename"] == "-":
+            rename = config["project-name"]
+        elif kwargs["rename"] == "":
+            rename = c_name
+        else:
+            rename = kwargs["rename"]
+        new_test(c_language, project_name, rename)
     elif c_name == "es_script" and c_language == "Javascript":
         new_es_script(config)
     else:

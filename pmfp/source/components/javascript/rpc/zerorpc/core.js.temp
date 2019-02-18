@@ -1,0 +1,55 @@
+import zerorpc from "zerorpc"
+import log from 'pino'
+import {
+    isNull
+} from "util"
+
+class Application {
+
+    constructor(config, name = __filename) {
+        this.name = name
+        if (config instanceof Map) {
+            this.config = config
+        } else {
+            throw "config must be a Map"
+        }
+        this.logger = log()
+        this.server = function (funcs) {
+            let result = new zerorpc.Server(funcs)
+            return result
+        }
+        this.funcsObject = null
+    }
+    /**
+     * @param {Object} funcsObject
+     */
+    implement(funcsObject) {
+        this.funcsObject = funcsObject
+    }
+
+    /**
+     * 
+     * @param {string} host 
+     * @param {number} port 
+     * @param {boolean} debug 
+     */
+    run(debug = true, port = null, host = null) {
+        if (isNull(this.funcsObject)) {
+            throw "implement first!"
+        } else {
+            let h = host ? host : this.config.get("HOST")
+            let p = port ? port : this.config.get("PORT")
+            if (debug) {
+                //log.setLevel(log.levels.INFO)
+                this.logger.level = "debug"
+            } else {
+                this.logger.level = "error"
+            }
+            let server = this.server(this.funcsObject)
+            this.logger.info("ZeroRpc Server running @" + h + ":" + p)
+            server.bind(`${h}:${p}`)
+        }
+    }
+}
+
+export default Application
