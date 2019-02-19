@@ -23,17 +23,7 @@ def new_setup(config: Dict[str, Any], language: str, name: str):
         else:
             print("setup.py组件")
             setup_path = PROJECT_HOME.joinpath("setup.py")
-            template_content = Template(tempfile.open(encoding="utf-8").read())
-            content = template_content.substitute(
-                project_name=config["project-name"],
-                version=config["version"],
-                description=config["description"],
-                url=config["url"],
-                author=config["author"],
-                author_email=config["author-email"],
-                license_=config["license"],
-                keywords=str(config["keywords"])
-            )
+            content = tempfile.open(encoding="utf-8").read()
             setup_path.open("w", encoding="utf-8").write(content)
             # manifest
             manifest_path = PROJECT_HOME.joinpath("MANIFEST.in")

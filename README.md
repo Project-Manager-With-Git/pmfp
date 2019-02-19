@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.12
++ version: 3.0.13
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -39,13 +39,13 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 + 增加对github release的支持
 + 添加更多模板
-+ 添加node支持
++ 完善node支持
 + 添加C语言支持
 + 添加go语言支持
 
 ## Limitations
 
-+ 只支持python3.5+
++ 只支持python3.6+
 
 ## 版本更新
 
@@ -55,13 +55,27 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
 
+### 3.0.13
+
+1. 修改模板的`setup.py.temp`,`cmd_setup.py.temp`以及`cython_setup.py.temp`和`cython_numpy_setup.py.temp`使其依赖于文件`pmfprc.json`,并修改 `new setup`命令的实现.
+2. 修改doc的config部分文件,使版本更新依赖于项目配置文件.,并修改`new doc`命令的实现.
+3. 修改update命令的实现,因为已经不再需要更新`setup.py`和`document`的`config.py`了,并且现在需要修改python项目源码中的`info.py`
+4. 现在可以在python项目的源码文件夹根目录加一个`info.py`文件,以如下形式描述项目的自身情况
+
+    ```python
+    """描述项目自身状态."""
+    VERSION = "3.0.12"
+    STATUS = "dev"
+    ```
+
+5. pmfp本身运行不再支持python 3.5
+
 ### 3.0.12
 
 1. 修正创建python的module项目时因为entry字段引起的错误.
 2. 新增python通用的test组件,现在可以在new中使用
 3. TODO新增node.js对grpc的支持.
 4. TODO新增node.js对zerorpc的支持.
-
 
 ### 3.0.11
 

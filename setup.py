@@ -1,47 +1,41 @@
-from codecs import open
-from setuptools import setup, find_packages
+"""package's install entrypoint."""
+import json
 from pathlib import Path
-REQUIREMETS_FILE = 'requirements.txt'
-PROJECTNAME = 'pmfp'
-VERSION = '3.0.12'
-DESCRIPTION = 'a simple package manager for python like npm.'
-URL = 'https://github.com/Python-Tools/pmfp'
-AUTHOR = 'hsz'
-AUTHOR_EMAIL = 'hsz1273327@gmail.com'
-LICENSE = 'MIT'
-CLASSIFIERS = [
+from setuptools import setup, find_packages
+
+HERE = Path(__file__).parent
+
+with open(HERE.joinpath("pmfprc.json")) as project_info_json:
+    project_info = json.load(project_info_json)
+classifiers = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 3.5',
+    f'License :: OSI Approved :: {project_info.get("license")} License',
     'Programming Language :: Python :: 3.6',
     'Topic :: Documentation :: Sphinx',
 ]
-KEYWORDS = ['tools', 'project_manager']
-PACKAGES = find_packages(exclude=['contrib', 'docs', 'test'])
-ZIP_SAFE = False
-HERE = Path(__file__).parent
+packages = find_packages(exclude=['contrib', 'docs', 'test'])
 with open(str(HERE.joinpath('README.rst')), encoding='utf-8') as f:
-    LONG_DESCRIPTION = f.read()
-with open(str(HERE.joinpath(REQUIREMETS_FILE)), encoding='utf-8') as f:
-    REQUIREMETS = f.readlines()
+    long_description = f.read()
+
 setup(
-    name=PROJECTNAME,
-    version=VERSION,
-    description=DESCRIPTION,
-    long_description=LONG_DESCRIPTION,
-    url=URL,
-    author=AUTHOR,
-    author_email=AUTHOR_EMAIL,
-    license=LICENSE,
-    classifiers=CLASSIFIERS,
-    keywords=KEYWORDS,
-    packages=PACKAGES,
+    name=project_info["project-name"],
+    version=project_info["version"],
+    description=project_info["description"],
+    long_description=long_description,
+    url=project_info["url"],
+    author=project_info["author"],
+    author_email=project_info["author-email"],
+    license=project_info["license"],
+    classifiers=classifiers,
+    keywords=project_info["keywords"],
+    packages=packages,
     include_package_data=True,
-    install_requires=REQUIREMETS,
+    install_requires=project_info["requirement"],
+    tests_require=project_info["requirement-dev"],
     entry_points={
         'console_scripts':
         ['ppm = pmfp.scripts:main']
     },
-    zip_safe=ZIP_SAFE
+    zip_safe=False
 )

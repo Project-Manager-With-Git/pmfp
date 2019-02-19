@@ -36,7 +36,7 @@ def git_tag(config: Dict[str, Any])->None:
     remote = _git_check_and_find_remote()
     version = config["version"]
     status = config["status"]
-    tag = "{status}-{version}".format(version=version, status=status)
+    tag = f"{status}-{version}"
     command = f"git tag -a {tag} -m 'version: {tag}'"
     subprocess.check_call(command, shell=True)
     command = f"git push --tag"
@@ -59,6 +59,7 @@ def git_push(msg: str = None)->None:
 
     command = "git add ."
     subprocess.check_call(command, shell=True)
+    msg = msg or "push"
     command = f'git commit -m "{msg}@{time}"'
     subprocess.check_call(command, shell=True)
 

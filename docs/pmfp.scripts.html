@@ -1,0 +1,268 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pmfp.scripts package &#8212; pmfp  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pmfp.show package" href="pmfp.show.html" />
+    <link rel="prev" title="pmfp.run package" href="pmfp.run.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pmfp-scripts-package">
+<h1>pmfp.scripts package<a class="headerlink" href="#pmfp-scripts-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pmfp.scripts.methods">
+<span id="pmfp-scripts-methods-module"></span><h2>pmfp.scripts.methods module<a class="headerlink" href="#module-pmfp.scripts.methods" title="Permalink to this headline">¶</a></h2>
+<p>ppm工具的命令行入口定义.</p>
+<dl class="class">
+<dt id="pmfp.scripts.methods.PPM">
+<em class="property">class </em><code class="descclassname">pmfp.scripts.methods.</code><code class="descname">PPM</code><span class="sig-paren">(</span><em>argv</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>ppm命令的第一级子命令定义.</p>
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.build">
+<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>按需求编译项目为二进制文件.</p>
+<p>包括编译dockerfile
+python可以选择将包编译为egg或者wheel用于发布,或者编译为pyz文件用于部署.
+node和c暂时不支持.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.build_pb">
+<code class="descname">build_pb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.build_pb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.build_pb" title="Permalink to this definition">¶</a></dt>
+<dd><p>编译protobuf的schema到指定的语言指定的位置.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>清理项目,删除文件.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.doc">
+<code class="descname">doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>用于构建文档.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.freeze">
+<code class="descname">freeze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.freeze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.freeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>为python项目固定依赖.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.help">
+<code class="descname">help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.help" title="Permalink to this definition">¶</a></dt>
+<dd><p>帮助信息.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.init">
+<code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>创建对应模板项目的子命令.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.install">
+<code class="descname">install</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.install" title="Permalink to this definition">¶</a></dt>
+<dd><p>为项目安装依赖.如果有参数就是安装到固定环境,没有就是按固定环境安装其中写的内容.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.new">
+<code class="descname">new</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>新增一个组件.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.release">
+<code class="descname">release</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.release"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.release" title="Permalink to this definition">¶</a></dt>
+<dd><p>发布项目到合适的地方.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>执行命令的命令.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.show">
+<code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>展示已有的模板和组件.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.status">
+<code class="descname">status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>查看项目状态的命令.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.test">
+<code class="descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>测试命令的参数设置.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>更新项目元数据.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.upload">
+<code class="descname">upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>上传数据流到git仓库.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pmfp.scripts.methods.PPM.version">
+<code class="descname">version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#PPM.version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.PPM.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>展示版本信息.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pmfp.scripts.methods.main">
+<code class="descclassname">pmfp.scripts.methods.</code><code class="descname">main</code><span class="sig-paren">(</span><em>argv=['-b', 'html', 'document', 'docs']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/scripts/methods.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.scripts.methods.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>服务启动入口.</p>
+<p>设置覆盖顺序`环境变量&gt;命令行参数`&gt;`’-c’指定的配置文件`&gt;`项目启动位置的配置文件`&gt;默认配置.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pmfp.scripts">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pmfp.scripts" title="Permalink to this headline">¶</a></h2>
+<p>命令行执行脚本模块.</p>
+<p>标准模板中可以解析的子命令包括:</p>
+<ul class="simple">
+<li><cite>run</cite> 用于执行app</li>
+</ul>
+<p>其中已经包含对配置的读取操作,在其子模块`config`中</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pmfp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pmfp.html">pmfp package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pmfp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pmfp.build_.html">pmfp.build_ package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.config.html">pmfp.config package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.init.html">pmfp.init package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.install.html">pmfp.install package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.new.html">pmfp.new package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.release.html">pmfp.release package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.run.html">pmfp.run package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pmfp.scripts package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.show.html">pmfp.show package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.test_.html">pmfp.test_ package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.build_pb">pmfp.build_pb module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.clean">pmfp.clean module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.const">pmfp.const module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.doc">pmfp.doc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.freeze">pmfp.freeze module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.info">pmfp.info module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.status">pmfp.status module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.update">pmfp.update module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.upload">pmfp.upload module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.utils">pmfp.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="pmfp.html">pmfp package</a><ul>
+      <li>Previous: <a href="pmfp.run.html" title="previous chapter">pmfp.run package</a></li>
+      <li>Next: <a href="pmfp.show.html" title="next chapter">pmfp.show package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, hsz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/pmfp.scripts.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

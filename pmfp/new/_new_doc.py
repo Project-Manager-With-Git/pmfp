@@ -75,13 +75,7 @@ def default_document(config: Dict[str, Any], language: str)->bool:
         doc_conf = PMFP_DOC_TEMP.joinpath(language).open(encoding="utf-8").read()
         doc_conf_temp = Template(doc_conf)
         with open("document/conf.py", "w", encoding="utf-8") as f:
-            f.write(
-                doc_conf_temp.substitute(
-                    project_name=project_name,
-                    author=author,
-                    version=version
-                )
-            )
+            f.write(doc_conf)
     print('building document done')
     return True
 
