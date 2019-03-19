@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.13
++ version: 3.0.14
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -54,6 +54,11 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+### 3.0.14
+
+1. 修正了upload命令不加-m内容就显示None的bug.
+2. 修正了js中koa模板的一些bug
 
 ### 3.0.13
 

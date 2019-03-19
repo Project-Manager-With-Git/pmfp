@@ -22,8 +22,8 @@ export function init_config(options) {
         console.log("default config file not exist")
     }
     if (options.config) {
-        if (fs.existsSync(option.config)) {
-            let temp_config = new Map(Object.entries(JSON.parse(fs.readFileSync(option.config))))
+        if (fs.existsSync(options.config)) {
+            let temp_config = new Map(Object.entries(JSON.parse(fs.readFileSync(options.config))))
             updateMap(config, temp_config)
         } else {
             throw "config file not exist"
