@@ -11,6 +11,7 @@ wheel
 coverage
 recommonmark
 sphinxcontrib-napoleon
+sphinx-intl
 mypy
 lxml
 mypy-extensions

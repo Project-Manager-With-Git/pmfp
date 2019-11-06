@@ -274,6 +274,9 @@ grpc                     创建一个grpc用的protobuf文件
             prog='ppm doc',
             description="build project's document")
         parser.add_argument('-s', '--serve', action="store_true")
+        parser.add_argument('-u', '--update', action="store_true")
+        parser.add_argument('-l', '--locale', type=str,default="",help="小语种支持")
+        parser.add_argument('-b', '--build', action="store_true")
         parser.set_defaults(func=doc_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)

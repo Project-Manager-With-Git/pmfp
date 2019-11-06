@@ -13,11 +13,26 @@ def doc_cmd(args):
 
 def _parser_args(args):
     kwargs = {
-        "serve": False
+        "serve": False,
+        "build": False,
+        "update":False,
+        "locale":None
     }
     if args.serve:
         kwargs.update({
             "serve": args.serve
         })
+    if args.build:
+        kwargs.update({
+            "build": args.build
+        })
+    if args.update:
+        kwargs.update({
+            "update":args.update
+        })
 
+    if args.locale:
+        kwargs.update({
+            "locale":args.locale
+        })
     return kwargs

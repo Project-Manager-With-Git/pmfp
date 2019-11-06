@@ -18,7 +18,8 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    'sphinx.ext.extlinks'
 ]
 
 templates_path = ['_templates']
@@ -34,7 +35,7 @@ author = project_info["author"]
 copyright = f'{year}, {author}'
 version = project_info["version"]
 release = ''
-language = 'en'
+language = 'zh'
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 pygments_style = 'sphinx'
 todo_include_todos = True
@@ -76,6 +77,12 @@ epub_exclude_files = ['search.html']
 todo_include_todos = True
 url_doc_root = project_info["url"]
 
+locale_dirs = ['locale/']
+gettext_compact = False 
+
+extlinks = {
+    "locale":(f"{url_doc_root}%s/index.html","")
+}
 
 def setup(app):
     app.add_config_value('recommonmark_config', {

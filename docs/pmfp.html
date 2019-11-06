@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pmfp package &#8212; pmfp  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -13,7 +11,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pmfp.build_ package" href="pmfp.build_.html" />
@@ -116,20 +114,16 @@
 <p>编译protobuf的schema为不同语言的代码.</p>
 <dl class="function">
 <dt id="pmfp.build_pb.build_pb">
-<code class="descclassname">pmfp.build_pb.</code><code class="descname">build_pb</code><span class="sig-paren">(</span><em>config: Dict[str, Any], kwargs: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/build_pb.html#build_pb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.build_pb.build_pb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.build_pb.</code><code class="sig-name descname">build_pb</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any], kwargs: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/build_pb.html#build_pb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.build_pb.build_pb" title="Permalink to this definition">¶</a></dt>
 <dd><p>编译protobuf的schema为不同语言的代码.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</li>
-<li><strong>kwargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 编译的配置信息字典.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p></li>
+<li><p><strong>kwargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 编译的配置信息字典.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -138,21 +132,18 @@
 <p>清空项目.</p>
 <dl class="function">
 <dt id="pmfp.clean.clean">
-<code class="descclassname">pmfp.clean.</code><code class="descname">clean</code><span class="sig-paren">(</span><em>total: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/clean.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.clean.clean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.clean.</code><code class="sig-name descname">clean</code><span class="sig-paren">(</span><em class="sig-param">total: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/clean.html#clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.clean.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>清除多余的项目文件.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>total</strong> (<em>bool</em><em>, </em><em>optional</em>) – Defaults to False. 是否删除全部项目.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>total</strong> (<em>bool</em><em>, </em><em>optional</em>) – Defaults to False. 是否删除全部项目.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.clean.remove_readonly">
-<code class="descclassname">pmfp.clean.</code><code class="descname">remove_readonly</code><span class="sig-paren">(</span><em>func: Callable</em>, <em>path: str</em>, <em>_: Any</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/clean.html#remove_readonly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.clean.remove_readonly" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.clean.</code><code class="sig-name descname">remove_readonly</code><span class="sig-paren">(</span><em class="sig-param">func: Callable</em>, <em class="sig-param">path: str</em>, <em class="sig-param">_: Any</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/clean.html#remove_readonly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.clean.remove_readonly" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear the readonly bit and reattempt the removal.</p>
 </dd></dl>
 
@@ -166,20 +157,16 @@
 <p>项目文档创建,编译等,使用sphinx.</p>
 <dl class="function">
 <dt id="pmfp.doc.doc">
-<code class="descclassname">pmfp.doc.</code><code class="descname">doc</code><span class="sig-paren">(</span><em>config: Dict[str, Any], kwargs: Dict[str, Any]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/doc.html#doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.doc.doc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.doc.</code><code class="sig-name descname">doc</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any], kwargs: Dict[str, Any]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pmfp/doc.html#doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.doc.doc" title="Permalink to this definition">¶</a></dt>
 <dd><p>doc命令.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</li>
-<li><strong>kwargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – doc命令参数.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p></li>
+<li><p><strong>kwargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – doc命令参数.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -188,16 +175,13 @@
 <p>将python的依赖保存到requirements.txt中.</p>
 <dl class="function">
 <dt id="pmfp.freeze.freeze">
-<code class="descclassname">pmfp.freeze.</code><code class="descname">freeze</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/freeze.html#freeze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.freeze.freeze" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.freeze.</code><code class="sig-name descname">freeze</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/freeze.html#freeze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.freeze.freeze" title="Permalink to this definition">¶</a></dt>
 <dd><p>f将python的依赖保存到requirements.txt中.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -210,16 +194,13 @@
 <p>获取项目的版本号和状态.</p>
 <dl class="function">
 <dt id="pmfp.status.status">
-<code class="descclassname">pmfp.status.</code><code class="descname">status</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/status.html#status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.status.status" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.status.</code><code class="sig-name descname">status</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/status.html#status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.status.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>[summary]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -228,72 +209,57 @@
 <p>更新项目的版本信息.</p>
 <dl class="function">
 <dt id="pmfp.update.update">
-<code class="descclassname">pmfp.update.</code><code class="descname">update</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.update.</code><code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>更新项目的状态和版本信息.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.update.update_doc">
-<code class="descclassname">pmfp.update.</code><code class="descname">update_doc</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_doc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.update.</code><code class="sig-name descname">update_doc</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_doc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_doc" title="Permalink to this definition">¶</a></dt>
 <dd><p>更新文档中index页的信息.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.update.update_info_json">
-<code class="descclassname">pmfp.update.</code><code class="descname">update_info_json</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_info_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_info_json" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.update.</code><code class="sig-name descname">update_info_json</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_info_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_info_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>更新项目源码中的info.json文件.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.update.update_package_json">
-<code class="descclassname">pmfp.update.</code><code class="descname">update_package_json</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_package_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_package_json" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.update.</code><code class="sig-name descname">update_package_json</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_package_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_package_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>更新js项目中package.json的信息.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.update.update_readme">
-<code class="descclassname">pmfp.update.</code><code class="descname">update_readme</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_readme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_readme" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.update.</code><code class="sig-name descname">update_readme</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/update.html#update_readme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.update.update_readme" title="Permalink to this definition">¶</a></dt>
 <dd><p>更新readme中的信息.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目信息字典.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -302,58 +268,47 @@
 <p>上传项目到git仓库.</p>
 <dl class="function">
 <dt id="pmfp.upload.git_push">
-<code class="descclassname">pmfp.upload.</code><code class="descname">git_push</code><span class="sig-paren">(</span><em>msg: str = None</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/upload.html#git_push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.upload.git_push" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.upload.</code><code class="sig-name descname">git_push</code><span class="sig-paren">(</span><em class="sig-param">msg: str = None</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/upload.html#git_push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.upload.git_push" title="Permalink to this definition">¶</a></dt>
 <dd><p>对项目推代码.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</li>
-<li><strong>msg</strong> (<em>str</em><em>, </em><em>optional</em>) – Defaults to None. 顺便的要添加的提交信息</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</p></li>
+<li><p><strong>msg</strong> (<em>str</em><em>, </em><em>optional</em>) – Defaults to None. 顺便的要添加的提交信息</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">[description]</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.upload.git_tag">
-<code class="descclassname">pmfp.upload.</code><code class="descname">git_tag</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/upload.html#git_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.upload.git_tag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.upload.</code><code class="sig-name descname">git_tag</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/upload.html#git_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.upload.git_tag" title="Permalink to this definition">¶</a></dt>
 <dd><p>为项目打标签.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.upload.upload">
-<code class="descclassname">pmfp.upload.</code><code class="descname">upload</code><span class="sig-paren">(</span><em>config: Dict[str, Any], kwargs: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/upload.html#upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.upload.upload" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.upload.</code><code class="sig-name descname">upload</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any], kwargs: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/upload.html#upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.upload.upload" title="Permalink to this definition">¶</a></dt>
 <dd><p>将代码上传至远端git仓库.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</li>
-<li><strong>kwargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 上传的关键字参数.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</p></li>
+<li><p><strong>kwargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 上传的关键字参数.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -362,56 +317,53 @@
 <p>项目的功用组件.</p>
 <dl class="function">
 <dt id="pmfp.utils.find_project_name_path">
-<code class="descclassname">pmfp.utils.</code><code class="descname">find_project_name_path</code><span class="sig-paren">(</span><em>project_name: str</em><span class="sig-paren">)</span> &#x2192; Union[bool, pathlib.Path]<a class="reference internal" href="_modules/pmfp/utils.html#find_project_name_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.utils.find_project_name_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.utils.</code><code class="sig-name descname">find_project_name_path</code><span class="sig-paren">(</span><em class="sig-param">project_name: str</em><span class="sig-paren">)</span> &#x2192; Union[bool, pathlib.Path]<a class="reference internal" href="_modules/pmfp/utils.html#find_project_name_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.utils.find_project_name_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>找到与项目同名的文件或者文件夹.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>project_name</strong> (<em>str</em>) – 项目名</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">找到了就返回地址,没找到返回False.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Union[bool, Path]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>project_name</strong> (<em>str</em>) – 项目名</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>找到了就返回地址,没找到返回False.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Union[bool, Path]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.utils.find_template_path">
-<code class="descclassname">pmfp.utils.</code><code class="descname">find_template_path</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; pathlib.Path<a class="reference internal" href="_modules/pmfp/utils.html#find_template_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.utils.find_template_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.utils.</code><code class="sig-name descname">find_template_path</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; pathlib.Path<a class="reference internal" href="_modules/pmfp/utils.html#find_template_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.utils.find_template_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>找到项目的template地址.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">template的地址.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Path</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>template的地址.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.utils.get_python_path">
-<code class="descclassname">pmfp.utils.</code><code class="descname">get_python_path</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pmfp/utils.html#get_python_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.utils.get_python_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.utils.</code><code class="sig-name descname">get_python_path</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pmfp/utils.html#get_python_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.utils.get_python_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取python解释器的地址.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">要执行的python地址字符串</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>要执行的python地址字符串</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -479,17 +431,23 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -498,8 +456,8 @@
       &copy;2019, hsz.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/pmfp.rst.txt"

@@ -76,7 +76,24 @@ def default_document(config: Dict[str, Any], language: str)->bool:
         doc_conf_temp = Template(doc_conf)
         with open("document/conf.py", "w", encoding="utf-8") as f:
             f.write(doc_conf)
-    print('building document done')
+        print('init document source done')
+        print("building document")
+        command = "sphinx-build -b html document docs"
+        subprocess.check_call(command, shell=True)
+        print("build Document done!")
+        docs = PROJECT_HOME.joinpath("docs")
+        nojekyll = docs.joinpath(".nojekyll")
+        if not nojekyll.exists():
+            with nojekyll.open("w", encoding="utf-8") as f:
+                pass
+        print("building document done")
+        print("init Internationalization")
+        command = "sphinx-build -b gettext document docs/locale"
+        subprocess.check_call(command, shell=True)
+        command = "sphinx-intl update -p docs/locale -d document/locale -l zh -l en"
+        subprocess.check_call(command, shell=True)
+        print("init Internationalization done")
+    print('new document done')
     return True
 
 

@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>pmfp.config package &#8212; pmfp  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -13,7 +11,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pmfp.init package" href="pmfp.init.html" />
@@ -44,27 +42,23 @@
 <p>在没有pmfp.json时根据命令行的输入构造一个.</p>
 <dl class="function">
 <dt id="pmfp.config.new_config.new_config">
-<code class="descclassname">pmfp.config.new_config.</code><code class="descname">new_config</code><span class="sig-paren">(</span><em>project_name: str</em>, <em>template: Optional[str] = None</em>, <em>language: Optional[str] = None</em><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/new_config.html#new_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.new_config.new_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.config.new_config.</code><code class="sig-name descname">new_config</code><span class="sig-paren">(</span><em class="sig-param">project_name: str</em>, <em class="sig-param">template: Optional[str] = None</em>, <em class="sig-param">language: Optional[str] = None</em><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/new_config.html#new_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.new_config.new_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>创建一个项目配置.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>project_name</strong> (<em>str</em>) – 项目名</li>
-<li><strong>template</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Defaults to None. 项目模板</li>
-<li><strong>language</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Defaults to None. 项目编程语言</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<em>str</em>) – 项目名</p></li>
+<li><p><strong>template</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Defaults to None. 项目模板</p></li>
+<li><p><strong>language</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Defaults to None. 项目编程语言</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">默认的初始化配置</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Dict[str, Any]</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>默认的初始化配置</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, Any]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -73,48 +67,41 @@
 <p>config模块的通用工具,也是config对外公开的方法.</p>
 <dl class="function">
 <dt id="pmfp.config.utils.load_conf">
-<code class="descclassname">pmfp.config.utils.</code><code class="descname">load_conf</code><span class="sig-paren">(</span><em>path: Union[pathlib.Path, str]</em><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/utils.html#load_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.utils.load_conf" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.config.utils.</code><code class="sig-name descname">load_conf</code><span class="sig-paren">(</span><em class="sig-param">path: Union[pathlib.Path, str]</em><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/utils.html#load_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.utils.load_conf" title="Permalink to this definition">¶</a></dt>
 <dd><p>指定地址加载配置文件为配置字典.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">项目的配置字典</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Dict[str, Any]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>项目的配置字典</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.config.utils.load_rc">
-<code class="descclassname">pmfp.config.utils.</code><code class="descname">load_rc</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/utils.html#load_rc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.utils.load_rc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.config.utils.</code><code class="sig-name descname">load_rc</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/utils.html#load_rc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.utils.load_rc" title="Permalink to this definition">¶</a></dt>
 <dd><p>读取pmfp.json,获得项目配置.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">项目的配置字典</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Dict[str, Any]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>项目的配置字典</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.config.utils.write_rc">
-<code class="descclassname">pmfp.config.utils.</code><code class="descname">write_rc</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/config/utils.html#write_rc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.utils.write_rc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.config.utils.</code><code class="sig-name descname">write_rc</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/config/utils.html#write_rc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.utils.write_rc" title="Permalink to this definition">¶</a></dt>
 <dd><p>将项目的配置字典写到配置文件.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目的配置字典</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -123,46 +110,42 @@
 <p>用于验证pmfp.json的schema.</p>
 <dl class="function">
 <dt id="pmfp.config.verify.config_must_match">
-<code class="descclassname">pmfp.config.verify.</code><code class="descname">config_must_match</code><span class="sig-paren">(</span><em>config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/verify.html#config_must_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.verify.config_must_match" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.config.verify.</code><code class="sig-name descname">config_must_match</code><span class="sig-paren">(</span><em class="sig-param">config: Dict[str, Any]</em><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pmfp/config/verify.html#config_must_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.verify.config_must_match" title="Permalink to this definition">¶</a></dt>
 <dd><p>检测配置是否符合要求的函数.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目当前配置.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Invalid</span></code> – 项目非法.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">如果项目配置没问题,返回项目配置</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Dict[str, Any]</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – 项目当前配置.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Invalid</strong> – 项目非法.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>如果项目配置没问题,返回项目配置</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, Any]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pmfp.config.verify.env_match">
-<code class="descclassname">pmfp.config.verify.</code><code class="descname">env_match</code><span class="sig-paren">(</span><em>language: str</em>, <em>env: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pmfp/config/verify.html#env_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.verify.env_match" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pmfp.config.verify.</code><code class="sig-name descname">env_match</code><span class="sig-paren">(</span><em class="sig-param">language: str</em>, <em class="sig-param">env: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pmfp/config/verify.html#env_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.config.verify.env_match" title="Permalink to this definition">¶</a></dt>
 <dd><p>检测language和env是否匹配.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>language</strong> (<em>str</em>) – language</li>
-<li><strong>env</strong> (<em>str</em>) – env</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>language</strong> (<em>str</em>) – language</p></li>
+<li><p><strong>env</strong> (<em>str</em>) – env</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">是否匹配</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>是否匹配</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -233,17 +216,23 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -252,8 +241,8 @@
       &copy;2019, hsz.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/pmfp.config.rst.txt"

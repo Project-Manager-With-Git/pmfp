@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.0.14
++ version: 3.0.15
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -54,6 +54,12 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+### 3.0.15
+
+1. doc初始化增加了对国际化的支持,默认`zh`和`en`
+2. 可以使用doc命令`locale`新增小语种支持.
+3. doc命令新增了`update`
 
 
 ### 3.0.14
