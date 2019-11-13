@@ -6,7 +6,7 @@
     "components": {
         "flask-server": ["-", ""],
         "flask-scripts": ["-", ""],
-        "flask-new_app.py.temp": ["-", "-"],
+        "flask-new_app_mvc.py.temp": ["-", "-"],
         "flask-log.py.temp": ["-", "log"],
         "flask-views": ["-", "views"],
         "flask-templates": [".",""],

@@ -25,4 +25,4 @@ handler = logging.StreamHandler(sys.stdout)
 root_logger = logging.getLogger()
 root_logger.addHandler(handler)
 root_logger.setLevel(LOG_LEVEL)  # 设置最低log等级
-log = structlog.get_logger(SERVER_NAME)
+model_logger = structlog.get_logger(SERVER_NAME)

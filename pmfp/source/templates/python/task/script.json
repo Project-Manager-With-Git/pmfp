@@ -8,7 +8,7 @@
         "universal-submodule": ["-", "-"],
         "universal-config": ["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "universal-log.py.temp": ["-", "log"],
+        "universal-jsonlog.py.temp": ["-", "log"],
         "docker-Dockerfile.temp": [".", "dockerfile"]
     },
     "requirement": ["voluptuous"],

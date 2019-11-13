@@ -12,7 +12,7 @@
         "universal-submodule_func": ["-", "view_func"],
         "universal-webconfig": ["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "universal-log.py.temp": ["-", "log"],
+        "universal-jsonlog.py.temp": ["-", "log"],
         "docker-Dockerfile.temp": [".", "dockerfile"]
     },
     "requirement": ["voluptuous","jsonrpclib-pelix"],
