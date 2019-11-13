@@ -1,0 +1,20 @@
+"""定时任务模块.
+
+这个模块只能定义一个job
+这个模块的使用方法是
+1. 在`task.py`中修改`job`函数的内容.
+2. 定义`config.json`,或者其他方式,使传入的config包含:
+    + "EVERY":<int>,
+    + "INTERVAL":string,可选范围(seconds,minutes,hours,days,weeks)
+    + "AT":<str>,形如"01:00",可以没有或者为None
+3. 要调用的话先使用`init_app(config)`创建一个app对象,然后执行`app.run()`执行
+4. 想要起个线程后台执行则可以使用`app.run_background()`来执行
+
+"""
+from .crontab import CrontabApp
+from .tasks import job
+
+def init_app(config):
+    app = CrontabApp(config)
+    app.register(job)
+    return app

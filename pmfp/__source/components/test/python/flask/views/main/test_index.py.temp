@@ -1,0 +1,39 @@
+import sys
+import unittest
+from pathlib import Path
+try:
+    from test.test_views._core import Core
+except:
+    path = str(
+        Path(__file__).absolute().parent.parent
+    )
+    if path not in sys.path:
+        sys.path.append(path)
+    from _core import Core
+
+
+def setUpModule():
+    print("[SetUp Main View Index test]")
+
+
+def tearDownModule():
+    print("[TearDown Main View Index test]")
+
+
+class FlaskTest(Core):
+
+    def test_hello(self):
+        rv = self.client.get('/')
+        assert "hello" in rv.data.decode("utf-8")
+
+
+def hello_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(FlaskTest("test_hello"))
+    return suite
+
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)
+    test_suite = hello_suite()
+    runner.run(test_suite)

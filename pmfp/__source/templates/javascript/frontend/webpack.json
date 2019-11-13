@@ -1,0 +1,12 @@
+{
+    "name": "frontend-webpack",
+    "desc": "使用webpack的前端项目,可以用build编译正式环境代码,使用run启动调试用的本地服务",
+    "env": "webpack",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "frontend-webpack": ["", "src"]
+    },
+    "requirement": [],
+    "requirement-dev": ["eslint"]
+}

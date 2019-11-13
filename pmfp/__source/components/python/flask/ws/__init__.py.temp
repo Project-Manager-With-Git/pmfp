@@ -1,0 +1,46 @@
+"""websocket蓝图模组.
+
+## 使用方法
+
+在目录下以`index.py`为样板构造一个websocket的view,注意,这个项目将`flask_sockets`的`Sockets`对象
+封装到了`core.py`中的`Websockets`中,重新构造了一个方便将蓝图注册到app对象的代理对象ws.因此,使用这个蓝图需要像下面这样:
+
+>>> from .core import ws
+>>> @ws.blueprint.route('/echo')
+... def echo_socket(socket):
+...     try:
+...         while not socket.closed:
+...             message = socket.receive()
+...             socket.send(message)
+...     except geventwebsocket.exceptions.WebSocketError as wse:
+...         pass
+
+
+再在`__init__.py`中import进来.
+
+
+## 测试方法:
+
+>>> import asyncio
+>>> import websockets
+>>> uri = 'ws://localhost:5000/ws/echo'
+>>> async def hello(uri):
+...     async with websockets.connect(uri) as websocket:
+...         await websocket.send("Hello world!")
+...         async for message in websocket:
+...             print(message)
+...             break
+
+>>> asyncio.get_event_loop().run_until_complete(hello(uri))
+Hello world!
+
+
+## 注册方法
+
+```python
+from wsviews import ws
+ws.init_app(app)
+```
+"""
+from .core import ws
+from .index import *

@@ -1,0 +1,14 @@
+from flask import Flask, jsonify
+app = Flask(__name__)
+
+
+@app.route('/ping')
+def hello_world():
+    return jsonify({"msg": "pong"})
+
+def main():
+    app.run(debug=True)
+
+    
+if __name__ == '__main__':
+    main()

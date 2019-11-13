@@ -1,0 +1,53 @@
+import sys
+import unittest
+try:
+    from $project_name.submodule import show
+except:
+    from pathlib import Path
+    test_dir = str(Path(__file__).absolute().parent.parent)
+    print(test_dir)
+    if test_dir not in sys.path:
+        sys.path.append(test_dir)
+    from const import PROJECT_PATH, TEST_PATH
+    if str(PROJECT_PATH) not in sys.path:
+        sys.path.append(str(PROJECT_PATH))
+    from $project_name.submodule import show
+
+def setUpModule():
+    print("[SetUp Submodule test]")
+
+
+def tearDownModule():
+    print("[TearDown Submodule test]")
+
+
+class SubmoduletTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print("setUp model test context")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("tearDown model test context")
+
+    def setUp(self):
+        print("instance setUp")
+
+    def tearDown(self):
+        print("instance tearDown")
+
+    def test_show(self):
+        print(show({"name":"new","type":"x"}))
+        assert show({"name":"new","type":"x"}) == "x----new"
+
+
+def submodule_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(SubmoduletTest("test_show"))
+    return suite
+
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)
+    test_suite = submodule_suite()
+    runner.run(test_suite)

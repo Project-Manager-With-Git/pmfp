@@ -1,0 +1,16 @@
+{
+    "name": "rpc-grpc",
+    "desc": "grpc使用loader的模板,不用先编译proto.",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "grpc": ["pbschema", "data"],
+        "cli-grpc_cli.js.temp": [".", "grpc_cli"],
+        "rpc-grpc": ["es", "application"],
+        "server-utils.js.temp": ["es/application", "utils"],
+        "rpc-gconfig.js.temp": ["es/application", "config"],
+        "rpc-index.js.temp": ["es", "index"]
+    },
+    "requirement": ["pino","commander","grpc","@grpc/proto-loader"],
+    "requirement-dev": ["eslint"]
+}

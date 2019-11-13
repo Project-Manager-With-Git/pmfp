@@ -1,0 +1,18 @@
+from socketIO_client import SocketIO, BaseNamespace
+
+
+class TestNamespace(BaseNamespace):
+    def on_connect(self):
+        self.emit('my event', {"data": "I'm connected!"})
+
+    def on_disconnect(self):
+        print(' Disconnected')
+
+    def on_my_response(self, *args):
+        for arg in args:
+            print('<br>Received: ' + arg.get("data"))
+
+socketIO = SocketIO('127.0.0.1', 5000)
+chat_namespace = socketIO.define(TestNamespace, '/test')
+chat_namespace.emit("my_event",{"data": "echo"})
+socketIO.wait(seconds=10)

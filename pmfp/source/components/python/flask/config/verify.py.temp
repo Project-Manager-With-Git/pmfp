@@ -1,11 +1,31 @@
-from voluptuous import Schema, All, ALLOW_EXTRA, Range
-
-config_schema = Schema(
-    {
-        'DEBUG': bool,
-        'HOST': str,
-        'SECRET_KEY': str,
-        'PORT': All(int, Range(min=1, max=10000))
+from jsonschema import validate
+schema = {
+    "title": "config",
+    "description": "config verify",
+    "type": "object",
+    "properties": {
+        "DEBUG": {
+            "description": "debug mode",
+            "type": "boolean"
+        }, "HOST": {
+            "description": "host name or ip",
+            "type": "string"
+        }, "PORT": {
+            "description": "listen to port",
+            "type": "integer"
+        }, "SECRET_KEY": {
+            "description": "SECRET_KEY for application",
+            "type": "string"
+        }
     },
-    extra=ALLOW_EXTRA
-)
+    #"required": ["DEBUG", "HOST", "PORT", "SECRET_KEY"]
+}
+
+
+def config_schema(instance):
+    try:
+        validate(instance=instance, schema=schema)
+    except:
+        raise
+    else:
+        return instance

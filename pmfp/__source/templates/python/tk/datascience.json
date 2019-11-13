@@ -1,0 +1,29 @@
+{
+    "name": "tk-datascience",
+    "desc": "使用标准库tk和pandastable的简数据科学可视化工具",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "tk-new_app.py.temp": ["-", "-"],
+        "tk-core.py.temp": ["-", "core"],
+        "tk-ds_bind_mixin.py.temp": ["-", "bind_mixin"],
+        "tk-ds_model.py.temp": ["-", "model"],
+        "tk-ds_views": ["-", "views"],
+        "scripts-entry.py.temp": ["-", "scripts"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "pandastable"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

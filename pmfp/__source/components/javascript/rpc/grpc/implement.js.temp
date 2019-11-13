@@ -1,0 +1,9 @@
+const Implement = {
+    DoFormat: function (call, callback) {
+        callback(null, {
+            text: 'Hello ' + call.request.text
+        })
+    }
+}
+
+export default Implement

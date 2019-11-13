@@ -1,0 +1,2 @@
+"""复杂的命令行执行脚本模块."""
+from .methods import main

@@ -1,0 +1,26 @@
+"""函数计时装饰器.
+
+用法:
+
+>>> @timer
+... def add(x,y):
+...     return x+y
+...
+>>> add(1,2)
+[timer]function <add> with params (1, 2), {} used:3.927038051187992e-06s
+3
+"""
+import functools
+import time
+
+
+def timer(func):
+    @functools.wraps(func)
+    def clocked(*args, **kwargs):
+        t0 = time.perf_counter()
+        result = func(*args, **kwargs)
+        elapsed = time.perf_counter() - t0
+        name = func.__name__
+        print(f"[timer]function <{func.__name__}> with params {args}, {kwargs} used:{elapsed}s")
+        return result
+    return clocked

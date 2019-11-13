@@ -1,0 +1,18 @@
+{
+    "name": "server-koa",
+    "desc": "使用koa的全功能服务",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "server-koa": ["es", "application"],
+        "server-sio": ["es/application", ""],
+        "server-view": ["es/application", ""],
+        "server-static": ["", ""],
+        "universal-model":["es/application",""],
+        "server-config.js.temp": ["es/application", "config"],
+        "server-utils.js.temp": ["es/application", "utils"],
+        "server-index.js.temp": ["es", "index"]
+    },
+    "requirement": ["pino","commander","koa","koa-static","koa-body","sequelize","socket.io","koa-compose","koa-route","sqlite3"],
+    "requirement-dev": ["eslint"]
+}

@@ -1,0 +1,47 @@
+import sys
+import argparse
+from .worker_cmd import worker_cmd
+from .flower_cmd import flower_cmd
+
+def parser_args(params):
+    """[summary]
+    解析命令行参数.
+
+    Args:
+        params ([type]): 要解析的参数
+        get_cmd_func ([type]): 根据命令名获取对应命令函数的工厂函数
+    """
+
+    parser = argparse.ArgumentParser(
+        prog='$project_name',
+        description='管理http应用的命令行工具',
+        epilog='子命令run可以用来启动服务'
+    )
+    parser.set_defaults(func=lambda x: parser.print_help())
+    subparsers = parser.add_subparsers(
+        title='子解析',
+        description='指定主机端口或配置文件启动http服务',
+        help='支持的子解析'
+    )
+    # 启动服务所用的解析
+    parser_worker = subparsers.add_parser('worker')
+    parser_worker.add_argument("-c", "--config", type=str,
+                               help="指定配置文件")
+    parser_worker.add_argument('--command', type=str, default="")
+    parser_worker.set_defaults(func=worker_cmd)
+
+    parser_flower = subparsers.add_parser('flower')
+    parser_flower.add_argument("-c", "--config", type=str,help="指定配置文件")
+    parser_flower.add_argument('--command', type=str)
+    parser_flower.set_defaults(func=flower_cmd)
+
+    args = parser.parse_args(params)
+    args.func(args)
+
+
+def main(argv=sys.argv[1:]):
+    """服务启动入口.
+
+    设置覆盖顺序`环境变量>命令行参数`>`'-c'指定的配置文件`>`项目启动位置的配置文件`>默认配置.
+    """
+    parser_args(argv)

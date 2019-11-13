@@ -1,0 +1,25 @@
+{
+    "name": "module-cython_numpy",
+    "desc": "一般cython模块",
+    "project-language": "Python",
+    "project-type": "module",
+    "components": {
+        "cython-__init__.py.temp":["-", "__init__"],
+        "cython-simple.pyx.temp":["-", "-"],
+        "cython_numpy_setup": [".", "setup"]
+    },
+    "requirement": [
+        "numpy",
+        "cython"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

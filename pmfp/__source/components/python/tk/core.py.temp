@@ -1,0 +1,17 @@
+from tkinter import Tk
+
+
+class Core:
+
+    def __init__(self, view, model):
+        self.main_win = Tk()
+        self.main_win.title("MyRedis")
+        self.main_win.geometry("650x500+100+400")
+        # self.main_win.wm_maxsize(width=800, height=600)
+        # self.main_win.wm_minsize(width=400, height=300)
+
+        self.view = view(self.main_win)
+        self.model = model
+
+    def run(self):
+        self.main_win.mainloop()

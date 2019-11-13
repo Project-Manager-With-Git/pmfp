@@ -1,0 +1,27 @@
+"""flask默认的app构造组件.
+
+组件名字会被改为项目名.
+
+注册模块组件使用`xxx.init_app(app)`;
+
+注册蓝图组件使用`app.register_blueprint(xxx)`
+
+使用数据库组件则使用`bind_db(app.config["DBURL"])`的形式
+"""
+from flask import Flask, url_for
+from api import restapi
+from server import run_aplication
+from log import set_log
+from model import bind_db
+
+
+def init_app(config):
+    app = Flask(__name__)
+    app.config.update(
+        **config
+    )
+    run_aplication.init_app(app)
+    set_log.init_app(app)
+    bind_db(app.config["DBURL"])
+    app.register_blueprint(restapi)
+    return app

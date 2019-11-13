@@ -1,0 +1,53 @@
+import time
+import threading
+from .monkeypatch import patch
+import schedule
+patch()
+
+
+def run_threaded(job_func):
+    job_thread = threading.Thread(target=job_func)
+    job_thread.start()
+
+
+class CrontabApp:
+
+    def __init__(self, config):
+        self.job = None
+        self.config = config
+
+    def register(self, job):
+        self.job = job
+
+    def run_background(self):
+        every = self.config["EVERY"]
+        interval = self.config["INTERVAL"]
+        at = self.config.get("AT")
+        if at:
+            job = schedule.every(every)
+            job.unit = interval
+            job.at(at).do(run_threaded, self.job)
+        else:
+            job = schedule.every(every)
+            job.unit = interval
+            job.do(run_threaded, self.job)
+        return schedule.run_continuously()
+
+    def run(self):
+        every = self.config["EVERY"]
+        interval = self.config["INTERVAL"]
+        at = self.config.get("AT")
+        if at:
+            job = schedule.every(every)
+            job.unit = interval
+            job.at(at).do(self.job)
+        else:
+            job = schedule.every(every)
+            job.unit = interval
+            job.do(self.job)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+
+__all__ = ["CrontabApp"]

@@ -1,0 +1,15 @@
+"""view蓝图模组.
+
+## 使用方法
+
+```python
+from bpxxx import xxx
+app.register_blueprint(xxx)
+```
+
+## 注意事项
+
+写好的view记得在本模块的`__init__.py`文件中import进来,如果不这样做,view无法注册到蓝图上
+"""
+from .core import main_view
+from .index import index

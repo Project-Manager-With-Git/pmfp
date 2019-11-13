@@ -1,0 +1,27 @@
+{
+    "name": "module-complex_cmd",
+    "desc": "带复杂命令行工具的模块",
+    "project-language": "Python",
+    "project-type": "module",
+    "components": {
+        "scripts-complex_scripts": ["-", "scripts"],
+        "universal-config": ["-", ""],
+        "universal-submodule": ["-", ""],
+        "universal-main.py.temp": [".", "main"],
+        "universal-__init__.py.temp": ["-", "__init__"],
+        "cmd_setup": [".", "setup"]
+    },
+    "requirement": [
+        "voluptuous"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

@@ -1,0 +1,21 @@
+from pathlib import Path
+from flask import Blueprint
+from flask_sockets import Sockets
+
+
+class Websockets:
+    def __init__(self, *args, **kwargs):
+        self.sockets = Sockets()
+        self.blueprint = Blueprint(*args, **kwargs)
+
+    def init_app(self, app):
+        self.sockets.init_app(app)
+        self.sockets.register_blueprint(self.blueprint)
+
+
+ws = Websockets(
+    'ws',
+    __name__,
+    url_prefix='/ws'
+)
+__all__ = ["ws"]

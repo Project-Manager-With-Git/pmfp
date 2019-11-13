@@ -1,0 +1,39 @@
+import zerorpc
+import tempfile
+import sys
+from log import model_logger
+
+
+class App:
+    def __init__(self, config=None):
+        default_config = {
+            "HOST": "localhost",
+            "PORT": 5000,
+            "DEBUG":True
+        }
+        self.register_instances = None
+        if config:
+            default_config.update(config)
+        self.config = default_config
+
+    def register_instance(self, instance):
+        self.register_instances =instance
+
+    def run(self,host=None,port=None,debug=False):
+        if self.register_instances is None:
+            assert False,"需要先注册实例"
+        host = host or self.config["HOST"]
+        port = port or self.config["PORT"]
+        debug = debug or self.config["DEBUG"]
+        if debug is False:
+            model_logger.setLevel("WARNING")
+            sys.stderr=tempfile.TemporaryFile() 
+        s = zerorpc.Server(self.register_instances)
+        model_logger.info(f'"msg":"zerorpc start @ tcp://{host}:{port}","debug":{debug}')
+        s.bind(f"tcp://{host}:{port}")
+        try:
+            s.run()
+        except:
+            raise
+        finally:
+            model_logger.info(f'"msg":"zerorpc @ {host}:{port} stoped!"')

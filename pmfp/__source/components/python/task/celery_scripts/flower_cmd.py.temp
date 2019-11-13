@@ -1,0 +1,22 @@
+import os
+import json
+from pathlib import Path
+from $project_name import init_app
+from config import load_conf
+
+from celery.utils.imports import instantiate
+
+
+def flower_cmd(args):
+    config = load_conf(args)
+    app = init_app(config)
+    if args.command:
+        command = args.command.split(" ")
+        instantiate(
+            'flower.command:FlowerCommand', app=app
+        ).execute_from_commandline(command)
+
+    else:
+        instantiate(
+            'flower.command:FlowerCommand', app=app
+        ).execute_from_commandline()

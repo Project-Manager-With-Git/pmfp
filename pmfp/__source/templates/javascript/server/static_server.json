@@ -1,0 +1,15 @@
+{
+    "name": "server-static_server",
+    "desc": "静态http服务器,可以指定静态文件所在的文件夹.",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "server-static_server": ["es", "application"],
+        "server-static": ["", ""],
+        "server-config.js.temp": ["es/application", "config"],
+        "server-utils.js.temp": ["es/application", "utils"],
+        "server-index.js.temp": ["es", "index"]
+    },
+    "requirement": ["pino","commander"],
+    "requirement-dev": ["eslint"]
+}

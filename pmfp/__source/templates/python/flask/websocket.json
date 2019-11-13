@@ -1,0 +1,38 @@
+{
+    "name": "flask-websocket",
+    "desc": "使用flask的websocket服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "flask-server": ["-", ""],
+        "flask-scripts": ["-", ""],
+        "flask-new_app.py.temp": ["-", "-"],
+        "flask-log.py.temp": ["-", "log"],
+        "flask-ws": ["-", ""],
+        "flask-config": ["-", ""],
+        "database-model": ["-", ""],
+        "cli-ws_cli.py.temp": [".","ws_cli"],
+        "universal-data_schema": ["-", ""],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "Flask",
+        "peewee",
+        "gevent",
+        "gunicorn",
+        "flask_sockets",
+        "websocket-client",
+        "voluptuous"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

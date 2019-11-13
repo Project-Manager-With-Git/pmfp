@@ -1,0 +1,40 @@
+import asyncio
+import socketio
+from functools import partial
+from jinja2 import FileSystemLoader
+from sanic_jinja2 import SanicJinja2
+
+
+async def index(request):
+    return
+
+
+class SanicSocketIo:
+    async def _background_wrap(self, task, app, loop):
+        self.io.start_background_task(task)
+
+    def __init__(self, app=None):
+        self.io = socketio.AsyncServer(async_mode='sanic')
+        self.jinja = SanicJinja2()
+        self.background = []
+        if app:
+            self.init_app(app)
+
+    def register_background(self, cfunc):
+        if not asyncio.iscoroutinefunction(cfunc):
+            raise AttributeError("background func must be coroutine function")
+        self.background.append(partial(self._background_wrap, cfunc))
+
+    def init_app(self, app):
+        loader = FileSystemLoader(app.config.TEMPLATE_PATH)
+        app.static('/static', app.config.STATIC_FOLDER)
+        self.jinja.init_app(app, loader=loader)
+        self.io.attach(app)
+        app.get("/")(self.jinja.template('index.html')(index))
+        if self.background:
+            for cfunc in self.background:
+                app.listener('before_server_start')(cfunc)
+        return app
+
+
+socket = SanicSocketIo()

@@ -41,13 +41,16 @@ set_log.init_app(app)
     + `SET_LOG_MAILTOADDRS:List[str]` 默认为None,设置要发送去的目标,注意是字符串列表
     + `SET_LOG_MAILSUBJECT:str` 默认为`Application Error`,设置发送去邮件的主题
 """
+import sys
 import time
 import datetime
 import logging
+import structlog
 from logging.handlers import (
     TimedRotatingFileHandler,
     SMTPHandler
 )
+
 from flask import request
 from flask.logging import default_handler
 import werkzeug._internal as _internal
@@ -66,16 +69,8 @@ Formatters = {
         "fmt": '''{"time":"%(asctime)s","name":"$project_name.server", "level":"%(levelname)s","host":"%(host)s","request":"%(request)s",%(message)s}''',
         "datefmt": "%Y-%m-%dT%H:%M:%S Z"
     }),
-    "access_txt": RequestFormatter(** {
-        "fmt": "[%(asctime)s] - ($project_name.server)[%(levelname)s]@[%(host)s] %(request)s: %(message)s",
-        "datefmt": "%Y-%m-%dT%H:%M:%S Z"
-    }),
-    "server_txt": logging.Formatter(**{
-        "fmt": '[%(asctime)s] [$project_name.server] %(levelname)s in %(module)s: %(message)s',
-        "datefmt": "%Y-%m-%dT%H:%M:%S Z"
-    }),
-    "server_json": logging.Formatter(**{
-        "fmt": '''{"time":"%(asctime)s","name":"$project_name.server", "level":"%(levelname)s","msg":"%(message)s"}''',
+    "werkzeug_json": logging.Formatter(**{
+        "fmt": '''{"timestamp":"%(asctime)s","logger":"werkzeug.server", "level":"%(levelname)s","msg":"%(message)s"}''',
         "datefmt": "%Y-%m-%dT%H:%M:%S Z"
     })
 }
@@ -111,7 +106,6 @@ def emit(self, record):
 
 def _init_logger(
         app,
-        fmt="txt",
         errorlog="-",
         errorlog_when='midnight',
         errorlog_interval=1,
@@ -120,7 +114,8 @@ def _init_logger(
         errorlog_delay=False,
         errorlog_utc=True,
         errorlog_attime=None,
-        loglevel="info",
+        flask_log_level=logging.INFO,
+        werkzeug_log_level=logging.INFO,
         mail_log=False,
         mailhost=None,
         mailport=25,
@@ -130,21 +125,41 @@ def _init_logger(
         mailfromaddr=None,
         mailtoaddrs=None,
         mailsubject="Application Error"):
-    """为flask项目设置logger
+    """为flask项目设置logger.
 
     Args:
         app ([type]): flask的app对象
-        fmt (str, optional): Defaults to "json". log的格式
     """
-    fmtRange = ("json", "txt")
-    formatter = Formatters.get("access_" + fmt)
+    formatter = Formatters.get("access_json")
     default_handler.setFormatter(formatter)
+    handler = logging.StreamHandler(sys.stdout)
+    flask_app_logger = logging.getLogger("flask.app")
+    flask_app_logger.addHandler(handler)
+    flask_app_logger.setLevel(flask_log_level)  # 设置最低log等级
+    structlog.configure(
+        processors=[
+            structlog.stdlib.filter_by_level,  # 判断是否接受某个level的log消息
+            structlog.stdlib.add_logger_name,  # 增加字段logger
+            structlog.stdlib.add_log_level,  # 增加字段level
+            structlog.stdlib.PositionalArgumentsFormatter(),
+            structlog.processors.TimeStamper(fmt="iso"),  # 增加字段timestamp且使用iso格式输出
+            structlog.processors.StackInfoRenderer(),
+            structlog.processors.format_exc_info,  # 捕获异常的栈信息
+            structlog.processors.StackInfoRenderer(),  # 详细栈信息
+            structlog.processors.JSONRenderer()  # json格式输出,第一个参数会被放入event字段
+        ],
+        context_class=dict,
+        logger_factory=structlog.stdlib.LoggerFactory(),
+        wrapper_class=structlog.stdlib.BoundLogger,
+        cache_logger_on_first_use=True,
+    )
+    log = structlog.get_logger("flask.app")
+    app.logger = log
 
-    serverlogger = logging.getLogger('werkzeug')
     if errorlog == "-":
-        server_handler = logging.StreamHandler()
+        werkzeug_handler = logging.StreamHandler()
     else:
-        server_handler = TimedRotatingFileHandler(**{
+        werkzeug_handler = TimedRotatingFileHandler(**{
             "filename": errorlog,
             "when": errorlog_when,
             "interval": errorlog_interval,
@@ -154,10 +169,11 @@ def _init_logger(
             "utc": errorlog_utc,
             "atTime": None if not errorlog_attime else datetime.time(*[int(i) for i in errorlog_attime.split(",")])
         })
-    server_handler.setFormatter(Formatters.get("server_" + fmt))
-    serverlogger.handlers = []
-    serverlogger.addHandler(server_handler)
-    serverlogger.setLevel(loglevel.upper())
+    werkzeug_handler.setFormatter(Formatters.get("werkzeug_json"))
+    werkzeug_logger = logging.getLogger("werkzeug")
+    werkzeug_logger.handlers = []
+    werkzeug_logger.addHandler(werkzeug_handler)
+    werkzeug_logger.setLevel(werkzeug_log_level)  # 设置最低log等级
 
     if mail_log is True:
         if mailport:
@@ -186,7 +202,7 @@ def _init_logger(
         mail_handler.setLevel("ERROR")
         mail_handler.setFormatter(formatter)
         if not app.debug:
-            app.logger.addHandler(mail_handler)
+            flask_app_logger.addHandler(mail_handler)
 
 
 class FlaskSetLog:

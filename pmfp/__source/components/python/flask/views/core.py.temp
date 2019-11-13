@@ -1,0 +1,13 @@
+from pathlib import Path
+from flask import Blueprint
+
+main = Blueprint(
+    'main',
+    __name__,
+    static_folder=str(Path("./static/main").absolute()),
+    static_url_path="/",
+    template_folder=str(Path("./templates/main").absolute()),
+    url_prefix='/'
+)
+
+__all__ = ["main"]

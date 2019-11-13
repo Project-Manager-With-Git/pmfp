@@ -1,0 +1,9 @@
+from flask import render_template, current_app
+from model import get_table
+from .core import main
+User = get_table("User")
+
+@main.route('/', methods=['GET'])
+def index():
+    users = ",".join([i.name for i in User.select()])
+    return render_template('index.html', greetings="hello", users=users)

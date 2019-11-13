@@ -1,0 +1,23 @@
+{
+    "name": "sanic-simple",
+    "desc": "使用sanic的最简单http服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "sanic-simpleapp.py.temp": [".", "-"],
+        "docker-Dockerfile_singlefile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "sanic"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

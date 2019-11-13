@@ -1,0 +1,3 @@
+def test_func(a, b):
+    """测试加法"""
+    return a + b

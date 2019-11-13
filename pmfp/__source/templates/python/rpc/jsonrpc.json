@@ -1,0 +1,29 @@
+{
+    "name": "rpc-jsonrpc",
+    "desc": "jsonrpc的标准化模板",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "rpc-new_app.py.temp": ["-", "-"],
+        "rpc-jsoncore.py.temp": ["-", "core"],
+        "scripts-webscripts": ["-", "scripts"],
+        "cli-jsonrpc_cli.py.temp": [".", "jsonrpc_cli"],
+        "universal-submodule_class": ["-", "view_clz"],
+        "universal-submodule_func": ["-", "view_func"],
+        "universal-webconfig": ["-", "config"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "universal-log.py.temp": ["-", "log"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": ["voluptuous","jsonrpclib-pelix"],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

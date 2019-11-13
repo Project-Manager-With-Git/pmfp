@@ -1,0 +1,29 @@
+from pathlib import Path
+from sanic import Blueprint
+from jinja2 import FileSystemLoader
+from sanic_jinja2 import SanicJinja2
+from .hooks import hooks
+
+main = Blueprint(
+    'main',
+    url_prefix='/'
+)
+main_jinja = SanicJinja2()
+hooks.init_app(main)
+
+
+class SanicViews:
+
+    def __init__(self, app=None):
+        if app:
+            self.init_app(app)
+
+    def init_app(self, app):
+        main.static('/static/main', str(Path(app.config.STATIC_FOLDER).joinpath("main")))
+        loader = FileSystemLoader(str(Path(app.config.TEMPLATE_PATH).joinpath("main")))
+        main_jinja.init_app(app, loader=loader)
+        app.blueprint(main)
+
+
+main_view = SanicViews()
+__all__ = ["SanicViews", "main_view"]

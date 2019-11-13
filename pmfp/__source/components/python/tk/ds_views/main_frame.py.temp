@@ -1,0 +1,14 @@
+from tkinter import Frame, LabelFrame, Label
+from pandastable import Table
+
+
+class MainFrameMixin:
+    def __init__(self, master):
+        self.main_frame = Frame(master)
+        self.main_frame.pack()
+        self.create_table()
+
+    def create_table(self):
+        self.table = Table(self.main_frame, showtoolbar=True, showstatusbar=True)
+        self.table.show()
+        self.table.showPlotViewer()

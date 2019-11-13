@@ -1,0 +1,13 @@
+{
+    "name": "frontend-pure",
+    "desc": "原始纯净的前端项目模板,使用run启动调试用的本地服务",
+    "env": "frontend",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "frontend-pure": ["", "public"],
+        "frontend-pure_es": ["", "es"]
+    },
+    "requirement": [],
+    "requirement-dev": ["eslint"]
+}

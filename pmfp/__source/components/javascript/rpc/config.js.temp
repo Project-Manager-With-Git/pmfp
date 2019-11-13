@@ -1,0 +1,31 @@
+import fs from 'fs'
+import path from 'path'
+import {
+    updateMap
+} from "./utils"
+export const DEFAULT_CONFIG = {
+    "PORT": 5000,
+    "HOST": "tcp://0.0.0.0"
+}
+
+
+
+export function init_config(options) {
+    let config = new Map(Object.entries(DEFAULT_CONFIG))
+    let defaultconfigPath = path.resolve("./", "config.json")
+    if (fs.existsSync(defaultconfigPath)) {
+        let temp_config = new Map(Object.entries(JSON.parse(fs.readFileSync(configPath))))
+        updateMap(config, temp_config)
+    } else {
+        console.log("default config file not exist")
+    }
+    if (options.config) {
+        if (fs.existsSync(option.config)) {
+            let temp_config = new Map(Object.entries(JSON.parse(fs.readFileSync(option.config))))
+            updateMap(config, temp_config)
+        } else {
+            throw "config file not exist"
+        }
+    }
+    return config
+}

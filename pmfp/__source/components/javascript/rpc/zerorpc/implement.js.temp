@@ -1,0 +1,12 @@
+const Implement = {
+    hello: function (name, reply) {
+        reply(null, "Hello, " + name)
+    },
+    streaming_range: function (from, to, step, reply) {
+        for (let i = from; i < to; i += step) {
+            reply(null, i, i + step < to)
+        }
+    }
+}
+
+export default Implement

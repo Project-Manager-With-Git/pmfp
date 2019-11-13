@@ -1,0 +1,23 @@
+{
+    "name": "module-simple",
+    "desc": "一般python模块",
+    "project-language": "Python",
+    "project-type": "module",
+    "components": {
+        "universal-submodule": ["-", ""],
+        "universal-__init__.py.temp": ["-", "__init__"],
+        "setup": [".", "setup"]
+    },
+    "requirement": [
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

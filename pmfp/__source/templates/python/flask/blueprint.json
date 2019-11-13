@@ -1,0 +1,42 @@
+{
+    "name": "flask-blueprint",
+    "desc": "使用flask的复杂服务,使用蓝图解耦",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "flask-server": ["-", ""],
+        "flask-scripts": ["-", ""],
+        "flask-new_app.py.temp": ["-", "-"],
+        "flask-log.py.temp": ["-", "log"],
+        "flask-api": ["-",""],
+        "flask-ws": ["-",""],
+        "flask-views": ["-", "views"],
+        "flask-templates": [".",""],
+        "flask-static": [".", ""],
+        "flask-config": ["-",""],
+        "database-model": ["-", ""],
+        "universal-ws_cli.py.temp": [".","ws_cli"],
+        "universal-data_schema":["-",""],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfilewithstatic.temp":[".", "dockerfile"]
+    },
+    "requirement": [
+        "Flask",
+        "peewee",
+        "gevent",
+        "gunicorn",
+        "flask_sockets",
+        "websocket-client",
+        "voluptuous"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

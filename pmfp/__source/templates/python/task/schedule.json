@@ -1,0 +1,25 @@
+{
+    "name": "task-schedule",
+    "desc": "脚本任务,一般用于做批处理或者数据库迁移这种低频操作",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "task-schedule_scripts.py.temp":["-", "scripts"],
+        "task-schedule_app": ["-", "-"],
+        "task-schedule_config":["-", "config"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "universal-log.py.temp": ["-", "log"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": ["voluptuous","schedule"],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

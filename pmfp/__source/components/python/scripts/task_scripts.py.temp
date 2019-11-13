@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+import sys
+import argparse
+from $project_name import show
+
+def show_x_cmd(args):
+    kwargs = _parser_args(args)
+    kwargs.update({
+        "type": "x"
+    })
+    show(kwargs)
+
+
+def show_y_cmd(args):
+    kwargs = _parser_args(args)
+    kwargs.update({
+        "type": "y"
+    })
+    show(kwargs)
+
+
+def _parser_args(args):
+    result = {
+        "name": None
+    }
+    if args.name:
+        result["name"] = args.name
+    return result
+
+def parser_args(params):
+    """[summary]
+    解析命令行参数.
+
+    Args:
+        params ([type]): 要解析的参数
+    """
+
+    parser = argparse.ArgumentParser(
+        prog='ppm show',
+        description='desc',
+        epilog='epilog'
+    )
+    parser.set_defaults(func=lambda x: parser.print_help())
+
+    subparsers = parser.add_subparsers(
+        title='show命令的子命令',
+        description='desc',
+        help='helpstr')
+
+    x_parsers = subparsers.add_parser(
+        "x", aliases=["X"], help="查看X")
+    x_parsers.add_argument(
+        "-n", "--name", type=str, help="helpstr", default="")
+    x_parsers.set_defaults(func=show_x_cmd)
+
+    y_parsers = subparsers.add_parser(
+        "y", aliases=["Y"], help="查看Y")
+    y_parsers.add_argument(
+        "-n", "--name", type=str, help="helpstr", default="")
+    y_parsers.set_defaults(func=show_y_cmd)
+    args = parser.parse_args(params)
+    args.func(args)
+
+
+def main(argv=sys.argv[1:]):
+    """服务启动入口.
+
+    设置覆盖顺序`环境变量>命令行参数`>`'-c'指定的配置文件`>`项目启动位置的配置文件`>默认配置.
+    """
+    parser_args(argv)

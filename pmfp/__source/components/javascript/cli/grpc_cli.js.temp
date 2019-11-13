@@ -1,0 +1,33 @@
+import path from 'path'
+import grpc from 'grpc'
+import {loadSync} from '@grpc/proto-loader'
+
+
+const Client = (url, proto_path) => {
+    const packageDefinition = loadSync(
+        proto_path,
+        {
+            keepCase: true,
+            longs: String,
+            enums: String,
+            defaults: true,
+            oneofs: true
+        }
+    )
+    const example_proto = grpc.loadPackageDefinition(packageDefinition).example
+
+    const client = new example_proto.RPC(url, grpc.credentials.createInsecure())
+    return client
+}
+
+function main() {
+    const PROTO_PATH = path.resolve("./", "pbschema/data.proto")
+    const url = "localhost:5000"
+    const client = Client(url, PROTO_PATH)
+    client.DoFormat({
+        text: "AsDfa"
+    }, (err, response) => {
+        console.log('Greeting:', response);
+    })
+}
+main()

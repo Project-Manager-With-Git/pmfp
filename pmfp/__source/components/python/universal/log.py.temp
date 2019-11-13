@@ -1,0 +1,117 @@
+"""log信息.
+
+本模块常用于模块类型的项目.注意.全局使用utc时间
+"""
+import time
+import logging
+import logging.config
+import logging.handlers
+from typing import (
+    List,
+    Dict
+)
+logging.Formatter.converter = time.gmtime
+Formatters = {
+    "model_json": logging.Formatter(**{
+        "fmt": '''{"time":"%(asctime)s","name":"%(name)s", "level":"%(levelname)s","file":"%(filename)s","funcname":"%(funcName)s","line":"%(lineno)d",%(message)s}''',
+        "datefmt": "%Y-%m-%dT%H:%M:%S Z",
+
+    }),
+    "model_txt": logging.Formatter(**{
+        "fmt": '''[%(asctime)s %(name)s (%(process)d) %(levelname)s]@%(filename)s - %(lineno)d - %(funcName)s: %(message)s}''',
+        "datefmt": "%Y-%m-%dT%H:%M:%S Z"
+    })
+
+}
+Handlers = {
+    "model_console": logging.StreamHandler(),
+    "model_file_size": logging.handlers.RotatingFileHandler(**{
+        "filename": "$project_name.log",
+        "maxBytes": 1048576,
+        "backupCount": 3,
+        "encoding": "utf-8",
+        "delay": False
+    }),
+    "model_file_date": logging.handlers.TimedRotatingFileHandler(**{
+        "filename": "$project_name.timed.log",
+        "when": 'midnight',
+        "interval": 1,
+        "backupCount": 3,
+        "encoding": "utf-8",
+        "delay": False,
+        "utc": True,
+        "atTime": None
+    }),
+    "model_email": logging.handlers.SMTPHandler(**{
+        "mailhost": '127.0.0.1',
+        "fromaddr": 'server-error@example.com',
+        "toaddrs": ['admin@example.com'],
+        "subject": 'Application Error',
+        "credentials": None,
+        "secure": None,
+        "timeout": 1.0
+    })
+}
+
+StreamHandlers = {
+    "console": logging.StreamHandler,
+    "file_size": logging.handlers.RotatingFileHandler,
+    "file_date": logging.handlers.TimedRotatingFileHandler,
+    "email": logging.handlers.SMTPHandler
+}
+
+
+def set_logger(form: str="json",
+               level: str="DEBUG",
+               stream: Dict[str, str]={"console": "DEBUG"},
+               logger: logging.Logger=None)->logging.Logger:
+    """根据log的输出格式等信息选择对应的logger.
+
+    Args:
+        form (str): log的输出格式
+        level (str, optional): Defaults to "DEBUG". logger的总体等级
+        stream (Dict[str, str], optional): Defaults to {"console": "INFO"}. 设置不同流及其对应的等级,默认支持"console", "file_size","file_date, "email"四种
+        logger ([type], optional): Defaults to None. 如果有该参数,则不重新创建一个logger对象而是修改这个logger.
+
+    Raises:
+        AttributeError:输入不正确则抛出
+
+    Returns:
+        logging.Logger: 设置好后的logger
+    """
+    FormRange = ("json", "txt")
+    StreamRange = list(StreamHandlers.keys())
+    LevelRange = ("ERROR", "INFO", "DEBUG", "WARNING", "CRITICAL")
+    stream = dict(stream)
+    if form not in FormRange:
+        raise AttributeError(f"form不在范围内,{FormRange}")
+    if level not in LevelRange:
+        raise AttributeError(f"level不在范围内,{LevelRange}")
+    if not all([(k in StreamRange and v in LevelRange) for k, v in stream.items()]):
+        raise AttributeError(f"stream不在范围内,{StreamRange},{LevelRange}")
+    if logger:
+        if not isinstance(logger, logging.Logger):
+            raise AttributeError(f"logger 必须是logging.Logger的实例")
+    logger = logger or logging.getLogger('$project_name')
+    logger.setLevel(level)
+    Format = {
+        "json": Formatters.get("model_json"),
+        "txt": Formatters.get("model_txt")
+    }
+    fmt = Format.get(form)
+    for k, v in stream.items():
+        need2rm = []
+        for i in logger.handlers:
+            if isinstance(i, StreamHandlers.get(k)):
+                need2rm.append(i)
+        for i in need2rm:
+            logger.removeHandler(i)
+        handler = Handlers.get("model_" + k)
+        handler.setLevel(v)
+        handler.setFormatter(fmt)
+        logger.addHandler(handler)
+    return logger
+
+
+model_logger = set_logger()
+__all__ = ["set_logger", "model_logger"]

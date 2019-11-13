@@ -1,0 +1,16 @@
+{
+    "name": "server-koa_socketio",
+    "desc": "使用koa的socketio服务",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "server-koa": ["es", "application"],
+        "server-sio": ["es/application", ""],
+        "server-static": ["", ""],
+        "server-config.js.temp": ["es/application", "config"],
+        "server-utils.js.temp": ["es/application", "utils"],
+        "server-index.js.temp": ["es", "index"]
+    },
+    "requirement": ["pino","commander","koa","koa-static","socket.io"],
+    "requirement-dev": ["eslint"]
+}

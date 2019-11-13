@@ -1,0 +1,6 @@
+from .core import task
+
+
+@task.register(bind=True, name=__name__.split(".")[-1] + '::add')
+def add(self, x, y):
+    return x + y

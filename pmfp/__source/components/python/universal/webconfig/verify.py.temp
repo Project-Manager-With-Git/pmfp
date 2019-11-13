@@ -1,0 +1,10 @@
+from voluptuous import Schema, ALLOW_EXTRA
+
+config_schema = Schema(
+    {
+        'DEBUG': bool,
+        "PORT":int,
+        "HOST":str
+    },
+    extra=ALLOW_EXTRA
+)

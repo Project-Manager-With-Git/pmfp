@@ -1,0 +1,40 @@
+# $project_name
+
++ version: $version
++ status: $status
++ author: $author
++ email: $author_email
+
+## Description
+
+$description
+
+keywords:$keywords
+
+## Feature
+
++ Feature1
++ Feature2
+
+## Example
+
+```python
+```
+
+## Install
+
+`python -m pip install $project_name`
+
+## Documentation
+
+Documentation on github page <$url>
+
+## TODO
+
++ todo1
++ todo2
+
+## Limitations
+
++ limit1
++ limit2

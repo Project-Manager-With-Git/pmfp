@@ -1,0 +1,26 @@
+from $project_name.submodule import show
+
+
+def show_x_cmd(args):
+    kwargs = _parser_args(args)
+    kwargs.update({
+        "type": "x"
+    })
+    show(kwargs)
+
+
+def show_y_cmd(args):
+    kwargs = _parser_args(args)
+    kwargs.update({
+        "type": "y"
+    })
+    show(kwargs)
+
+
+def _parser_args(args):
+    result = {
+        "name": None
+    }
+    if args.name:
+        result["name"] = args.name
+    return result

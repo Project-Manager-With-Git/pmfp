@@ -1,0 +1,22 @@
+{
+    "name": "tk-simple",
+    "desc": "使用tk的最简单客户端服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "tk-simpleapp.py.temp": [".", "-"],
+        "docker-Dockerfile_singlefile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "module-classmodel",
+    "desc": "脚本任务,一般用于做批处理或者数据库迁移这种低频操作",
+    "project-language": "Javascript",
+    "project-type": "module",
+    "components": {
+        "universal-class_model.js.temp": ["es", "index"]
+    },
+    "requirement": [],
+    "requirement-dev": ["eslint"]
+}

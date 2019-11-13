@@ -1,0 +1,20 @@
+from model import bind_db, drop_tables, moke_data
+from .method import hooks
+
+
+@hooks.register('after_server_start')
+async def setup_db(app, loop):
+    await bind_db(app.config["DB_URL"], loop=loop)
+    if app.config.DEBUG:
+        print("debug model, moke data")
+        await moke_data()
+
+
+@hooks.register('after_server_stop')
+async def setup_db(app, loop):
+    if app.config.DEBUG:
+        print("debug model,delete moke data")
+        await drop_tables()
+
+
+__all__ = ["setup_db"]

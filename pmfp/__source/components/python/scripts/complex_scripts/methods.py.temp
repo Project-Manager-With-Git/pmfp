@@ -1,0 +1,67 @@
+import sys
+import argparse
+from .show_cmd import (
+    show_x_cmd,
+    show_y_cmd
+)
+
+
+
+class Scripts:
+    """定义命令行工具的第一级子命令定义."""
+
+    def __init__(self, argv):
+        parser = argparse.ArgumentParser(
+            prog='ppm',
+            epilog='epilog',
+            description='desc',
+            usage='''$project_name <command> [<args>]
+
+$project_name工具的子命令有:
+   show        desc
+''')
+        parser.add_argument('command', help='执行子命令')
+        self.argv = argv
+        args = parser.parse_args(argv[0:1])
+        if not hasattr(self, args.command):
+            print('未知的子命令')
+            parser.print_help()
+            exit(1)
+        # 在这个类中定义与一级子命令同名的函数,用于定义复杂命令行
+        getattr(self, args.command)()
+
+    def show(self):
+        """在以及子命令同名的函数中定义二级,3级甚至4级子命令."""
+        parser = argparse.ArgumentParser(
+            prog='ppm show',
+            description='desc',
+            epilog='epilog'
+        )
+        parser.set_defaults(func=lambda x: parser.print_help())
+
+        subparsers = parser.add_subparsers(
+            title='show命令的子命令',
+            description='desc',
+            help='helpstr')
+
+        x_parsers = subparsers.add_parser(
+            "x", aliases=["X"], help="查看X")
+        x_parsers.add_argument(
+            "-n", "--name", type=str, help="helpstr", default="")
+        x_parsers.set_defaults(func=show_x_cmd)
+
+        y_parsers = subparsers.add_parser(
+            "y", aliases=["Y"], help="查看Y")
+        y_parsers.add_argument(
+            "-n", "--name", type=str, help="helpstr", default="")
+        y_parsers.set_defaults(func=show_y_cmd)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
+
+    
+def main(argv=sys.argv[1:]):
+    """服务启动入口.
+
+    设置覆盖顺序`环境变量>命令行参数`>`'-c'指定的配置文件`>`项目启动位置的配置文件`>默认配置.
+    """
+    Scripts(argv)

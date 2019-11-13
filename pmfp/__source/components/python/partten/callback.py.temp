@@ -1,0 +1,51 @@
+"""回调函数装饰器.
+
+执行完被装饰的函数后以其结果为参数执行回调函数.注意这个装饰器并不会改变装饰函数的结果.
+
+可以设置两个回调函数:
+callback_func 正确执行时执行的回调,函数的参数为被装饰函数的结果
+exception_func 被装饰函数执行报错时执行的回调函数,函数的参数为错误对象
+
+用法:
+
+>>> @callback(lambda x:print(x**3))
+>>> @callback(lambda x:print(x**2))
+... def add(x,y):
+...     return x+y
+
+>>> add(1,2)
+9
+27
+3
+
+>>> @callback(lambda x:print(x**2),lambda e: print(f"{type(e)},{e}"))
+... def add(x,y):
+        assert False,"这是个啥"
+
+>>> add(1,2)
+<class 'AssertionError'>,这是个啥
+"""
+
+
+import functools
+
+
+def callback(callback_func=None,exception_func=None):
+    def decorate(func):
+        @functools.wraps(func)
+        def wrap(*args, **kwargs):
+            nonlocal callback_func
+            nonlocal exception_func
+            try:
+                result = func(*args, **kwargs)
+            except Exception as e:
+                if exception_func is not None:
+                    exception_func(e)
+                raise e
+            else:
+                if callback_func is not None:
+                    callback_func(result)
+                return result
+        return wrap
+    return decorate
+

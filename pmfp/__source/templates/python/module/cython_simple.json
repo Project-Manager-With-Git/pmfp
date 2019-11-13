@@ -1,0 +1,24 @@
+{
+    "name": "module-cython_simple",
+    "desc": "一般cython模块",
+    "project-language": "Python",
+    "project-type": "module",
+    "components": {
+        "cython-__init__.py.temp":["-", "__init__"],
+        "cython-simple.pyx.temp":["-", "-"],
+        "cython_setup": [".", "setup"]
+    },
+    "requirement": [
+        "cython"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

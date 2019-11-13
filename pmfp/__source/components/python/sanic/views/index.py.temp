@@ -1,0 +1,14 @@
+from model import get_table
+from .core import main, main_jinja
+User = get_table("User")
+
+
+@main.get("/")
+@main_jinja.template('index.html')
+async def index(request):
+    request['flash']('success message', 'success')
+    request['flash']('info message', 'info')
+    request['flash']('warning message', 'warning')
+    request['flash']('error message', 'error')
+    usernames = ",".join([i.name async for i in User.select()])
+    return {'greetings': f'Hello, sanic {usernames}!'}

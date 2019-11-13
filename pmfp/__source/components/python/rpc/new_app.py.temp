@@ -1,0 +1,10 @@
+from core import App
+from view_clz import RPC
+from view_func import test_func
+
+
+def init_app(config):
+    app = App(config)
+    app.register_instance(RPC())
+    app.register_function("add", test_func)
+    return app

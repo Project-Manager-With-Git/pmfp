@@ -1,0 +1,64 @@
+import xmlrpc.client
+MultiCall = xmlrpc.client.MultiCall
+
+
+class CliProxy:
+    __slots__ = ('url', 'client', '_callbacks')
+
+    def __init__(self, url=None):
+        self._callbacks = []
+        self.client = None
+        self.url = None
+        if url:
+            self.initialize(url)
+
+    def initialize(self, url: str):
+        """[summary]
+        Args:
+            url ([type]): [description]
+        """
+        self.url = url
+        for callback in self._callbacks:
+            callback(url)
+
+    def attach_callback(self, callback):
+        self._callbacks.append(callback)
+
+    def __enter__(self):
+        self.client = xmlrpc.client.ServerProxy(self.url)
+        return self.client
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.client("close")
+        self.client = None
+
+    def __getattr__(self, attr):
+        if self.url is None:
+            raise AttributeError('Cannot use uninitialized Proxy.')
+        with xmlrpc.client.ServerProxy(self.url) as s:
+            # Print list of available methods
+            result = getattr(s, attr)
+        return result
+
+    def __setattr__(self, attr, value):
+        if attr not in self.__slots__:
+            raise AttributeError('Cannot set attribute on proxy.')
+        return super().__setattr__(attr, value)
+
+
+__all__ = ["CliProxy", "MultiCall"]
+
+if __name__ == "__main__":
+    url = "http://localhost:5000"
+    cli = CliProxy(url)
+    print(cli.system.listMethods())
+    print(cli.add(123, 1))
+    print(cli.hello("hsz"))
+    with CliProxy(url) as s:
+        multi = MultiCall(s)
+        multi.add(1, 2)
+        multi.hello("qwe")
+        result = multi()
+        for i in result:
+            print(i)
+

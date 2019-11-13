@@ -1,0 +1,32 @@
+{
+    "name": "sanic-websocket",
+    "desc": "使用flask的websocket服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "sanic-scripts": ["-", ""],
+        "sanic-new_app.py.temp": ["-", "-"],
+        "sanic-log.py.temp": ["-", "log"],
+        "sanic-ws": ["-", ""],
+        "sanic-config": ["-", ""],
+        "cli-ws_cli.py.temp": [".", "ws_cli"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "sanic",
+        "voluptuous"
+    ],
+    "requirement-dev": [
+        "aiohttp",
+        "websocket-client",
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

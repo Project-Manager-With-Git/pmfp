@@ -1,0 +1,17 @@
+from ..core import socket
+
+
+@socket.register_background
+async def background_task():
+    """Example of how to send server generated events to clients."""
+    count = 0
+    while True:
+        await socket.io.sleep(5)
+        count += 1
+        await socket.io.emit(
+            'my response',
+            {'data': 'Server generated event'},
+            namespace='/test'
+        )
+
+__all__ = ["background_task"]

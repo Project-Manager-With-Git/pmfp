@@ -1,0 +1,25 @@
+{
+    "name": "task-celery",
+    "desc": "celery任务,用于批处理",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "task-celery_tasks": ["-", "tasks"],
+        "task-celery_app.py.temp": ["-", "-"],
+        "task-celery_scripts": ["-", "scripts"],
+        "task-celery_config": ["-", "config"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": ["voluptuous", "celery", "tornado==4.5.2", "flower", "redis"],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

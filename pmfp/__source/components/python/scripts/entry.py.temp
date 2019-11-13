@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+from $project_name import app
+
+
+def main():
+    """服务启动入口.
+
+    设置覆盖顺序`环境变量>命令行参数`>`'-c'指定的配置文件`>`项目启动位置的配置文件`>默认配置.
+    """
+    app.run()

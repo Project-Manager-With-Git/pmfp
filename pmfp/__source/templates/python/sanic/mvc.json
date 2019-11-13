@@ -1,0 +1,39 @@
+{
+    "name": "sanic-mvc",
+    "desc": "使用sanic的页面服务端渲染服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "sanic-scripts": ["-", ""],
+        "sanic-new_app.py.temp": ["-", "-"],
+        "sanic-log.py.temp": ["-", "log"],
+        "sanic-views": ["-", "views"],
+        "sanic-templates": [".", ""],
+        "sanic-static": [".", ""],
+        "sanic-config": ["-", ""],
+        "sanic-hooks": ["-", ""],
+        "sanic-exception": ["-", ""],
+        "database-model_async": ["-", "model"],
+        "universal-data_schema": ["-", ""],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfilewithstatic.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "sanic",
+        "voluptuous",
+        "aioorm",
+        "sanic_jinja2",
+        "sanic_session"
+    ],
+    "requirement-dev": [
+        "aiohttp",
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

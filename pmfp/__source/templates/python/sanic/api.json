@@ -1,0 +1,35 @@
+{
+    "name": "sanic-api",
+    "desc": "使用sanic的纯restful api 服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "sanic-scripts": ["-", ""],
+        "sanic-new_app.py.temp": ["-", "-"],
+        "sanic-log.py.temp": ["-", "log"],
+        "sanic-api": ["-", ""],
+        "sanic-config": ["-", ""],
+        "sanic-exception": ["-", ""],
+        "database-model_async": ["-", "model"],
+        "universal-data_schema": ["-", ""],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "sanic",
+        "aioorm",
+        "sanic_session",
+        "voluptuous"
+    ],
+    "requirement-dev": [
+        "aiohttp",
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

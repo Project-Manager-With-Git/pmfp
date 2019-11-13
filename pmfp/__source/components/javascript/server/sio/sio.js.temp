@@ -1,0 +1,81 @@
+/**
+ * # socketio服务端的使用逻辑:
+ * 
+ * + 在`core.js`中指定设置,比较有用的是path,它可以指定一个统一的二级uri用于区分主干,api和socketio接口.
+ * + 使用`import io from "./sio/sio"`导入`io`对象,io对象可以理解为全服务的管理对象,管理所有对服务端的连接
+ * + 使用`io.attach(server, options)`将io对象绑定到http服务
+ * 
+ * # socketio服务端的事件注册
+ * 
+ * ## 事件监听
+ * 
+ * `io.on('connection',func)`是注册connection事件的接口,也是socketio服务的入口,必须得有,
+ * 客户端连到服务端就会触发`connection`事件
+ * 其中的`func`为回调函数,其参数为`socket`对象,即某一客户端访问服务端的套接字对象.
+ * 它的id(`socket.id`)可以唯一的标识客户端的一次连接
+ * 
+ * socket对象上可以用`socket.on("disconnect",func)`这样的接口注册回调函数到事件上,当socket上监听到有同名事件时就会触发.
+ * 
+ * ## 命名空间namespace
+ * 
+ * `io.of(uri)`可以指定一个命名空间,命名空间可以说是用来进一步区分用途和划分客户端.
+ * `io.on('connection',func)`其实是`io.of("/").on('connection',func)`的糖,这也意味着其实有个默认的namespace就是`/`
+ * 
+ * namespace可以使用`.clients((error,clients)=>{})`来管理其中的所有客户端socket
+ * 
+ * ## room
+ * 
+ * 另一个概念是room,它和namespace平级,但强调的是客户端的集群,是更加细分的客户端socket划分容器.
+ * 在namespace下使用`.in(roomname)`进入.socket针对他有几个特殊操作:
+ * + `socket.join(roomname)`将自己添加到某个room
+ * + `socket.leave(roomname)`将自己从某个room中删除
+ * 
+ * 同样的,它可以使用`.clients((error,clients)=>{})`来管理其中的所有客户端socket
+ * `io.of(uri).in(room).clients((error,clients)=>{})`
+ * 
+ * ## 发送消息
+ * 
+ * ### 单播
+ * 
+ * + 客户端和服务端间点对点发送消息使用`socket.emit(event[,msg_obj])`
+ * + 客户端向特定另一个客户端发送消息`io.to(<socketid>).emit(event[,msg_obj])`
+ * 
+ * ### 广播
+ * 
+ * + 客户端向全体广播消息`io.emit(event[,msg_obj])`
+ * + 客户端向连接这的服务器节点上的全部用户广播`io.local.emit(event[,msg_obj])`
+ * + 客户端在namespace中room内发送消息(room中所有socket都会收到)`io.of(namespace).to(room).emit(event[,msg_obj])`
+ * + 客户端向room内的全体成员广播消息`io.to(room).emit(event[,msg_obj])`
+ * + 发送消息给全体某个namespace下的成员`io.of(namespace).emit(event[,msg_obj])`
+ * 
+ * 
+ * ### 广播但自己收不到
+ * + 客户端向全体*其他*成员广播消息`socket.broadcast.emit(event[,msg_obj])`
+ * + 客户端向在room内的全体*其他*成员广播消息`socket.to(namespace).emit(event[,msg_obj])`
+ * 
+ * 发送消息的接口以<https://github.com/socketio/socket.io/blob/master/docs/emit.md>为准
+ * 
+ * 其他具体接口可以看<https://socket.io/docs/server-api/>
+ * 
+ * ## 一些技巧
+ * 
+ * ### 定时推送
+ * 
+ * 使用如下代码形式设置定时推送,其中的10000是指10000ns,也就是10s
+ * ```js
+ * setInterval(function () {
+ *     socket.emit(
+ *       'my_response', {
+ *         'data': 'Server generated event'
+ *       }
+ *     )
+ *   }, 10000)
+ * ```
+ * 
+ * ### 广播在使用namespace时似乎有问题
+ * 因此可能比较好的办法是定义多个io对象,设置不同的path,然后单独使用,不要使用namespace
+ */
+import io from "./core"
+import test_nps from "./test"
+
+export default io

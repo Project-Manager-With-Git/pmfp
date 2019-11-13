@@ -1,0 +1,28 @@
+{
+    "name": "rpc-zerorpc",
+    "desc": "xmlrpc的标准化模板",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "rpc-new_rpc_app.py.temp": ["-", "-"],
+        "rpc-zerocore.py.temp": ["-", "core"],
+        "scripts-webscripts": ["-", "scripts"],
+        "cli-zerorpc_cli.py.temp": [".", "zerorpc_cli"],
+        "universal-submodule_class": ["-", "view_clz"],
+        "universal-webconfig": ["-", "config"],
+        "universal-__main__.py.temp": ["-", "__main__"],
+        "universal-log.py.temp": ["-", "log"],
+        "docker-Dockerfile.temp": [".", "dockerfile"]
+    },
+    "requirement": ["voluptuous","zerorpc"],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

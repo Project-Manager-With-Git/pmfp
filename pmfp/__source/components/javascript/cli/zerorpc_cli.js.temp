@@ -1,0 +1,30 @@
+import zerorpc from "zerorpc"
+
+const client = new zerorpc.Client()
+
+function main() {
+
+    client.connect("tcp://127.0.0.1:5000")
+    client.on("error", function (error) {
+        console.error("RPC client error:", error)
+    })
+    client.invoke("hello", "RPC", function (error, res, more) {
+        console.log(res)
+        if(!more) {
+            console.log("Done.")
+            client.close()
+        }
+    })
+    // client.invoke("streaming_range", 10, 20, 2, function (error, res, more) {
+    //     if(error) {
+    //         console.error(error);
+    //     } else {
+    //         console.log("UPDATE:", res);
+    //     }
+    //     if(!more) {
+    //         console.log("Done.")
+    //         client.close()
+    //     }
+    // })
+}
+main()

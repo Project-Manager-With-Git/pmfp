@@ -1,0 +1,23 @@
+{
+    "name": "flask-simple",
+    "desc": "使用flask的最简单http服务",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "flask-simpleapp.py.temp": [".", "-"],
+        "docker-Dockerfile_singlefile.temp": [".", "dockerfile"]
+    },
+    "requirement": [
+        "flask"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8"
+    ]
+}

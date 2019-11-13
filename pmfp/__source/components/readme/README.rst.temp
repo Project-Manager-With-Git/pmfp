@@ -1,0 +1,43 @@
+$project_name
+===============================
+* version: $version
+* status: $status
+* author: $author
+* email: $author_email
+
+
+Desc
+--------------------------------
+$description
+keywords:$keywords
+
+
+Feature
+----------------------
+* Feature1
+* Feature2
+
+
+Example
+-------------------------------
+.. code:: python
+
+
+Install
+--------------------------------
+- ``python -m pip install $project_name``
+
+
+Documentation
+--------------------------------
+`Documentation on Readthedocs <$url>`_.
+
+
+TODO
+-----------------------------------
+* todo
+
+
+Limitations
+-----------
+* limit

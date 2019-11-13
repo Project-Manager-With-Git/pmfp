@@ -1,27 +1,35 @@
-from voluptuous import Schema
-
+from jsonschema import validate
+from typing import Dict, Any, Callable
 Schemas = {
 
 }
 
 
-def register_schema(schema_name: str, *args, **kwargs)->Schema:
+def register_schema(schema_name: str, schema: Dict[str, Any]) -> Callable[[Dict[str, Any]], None]:
     """将定义的schema注册到Schemas表中.
 
-    使用的时候
+    使用:
 
     >>> register_schema("user",
-    ... {
-    ...     'name': str,
-    ...     'age': int
-    ... })
+    ...  {
+    ... "title": "user",
+    ... "description": "query user source",
+    ... "type": "object",
+    ... "properties": {
+    ...     "name": {
+    ...         "description": "user name",
+    ...         "type": "string"
+    ...     }, "age": {
+    ...         "description": "user age",
+    ...         "type": "integer"
+    ...     }
+    ... },
+    ... "required": ["name", "age"]
+    ... }
 
     Args:
-        schema_name (str): 
+        schema_name (str): 判别式的名字.
+        schema (Dict[str, Any]): json schema判别式
 
-    Returns:
-        [Schema]: 格式对象
     """
-    schema = Schema(*args, **kwargs)
-    Schemas[schema_name] = schema
-    return schema
+    Schemas[schema_name] = lambda instance: validate(instance=instance, schema=schema)
