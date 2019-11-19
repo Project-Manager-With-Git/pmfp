@@ -55,6 +55,15 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
 
+### 3.1.0
+
+1. 为freeze命令增加解析,现在默认只固定`requirement`字段中的依赖,但可以通过`--dev`来固定开发依赖,用`--all`来固定全部依赖,`--noversion`不固定依赖的版本.
+2. python模板中的log使用结构化log模块
+3. python模板中的config部分和dataschema改用json schema
+4. init命令新增字段`--noinstall`,标明创建时不安装依赖
+5. sanic,flask,rpc项目的dockerfile中不再强制使用`pyz`
+6. sanic,flask,rpc项目新增docker-compose模板
+
 ### 3.0.15
 
 1. doc初始化增加了对国际化的支持,默认`zh`和`en`

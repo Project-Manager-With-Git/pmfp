@@ -10,7 +10,7 @@ def init_cmd(args):
         config = new_config(kwargs["project_name"], kwargs["template"], kwargs["language"])
         print("创建项目配置文件")
         write_rc(config)
-    init(config, test=kwargs["test"], doc=kwargs["doc"])
+    init(config, test=kwargs["test"], doc=kwargs["doc"], noinstall=kwargs["noinstall"])
 
 
 def _parser_args(args):
@@ -19,7 +19,8 @@ def _parser_args(args):
         "language": None,
         'project_name': None,
         "test": False,
-        "doc": False
+        "doc": False,
+        "noinstall": False
     }
     if args.project_name:
         result["project_name"] = args.project_name
@@ -31,4 +32,6 @@ def _parser_args(args):
         result['test'] = args.test
     if args.doc:
         result['doc'] = args.doc
+    if args.noinstall:
+        result['noinstall'] = args.noinstall
     return result

@@ -7,7 +7,7 @@ DEFAULT_SETTING = {
     'SECRET_KEY': 'some secret words',
     'PORT': 5000,
     "JSON_AS_ASCII": False,
-    "DB_URL": "postgresql://postgres:postgres@localhost:5432/test",
+    "DB_URL": "postgresext+pool+async://postgres:postgres@localhost:5432/postgres",
     "WORKER": 4,
     "SET_LOG_FMT": "json",
     "SET_LOG_MAIL_LOG": False,

@@ -1,0 +1,30 @@
+"""用户自定义的orm映射.
+
+注意使用装饰器register将要创建的表注册到Tables.
+"""
+from peewee import (
+    CharField,
+    IntegerField,
+    AutoField
+)
+from ._base import (
+    BaseModel,
+    register
+)
+
+
+@register
+class User(BaseModel):
+    id = AutoField(primary_key=True)
+    age = IntegerField()
+    name = CharField()
+
+    def to_dict(self):
+        return {
+            "age": self.age,
+            "name": self.name
+
+        }
+
+
+__all__ = ["User"]

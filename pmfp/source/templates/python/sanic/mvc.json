@@ -5,7 +5,7 @@
     "project-type": "application",
     "components": {
         "sanic-scripts": ["-", ""],
-        "sanic-new_app.py.temp": ["-", "-"],
+        "sanic-new_app_mvc.py.temp": ["-", "-"],
         "sanic-log.py.temp": ["-", "log"],
         "sanic-views": ["-", "views"],
         "sanic-templates": [".", ""],
@@ -13,15 +13,20 @@
         "sanic-config": ["-", ""],
         "sanic-hooks": ["-", ""],
         "sanic-exception": ["-", ""],
-        "database-model_async": ["-", "model"],
+        "database-model_peewee_async": ["-", "model"],
         "universal-data_schema": ["-", ""],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "docker-Dockerfilewithstatic.temp": [".", "dockerfile"]
+        "docker-Dockerfilewithstatic.temp": [".", "dockerfile"],
+        "docker-pip.conf.temp": [".", "pip"],
+        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
     "requirement": [
         "sanic",
-        "voluptuous",
-        "aioorm",
+        "jsonschema",
+        "peewee",
+        "peewee_async==0.6.0a",
+        "aiopg",
+        "psycopg2-binary",
         "sanic_jinja2",
         "sanic_session"
     ],

@@ -9,9 +9,11 @@
         "task-celery_scripts": ["-", "scripts"],
         "task-celery_config": ["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "docker-Dockerfile.temp": [".", "dockerfile"]
+        "docker-Dockerfile.temp": [".", "dockerfile"],
+        "docker-pip.conf.temp": [".", "pip"],
+        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
-    "requirement": ["voluptuous", "celery", "tornado==4.5.2", "flower", "redis"],
+    "requirement": ["jsonschema", "celery", "tornado==4.5.2", "flower", "redis"],
     "requirement-dev": [
         "coverage",
         "mypy",

@@ -9,9 +9,11 @@
         "task-schedule_config":["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
         "universal-jsonlog.py.temp": ["-", "log"],
-        "docker-Dockerfile.temp": [".", "dockerfile"]
+        "docker-Dockerfile.temp": [".", "dockerfile"],
+        "docker-pip.conf.temp": [".", "pip"],
+        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
-    "requirement": ["voluptuous","schedule"],
+    "requirement": ["jsonschema","schedule"],
     "requirement-dev": [
         "coverage",
         "mypy",

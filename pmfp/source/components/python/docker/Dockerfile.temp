@@ -1,5 +1,7 @@
 FROM python:latest
-ADD ./$project_name.pyz /code/$project_name.pyz
+ADD pip.conf /etc/pip.conf
 ADD ./requirements.txt /code/requirements.txt
 WORKDIR /code
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+ADD ./$project_name /code/$project_name

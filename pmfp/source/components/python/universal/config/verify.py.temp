@@ -1,8 +1,21 @@
-from voluptuous import Schema, ALLOW_EXTRA
+from jsonschema import validate
+schema = {
+    "title": "config",
+    "description": "config verify",
+    "type": "object",
+    "properties": {
+        "DEBUG": {
+            "description": "debug mode",
+            "type": "boolean"
+        }
+    }
+}
 
-config_schema = Schema(
-    {
-        'DEBUG': bool,
-    },
-    extra=ALLOW_EXTRA
-)
+
+def config_schema(instance):
+    try:
+        validate(instance=instance, schema=schema)
+    except:
+        raise
+    else:
+        return instance

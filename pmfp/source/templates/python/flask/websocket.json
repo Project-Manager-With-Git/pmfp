@@ -14,7 +14,9 @@
         "cli-ws_cli.py.temp": [".","ws_cli"],
         "universal-data_schema": ["-", ""],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "docker-Dockerfile.temp": [".", "dockerfile"]
+        "docker-Dockerfile.temp": [".", "dockerfile"],
+        "docker-pip.conf.temp": [".", "pip"],
+        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
     "requirement": [
         "Flask",
@@ -23,7 +25,8 @@
         "gunicorn",
         "flask_sockets",
         "websocket-client",
-        "voluptuous"
+        "jsonschema",
+        "structlog"
     ],
     "requirement-dev": [
         "coverage",

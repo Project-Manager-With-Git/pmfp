@@ -6,9 +6,10 @@ from pmfp.new import new
 from pmfp.clean import clean
 from pmfp.install import install
 from pmfp.utils import find_template_path
+from pmfp.const import PMFPRC_PATH
 
 
-def _init_env(config: Dict[str, Any])->None:
+def _init_env(config: Dict[str, Any]) -> None:
     """初始化环境.
 
     Args:
@@ -26,7 +27,7 @@ def _init_env(config: Dict[str, Any])->None:
     print("虚拟环境创建完了")
 
 
-def _init_readme(config: Dict[str, Any])->None:
+def _init_readme(config: Dict[str, Any]) -> None:
     """初始化README文件.
 
     Args:
@@ -44,7 +45,7 @@ def _init_readme(config: Dict[str, Any])->None:
     print("说明文档创建完成")
 
 
-def _init_requirement(config: Dict[str, Any])->None:
+def _init_requirement(config: Dict[str, Any]) -> None:
     """初始化依赖安装.
 
     Args:
@@ -65,7 +66,27 @@ def _init_requirement(config: Dict[str, Any])->None:
     print("模板依赖安装完成")
 
 
-def _init_component(config: Dict[str, Any], test: bool)->None:
+def _init_requirement_noinstall(config: Dict[str, Any]) -> None:
+    """初始化依赖但不安装.
+
+    Args:
+        config (Dict[str, Any]): 项目配置.
+    """
+    t_path = find_template_path(config)
+    with open(str(t_path), encoding="utf-8") as f:
+        temp_info = json.load(f)
+    print("准备依赖")
+    requirement_dev = temp_info["requirement-dev"]
+    requirement = temp_info["requirement"]
+    print("依赖准备完成")
+    config["requirement-dev"]=requirement_dev
+    config["requirement"]=requirement
+    with open(str(PMFPRC_PATH), "w", encoding="utf-8") as f:
+        json.dump(config, f)
+    print("依赖写入完成")
+
+
+def _init_component(config: Dict[str, Any], test: bool) -> None:
     """初始化组件.
 
     Args:
@@ -88,7 +109,7 @@ def _init_component(config: Dict[str, Any], test: bool)->None:
     print("安装组件完成")
 
 
-def _init_doc(config: Dict[str, Any])->None:
+def _init_doc(config: Dict[str, Any]) -> None:
     """初始化文档.
 
     Args:
@@ -106,7 +127,7 @@ def _init_doc(config: Dict[str, Any])->None:
     print("创建文档完成")
 
 
-def _init_esscript(config: Dict[str, Any])->None:
+def _init_esscript(config: Dict[str, Any]) -> None:
     """初始化js环境的命令配置.
 
     Args:
@@ -124,7 +145,7 @@ def _init_esscript(config: Dict[str, Any])->None:
     print("创建js环境的执行命令完成")
 
 
-def init(config: Dict[str, Any], test: bool = False, doc: bool = False)->None:
+def init(config: Dict[str, Any], test: bool = False, doc: bool = False, noinstall: bool = False) -> None:
     """初始化项目.
 
     Args:
@@ -139,7 +160,10 @@ def init(config: Dict[str, Any], test: bool = False, doc: bool = False)->None:
     try:
         _init_env(config)
         _init_readme(config)
-        _init_requirement(config)
+        if not noinstall:
+            _init_requirement(config)
+        else:
+            _init_requirement_noinstall(config)
         _init_component(config, test)
         if doc is True:
             _init_doc(config)

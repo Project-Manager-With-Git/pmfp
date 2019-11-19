@@ -1,16 +1,43 @@
-from voluptuous import Schema, ALLOW_EXTRA
-
-config_schema = Schema(
-    {
-        "BROKER_URL": str,
-        "CELERY_DISABLE_RATE_LIMITS": bool,
-        "CELERY_RESULT_BACKEND": str,
-        "CELERY_TASK_RESULT_EXPIRES": int,
-        "CELERY_RESULT_SERIALIZER": str,
-        "CELERY_TASK_SERIALIZER": str,
-        "CELERY_IMPORTS": str,
-        "CELERY_TASK_RESULT_EXPIRES": int,
-        "CELERYD_MAX_TASKS_PER_CHILD": int
+from jsonschema import validate
+schema = {
+    "title": "config",
+    "description": "config verify",
+    "type": "object",
+    "properties": {
+        "BROKER_URL": {
+            "description": "broker url",
+            "type": "string"
+        }, "CELERY_DISABLE_RATE_LIMITS": {
+            "description": "disable rate limits",
+            "type": "boolean"
+        }, "CELERY_RESULT_BACKEND": {
+            "description": "result backend",
+            "type": "string"
+        }, "CELERY_TASK_RESULT_EXPIRES": {
+            "description": "task result expires",
+            "type": "integer"
+        }, "CELERY_RESULT_SERIALIZER": {
+            "description": "task result serializer",
+            "type": "string"
+        }, "CELERY_TASK_SERIALIZER": {
+            "description": "task serializer",
+            "type": "string"
+        }, "CELERY_IMPORTS": {
+            "description": "listen to port",
+            "type": "string"
+        }, "CELERYD_MAX_TASKS_PER_CHILD": {
+            "description": "max task per child",
+            "type": "integer"
+        }
     },
-    extra=ALLOW_EXTRA
-)
+    "required": ["BROKER_URL"]
+}
+
+
+def config_schema(instance):
+    try:
+        validate(instance=instance, schema=schema)
+    except:
+        raise
+    else:
+        return instance

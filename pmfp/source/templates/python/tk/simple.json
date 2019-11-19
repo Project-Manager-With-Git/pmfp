@@ -4,8 +4,7 @@
     "project-language": "Python",
     "project-type": "application",
     "components": {
-        "tk-simpleapp.py.temp": [".", "-"],
-        "docker-Dockerfile_singlefile.temp": [".", "dockerfile"]
+        "tk-simpleapp.py.temp": [".", "-"]
     },
     "requirement": [
     ],

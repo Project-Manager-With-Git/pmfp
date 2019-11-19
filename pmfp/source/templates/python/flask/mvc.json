@@ -15,7 +15,9 @@
         "database-model": ["-", ""],
         "universal-data_schema":["-",""],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "docker-Dockerfilewithstatic.temp":[".", "dockerfile"]
+        "docker-Dockerfilewithstatic.temp":[".", "dockerfile"],
+        "docker-pip.conf.temp": [".", "pip"],
+        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
     "requirement": [
         "Flask",
@@ -23,7 +25,8 @@
         "gevent",
         "gunicorn",
         "flask_sockets",
-        "voluptuous"
+        "jsonschema",
+        "structlog"
     ],
     "requirement-dev": [
         "coverage",

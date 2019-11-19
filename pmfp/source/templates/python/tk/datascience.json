@@ -10,8 +10,7 @@
         "tk-ds_model.py.temp": ["-", "model"],
         "tk-ds_views": ["-", "views"],
         "scripts-entry.py.temp": ["-", "scripts"],
-        "universal-__main__.py.temp": ["-", "__main__"],
-        "docker-Dockerfile.temp": [".", "dockerfile"]
+        "universal-__main__.py.temp": ["-", "__main__"]
     },
     "requirement": [
         "pandastable"

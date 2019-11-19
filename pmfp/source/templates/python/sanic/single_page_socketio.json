@@ -13,13 +13,15 @@
         "sanic-config": ["-", ""],
         "socketio_cli.py.temp": [".", "socketio_cli"],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "docker-Dockerfile.temp": [".", "dockerfile"]
+        "docker-Dockerfile.temp": [".", "dockerfile"],
+        "docker-pip.conf.temp": [".", "pip"],
+        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
     "requirement": [
         "sanic",
         "python-socketio",
         "sanic_jinja2",
-        "voluptuous"
+        "jsonschema"
     ],
     "requirement-dev": [
         "aiohttp",

@@ -5,7 +5,9 @@
     "project-type": "application",
     "components": {
         "sanic-simpleapp.py.temp": [".", "-"],
-        "docker-Dockerfile_singlefile.temp": [".", "dockerfile"]
+        "docker-Dockerfile_singlefile.temp": [".", "dockerfile"],
+        "docker-pip.conf.temp": [".", "pip"],
+        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
     "requirement": [
         "sanic"

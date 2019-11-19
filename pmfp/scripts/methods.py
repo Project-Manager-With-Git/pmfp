@@ -128,7 +128,19 @@ class PPM:
 
     def freeze(self):
         """为python项目固定依赖."""
-        freeze_cmd()
+        parser = argparse.ArgumentParser(
+            prog='ppm freeze',
+            description='固定依赖',
+            epilog='子命令freeze用于为python项目固定依赖'
+        )
+        parser.add_argument('--all', action='store_true',help="将全部依赖固定到requirements-all.txt")
+        parser.add_argument(
+            '--dev', action='store_true',help="将开发依赖固定到requirements-dev.txt")
+        parser.add_argument(
+            '--noversion', action='store_true',help="不关心依赖的版本")
+        parser.set_defaults(func=freeze_cmd)
+        args = parser.parse_args(self.argv[1:])
+        args.func(args)
 
     def new(self):
         """新增一个组件."""
@@ -169,6 +181,7 @@ grpc                     创建一个grpc用的protobuf文件
         parser.add_argument("-t", "--template", type=str, help="指定一个项目模板", default="")
         parser.add_argument('--test', action="store_true", default=False, help="是否有测试用的对应组件")
         parser.add_argument('--doc', action="store_true", default=False, help="是否带着文档")
+        parser.add_argument('--noinstall', action="store_true", default=False, help="是否初始化时就安装依赖")
         parser.set_defaults(func=init_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -275,7 +288,7 @@ grpc                     创建一个grpc用的protobuf文件
             description="build project's document")
         parser.add_argument('-s', '--serve', action="store_true")
         parser.add_argument('-u', '--update', action="store_true")
-        parser.add_argument('-l', '--locale', type=str,default="",help="小语种支持")
+        parser.add_argument('-l', '--locale', type=str, default="", help="小语种支持")
         parser.add_argument('-b', '--build', action="store_true")
         parser.set_defaults(func=doc_cmd)
         args = parser.parse_args(self.argv[1:])

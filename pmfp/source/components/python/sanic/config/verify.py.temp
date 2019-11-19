@@ -17,8 +17,7 @@ schema = {
             "description": "SECRET_KEY for application",
             "type": "string"
         }
-    },
-    #"required": ["DEBUG", "HOST", "PORT", "SECRET_KEY"]
+    }
 }
 
 
