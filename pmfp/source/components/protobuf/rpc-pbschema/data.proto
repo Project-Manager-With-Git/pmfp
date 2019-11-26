@@ -1,5 +1,5 @@
 syntax = "proto3";
-package example;
+package grpc_schema;
 service RPC {
   rpc DoFormat(Data) returns (Data){}
 }

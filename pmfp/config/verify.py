@@ -7,14 +7,14 @@ from voluptuous import (All, Any, Email, Equal, In, Invalid, NotIn,
 
 NOT_NAME_RANGE = ["app", "application", "module", "project"]
 STATUS_RANGE = ["prod", "release", "dev", "test"]
-LANGUAGE_RANGE = ["Python", "Javascript"]
-ENV_RANGE = ["env", "conda", "node", "frontend", "webpack", "vue"]
+LANGUAGE_RANGE = ["Python", "Javascript", "Golang"]
+ENV_RANGE = ["env", "conda", "node", "frontend", "webpack", "vue", "gomod"]
 TYPE_RANGE = ["application", "module"]
 LICENSE_RANGE = ["MIT", "Apache", "BSD", "Mozilla", "LGPL", "GPL", "GNU"]
 DEFAULT_AUTHOR = getpass.getuser()
 
 
-def env_match(language: str, env: str)->bool:
+def env_match(language: str, env: str) -> bool:
     """检测language和env是否匹配.
 
     Args:
@@ -35,11 +35,16 @@ def env_match(language: str, env: str)->bool:
             return False
         else:
             return True
+    elif language in ("Golang",):
+        if env not in ("gomod", ):
+            return False
+        else:
+            return True
     else:
-        raise AttributeError("unknown language")
+        raise AttributeError(f"unknown language {language}")
 
 
-def config_must_match(config: Dict[str, typeAny])->Dict[str, typeAny]:
+def config_must_match(config: Dict[str, typeAny]) -> Dict[str, typeAny]:
     """检测配置是否符合要求的函数.
 
     Args:

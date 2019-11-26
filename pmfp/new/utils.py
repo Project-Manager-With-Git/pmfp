@@ -20,7 +20,8 @@ def template_2_file(project_name: str, path: Path):
             ".cpp" in path.name) or (
             ".go" in path.name) or (
             "docker" in path.name) or (
-            ".json" in path.name):
+            ".json" in path.name) or (
+            ".mod" in path.name):
         try:
             template_content = Template(path.open(encoding='utf-8').read())
             content = template_content.substitute(
@@ -58,7 +59,7 @@ def iter_template_2_file(project_name: str, path: Path):
             iter_template_2_file(project_name, p)
 
 
-def new_json_package(config: Dict[str, Any])->None:
+def new_json_package(config: Dict[str, Any]) -> None:
     """创建package.json.
 
     Args:

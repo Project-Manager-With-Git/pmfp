@@ -6,7 +6,7 @@ from typing import Dict, Any
 from pmfp.const import PROJECT_HOME
 
 
-def _git_check()->bool:
+def _git_check() -> bool:
     """检测项目有没有.git可以用于上传和打标签等操作."""
     if not PROJECT_HOME.joinpath(".git").exists():
         return False
@@ -14,7 +14,7 @@ def _git_check()->bool:
         return True
 
 
-def _git_check_and_find_remote()->str:
+def _git_check_and_find_remote() -> str:
     """从项目的.git中找到远端仓库url."""
     if not _git_check():
         raise AttributeError("upload to git should have a .git dir in root path")
@@ -27,7 +27,7 @@ def _git_check_and_find_remote()->str:
         return path
 
 
-def git_tag(config: Dict[str, Any])->None:
+def git_tag(config: Dict[str, Any]) -> None:
     """为项目打标签.
 
     Args:
@@ -36,7 +36,10 @@ def git_tag(config: Dict[str, Any])->None:
     remote = _git_check_and_find_remote()
     version = config["version"]
     status = config["status"]
-    tag = f"{status}-{version}"
+    if config["project-language"] != "Golang":
+        tag = f"{status}-{version}"
+    else:
+        tag = f"v{version}"
     command = f"git tag -a {tag} -m 'version: {tag}'"
     subprocess.check_call(command, shell=True)
     command = f"git push --tag"
@@ -44,7 +47,7 @@ def git_tag(config: Dict[str, Any])->None:
     print(f"push tag {tag} for package to {remote} done")
 
 
-def git_push(msg: str = None)->None:
+def git_push(msg: str = None) -> None:
     """对项目推代码.
 
     Args:
@@ -70,9 +73,9 @@ def git_push(msg: str = None)->None:
     print(f"push code to {remote} done")
 
 
-def upload(config: Dict[str, Any], kwargs: Dict[str, Any])->None:
+def upload(config: Dict[str, Any], kwargs: Dict[str, Any]) -> None:
     """将代码上传至远端git仓库.
-    
+
     Args:
         config (Dict[str, Any]): 项目的配置字典
         kwargs (Dict[str, Any]): 上传的关键字参数.

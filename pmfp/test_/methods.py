@@ -3,9 +3,10 @@
 from typing import Dict, Any
 from ._js_test import run_js_test
 from ._python_test import run_python_test
+from ._golang_test import run_golang_test
 
 
-def test(config: Dict[str, Any], kwargs: Dict[str, Any])->bool:
+def test(config: Dict[str, Any], kwargs: Dict[str, Any]) -> bool:
     """测试项目.
 
     Args:
@@ -18,6 +19,7 @@ def test(config: Dict[str, Any], kwargs: Dict[str, Any])->bool:
     """
     html = kwargs["html"]
     typecheck = kwargs["typecheck"]
+    benchmark = kwargs["benchmark"]
     source = kwargs["source"]
     language = config["project-language"]
     if language == "Python":
@@ -26,6 +28,8 @@ def test(config: Dict[str, Any], kwargs: Dict[str, Any])->bool:
     elif language == "Javascript":
         run_js_test()
         return True
+    elif language == "Golang":
+        run_golang_test(config, benchmark)
     else:
         print("未知的编程语言!")
         return False

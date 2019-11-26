@@ -146,6 +146,8 @@ def _init_env(config: Dict[str, Any])-> Dict[str, Any]:
         default_env = config.get("env") or "env"
     elif language == "Javascript":
         default_env = config.get("env") or "node"
+    elif language == "Golang":
+        default_env = config.get("env") or "gomod"
     else:
         print("不支持的项目语言")
         return

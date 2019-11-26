@@ -16,4 +16,4 @@ def release(config: Dict[str, Any])->None:
     elif p_language == "Python":
         release_py(config=config)
     else:
-        print("目前install子命令还不支持{p_language}语言")
+        print("目前release子命令还不支持{p_language}语言")

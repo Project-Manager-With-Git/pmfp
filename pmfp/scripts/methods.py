@@ -39,7 +39,7 @@ ppm工具的子命令有:
    upload      将项目上传至git仓库
 
    run         执行项目,需要在配置文件中指定入口文件
-   build       将项目打包
+   build       将项目打包,go项目可以以`$GOARCHS,$GOOSS,`的个形式指定交叉编译的平台
    release     将项目发表出去,app型的发表到docker的镜像仓库,module型的发表到包管理仓库
                
    test        执行测试
@@ -133,11 +133,11 @@ class PPM:
             description='固定依赖',
             epilog='子命令freeze用于为python项目固定依赖'
         )
-        parser.add_argument('--all', action='store_true',help="将全部依赖固定到requirements-all.txt")
+        parser.add_argument('--all', action='store_true', help="将全部依赖固定到requirements-all.txt")
         parser.add_argument(
-            '--dev', action='store_true',help="将开发依赖固定到requirements-dev.txt")
+            '--dev', action='store_true', help="将开发依赖固定到requirements-dev.txt")
         parser.add_argument(
-            '--noversion', action='store_true',help="不关心依赖的版本")
+            '--noversion', action='store_true', help="不关心依赖的版本")
         parser.set_defaults(func=freeze_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -242,6 +242,17 @@ grpc                     创建一个grpc用的protobuf文件
             default=False,
             help="只有cython写的model有用"
         )
+        parser.add_argument(
+            '--cross',
+            type=str,
+            default="",
+            choices=(
+                "linux-386", "windows-386", "darwin-386", "freebsd-386",
+                "linux-amd64", "windows-amd64", "darwin-amd64", "freebsd-amd64",
+                "linux-arm"
+            ),
+            help="交叉编译项目,形式为`$GOOSS-$GOARCHS`"
+        )
         parser.set_defaults(func=build_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -275,6 +286,8 @@ grpc                     创建一个grpc用的protobuf文件
                             help="use global env")
         parser.add_argument(
             '-T', '--typecheck', action="store_true", help="check python's typehints")
+        parser.add_argument(
+            '-B', '--benchmark', action="store_true", help="run benchmark test for golang")
         parser.add_argument('--source', type=str, nargs='*', help="coverage source")
         parser.set_defaults(func=test_cmd)
         args = parser.parse_args(self.argv[1:])

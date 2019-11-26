@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  webapp:
+    build: .
+    image: $project_name:latest
+    ports:
+      - "5000:5000"
+    

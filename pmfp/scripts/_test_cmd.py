@@ -15,7 +15,8 @@ def _parser_args(args):
     kwargs = {
         'html': False,
         "typecheck": False,
-        "source":[]
+        'benchmark': False,
+        "source": []
     }
     if args.html:
         kwargs.update({
@@ -25,8 +26,12 @@ def _parser_args(args):
         kwargs.update({
             "typecheck": args.typecheck
         })
+    if args.benchmark:
+        kwargs.update({
+            "benchmark": args.benchmark
+        })
     if args.source:
         kwargs.update({
-            "source":  args.source
+            "source": args.source
         })
     return kwargs

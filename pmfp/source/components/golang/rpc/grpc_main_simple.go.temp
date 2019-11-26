@@ -1,0 +1,38 @@
+package main
+
+import (
+	"context"
+	"log"
+	"net"
+	"strings"
+
+	pb "$project_name/grpc_schema"
+
+	grpc "google.golang.org/grpc"
+)
+
+const (
+	ADDRESS = "0.0.0.0:5000"
+)
+
+// server is used to implement helloworld.GreeterServer.
+type server struct{}
+
+// SayHello implements helloworld.GreeterServer
+func (s *server) DoFormat(ctx context.Context, in *pb.Data) (*pb.Data, error) {
+	log.Printf("Received: %v", in.Text)
+	return &pb.Data{Text: strings.ToUpper(in.Text)}, nil
+}
+
+func main() {
+	lis, err := net.Listen("tcp", ADDRESS)
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	log.Println("server started @", ADDRESS)
+	s := grpc.NewServer()
+	pb.RegisterRPCServer(s, &server{})
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
+}

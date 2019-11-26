@@ -1,13 +1,17 @@
 """为项目创建执行环境."""
 import json
 import subprocess
+from string import Template
 from typing import Dict, Any
 from pmfp.const import (
     GOLBAL_PYTHON_VERSION,
     ENV_PATH,
     JS_ENV_PATH,
-    PROJECT_HOME
+    PROJECT_HOME,
+    GO_ENV_PATH,
+    PMFP_GOLANG_ENV_TEMP
 )
+
 from .utils import new_json_package
 from .const import (
     WEBPACK_BASE_CONFIG,
@@ -209,6 +213,22 @@ def _new_js_env(config: Dict[str, Any]):
         raise AttributeError("unknown env")
 
 
+def _new_go_env(config: Dict[str, Any]):
+    env = config["env"]
+    print('creating env')
+    if GO_ENV_PATH.exists():
+        print("go的虚拟环境已存在!")
+        return
+    project_name = config["project-name"]
+    template_content = Template(PMFP_GOLANG_ENV_TEMP.open(encoding='utf-8').read())
+    content = template_content.substitute(
+        project_name=project_name
+    )
+    
+    with open(str(GO_ENV_PATH), "w", encoding="utf-8") as fa:
+        fa.write(content)
+
+
 def new_env(config: Dict[str, Any], language: str):
     """为项目创建执行环境.
 
@@ -222,5 +242,7 @@ def new_env(config: Dict[str, Any], language: str):
     elif language in ("javascript", "Javascript"):
         _new_js_env(config)
         print('creating env')
+    elif language in ("go", "golang", "Go", "Golang"):
+        _new_go_env(config)
     else:
         print("暂时不支持")

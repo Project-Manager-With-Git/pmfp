@@ -1,0 +1,14 @@
+{
+    "name": "rpc-grpc-simple",
+    "desc": "grpc的简单标准化模板",
+    "project-language": "Golang",
+    "project-type": "application",
+    "components": {
+        "rpc-grpc_main_simple.go.temp": [".", "main"],
+        "grpc": ["pbschema", "data"]
+    },
+    "requirement": ["google.golang.org/grpc@v1.19.0"],
+    "requirement-dev": [
+        "github.com/golang/protobuf@v1.3.1"
+    ]
+}
