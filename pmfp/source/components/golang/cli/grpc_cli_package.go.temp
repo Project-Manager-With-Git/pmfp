@@ -1,0 +1,38 @@
+package cli
+
+import (
+	"context"
+	pb "goceshi/grpc_schema"
+	"time"
+
+	grpc "google.golang.org/grpc"
+)
+
+// Client pb的客户端类型
+type Client struct {
+	Address string
+}
+
+// New 创建客户端对象
+func New(address string) *Client {
+	return &Client{Address: address}
+}
+
+func (client *Client) DoFormat(info string) (string, error) {
+	conn, err := grpc.Dial(client.Address, grpc.WithInsecure())
+	if err != nil {
+		return "", err
+	}
+	defer conn.Close()
+	c := pb.NewRPCClient(conn)
+	// 设置请求上下文的过期时间
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+
+	rs, err := c.DoFormat(ctx, &pb.Data{Text: info})
+	if err != nil {
+		return "", err
+	}
+
+	return rs.Text, nil
+}

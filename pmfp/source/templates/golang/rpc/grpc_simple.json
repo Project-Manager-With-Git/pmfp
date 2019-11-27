@@ -4,6 +4,14 @@
     "project-language": "Golang",
     "project-type": "application",
     "components": {
+        "cli-grpc_cli_package.go.temp": [
+            "cli",
+            "cli"
+        ],
+        "cli-grpc_cli_cmd.go.temp": [
+            ".",
+            "test_client"
+        ],
         "rpc-grpc_main_simple.go.temp": [
             ".",
             "main"

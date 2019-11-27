@@ -6,7 +6,7 @@ def run_cmd(args):
     config = load_rc()
     if config:
         if args.cmd:
-            cmd = args.cmd
+            cmd = " ".join(args.cmd)
         else:
             cmd = None
         if args.entry:

@@ -264,11 +264,11 @@ grpc                     创建一个grpc用的protobuf文件
         parser = argparse.ArgumentParser(
             prog='ppm run',
             description='执行脚本,脚本的入口由配置文件中的entry字段指定')
-
-        parser.add_argument('cmd', type=str,
-                            default="", help="执行的参数字符串")
         parser.add_argument('-e', '--entry', type=str, default="",
                             help="指定入口文件")
+        parser.add_argument('cmd', type=str,
+                            nargs='*', help="执行的参数字符串")
+
         parser.set_defaults(func=run_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
