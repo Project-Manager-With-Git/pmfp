@@ -15,7 +15,7 @@ from pmfp.utils import find_project_name_path, get_python_path
 from .utils import delete_source
 
 
-def _delete_py_source(root_path: Path)->None:
+def _delete_py_source(root_path: Path) -> None:
     """将python源码的.py文件删除.
 
     这是一个递归操作的函数.
@@ -31,7 +31,7 @@ def _delete_py_source(root_path: Path)->None:
     )
 
 
-def _delete_c_source(root_path: Path)->None:
+def _delete_c_source(root_path: Path) -> None:
     """将C语言的源码删除.
 
     删除的包括".c", ".cpp", ".oc"作为后缀的文件
@@ -46,7 +46,7 @@ def _delete_c_source(root_path: Path)->None:
     )
 
 
-def build_python_app(config: Dict[str, Any])->None:
+def build_python_app(config: Dict[str, Any]) -> None:
     """将Application类型的python项目构造为可执行的.pyz文件.
 
     只会打包不是单文件的application项目
@@ -59,7 +59,7 @@ def build_python_app(config: Dict[str, Any])->None:
 
     """
     project_name = config["project-name"]
-    print(f'build {project_name} to pyz file')
+    print(f'编译打包python项目{project_name}为pyz文件')
     project_name_path = find_project_name_path(project_name)
     if find_project_name_path is False:
         print("找不到项目名同名目录")
@@ -90,12 +90,14 @@ def build_python_app(config: Dict[str, Any])->None:
                 except Exception as e:
                     print(f"发生错误{type(e)}:{str(e)}")
                     raise e
+                else:
+                    print("完成编译打包python项目{project_name}为pyz文件!")
                 finally:
                     if temp_path.exists():
                         shutil.rmtree(str(temp_path))
 
 
-def _build_cython(config: Dict[str, Any], inplace: bool = False)->None:
+def _build_cython(config: Dict[str, Any], inplace: bool = False) -> None:
     """编译构建cython写的python项目.
 
     Args:
@@ -109,7 +111,7 @@ def _build_cython(config: Dict[str, Any], inplace: bool = False)->None:
         print("没有requirements.txt,创建")
         freeze(config)
     project_name = config["project-name"]
-    print(f'build {project_name} @ `build` ')
+    print(f'编译cython项目{project_name}到路径`build`')
     python_path = get_python_path(config)
     if "cython" in config["template"]:
         if inplace:
@@ -133,7 +135,7 @@ def _build_cython(config: Dict[str, Any], inplace: bool = False)->None:
         raise AttributeError("template中必须有cython字段才会编译")
 
 
-def _build_cython_inplace(config: Dict[str, Any])->None:
+def _build_cython_inplace(config: Dict[str, Any]) -> None:
     """在cython源文件处构造模块.
 
     Args:
@@ -142,7 +144,7 @@ def _build_cython_inplace(config: Dict[str, Any])->None:
     _build_cython(config, True)
 
 
-def _build_curepython(config: Dict[str, Any])->None:
+def _build_curepython(config: Dict[str, Any]) -> None:
     """构造纯python项目的模块,到build文件夹下.
 
     Args:
@@ -152,13 +154,13 @@ def _build_curepython(config: Dict[str, Any])->None:
         print("没有requirements.txt,创建")
         freeze(config)
     project_name = config["project-name"]
-    print(f'build {project_name} @ `build` ')
+    print(f'编译纯python项目{project_name}到路径`build`')
     python_path = get_python_path(config)
     command = f"{python_path} setup.py build"
     subprocess.check_call(command, shell=True)
 
 
-def build_python_module(config: Dict[str, Any], inplace: bool)->None:
+def build_python_module(config: Dict[str, Any], inplace: bool) -> None:
     """构造python的模块.
 
     支持cython和纯python.

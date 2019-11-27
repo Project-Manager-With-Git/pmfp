@@ -5,8 +5,8 @@ from typing import Dict, Any
 from pmfp.const import PROJECT_HOME
 
 
-def release_js(config: Dict[str, Any]) -> None:
-    """将js项目发布到合适的地方.
+def release_golang(config: Dict[str, Any]) -> None:
+    """将go项目发布到合适的地方.
 
     目前模块项目会被发送到npm,application则会打包为docker image发送到指定的远程register.
 
@@ -22,12 +22,7 @@ def release_js(config: Dict[str, Any]) -> None:
     """
     home = Path.home()
     if config["project-type"] == "module":
-        if not PROJECT_HOME.joinpath("package.json").exists():
-            print("没有package.json")
-            raise AttributeError("没有package.json")
-        command = "npm publish"
-        subprocess.call(command, shell=True)
-        print("发布包到npm成功!")
+        print("golang没有包仓库,请使用`upload -t`接口上传源文件到git仓库")
     else:
         project_name = config["project-name"]
         remote_registry = config["remote_registry"]

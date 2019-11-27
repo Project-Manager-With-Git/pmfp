@@ -63,6 +63,10 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 4. init命令新增字段`--noinstall`,标明创建时不安装依赖
 5. sanic,flask,rpc项目的dockerfile中不再强制使用`pyz`
 6. sanic,flask,rpc项目新增docker-compose模板
+7. 新增了对golang的支持,目前支持的主要是grpc和gin
+8. build方法新增对golang交叉编译的支持
+9. run方法新增对golang指定入口文件的支持
+10. 所有提示改为中文
 
 ### 3.0.15
 

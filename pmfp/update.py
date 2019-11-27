@@ -14,7 +14,7 @@ def update_readme(config: Dict[str, Any])->None:
     readme_rst = PROJECT_HOME.joinpath('README.rst')
     readme_md = PROJECT_HOME.joinpath('README.md')
     if readme_rst.exists():
-        print("update readme.rst")
+        print("更新readme.rst中的版本信息")
         with open(str(readme_rst), "r", encoding="utf-8") as f:
             lines = []
             for i in f:
@@ -27,7 +27,7 @@ def update_readme(config: Dict[str, Any])->None:
             for i in lines:
                 f.write(i)
     if readme_md.exists():
-        print("update readme.md")
+        print("更新readme.md中的版本信息")
         with open(str(readme_md), "r", encoding="utf-8") as f:
             lines = []
             for i in f:
@@ -48,7 +48,7 @@ def update_doc(config: Dict[str, Any])->None:
     """
     doc = PROJECT_HOME.joinpath('document/index.rst')
     if doc.exists():
-        print("update doc index.rst")
+        print("更新文档中index页的版本信息")
         with open(doc, "r", encoding="utf-8") as f:
             lines = []
             for i in f:
@@ -69,7 +69,7 @@ def update_package_json(config: Dict[str, Any])->None:
     """
     package = PROJECT_HOME.joinpath("package.json")
     if package.exists():
-        print("update package.json")
+        print("更新package.json中的版本信息")
         with open(str(package), "r", encoding="utf-8") as f:
             pak = json.load(f)
         pak.update({"version": config["version"]})
@@ -77,7 +77,7 @@ def update_package_json(config: Dict[str, Any])->None:
             json.dump(pak, f)
 
 def update_info_json(config: Dict[str, Any])->None:
-    """更新项目源码中的info.json文件.
+    """更新项目源码中的info.py文件.
 
     Args:
         config (Dict[str, Any]): 项目信息字典.
@@ -86,7 +86,7 @@ def update_info_json(config: Dict[str, Any])->None:
     project_name = config["project-name"]
     info = PROJECT_HOME.joinpath(f"{project_name}/info.py")
     if info.exists():
-        print("update info.py")
+        print("更新项目源码中info.py文件的版本信息")
         with open(str(info), "r", encoding="utf-8") as f:
             lines = []
             for i in f:

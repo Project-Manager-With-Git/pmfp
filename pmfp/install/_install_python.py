@@ -27,7 +27,7 @@ PYTHON_REQUIREMENTS_PATH = {
 def install(
         config: Dict[str, Any],
         package: Optional[str] = None,
-        dev: bool = False)->bool:
+        dev: bool = False) -> bool:
     """python 安装依赖.
 
     Args:
@@ -51,9 +51,8 @@ def install(
                         command = f"conda install -y {package} -p env"
                 elif config["env"] == "env":
                     if package in WINDOWS_ENV_BLACKLIST:
-                        print(f"""windowsc an not install {package} through pip,
-                        please go to http://www.lfd.uci.edu/~gohlke/pythonlibs and 
-                        download the packages you need,then install""")
+                        print(f"""windows环境下无法使用pip安装包{package},
+                        请去<http://www.lfd.uci.edu/~gohlke/pythonlibs>下载需要的包并安装""")
                         return False
                     elif package in WINDOWS_ENV_BLACKDICT.keys():
                         command = WINDOWS_ENV_BLACKDICT[package].format(python_path=python_path)
@@ -82,9 +81,8 @@ def install(
                     command = f"conda install -y {package} -p env"
             elif config["env"] == "env":
                 if package in WINDOWS_ENV_BLACKLIST:
-                    print(f"""windowsc an not install {package} through pip,
-                    please go to http://www.lfd.uci.edu/~gohlke/pythonlibs and 
-                    download the packages you need,then install""")
+                    print(f"""windows环境下无法使用pip安装包{package},
+                        请去<http://www.lfd.uci.edu/~gohlke/pythonlibs>下载需要的包并安装""")
                     return False
                 elif package in WINDOWS_ENV_BLACKDICT.keys():
                     command = WINDOWS_ENV_BLACKDICT[package].format(python_path=python_path)
@@ -102,7 +100,7 @@ def install(
             print(f"执行安装命令:{command}时出错")
             raise e
         else:
-            print(package, "installed")
+            print(f"包{package} 安装完成!")
             if dev is True:
                 requirement = list(set(config["requirement-dev"]))
                 requirement.append(package)

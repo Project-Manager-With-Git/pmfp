@@ -59,7 +59,7 @@ def default_document(config: Dict[str, Any], language: str)->bool:
 
     """
     if DOC_PATH.exists():
-        print("document exists")
+        print("document文件夹已存在")
         return False
     else:
         package_path = PROJECT_HOME.joinpath(config["project-name"])
@@ -76,24 +76,23 @@ def default_document(config: Dict[str, Any], language: str)->bool:
         doc_conf_temp = Template(doc_conf)
         with open("document/conf.py", "w", encoding="utf-8") as f:
             f.write(doc_conf)
-        print('init document source done')
-        print("building document")
+        print('完成初始化文档源文件')
+        print("编译项目文档")
         command = "sphinx-build -b html document docs"
         subprocess.check_call(command, shell=True)
-        print("build Document done!")
         docs = PROJECT_HOME.joinpath("docs")
         nojekyll = docs.joinpath(".nojekyll")
         if not nojekyll.exists():
             with nojekyll.open("w", encoding="utf-8") as f:
                 pass
-        print("building document done")
-        print("init Internationalization")
+        print("编译项目文档完成!")
+        print("初始化项目文档国际化部分")
         command = "sphinx-build -b gettext document docs/locale"
         subprocess.check_call(command, shell=True)
         command = "sphinx-intl update -p docs/locale -d document/locale -l zh -l en"
         subprocess.check_call(command, shell=True)
-        print("init Internationalization done")
-    print('new document done')
+        print("初始化项目文档国际化部分 完成!")
+    print('创建项目文档完成')
     return True
 
 
@@ -104,7 +103,7 @@ def new_document(config: Dict[str, Any], language: str):
         config (Dict[str, Any]): 项目配置.
         language (str): 项目的编程语言.
     """
-    print('building document')
+    print('创建项目文档')
     if language == "javascript":
         js_document(config)
     else:

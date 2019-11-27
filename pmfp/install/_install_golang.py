@@ -46,7 +46,7 @@ def install(
             print(f"执行安装命令:{command}时出错")
             raise e
         else:
-            print(package, "installed")
+            print(f"包{package} 安装完成!")
             if dev is True:
                 requirement = list(set(config["requirement-dev"]))
                 requirement.append(package)
@@ -57,5 +57,5 @@ def install(
                 config["requirement"] = requirement
             with open(str(PMFPRC_PATH), "w", encoding="utf-8") as f:
                 json.dump(config, f)
-            print("安装依赖成功")
+            print("安装并记录依赖成功")
             return True

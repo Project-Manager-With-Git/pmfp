@@ -35,7 +35,7 @@ def _new_python_env(config: Dict[str, Any]):
 
     """
     env = config["env"]
-    print('creating env')
+    print('创建python项目的虚拟环境')
     if ENV_PATH.exists():
         print("虚拟环境已存在!")
         return
@@ -47,7 +47,7 @@ def _new_python_env(config: Dict[str, Any]):
     else:
         raise AttributeError("unknown env")
     subprocess.check_call(command, shell=True)
-    print('creating python env done!')
+    print('创建python项目的虚拟环境 完成!')
 
 
 def _new_babel(config: Dict[str, Any]):
@@ -197,9 +197,9 @@ def _new_vue(config: Dict[str, Any]):
 def _new_js_env(config: Dict[str, Any]):
     """为js项目创建运行环境."""
     env = config["env"]
-    print('creating env')
+    print('创建js的执行环境配置')
     if JS_ENV_PATH.exists():
-        print("js虚拟环境已存在!")
+        print("js执行环境配置已存在!")
         return
     if env == "node":
         _new_node(config)
@@ -215,7 +215,7 @@ def _new_js_env(config: Dict[str, Any]):
 
 def _new_go_env(config: Dict[str, Any]):
     env = config["env"]
-    print('creating env')
+    print('创建go语言的编译环境')
     if GO_ENV_PATH.exists():
         print("go的虚拟环境已存在!")
         return
@@ -241,8 +241,7 @@ def new_env(config: Dict[str, Any], language: str):
         _new_python_env(config)
     elif language in ("javascript", "Javascript"):
         _new_js_env(config)
-        print('creating env')
     elif language in ("go", "golang", "Go", "Golang"):
         _new_go_env(config)
     else:
-        print("暂时不支持")
+        print(f"暂时不支持语言{language}创建环境")

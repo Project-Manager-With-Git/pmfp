@@ -28,7 +28,7 @@ def template_2_file(project_name: str, path: Path):
                 project_name=project_name
             )
         except:
-            print(f"path:{path} template2file error")
+            print(f"位置{path} 执行template2file出错")
             raise
         else:
             path.open("w", encoding='utf-8').write(content)

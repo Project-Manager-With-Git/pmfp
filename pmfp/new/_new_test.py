@@ -44,29 +44,27 @@ def js_test(project_name: str, rename: str, path: Path):
         rename (str): 测试文件夹改名
         path (Path): 在测试文件夹中的位置
     """
-    print("test.js")
     test_init = TEST_PATH.joinpath("test.js.temp")
     if not test_init.exists():
         shutil.copy(
             str(PMFP_TEST_TEMP.joinpath("javascript/test.js.temp")),
             str(TEST_PATH.joinpath("test.js"))
         )
-    print("const.js")
+
     test_const = TEST_PATH.joinpath("const.js.temp")
     if not test_const.exists():
         shutil.copy(
             str(PMFP_TEST_TEMP.joinpath("javascript/const.js.temp")),
             str(TEST_PATH.joinpath("const.js"))
         )
-    print(f"test_{rename}")
+
     test_path = TEST_PATH.joinpath(f"test_{rename}")
     shutil.copytree(
         str(PMFP_TEST_TEMP.joinpath(path)),
         str(test_path)
     )
-    print("template_2_file")
+
     iter_template_2_file(project_name, test_path)
-    print("template_2_file")
 
 
 def new_test(language: str, project_name: str, rename: str):

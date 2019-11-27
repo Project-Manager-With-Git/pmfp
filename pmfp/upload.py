@@ -44,7 +44,7 @@ def git_tag(config: Dict[str, Any]) -> None:
     subprocess.check_call(command, shell=True)
     command = f"git push --tag"
     subprocess.check_call(command, shell=True)
-    print(f"push tag {tag} for package to {remote} done")
+    print(f"推送 tag版本{tag}到git仓库{remote}完成")
 
 
 def git_push(msg: str = None) -> None:
@@ -70,7 +70,7 @@ def git_push(msg: str = None) -> None:
     subprocess.check_call(command, shell=True)
     command = "git push"
     subprocess.check_call(command, shell=True)
-    print(f"push code to {remote} done")
+    print(f"推送源码到git仓库{remote}完成")
 
 
 def upload(config: Dict[str, Any], kwargs: Dict[str, Any]) -> None:

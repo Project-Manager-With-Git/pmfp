@@ -119,9 +119,9 @@ class PPM:
             description='为项目安装依赖',
             epilog='子命令install用于安装依赖'
         )
-        parser.add_argument('packages', nargs='?', type=str, default="DEFAULT")
+        parser.add_argument('packages', nargs='?', type=str, default="DEFAULT", help="要安装的依赖名")
         parser.add_argument(
-            '--dev', action='store_true')
+            '--dev', action='store_true', help="要安装依赖是开发依赖还是执行依赖")
         parser.set_defaults(func=install_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -170,10 +170,10 @@ grpc                     创建一个grpc用的protobuf文件
 
     def init(self):
         """创建对应模板项目的子命令."""
-        print('Running ppm init')
+        print('ppm执行项目初始化')
         parser = argparse.ArgumentParser(
             prog='ppm init',
-            description='基于模板创建一个项目',
+            description='基于模板创建一个项目,可以指定参数创建,也可以在交互环境输入对应的值',
             epilog='子命令init用于新建一个项目'
         )
         parser.add_argument("project_name", nargs='?', type=str, help="项目命名")
@@ -206,9 +206,9 @@ grpc                     创建一个grpc用的protobuf文件
         parser = argparse.ArgumentParser(
             prog='ppm update',
             description="更新项目的版本号和开发状态")
-        parser.add_argument('-v', '--version', type=str)
+        parser.add_argument('-v', '--version', type=str, help="更新版本")
         parser.add_argument('-s', "--status", type=str,
-                            choices=STATUS_RANGE)
+                            choices=STATUS_RANGE, help="更新开发状态")
         parser.set_defaults(func=update_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -220,11 +220,12 @@ grpc                     创建一个grpc用的protobuf文件
             prog='ppm upload',
             description='upload project to a remote git repository')
         parser.add_argument('-m', '--message', type=str, default="", help="commit的信息")
-        parser.add_argument('-t', '--with_tag', action="store_true", default=False, help="是否打标签")
+        parser.add_argument('-t', '--with_tag', action="store_true", default=False,
+                            help="是否打标签,go语言的标签会符合版本发布要求格式,其他则是`{status}-{version}`的格式")
         parser.set_defaults(func=upload_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("upload done!")
+        print("项目版本更新完成!")
 
     def build(self):
         """按需求编译项目为二进制文件.
@@ -263,50 +264,53 @@ grpc                     创建一个grpc用的protobuf文件
         parser = argparse.ArgumentParser(
             prog='ppm run',
             description='执行脚本,脚本的入口由配置文件中的entry字段指定')
-        parser.add_argument('script', type=str,
-                            nargs='*')
+
+        parser.add_argument('cmd', type=str,
+                            default="", help="执行的参数字符串")
+        parser.add_argument('-e', '--entry', type=str, default="",
+                            help="指定入口文件")
         parser.set_defaults(func=run_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("run script done!")
+        print("项目执行完成!")
 
     def release(self):
         """发布项目到合适的地方."""
         release_cmd()
-        print("release done!")
+        print("项目发布完成!")
 
     def test(self):
         """测试命令的参数设置."""
         parser = argparse.ArgumentParser(
             prog='ppm test',
-            description='test project')
+            description='测试项目')
         parser.add_argument('-H', '--html', action="store_true", default=False,
-                            help="export the html report")
+                            help="将测试结果导出到html文件(golang无效)")
         parser.add_argument('-g', action="store_true", default=False,
-                            help="use global env")
+                            help="使用全局执行环境测试(python,js有效)")
         parser.add_argument(
-            '-T', '--typecheck', action="store_true", help="check python's typehints")
+            '-T', '--typecheck', action="store_true", help="类型检测(只有python有效)")
         parser.add_argument(
-            '-B', '--benchmark', action="store_true", help="run benchmark test for golang")
-        parser.add_argument('--source', type=str, nargs='*', help="coverage source")
+            '-B', '--benchmark', action="store_true", help="性能测试(只有golang有效)")
+        parser.add_argument('--source', type=str, nargs='*', help="测试覆盖的范围")
         parser.set_defaults(func=test_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("test done!")
+        print("项目测试完成!")
 
     def doc(self):
         """用于构建文档."""
         parser = argparse.ArgumentParser(
             prog='ppm doc',
-            description="build project's document")
-        parser.add_argument('-s', '--serve', action="store_true")
-        parser.add_argument('-u', '--update', action="store_true")
-        parser.add_argument('-l', '--locale', type=str, default="", help="小语种支持")
-        parser.add_argument('-b', '--build', action="store_true")
+            description="构建和编译输出项目文档")
+        parser.add_argument('-s', '--serve', action="store_true", help="启动http的文档服务")
+        parser.add_argument('-u', '--update', action="store_true", help="由代码更新源文件")
+        parser.add_argument('-l', '--locale', type=str, default="", help="添加特定语言支持")
+        parser.add_argument('-b', '--build', action="store_true", help="编译构建项目文档")
         parser.set_defaults(func=doc_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
-        print("doc done!")
+        print("项目构建文档完成!")
 
     def build_pb(self):
         """编译protobuf的schema到指定的语言指定的位置."""

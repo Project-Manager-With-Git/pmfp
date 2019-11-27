@@ -25,7 +25,7 @@ def _run_python_test(
         e: 测试失败会报错
 
     """
-    print("unittest start")
+    print("开始单元测试")
     python_path = get_python_path(config)
     package_name = config["project-name"]
     if source:
@@ -36,7 +36,7 @@ def _run_python_test(
     try:
         subprocess.check_call(command, shell=True)
     except Exception as e:
-        print("error")
+        print("单元测试执行失败")
         raise e
     else:
         if html:
@@ -45,7 +45,7 @@ def _run_python_test(
         else:
             command = f"{python_path} -m coverage report"
             subprocess.check_call(command, shell=True)
-    print("unittest done!")
+    print("单元测试完成!")
 
 
 def _run_python_typecheck(
@@ -63,7 +63,7 @@ def _run_python_typecheck(
         e: 测试失败会报错
 
     """
-    print("type check start")
+    print("类型检验开始")
     language = config["project-language"]
     project_name = config["project-name"]
     project_name_path = find_project_name_path(project_name)
@@ -90,12 +90,12 @@ def _run_python_typecheck(
                 ["--no-site-packages","--ignore-missing-imports"] + package_name
             )
         if result[0]:
-            print('\nType checking report:\n')
+            print('\n类型检验报告:\n')
             print(result[0])  # stdout
-        print("type check done!")
+        print("类型检验结束!")
         return True
     else:
-        print("only python can check type")
+        print("只有python语言的项目有类型检验")
         return False
 
 

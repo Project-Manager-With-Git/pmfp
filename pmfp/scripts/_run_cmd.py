@@ -5,10 +5,14 @@ from pmfp.config import load_rc
 def run_cmd(args):
     config = load_rc()
     if config:
-        if args.script:
-            cmd = " ".join(args.script)
+        if args.cmd:
+            cmd = args.cmd
         else:
             cmd = None
-        run(config, cmd)
+        if args.entry:
+            entry = args.entry
+        else:
+            entry = None
+        run(config, entry, cmd)
     else:
         print("命令需要在pmfp项目中执行")

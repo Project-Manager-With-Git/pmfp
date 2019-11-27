@@ -15,5 +15,7 @@ def release(config: Dict[str, Any])->None:
         release_js(config=config)
     elif p_language == "Python":
         release_py(config=config)
+    elif p_language == "Golang":
+        release_golang(config=config)
     else:
         print("目前release子命令还不支持{p_language}语言")

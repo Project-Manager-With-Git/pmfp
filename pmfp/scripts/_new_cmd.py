@@ -5,7 +5,6 @@ from pmfp.config import load_rc
 def new_cmd(args):
     config = load_rc()
     if config is False:
-        #print("new命令需要目录下有.pmfprc.json配置文件.")
         kwargs_o = _parser_args(args)
         c_language = kwargs_o.get("language").capitalize()
         spl_name = kwargs_o.get("component_name").split("-")
