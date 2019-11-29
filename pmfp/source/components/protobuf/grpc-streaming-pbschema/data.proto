@@ -1,0 +1,12 @@
+syntax = "proto3";
+package grpc_schema;
+
+service RPC {
+    rpc Square (Message) returns (Message){}
+    rpc RangeSquare (Message) returns (stream Message){}
+    rpc SumSquare (stream Message) returns (Message){}
+    rpc StreamrangeSquare (stream Message) returns (stream Message){}
+}
+message Message {
+    double Message = 1;
+}

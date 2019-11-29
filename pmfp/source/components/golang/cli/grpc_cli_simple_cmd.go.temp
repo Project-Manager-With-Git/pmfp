@@ -6,15 +6,27 @@ import (
 	cli  "$project_name/cli"
 )
 
-func test_rpc(client_address string){
+func test_rpc(client_address string) {
 	client := cli.New(client_address)
 	result, err := client.DoFormat("Huang Sizhe")
 	if err != nil {
 		log.Println("err")
-	}else{
+	} else {
 		log.Println(result)
 	}
+	res, err := client.Do(
+		func(c pb.RPCClient, ctx context.Context) (interface{}, error) {
+			rs, err := c.DoFormat(ctx, &pb.Data{Text: "XiLi"})
+			return rs, err
+		},
+		time.Second)
+	if err != nil {
+		log.Println("err")
+	} else {
+		log.Println(res.(*pb.Data).Text)
+	}
 }
+
 
 func main() {
 	address := flag.String("address", "localhost:5000", "连接或启动的地址")

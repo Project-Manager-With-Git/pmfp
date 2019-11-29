@@ -40,7 +40,7 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
         new_readme(config)
     elif c_name in ("setup", "cython_setup", "cython_numpy_setup", "cmd_setup"):
         new_setup(config, c_language, c_name)
-    elif c_name in ("pb", "grpc"):
+    elif c_name in ("pb", "grpc","grpc-streaming"):
         if kwargs["rename"] == "-":
             rename = config["project-name"]
         elif kwargs["rename"] == "":

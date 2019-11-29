@@ -1,22 +1,22 @@
 {
-    "name": "rpc-grpc_simple",
-    "desc": "grpc的简单标准化模板,这个模板适合只使用请求响应模式的简单需求.",
+    "name": "rpc-grpc_complex",
+    "desc": "grpc的简单标准化模板",
     "project-language": "Golang",
     "project-type": "application",
     "components": {
-        "cli-grpc_cli_simple_package.go.temp": [
+        "cli-grpc_cli_streaming_package.go.temp": [
             "cli",
             "cli"
         ],
-        "cli-grpc_cli_simple_cmd.go.temp": [
+        "cli-grpc_cli_cmd.go.temp": [
             ".",
             "test_client"
         ],
-        "rpc-grpc_main_simple.go.temp": [
+        "rpc-grpc_main_complex.go.temp": [
             ".",
             "main"
         ],
-        "grpc": [
+        "grpc-streaming": [
             "pbschema",
             "data"
         ],

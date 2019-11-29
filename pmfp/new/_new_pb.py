@@ -18,7 +18,9 @@ def new_pb(c_name: str, rename: str, to: str = "pbschema"):
     if c_name == "pb":
         c_path = PMFP_PB_TEMP.joinpath("pbschema/data.proto")
     elif c_name == "grpc":
-        c_path = PMFP_PB_TEMP.joinpath("rpc-pbschema/data.proto")
+        c_path = PMFP_PB_TEMP.joinpath("grpc-pbschema/data.proto")
+    elif c_name == "grpc-streaming":
+        c_path = PMFP_PB_TEMP.joinpath("grpc-streaming-pbschema/data.proto")
     to_path = t_path.joinpath(rename + ".proto")
     if to_path.exists():
         print(f"存在同名文件{rename}.proto")
