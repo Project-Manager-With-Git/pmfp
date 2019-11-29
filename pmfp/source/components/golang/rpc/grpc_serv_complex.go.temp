@@ -1,0 +1,89 @@
+package serv
+
+import (
+	"container/list"
+	"context"
+	"io"
+	"log"
+	"net"
+
+	pb "$project_name/grpc_schema"
+
+	grpc "google.golang.org/grpc"
+)
+
+type server struct{}
+
+//Square 请求-响应模式模板
+func (s *server) Square(ctx context.Context, in *pb.Message) (*pb.Message, error) {
+	log.Printf("Received: %v", in.Message)
+	return &pb.Message{Message: in.Message * in.Message}, nil
+}
+
+//RangeSquare 请求-响应流模式模板
+func (s *server) RangeSquare(in *pb.Message, stream pb.RPC_RangeSquareServer) error {
+	log.Printf("Received: %v", in.Message)
+	limit := int(in.Message)
+	for i := 0; i <= limit; i++ {
+		r := float64(i * i)
+		err := stream.Send(&pb.Message{Message: r})
+		log.Printf("Send: %v", r)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+//SumSquare 请求流-响应模式模板
+func (s *server) SumSquare(stream pb.RPC_SumSquareServer) error {
+	var sum float64 = 0.0
+	for {
+		data, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				return stream.SendAndClose(&pb.Message{Message: sum})
+			}
+			if err != nil {
+				return err
+			}
+		} else {
+			sum += data.Message * data.Message
+		}
+	}
+}
+
+//StreamrangeSquare 请求流-响应流模式模板
+func (s *server) StreamrangeSquare(stream pb.RPC_StreamrangeSquareServer) error {
+	l := list.New()
+	for {
+		in, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				break
+			} else {
+				return err
+			}
+		} else {
+			l.PushBack(in.Message * in.Message)
+		}
+	}
+	for e := l.Front(); e != nil; e = e.Next() {
+		stream.Send(&pb.Message{Message: e.Value.(float64)})
+	}
+	return nil
+}
+
+//RunServer 启动服务
+func RunServer(server_address string) {
+	lis, err := net.Listen("tcp", server_address)
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	log.Println("server started @", server_address)
+	s := grpc.NewServer()
+	pb.RegisterRPCServer(s, &server{})
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
+}
