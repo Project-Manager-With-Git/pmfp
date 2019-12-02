@@ -8,7 +8,7 @@ from pmfp.const import (
 )
 
 
-def template_2_file(project_name: str, path: Path):
+def template_2_file(path: Path,**kwargs):
     """将模板转换为项目中的文件.
 
     Args:
@@ -25,7 +25,7 @@ def template_2_file(project_name: str, path: Path):
         try:
             template_content = Template(path.open(encoding='utf-8').read())
             content = template_content.substitute(
-                project_name=project_name
+                **kwargs
             )
         except:
             print(f"位置{path} 执行template2file出错")
@@ -44,7 +44,7 @@ def template_2_file(project_name: str, path: Path):
     path.rename(Path(newpath))
 
 
-def iter_template_2_file(project_name: str, path: Path):
+def iter_template_2_file( project_name: str,path: Path):
     """遍历并将模板转化为项目中的文件.
 
     Args:
@@ -54,9 +54,9 @@ def iter_template_2_file(project_name: str, path: Path):
     for p in path.iterdir():
         if p.is_file():
             if p.suffix == ".temp":
-                template_2_file(project_name, p)
+                template_2_file(p,project_name=project_name)
         else:
-            iter_template_2_file(project_name, p)
+            iter_template_2_file(project_name,p)
 
 
 def new_json_package(config: Dict[str, Any]) -> None:

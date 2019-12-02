@@ -73,7 +73,8 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
         test = kwargs["test"]
         try:
             print(f"创建组件{c_path}")
-            new_component(config, path=c_path, to=to, rename=rename, test=test)
+            kwargs.get("kwargs",{})
+            new_component(config, path=c_path, to=to, rename=rename, test=test,**kwargs.get("kwargs",{}))
         except Exception as e:
             print(f"组件{c_path}创建错误")
             raise e

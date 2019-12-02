@@ -1,0 +1,11 @@
+package $package
+
+type $typeList struct {
+    Value $valuetype
+    Next *$typeList
+}
+
+func New() *$typeList {
+    var node $typeList
+    return &node
+}

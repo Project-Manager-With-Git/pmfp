@@ -1,3 +1,5 @@
+
+import json
 from pmfp.new import new,new_component
 from pmfp.config import load_rc
 
@@ -21,7 +23,8 @@ def new_cmd(args):
             path, 
             to,
             kwargs_o.get("rename"), 
-            kwargs_o.get("test")
+            kwargs_o.get("test"),
+            **kwargs_o.get("kwargs",{})
         )
     else:
         kwargs_o = _parser_args(args)
@@ -35,7 +38,8 @@ def _parser_args(args):
         'to': "-",
         'rename': "-",
         "language": "-",
-        "test": False
+        "test": False,
+        "kwargs":{}
     }
     if args.component_name:
         result["component_name"] = args.component_name
@@ -47,4 +51,10 @@ def _parser_args(args):
         result['language'] = args.language
     if args.test:
         result['test'] = args.test
+    if args.kwargs:
+        print(args.kwargs)
+        try:
+            result['kwargs']=json.loads(args.kwargs)
+        except:
+            print("关键字kwargs无法解析为json形式")
     return result

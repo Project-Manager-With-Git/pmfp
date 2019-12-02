@@ -158,12 +158,14 @@ cython_setup             cython的安装脚本
 cython_numpy_setup       cython的安装脚本,带上numpy依赖
 pb                       创建一个protobuf 文件
 grpc                     创建一个grpc用的protobuf文件
+grpc-streaming           创建一个有流的grpc用的protobuf文件
 ''')
         parser.add_argument("component_name", type=str)
         parser.add_argument("-l", "--language", type=str, help="指定组件的语言", default="-")
         parser.add_argument("-t", "--to", type=str, help="指定一个存放的位置", default="-")
         parser.add_argument("-r", "--rename", type=str, help="重命名为", default="-")
-        parser.add_argument('--test', action="store_true", default=False)
+        parser.add_argument("-k", "--kwargs", type=str, help="json形式的模板参数", default="")
+        parser.add_argument('--test', action="store_true", default=False, help="创建对应组件的测试文件")
         parser.set_defaults(func=new_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
