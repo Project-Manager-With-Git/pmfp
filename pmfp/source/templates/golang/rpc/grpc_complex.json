@@ -8,13 +8,17 @@
             "cli",
             "cli"
         ],
-        "cli-grpc_cli_cmd.go.temp": [
+        "cli-grpc_cli_streaming_cmd.go.temp": [
             ".",
             "test_client"
         ],
         "rpc-grpc_main_complex.go.temp": [
             ".",
             "main"
+        ],
+        "rpc-grpc_serv_complex.go.temp": [
+            "serv",
+            "serv"
         ],
         "grpc-streaming": [
             "pbschema",
