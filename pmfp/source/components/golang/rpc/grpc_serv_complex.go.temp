@@ -3,11 +3,10 @@ package serv
 import (
 	"container/list"
 	"context"
-	"io"
-	"log"
-	"net"
-
 	pb "$project_name/grpc_schema"
+	log "$project_name/logger"
+	"io"
+	"net"
 
 	grpc "google.golang.org/grpc"
 )
@@ -16,18 +15,18 @@ type server struct{}
 
 //Square 请求-响应模式模板
 func (s *server) Square(ctx context.Context, in *pb.Message) (*pb.Message, error) {
-	log.Printf("Received: %v", in.Message)
+	log.Info(nil, "Received Message")
 	return &pb.Message{Message: in.Message * in.Message}, nil
 }
 
 //RangeSquare 请求-响应流模式模板
 func (s *server) RangeSquare(in *pb.Message, stream pb.RPC_RangeSquareServer) error {
-	log.Printf("Received: %v", in.Message)
+	log.Info(nil, "Received Message")
 	limit := int(in.Message)
 	for i := 0; i <= limit; i++ {
 		r := float64(i * i)
 		err := stream.Send(&pb.Message{Message: r})
-		log.Printf("Send: %v", r)
+		log.Info(nil, "Send Message")
 		if err != nil {
 			return err
 		}
@@ -75,15 +74,15 @@ func (s *server) StreamrangeSquare(stream pb.RPC_StreamrangeSquareServer) error 
 }
 
 //RunServer 启动服务
-func RunServer(server_address string) {
-	lis, err := net.Listen("tcp", server_address)
+func RunServer(address string) {
+	lis, err := net.Listen("tcp", address)
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatal(map[string]interface{}{"error": err, "address": address}, "Failed to Listen")
 	}
-	log.Println("server started @", server_address)
+	log.Info(map[string]interface{}{"address": address}, "Server Start")
 	s := grpc.NewServer()
 	pb.RegisterRPCServer(s, &server{})
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Fatal(map[string]interface{}{"error": err}, "Failed to Serve")
 	}
 }

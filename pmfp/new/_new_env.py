@@ -221,7 +221,7 @@ def _new_go_env(config: Dict[str, Any]):
         return
     project_name = config["project-name"]
     template_content = Template(PMFP_GOLANG_ENV_TEMP.open(encoding='utf-8').read())
-    content = template_content.substitute(
+    content = template_content.safe_substitute(
         project_name=project_name
     )
     

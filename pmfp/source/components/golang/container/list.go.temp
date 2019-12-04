@@ -1,11 +1,11 @@
 package $package
 
-type $typeList struct {
-    Value $valuetype
-    Next *$typeList
+type List$type struct {
+    Value $type
+    Next *List$type
 }
 
-func New() *$typeList {
-    var node $typeList
+func New() *List$type {
+    var node List$type
     return &node
 }

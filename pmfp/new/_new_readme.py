@@ -20,7 +20,7 @@ def new_readme(config: Dict[str, Any]):
     # rst
     print("创建rst格式的文档")
     template_content = Template(rst_temp_path.open(encoding="utf-8").read())
-    content = template_content.substitute(
+    content = template_content.safe_substitute(
         project_name=config["project-name"],
         status=config["status"],
         version=config["version"],
@@ -34,7 +34,7 @@ def new_readme(config: Dict[str, Any]):
     # md
     print("创建md格式的文档")
     template_content = Template(md_temp_path.open(encoding="utf-8").read())
-    content = template_content.substitute(
+    content = template_content.safe_substitute(
         project_name=config["project-name"],
         status=config["status"],
         version=config["version"],

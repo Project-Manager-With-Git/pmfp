@@ -24,7 +24,7 @@ def template_2_file(path: Path,**kwargs):
             ".mod" in path.name):
         try:
             template_content = Template(path.open(encoding='utf-8').read())
-            content = template_content.substitute(
+            content = template_content.safe_substitute(
                 **kwargs
             )
         except:

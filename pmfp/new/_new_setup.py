@@ -29,7 +29,7 @@ def new_setup(config: Dict[str, Any], language: str, name: str):
             manifest_path = PROJECT_HOME.joinpath("MANIFEST.in")
             manifest_temp = PMFP_SETUP_TEMP.joinpath("MANIFEST.in.temp")
             manifest_content = Template(manifest_temp.open(encoding="utf-8").read())
-            content = manifest_content.substitute(
+            content = manifest_content.safe_substitute(
                 project_name=config["project-name"]
             )
             manifest_path.open("w", encoding="utf-8").write(content)
