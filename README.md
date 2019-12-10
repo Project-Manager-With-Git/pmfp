@@ -67,6 +67,7 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 8. build方法新增对golang交叉编译的支持
 9. run方法新增对golang指定入口文件的支持
 10. 所有提示改为中文
+11. 为项目增加类型注解
 
 ### 3.0.15
 

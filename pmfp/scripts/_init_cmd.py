@@ -1,9 +1,10 @@
+import argparse
 from pmfp.init import init
 from pmfp.config.utils import load_rc, write_rc
 from pmfp.config.new_config import new_config
 
 
-def init_cmd(args):
+def init_cmd(args: argparse.Namespace):
     kwargs = _parser_args(args)
     config = load_rc()
     if config is False:
@@ -13,7 +14,7 @@ def init_cmd(args):
     init(config, test=kwargs["test"], doc=kwargs["doc"], noinstall=kwargs["noinstall"])
 
 
-def _parser_args(args):
+def _parser_args(args: argparse.Namespace):
     result = {
         "template": None,
         "language": None,

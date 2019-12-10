@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:$language_version
 ADD pip.conf /etc/pip.conf
 ADD ./requirements.txt /code/requirements.txt
 WORKDIR /code

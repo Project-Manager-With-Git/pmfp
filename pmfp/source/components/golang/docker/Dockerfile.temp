@@ -1,4 +1,4 @@
-FROM golang:1.12
+FROM golang:$language_version
 ENV GO111MODULE on
 ENV GOPROXY https://goproxy.io
 ADD . /code

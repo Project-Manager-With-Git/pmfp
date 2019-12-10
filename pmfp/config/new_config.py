@@ -1,10 +1,16 @@
 """在没有pmfp.json时根据命令行的输入构造一个."""
 
 import json
+import warnings
 from typing import Optional, Dict, Any
 from pmfp.const import PROJECT_HOME
 from pmfp.show import show
-from pmfp.utils import find_template_path, _find_template_path
+from pmfp.utils import (
+    find_template_path, 
+    _find_template_path,
+    get_node_version,
+    get_golang_version
+)
 from .verify import (
     DEFAULT_AUTHOR,
     LANGUAGE_RANGE,
@@ -15,7 +21,10 @@ from .verify import (
 )
 
 
-def _init_config(project_name: str, template: Optional[str] = None, language: Optional[str] = None)->Dict[str, Any]:
+def _init_config(
+        project_name: str,
+        template: Optional[str] = None,
+        language: Optional[str] = None) -> Dict[str, Any]:
     """初始化配置.
 
     构造一个默认的初始化配置.
@@ -65,7 +74,7 @@ def _init_config(project_name: str, template: Optional[str] = None, language: Op
     return config
 
 
-def _init_project_name(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_project_name(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目名.
 
     Args:
@@ -91,15 +100,15 @@ def _init_project_name(config: Dict[str, Any])-> Dict[str, Any]:
                 break
     if "-" in project_name:
         project_name = project_name.replace("-", "_")
-        print("已将项目名中的-改为了_")
-    else:
-        config.update({
-            "project-name": project_name
-        })
+        print(f"已将项目名中的-改为了_,项目名为{project_name}")
+    
+    config.update({
+        "project-name": project_name
+    })
     return config
 
 
-def _init_language(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_language(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目language.
 
     Args:
@@ -124,13 +133,21 @@ def _init_language(config: Dict[str, Any])-> Dict[str, Any]:
                 print(f"不支持的语言{project_language},目前只支持{LANGUAGE_RANGE},请重新输入")
             else:
                 break
+
+    if project_language == "Golang":
+        if get_golang_version() is None:
+            warnings.warn("本机没有go语言环境")
+    elif project_language == "Javascript":
+        if get_node_version() is None:
+            warnings.warn("本机没有node环境")
+        
     config.update({
         "project-language": project_language
     })
     return config
 
 
-def _init_env(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_env(config: Dict[str, Any]) -> Dict[str, Any]:
     """创建env环境.
 
     Args:
@@ -165,7 +182,7 @@ def _init_env(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_template(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_template(config: Dict[str, Any]) -> Dict[str, Any]:
     """通过template构造项目配置.
 
     Args:
@@ -202,7 +219,7 @@ def _init_template(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_license(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_license(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目license.
 
     Args:
@@ -231,7 +248,7 @@ def _init_license(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_version(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_version(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目版本.
 
     Args:
@@ -251,7 +268,7 @@ def _init_version(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_status(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_status(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目状态.
 
     Args:
@@ -279,7 +296,7 @@ def _init_status(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_url(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_url(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目的主页.
 
     Args:
@@ -299,7 +316,7 @@ def _init_url(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_author(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_author(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目的作者.
 
     Args:
@@ -319,7 +336,7 @@ def _init_author(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_author_email(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_author_email(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目的作者邮箱.
 
     Args:
@@ -339,7 +356,7 @@ def _init_author_email(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_keywords(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_keywords(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目的关键字.
 
     Args:
@@ -361,7 +378,7 @@ def _init_keywords(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_desc(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_desc(config: Dict[str, Any]) -> Dict[str, Any]:
     """初始化项目的作者邮箱.
 
     Args:
@@ -381,7 +398,7 @@ def _init_desc(config: Dict[str, Any])-> Dict[str, Any]:
     return config
 
 
-def _init_entry(config: Dict[str, Any])-> Dict[str, Any]:
+def _init_entry(config: Dict[str, Any]) -> Dict[str, Any]:
     config = dict(config)
     if not config.get("entry"):
         if config["project-language"] == "Python":
@@ -412,7 +429,7 @@ def _init_entry(config: Dict[str, Any])-> Dict[str, Any]:
 def new_config(
         project_name: str,
         template: Optional[str] = None,
-        language: Optional[str] = None)->Dict[str, Any]:
+        language: Optional[str] = None) -> Dict[str, Any]:
     """创建一个项目配置.
 
     Args:

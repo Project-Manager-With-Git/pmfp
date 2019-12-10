@@ -8,11 +8,18 @@ from pmfp.const import (
     TEST_PATH,
     PMFP_TEST_TEMP
 )
+
 from .utils import iter_template_2_file, template_2_file
 from ._new_test import python_test, js_test
 
 
-def new_component(config: Dict[str, Any], path: str, to: str, rename: str, test: bool,**kwargs):
+def new_component(
+        config: Dict[str, Any],
+        path: str,
+        to: str,
+        rename: str,
+        test: bool,
+        **kwargs):
     """为项目新建一个组件.
 
     Args:
@@ -21,13 +28,12 @@ def new_component(config: Dict[str, Any], path: str, to: str, rename: str, test:
         to (str): 组件要复制到的位置
         rename (str): 组件要修改为什么名字
         test (bool): 是否要为组件添加测试
+
     """
     project_name = config.get("project-name") or "tempname"
-    kws = {"project_name":project_name}
+    kws = {"project_name": project_name}
     if kwargs:
         kws.update(**kwargs)
-    print("#############")
-    print(kws)
     c_path = PMFP_COMPONENTS_HOME.joinpath(path)
     t_path = PROJECT_HOME.joinpath(to)
     if not c_path.exists():
@@ -49,7 +55,7 @@ def new_component(config: Dict[str, Any], path: str, to: str, rename: str, test:
                 str(c_path),
                 str(to_path)
             )
-            template_2_file(to_path,**kws)
+            template_2_file(to_path, **kws)
     else:
         to_path = t_path.joinpath(rename)
         if t_path.joinpath(rename).exists():

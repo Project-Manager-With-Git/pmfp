@@ -1,5 +1,6 @@
 """项目的功用组件."""
-from typing import Dict, Any, Union
+import subprocess
+from typing import Dict, Any, Union, Optional
 from pathlib import Path
 from pmfp.const import (
     PLATFORM,
@@ -9,7 +10,25 @@ from pmfp.const import (
 )
 
 
-def get_python_path(config: Dict[str, Any])->str:
+def get_node_version() -> Optional[str]:
+    x = subprocess.run(f"node -v", capture_output=True, shell=True)
+    if x.returncode == 0:
+        return x.stdout.decode("utf-8").strip()[1:]
+
+
+def get_golang_version() -> Optional[str]:
+    x = subprocess.run(f"go version", capture_output=True, shell=True)
+    if x.returncode == 0:
+        return [i for i in x.stdout.decode("utf-8").strip().split(" ") if "."in i][0][2:]
+
+
+def get_protoc_version() -> Optional[str]:
+    x = subprocess.run(f"protoc --version", capture_output=True, shell=True)
+    if x.returncode == 0:
+        return [i for i in x.stdout.decode("utf-8").strip().split(" ") if "."in i][0]
+
+
+def get_python_path(config: Dict[str, Any]) -> str:
     """获取python解释器的地址.
 
     Args:
@@ -32,13 +51,13 @@ def get_python_path(config: Dict[str, Any])->str:
     return str(python_path)
 
 
-def _find_template_path(language: str, t_p: str)->Path:
+def _find_template_path(language: str, t_p: str) -> Path:
     """找到项目的template地址.
-    
+
     Args:
         language (str): template的语言.
         t_p (str): template名字.
-    
+
     Returns:
         Path: template的地址.
 
@@ -49,7 +68,7 @@ def _find_template_path(language: str, t_p: str)->Path:
     return file_path
 
 
-def find_template_path(config: Dict[str, Any])->Path:
+def find_template_path(config: Dict[str, Any]) -> Path:
     """找到项目的template地址.
 
     Args:
@@ -64,7 +83,7 @@ def find_template_path(config: Dict[str, Any])->Path:
     return _find_template_path(language, t_p)
 
 
-def find_project_name_path(project_name: str)->Union[bool, Path]:
+def find_project_name_path(project_name: str) -> Union[bool, Path]:
     """找到与项目同名的文件或者文件夹.
 
     Args:

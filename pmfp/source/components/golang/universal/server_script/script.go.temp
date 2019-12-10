@@ -12,9 +12,7 @@ func InitConfig() (ConfigType, error) {
 	var Config ConfigType = DefaultConfig
 	fileConfig, err := InitFileConfig()
 	if err != nil {
-		log.WithFields(map[string]interface{}{
-			"error": err,
-		}).Warn("从默认路径文件初始化配置项错误")
+		log.Warn("从默认路径文件初始化配置项错误")
 	} else {
 		for k, v := range fileConfig {
 			Config[k] = v

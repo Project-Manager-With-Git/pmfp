@@ -1,6 +1,12 @@
 """新建一个组件."""
 from typing import Dict, Any
-
+from pmfp.const import (
+    GOLBAL_PYTHON_VERSION
+)
+from pmfp.utils import (
+    get_golang_version,
+    get_node_version
+)
 from ._new_component import new_component
 from ._new_doc import new_document
 from ._new_env import new_env
@@ -40,7 +46,7 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
         new_readme(config)
     elif c_name in ("setup", "cython_setup", "cython_numpy_setup", "cmd_setup"):
         new_setup(config, c_language, c_name)
-    elif c_name in ("pb", "grpc","grpc-streaming"):
+    elif c_name in ("pb", "grpc", "grpc-streaming"):
         if kwargs["rename"] == "-":
             rename = config["project-name"]
         elif kwargs["rename"] == "":
@@ -70,11 +76,27 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
         else:
             rename = kwargs["rename"]
         c_path = f"{c_language}/{c_category}/{c_name}"
+        if c_category == "docker":
+            if not kwargs.get("kwargs"):
+                kwargs["kwargs"] = {}
+            if c_language.lower() == "golang":
+                kwargs["kwargs"]["language_version"] = get_golang_version() or "latest"
+            elif c_language.lower() == "python":
+                kwargs["kwargs"]["language_version"] = GOLBAL_PYTHON_VERSION
+            elif c_language.lower() == "javascript":
+                kwargs["kwargs"]["language_version"] = get_node_version() or "latest"
+
         test = kwargs["test"]
         try:
             print(f"创建组件{c_path}")
-            kwargs.get("kwargs",{})
-            new_component(config, path=c_path, to=to, rename=rename, test=test,**kwargs.get("kwargs",{}))
+            kwargs.get("kwargs", {})
+            new_component(
+                config,
+                path=c_path,
+                to=to,
+                rename=rename,
+                test=test,
+                **kwargs.get("kwargs", {}))
         except Exception as e:
             print(f"组件{c_path}创建错误")
             raise e

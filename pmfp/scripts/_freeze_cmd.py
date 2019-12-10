@@ -1,8 +1,9 @@
+import argparse
 from pmfp.freeze import freeze
 from pmfp.config import load_rc
 
 
-def freeze_cmd(args):
+def freeze_cmd(args: argparse.Namespace):
     freeze_range = ("Python",)
     config = load_rc()
     if config is False:
@@ -16,7 +17,7 @@ def freeze_cmd(args):
             freeze(config,kwargs)
 
 
-def _parser_args(args):
+def _parser_args(args: argparse.Namespace):
     result = {
         "all": False,
         "dev": False,

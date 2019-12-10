@@ -109,7 +109,7 @@ def _build_cython(config: Dict[str, Any], inplace: bool = False) -> None:
     """
     if not PROJECT_HOME.joinpath("requirements.txt").exists():
         print("没有requirements.txt,创建")
-        freeze(config)
+        freeze(config, {})
     project_name = config["project-name"]
     print(f'编译cython项目{project_name}到路径`build`')
     python_path = get_python_path(config)

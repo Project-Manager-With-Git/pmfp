@@ -1,7 +1,8 @@
+import argparse
 from pmfp.show import show
 
 
-def show_template_cmd(args):
+def show_template_cmd(args: argparse.Namespace):
     config = _parser_args(args)
     config.update({
         "type": "template"
@@ -10,7 +11,7 @@ def show_template_cmd(args):
     show(config)
 
 
-def show_component_cmd(args):
+def show_component_cmd(args: argparse.Namespace):
     config = _parser_args(args)
     config.update({
         "type": "component"
@@ -18,7 +19,7 @@ def show_component_cmd(args):
     show(config)
 
 
-def _parser_args(args):
+def _parser_args(args: argparse.Namespace):
     result = {
         "name": None,
         'language': None,

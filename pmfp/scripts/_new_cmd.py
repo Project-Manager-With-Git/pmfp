@@ -1,10 +1,10 @@
-
+import argparse
 import json
-from pmfp.new import new,new_component
+from pmfp.new import new, new_component
 from pmfp.config import load_rc
 
 
-def new_cmd(args):
+def new_cmd(args: argparse.Namespace):
     config = load_rc()
     if config is False:
         kwargs_o = _parser_args(args)
@@ -14,32 +14,31 @@ def new_cmd(args):
         c_name = "".join(spl_name[1:])
         path = f"{c_language}/{c_category}/{c_name}"
         config = {
-            "project-language":c_language,
-            "project-name":"tempname"
+            "project-language": c_language,
+            "project-name": "tempname"
         }
         to = "." if kwargs_o.get("to") == "-" else kwargs_o.get("to")
         new_component(
-            config, 
-            path, 
+            config,
+            path,
             to,
-            kwargs_o.get("rename"), 
+            kwargs_o.get("rename"),
             kwargs_o.get("test"),
-            **kwargs_o.get("kwargs",{})
+            **kwargs_o.get("kwargs", {})
         )
     else:
         kwargs_o = _parser_args(args)
-        language = config["project-language"]
         new(config, kwargs_o)
 
 
-def _parser_args(args):
+def _parser_args(args: argparse.Namespace):
     result = {
         "component_name": None,
         'to': "-",
         'rename': "-",
         "language": "-",
         "test": False,
-        "kwargs":{}
+        "kwargs": {}
     }
     if args.component_name:
         result["component_name"] = args.component_name
@@ -54,7 +53,7 @@ def _parser_args(args):
     if args.kwargs:
         print(args.kwargs)
         try:
-            result['kwargs']=json.loads(args.kwargs)
-        except:
+            result['kwargs'] = json.loads(args.kwargs)
+        except Exception as e:
             print("关键字kwargs无法解析为json形式")
     return result

@@ -1,8 +1,9 @@
+import argparse
 from pmfp.test_ import test
 from pmfp.config import load_rc
 
 
-def test_cmd(args):
+def test_cmd(args: argparse.Namespace):
     config = load_rc()
     if config:
         kwargs = _parser_args(args)
@@ -11,7 +12,7 @@ def test_cmd(args):
         print("命令需要在pmfp项目中执行")
 
 
-def _parser_args(args):
+def _parser_args(args: argparse.Namespace):
     kwargs = {
         'html': False,
         "typecheck": False,

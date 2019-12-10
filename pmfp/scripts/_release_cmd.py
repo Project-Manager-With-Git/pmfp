@@ -1,3 +1,4 @@
+import argparse
 from pmfp.config import load_rc
 from pmfp.release import release
 

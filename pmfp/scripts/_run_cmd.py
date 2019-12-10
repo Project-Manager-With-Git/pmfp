@@ -1,8 +1,9 @@
+import argparse
 from pmfp.run import run
 from pmfp.config import load_rc
 
 
-def run_cmd(args):
+def run_cmd(args: argparse.Namespace):
     config = load_rc()
     if config:
         if args.cmd:

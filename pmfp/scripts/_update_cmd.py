@@ -1,8 +1,9 @@
+import argparse
 from pmfp.update import update
 from pmfp.config import load_rc, write_rc
 
 
-def update_cmd(args):
+def update_cmd(args: argparse.Namespace):
     config = load_rc()
     if config:
         if args.version:

@@ -1,8 +1,9 @@
 from pmfp.build_ import build
 from pmfp.config import load_rc
+import argparse
 
 
-def build_cmd(args):
+def build_cmd(args: argparse.Namespace):
     """编译项目中需要编译的源码."""
     config = load_rc()
     if config:

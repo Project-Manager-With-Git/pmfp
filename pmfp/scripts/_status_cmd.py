@@ -1,3 +1,4 @@
+import argparse
 from pmfp.status import status
 from pmfp.config import load_rc
 

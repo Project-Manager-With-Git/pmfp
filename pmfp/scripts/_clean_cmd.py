@@ -1,8 +1,9 @@
+import argparse
 from pmfp.clean import clean
 from pmfp.config import load_rc
 
 
-def clean_cmd(args):
+def clean_cmd(args: argparse.Namespace):
     config = load_rc()
     if config is False:
         print("freeze命令需要目录下有.pmfprc.json配置文件.")
