@@ -39,7 +39,6 @@ TODO
 * 添加更多模板
 * 完善node支持
 * 添加C语言支持
-* 添加go语言支持
 
 
 Limitations
