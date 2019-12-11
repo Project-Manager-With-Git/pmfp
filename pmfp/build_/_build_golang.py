@@ -1,6 +1,7 @@
 """执行golang的build操作."""
 import subprocess
 from typing import Dict, Any, Optional
+import chardet
 from pmfp.const import PLATFORM, PROJECT_HOME
 
 
@@ -23,8 +24,13 @@ def build_go(config: Dict[str, Any], cross: Optional[str] = None) -> None:
                 command = f"go build -o bin/{target_name}"
             else:
                 command = f"go build -o bin/{target_name} {entry}"
-            subprocess.check_call(command, shell=True)
-            print("完成编译golang项目{name}!")
+            res = subprocess.run(command, capture_output=True, shell=True)
+            if res.returncode == 0:
+                print(f"完成编译golang项目{name}!")
+            else:
+                print(f"交叉编译golang项目{name}失败!")
+                encoding = chardet.detect(res.stderr).get("encoding")
+                print(res.stderr.decode(encoding))
         else:
             GOOSS, GOARCHS = cross.split("-")
             dir_name = f"{GOOSS}-{GOARCHS}"
@@ -38,5 +44,10 @@ def build_go(config: Dict[str, Any], cross: Optional[str] = None) -> None:
                 command = f"go build -o {str(target_dir)}/{target_name}"
             else:
                 command = f"go build -o {str(target_dir)}/{target_name} {entry}"
-            subprocess.check_call(command, shell=True)
-            print(f"已完成为{GOARCHS}平台的{GOOSS}系统交叉编译golang项目{name}!")
+            res = subprocess.run(command, capture_output=True, shell=True)
+            if res.returncode == 0:
+                print(f"已完成为{GOARCHS}平台的{GOOSS}系统交叉编译golang项目{name}!")
+            else:
+                print(f"交叉编译golang项目{name}失败!")
+                encoding = chardet.detect(res.stderr).get("encoding")
+                print(res.stderr.decode(encoding))

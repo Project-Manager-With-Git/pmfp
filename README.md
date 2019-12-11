@@ -55,6 +55,11 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
 
+### 3.1.1
+
+1. 更新grpc相关的模板,使之更加好用
+2. 替换subprocess使用run的方法
+
 ### 3.1.0
 
 1. 为freeze命令增加解析,现在默认只固定`requirement`字段中的依赖,但可以通过`--dev`来固定开发依赖,用`--all`来固定全部依赖,`--noversion`不固定依赖的版本.

@@ -8,7 +8,7 @@ from typing import (
     Any
 )
 from pathlib import Path
-
+import chardet
 from pmfp.const import PLATFORM, PROJECT_HOME
 from pmfp.freeze import freeze
 from pmfp.utils import find_project_name_path, get_python_path
@@ -79,7 +79,8 @@ def build_python_app(config: Dict[str, Any]) -> None:
                         str(temp_path)
                     )
                     for p in temp_path.iterdir():
-                        compileall.compile_dir(str(p), force=True, legacy=True, optimize=2)
+                        compileall.compile_dir(
+                            str(p), force=True, legacy=True, optimize=2)
                         if p.is_dir():
                             _delete_py_source(p)
                     zipapp.create_archive(
@@ -127,7 +128,13 @@ def _build_cython(config: Dict[str, Any], inplace: bool = False) -> None:
         else:
             if cc:
                 command = f"CC={cc} " + command
-        subprocess.check_call(command, shell=True)
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode == 0:
+            print(f"完成编译cython项目!")
+        else:
+            print(f"编译cython项目失败!")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
 
         if inplace:
             _delete_c_source(PROJECT_HOME)
@@ -152,12 +159,18 @@ def _build_curepython(config: Dict[str, Any]) -> None:
     """
     if not PROJECT_HOME.joinpath("requirements.txt").exists():
         print("没有requirements.txt,创建")
-        freeze(config)
+        freeze(config,{})
     project_name = config["project-name"]
     print(f'编译纯python项目{project_name}到路径`build`')
     python_path = get_python_path(config)
     command = f"{python_path} setup.py build"
-    subprocess.check_call(command, shell=True)
+    res = subprocess.run(command, capture_output=True, shell=True)
+    if res.returncode == 0:
+        print(f"完成build纯python项目!")
+    else:
+        print(f"build纯python项目失败!")
+        encoding = chardet.detect(res.stderr).get("encoding")
+        print(res.stderr.decode(encoding))
 
 
 def build_python_module(config: Dict[str, Any], inplace: bool) -> None:

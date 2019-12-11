@@ -26,7 +26,7 @@ def release_py(config: Dict[str, Any]) -> None:
         if home.joinpath(".pypirc").exists():
             if not PROJECT_HOME.joinpath("requirements.txt").exists():
                 print("没有requirements.txt,创建")
-                freeze(config)
+                freeze(config,{})
             command = "python setup.py sdist upload"
             subprocess.check_call(command, shell=True)
             command = "python setup.py bdist_wheel upload"
@@ -47,7 +47,7 @@ def release_py(config: Dict[str, Any]) -> None:
             raise AttributeError("没有指定镜像仓库,请在pmfprc.json中指定remote_registry")
         if not PROJECT_HOME.joinpath("requirements.txt").exists():
             print("没有requirements.txt,创建")
-            freeze(config)
+            freeze(config,{})
         if PROJECT_HOME.joinpath(config["project-name"]).exists():
             print("打包项目为pyz")
             build(config)

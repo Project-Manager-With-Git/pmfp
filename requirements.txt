@@ -17,3 +17,4 @@ lxml
 mypy-extensions
 boom
 voluptuous
+chardet

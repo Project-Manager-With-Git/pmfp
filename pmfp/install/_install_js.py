@@ -1,6 +1,7 @@
 """安装js项目的依赖."""
-import subprocess
 import json
+import subprocess
+import chardet
 from typing import (
     Dict,
     Any,
@@ -12,7 +13,7 @@ from pmfp.const import (
 )
 
 
-def install_one(config: Dict[str, Any], package: str, dev: bool = False)->None:
+def install_one(config: Dict[str, Any], package: str, dev: bool = False) -> None:
     """安装一个依赖.
 
     Args:
@@ -26,22 +27,30 @@ def install_one(config: Dict[str, Any], package: str, dev: bool = False)->None:
     print(f"安装依赖{package}")
     if dev is False:
         command = f"npm install {package} --save"
-        subprocess.check_call(command, shell=True)
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode != 0:
+            print(f"安装依赖{package}出错")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
         requirement = list(set(config["requirement"]))
         requirement.append(package)
         config["requirement"] = requirement
     else:
         command = f"npm install {package} --save-dev"
-        subprocess.check_call(command, shell=True)
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode != 0:
+            print(f"安装开发依赖{package}出错")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
         requirement = list(set(config["requirement-dev"]))
         requirement.append(package)
         config["requirement-dev"] = requirement
-    with open(str(PMFPRC_PATH), "w",encoding="utf-8") as f:
+    with open(str(PMFPRC_PATH), "w", encoding="utf-8") as f:
         json.dump(config, f)
     print(f"安装依赖{package}成功")
 
 
-def install(config: Dict[str, Any], package: Optional[str] = None, dev: bool = False)->bool:
+def install(config: Dict[str, Any], package: Optional[str] = None, dev: bool = False) -> bool:
     """为js项目安装依赖.
 
     Args:

@@ -1,6 +1,6 @@
 {
-    "name": "rpc-grpc",
-    "desc": "xmlrpc的标准化模板",
+    "name": "rpc-grpc_simple",
+    "desc": "grpc的简单模板",
     "project-language": "Python",
     "project-type": "application",
     "components": {
