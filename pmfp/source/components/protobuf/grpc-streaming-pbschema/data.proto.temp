@@ -1,5 +1,5 @@
 syntax = "proto3";
-package grpc_schema;
+package ${project_name}.${rename}_grpc;
 
 service RPC {
     rpc Square (Message) returns (Message){}

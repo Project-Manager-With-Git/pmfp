@@ -1,0 +1,16 @@
+"""客户端组件,直接执行即可."""
+
+from grpc_schema import *
+from core import CliProxy
+
+
+def test_run():
+    url = "localhost:5000"
+    cli = CliProxy(url)
+    response = cli.DoFormat(Data(text='hello,world!'))
+    print("received: " + response.text)
+
+
+if __name__ == '__main__':
+    test_run()
+

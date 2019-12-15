@@ -3,6 +3,7 @@ import json
 import subprocess
 from string import Template
 from typing import Dict, Any
+import chardet
 from pmfp.const import (
     GOLBAL_PYTHON_VERSION,
     ENV_PATH,
@@ -46,26 +47,26 @@ def _new_python_env(config: Dict[str, Any]):
         command = f"conda create -y -p env python={GOLBAL_PYTHON_VERSION}"
     else:
         raise AttributeError("unknown env")
-    subprocess.check_call(command, shell=True)
-    print('创建python项目的虚拟环境 完成!')
+    res = subprocess.run(command, capture_output=True, shell=True)
+    if res.returncode != 0:
+        print("创建python项目的虚拟环境出错")
+        encoding = chardet.detect(res.stderr).get("encoding")
+        print(res.stderr.decode(encoding))
+    else:
+        print('创建python项目的虚拟环境完成!')
 
 
 def _new_babel(config: Dict[str, Any]):
     """初始化babel环境."""
     new_json_package(config)
-    command = "npm install --save-dev babel-cli"
-    subprocess.check_call(command, shell=True)
-    # command = "npm install --save-dev @babel/preset-env"
-    command = "npm install --save-dev babel-preset-env"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev babel-register"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev babel-polyfill"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev mocha"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev nyc"
-    subprocess.check_call(command, shell=True)
+    command = "npm install --save-dev babel-cli babel-preset-env babel-register babel-polyfill mocha nyc"
+    res = subprocess.run(command, capture_output=True, shell=True)
+    if res.returncode != 0:
+        print("创建babel项目的环境出错")
+        encoding = chardet.detect(res.stderr).get("encoding")
+        print(res.stderr.decode(encoding))
+    else:
+        print('创建babel项目的环境完成!')
 
 
 def _new_node(config: Dict[str, Any]):
@@ -88,106 +89,72 @@ def _new_frontend(config: Dict[str, Any]):
     """初始化基于babel的前端环境."""
     _new_babel(config)
     command = "npm install --save-dev live-server"
-    subprocess.check_call(command, shell=True)
-    with open(str(JS_ENV_PATH), encoding="utf-8") as f:
-        content = json.load(f)
-    with open(str(JS_ENV_PATH), "w", encoding="utf-8") as f:
-        content.update({
-            "babel": {
-                "presets": [
-                    ["env",
-                     {
-                         "targets": {
-                             "browsers": "> 5%"
-                         }
-                     }]
-                ]
-            }
-        })
+    res = subprocess.run(command, capture_output=True, shell=True)
+    if res.returncode != 0:
+        print("创建基于babel的前端环境出错")
+        encoding = chardet.detect(res.stderr).get("encoding")
+        print(res.stderr.decode(encoding))
+    else:
+        print('创建基于babel的前端环境完成!')
+        with open(str(JS_ENV_PATH), encoding="utf-8") as f:
+            content = json.load(f)
+        with open(str(JS_ENV_PATH), "w", encoding="utf-8") as f:
+            content.update({
+                "babel": {
+                    "presets": [
+                        ["env",
+                        {
+                            "targets": {
+                                "browsers": "> 5%"
+                            }
+                        }]
+                    ]
+                }
+            })
         json.dump(content, f)
 
 
 def _new_webpack(config: Dict[str, Any]):
     """初始化基本webpack环境."""
     new_json_package(config)
-    command = "npm install --save-dev webpack"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev webpack-cli"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev babel-core"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev babel-loader@7"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev babel-preset-env"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev style-loader"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev css-loader"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev stylus"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev stylus-loader"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev url-loader"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev file-loader"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev image-webpack-loader"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev html-webpack-plugin"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev webpack-dev-server"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev clean-webpack-plugin"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev extract-text-webpack-plugin@next"
-    subprocess.check_call(command, shell=True)
-    command = "npm install --save-dev uglifyjs-webpack-plugin"
-    subprocess.check_call(command, shell=True)
-
-    command = "npm install --save-dev webpack-merge"
-    subprocess.check_call(command, shell=True)
-
-    with open(str(JS_ENV_PATH), encoding="utf-8") as f:
-        content = json.load(f)
-    with open(str(JS_ENV_PATH), "w", encoding="utf-8") as f:
-        content.update({
-            "babel": {
-                "presets": [
-                    ["env"]
-                ]
-            }
-        })
+    command = "npm install --save-dev webpack webpack-cli babel-core babel-loader@7 babel-preset-env style-loader css-loader stylus stylus-loader url-loader file-loader image-webpack-loader html-webpack-plugin webpack-dev-server clean-webpack-plugin extract-text-webpack-plugin@next uglifyjs-webpack-plugin webpack-merge"
+    res = subprocess.run(command, capture_output=True, shell=True)
+    if res.returncode != 0:
+        print("创建基于基本webpack的环境出错")
+        encoding = chardet.detect(res.stderr).get("encoding")
+        print(res.stderr.decode(encoding))
+    else:
+        with open(str(JS_ENV_PATH), encoding="utf-8") as f:
+            content = json.load(f)
+        with open(str(JS_ENV_PATH), "w", encoding="utf-8") as f:
+            content.update({
+                "babel": {
+                    "presets": [
+                        ["env"]
+                    ]
+                }
+            })
         json.dump(content, f)
+        if not PROJECT_HOME.joinpath("env").is_dir():
+            PROJECT_HOME.joinpath("env").mkdir()
+        with open(str(PROJECT_HOME.joinpath("env/webpack.config.base.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_BASE_CONFIG)
+        with open(str(PROJECT_HOME.joinpath("env/webpack.config.dev.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_DEV_CONFIG)
+        with open(str(PROJECT_HOME.joinpath("env/webpack.config.prod.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_PROD_CONFIG)
+        with open(str(PROJECT_HOME.joinpath("env/webpack.config.test.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_TEST_CONFIG)
 
-    if not PROJECT_HOME.joinpath("env").is_dir():
-        PROJECT_HOME.joinpath("env").mkdir()
-    with open(str(PROJECT_HOME.joinpath("env/webpack.config.base.js")), "w", encoding="utf-8") as f:
-        f.write(WEBPACK_BASE_CONFIG)
-    with open(str(PROJECT_HOME.joinpath("env/webpack.config.dev.js")), "w", encoding="utf-8") as f:
-        f.write(WEBPACK_DEV_CONFIG)
-    with open(str(PROJECT_HOME.joinpath("env/webpack.config.prod.js")), "w", encoding="utf-8") as f:
-        f.write(WEBPACK_PROD_CONFIG)
-    with open(str(PROJECT_HOME.joinpath("env/webpack.config.test.js")), "w", encoding="utf-8") as f:
-        f.write(WEBPACK_TEST_CONFIG)
+        if not PROJECT_HOME.joinpath("env/conf").is_dir():
+            PROJECT_HOME.joinpath("env/conf").mkdir()
 
-    if not PROJECT_HOME.joinpath("env/conf").is_dir():
-        PROJECT_HOME.joinpath("env/conf").mkdir()
-
-    with open(str(PROJECT_HOME.joinpath("env/conf/dev.json")), "w", encoding="utf-8") as f:
-        f.write(DEV_CONFIG)
-    with open(str(PROJECT_HOME.joinpath("env/conf/prod.json")), "w", encoding="utf-8") as f:
-        f.write(PROD_CONFIG)
-    with open(str(PROJECT_HOME.joinpath("env/conf/test.json")), "w", encoding="utf-8") as f:
-        f.write(TEST_CONFIG)
+        with open(str(PROJECT_HOME.joinpath("env/conf/dev.json")), "w", encoding="utf-8") as f:
+            f.write(DEV_CONFIG)
+        with open(str(PROJECT_HOME.joinpath("env/conf/prod.json")), "w", encoding="utf-8") as f:
+            f.write(PROD_CONFIG)
+        with open(str(PROJECT_HOME.joinpath("env/conf/test.json")), "w", encoding="utf-8") as f:
+            f.write(TEST_CONFIG)
 
 
 def _new_vue(config: Dict[str, Any]):
@@ -224,7 +191,6 @@ def _new_go_env(config: Dict[str, Any]):
     content = template_content.safe_substitute(
         project_name=project_name
     )
-    
     with open(str(GO_ENV_PATH), "w", encoding="utf-8") as fa:
         fa.write(content)
 
@@ -236,7 +202,6 @@ def new_env(config: Dict[str, Any], language: str):
         config (Dict[str, Any]): 项目配置字典.
         language (str): 项目语言
     """
-
     if language in ("python", "Python"):
         _new_python_env(config)
     elif language in ("javascript", "Javascript"):

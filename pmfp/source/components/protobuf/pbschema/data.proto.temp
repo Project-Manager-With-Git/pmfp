@@ -1,4 +1,6 @@
 syntax = "proto3";
+package ${project_name}.${rename}_pb;
+
 
 message SearchRequest {
   string query = 1;

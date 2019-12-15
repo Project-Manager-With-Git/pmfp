@@ -30,7 +30,7 @@
         ],
         "grpc-streaming": [
             "pbschema",
-            "data"
+            "-"
         ],
         "docker-Dockerfile.temp": [
             ".",

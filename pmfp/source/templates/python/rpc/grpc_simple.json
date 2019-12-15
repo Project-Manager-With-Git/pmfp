@@ -9,15 +9,15 @@
         "rpc-grpc_view_clz.py.temp": ["-", "view_clz"],
         "scripts-webscripts": ["-", "scripts"],
         "cli-grpc_cli": [".", "grpc_cli"],
-        "grpc": ["pbschema", "data"],
+        "grpc": ["pbschema", "-"],
         "universal-webconfig": ["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
-        "universal-jsonlog.py.temp": ["-", "log"],
+        "universal-jsonlog_proxy.py.temp": ["-", "logger"],
         "docker-Dockerfile.temp": [".", "dockerfile"],
         "docker-pip.conf.temp": [".", "pip"],
         "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },
-    "requirement": ["jsonschema", "protobuf", "grpcio"],
+    "requirement": ["jsonschema", "protobuf", "grpcio","structlog"],
     "requirement-dev": [
         "coverage",
         "mypy",
@@ -26,6 +26,7 @@
         "wheel",
         "pydocstyle",
         "pep8",
-        "autopep8"
+        "autopep8",
+        "pylint"
     ]
 }

@@ -1,9 +1,12 @@
 package main
 
 import (
-	"log"
+	"context"
 	"flag"
-	cli  "$project_name/cli"
+	"log"
+	cli "$project_name/cli"
+	pb "$project_name/grpc_schema"
+	"time"
 )
 
 func test_rpc(client_address string) {

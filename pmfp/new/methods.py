@@ -53,7 +53,7 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
             rename = c_name
         else:
             rename = kwargs["rename"]
-        new_pb(c_name, rename, to)
+        new_pb(config, c_name, rename, to)
     elif c_name == "test":
         project_name = config["project-name"]
         if kwargs["rename"] == "-":
@@ -75,15 +75,16 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
             rename = c_name
         else:
             rename = kwargs["rename"]
+        c_language = c_language.lower()
         c_path = f"{c_language}/{c_category}/{c_name}"
         if c_category == "docker":
             if not kwargs.get("kwargs"):
                 kwargs["kwargs"] = {}
-            if c_language.lower() == "golang":
+            if c_language == "golang":
                 kwargs["kwargs"]["language_version"] = get_golang_version() or "latest"
-            elif c_language.lower() == "python":
+            elif c_language == "python":
                 kwargs["kwargs"]["language_version"] = GOLBAL_PYTHON_VERSION
-            elif c_language.lower() == "javascript":
+            elif c_language == "javascript":
                 kwargs["kwargs"]["language_version"] = get_node_version() or "latest"
 
         test = kwargs["test"]

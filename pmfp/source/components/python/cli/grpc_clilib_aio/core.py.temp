@@ -1,5 +1,6 @@
-from grpc_schema import RPCStub
-import grpc
+from .grpc_schema import RPCStub
+
+import aio_grpc
 
 
 

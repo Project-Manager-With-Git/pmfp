@@ -2,7 +2,7 @@ package cli
 
 import (
 	"context"
-	pb "goceshi/grpc_schema"
+	pb "$project_name/grpc_schema"
 	"time"
 
 	grpc "google.golang.org/grpc"

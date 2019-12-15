@@ -1,12 +1,15 @@
 """创建protobuf文件."""
 import shutil
 import warnings
+from typing import Dict, Any
 from pmfp.const import PMFP_PB_TEMP, PROJECT_HOME
 from pmfp.utils import (
     get_protoc_version
 )
+from .utils import template_2_file
 
-def new_pb(c_name: str, rename: str, to: str = "pbschema"):
+
+def new_pb(config: Dict[str, Any], c_name: str, rename: str, to: str = "pbschema"):
     """创建protobuf文件.
 
     Args:
@@ -17,7 +20,7 @@ def new_pb(c_name: str, rename: str, to: str = "pbschema"):
     if get_protoc_version() is None:
         warnings.warn("""本机没有安装protoc,请去<https://developers.google.com/protocol-buffers/docs/downloads>下载安装.
         
-        如果要使用python环境,请安装python模块<protobuf>
+        如果要使用python环境,请安装python模块<grpc-tools>和<protobuf>
         要使用grpc的话请再安装python模块<grpcio>;
 
         如果使用go语言环境,请额外安装go包<github.com/golang/protobuf/protoc-gen-go>和<google.golang.org/genproto>
@@ -25,16 +28,18 @@ def new_pb(c_name: str, rename: str, to: str = "pbschema"):
 
         如果使用javascript的话,请额外安装js包<grpc>和<@grpc/proto-loader>
         """)
+    project_name = config["project-name"]
     t_path = PROJECT_HOME.joinpath(to)
     if not t_path.exists():
         print(f"找不到目标目录{str(t_path)},新建")
         t_path.mkdir(parents=True, exist_ok=False)
     if c_name == "pb":
-        c_path = PMFP_PB_TEMP.joinpath("pbschema/data.proto")
+        c_path = PMFP_PB_TEMP.joinpath("pbschema/data.proto.temp")
     elif c_name == "grpc":
-        c_path = PMFP_PB_TEMP.joinpath("grpc-pbschema/data.proto")
+        c_path = PMFP_PB_TEMP.joinpath("grpc-pbschema/data.proto.temp")
     elif c_name == "grpc-streaming":
-        c_path = PMFP_PB_TEMP.joinpath("grpc-streaming-pbschema/data.proto")
+        c_path = PMFP_PB_TEMP.joinpath(
+            "grpc-streaming-pbschema/data.proto.temp")
     to_path = t_path.joinpath(rename + ".proto")
     if to_path.exists():
         print(f"存在同名文件{rename}.proto")
@@ -44,3 +49,4 @@ def new_pb(c_name: str, rename: str, to: str = "pbschema"):
             str(c_path),
             str(to_path)
         )
+        template_2_file(to_path, rename=rename, project_name=project_name)

@@ -1,5 +1,4 @@
-from data_pb2_grpc import RPCServicer
-from data_pb2 import Data
+from grpc_schema import RPCServicer, Data
 
 
 class RPC(RPCServicer):

@@ -1,4 +1,5 @@
-from grpc_schema import RPCStub
+from .grpc_schema import RPCStub
+
 import grpc
 
 
