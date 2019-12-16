@@ -1,6 +1,6 @@
 {
-    "name": "rpc-zerorpc",
-    "desc": "zerorpc的标准化模板",
+    "name": "rpc-grpc_complex",
+    "desc": "grpc的复杂模板,支持流数据",
     "project-language": "Python",
     "project-type": "application",
     "components": {
@@ -8,21 +8,25 @@
             "-",
             "-"
         ],
-        "rpc-zerocore.py.temp": [
+        "rpc-grpccore.py.temp": [
             "-",
             "core"
+        ],
+        "rpc-grpc_view_clz_complex.py.temp": [
+            "-",
+            "view_clz"
         ],
         "scripts-webscripts": [
             "-",
             "scripts"
         ],
-        "cli-zerorpc_cli.py.temp": [
+        "cli-grpc_cli_complex": [
             ".",
-            "zerorpc_cli"
+            "grpc_cli"
         ],
-        "rpc--zerorpc_view_clz.py.temp": [
-            "-",
-            "view_clz"
+        "grpc-streaming": [
+            "pbschema",
+            "-"
         ],
         "universal-webconfig": [
             "-",
@@ -51,7 +55,8 @@
     },
     "requirement": [
         "jsonschema",
-        "zerorpc",
+        "protobuf",
+        "grpcio",
         "structlog"
     ],
     "requirement-dev": [
@@ -62,6 +67,7 @@
         "wheel",
         "pydocstyle",
         "pep8",
-        "autopep8"
+        "autopep8",
+        "pylint"
     ]
 }

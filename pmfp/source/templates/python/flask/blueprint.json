@@ -15,7 +15,7 @@
         "flask-static": [".", ""],
         "flask-config": ["-",""],
         "database-model": ["-", ""],
-        "universal-ws_cli.py.temp": [".","ws_cli"],
+        "cli-ws_cli.py.temp": [".","ws_cli"],
         "universal-data_schema":["-",""],
         "universal-__main__.py.temp": ["-", "__main__"],
         "docker-Dockerfilewithstatic.temp":[".", "dockerfile"],

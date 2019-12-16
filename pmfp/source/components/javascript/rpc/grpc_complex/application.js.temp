@@ -1,0 +1,9 @@
+import Application from "./core"
+import Implement from "./implement"
+
+function init_app(config) {
+    let app = new Application(config)
+    app.implement(Implement)
+    return app
+}
+export default init_app

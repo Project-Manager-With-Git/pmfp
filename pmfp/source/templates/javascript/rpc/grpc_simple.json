@@ -1,10 +1,10 @@
 {
-    "name": "rpc-grpc",
-    "desc": "grpc使用loader的模板,不用先编译proto.",
+    "name": "rpc-grpc_simple",
+    "desc": "js使用loader的grpc简单模板,不用先编译proto.",
     "project-language": "Javascript",
     "project-type": "application",
     "components": {
-        "grpc": ["pbschema", "data"],
+        "grpc": ["pbschema", "-"],
         "cli-grpc_cli.js.temp": [".", "grpc_cli"],
         "rpc-grpc": ["es", "application"],
         "server-utils.js.temp": ["es/application", "utils"],

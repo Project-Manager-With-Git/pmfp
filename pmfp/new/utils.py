@@ -21,8 +21,9 @@ def template_2_file(path: Path,**kwargs):
             ".go" in path.name) or (
             "docker" in path.name) or (
             ".json" in path.name) or (
-            ".mod" in path.name)or (
-            ".proto" in path.name):
+            ".mod" in path.name) or (
+            ".proto" in path.name) or (
+            ".js" in path.name):
         try:
             template_content = Template(path.open(encoding='utf-8').read())
             content = template_content.safe_substitute(

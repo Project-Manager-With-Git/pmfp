@@ -1,0 +1,11 @@
+import zerorpc
+class RPC:
+    """用于测试"""
+
+    def hello(self, name):
+        """测试类的方法hello"""
+        return "hello " + name
+
+    @zerorpc.stream
+    def range(self,fr, to, step):
+        return range(fr, to, step)

@@ -1,0 +1,24 @@
+"""客户端组件,直接执行即可."""
+
+from grpc_schema import *
+from core import CliProxy
+
+
+def test_run():
+    url = "localhost:5000"
+    cli = CliProxy(url)
+    response = cli.Square(Message(Message=12.3))
+    print(f"Square received: {response.Message}")
+    print("RangeSquare receiving:")
+    for i in cli.RangeSquare(Message(Message=12)):
+        print(i.Message)
+    print("RangeSquare receive done")
+
+    result = cli.SumSquare(Message(Message=i) for i in range(12))
+    print(f"SumSquare received {result.Message}")
+    print("StreamrangeSquare receiving:")
+    for result in cli.StreamrangeSquare(Message(Message=i) for i in range(12)):
+        print(result.Message)
+    print("StreamrangeSquare receive done")
+if __name__ == '__main__':
+    test_run()

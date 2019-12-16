@@ -1,0 +1,70 @@
+import path from 'path'
+import grpc from 'grpc'
+import { loadSync } from '@grpc/proto-loader'
+import * as bluebird from 'bluebird'
+
+
+const Client = (url, proto_path) => {
+    const packageDefinition = loadSync(
+        proto_path,
+        {
+            keepCase: true,
+            longs: String,
+            enums: String,
+            defaults: true,
+            oneofs: true
+        }
+    )
+    const example_proto = grpc.loadPackageDefinition(packageDefinition).ceshi.ceshi_grpc
+    const client = new example_proto.RPC(url, grpc.credentials.createInsecure())
+    return client
+}
+
+async function main() {
+    const PROTO_PATH = path.resolve("./", "pbschema/ceshi.proto")
+    const url = "localhost:5000"
+    const client = Client(url, PROTO_PATH)
+    const client_aio = bluebird.promisifyAll(client)
+    let result = await client_aio.SquareAsync({
+        Message: 12.3
+    })
+    console.log(`Square get result ${result.Message}`)
+
+    
+    let call = client.RangeSquare({
+        message: 12.3
+    })
+    call.on("data",(message)=>{
+        console.log(`RangeSquare get result ${message.Message}`)
+    })
+    call.on("end",()=>{
+        console.log("RangeSquare stream end")
+    })
+
+    call = client.SumSquare(
+        (error, message) => console.log(`SumSquare result: ${message.Message}`)
+    )
+    for (let i = 0; i <= 5; i++) {
+        call.write({
+            Message: i
+        })
+    }
+    call.end()
+
+    result = []
+    call = client.StreamrangeSquare()
+    call.on("data", (message) => {
+        console.log(`get message ${message.Message}`)
+        result.push(message.Message)
+    })
+    call.on("end", () => {
+        console.log(`StreamrangeSquare end with result: ${result}`)
+    })
+    for (let i = 0; i <= 5; i++) {
+        call.write({
+            Message: i
+        })
+    }
+    call.end()
+}
+main()

@@ -1,0 +1,49 @@
+const Implement = {
+    Square(call, callback) {
+        let result = call.request.Message ** 2
+        callback(null, {
+            Message: result
+        })
+    },
+    RangeSquare(call) {
+        let limit = call.request.Message
+        for (let i = 0; i <= limit; i++) {
+            call.write({
+                Message: i ** 2
+            })
+        }
+        call.end()
+    },
+    SumSquare(call, callback) {
+        let container = []
+        call.on("data", (message) => {
+            console.log(`get ${message.Message}`)
+            container.push(message.Message)
+        })
+        call.on("end", () => {
+            console.log("stream end")
+            callback(null, {
+                Message: container.map(e => e ** 2).reduce((x, y) => x + y)
+            })
+        })
+    },
+    StreamrangeSquare(call) {
+        let container = []
+        call.on("data", (message) => {
+            console.log(`get ${message.Message}`)
+            container.push(message.Message)
+        })
+        call.on("end", () => {
+            console.log("stream end")
+            for (let i of container) {
+                call.write({
+                    Message: i ** 2
+                })
+            }
+            call.end()
+        })
+
+    }
+}
+
+export default Implement

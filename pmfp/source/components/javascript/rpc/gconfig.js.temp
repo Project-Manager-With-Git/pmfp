@@ -6,7 +6,7 @@ import {
 export const DEFAULT_CONFIG = {
     "PORT": 5000,
     "HOST": "0.0.0.0",
-    "PROTO_PATH": path.resolve("./", "pbschema/data.proto")
+    "PROTO_PATH": path.resolve("./", "pbschema/${project_name}.proto")
 }
 
 
