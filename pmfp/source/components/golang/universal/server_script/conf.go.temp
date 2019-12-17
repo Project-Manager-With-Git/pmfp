@@ -1,7 +1,7 @@
 package script
 
 import (
-	"github.com/xeipuuv/gojsonschema"
+    "github.com/xeipuuv/gojsonschema"
 )
 
 //ConfigType 配置类型
@@ -12,38 +12,38 @@ var DefaultConfig ConfigType = ConfigType{"app_name": "$project_name", "address"
 
 //schema 默认的配置样式
 const schema = `{
-	"description": "server config",
-	"type": "object",
-	"required": [ "address","log_level","app_name"],
-	"additionalProperties": false,
-	"properties": {
-		"address": {
-			"type": "string",
-			"description": "服务的主机和端口"
-		},
-		"log_level":{
-			"type": "string",
-			"enum": ["TRACE","DEBUG","INFO","WARN","ERROR"],
-			"description": "项目的log等级"
-		},
-		"app_name":{
-			"type": "string",
-			"description": "服务名"
-		}
-	}
+    "description": "server config",
+    "type": "object",
+    "required": [ "address","log_level","app_name"],
+    "additionalProperties": false,
+    "properties": {
+        "address": {
+            "type": "string",
+            "description": "服务的主机和端口"
+        },
+        "log_level":{
+            "type": "string",
+            "enum": ["TRACE","DEBUG","INFO","WARN","ERROR"],
+            "description": "项目的log等级"
+        },
+        "app_name":{
+            "type": "string",
+            "description": "服务名"
+        }
+    }
 }`
 
 //VerifyConfig 验证config是否符合要求
 func VerifyConfig(conf ConfigType) (bool, *gojsonschema.Result) {
-	configLoader := gojsonschema.NewGoLoader(conf)
-	schemaLoader := gojsonschema.NewStringLoader(schema)
-	result, err := gojsonschema.Validate(schemaLoader, configLoader)
-	if err != nil {
-		return false, result
-	} else {
-		if result.Valid() {
-			return true, result
-		}
-		return false, result
-	}
+    configLoader := gojsonschema.NewGoLoader(conf)
+    schemaLoader := gojsonschema.NewStringLoader(schema)
+    result, err := gojsonschema.Validate(schemaLoader, configLoader)
+    if err != nil {
+        return false, result
+    } else {
+        if result.Valid() {
+            return true, result
+        }
+        return false, result
+    }
 }
