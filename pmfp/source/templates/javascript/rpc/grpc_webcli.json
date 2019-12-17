@@ -1,0 +1,25 @@
+{
+    "name": "rpc-grpc_webcli",
+    "desc": "grpc的前端项目",
+    "env": "webpack",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "frontend-pure": [
+            "",
+            "public"
+        ],
+        "frontend-pure_grpc_web": [
+            "",
+            "es"
+        ]
+    },
+    "requirement": [
+        "bluebird",
+        "google-protobuf",
+        "grpc-web"
+    ],
+    "requirement-dev": [
+        "eslint"
+    ]
+}

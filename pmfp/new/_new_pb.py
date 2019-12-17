@@ -6,10 +6,10 @@ from pmfp.const import PMFP_PB_TEMP, PROJECT_HOME
 from pmfp.utils import (
     get_protoc_version
 )
-from .utils import template_2_file
+from .utils import template_2_file, iter_template_2_file
 
 
-def new_pb(config: Dict[str, Any], c_name: str, rename: str, to: str = "pbschema"):
+def new_pb(c_name: str, rename: str, to: str = "pbschema", project_name: str = ""):
     """创建protobuf文件.
 
     Args:
@@ -28,25 +28,39 @@ def new_pb(config: Dict[str, Any], c_name: str, rename: str, to: str = "pbschema
 
         如果使用javascript的话,请额外安装js包<grpc>和<@grpc/proto-loader>
         """)
-    project_name = config["project-name"]
     t_path = PROJECT_HOME.joinpath(to)
     if not t_path.exists():
         print(f"找不到目标目录{str(t_path)},新建")
         t_path.mkdir(parents=True, exist_ok=False)
-    if c_name == "pb":
-        c_path = PMFP_PB_TEMP.joinpath("pbschema/data.proto.temp")
-    elif c_name == "grpc":
-        c_path = PMFP_PB_TEMP.joinpath("grpc-pbschema/data.proto.temp")
-    elif c_name == "grpc-streaming":
-        c_path = PMFP_PB_TEMP.joinpath(
-            "grpc-streaming-pbschema/data.proto.temp")
-    to_path = t_path.joinpath(rename + ".proto")
-    if to_path.exists():
-        print(f"存在同名文件{rename}.proto")
-        return
+    if c_name == "grpc-web-proxy":
+        c_path = PMFP_PB_TEMP.joinpath("grpc-web-proxy")
+        to_path = t_path.joinpath(rename)
+        if t_path.joinpath(rename).exists():
+            print(f"存在同名组件{rename}")
+            return
+        else:
+            shutil.copytree(
+                str(c_path),
+                str(to_path)
+            )
+            iter_template_2_file(project_name, to_path)
     else:
-        shutil.copy(
-            str(c_path),
-            str(to_path)
-        )
-        template_2_file(to_path, rename=rename, project_name=project_name)
+        if c_name == "pb":
+            c_path = PMFP_PB_TEMP.joinpath("pbschema/data.proto.temp")
+        elif c_name == "grpc":
+            c_path = PMFP_PB_TEMP.joinpath("grpc-pbschema/data.proto.temp")
+        elif c_name == "grpc-streaming":
+            c_path = PMFP_PB_TEMP.joinpath(
+                "grpc-streaming-pbschema/data.proto.temp")
+        else:
+            return
+        to_path = t_path.joinpath(rename + ".proto")
+        if to_path.exists():
+            print(f"存在同名文件{rename}.proto")
+            return
+        else:
+            shutil.copy(
+                str(c_path),
+                str(to_path)
+            )
+            template_2_file(to_path, rename=rename, project_name=project_name)

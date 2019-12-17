@@ -28,6 +28,10 @@
             "pbschema",
             "-"
         ],
+        "grpc-web-proxy": [
+            ".",
+            "grpc_web_proxy"
+        ],
         "universal-webconfig": [
             "-",
             "config"
@@ -48,7 +52,7 @@
             ".",
             "pip"
         ],
-        "docker_compose-docker_compose.yml.temp": [
+        "docker_compose-grpc_web_docker_compose.yml.temp": [
             ".",
             "docker-compose"
         ]

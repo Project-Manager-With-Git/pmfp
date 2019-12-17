@@ -1,0 +1,17 @@
+const { Message } = require('./${pb_name}_pb.js')
+const { RPCClient } = require('./${pb_name}_grpc_web_pb.js')
+
+let cli = new RPCClient('http://localhost:5001')
+
+let request = new Message()
+request.setMessage(12.3)
+
+cli.square(request, {}, function (err, response) {
+  if (err) {
+    console.log(err)
+  } else {
+    let v = response.getMessage()
+    console.log(v)
+    alert(v)
+  }
+})

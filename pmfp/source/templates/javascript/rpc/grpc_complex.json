@@ -8,6 +8,10 @@
             "pbschema",
             "-"
         ],
+        "grpc-web-proxy": [
+            ".",
+            "grpc_web_proxy"
+        ],
         "cli-grpc_cli_complex.js.temp": [
             ".",
             "grpc_cli"
@@ -27,6 +31,14 @@
         "rpc-index.js.temp": [
             "es",
             "index"
+        ],
+        "docker-backend_grpc_dockerfile.temp": [
+            ".",
+            "dockerfile"
+        ],
+        "docker_compose-grpc_web_docker_compose.yml.temp": [
+            ".",
+            "docker-compose"
         ]
     },
     "requirement": [

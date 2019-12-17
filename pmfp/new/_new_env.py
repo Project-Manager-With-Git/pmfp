@@ -103,15 +103,15 @@ def _new_frontend(config: Dict[str, Any]):
                 "babel": {
                     "presets": [
                         ["env",
-                        {
-                            "targets": {
-                                "browsers": "> 5%"
-                            }
-                        }]
+                         {
+                             "targets": {
+                                 "browsers": "> 5%"
+                             }
+                         }]
                     ]
                 }
             })
-        json.dump(content, f)
+            json.dump(content, f)
 
 
 def _new_webpack(config: Dict[str, Any]):
@@ -134,7 +134,7 @@ def _new_webpack(config: Dict[str, Any]):
                     ]
                 }
             })
-        json.dump(content, f)
+            json.dump(content, f)
         if not PROJECT_HOME.joinpath("env").is_dir():
             PROJECT_HOME.joinpath("env").mkdir()
         with open(str(PROJECT_HOME.joinpath("env/webpack.config.base.js")), "w", encoding="utf-8") as f:

@@ -55,8 +55,10 @@ def _parser_args(args: argparse.Namespace):
             language = "Python"
         elif args.language in ("js", "javascript", "JS", "Javascript", "Js", "JavaScript"):
             language = "Javascript"
+        elif args.language in ("web", "WEB", "Web"):
+            language = "Web"
         else:
-            print("不支持的语言, 目前只支持Python,Golang和Javascript")
+            print("不支持的语言, 目前只支持Python,Golang和Javascript/Web")
             return
         kwargs.update({
             "language": language
@@ -67,9 +69,15 @@ def _parser_args(args: argparse.Namespace):
             return
         else:
             language = config["project-language"]
-            kwargs.update({
-                "language": language
-            })
+            env = config["env"]
+            if language == "Javascript" and env not in ("node",):
+                kwargs.update({
+                    "language": "Web"
+                })
+            else:
+                kwargs.update({
+                    "language": language
+                })
 
     if args.grpc:
         grpc = args.grpc
@@ -93,7 +101,7 @@ def _parser_args(args: argparse.Namespace):
             })
         elif args.to.startswith("./"):
             if language == "Python" and grpc is True:
-                to = args.to[2:]+"/"+"_".join(name.split("."))
+                to = args.to[2:] + "/" + "_".join(name.split("."))
             else:
                 to = args.to[2:]
             kwargs.update({
@@ -110,7 +118,7 @@ def _parser_args(args: argparse.Namespace):
             })
         else:
             if language == "Python" and grpc is True:
-                to = args.to+"/"+"_".join(name.split("."))
+                to = args.to + "/" + "_".join(name.split("."))
             else:
                 to = args.to
             kwargs.update({
@@ -127,7 +135,7 @@ def _parser_args(args: argparse.Namespace):
             elif language == "Python":
                 to = f"{project_name}/grpc_schema"
             elif language == "Javascript":
-                to = f"{project_name}/grpc_schema"
+                to = f"es/grpc_schema"
             else:
                 to = "_".join(name.split("."))
             kwargs.update({

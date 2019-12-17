@@ -1,8 +1,33 @@
 """编译protobuf的schema为不同语言的代码."""
 import subprocess
+import warnings
 from typing import Dict, Any
 import chardet
 from pmfp.const import PROJECT_HOME
+
+
+def build_pb_web(name: str, dir_: str, to: str, grpc: bool) -> None:
+    if grpc:
+        warnings.warn("""编译grpc-web需要安装`protoc-gen-grpc-web`<https://github.com/grpc/grpc-web/releases>""")
+        command = f"protoc -I {dir_} {dir_}/{name} --js_out=import_style=commonjs:{to} --grpc-web_out=import_style=commonjs,mode=grpcwebtext:{to}"
+        print(command)
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode == 0:
+            print(f"编译grpc的protobuf项目<{name}>为go语言模块完成!")
+        else:
+            print(f"编译grpc的protobuf项目{name}为go语言模块失败!")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
+    else:
+        warnings.warn("""编译为js模块需要安装`protoc-gen-js`<https://www.npmjs.com/package/protoc-gen>""")
+        command = f"protoc -I={dir_} --js_out=import_style=commonjs,binary:{to} {dir_}/{name}"
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode == 0:
+            print(f"编译protobuf项目<{name}>为js语言模块完成!")
+        else:
+            print(f"编译protobuf项目{name}为js语言模块失败!")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
 
 
 def build_pb_go(name: str, dir_: str, to: str, grpc: bool) -> None:
@@ -93,8 +118,10 @@ from .{n}_pb2_grpc import *"""
 
 def build_pb_js(name: str, dir_: str, to: str, grpc: bool) -> None:
     if grpc:
-        command = f"python -m grpc_tools.protoc -I{dir_} --js_out={to} \
-                    --grpc_js_out={to} {name}"
+        warnings.warn("""编译grpc-web需要安装`grpc-tools`<https://www.npmjs.com/package/grpc-tools>""")
+        # grpc_tools_node_protoc --js_out=import_style=commonjs,binary:../node/static_codegen/ --grpc_out=../node/static_codegen --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` helloworld.proto
+        command = f"protoc -I{dir_} --js_out=import_style=commonjs,binary:{to} \
+                    --grpc_js_out=import_style=commonjs,binary:{to} {dir_}/{name}"
         res = subprocess.run(command, capture_output=True, shell=True)
         if res.returncode == 0:
             print(f"编译grpc的protobuf项目<{name}>为js模块完成!")
@@ -103,7 +130,8 @@ def build_pb_js(name: str, dir_: str, to: str, grpc: bool) -> None:
             encoding = chardet.detect(res.stderr).get("encoding")
             print(res.stderr.decode(encoding))
     else:
-        command = f"protoc -I={dir_} --js_out={to} {dir_}/{name}"
+        warnings.warn("""编译为js模块需要安装`protoc-gen-js`<https://www.npmjs.com/package/protoc-gen>""")
+        command = f"protoc -I={dir_} --js_out=import_style=commonjs,binary:{to} {dir_}/{name}"
         res = subprocess.run(command, capture_output=True, shell=True)
         if res.returncode == 0:
             print(f"编译protobuf项目<{name}>为js语言模块完成!")
@@ -133,3 +161,5 @@ def build_pb(kwargs: Dict[str, Any]) -> None:
         build_pb_py(name, dir_, to, grpc)
     elif language in ("js", "javascript", "JS", "Javascript"):
         build_pb_js(name, dir_, to, grpc)
+    elif language in ("web", "WEB", "Web"):
+        build_pb_web(name, dir_, to, grpc)

@@ -58,6 +58,10 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 ### 3.1.1
 
 1. 更新grpc相关的模板,使之更加好用
+   1. 修改了python的grpc相关模板,使之可以更灵活的使用json格式的log
+   2. 为js,python,go增加了grpc的复杂模板,这个模板可以做流输入和流输出.
+   3. build_pb和new pb/grpc/grpc-streaming命令现在可以在没有pmfprc.json的情况下使用了
+   4. 新增grpc-web支持,为其添加了对应的反向代理docker-compose模板
 2. 替换subprocess使用run的方法
 
 ### 3.1.0

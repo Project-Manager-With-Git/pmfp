@@ -1,0 +1,7 @@
+FROM node:$language_version
+ADD package.json /code/package.json
+ADD lib /code/lib
+ADD pbschema /code/pbschema
+WORKDIR /code
+RUN npm install --save
+ENTRYPOINT  ["node", "lib/index.js"]
