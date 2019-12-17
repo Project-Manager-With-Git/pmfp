@@ -4,7 +4,8 @@
     "project-language": "Golang",
     "project-type": "module",
     "components": {
-        "universal-simple_module.go.temp": [".", "-"]
+        "universal-plugin_module.go.temp": [".", "-"],
+        "universal-plugin_main.go.temp": [".", "main"]
     },
     "requirement": [],
     "requirement-dev": []

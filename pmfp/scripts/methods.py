@@ -265,17 +265,11 @@ grpc-streaming           创建一个有流的grpc用的protobuf文件
             help="只有cython写的model有用"
         )
         parser.add_argument(
-            '--asdll',
-            action="store_true",
-            default=False,
-            help="只有go写的module有用"
-        )
-        parser.add_argument(
             '--cross',
             type=str,
             default="",
             choices=(
-                "linux-386", "windows-386", "darwin-386", "freebsd-386",
+                "linux-386", "windows-386", "darwin-386", "freebsd-386","js-wasm"
                 "linux-amd64", "windows-amd64", "darwin-amd64", "freebsd-amd64",
                 "linux-arm"
             ),

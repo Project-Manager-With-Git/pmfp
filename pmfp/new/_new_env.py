@@ -12,7 +12,9 @@ from pmfp.const import (
     GO_ENV_PATH,
     PMFP_GOLANG_ENV_TEMP
 )
-
+from pmfp.utils import (
+    get_golang_version
+)
 from .utils import new_json_package
 from .const import (
     WEBPACK_BASE_CONFIG,
@@ -187,12 +189,18 @@ def _new_go_env(config: Dict[str, Any]):
         print("go的虚拟环境已存在!")
         return
     project_name = config["project-name"]
-    template_content = Template(PMFP_GOLANG_ENV_TEMP.open(encoding='utf-8').read())
-    content = template_content.safe_substitute(
-        project_name=project_name
-    )
-    with open(str(GO_ENV_PATH), "w", encoding="utf-8") as fa:
-        fa.write(content)
+    language_version = get_golang_version()
+    if language_version:
+        template_content = Template(
+            PMFP_GOLANG_ENV_TEMP.open(encoding='utf-8').read())
+        content = template_content.safe_substitute(
+            project_name=project_name,
+            language_version=language_version
+        )
+        with open(str(GO_ENV_PATH), "w", encoding="utf-8") as fa:
+            fa.write(content)
+    else:
+        raise AttributeError("需要先安装go语言")
 
 
 def new_env(config: Dict[str, Any], language: str):
