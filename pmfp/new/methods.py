@@ -66,6 +66,14 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
     elif c_name == "es_script" and c_language == "Javascript":
         new_es_script(config)
     else:
+        if not kwargs.get("kwargs"):
+            kwargs["kwargs"] = {}
+        if c_language == "golang":
+            kwargs["kwargs"]["language_version"] = get_golang_version() or "latest"
+        elif c_language == "python":
+            kwargs["kwargs"]["language_version"] = GOLBAL_PYTHON_VERSION
+        elif c_language == "javascript":
+            kwargs["kwargs"]["language_version"] = get_node_version() or "latest"
         spl_name = c_name.split("-")
         c_category = spl_name[0]
         c_name = "".join(spl_name[1:])
@@ -77,16 +85,6 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
             rename = kwargs["rename"]
         c_language = c_language.lower()
         c_path = f"{c_language}/{c_category}/{c_name}"
-        if c_category == "docker":
-            if not kwargs.get("kwargs"):
-                kwargs["kwargs"] = {}
-            if c_language == "golang":
-                kwargs["kwargs"]["language_version"] = get_golang_version() or "latest"
-            elif c_language == "python":
-                kwargs["kwargs"]["language_version"] = GOLBAL_PYTHON_VERSION
-            elif c_language == "javascript":
-                kwargs["kwargs"]["language_version"] = get_node_version() or "latest"
-
         test = kwargs["test"]
         try:
             print(f"创建组件{c_path}")

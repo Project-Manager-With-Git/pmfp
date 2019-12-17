@@ -64,6 +64,7 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
    4. 新增grpc-web支持,为其添加了对应的反向代理docker-compose模板
 2. 替换subprocess使用run的方法
 3. 为go语言新增http模板,使用的是gin框架
+4. go语言的build方法可以选择编译为动态库还是静态库,使用flag`--asdll`
 
 ### 3.1.0
 

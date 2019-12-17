@@ -1,0 +1,13 @@
+{
+    "name": "module-simple",
+    "desc": "一般go语言模块",
+    "project-language": "Golang",
+    "project-type": "module",
+    "components": {
+        "universal-simple_module": ["-", ""]
+    },
+    "requirement": [
+    ],
+    "requirement-dev": [
+    ]
+}

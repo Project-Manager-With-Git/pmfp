@@ -6,7 +6,7 @@ from ._build_python import build_python_app, build_python_module
 from ._build_golang import build_go
 
 
-def build(config: Dict[str, Any], inplace=False, cross=None) -> None:
+def build(config: Dict[str, Any], inplace=False, cross=None, asdll=False) -> None:
     """根据项目的信息编译源文件到包或者可执行文件.
 
     build的语义为建造,即由source组建为production.
@@ -25,4 +25,4 @@ def build(config: Dict[str, Any], inplace=False, cross=None) -> None:
     elif language == "Javascript":
         build_js()
     elif language == "Golang":
-        build_go(config, cross)
+        build_go(config, cross, asdll)
