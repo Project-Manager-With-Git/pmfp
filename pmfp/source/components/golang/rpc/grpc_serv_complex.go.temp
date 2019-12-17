@@ -1,7 +1,6 @@
 package serv
 
 import (
-	"container/list"
 	"context"
 	pb "$project_name/grpc_schema"
 	log "$project_name/logger"

@@ -63,6 +63,7 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
    3. build_pb和new pb/grpc/grpc-streaming命令现在可以在没有pmfprc.json的情况下使用了
    4. 新增grpc-web支持,为其添加了对应的反向代理docker-compose模板
 2. 替换subprocess使用run的方法
+3. 为go语言新增http模板,使用的是gin框架
 
 ### 3.1.0
 
