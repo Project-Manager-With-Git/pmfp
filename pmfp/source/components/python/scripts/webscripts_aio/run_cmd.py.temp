@@ -1,0 +1,11 @@
+import os
+import json
+from pathlib import Path
+from $project_name import init_app
+from config import load_conf
+
+
+def run(args):
+    config = load_conf(args)
+    app = init_app(config)
+    app.run()

@@ -1,6 +1,6 @@
 {
-    "name": "rpc-xmlrpc",
-    "desc": "xmlrpc的标准化模板",
+    "name": "rpc-grpc_aio",
+    "desc": "grpc的asyncio模板,支持流数据,使用grpclib",
     "project-language": "Python",
     "project-type": "application",
     "components": {
@@ -8,23 +8,31 @@
             "-",
             "-"
         ],
-        "rpc-xmlcore.py.temp": [
+        "rpc-grpclibcore.py.temp": [
             "-",
             "core"
         ],
-        "scripts-webscripts": [
-            "-",
-            "scripts"
-        ],
-        "cli-xmlrpc_cli.py.temp": [
-            ".",
-            "xmlrpc_cli"
-        ],
-        "rpc--xmljsonrpc_view_clz.py.temp": [
+        "rpc-grpclib_view_clz_complex.py.temp": [
             "-",
             "view_clz"
         ],
-        "universal-webconfig": [
+        "scripts-webscripts_aio": [
+            "-",
+            "scripts"
+        ],
+        "cli-grpclib_cli_complex": [
+            ".",
+            "grpc_cli"
+        ],
+        "grpc-streaming": [
+            "pbschema",
+            "-"
+        ],
+        "grpc-web-proxy": [
+            ".",
+            "grpc_web_proxy"
+        ],
+        "universal-webconfig_aio": [
             "-",
             "config"
         ],
@@ -44,14 +52,16 @@
             ".",
             "pip"
         ],
-        "docker_compose-docker_compose.yml.temp": [
+        "docker_compose-grpc_web_docker_compose.yml.temp": [
             ".",
             "docker-compose"
         ]
     },
     "requirement": [
         "jsonschema",
-        "structlog"
+        "protobuf",
+        "structlog",
+        "grpclib"
     ],
     "requirement-dev": [
         "coverage",
@@ -61,6 +71,7 @@
         "wheel",
         "pydocstyle",
         "pep8",
-        "autopep8"
+        "autopep8",
+        "pylint"
     ]
 }

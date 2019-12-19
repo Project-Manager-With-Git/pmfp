@@ -1,0 +1,35 @@
+"""客户端组件,直接执行即可."""
+import asyncio
+from .grpc_schema import *
+from .core import CliProxy
+
+
+async def test_run():
+    url = "localhost:5000"
+    with CliProxy(url) as cli:
+        response = await cli.Square(Message(Message=12.3))
+        print(f"Square received: {response.Message}")
+
+        print("RangeSquare receiving:")
+        async with cli.RangeSquare.open() as stream:
+            await stream.send_message(Message(Message=12), end=True)
+            async for i in stream:
+                print(i.Message)
+        print("RangeSquare receive done")
+
+        async with cli.SumSquare.open() as stream:
+            for i in range(12):
+                await stream.send_message(Message(Message=i))
+            await stream.end()
+            result = await stream.recv_message()
+            print(f"SumSquare received {result.Message}")
+        print("StreamrangeSquare receiving:")
+        async with cli.StreamrangeSquare.open() as stream:
+            for i in range(12):
+                await stream.send_message(Message(Message=12))
+                result = await stream.recv_message()
+                print(result.Message)
+            await stream.end()
+        print("StreamrangeSquare receive done")
+if __name__ == '__main__':
+    asyncio.run(test_run())

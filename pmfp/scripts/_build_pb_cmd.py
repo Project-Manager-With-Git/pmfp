@@ -57,6 +57,8 @@ def _parser_args(args: argparse.Namespace):
             language = "Javascript"
         elif args.language in ("web", "WEB", "Web"):
             language = "Web"
+        elif args.language in ("asyncio", "Asyncio","aio"):
+            language = "Asyncio"
         else:
             print("不支持的语言, 目前只支持Python,Golang和Javascript/Web")
             return
@@ -100,7 +102,7 @@ def _parser_args(args: argparse.Namespace):
                 "to": to
             })
         elif args.to.startswith("./"):
-            if language == "Python" and grpc is True:
+            if language in ("Python","Asyncio") and grpc is True:
                 to = args.to[2:] + "/" + "_".join(name.split("."))
             else:
                 to = args.to[2:]
@@ -109,7 +111,7 @@ def _parser_args(args: argparse.Namespace):
             })
         elif args.to.startswith("grpc_cli"):
 
-            if language == "Python" and grpc is True:
+            if language in ("Python","Asyncio") and grpc is True:
                 to = "grpc_cli/grpc_schema"
             else:
                 to = "grpc_cli"
@@ -117,7 +119,7 @@ def _parser_args(args: argparse.Namespace):
                 "to": to
             })
         else:
-            if language == "Python" and grpc is True:
+            if language in ("Python","Asyncio") and grpc is True:
                 to = args.to + "/" + "_".join(name.split("."))
             else:
                 to = args.to
@@ -132,7 +134,7 @@ def _parser_args(args: argparse.Namespace):
             project_name = config["project-name"]
             if language == "Golang":
                 to = "grpc_schema"
-            elif language == "Python":
+            elif language in ("Python","Asyncio"):
                 to = f"{project_name}/grpc_schema"
             elif language == "Javascript":
                 to = f"es/grpc_schema"

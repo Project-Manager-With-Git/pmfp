@@ -1,0 +1,40 @@
+from jsonschema import validate
+schema = {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "server_config",
+    "description": "server config verify",
+    "type": "object",
+    "properties": {
+        "APP_NAME": {
+            "description": "应用名",
+            "type": "string"
+        },
+        "LOG_LEVEL": {
+            "description": "log级别",
+            "type": "string",
+            "enum": ["DEBUG", "INFO", "WARN", "ERROR"]
+        },
+        "PORT": {
+            "description": "监听端口号",
+            "type": "integer"
+        },
+        "HOST": {
+            "description": "主机名",
+            "type": "string"
+        },
+        "UVLOOP": {
+            "description": "是否使用uvloop作为事件循环",
+            "type": "boolean"
+        }
+    },
+    "required": ["APP_NAME", "LOG_LEVEL", "PORT", "HOST","UVLOOP"]
+}
+
+
+def config_schema(instance):
+    try:
+        validate(instance=instance, schema=schema)
+    except:
+        raise
+    else:
+        return instance

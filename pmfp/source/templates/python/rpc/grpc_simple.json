@@ -13,7 +13,7 @@
         "universal-webconfig": ["-", "config"],
         "universal-__main__.py.temp": ["-", "__main__"],
         "universal-jsonlog_proxy.py.temp": ["-", "logger"],
-        "docker-Dockerfile.temp": [".", "dockerfile"],
+        "docker-Dockerfileforrpc.temp": [".", "dockerfile"],
         "docker-pip.conf.temp": [".", "pip"],
         "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
     },

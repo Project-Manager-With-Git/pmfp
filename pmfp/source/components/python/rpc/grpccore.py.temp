@@ -25,7 +25,7 @@ class App:
         self.register_instances =instance
         instance.app=self
 
-    def run(self,host=None,port=None,debug=False):
+    def run(self,host=None,port=None):
         if self.register_instances is None:
             assert False,"需要先注册实例"
         host = host or self.config["HOST"]

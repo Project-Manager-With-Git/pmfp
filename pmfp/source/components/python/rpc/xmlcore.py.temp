@@ -26,7 +26,7 @@ class App:
     def register_function(self, name, func):
         self.register_functions[name] = func
 
-    def run(self,host=None,port=None,debug=False):
+    def run(self,host=None,port=None):
         host = host or self.config["HOST"]
         port = port or self.config["PORT"]
         with ThreadXMLRPCServer((host, port), allow_none=True) as server:

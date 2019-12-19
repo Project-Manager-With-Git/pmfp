@@ -1,0 +1,22 @@
+from grpc_schema import RPCBase, Message
+
+
+class RPC(RPCBase):
+    async def Square(self, stream):
+        request: Message = await stream.recv_message()
+        await stream.send_message(Message(Message=request.Message**2))
+
+    async def RangeSquare(self, stream):
+        request: Message = await stream.recv_message()
+        for i in range(int(request.Message + 1)):
+            await stream.send_message(Message(Message=i**2))
+
+    async def SumSquare(self, stream):
+        result = 0
+        async for request in stream:
+            result += request.Message**2
+        await stream.send_message(Message(Message=result))
+
+    async def StreamrangeSquare(self, stream):
+        async for request in stream:
+            await stream.send_message(Message(Message=request.Message**2))
