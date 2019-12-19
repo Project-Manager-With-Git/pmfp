@@ -56,7 +56,7 @@ class PPM:
         """初始化PPM对象."""
         parser = argparse.ArgumentParser(
             prog='ppm',
-            epilog='除show命令和init命令外每个子命令都需要在根目录下有名为.pmfp.json的配置文件.',
+            epilog='除show命令,init命令,build_pb命令外每个子命令都需要在根目录下有名为.pmfp.json的配置文件.',
             description='Python用户的项目脚手架',
             usage=PPM_HELP)
         parser.add_argument('command', help='执行子命令')
