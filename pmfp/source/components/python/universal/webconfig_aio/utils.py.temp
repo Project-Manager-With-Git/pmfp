@@ -33,10 +33,10 @@ def _load_conf_from_env():
     """通过环境变量加载配置."""
     result = {}
     app_name_upper = DEFAULT_SETTING["APP_NAME"].upper()
-    loglevel = os.getenv(f"{app_name_upper}_LOG_LEVEL")
-    port = os.getenv(f"{app_name_upper}_PORT")
-    host = os.getenv(f"{app_name_upper}_HOST")
-    uvloop_inuse = os.getenv(f"{app_name_upper}_UVLOOP")
+    loglevel = os.environ.get(f"{app_name_upper}_LOG_LEVEL")
+    port = os.environ.get(f"{app_name_upper}_PORT")
+    host = os.environ.get(f"{app_name_upper}_HOST")
+    uvloop_inuse = os.environ.get(f"{app_name_upper}_UVLOOP")
     if loglevel:
         result["LOG_LEVEL"] = loglevel
     if host:
