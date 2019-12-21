@@ -41,7 +41,7 @@ from .{n}_pb2_grpc import *"""
             print(packstr)
             as_package = find_py_grpc_pb2_import_string(n)
             for line in lines:
-                if f"import {n}_pb2 as {n}__pb2" in line:
+                if f"import {n}_pb2 as {as_package}" in line:
                     t = f"import {packstr}.{n}_pb2 as {as_package}\n"
                     new_lines.append(t)
                 else:
