@@ -1,0 +1,64 @@
+package serv
+
+import (
+	"${project_name}/logger"
+
+	"github.com/gin-gonic/gin"
+	ginlogrus "github.com/toorop/gin-logrus"
+)
+
+type server struct {
+	Config map[string]interface{}
+	router *gin.Engine
+}
+
+func NewServ(config map[string]interface{}) *server {
+	var s *server = new(server)
+	s.Config = config
+	if s.Config["log_level"] != "DEBUG" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+	s.router = gin.New()
+
+	s.router.Use(ginlogrus.Logger(logger.Logger), gin.Recovery())
+	userlistsource := UserListSource{}
+	usersource := UserSource{}
+	user := s.router.Group("/user")
+	{
+		user.POST("/", userlistsource.Post)
+		user.GET("/:id", usersource.Get)
+		user.PUT("/:id", usersource.Put)
+		user.DELETE("/:id", usersource.Delete)
+	}
+
+	userpasswordsource := UserPassWordSource{}
+	userpassword := s.router.Group("/user-password")
+	{
+		userpassword.POST("/", userpasswordsource.Post)
+		userpassword.PUT("/:id", userpasswordsource.Put)
+	}
+	userpermissionsource := UserPermissionSource{}
+	userpermission := s.router.Group("/user-permission")
+	{
+		userpermission.POST("/", userpermissionsource.Post)
+		userpermission.DELETE("/:id", userpermissionsource.Delete)
+	}
+
+	authsource := AuthSource{}
+	auth := s.router.Group("/auth")
+	{
+		auth.POST("/", authsource.Post)
+		auth.GET("/", authsource.Get)
+	}
+	permissionlistsource := PermissionListSource{}
+	permission := s.router.Group("/permission")
+	{
+		permission.GET("/", permissionlistsource.Get)
+	}
+	return s
+}
+
+func (s *server) Run() {
+	logger.Logger.Info(map[string]interface{}{"config": s.Config}, "servrt start")
+	s.router.Run(s.Config["address"].(string))
+}

@@ -4,12 +4,12 @@
     "project-language": "Golang",
     "project-type": "application",
     "components": {
-        "rpc-grpc_main_complex.go.temp": [
+        "http-gin_main.go.temp": [
             ".",
             "main"
         ],
-        "rpc-grpc_serv_complex.go.temp": [
-            "serv",
+        "http-gin_server": [
+            ".",
             "serv"
         ],
         "universal-server_script": [
