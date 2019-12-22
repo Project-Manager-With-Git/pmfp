@@ -18,3 +18,4 @@ mypy-extensions
 boom
 voluptuous
 chardet
+grpclib
