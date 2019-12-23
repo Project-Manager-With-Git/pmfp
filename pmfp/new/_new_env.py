@@ -160,7 +160,20 @@ def _new_webpack(config: Dict[str, Any]):
 
 
 def _new_vue(config: Dict[str, Any]):
-    pass
+    command = "vue create -b -n --preset . ."
+    try:
+        res = subprocess.run(command, capture_output=True, shell=True, input="Y", encoding="utf-8", text=True)
+    except Exception as e:
+        print(e)
+        raise e
+    else:
+        if res.returncode != 0:
+            print("创建基于基本vue-cli的环境出错")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            try:
+                print(res.stderr.decode(encoding))
+            except Exception:
+                print(res.stderr)
 
 
 def _new_js_env(config: Dict[str, Any]):

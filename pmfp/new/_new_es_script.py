@@ -41,14 +41,12 @@ def new_es_script(config: Dict[str, Any]):
                 "build:prod": "./node_modules/.bin/webpack --config env/webpack.config.prod.js",
                 "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --require babel-polyfill --require babel-register"
             }
-        elif config.get("env") == "vue":
-            default_script = {
-            }
         else:
             default_script = {
             }
         if old_scripts:
-            scripts = old_scripts.update(default_script)
+            scripts = dict(old_scripts)
+            scripts.update(default_script)
         else:
             scripts = default_script
         if content.get("esdoc"):

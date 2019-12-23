@@ -8,7 +8,7 @@ from voluptuous import (All, Any, Email, Equal, In, Invalid, NotIn,
 NOT_NAME_RANGE = ["app", "application", "module", "project"]
 STATUS_RANGE = ["prod", "release", "dev", "test"]
 LANGUAGE_RANGE = ["Python", "Javascript", "Golang"]
-ENV_RANGE = ["env", "conda", "node", "frontend", "webpack", "vue", "gomod"]
+ENV_RANGE = ["env", "conda", "node", "frontend", "webpack", "vue", "vue-electron", "vue-native", "vue-nativescript", "gomod"]
 TYPE_RANGE = ["application", "module"]
 LICENSE_RANGE = ["MIT", "Apache", "BSD", "Mozilla", "LGPL", "GPL", "GNU"]
 DEFAULT_AUTHOR = getpass.getuser()
@@ -31,7 +31,7 @@ def env_match(language: str, env: str) -> bool:
         else:
             return True
     elif language in ("Javascript", ):
-        if env not in ("node", "frontend", "webpack", "vue"):
+        if env not in ("node", "frontend", "webpack", "vue", "vue-electron", "vue-native", "vue-nativescript"):
             return False
         else:
             return True
