@@ -89,7 +89,8 @@ def git_push(msg: str = None) -> None:
         encoding = chardet.detect(res.stdout).get("encoding")
         print(res.stdout.decode(encoding))
         msg = msg or "push"
-        command = f'git commit -m "{msg}@{time}"'
+        now = time.time()
+        command = f'git commit -m "{msg}@{now}"'
         res = subprocess.run(command, capture_output=True, shell=True)
         if res.returncode != 0:
             print("git commit执行出错")
