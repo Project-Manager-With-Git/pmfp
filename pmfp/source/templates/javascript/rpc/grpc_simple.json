@@ -1,0 +1,49 @@
+{
+    "name": "rpc-grpc_simple",
+    "desc": "js使用loader的grpc简单模板,不用先编译proto.",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "grpc": [
+            "pbschema",
+            "-"
+        ],
+        "cli-grpc_cli.js.temp": [
+            ".",
+            "grpc_cli"
+        ],
+        "rpc-grpc": [
+            "es",
+            "application"
+        ],
+        "server-utils.js.temp": [
+            "es/application",
+            "utils"
+        ],
+        "rpc-gconfig.js.temp": [
+            "es/application",
+            "config"
+        ],
+        "rpc-index.js.temp": [
+            "es",
+            "index"
+        ],
+        "docker-backend_grpc_dockerfile.temp": [
+            ".",
+            "dockerfile"
+        ],
+        "docker_compose-docker_compose.yml.temp": [
+            ".",
+            "docker-compose"
+        ]
+    },
+    "requirement": [
+        "pino",
+        "commander",
+        "grpc",
+        "@grpc/proto-loader"
+    ],
+    "requirement-dev": [
+        "eslint"
+    ]
+}

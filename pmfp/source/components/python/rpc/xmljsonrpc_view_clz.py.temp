@@ -1,0 +1,14 @@
+class RPC:
+    """用于测试"""
+
+    def hello(self, name):
+        """测试类的方法hello"""
+        return "hello " + name
+
+    def bye(self, name):
+        """测试类的方法bye"""
+        return "bye " + name
+
+    def add(self, a, b):
+        """测试加法"""
+        return a + b

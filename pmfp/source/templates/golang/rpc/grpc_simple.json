@@ -18,7 +18,7 @@
         ],
         "grpc": [
             "pbschema",
-            "data"
+            "-"
         ],
         "docker-Dockerfile.temp": [
             ".",

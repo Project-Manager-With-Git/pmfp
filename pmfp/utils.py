@@ -1,5 +1,6 @@
 """项目的功用组件."""
 import subprocess
+import chardet
 from typing import Dict, Any, Union, Optional
 from pathlib import Path
 from pmfp.const import (

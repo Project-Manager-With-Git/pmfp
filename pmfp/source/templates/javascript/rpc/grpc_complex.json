@@ -1,0 +1,54 @@
+{
+    "name": "rpc-grpc_simple",
+    "desc": "js使用loader的grpc复杂模板,支持流数据,不用先编译proto.",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "grpc-streaming": [
+            "pbschema",
+            "-"
+        ],
+        "grpc-web-proxy": [
+            ".",
+            "grpc_web_proxy"
+        ],
+        "cli-grpc_cli_complex.js.temp": [
+            ".",
+            "grpc_cli"
+        ],
+        "rpc-grpc_complex": [
+            "es",
+            "application"
+        ],
+        "server-utils.js.temp": [
+            "es/application",
+            "utils"
+        ],
+        "rpc-gconfig.js.temp": [
+            "es/application",
+            "config"
+        ],
+        "rpc-index.js.temp": [
+            "es",
+            "index"
+        ],
+        "docker-backend_grpc_dockerfile.temp": [
+            ".",
+            "dockerfile"
+        ],
+        "docker_compose-grpc_web_docker_compose.yml.temp": [
+            ".",
+            "docker-compose"
+        ]
+    },
+    "requirement": [
+        "pino",
+        "commander",
+        "grpc",
+        "@grpc/proto-loader"
+    ],
+    "requirement-dev": [
+        "eslint",
+        "bluebird"
+    ]
+}

@@ -41,4 +41,6 @@ if __name__ == "__main__":
     url = "tcp://localhost:5000"
     cli = CliProxy(url)
     print(cli.hello("RPC"))
+    for item in cli.range(10, 20, 2):
+        print(item)
 

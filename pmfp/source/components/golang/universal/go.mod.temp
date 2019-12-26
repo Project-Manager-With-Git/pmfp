@@ -3,4 +3,4 @@ module $project_name
 require (
     
 )
-go 1.12
+go ${language_version}

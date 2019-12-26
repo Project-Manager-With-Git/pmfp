@@ -5,6 +5,7 @@ from typing import (
     Any,
     Optional
 )
+import chardet
 from pmfp.const import PLATFORM, PMFPRC_PATH
 from pmfp.utils import get_python_path
 
@@ -63,11 +64,13 @@ def install(
                     command = f"{python_path} -m pip install {package}"
                 elif config["env"] == "conda":
                     command = f"conda install -y -p env {package}"
-            try:
-                subprocess.check_call(command, shell=True)
-            except Exception as e:
+
+            res = subprocess.run(command, capture_output=True, shell=True)
+            if res.returncode != 0:
                 print(f"批量安装时执行安装命令{command}时出错")
-                raise e
+                encoding = chardet.detect(res.stderr).get("encoding")
+                print(res.stderr.decode(encoding))
+                break
         else:
             print("安装依赖成功")
             return True
@@ -93,12 +96,11 @@ def install(
                 command = f"{python_path} -m pip install {package}"
             elif config["env"] == "conda":
                 command = f"conda install -y -p env {package}"
-
-        try:
-            subprocess.check_call(command, shell=True)
-        except Exception as e:
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode != 0:
             print(f"执行安装命令:{command}时出错")
-            raise e
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
         else:
             print(f"包{package} 安装完成!")
             if dev is True:

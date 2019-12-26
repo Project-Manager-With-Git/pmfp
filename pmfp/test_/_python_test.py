@@ -3,6 +3,7 @@
 import subprocess
 from typing import Dict, Any, Sequence, Optional
 from mypy import api
+import chardet
 from pmfp.const import PROJECT_HOME, TYPECHECK_PATH
 from pmfp.utils import (
     get_python_path,
@@ -13,7 +14,7 @@ from pmfp.utils import (
 def _run_python_test(
         config: Dict[str, Any],
         html: bool,
-        source: Optional[Sequence[str]])->None:
+        source: Optional[Sequence[str]]) -> None:
     """测试python代码.
 
     Args:
@@ -33,19 +34,36 @@ def _run_python_test(
     else:
         source = package_name
     command = f"{python_path} -m coverage run --source={source} -m unittest discover -v -s ."
-    try:
-        subprocess.check_call(command, shell=True)
-    except Exception as e:
-        print("单元测试执行失败")
-        raise e
+    res = subprocess.run(command, capture_output=True, shell=True)
+    if res.returncode != 0:
+        print("单元测试出错")
+        encoding = chardet.detect(res.stderr).get("encoding")
+        print(res.stderr.decode(encoding))
     else:
+        print("单元测试结果!")
+        encoding = chardet.detect(res.stdout).get("encoding")
+        print(res.stdout.decode(encoding))
         if html:
             command = f"{python_path} -m coverage html -d covhtml"
-            subprocess.check_call(command, shell=True)
+            res = subprocess.run(command, capture_output=True, shell=True)
+            if res.returncode != 0:
+                print("生成覆盖率网页报告出错")
+                encoding = chardet.detect(res.stderr).get("encoding")
+                print(res.stderr.decode(encoding))
+            else:
+                print("生成覆盖率网页报告成功")
         else:
             command = f"{python_path} -m coverage report"
-            subprocess.check_call(command, shell=True)
-    print("单元测试完成!")
+            res = subprocess.run(command, capture_output=True, shell=True)
+            if res.returncode != 0:
+                print("生成覆盖率报告出错")
+                encoding = chardet.detect(res.stderr).get("encoding")
+                print(res.stderr.decode(encoding))
+            else:
+                print("生成覆盖率报告成功")
+                encoding = chardet.detect(res.stdout).get("encoding")
+                print(res.stdout.decode(encoding))
+                print("单元测试完成!")
 
 
 def _run_python_typecheck(
@@ -83,11 +101,12 @@ def _run_python_typecheck(
                 TYPECHECK_PATH.mkdir()
             print(package_name)
             result = api.run(
-                ["--no-site-packages","--ignore-missing-imports", '--html-report', TYPECHECK_PATH.name] + package_name
+                ["--no-site-packages", "--ignore-missing-imports",
+                    '--html-report', TYPECHECK_PATH.name] + package_name
             )
         else:
             result = api.run(
-                ["--no-site-packages","--ignore-missing-imports"] + package_name
+                ["--no-site-packages", "--ignore-missing-imports"] + package_name
             )
         if result[0]:
             print('\n类型检验报告:\n')
@@ -103,7 +122,7 @@ def run_python_test(
         config: Dict[str, Any],
         html: bool = False,
         typecheck: bool = False,
-        source: Optional[Sequence[str]] = None)->None:
+        source: Optional[Sequence[str]] = None) -> None:
     """测试项目,支持python和node.
 
     Args:

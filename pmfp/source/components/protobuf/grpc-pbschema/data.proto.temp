@@ -1,0 +1,10 @@
+syntax = "proto3";
+package ${project_name}.${rename}_grpc;
+
+
+service RPC {
+  rpc DoFormat(Data) returns (Data){}
+}
+message Data {
+  string text = 1;
+}

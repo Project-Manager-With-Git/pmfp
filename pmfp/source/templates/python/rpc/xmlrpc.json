@@ -4,20 +4,55 @@
     "project-language": "Python",
     "project-type": "application",
     "components": {
-        "rpc-new_app.py.temp": ["-", "-"],
-        "rpc-xmlcore.py.temp": ["-", "core"],
-        "scripts-webscripts": ["-", "scripts"],
-        "cli-xmlrpc_cli.py.temp": [".", "xmlrpc_cli"],
-        "universal-submodule_class": ["-", "view_clz"],
-        "universal-submodule_func": ["-", "view_func"],
-        "universal-webconfig": ["-", "config"],
-        "universal-__main__.py.temp": ["-", "__main__"],
-        "universal-jsonlog.py.temp": ["-", "log"],
-        "docker-Dockerfile.temp": [".", "dockerfile"],
-        "docker-pip.conf.temp": [".", "pip"],
-        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
+        "rpc-new_rpc_app.py.temp": [
+            "-",
+            "-"
+        ],
+        "rpc-xmlcore.py.temp": [
+            "-",
+            "core"
+        ],
+        "scripts-webscripts": [
+            "-",
+            "scripts"
+        ],
+        "cli-xmlrpc_cli.py.temp": [
+            ".",
+            "xmlrpc_cli"
+        ],
+        "rpc--xmljsonrpc_view_clz.py.temp": [
+            "-",
+            "view_clz"
+        ],
+        "universal-webconfig": [
+            "-",
+            "config"
+        ],
+        "universal-__main__.py.temp": [
+            "-",
+            "__main__"
+        ],
+        "universal-jsonlog_proxy.py.temp": [
+            "-",
+            "logger"
+        ],
+        "docker-Dockerfileforrpc.temp": [
+            ".",
+            "dockerfile"
+        ],
+        "docker-pip.conf.temp": [
+            ".",
+            "pip"
+        ],
+        "docker_compose-docker_compose.yml.temp": [
+            ".",
+            "docker-compose"
+        ]
     },
-    "requirement": ["jsonschema"],
+    "requirement": [
+        "jsonschema",
+        "structlog"
+    ],
     "requirement-dev": [
         "coverage",
         "mypy",

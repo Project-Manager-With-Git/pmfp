@@ -1,0 +1,40 @@
+import asyncio
+from grpclib.utils import graceful_exit
+from grpclib.server import Server
+from logger import log
+from grpc_schema.${project_name}_grpc import RPCBase
+
+
+class App:
+    def __init__(self, config=None):
+        default_config = {
+            "HOST": "0.0.0.0",
+            "PORT": 5000
+        }
+        self.register_instances = None
+        if config:
+            default_config.update(config)
+        self.config = default_config
+
+    def register_instance(self, instance):
+        if not isinstance(instance, RPCBase):
+            raise AttributeError("需要RPCBase的实例")
+        self.register_instances = instance
+        instance.app = self
+
+    async def server(self, host=None, port=None):
+        if self.register_instances is None:
+            assert False, "需要先注册实例"
+        host = host or self.config["HOST"]
+        port = port or self.config["PORT"]
+        server = Server([self.register_instances])
+        with graceful_exit([server]):
+            await server.start(host, port)
+            log.info("grpc start", address=f"tcp://{host}:{port}")
+            await server.wait_closed()
+
+    def run(self, host=None, port=None):
+        try:
+            asyncio.run(self.server())
+        finally:
+            log.info("grpc stoped!", address=f"tcp://{host}:{port}")

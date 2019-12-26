@@ -14,14 +14,14 @@ const Client = (url, proto_path) => {
             oneofs: true
         }
     )
-    const example_proto = grpc.loadPackageDefinition(packageDefinition).example
+    const example_proto = grpc.loadPackageDefinition(packageDefinition).${project_name}.${project_name}_grpc
 
     const client = new example_proto.RPC(url, grpc.credentials.createInsecure())
     return client
 }
 
 function main() {
-    const PROTO_PATH = path.resolve("./", "pbschema/data.proto")
+    const PROTO_PATH = path.resolve("./", "pbschema/${project_name}.proto")
     const url = "localhost:5000"
     const client = Client(url, PROTO_PATH)
     client.DoFormat({

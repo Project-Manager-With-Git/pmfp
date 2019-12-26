@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 3.1.0
++ version: 3.1.1
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -53,6 +53,18 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
+
+### 3.1.1
+
+1. 更新grpc相关的模板,使之更加好用
+   1. 修改了python的grpc相关模板,使之可以更灵活的使用json格式的log
+   2. 为js,python,go增加了grpc的复杂模板,这个模板可以做流输入和流输出.
+   3. build_pb和new pb/grpc/grpc-streaming命令现在可以在没有pmfprc.json的情况下使用了
+   4. 新增grpc-web支持,为其添加了对应的反向代理docker-compose模板
+2. 替换subprocess使用run的方法
+3. 为go语言新增http模板,使用的是gin框架
+4. go语言的build方法可以选择编译为动态库还是静态库,使用flag`--asdll`
+5. 新增模板`frontend-vue_default`用于初始化vue的web端项目
 
 ### 3.1.0
 

@@ -1,5 +1,6 @@
 import json
 import os
+import chardet
 import subprocess
 from typing import (
     Dict,
@@ -30,21 +31,32 @@ def install(
             requirement = config["requirement"]
         for package in requirement:
             command = f'go get {package}'
-            try:
-                subprocess.run(command, shell=True, env=env)
-            except Exception as e:
+            res = subprocess.run(
+                command,
+                capture_output=True,
+                shell=True,
+                env=env
+            )
+            if res.returncode != 0:
                 print(f"批量安装时执行安装命令{command}时出错")
-                raise e
+                encoding = chardet.detect(res.stderr).get("encoding")
+                print(res.stderr.decode(encoding))
+                break
         else:
             print("安装依赖成功")
             return True
     else:
         command = f'go get {package}'
-        try:
-            subprocess.run(command, shell=True, env=env)
-        except Exception as e:
+        res = subprocess.run(
+            command, 
+            capture_output=True, 
+            shell=True, 
+            env=env
+        )
+        if res.returncode != 0:
             print(f"执行安装命令:{command}时出错")
-            raise e
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
         else:
             print(f"包{package} 安装完成!")
             if dev is True:

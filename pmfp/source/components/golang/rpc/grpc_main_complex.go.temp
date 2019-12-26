@@ -1,15 +1,15 @@
 package main
 
 import (
-	log "$project_name/logger"
-	script "$project_name/script"
-	serv "$project_name/serv"
+    log "$project_name/logger"
+    script "$project_name/script"
+    serv "$project_name/serv"
 )
 
 func main() {
-	config, _ := script.InitConfig()
-	address := config["address"].(string)
-	app_name := config["app_name"].(string)
-	log.InitLog("INFO", map[string]interface{}{"app_name": app_name})
-	serv.RunServer(address)
+    config, _ := script.InitConfig()
+    address := config["address"].(string)
+    app_name := config["app_name"].(string)
+    log.InitLog("INFO", map[string]interface{}{"app_name": app_name})
+    serv.RunServer(address)
 }

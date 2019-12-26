@@ -2,6 +2,7 @@
 from typing import Dict, Any
 import os
 import subprocess
+import chardet
 from pmfp.utils import get_python_path
 from pmfp.const import PROJECT_HOME
 
@@ -17,10 +18,12 @@ def freeze_with_version(config: Dict[str, Any], kwargs: Dict[str, Any]) -> None:
     dev_requirement_path = PROJECT_HOME.joinpath("requirements-dev.txt")
     all_requirement_path = PROJECT_HOME.joinpath("requirements-all.txt")
     command = f"{python_path} -m pip freeze > {str(all_requirement_path)}"
-    try:
-        subprocess.check_call(command, shell=True)
-    except Exception as e:
-        print("freeze出错,直接写入")
+    res = subprocess.run(command, capture_output=True, shell=True)
+    if res.returncode != 0:
+        print(f"freeze出错")
+        encoding = chardet.detect(res.stderr).get("encoding")
+        print(res.stderr.decode(encoding))
+        print("直接写入")
         content = config.get("requirement-dev") + config.get("requirement")
         to_write = [line + "/n" for line in content]
         with open(str(all_requirement_path), "w") as f:

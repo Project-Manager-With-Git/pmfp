@@ -1,0 +1,71 @@
+import os
+import copy
+import json
+from .verify import config_schema
+from .default import DEFAULT_SETTING, DEFAULT_PATH
+
+
+def _load_conf_from_json(path):
+    """指定地址加载配置文件为配置字典."""
+    with open(path) as f:
+        result = json.load(f)
+
+    return config_schema(result)
+
+
+def _load_conf_from_args(args):
+    """通过命令行参数创建配置字典."""
+    result = {}
+    if args.port:
+        result["PORT"] = args.port
+    if args.host:
+        result['HOST'] = args.host
+    if args.loglevel:
+        result['LOG_LEVEL'] = args.loglevel
+    if args.loglevel:
+        result['LOG_LEVEL'] = args.loglevel
+    if args.uvloop:
+        result['UVLOOP'] = args.uvloop
+    return result
+
+
+def _load_conf_from_env():
+    """通过环境变量加载配置."""
+    result = {}
+    app_name_upper = DEFAULT_SETTING["APP_NAME"].upper()
+    loglevel = os.environ.get(f"{app_name_upper}_LOG_LEVEL")
+    port = os.environ.get(f"{app_name_upper}_PORT")
+    host = os.environ.get(f"{app_name_upper}_HOST")
+    uvloop_inuse = os.environ.get(f"{app_name_upper}_UVLOOP")
+    if loglevel:
+        result["LOG_LEVEL"] = loglevel
+    if host:
+        result["HOST"] = host
+    if port and port.isdigit():
+        result["PORT"] = int(port)
+    if uvloop_inuse and uvloop_inuse.lower() in ("true","false"):
+        uvloop_inuse = True if uvloop_inuse.lower() == "true" else False
+        result["UVLOOP"] = uvloop_inuse
+
+    return result
+
+
+def load_conf(args):
+    """加载配置.
+
+    加载顺序优先级是`环境变量>命令行参数>指定位置配置文件>启动目录下的`config.json`配置文件>默认配置
+
+    Args:
+        args ([type]): [description]
+        path ([type]): [description]
+    """
+    config = copy.deepcopy(DEFAULT_SETTING)
+    p = DEFAULT_PATH
+    if p.exists():
+        config.update(**_load_conf_from_json(str(p)))
+    if args.config:
+        config.update(**_load_conf_from_json(args.config))
+    config.update(**_load_conf_from_args(args))
+    config.update(**_load_conf_from_env())
+    return config_schema(config)
+

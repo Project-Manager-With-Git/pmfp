@@ -46,14 +46,14 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
         new_readme(config)
     elif c_name in ("setup", "cython_setup", "cython_numpy_setup", "cmd_setup"):
         new_setup(config, c_language, c_name)
-    elif c_name in ("pb", "grpc", "grpc-streaming"):
+    elif c_name in ("pb", "grpc", "grpc-streaming", "grpc-web-proxy"):
         if kwargs["rename"] == "-":
             rename = config["project-name"]
         elif kwargs["rename"] == "":
             rename = c_name
         else:
             rename = kwargs["rename"]
-        new_pb(c_name, rename, to)
+        new_pb(c_name=c_name, rename=rename, to=to, project_name=config["project-name"])
     elif c_name == "test":
         project_name = config["project-name"]
         if kwargs["rename"] == "-":
@@ -66,6 +66,14 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
     elif c_name == "es_script" and c_language == "Javascript":
         new_es_script(config)
     else:
+        if not kwargs.get("kwargs"):
+            kwargs["kwargs"] = {}
+        if c_language == "Golang":
+            kwargs["kwargs"]["language_version"] = get_golang_version() or "latest"
+        elif c_language == "Python":
+            kwargs["kwargs"]["language_version"] = GOLBAL_PYTHON_VERSION or "latest"
+        elif c_language == "Javascript":
+            kwargs["kwargs"]["language_version"] = get_node_version() or "latest"
         spl_name = c_name.split("-")
         c_category = spl_name[0]
         c_name = "".join(spl_name[1:])
@@ -75,28 +83,19 @@ def new(config: Dict[str, Any], kwargs: Dict[str, Any]):
             rename = c_name
         else:
             rename = kwargs["rename"]
+        c_language = c_language.lower()
         c_path = f"{c_language}/{c_category}/{c_name}"
-        if c_category == "docker":
-            if not kwargs.get("kwargs"):
-                kwargs["kwargs"] = {}
-            if c_language.lower() == "golang":
-                kwargs["kwargs"]["language_version"] = get_golang_version() or "latest"
-            elif c_language.lower() == "python":
-                kwargs["kwargs"]["language_version"] = GOLBAL_PYTHON_VERSION
-            elif c_language.lower() == "javascript":
-                kwargs["kwargs"]["language_version"] = get_node_version() or "latest"
-
         test = kwargs["test"]
         try:
-            print(f"创建组件{c_path}")
-            kwargs.get("kwargs", {})
+            nc_kwargs = kwargs.get("kwargs", {})
+            print(f"创建组件{c_path},kwargs: {nc_kwargs}")
             new_component(
                 config,
                 path=c_path,
                 to=to,
                 rename=rename,
                 test=test,
-                **kwargs.get("kwargs", {}))
+                **nc_kwargs)
         except Exception as e:
             print(f"组件{c_path}创建错误")
             raise e

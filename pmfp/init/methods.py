@@ -79,8 +79,8 @@ def _init_requirement_noinstall(config: Dict[str, Any]) -> None:
     requirement_dev = temp_info["requirement-dev"]
     requirement = temp_info["requirement"]
     print("依赖准备完成")
-    config["requirement-dev"]=requirement_dev
-    config["requirement"]=requirement
+    config["requirement-dev"] = requirement_dev
+    config["requirement"] = requirement
     with open(str(PMFPRC_PATH), "w", encoding="utf-8") as f:
         json.dump(config, f)
     print("依赖写入完成")
@@ -158,13 +158,13 @@ def init(config: Dict[str, Any], test: bool = False, doc: bool = False, noinstal
 
     """
     try:
+        _init_component(config, test)
         _init_env(config)
         _init_readme(config)
         if not noinstall:
             _init_requirement(config)
         else:
             _init_requirement_noinstall(config)
-        _init_component(config, test)
         if doc is True:
             _init_doc(config)
         if config["project-language"] == "Javascript":

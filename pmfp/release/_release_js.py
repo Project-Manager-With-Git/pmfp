@@ -1,5 +1,6 @@
 """将js项目发布到合适的地方."""
 import subprocess
+import chardet
 from pathlib import Path
 from typing import Dict, Any
 from pmfp.const import PROJECT_HOME
@@ -26,8 +27,13 @@ def release_js(config: Dict[str, Any]) -> None:
             print("没有package.json")
             raise AttributeError("没有package.json")
         command = "npm publish"
-        subprocess.call(command, shell=True)
-        print("发布包到npm成功!")
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode != 0:
+            print("发布包到npm失败")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
+        else:
+            print("发布包到npm成功!")
     else:
         project_name = config["project-name"]
         remote_registry = config["remote_registry"]
@@ -39,8 +45,18 @@ def release_js(config: Dict[str, Any]) -> None:
         if not remote_registry:
             print("没有指定镜像仓库,请在pmfprc.json中指定remote_registry")
             raise AttributeError("没有指定镜像仓库,请在pmfprc.json中指定remote_registry")
-        cmd = f"docker build --pull -t {remote_registry}/{project_name}:{status}-{version} ."
-        subprocess.check_call(cmd, shell=True)
-        cmd = f"docker push {remote_registry}/{project_name}:{status}-{version}"
-        subprocess.check_call(cmd, shell=True)
-        print("成功将项目docker镜像提交到镜像仓库!")
+        command = f"docker build --pull -t {remote_registry}/{project_name}:{status}-{version} ."
+        res = subprocess.run(command, capture_output=True, shell=True)
+        if res.returncode != 0:
+            print("项目打包为docker镜像失败")
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(res.stderr.decode(encoding))
+        else:
+            command = f"docker push {remote_registry}/{project_name}:{status}-{version}"
+            res = subprocess.run(command, capture_output=True, shell=True)
+            if res.returncode != 0:
+                print("项目的docker镜像上传失败")
+                encoding = chardet.detect(res.stderr).get("encoding")
+                print(res.stderr.decode(encoding))
+            else:
+                print("成功将项目docker镜像提交到镜像仓库!")

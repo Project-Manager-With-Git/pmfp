@@ -1,0 +1,23 @@
+from grpc_schema import RPCServicer, Message
+
+
+class RPC(RPCServicer):
+    def Square(self, request, context):
+        return Message(Message=request.Message**2)
+
+    def RangeSquare(self, request, context):
+        for i in range(int(request.Message + 1)):
+            yield Message(Message=i**2)
+
+    def SumSquare(self, request_iterator, context):
+        result = 0
+        for i in request_iterator:
+            result += i.Message**2
+        return Message(Message=result)
+
+    def StreamrangeSquare(self, request_iterator, context):
+        result = []
+        for i in request_iterator:
+            result.append(i.Message**2)
+        for j in result:
+            yield Message(Message=j)

@@ -6,7 +6,7 @@ from typing import Optional, List
 from pmfp.const import PMFP_COMPONENTS_HOME
 from ._find_path import find_path
 
-EXCEPT = ["doc", "env", "protobuf", "readme", "setup", "test"]
+EXCEPT = ["doc", "env", "readme", "setup", "test"]
 
 
 def _find_all()->Optional[List[Path]]:

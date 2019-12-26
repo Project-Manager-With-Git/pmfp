@@ -6,7 +6,7 @@ from typing import Optional, Dict, Any
 from pmfp.const import PROJECT_HOME
 from pmfp.show import show
 from pmfp.utils import (
-    find_template_path, 
+    find_template_path,
     _find_template_path,
     get_node_version,
     get_golang_version
@@ -101,7 +101,7 @@ def _init_project_name(config: Dict[str, Any]) -> Dict[str, Any]:
     if "-" in project_name:
         project_name = project_name.replace("-", "_")
         print(f"已将项目名中的-改为了_,项目名为{project_name}")
-    
+
     config.update({
         "project-name": project_name
     })
@@ -140,7 +140,7 @@ def _init_language(config: Dict[str, Any]) -> Dict[str, Any]:
     elif project_language == "Javascript":
         if get_node_version() is None:
             warnings.warn("本机没有node环境")
-        
+
     config.update({
         "project-language": project_language
     })

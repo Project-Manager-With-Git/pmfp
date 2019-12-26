@@ -1,22 +1,59 @@
 {
     "name": "rpc-zerorpc",
-    "desc": "xmlrpc的标准化模板",
+    "desc": "zerorpc的标准化模板",
     "project-language": "Python",
     "project-type": "application",
     "components": {
-        "rpc-new_rpc_app.py.temp": ["-", "-"],
-        "rpc-zerocore.py.temp": ["-", "core"],
-        "scripts-webscripts": ["-", "scripts"],
-        "cli-zerorpc_cli.py.temp": [".", "zerorpc_cli"],
-        "universal-submodule_class": ["-", "view_clz"],
-        "universal-webconfig": ["-", "config"],
-        "universal-__main__.py.temp": ["-", "__main__"],
-        "universal-jsonlog.py.temp": ["-", "log"],
-        "docker-Dockerfile.temp": [".", "dockerfile"],
-        "docker-pip.conf.temp": [".", "pip"],
-        "docker_compose-docker_compose.yml.temp": [".", "docker-compose"]
+        "rpc-new_rpc_app.py.temp": [
+            "-",
+            "-"
+        ],
+        "rpc-zerocore.py.temp": [
+            "-",
+            "core"
+        ],
+        "scripts-webscripts": [
+            "-",
+            "scripts"
+        ],
+        "cli-zerorpc_cli.py.temp": [
+            ".",
+            "zerorpc_cli"
+        ],
+        "rpc--zerorpc_view_clz.py.temp": [
+            "-",
+            "view_clz"
+        ],
+        "universal-webconfig": [
+            "-",
+            "config"
+        ],
+        "universal-__main__.py.temp": [
+            "-",
+            "__main__"
+        ],
+        "universal-jsonlog_proxy.py.temp": [
+            "-",
+            "logger"
+        ],
+        "docker-Dockerfileforrpc.temp": [
+            ".",
+            "dockerfile"
+        ],
+        "docker-pip.conf.temp": [
+            ".",
+            "pip"
+        ],
+        "docker_compose-docker_compose.yml.temp": [
+            ".",
+            "docker-compose"
+        ]
     },
-    "requirement": ["jsonschema","zerorpc"],
+    "requirement": [
+        "jsonschema",
+        "zerorpc",
+        "structlog"
+    ],
     "requirement-dev": [
         "coverage",
         "mypy",

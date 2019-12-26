@@ -1,0 +1,45 @@
+from .grpc_schema import RPCStub
+
+import grpc
+
+
+
+    
+class CliProxy:
+    __slots__ = ('conn', 'client', '_callbacks')
+
+    def __init__(self, url=None):
+        self._callbacks = []
+        self.conn = None
+        self.client = None
+        if url:
+            self.initialize(url)
+
+    def initialize(self, url: str):
+        """[summary]
+        Args:
+            url ([type]): [description]
+        """
+
+        self.conn = grpc.insecure_channel(url)
+        self.client = RPCStub(channel=self.conn)
+
+        for callback in self._callbacks:
+            callback(self.client)
+
+    def attach_callback(self, callback):
+        self._callbacks.append(callback)
+
+    def __getattr__(self, attr):
+        if self.client is None:
+            raise AttributeError('Cannot use uninitialized Proxy.')
+        return getattr(self.client, attr)
+
+    def __setattr__(self, attr, value):
+        if attr not in self.__slots__:
+            raise AttributeError('Cannot set attribute on proxy.')
+        return super().__setattr__(attr, value)
+
+
+    
+

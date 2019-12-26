@@ -1,0 +1,15 @@
+{
+    "name": "frontend-vue_default",
+    "desc": "vue默认模板",
+    "env": "vue",
+    "project-language": "Javascript",
+    "project-type": "application",
+    "components": {
+        "vuepreset-full_feature.json": [
+            ".",
+            "preset.json"
+        ]
+    },
+    "requirement": [],
+    "requirement-dev": []
+}

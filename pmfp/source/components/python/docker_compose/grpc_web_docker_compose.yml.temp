@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  ${project_name}_grpc_service:
+    build: .
+    image: ${project_name}:latest
+    ports:
+      - "5000:5000"
+    
+    
+  grpc_proxy:
+    build: .
+    image: ${project_name}-proxy:latest
+    ports:
+      - "8080:8080"

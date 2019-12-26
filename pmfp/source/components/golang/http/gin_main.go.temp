@@ -1,0 +1,15 @@
+package main
+
+import (
+	"$project_name/logger"
+	script "$project_name/script"
+	serv "$project_name/serv"
+)
+
+func main() {
+	config, _ := script.InitConfig()
+	appname := config["app_name"].(string)
+	logger.InitLog("INFO", map[string]interface{}{"app_name": appname})
+	server := serv.NewServ(config)
+	server.Run()
+}

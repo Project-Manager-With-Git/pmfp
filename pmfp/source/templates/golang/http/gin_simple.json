@@ -1,0 +1,43 @@
+{
+    "name": "rpc-gin_simple",
+    "desc": "gin框架的的简单标准化模板,这个模块适合restful接口服务.",
+    "project-language": "Golang",
+    "project-type": "application",
+    "components": {
+        "http-gin_main.go.temp": [
+            ".",
+            "main"
+        ],
+        "http-gin_server": [
+            ".",
+            "serv"
+        ],
+        "universal-server_script": [
+            ".",
+            "script"
+        ],
+        "universal-logger.go.temp": [
+            "logger",
+            "logger"
+        ],
+        "docker-Dockerfile.temp": [
+            ".",
+            "dockerfile"
+        ],
+        "docker_compose-docker_compose.yml.temp": [
+            ".",
+            "docker-compose"
+        ]
+    },
+    "requirement": [
+        "github.com/gin-gonic/gin@v1.3.0",
+        "github.com/labstack/gommon@v0.2.8",
+        "github.com/sirupsen/logrus@v1.4.2",
+        "github.com/toorop/gin-logrus@latest",
+        "github.com/small-tk/pathlib@v0.0.0-20190601032836-742166d9b695",
+        "github.com/spf13/pflag@v1.0.3",
+        "github.com/spf13/viper@v1.4.0",
+        "github.com/xeipuuv/gojsonschema@v1.2.0"
+    ],
+    "requirement-dev": []
+}

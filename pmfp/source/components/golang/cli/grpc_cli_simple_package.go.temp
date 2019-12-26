@@ -1,54 +1,54 @@
 package cli
 
 import (
-	"context"
-	pb "goceshi/grpc_schema"
-	"time"
+    "context"
+    pb "$project_name/grpc_schema"
+    "time"
 
-	grpc "google.golang.org/grpc"
+    grpc "google.golang.org/grpc"
 )
 
 // Client pb的客户端类型
 type Client struct {
-	Address string
+    Address string
 }
 
 // New 创建客户端对象
 func New(address string) *Client {
-	return &Client{Address: address}
+    return &Client{Address: address}
 }
 
 func (client *Client) DoFormat(info string) (string, error) {
-	conn, err := grpc.Dial(client.Address, grpc.WithInsecure())
-	if err != nil {
-		return "", err
-	}
-	defer conn.Close()
-	c := pb.NewRPCClient(conn)
-	// 设置请求上下文的过期时间
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
+    conn, err := grpc.Dial(client.Address, grpc.WithInsecure())
+    if err != nil {
+        return "", err
+    }
+    defer conn.Close()
+    c := pb.NewRPCClient(conn)
+    // 设置请求上下文的过期时间
+    ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+    defer cancel()
 
-	rs, err := c.DoFormat(ctx, &pb.Data{Text: info})
-	if err != nil {
-		return "", err
-	}
+    rs, err := c.DoFormat(ctx, &pb.Data{Text: info})
+    if err != nil {
+        return "", err
+    }
 
-	return rs.Text, nil
+    return rs.Text, nil
 }
 
 type Callback func(c pb.RPCClient, ctx context.Context) (interface{}, error)
 
 func (client *Client) Do(callback Callback, timeout time.Duration) (interface{}, error) {
-	conn, err := grpc.Dial(client.Address, grpc.WithInsecure())
-	if err != nil {
-		return "", err
-	}
-	defer conn.Close()
-	c := pb.NewRPCClient(conn)
-	// 设置请求上下文的过期时间
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
-	rs, err := callback(c, ctx)
-	return rs, err
+    conn, err := grpc.Dial(client.Address, grpc.WithInsecure())
+    if err != nil {
+        return "", err
+    }
+    defer conn.Close()
+    c := pb.NewRPCClient(conn)
+    // 设置请求上下文的过期时间
+    ctx, cancel := context.WithTimeout(context.Background(), timeout)
+    defer cancel()
+    rs, err := callback(c, ctx)
+    return rs, err
 }

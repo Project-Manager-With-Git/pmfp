@@ -1,0 +1,77 @@
+{
+    "name": "rpc-grpc_complex",
+    "desc": "grpc的复杂模板,支持流数据",
+    "project-language": "Python",
+    "project-type": "application",
+    "components": {
+        "rpc-new_rpc_app.py.temp": [
+            "-",
+            "-"
+        ],
+        "rpc-grpccore.py.temp": [
+            "-",
+            "core"
+        ],
+        "rpc-grpc_view_clz_complex.py.temp": [
+            "-",
+            "view_clz"
+        ],
+        "scripts-webscripts": [
+            "-",
+            "scripts"
+        ],
+        "cli-grpc_cli_complex": [
+            ".",
+            "grpc_cli"
+        ],
+        "grpc-streaming": [
+            "pbschema",
+            "-"
+        ],
+        "grpc-web-proxy": [
+            ".",
+            "grpc_web_proxy"
+        ],
+        "universal-webconfig": [
+            "-",
+            "config"
+        ],
+        "universal-__main__.py.temp": [
+            "-",
+            "__main__"
+        ],
+        "universal-jsonlog_proxy.py.temp": [
+            "-",
+            "logger"
+        ],
+        "docker-Dockerfileforrpc.temp": [
+            ".",
+            "dockerfile"
+        ],
+        "docker-pip.conf.temp": [
+            ".",
+            "pip"
+        ],
+        "docker_compose-grpc_web_docker_compose.yml.temp": [
+            ".",
+            "docker-compose"
+        ]
+    },
+    "requirement": [
+        "jsonschema",
+        "protobuf",
+        "grpcio",
+        "structlog"
+    ],
+    "requirement-dev": [
+        "coverage",
+        "mypy",
+        "mypy-extensions",
+        "lxml",
+        "wheel",
+        "pydocstyle",
+        "pep8",
+        "autopep8",
+        "pylint"
+    ]
+}

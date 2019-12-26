@@ -56,7 +56,7 @@ class PPM:
         """初始化PPM对象."""
         parser = argparse.ArgumentParser(
             prog='ppm',
-            epilog='除show命令和init命令外每个子命令都需要在根目录下有名为.pmfp.json的配置文件.',
+            epilog='除show命令,init命令,build_pb命令外每个子命令都需要在根目录下有名为.pmfp.json的配置文件.',
             description='Python用户的项目脚手架',
             usage=PPM_HELP)
         parser.add_argument('command', help='执行子命令')
@@ -98,16 +98,22 @@ class PPM:
 
         template_parsers = subparsers.add_parser(
             "template", aliases=["T"], help="查看已有的模板")
-        template_parsers.add_argument("-n", "--name", type=str, help="查看对应名字的模板", default="")
-        template_parsers.add_argument("-l", "--language", type=str, help="查看对应语言的模板", default="")
-        template_parsers.add_argument("-c", "--category", type=str, help="查看对应分类的模板", default="")
+        template_parsers.add_argument(
+            "-n", "--name", type=str, help="查看对应名字的模板", default="")
+        template_parsers.add_argument(
+            "-l", "--language", type=str, help="查看对应语言的模板", default="")
+        template_parsers.add_argument(
+            "-c", "--category", type=str, help="查看对应分类的模板", default="")
         template_parsers.set_defaults(func=show_template_cmd)
 
         component_parsers = subparsers.add_parser(
             "component", aliases=["C"], help="查看已有的组件")
-        component_parsers.add_argument("-n", "--name", type=str, help="查看对应名字的组件", default="")
-        component_parsers.add_argument("-l", "--language", type=str, help="查看对应语言的组件", default="")
-        component_parsers.add_argument("-c", "--category", type=str, help="查看对应分类的组件", default="")
+        component_parsers.add_argument(
+            "-n", "--name", type=str, help="查看对应名字的组件", default="")
+        component_parsers.add_argument(
+            "-l", "--language", type=str, help="查看对应语言的组件", default="")
+        component_parsers.add_argument(
+            "-c", "--category", type=str, help="查看对应分类的组件", default="")
         component_parsers.set_defaults(func=show_component_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -119,7 +125,8 @@ class PPM:
             description='为项目安装依赖',
             epilog='子命令install用于安装依赖'
         )
-        parser.add_argument('packages', nargs='?', type=str, default="DEFAULT", help="要安装的依赖名")
+        parser.add_argument('packages', nargs='?', type=str,
+                            default="DEFAULT", help="要安装的依赖名")
         parser.add_argument(
             '--dev', action='store_true', help="要安装依赖是开发依赖还是执行依赖")
         parser.set_defaults(func=install_cmd)
@@ -133,7 +140,8 @@ class PPM:
             description='固定依赖',
             epilog='子命令freeze用于为python项目固定依赖'
         )
-        parser.add_argument('--all', action='store_true', help="将全部依赖固定到requirements-all.txt")
+        parser.add_argument('--all', action='store_true',
+                            help="将全部依赖固定到requirements-all.txt")
         parser.add_argument(
             '--dev', action='store_true', help="将开发依赖固定到requirements-dev.txt")
         parser.add_argument(
@@ -161,11 +169,16 @@ grpc                     创建一个grpc用的protobuf文件
 grpc-streaming           创建一个有流的grpc用的protobuf文件
 ''')
         parser.add_argument("component_name", type=str)
-        parser.add_argument("-l", "--language", type=str, help="指定组件的语言", default="-")
-        parser.add_argument("-t", "--to", type=str, help="指定一个存放的位置", default="-")
-        parser.add_argument("-r", "--rename", type=str, help="重命名为", default="-")
-        parser.add_argument("-k", "--kwargs", type=str, help="json形式的模板参数", default="")
-        parser.add_argument('--test', action="store_true", default=False, help="创建对应组件的测试文件")
+        parser.add_argument("-l", "--language", type=str,
+                            help="指定组件的语言", default="-")
+        parser.add_argument("-t", "--to", type=str,
+                            help="指定一个存放的位置", default="-")
+        parser.add_argument("-r", "--rename", type=str,
+                            help="重命名为", default="-")
+        parser.add_argument("-k", "--kwargs", type=str,
+                            help="json形式的模板参数", default="")
+        parser.add_argument('--test', action="store_true",
+                            default=False, help="创建对应组件的测试文件")
         parser.set_defaults(func=new_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -179,11 +192,16 @@ grpc-streaming           创建一个有流的grpc用的protobuf文件
             epilog='子命令init用于新建一个项目'
         )
         parser.add_argument("project_name", nargs='?', type=str, help="项目命名")
-        parser.add_argument("-l", "--language", type=str, help="指定一个项目语言", default="")
-        parser.add_argument("-t", "--template", type=str, help="指定一个项目模板", default="")
-        parser.add_argument('--test', action="store_true", default=False, help="是否有测试用的对应组件")
-        parser.add_argument('--doc', action="store_true", default=False, help="是否带着文档")
-        parser.add_argument('--noinstall', action="store_true", default=False, help="是否初始化时就安装依赖")
+        parser.add_argument("-l", "--language", type=str,
+                            help="指定一个项目语言", default="")
+        parser.add_argument("-t", "--template", type=str,
+                            help="指定一个项目模板", default="")
+        parser.add_argument('--test', action="store_true",
+                            default=False, help="是否有测试用的对应组件")
+        parser.add_argument('--doc', action="store_true",
+                            default=False, help="是否带着文档")
+        parser.add_argument('--noinstall', action="store_true",
+                            default=False, help="是否初始化时就安装依赖")
         parser.set_defaults(func=init_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -221,7 +239,8 @@ grpc-streaming           创建一个有流的grpc用的protobuf文件
         parser = argparse.ArgumentParser(
             prog='ppm upload',
             description='upload project to a remote git repository')
-        parser.add_argument('-m', '--message', type=str, default="", help="commit的信息")
+        parser.add_argument('-m', '--message', type=str,
+                            default="", help="commit的信息")
         parser.add_argument('-t', '--with_tag', action="store_true", default=False,
                             help="是否打标签,go语言的标签会符合版本发布要求格式,其他则是`{status}-{version}`的格式")
         parser.set_defaults(func=upload_cmd)
@@ -250,7 +269,7 @@ grpc-streaming           创建一个有流的grpc用的protobuf文件
             type=str,
             default="",
             choices=(
-                "linux-386", "windows-386", "darwin-386", "freebsd-386",
+                "linux-386", "windows-386", "darwin-386", "freebsd-386","js-wasm",
                 "linux-amd64", "windows-amd64", "darwin-amd64", "freebsd-amd64",
                 "linux-arm"
             ),
@@ -305,10 +324,14 @@ grpc-streaming           创建一个有流的grpc用的protobuf文件
         parser = argparse.ArgumentParser(
             prog='ppm doc',
             description="构建和编译输出项目文档")
-        parser.add_argument('-s', '--serve', action="store_true", help="启动http的文档服务")
-        parser.add_argument('-u', '--update', action="store_true", help="由代码更新源文件")
-        parser.add_argument('-l', '--locale', type=str, default="", help="添加特定语言支持")
-        parser.add_argument('-b', '--build', action="store_true", help="编译构建项目文档")
+        parser.add_argument(
+            '-s', '--serve', action="store_true", help="启动http的文档服务")
+        parser.add_argument(
+            '-u', '--update', action="store_true", help="由代码更新源文件")
+        parser.add_argument('-l', '--locale', type=str,
+                            default="", help="添加特定语言支持")
+        parser.add_argument(
+            '-b', '--build', action="store_true", help="编译构建项目文档")
         parser.set_defaults(func=doc_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)
@@ -321,11 +344,11 @@ grpc-streaming           创建一个有流的grpc用的protobuf文件
             description='编译pb文件',
             epilog='子命令build_pb可以用来编译.proto文件对应语言'
         )
-        parser.add_argument("-n", "--name", type=str, help="待编译的文件名", default="data.proto")
-        parser.add_argument("-d", "--dir", type=str, help="待编译的文件所在的地址", default="pbschema")
-        parser.add_argument("-l", "--language", type=str, help="编译为什么语言", default="")
+        parser.add_argument("-n", "--name", type=str, help="待编译的文件名")
+        parser.add_argument("-d", "--dir", type=str, help="待编译的文件所在的地址")
+        parser.add_argument("-l", "--language", type=str, help="编译为什么语言")
         parser.add_argument("--grpc", action="store_true", help="是否是grpc")
-        parser.add_argument("-t", "--to", type=str, help="存放的", default="")
+        parser.add_argument("-t", "--to", type=str, help="存放的地方")
         parser.set_defaults(func=build_pb_cmd)
         args = parser.parse_args(self.argv[1:])
         args.func(args)

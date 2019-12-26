@@ -1,0 +1,17 @@
+"""grpc的同步客户端模块.
+
+需要外部调用才可以使用.
+使用方法:
+
+>>> from grpc_clilib import CliProxy,Data
+>>> url = "localhost:5000"
+>>> cli = CliProxy(url)
+>>> response = cli.DoFormat(Data(text='hello,world!'))
+>>> print("received: " + response.text)
+
+"""
+
+from .grpc_schema import *
+from .core import CliProxy
+
+
