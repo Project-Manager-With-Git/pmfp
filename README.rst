@@ -1,7 +1,7 @@
 pmfp
 ===============================
 * version: 3.1.1
-* status: dev
+* status: prod
 * author: hsz
 * email: hsz1273327@gmail.com
 

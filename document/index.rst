@@ -1,7 +1,7 @@
 欢迎使用脚手架项目PMFP
 ===============================
 * version: 3.1.1
-* status: dev
+* status: prod
 * author: hsz
 * email: hsz1273327@gmail.com
 
