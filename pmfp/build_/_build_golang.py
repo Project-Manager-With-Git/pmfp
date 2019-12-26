@@ -7,6 +7,7 @@ from pmfp.const import PLATFORM, PROJECT_HOME
 
 
 def build_go_app(name: str, entry: str, cross: Optional[str] = None) -> None:
+    default_environ = dict(os.environ)
     if not PROJECT_HOME.joinpath("bin").is_dir():
         PROJECT_HOME.joinpath("bin").mkdir()
     if cross is None:
@@ -16,7 +17,9 @@ def build_go_app(name: str, entry: str, cross: Optional[str] = None) -> None:
             command = f"go build -o bin/{target_name}"
         else:
             command = f"go build -o bin/{target_name} {entry}"
-        res = subprocess.run(command, capture_output=True, shell=True)
+        env = {"GO111MODULE": "on", "GOPROXY": "https://goproxy.io"}
+        env.update(**default_environ)
+        res = subprocess.run(command, capture_output=True, shell=True,env=env)
         if res.returncode == 0:
             print(f"完成编译golang项目{name}!")
         else:
@@ -25,8 +28,7 @@ def build_go_app(name: str, entry: str, cross: Optional[str] = None) -> None:
             print(res.stderr.decode(encoding))
     else:
         GOOS, GOARCHS = cross.split("-")
-        default_environ = dict(os.environ)
-        env = {"GOOS": GOOS, "GOARCHS": GOARCHS}
+        env = {"GOOS": GOOS, "GOARCHS": GOARCHS,"GO111MODULE": "on", "GOPROXY": "https://goproxy.io"}
         env.update(**default_environ)
         dir_name = f"{GOOS}-{GOARCHS}"
         target_dir = PROJECT_HOME.joinpath("bin").joinpath(dir_name)

@@ -269,7 +269,7 @@ grpc-streaming           创建一个有流的grpc用的protobuf文件
             type=str,
             default="",
             choices=(
-                "linux-386", "windows-386", "darwin-386", "freebsd-386","js-wasm"
+                "linux-386", "windows-386", "darwin-386", "freebsd-386","js-wasm",
                 "linux-amd64", "windows-amd64", "darwin-amd64", "freebsd-amd64",
                 "linux-arm"
             ),
