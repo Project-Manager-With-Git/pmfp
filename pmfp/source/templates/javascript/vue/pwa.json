@@ -1,0 +1,15 @@
+{
+    "name": "vue-pwa",
+    "desc": "使用vue的全量配置,包含babel+vuex+router(historyMode)外额外包含pwa,stylus支持",
+    "project-language": "Javascript",
+    "env": "vue",
+    "project-type": "application",
+    "components": {
+        "vuepreset-pwa.json": [
+            ".",
+            "vue-preset.json"
+        ]
+    },
+    "requirement": [],
+    "requirement-dev": []
+}

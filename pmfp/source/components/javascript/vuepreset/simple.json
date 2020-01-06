@@ -1,0 +1,10 @@
+{
+    "useConfigFiles": false,
+    "plugins": {
+        "@vue/cli-plugin-babel": {},
+        "@vue/cli-plugin-router": {
+            "historyMode": false
+        },
+        "@vue/cli-plugin-vuex": {}
+    }
+}

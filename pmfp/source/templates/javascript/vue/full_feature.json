@@ -1,13 +1,13 @@
 {
-    "name": "frontend-vue_default",
-    "desc": "vue默认模板",
-    "env": "vue",
+    "name": "vue-full_feature",
+    "desc": "使用vue的全量配置,包含babel+vuex+router(historyMode)外额外包含pwa,stylus支持,单元测试以及eslint",
     "project-language": "Javascript",
+    "env": "vue",
     "project-type": "application",
     "components": {
         "vuepreset-full_feature.json": [
             ".",
-            "preset.json"
+            "vue-preset.json"
         ]
     },
     "requirement": [],

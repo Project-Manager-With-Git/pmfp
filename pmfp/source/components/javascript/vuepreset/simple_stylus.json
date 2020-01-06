@@ -1,0 +1,11 @@
+{
+    "useConfigFiles": false,
+    "plugins": {
+        "@vue/cli-plugin-babel": {},
+        "@vue/cli-plugin-router": {
+            "historyMode": true
+        },
+        "@vue/cli-plugin-vuex": {}
+    },
+    "cssPreprocessor": "stylus"
+}

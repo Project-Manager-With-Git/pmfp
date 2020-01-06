@@ -55,6 +55,11 @@ Documentation on github page <https://github.com/Python-Tools/pmfp>
 
 3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录
 
+### 3.1.2
+
+1. 增加对vue.js的支持,新增4个模板`vue-full_feature`,`vue-pwa`,`vue-simple`和`vue-simple_stylus`,删除`frontend-vue_default`
+
+
 ### 3.1.1
 
 1. 更新grpc相关的模板,使之更加好用

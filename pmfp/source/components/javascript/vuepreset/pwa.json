@@ -6,12 +6,7 @@
         "@vue/cli-plugin-router": {
             "historyMode": true
         },
-        "@vue/cli-plugin-vuex": {},
-        "@vue/cli-plugin-eslint": {
-            "config": "base",
-            "lintOn": []
-        },
-        "@vue/cli-plugin-unit-mocha": {}
+        "@vue/cli-plugin-vuex": {}
     },
     "cssPreprocessor": "stylus"
 }
