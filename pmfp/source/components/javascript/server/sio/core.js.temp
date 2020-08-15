@@ -1,7 +1,0 @@
-import SocketeIO from 'socket.io'
-
-const io = SocketeIO({
-    path: '/io',
-    transports:['websocket','polling']
-  })
-export default io

@@ -1,6 +1,0 @@
-def setUpModule():
-    print("[setUp Main View test]")
-
-
-def tearDownModule():
-    print("[tearDown Main View test]")

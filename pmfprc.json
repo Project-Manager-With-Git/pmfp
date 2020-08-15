@@ -1,9 +1,9 @@
 {
     "project-name": "pmfp",
-    "project-language": "Python",
-    "env": "env",
-    "project-type": "module",
-    "template": "module-complex_cmd",
+    "project-type": "tool",
+    "gcc": "gcc",
+    "global-python": "python",
+    "remote_registry": "",
     "license": "MIT",
     "version": "3.1.1",
     "status": "dev",
@@ -12,10 +12,8 @@
     "author-email": "hsz1273327@gmail.com",
     "keywords": ["tools", "project_manager"],
     "description": "a simple package manager for python like npm.",
-    "gcc": "gcc",
-    "global-python": "python",
-    "remote_registry": "",
-    "requirement": ["sphinx", "wheel", "coverage", "recommonmark", "sphinxcontrib-napoleon", "mypy", "lxml", "mypy-extensions", "boom", "voluptuous"],
-    "requirement-dev": ["wheel", "pep8", "coverage", "mypy", "lxml", "mypy-extensions", "pydocstyle", "autopep8"],
-    "entry": "main.py"
+    "modules":[],
+    "scripts":{
+
+    }
 }

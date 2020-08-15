@@ -1,5 +1,0 @@
-include LICENSE
-include README.rst
-include pmfprc.json
-include requirements.txt
-recursive-include $project_name *.pyx *.pxd *.pxi *.py *.c *.h
