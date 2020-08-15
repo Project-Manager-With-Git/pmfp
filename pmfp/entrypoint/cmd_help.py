@@ -98,7 +98,7 @@ def help(argv):
         usage= PPM_HELP_HELP
     )
     parser.add_argument('subcmd', type=str,
-                        default="DEFAULT", help="要安装的依赖名")
+                        default=choices, help="要安装的依赖名")
     parser.set_defaults(func=install_cmd)
     args = parser.parse_args(argv)
     args.func(args)

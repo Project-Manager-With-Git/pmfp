@@ -1,3 +1,5 @@
+import functools
+import argparse
 class EntryPoint:
     """复杂入口定义."""
 
@@ -7,7 +9,12 @@ class EntryPoint:
         self.argv = None
 
     def regist_cmd(self,func):
-        
+        @functools.wraps(func)
+        def warp(argv):
+            return func(argv)
+        self.cmds[func.__name__] = func
+        return warp
+
         
 
     def parse_args(self,argv):
