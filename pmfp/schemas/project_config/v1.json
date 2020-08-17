@@ -1,0 +1,19 @@
+schema = {
+    "project-name": "pmfp",
+    "project-type": "tool",
+    "gcc": "gcc",
+    "global-python": "python",
+    "remote_registry": "",
+    "license": "MIT",
+    "version": "3.1.1",
+    "status": "dev",
+    "url": "https://github.com/Python-Tools/pmfp",
+    "author": "hsz",
+    "author-email": "hsz1273327@gmail.com",
+    "keywords": ["tools", "project_manager"],
+    "description": "a simple package manager for python like npm.",
+    "modules":[],
+    "scripts":{
+
+    }
+}
