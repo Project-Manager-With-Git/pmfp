@@ -55,7 +55,5 @@ ppm.__doc__= """ppm <subcmd> [<args>]
     template          管理模板
     project           管理项目
     stack             管理项目组
-    proto             管理protobuffer文件
-    doc               管理项目组文档
-    deploy            管理镜像部署
+    build_pb          代理protoc编译protobuffer
     """
