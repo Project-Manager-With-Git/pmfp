@@ -1,4 +1,4 @@
-import os
+import sys
 import argparse
 import functools
 from typing import Callable,Sequence,NoReturn
@@ -32,10 +32,10 @@ class EntryPoint:
     def parse_args(self,argv:Sequence[str])->NoReturn:
         """解析复杂命令行."""
         parser = argparse.ArgumentParser(
-            prog='ppm',
-            epilog='除show命令,init命令,build_pb命令外每个子命令都需要在根目录下有名为.pmfp.json的配置文件.',
-            description='Python用户的项目脚手架',
-            usage=self.__doc__)
+            prog=self.prog if hasattr(self,"prog") else None,
+            epilog=self.epilog if hasattr(self,"epilog") else None,
+            description=self.description if hasattr(self,"description") else None,
+            usage=self.__doc__ if hasattr(self,"__doc__") else None)
         parser.add_argument('subcmd', help='执行子命令')
         args = parser.parse_args(argv[0:1])
         if self.subcmds.get(args.subcmd):
@@ -43,7 +43,7 @@ class EntryPoint:
         else:
             print('未知的子命令')
             parser.print_help()
-            os.exit(1)
+            sys.exit(1)
             
 
 ppm = EntryPoint()
@@ -55,5 +55,10 @@ ppm.__doc__= """ppm <subcmd> [<args>]
     template          管理模板
     project           管理项目
     stack             管理项目组
-    build_pb          代理protoc编译protobuffer
+    proto             管理protobuffer文件
+    schema            管理json schema文件
     """
+
+ppm.prog = "ppm"
+ppm.epilog = ''
+ppm.description = '项目脚手架'
