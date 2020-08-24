@@ -13,7 +13,7 @@ def new(argv:Sequence[str]):
     """
     parser = argparse.ArgumentParser(
         prog='ppm proto new',
-        description='编译pb文件',
+        description='创建pb文件',
         usage= ppm_proto.subcmds.get("build").__doc__
     )
     parser.add_argument("-g","--grpc", action="store_true", help="是否是grpc")

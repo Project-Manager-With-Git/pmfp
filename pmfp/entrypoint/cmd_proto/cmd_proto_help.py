@@ -13,7 +13,7 @@ ppm proto工具的子命令有:
     build               编译protobuf到指定位置      
     """
     parser = argparse.ArgumentParser(
-        prog='ppm help',
+        prog='ppm proto help',
         description='查看子命令的帮助说明',
         usage= ppm_proto.subcmds.get("help").__doc__
     )

@@ -23,3 +23,22 @@ def template_2_content(template:str,**kwargs:Dict[str,str])->str:
         raise
     else:
         return content
+
+
+def jsontemplate_2_content(template:str,**kwargs:Dict[str,Any])->str:
+    """将模板转换为文件内容.
+
+    Args:
+        template (str): 模板字符串
+        kwargs (Dict[str,str]): 由模板构造内容的关键字
+    
+    """
+    try:
+        content = json.loads(template)
+        content.update(kwargs)
+
+    except:
+        print(f"template_2_content出错")
+        raise
+    else:
+        return json.dumps(content, ensure_ascii=False)

@@ -52,11 +52,11 @@ ppm.__doc__= """ppm <subcmd> [<args>]
 
     help              展示ppm的帮助说明
     version           展示ppm的版本
+    proto             管理protobuffer文件
+    schema            管理json schema文件
     template          管理模板
     project           管理项目
     stack             管理项目组
-    proto             管理protobuffer文件
-    schema            管理json schema文件
     """
 
 ppm.prog = "ppm"

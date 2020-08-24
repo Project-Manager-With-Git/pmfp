@@ -6,6 +6,7 @@ from .cmd_project import *
 from .cmd_stack import *
 from .cmd_template import *
 from .cmd_proto import *
+from .cmd_schema import *
 from .core import ppm
 
 
