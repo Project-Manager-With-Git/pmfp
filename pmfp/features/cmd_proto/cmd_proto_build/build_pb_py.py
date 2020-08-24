@@ -37,10 +37,10 @@ def find_pypackage_string(to_path: str) -> str:
     return packs
 
 
-def find_py_grpc_pb2_import_string(n: str)->str:
+def find_py_grpc_pb2_import_string(name: str)->str:
     """python的grpc模块as的内容."""
-    org = f"{n}_pb2"
-    return "__".join(org.split("_"))
+    
+    return "__".join(name.split("_"))
 
 def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str]) -> NoReturn:
     includes_str = " ".join([f"-I {include}" for include in includes])
@@ -74,35 +74,45 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str, **kwargs: Dic
         encoding = chardet.detect(res.stderr).get("encoding")
         print(res.stderr.decode(encoding))
     else:
-        to_path = PROJECT_HOME.joinpath(to)
-        tp = Path(to)
-        if tp.is_absolute():
-            to_path = tp
-        else:
-            to_path = Path(".").absolute().joinpath(to)
-
-        n = name.split(".")[0]
-        to_path.joinpath("__init__.py").open("w").write(
-            f"""from .{n}_pb2 import *
-from .{n}_pb2_grpc import *"""
-        )
-        grpc_file = to_path.joinpath(f"{n}_pb2_grpc.py")
-        with open(str(grpc_file), "r") as f:
-            lines = f.readlines()
-        new_lines = []
-        packstr = find_pypackage_string(to)
-        print(to)
-        print(packstr)
-        as_package = find_py_grpc_pb2_import_string(n)
-        for line in lines:
-            if f"import {n}_pb2 as {as_package}" in line:
-                t = f"import {packstr}.{n}_pb2 as {as_package}\n"
-                new_lines.append(t)
-            else:
-                new_lines.append(line)
-        with open(str(grpc_file), "w") as f:
-            f.writelines(new_lines)
         print(f"编译{task}项目{target_str}为python语言模块完成!")
+        trans_grpc_model_py(to)
+
+def trans_grpc_model_py(to:str):
+    tp = Path(to)
+    if tp.is_absolute():
+        to_path = tp
+    else:
+        to_path = Path(".").absolute().joinpath(to)
+
+    for p in to_path.iterdir():
+        if p.is_file() and p.suffix==".py" and p.name != "__init__.py":
+            x = p.name.split("_")
+            if x[-1]=="grpc.py":
+                grpc_file = p
+                grpc_name = p.name
+                grpc_package = grpc_name.split(".")[0]
+                pb_package = "_".join(x[:-1])
+                pb_name = pb_package + ".py"         
+                to_path.joinpath("__init__.py").open("a").write(
+f"""
+from .{pb_package} import *
+from .{grpc_package} import *
+""")
+
+                with open(str(grpc_file), "r") as f:
+                    lines = f.readlines()
+                new_lines = []
+                packstr = find_pypackage_string(to)
+                as_package = find_py_grpc_pb2_import_string(pb_package)
+                for line in lines:
+                    if f"import {pb_package} as {as_package}" in line:
+                        t = f"import {packstr}.{pb_package} as {as_package}\n"
+                        new_lines.append(t)
+                    else:
+                        new_lines.append(line)
+                with open(str(grpc_file), "w") as f:
+                    f.writelines(new_lines)
+                print(f"转换python项目的grpc文件{grpc_name}为python模块完成!")
 
 
 def build_pb_py(files: List[str], includes: List[str], to: str,grpc:bool, **kwargs: Dict[str, str]) -> NoReturn:

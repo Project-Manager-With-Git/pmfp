@@ -1,4 +1,4 @@
-"""help命令的处理."""
+"""ppm proto help命令的处理."""
 import argparse
 from .core import ppm_proto
 from typing import Sequence
