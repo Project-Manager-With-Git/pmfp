@@ -5,7 +5,7 @@ from typing import Sequence
 
 ppm_proto = EntryPoint()
 ppm_proto.__name__="proto"
-ppm_proto.__doc__ = """ppm proto <subcmd>
+ppm_proto.__doc__ = """ppm proto <subcommand>
 
     ppm proto 的子命令有:
 

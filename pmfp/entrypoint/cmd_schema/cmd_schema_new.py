@@ -1,4 +1,4 @@
-"""ppm proto new命令的处理."""
+"""ppm schema new命令的处理."""
 import argparse
 from .core import ppm_schema
 from typing import Sequence
@@ -7,7 +7,7 @@ from pmfp.features.cmd_schema.cmd_schema_new import new_schema
 
 @ppm_schema.regist_subcmd
 def new(argv:Sequence[str]):
-    """ppm schema new
+    """ppm schema new [-flags] <name>
 
     创建新的json schema模式文件.
     模式文件将以存放路径或者网址路径作为id
@@ -15,7 +15,7 @@ def new(argv:Sequence[str]):
     parser = argparse.ArgumentParser(
         prog='ppm schema new',
         description='创建json schema文件',
-        usage= ppm_schema.subcmds.get("build").__doc__
+        usage= ppm_schema.subcmds.get("new").__doc__
     )
     parser.add_argument("-p", "--path", type=str,default=".", help="相对根目录的路径")
     parser.add_argument("-v", "--version", type=str,default="v0.0.0", help="模式的版本")

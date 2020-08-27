@@ -7,7 +7,7 @@ from pmfp.features.cmd_proto.cmd_proto_new import new_pb
 
 @ppm_proto.regist_subcmd
 def new(argv:Sequence[str]):
-    """ppm proto new
+    """ppm proto new [-flag] <name>
 
     创建新的protobuf文件
     """

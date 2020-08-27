@@ -1,28 +1,19 @@
-"""创建json schema的schema."""
-import pkgutil
+"""检测json schema的example是否符合定义的模式schema."""
 import json
 from pathlib import Path
 from typing import NoReturn,Optional
-from pmfp.utils.template_utils import jsontemplate_2_content
-
-schema_template = pkgutil.get_data('pmfp.features.cmd_schema.cmd_schema_new.schematemp', 'schema.json').decode('utf-8')
+from utils.url_utils import is_http_url,is_file_url,is_url
 
 
 
 
-def new_schema(name:str,path:str,version:str,root:str,addr:Optional[str]=None) -> NoReturn:
-    """新建一个json schema文件.
+def test_schema(file:str) -> NoReturn:
+    """检查一个json schema文件中的例子是否符合自身的schema.
 
     Args:
-        name (str): 模式名
-        path (str): 从根目录起的路径
-        version (str): 模式版本
-        root (str): 根目录.
-        addr (str, optional): 网站域名.
+        file (str): 模式文件地址
 
     """
-    version_name = "_".join(version.split("."))
-    root = Path(root)
     if root.is_absolute():
         root_path = root
     else:

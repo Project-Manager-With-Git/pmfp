@@ -7,7 +7,7 @@ from pmfp.features.cmd_proto.cmd_proto_build import build_pb
 
 @ppm_proto.regist_subcmd
 def build(argv:Sequence[str]):
-    """ppm proto build
+    """ppm proto build [-flag] <files>
 
     编译proto文件
     """
