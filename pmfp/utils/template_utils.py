@@ -41,4 +41,4 @@ def jsontemplate_2_content(template:str,**kwargs:Dict[str,Any])->str:
         print(f"template_2_content出错")
         raise
     else:
-        return json.dumps(content, ensure_ascii=False)
+        return json.dumps(content, indent=4,ensure_ascii=False,sort_keys=True)

@@ -2,6 +2,13 @@
   "$id": "http:///address.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "description": "An address similar to http://microformats.org/wiki/h-card",
+  "examples":[
+    {
+      "locality": "zh", 
+      "region": "江苏", 
+      "country-name":"中国"
+    }
+  ],
   "type": "object",
   "properties": {
     "post-office-box": {

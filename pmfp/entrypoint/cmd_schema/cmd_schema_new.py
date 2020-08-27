@@ -17,10 +17,10 @@ def new(argv:Sequence[str]):
         description='创建json schema文件',
         usage= ppm_schema.subcmds.get("build").__doc__
     )
-    parser.add_argument("-p", "--path", type=str,required=True, help="相对根目录的路径")
-    parser.add_argument("-v", "--version", type=str,required=True, help="模式的版本")
-    parser.add_argument("-r", "--root", type=str,required=True, help="存放的根地址") 
-    parser.add_argument("-a", "--addr", type=str,required=True, help="网址") 
+    parser.add_argument("-p", "--path", type=str,default=".", help="相对根目录的路径")
+    parser.add_argument("-v", "--version", type=str,default="v0.0.0", help="模式的版本")
+    parser.add_argument("-r", "--root", type=str,default=".", help="存放的根地址") 
+    parser.add_argument("-a", "--addr", type=str, help="网址") 
     parser.add_argument("name",type=str, help="schema名")
     parser.set_defaults(func=cmd_new_schema)
     args = parser.parse_args(argv)
@@ -28,4 +28,4 @@ def new(argv:Sequence[str]):
 
 
 def cmd_new_schema(args: argparse.Namespace):
-    new_schema(name=args.name,dir=args.dir,version=args.version,root=args.root,addr=args.addr)
+    new_schema(name=args.name,path=args.path,version=args.version,root=args.root,addr=args.addr)
