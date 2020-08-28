@@ -1,8 +1,5 @@
 """编译protobuf的schema为不同语言的代码."""
-import subprocess
-import warnings
 from typing import Dict, Any,List,NoReturn
-import chardet
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py

@@ -1,9 +1,7 @@
 """编译js语言的grpc-web模块."""
 import warnings
-import subprocess
-import chardet
 from typing import List, Optional,NoReturn,Dict
-
+from pmfp.utils.run_command_utils import run_command
 def build_pb_web(files: List[str], includes: List[str], to: str,grpc:bool, **kwargs: Dict[str, str]) -> NoReturn:
     """编译js语言的grpc-web模块.
 
@@ -24,12 +22,10 @@ def build_pb_web(files: List[str], includes: List[str], to: str,grpc:bool, **kwa
         task = "grpc"
         command = f"protoc {includes_str} {flag_str} --js_out=import_style=commonjs:{to} --grpc-web_out=import_style=commonjs,mode=grpcwebtext:{to} {target_str}"
         print(f"编译命令:{command}")
-        res = subprocess.run(command, capture_output=True, shell=True)
-        if res.returncode == 0:
-            print(f"编译{task}的protobuf项目<{target_str}>为web环境模块完成!")
-        else:
-            print(f"编译{task}的protobuf项目{target_str}为web环境模块失败!")
-            encoding = chardet.detect(res.stderr).get("encoding")
-            print(res.stderr.decode(encoding))
+        run_command(
+            command,
+            succ_cb=lambda : print(f"编译{task}项目 {target_str} 为web环境模块完成!"),
+            fail_cb=lambda : print(f"编译{task}项目 {target_str} 为web环境模块失败!"))
+
     else:
         print("web环境只有grpc,如果需要编译普通protobuf文件,应该使用js环境")

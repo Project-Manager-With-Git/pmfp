@@ -9,14 +9,19 @@ def help(argv:Sequence[str]):
     """ppm help <subcommand>
 ppm工具的子命令有:
 
+    工具自身相关:
     help              展示ppm的帮助说明
     version           展示ppm的版本
-    template          管理模板
+
+    项目管理类:
+    template          管理模板项目
     project           管理项目
     stack             管理项目组
+    
+    常用工具类:
     proto             管理protobuffer文件
-    doc               管理项目组文档
-    docker            管理项目的docker操作           
+    schema            管理json schema文件
+    http              http服务相关的工具     
     """
     parser = argparse.ArgumentParser(
         prog='ppm help',

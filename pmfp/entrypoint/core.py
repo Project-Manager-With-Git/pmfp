@@ -50,13 +50,19 @@ ppm = EntryPoint()
 ppm.__doc__= """ppm <subcmd> [<args>]
     ppm工具的子命令有:
 
+    工具自身相关:
     help              展示ppm的帮助说明
     version           展示ppm的版本
-    proto             管理protobuffer文件
-    schema            管理json schema文件
-    template          管理模板
+
+    项目管理类:
+    template          管理模板项目
     project           管理项目
     stack             管理项目组
+    
+    常用工具类:
+    proto             管理protobuffer文件
+    schema            管理json schema文件
+    http              http服务相关的工具
     """
 
 ppm.prog = "ppm"

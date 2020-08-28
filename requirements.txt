@@ -1,14 +1,10 @@
 wheel
 pep8
 coverage
-mypy
-lxml
 mypy-extensions
 pydocstyle
 autopep8
 sphinx
-wheel
-coverage
 recommonmark
 sphinxcontrib-napoleon
 sphinx-intl
@@ -16,6 +12,5 @@ mypy
 lxml
 mypy-extensions
 boom
-voluptuous
 chardet
 grpclib

@@ -1,10 +1,8 @@
 """编译js语言模块."""
 import os
 import warnings
-import subprocess
-import chardet
 from typing import NoReturn, List, Dict
-
+from pmfp.utils.run_command_utils import run_command
 
 def build_pb_js(files: List[str], includes: List[str], to: str, grpc: bool, **kwargs: Dict[str, str]) -> NoReturn:
     """编译js语言模块.
@@ -41,10 +39,7 @@ def build_pb_js(files: List[str], includes: List[str], to: str, grpc: bool, **kw
         task = "protobuf"
         command = f"protoc {includes_str} --js_out=import_style=commonjs,binary:{to} {target_str}"
     print(f"编译命令:{command}")
-    res = subprocess.run(command, capture_output=True, shell=True)
-    if res.returncode == 0:
-        print(f"编译{task}项目 {target_str} 为js语言模块完成!")
-    else:
-        print(f"编译{task}项目 {target_str} 为js语言模块失败!")
-        encoding = chardet.detect(res.stderr).get("encoding")
-        print(res.stderr.decode(encoding))
+    run_command(
+        command,
+        succ_cb=lambda : print(f"编译{task}项目 {target_str} 为js语言模块完成!"),
+        fail_cb=lambda : print(f"编译{task}项目 {target_str} 为js语言模块失败!"))

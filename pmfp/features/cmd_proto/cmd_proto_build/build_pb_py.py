@@ -1,7 +1,6 @@
 """编译python语言模块."""
-import subprocess
-import chardet
 from pathlib import Path
+from pmfp.utils.run_command_utils import run_command
 from typing import List, Optional,NoReturn,Dict
 
 def _find_pypackage(final_path: Path, packs: List[Optional[str]]):
@@ -39,7 +38,6 @@ def find_pypackage_string(to_path: str) -> str:
 
 def find_py_grpc_pb2_import_string(name: str)->str:
     """python的grpc模块as的内容."""
-    
     return "__".join(name.split("_"))
 
 def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str]) -> NoReturn:
@@ -51,13 +49,11 @@ def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[
     task = "protobuf"
     command = f"protoc  {includes_str} {flag_str} --python_out={to} {target_str}"
     print(f"编译命令:{command}")
-    res = subprocess.run(command, capture_output=True, shell=True)
-    if res.returncode != 0:
-        print(f"编译{task}项目{name}为python语言模块失败!")
-        encoding = chardet.detect(res.stderr).get("encoding")
-        print(res.stderr.decode(encoding))
-    else:
-        print(f"编译{task}项目{name}为python语言模块完成!")
+    run_command(
+        command,
+        succ_cb=lambda : print(f"编译{task}项目{target_str}为python语言模块完成!"),
+        fail_cb=lambda : print(f"编译{task}项目{target_str}为python语言模块失败!"))
+
 
 def _build_grpc_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str])->NoReturn:
     includes_str = " ".join([f"-I {include}" for include in includes])
@@ -68,16 +64,22 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str, **kwargs: Dic
     task = "grpc"
     command = f"python -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
     print(f"编译命令:{command}")
-    res = subprocess.run(command, capture_output=True, shell=True)
-    if res.returncode != 0:
-        print(f"编译{task}项目{target_str}为python语言模块失败!")
-        encoding = chardet.detect(res.stderr).get("encoding")
-        print(res.stderr.decode(encoding))
-    else:
-        print(f"编译{task}项目{target_str}为python语言模块完成!")
+    def _():
+        print(f"编译{task}项目 {target_str} 为python模块完成!")
         trans_grpc_model_py(to)
 
+    run_command(
+        command,
+        succ_cb=_,
+        fail_cb=lambda : print(f"编译{task}项目 {target_str} 为python模块失败!"))
+
 def trans_grpc_model_py(to:str):
+    """转换python的grpc输出为一个python模块.
+
+    Args:
+        to (str): 目标地址
+
+    """
     tp = Path(to)
     if tp.is_absolute():
         to_path = tp

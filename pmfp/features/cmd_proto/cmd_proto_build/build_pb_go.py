@@ -1,7 +1,6 @@
 """编译go语言模块."""
-import subprocess
 from typing import NoReturn, List, Dict
-import chardet
+from pmfp.utils.run_command_utils import run_command
 
 
 def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,source_relative:bool, **kwargs: Dict[str, str]) -> NoReturn:
@@ -31,10 +30,7 @@ def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,sourc
     else:
         command = f"protoc  {includes_str} {flag_str} --go_out={to} {target_str}"
     print(f"编译命令:{command}")
-    res = subprocess.run(command, capture_output=True, shell=True)
-    if res.returncode == 0:
-        print(f"编译{task}项目 {target_str} 为go语言模块完成!")
-    else:
-        print(f"编译{task}项目 {target_str} 为go语言模块失败!")
-        encoding = chardet.detect(res.stderr).get("encoding")
-        print(res.stderr.decode(encoding))
+    run_command(
+        command,
+        succ_cb=lambda : print(f"编译{task}项目 {target_str} 为go语言模块完成!"),
+        fail_cb=lambda : print(f"编译{task}项目 {target_str} 为go语言模块失败!"))

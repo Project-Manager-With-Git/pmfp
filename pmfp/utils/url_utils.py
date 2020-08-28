@@ -1,4 +1,6 @@
 """与url字符串相关的工具代码."""
+import json
+from typing import Dict, Any,List,NoReturn,Optional,Callable
 from pathlib import Path
 from urllib.parse import urlparse
 import requests as rq
@@ -51,8 +53,136 @@ def is_file_url(url)->bool:
     except ValueError:
         return False
 
+def http_query(url:str,method:str,*,
+                auth:Optional[str]=None,
+                auth_type:Optional[str]=None,
+                payload:Optional[str]=None,
+                payload_type:Optional[str]=None,
+                stream:bool=False,
+                verify:bool=False,
+                cert:Optional[str]=None,
+                cb:Optional[Callable[[str],NoReturn]]=None) -> NoReturn:
+    """http请求并打印结果.
+
+    Args:
+        url (str): 要访问的http资源的地址
+        method (str): 访问资源的方法
+        auth (Optional[str], optional): 用户身份验证字符串. Defaults to None.
+        auth_type (Optional[str], optional): 用户身份的验证类型. Defaults to None.
+        payload (Optional[str], optional): 请求负载. Defaults to None.
+        payload_type (Optional[str], optional): 请求的负载类型. Defaults to None.
+        stream (bool, optional): 返回是否为流数据. Defaults to False.
+        verify (bool, optional): https请求是否验证. Defaults to False.
+        cert (Optional[str], optional): https请求的客户端认证文件. Defaults to None.
+        cb (Optional[Callable[[str],NoReturn]], optional): 获取到数据后的处理回调. Defaults to None.
+
+    """
+    with rq.Session() as s:
+        if verify:
+            s.verify = verify
+        if auth_type:
+            if auth_type == "basic":
+                from requests.auth import HTTPBasicAuth
+                user,pwd=auth.split(",")
+                s.auth=HTTPBasicAuth(user,pwd)
+
+            if auth_type == "digest":
+                from requests.auth import HTTPDigestAuth
+                user,pwd=auth.split(",")
+                s.auth=HTTPDigestAuth(user,pwd)
+                
+            elif auth_type == "jwt":
+                s.headers={"Authorization": "Bearer " + auth}
+            elif auth_type == "oauth1":
+                from requests_oauthlib import OAuth1
+                app_key,app_secret,oauth_token,oauth_token_secret=auth.split(",")
+                s.auth = OAuth1(app_key,app_secret,oauth_token,oauth_token_secret)
+            else:
+                raise AttributeError(f"auth_type 参数 {auth_type} 目前不支持")
+        if cert:
+            cert_list = cert.split(",")
+            cert_list_len = len(cert_list)
+            if cert_list_len == 1:
+                s.cert = cert_list[0]
+            elif cert_list_len == 2:
+                s.cert= (cert_list[0],cert_list[1])
+            else:
+                raise AttributeError(f"cert 参数 {cert} 不合法")
+        
+        if payload is None:
+            if stream is True:
+                with s.request(method.upper(),url,stream=True) as res:
+                    for line in res.iter_lines(decode_unicode=True):
+                        if line:
+                            if cb:
+                                cb(line)
+                            
+            else:
+                res = s.request(method.upper(),url)
+                if cb:
+                    cb(res.text)
+
+        else:
+            if payload_type == "stream":
+                if stream is True :
+                    with open(payload,"rb") as f:
+                        with s.request(method.upper(),url,data=f, stream=True) as res:
+                            for line in res.iter_lines(decode_unicode=True):
+                                if line:
+                                    if cb:
+                                        cb(line)
+                else:
+                    with open(payload,"rb") as f:
+                        res = s.request(method.upper(),url,data=f)
+                        if cb:
+                            cb(res.text)
+
+            else:
+                with open(payload,"r") as f:
+                    payload_dict = json.load(f)
+
+                if stream is True:
+                    if payload_type == "json":
+                        with s.request(method.upper(),url,json=payload_dict, stream=True) as res:
+                            for line in res.iter_lines(decode_unicode=True):
+                                if line:
+                                    if cb:
+                                        cb(line)
+                    elif payload_type == "form":
+                        with s.request(method.upper(),url,data=payload_dict, stream=True) as res:
+                            for line in res.iter_lines(decode_unicode=True):
+                                if line:
+                                    if cb:
+                                        cb(line)
+                    elif payload_type == "url":
+                        with s.request(method.upper(),url,params=payload_dict, stream=True) as res:
+                            for line in res.iter_lines(decode_unicode=True):
+                                if line:
+                                    if cb:
+                                        cb(line)
+                    else:
+                        raise AttributeError(f"不支持的负载类型{payload_type}")
+                else:
+                    if payload_type == "json":
+                        res = s.request(method.upper(),url,json=payload_dict)
+                        if cb:
+                            cb(res.text)
+                    elif payload_type == "form":
+                        res = s.request(method.upper(),url,data=payload_dict)
+                        if cb:
+                            cb(res.text)
+                    elif payload_type == "url":
+                        res = s.request(method.upper(),url,params=payload_dict)
+                        if cb:
+                            cb(res.text)
+                    else:
+                        raise AttributeError(f"不支持的负载类型{payload_type}")
+
+
 def get_source_from_url(url:str)->str:
     """从指定url中回去源数据.
+
+    注意只能获取静态http资源.
 
     Args:
         url (str): url地址
@@ -63,6 +193,7 @@ def get_source_from_url(url:str)->str:
 
     Returns:
         str: 内容文本
+
     """
     if is_http_url(url):
         rs = rq.get(url)
