@@ -1,5 +1,6 @@
 """编译protobuf的schema为不同语言的代码."""
 import json
+import yaml
 from pmfp.utils.url_utils import http_query,is_url,get_source_from_url
 from pmfp.utils.schema_utils import is_validated
 from typing import Optional,Callable,NoReturn
@@ -32,11 +33,13 @@ def http_test(schema:str,serialization:str,url:str,method:str,*,
     if is_url(schema):
         schema_obj = json.loads(get_source_from_url(schema))
     else:
-        with open(schema,"r") as f:
+        with open(schema,"r", encoding='utf-8') as f:
             schema_obj = json.load(f)
 
     if serialization == "json":
         serialization_func = json.loads
+    elif serialization == "yaml":
+        serialization_func = yaml.loads
     else:
         raise AttributeError(f"不支持的序列化格式{serialization}")
     http_query(

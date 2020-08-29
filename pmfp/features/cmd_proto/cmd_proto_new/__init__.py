@@ -37,7 +37,7 @@ def new_pb(name: str, to: str,*,parent_package:Optional[str]=None, grpc: bool=Fa
         content = template_2_content(template=grpc_template,parent_package=parent_package,name=name,package_go=package_go,name_upper=name.upper())
     else:
         content = template_2_content(template=proto_template,parent_package=parent_package,name=name,package_go=package_go)
-    with open(str(to_path.joinpath(f"{name}.proto")),"w") as f:
+    with open(str(to_path.joinpath(f"{name}.proto")),"w", encoding='utf-8') as f:
         f.write(content)
 
 

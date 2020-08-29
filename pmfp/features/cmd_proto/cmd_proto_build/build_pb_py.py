@@ -101,7 +101,7 @@ from .{pb_package} import *
 from .{grpc_package} import *
 """)
 
-                with open(str(grpc_file), "r") as f:
+                with open(str(grpc_file), "r", encoding='utf-8') as f:
                     lines = f.readlines()
                 new_lines = []
                 packstr = find_pypackage_string(to)

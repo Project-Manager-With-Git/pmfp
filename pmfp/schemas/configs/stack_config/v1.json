@@ -1,9 +1,0 @@
-schema = {
-    "version":"xxx"
-    "name":"xxx",
-    "scripts":{
-
-    },
-    "meta": None,
-    "projects":[],
-}

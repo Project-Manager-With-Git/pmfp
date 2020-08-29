@@ -9,7 +9,7 @@ from pmfp.features.cmd_schema.cmd_schema_test import test_schema
 def test(argv:Sequence[str]):
     """ppm schema test <file>
 
-    检查schema文件中的`examples`是否符合定义.
+    检查schema文件中的`examples`是否符合定义.这个schema文件可以是文件地址或者http/fiil的url
     """
     parser = argparse.ArgumentParser(
         prog='ppm schema test',
@@ -23,4 +23,4 @@ def test(argv:Sequence[str]):
 
 
 def cmd_test_schema(args: argparse.Namespace):
-    new_schema(name=args.name,path=args.path,version=args.version,root=args.root,addr=args.addr)
+    test_schema(file=args.file)

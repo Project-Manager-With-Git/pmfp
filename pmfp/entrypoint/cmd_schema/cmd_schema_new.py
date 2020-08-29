@@ -9,8 +9,7 @@ from pmfp.features.cmd_schema.cmd_schema_new import new_schema
 def new(argv:Sequence[str]):
     """ppm schema new [-flags] <name>
 
-    创建新的json schema模式文件.
-    模式文件将以存放路径或者网址路径作为id
+    将schema文件移动到指定路径,也用于版本升级以及替换网址
     """
     parser = argparse.ArgumentParser(
         prog='ppm schema new',
@@ -21,7 +20,7 @@ def new(argv:Sequence[str]):
     parser.add_argument("-v", "--version", type=str,default="v0.0.0", help="模式的版本")
     parser.add_argument("-r", "--root", type=str,default=".", help="存放的根地址") 
     parser.add_argument("-a", "--addr", type=str, help="网址") 
-    parser.add_argument("name",type=str, help="schema名")
+    parser.add_argument("name",type=str, help="schema名,也可以使用`*`作为通配符代表path下的所有schema文件")
     parser.set_defaults(func=cmd_new_schema)
     args = parser.parse_args(argv)
     args.func(args)

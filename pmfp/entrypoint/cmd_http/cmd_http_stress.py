@@ -55,7 +55,7 @@ def cmd_stress_http(args: argparse.Namespace):
     del params["func"]
     config.update(default_config)
     if args.config:
-        with open(args.config) as f:
+        with open(args.config, encoding='utf-8') as f:
             c = json.load(f)
             config.update(c)
     del params["config"]

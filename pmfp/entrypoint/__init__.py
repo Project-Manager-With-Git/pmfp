@@ -1,4 +1,6 @@
 """命令行执行脚本模块."""
+from gevent import monkey
+monkey.patch_all()
 import sys
 from .cmd_help import *
 from .cmd_version import *

@@ -1,5 +1,4 @@
-from gevent import monkey
-monkey.patch_all()
+"""http服务相关的工具."""
 from .core import ppm_http
 from .cmd_http_help import *
 from .cmd_http_serv import *

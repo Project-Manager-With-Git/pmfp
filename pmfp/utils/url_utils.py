@@ -5,6 +5,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 import requests as rq
 
+
 def is_url(url:str)->bool:
     """判断url是否是url.
 
@@ -17,7 +18,7 @@ def is_url(url:str)->bool:
     """
     try:
         result = urlparse(url)
-        return all([result.scheme, result.netloc]) 
+        return all([result.scheme]) 
     except ValueError:
         return False
 
@@ -49,7 +50,7 @@ def is_file_url(url)->bool:
     """
     try:
         result = urlparse(url)
-        return all([result.scheme, result.netloc]) and result.scheme == "file"
+        return all([result.scheme]) and result.scheme == "file"
     except ValueError:
         return False
 
@@ -138,7 +139,7 @@ def http_query(url:str,method:str,*,
                             cb(res.text)
 
             else:
-                with open(payload,"r") as f:
+                with open(payload,"r", encoding='utf-8') as f:
                     payload_dict = json.load(f)
 
                 if stream is True:
@@ -179,6 +180,24 @@ def http_query(url:str,method:str,*,
                         raise AttributeError(f"不支持的负载类型{payload_type}")
 
 
+def parse_file_url(url:str)->str:
+    """从file url中提取文件系统中的路径.
+
+    Args:
+        url (str): file url
+
+    Returns:
+        str: file url中提取出的路径
+
+    """
+    path_str = urlparse(url).path
+    if ":" in path_str:
+        path = path_str[1:]
+    else:
+        path = path_str
+    return path
+
+
 def get_source_from_url(url:str)->str:
     """从指定url中回去源数据.
 
@@ -202,12 +221,8 @@ def get_source_from_url(url:str)->str:
         else:
             return rs.text
     elif is_file_url(url):
-        path_str = urlparse(url).path
-        if ":" in path_str:
-            path = path_str[1:]
-        else:
-            path = path_str
-        with open(path,"r") as f:
+        path = parse_file_url(url)
+        with open(path,"r", encoding='utf-8') as f:
             content = f.read()
         return content
     else:

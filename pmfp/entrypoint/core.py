@@ -41,7 +41,7 @@ class EntryPoint:
         if self.subcmds.get(args.subcmd):
             self.subcmds[args.subcmd](argv[1:])
         else:
-            print('未知的子命令')
+            print(f'未知的子命令 {argv[1:]}')
             parser.print_help()
             sys.exit(1)
             
