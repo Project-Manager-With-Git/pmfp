@@ -38,11 +38,7 @@ def clone_schema(url:str,method:str,out:str,*,
                 print(f"未知的url形式 {url}")
                 return
             name = Path(p).name
-            out_path = Path(out)
-            if out_path.is_absolute():
-                out_p = out_path
-            else:
-                out_p = Path(".").absolute().joinpath(out)
+            out_p = get_abs_path(out)
             print("克隆到位置")
             with open(out_p.joinpath(name).as_posix(),"w") as f:
                 json.dump(schema,f,ensure_ascii=False,indent=4,sort_keys=True)

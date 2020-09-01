@@ -2,6 +2,7 @@ from .run_command_utils import run_command
 
 def _git_check(p:str) -> bool:
     """检测项目有没有.git可以用于上传和打标签等操作."""
+    
     if not .joinpath(".git").exists():
         return False
     else:

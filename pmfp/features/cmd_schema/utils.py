@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Optional
 from pmfp.utils.template_utils import jsontemplate_2_content
+from pmfp.utils.fs_utils import get_abs_path
 
 def make_url_id(name:str,path:str,version_name:str,root:str,addr:Optional[str]=None)->str:
     """构造json schema 的id.
@@ -16,11 +17,7 @@ def make_url_id(name:str,path:str,version_name:str,root:str,addr:Optional[str]=N
         str: [description]
 
     """
-    rootp = Path(root)
-    if rootp.is_absolute():
-        root_path = rootp
-    else:
-        root_path = Path(".").absolute().joinpath(root)
+    root_path = get_abs_path(root)
     if addr:
         _id = f"http://{addr}/{path}/{name}/{version_name}/{name}.schema.json"
     else:
@@ -39,12 +36,8 @@ def copy_schema(template:str,name:str,path:str,version_name:str,root:str,addr:Op
         addr (str, optional): 网站域名.
 
     """
-    _id = make_url_id(name=name,path=path,version_name=version_name,root=root,addr=addr)
-    rootp = Path(root)
-    if rootp.is_absolute():
-        root_path = rootp
-    else:
-        root_path = Path(".").absolute().joinpath(root)
+    _id = make_url_id(name=name,path=path,version_name=version_name,root=root,addr=addr) 
+    root_path = get_abs_path(root)
     filepath = root_path.joinpath(f"{path}/{name}/{version_name}/{name}.schema.json")
     parentpath = filepath.parent
     kwargs = {

@@ -1,5 +1,22 @@
 from pathlib import Path
-from typing import Callable,Optional
+from typing import Callable, Optional
+
+def get_abs_path(path_str:str)->Path:
+    """由路径字符串获取绝对路径.
+
+    Args:
+        path_str (str): 路径字符创
+
+    Returns:
+        Path: 路径字符串的绝对路径
+
+    """
+    rootp = Path(path_str)
+    if rootp.is_absolute():
+        root_path = rootp
+    else:
+        root_path = Path(".").absolute().joinpath(path_str)
+    return root_path
 
 def iter_dir_to_end(path:Path,
     match:Callable[[Path],bool],*,

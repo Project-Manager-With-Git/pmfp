@@ -6,8 +6,9 @@ from urllib.parse import urlparse
 from typing import Optional,Dict
 from pmfp.utils.template_utils import jsontemplate_2_content
 from pmfp.utils.url_utils import is_file_url,is_http_url
-from pmfp.utils.fs_utils import iter_dir_to_end
+from pmfp.utils.fs_utils import iter_dir_to_end,get_abs_path
 from pmfp.features.cmd_schema.utils import copy_schema,make_url_id
+
 
 def parse_id_from_relative_path(relative_path:Path)->Dict[str,str]:
     """从相对路劲来解析id中的构造参数.
@@ -39,11 +40,7 @@ def parse_id(url:str,root:str)->Dict[str,str]:
         str: file url中提取出的路径
 
     """
-    rootp = Path(root)
-    if rootp.is_absolute():
-        root_path = rootp
-    else:
-        root_path = Path(".").absolute().joinpath(root)
+    root_path = get_abs_path(root)
     if is_file_url(url):
         path_str = urlparse(url).path
         if ":" in path_str:
@@ -81,11 +78,7 @@ def _move_schema(schema_file:str,old_root:str,*,
         old_schema_str = f.read()
     old_schema = json.loads(old_schema_str)
     old_schema_id = old_schema.get("$id")
-    root = Path(old_root)
-    if root.is_absolute():
-        root_path = root
-    else:
-        root_path = Path(".").absolute().joinpath(root)
+    root_path = get_abs_path(old_root)
     params = {"root":root_path.as_posix()}
     old_params = parse_id(old_schema_id,old_root)
     params.update(old_params)
@@ -96,11 +89,7 @@ def _move_schema(schema_file:str,old_root:str,*,
     if new_version is not None:
         params["version_name"]="_".join(new_version.split("."))
     if new_root is not None:
-        new_rootp = Path(new_root)
-        if new_rootp.is_absolute():
-            new_root_path = new_rootp
-        else:
-            new_root_path = Path(".").absolute().joinpath(new_root)
+        new_root_path = get_abs_path(new_root)
         params["root"]=new_root_path.as_posix()
     if new_addr is not None:
         params["addr"]=new_addr

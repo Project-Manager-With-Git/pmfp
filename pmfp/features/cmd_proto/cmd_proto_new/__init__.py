@@ -6,6 +6,7 @@ import pkgutil
 from typing import Dict, Any,List,Optional
 import chardet
 from pmfp.utils.template_utils import template_2_content
+from pmfp.utils.fs_utils import get_abs_path
 
 proto_template = ""
 grpc_template = ""
@@ -31,12 +32,7 @@ def new_pb(name: str, to: str,*,parent_package:Optional[str]=None, grpc: bool=Fa
         grpc (bool, optional): 是否是grpc. Defaults to False.
 
     """
-    tp = Path(to)
-    if tp.is_absolute():
-        to_path = tp
-    else:
-        to_path = Path(".").absolute().joinpath(to)
-
+    to_path =get_abs_path(to)
     package_go = name
     if parent_package:
             package_go = parent_package.replace(".","_") + "/"+ name

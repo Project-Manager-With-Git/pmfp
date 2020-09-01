@@ -1,6 +1,7 @@
 """编译python语言模块."""
 from pathlib import Path
 from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.fs_utils import get_abs_path
 from typing import List, Optional,Dict
 
 def _find_pypackage(final_path: Path, packs: List[str])->None:
@@ -26,11 +27,7 @@ def find_pypackage_string(to_path: str) -> str:
 
     """
     packs: List[str] = []
-    tp = Path(to_path)
-    if tp.is_absolute():
-        final_path = tp
-    else:
-        final_path = Path(".").absolute().joinpath(to_path)
+    final_path = get_abs_path(to_path)
     _find_pypackage(final_path, packs)
     packstr = ".".join(reversed(packs))
     return packstr
@@ -80,12 +77,7 @@ def trans_grpc_model_py(to:str)->None:
         to (str): 目标地址
 
     """
-    tp = Path(to)
-    if tp.is_absolute():
-        to_path = tp
-    else:
-        to_path = Path(".").absolute().joinpath(to)
-
+    to_path = get_abs_path(to)
     for p in to_path.iterdir():
         if p.is_file() and p.suffix==".py" and p.name != "__init__.py":
             x = p.name.split("_")
