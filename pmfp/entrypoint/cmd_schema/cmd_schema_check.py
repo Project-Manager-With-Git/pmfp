@@ -4,9 +4,8 @@ from .core import ppm_schema
 from typing import Sequence
 from pmfp.features.cmd_schema.cmd_schema_check import check_schema
 
-
 @ppm_schema.regist_subcmd
-def check(argv:Sequence[str]):
+def check(argv:Sequence[str])->None:
     """ppm schema check -s <schema> [--flag] <url>
 
     检查schema文件中的`examples`是否符合定义.这个schema文件可以是文件地址或者http/fiil的url
@@ -33,7 +32,7 @@ def check(argv:Sequence[str]):
 
 
 
-def cmd_check_schema(args: argparse.Namespace):
+def cmd_check_schema(args: argparse.Namespace)->None:
     check_schema(schema=args.schema,
         serialization=args.serialization,
         url=args.url,

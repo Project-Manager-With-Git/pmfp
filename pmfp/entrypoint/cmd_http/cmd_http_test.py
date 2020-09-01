@@ -6,7 +6,7 @@ from pmfp.features.cmd_http.cmd_http_test import http_test
 
 
 @ppm_http.regist_subcmd
-def test(argv:Sequence[str]):
+def test(argv:Sequence[str])->None:
     """ppm http test -s <schema> [--flag] <url>
 
     检查http请求返回的数据是否满足json schema定义的模式.
@@ -32,7 +32,7 @@ def test(argv:Sequence[str]):
     args.func(args)
 
 
-def cmd_test_http(args: argparse.Namespace):
+def cmd_test_http(args: argparse.Namespace)->None:
     http_test(
         schema=args.schema,
         serialization=args.serialization,

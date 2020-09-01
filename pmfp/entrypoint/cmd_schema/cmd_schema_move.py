@@ -6,7 +6,7 @@ from pmfp.features.cmd_schema.cmd_schema_move import move_schema
 
 
 @ppm_schema.regist_subcmd
-def move(argv:Sequence[str]):
+def move(argv:Sequence[str])->None:
     """ppm schema move [-flags] <name>
 
     迁移旧的json schema模式文件.
@@ -30,5 +30,5 @@ def move(argv:Sequence[str]):
     args.func(args)
 
 
-def cmd_move_schema(args: argparse.Namespace):
+def cmd_move_schema(args: argparse.Namespace)->None:
     move_schema(file=args.file,old_root=args.old_root,remove_old=args.remove_old,name=args.name,path=args.path,version=args.version,root=args.root,addr=args.addr)

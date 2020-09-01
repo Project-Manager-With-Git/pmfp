@@ -3,7 +3,7 @@ import argparse
 from ..core import ppm,EntryPoint
 from typing import Sequence
 
-ppm_project = EntryPoint()
+ppm_project = EntryPoint("project")
 ppm_project.__doc__ = """ppm project <subcmd>
 
     ppm project 的子命令有:
@@ -19,5 +19,4 @@ ppm_project.__doc__ = """ppm project <subcmd>
     test              执行测试
     doc               编译文档
     """
-ppm_project.__name__="project"
 ppm.regist_subcmd(ppm_project)

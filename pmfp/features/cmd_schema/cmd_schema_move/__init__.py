@@ -3,7 +3,7 @@ import os
 import json
 from pathlib import Path
 from urllib.parse import urlparse
-from typing import NoReturn,Optional,Dict
+from typing import Optional,Dict
 from pmfp.utils.template_utils import jsontemplate_2_content
 from pmfp.utils.url_utils import is_file_url,is_http_url
 from pmfp.utils.fs_utils import iter_dir_to_end
@@ -39,9 +39,9 @@ def parse_id(url:str,root:str)->Dict[str,str]:
         str: file url中提取出的路径
 
     """
-    root = Path(root)
-    if root.is_absolute():
-        root_path = root
+    rootp = Path(root)
+    if rootp.is_absolute():
+        root_path = rootp
     else:
         root_path = Path(".").absolute().joinpath(root)
     if is_file_url(url):
@@ -76,7 +76,7 @@ def _move_schema(schema_file:str,old_root:str,*,
         new_version:Optional[str]=None,
         new_root:Optional[str]=None,
         new_addr:Optional[str]=None,
-        remove_old:bool=False):
+        remove_old:bool=False)->None:
     with open(schema_file, "r", encoding="utf-8") as f:
         old_schema_str = f.read()
     old_schema = json.loads(old_schema_str)
@@ -96,9 +96,9 @@ def _move_schema(schema_file:str,old_root:str,*,
     if new_version is not None:
         params["version_name"]="_".join(new_version.split("."))
     if new_root is not None:
-        new_root = Path(new_root)
-        if new_root.is_absolute():
-            new_root_path = new_root
+        new_rootp = Path(new_root)
+        if new_rootp.is_absolute():
+            new_root_path = new_rootp
         else:
             new_root_path = Path(".").absolute().joinpath(new_root)
         params["root"]=new_root_path.as_posix()
@@ -115,7 +115,7 @@ def _move_schema(schema_file:str,old_root:str,*,
             try:
                 os.remove(schema_file)
             except Exception as e:
-                print(f"因为错误{str(e)}跳过删除文件 {str(p)}")
+                print(f"因为错误{str(e)}跳过删除文件 {str(old_schema_str)}")
     
 
 
@@ -126,7 +126,7 @@ def move_schema(file:str,old_root:str,*,
         version:Optional[str]=None,
         root:Optional[str]=None,
         addr:Optional[str]=None,
-        remove_old:bool=False) -> NoReturn:
+        remove_old:bool=False) -> None:
     """新建一个json schema文件.
 
     Args:

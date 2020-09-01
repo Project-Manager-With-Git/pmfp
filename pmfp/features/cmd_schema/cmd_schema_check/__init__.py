@@ -3,7 +3,7 @@ import json
 import yaml
 import sys
 from pathlib import Path
-from typing import NoReturn,Optional
+from typing import Optional,Callable,IO,Any
 from pmfp.utils.url_utils import (
     is_url,
     is_http_url,
@@ -23,7 +23,7 @@ def check_schema(schema:str,serialization:str,url:str,method:str,*,
                 payload_type:Optional[str]=None,
                 stream:bool=False,
                 verify:bool=False,
-                cert:Optional[str]=None) -> NoReturn:
+                cert:Optional[str]=None) -> None:
     """检测指定的数据是否满足模式.
 
     Args:
@@ -38,7 +38,6 @@ def check_schema(schema:str,serialization:str,url:str,method:str,*,
         stream (bool, optional): 返回是否为流数据. Defaults to False.
         verify (bool, optional): https请求是否验证. Defaults to False.
         cert (Optional[str], optional): https请求的客户端认证文件. Defaults to None.
-        cb (Optional[Callable[[str],NoReturn]], optional): 获取到数据后的处理回调. Defaults to None.
 
     """
     if is_http_url(url):
@@ -60,10 +59,11 @@ def check_schema(schema:str,serialization:str,url:str,method:str,*,
             path = parse_file_url(url)
         else:
             path = url
+        serialization_func: Callable[[IO[str]],Any]
         if serialization == "json":
             serialization_func = json.load
         elif serialization == "yaml":
-            serialization_func = yaml.safe_load
+            serialization_func = yaml.load
         with open(path,"r", encoding='utf-8') as f:
             instance = serialization_func(f)
         if is_url(schema):
@@ -71,6 +71,9 @@ def check_schema(schema:str,serialization:str,url:str,method:str,*,
         else:
             with open(schema,"r", encoding='utf-8') as f:
                 schema_obj = json.load(f)
-        print("validated") if is_validated(instance,schema_obj) else print("not validated")
+        if is_validated(instance,schema_obj):
+            print("validated")  
+        else:
+            print("not validated")
 
     

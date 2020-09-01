@@ -3,7 +3,7 @@ import json
 import yaml
 from pmfp.utils.url_utils import http_query,is_url,get_source_from_url
 from pmfp.utils.schema_utils import is_validated
-from typing import Optional,Callable,NoReturn
+from typing import Optional,Callable,Any
 
 def http_test(schema:str,serialization:str,url:str,method:str,*,
                 auth:Optional[str]=None,
@@ -12,7 +12,7 @@ def http_test(schema:str,serialization:str,url:str,method:str,*,
                 payload_type:Optional[str]=None,
                 stream:bool=False,
                 verify:bool=False,
-                cert:Optional[str]=None)->NoReturn:
+                cert:Optional[str]=None)->None:
     """检测http请求的结果是否满足模式.
 
     Args:
@@ -27,7 +27,7 @@ def http_test(schema:str,serialization:str,url:str,method:str,*,
         stream (bool, optional): 返回是否为流数据. Defaults to False.
         verify (bool, optional): https请求是否验证. Defaults to False.
         cert (Optional[str], optional): https请求的客户端认证文件. Defaults to None.
-        cb (Optional[Callable[[str],NoReturn]], optional): 获取到数据后的处理回调. Defaults to None.
+        cb (Optional[Callable[[str],]], optional): 获取到数据后的处理回调. Defaults to None.
 
     """
     if is_url(schema):
@@ -35,13 +35,19 @@ def http_test(schema:str,serialization:str,url:str,method:str,*,
     else:
         with open(schema,"r", encoding='utf-8') as f:
             schema_obj = json.load(f)
-
+    serialization_func: Callable[[str],Any]
     if serialization == "json":
         serialization_func = json.loads
     elif serialization == "yaml":
-        serialization_func = yaml.loads
+        serialization_func = yaml.load
     else:
         raise AttributeError(f"不支持的序列化格式{serialization}")
+
+    def _(x:str)->None:
+        if is_validated(serialization_func(x),schema_obj):
+            print("validated") 
+        else:
+            print("not validated")
     http_query(
         url=url,
         method=method,
@@ -52,5 +58,5 @@ def http_test(schema:str,serialization:str,url:str,method:str,*,
         stream=stream, 
         verify=verify, 
         cert=cert, 
-        cb=lambda x: print("validated") if is_validated(serialization_func(x),schema_obj) else print("not validated")
+        cb=_
     )

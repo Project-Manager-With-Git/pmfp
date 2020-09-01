@@ -6,7 +6,7 @@ from pmfp.features.cmd_schema.cmd_schema_new import new_schema
 
 
 @ppm_schema.regist_subcmd
-def new(argv:Sequence[str]):
+def new(argv:Sequence[str])->None:
     """ppm schema new [-flags] <name>
 
     将schema文件移动到指定路径,也用于版本升级以及替换网址
@@ -26,5 +26,5 @@ def new(argv:Sequence[str]):
     args.func(args)
 
 
-def cmd_new_schema(args: argparse.Namespace):
+def cmd_new_schema(args: argparse.Namespace)->None:
     new_schema(name=args.name,path=args.path,version=args.version,root=args.root,addr=args.addr)

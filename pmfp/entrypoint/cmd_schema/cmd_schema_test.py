@@ -4,9 +4,8 @@ from .core import ppm_schema
 from typing import Sequence
 from pmfp.features.cmd_schema.cmd_schema_test import test_schema
 
-
 @ppm_schema.regist_subcmd
-def test(argv:Sequence[str]):
+def test(argv:Sequence[str])->None:
     """ppm schema test <file>
 
     检查schema文件中的`examples`是否符合定义.这个schema文件可以是文件地址或者http/fiil的url
@@ -22,5 +21,5 @@ def test(argv:Sequence[str]):
     args.func(args)
 
 
-def cmd_test_schema(args: argparse.Namespace):
+def cmd_test_schema(args: argparse.Namespace)->None:
     test_schema(file=args.file)

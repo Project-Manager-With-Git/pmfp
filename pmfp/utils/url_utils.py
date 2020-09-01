@@ -1,6 +1,6 @@
 """与url字符串相关的工具代码."""
 import json
-from typing import Dict, Any,List,NoReturn,Optional,Callable
+from typing import Dict, Any,List,Optional,Callable
 from pathlib import Path
 from urllib.parse import urlparse
 import requests as rq
@@ -22,7 +22,7 @@ def is_url(url:str)->bool:
     except ValueError:
         return False
 
-def is_http_url(url)->bool:
+def is_http_url(url:str)->bool:
     """判断url是否是http请求的url.
 
     Args:
@@ -38,7 +38,7 @@ def is_http_url(url)->bool:
     except ValueError:
         return False
 
-def is_file_url(url)->bool:
+def is_file_url(url:str)->bool:
     """判断url是否是文件协议相关的url.
 
     Args:
@@ -62,7 +62,7 @@ def http_query(url:str,method:str,*,
                 stream:bool=False,
                 verify:bool=False,
                 cert:Optional[str]=None,
-                cb:Optional[Callable[[str],NoReturn]]=None) -> NoReturn:
+                cb:Optional[Callable[[str],None]]=None) ->None:
     """http请求并打印结果.
 
     Args:
@@ -75,13 +75,13 @@ def http_query(url:str,method:str,*,
         stream (bool, optional): 返回是否为流数据. Defaults to False.
         verify (bool, optional): https请求是否验证. Defaults to False.
         cert (Optional[str], optional): https请求的客户端认证文件. Defaults to None.
-        cb (Optional[Callable[[str],NoReturn]], optional): 获取到数据后的处理回调. Defaults to None.
+        cb (Optional[Callable[[str],None]], optional): 获取到数据后的处理回调. Defaults to None.
 
     """
     with rq.Session() as s:
         if verify:
             s.verify = verify
-        if auth_type:
+        if auth_type and auth:
             if auth_type == "basic":
                 from requests.auth import HTTPBasicAuth
                 user,pwd=auth.split(",")
@@ -93,7 +93,7 @@ def http_query(url:str,method:str,*,
                 s.auth=HTTPDigestAuth(user,pwd)
                 
             elif auth_type == "jwt":
-                s.headers={"Authorization": "Bearer " + auth}
+                s.headers=rq.structures.CaseInsensitiveDict({"Authorization": "Bearer " + auth})
             elif auth_type == "oauth1":
                 from requests_oauthlib import OAuth1
                 app_key,app_secret,oauth_token,oauth_token_secret=auth.split(",")
@@ -139,8 +139,8 @@ def http_query(url:str,method:str,*,
                             cb(res.text)
 
             else:
-                with open(payload,"r", encoding='utf-8') as f:
-                    payload_dict = json.load(f)
+                with open(payload,"r", encoding='utf-8') as fu:
+                    payload_dict = json.load(fu)
 
                 if stream is True:
                     if payload_type == "json":
@@ -195,6 +195,20 @@ def parse_file_url(url:str)->str:
         path = path_str[1:]
     else:
         path = path_str
+    return path
+
+def parse_http_url(url:str)->str:
+    """从file url中提取文件系统中的路径.
+
+    Args:
+        url (str): file url
+
+    Returns:
+        str: file url中提取出的路径
+
+    """
+    path = urlparse(url).path
+    
     return path
 
 

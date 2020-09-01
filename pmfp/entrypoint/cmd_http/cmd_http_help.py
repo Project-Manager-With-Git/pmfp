@@ -5,7 +5,7 @@ from typing import Sequence
 
 
 @ppm_http.regist_subcmd
-def help(argv:Sequence[str]):
+def help(argv:Sequence[str])->None:
     """ppm http help <subcommand>
 ppm http 的子命令有:
 
@@ -28,5 +28,5 @@ ppm http 的子命令有:
     args = parser.parse_args(argv)
     args.func(args)
 
-def cmd_help(args:argparse.Namespace):
+def cmd_help(args:argparse.Namespace)->None:
     print(ppm_http.subcmds.get(args.subcmd).__doc__)

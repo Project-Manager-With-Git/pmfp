@@ -1,9 +1,9 @@
 """编译go语言模块."""
-from typing import NoReturn, List, Dict
+from typing import List, Dict
 from pmfp.utils.run_command_utils import run_command
 
 
-def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,source_relative:bool, **kwargs: Dict[str, str]) -> NoReturn:
+def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,source_relative:bool, **kwargs: Dict[str, str]) -> None:
     """编译protobuffer为go语言模块.
 
     Args:

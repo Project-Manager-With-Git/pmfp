@@ -1,8 +1,8 @@
 """编译js语言的grpc-web模块."""
 import warnings
-from typing import List, Optional,NoReturn,Dict
+from typing import List, Optional,Dict
 from pmfp.utils.run_command_utils import run_command
-def build_pb_web(files: List[str], includes: List[str], to: str,grpc:bool, **kwargs: Dict[str, str]) -> NoReturn:
+def build_pb_web(files: List[str], includes: List[str], to: str,grpc:bool, **kwargs: Dict[str, str]) -> None:
     """编译js语言的grpc-web模块.
 
     Args:

@@ -7,7 +7,7 @@ from pmfp.features.cmd_http.cmd_http_stress import http_stress
 
 
 @ppm_http.regist_subcmd
-def stress(argv:Sequence[str]):
+def stress(argv:Sequence[str])->None:
     """ppm http stress [-flags] port
 
     对一个http资源做压测,注意参数的优先级命令行>配置文件>默认配置.
@@ -48,7 +48,7 @@ default_config = {
     "quiet":False
 }
 
-def cmd_stress_http(args: argparse.Namespace):
+def cmd_stress_http(args: argparse.Namespace)->None:
     config = {
     }
     params = vars(args)

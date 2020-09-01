@@ -6,7 +6,7 @@ from pmfp.features.cmd_http.cmd_http_query import http_query
 
 
 @ppm_http.regist_subcmd
-def put(argv:Sequence[str]):
+def put(argv:Sequence[str])->None:
     """ppm http put [-flags] url
 
     以指定位置作为http服务的根目录启动一个静态http服务器.
@@ -29,7 +29,7 @@ def put(argv:Sequence[str]):
     args.func(args)
 
 
-def cmd_put_http(args: argparse.Namespace):
+def cmd_put_http(args: argparse.Namespace)->None:
     http_query(
         url=args.url,
         method="GET",

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional,NoReturn
+from typing import Optional
 from pmfp.utils.template_utils import jsontemplate_2_content
 
 def make_url_id(name:str,path:str,version_name:str,root:str,addr:Optional[str]=None)->str:
@@ -16,9 +16,9 @@ def make_url_id(name:str,path:str,version_name:str,root:str,addr:Optional[str]=N
         str: [description]
 
     """
-    root = Path(root)
-    if root.is_absolute():
-        root_path = root
+    rootp = Path(root)
+    if rootp.is_absolute():
+        root_path = rootp
     else:
         root_path = Path(".").absolute().joinpath(root)
     if addr:
@@ -28,7 +28,7 @@ def make_url_id(name:str,path:str,version_name:str,root:str,addr:Optional[str]=N
         _id = file_path.as_uri()
     return _id
 
-def copy_schema(template:str,name:str,path:str,version_name:str,root:str,addr:Optional[str]=None) -> NoReturn:
+def copy_schema(template:str,name:str,path:str,version_name:str,root:str,addr:Optional[str]=None) -> None:
     """以一个json schema 为模板copy一个json schema文件.
 
     Args:
@@ -40,9 +40,9 @@ def copy_schema(template:str,name:str,path:str,version_name:str,root:str,addr:Op
 
     """
     _id = make_url_id(name=name,path=path,version_name=version_name,root=root,addr=addr)
-    root = Path(root)
-    if root.is_absolute():
-        root_path = root
+    rootp = Path(root)
+    if rootp.is_absolute():
+        root_path = rootp
     else:
         root_path = Path(".").absolute().joinpath(root)
     filepath = root_path.joinpath(f"{path}/{name}/{version_name}/{name}.schema.json")

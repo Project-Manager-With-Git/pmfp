@@ -1,35 +1,43 @@
 import sys
 import argparse
 import functools
-from typing import Callable,Sequence,NoReturn
+from typing import Callable,Sequence,Dict
 
 class EntryPoint:
-    
-
-    def __init__(self):
+    prog:str
+    epilog:str
+    description:str
+    subcmds: Dict[str, Callable[[Sequence[str]],None]]
+    __name__: str
+    def __init__(self,name:str)->None:
         """初始化复杂入口."""
+        self.__name__ = name
         self.subcmds = {}
+        self.prog = ""
+        self.epilog = ''
+        self.description = ''
+        
 
-    def __call__(self,argv:Sequence[str])->NoReturn:
+    def __call__(self,argv:Sequence[str])->None:
         self.parse_args(argv)
 
-    def regist_subcmd(self,func:Callable[[Sequence[str]],NoReturn])->Callable[[Sequence[str]],NoReturn]:
+    def regist_subcmd(self,func:Callable[[Sequence[str]],None])->Callable[[Sequence[str]],None]:
         """注册子命令.
 
         Args:
-            func (Callabel[[Sequence[str]],NoReturn]): 子命令的处理函数
+            func (Callabel[[Sequence[str]],]): 子命令的处理函数
 
         Returns:
-            Callabel[[Sequence[str]],NoReturn]: 包装后的子命令处理函数
+            Callabel[[Sequence[str]],]: 包装后的子命令处理函数
 
         """
         @functools.wraps(func)
-        def warp(argv:Sequence[str])->NoReturn:
-            return func(argv)
+        def warp(argv:Sequence[str])->None:
+            func(argv)
         self.subcmds[func.__name__] = func
         return warp
 
-    def parse_args(self,argv:Sequence[str])->NoReturn:
+    def parse_args(self,argv:Sequence[str])->None:
         """解析复杂命令行."""
         parser = argparse.ArgumentParser(
             prog=self.prog if hasattr(self,"prog") else None,
@@ -46,7 +54,7 @@ class EntryPoint:
             sys.exit(1)
             
 
-ppm = EntryPoint()
+ppm = EntryPoint("ppm")
 ppm.__doc__= """ppm <subcmd> [<args>]
     ppm工具的子命令有:
 

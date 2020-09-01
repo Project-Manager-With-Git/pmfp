@@ -5,7 +5,7 @@ from typing import Sequence
 
 
 @ppm_proto.regist_subcmd
-def help(argv:Sequence[str]):
+def help(argv:Sequence[str])->None:
     """ppm proto help <subcommand>
 ppm proto工具的子命令有:
 
@@ -23,5 +23,5 @@ ppm proto工具的子命令有:
     args = parser.parse_args(argv)
     args.func(args)
 
-def cmd_help(args:argparse.Namespace):
+def cmd_help(args:argparse.Namespace)->None:
     print(ppm_proto.subcmds.get(args.subcmd).__doc__)

@@ -6,7 +6,7 @@ from pmfp.features.cmd_proto.cmd_proto_build import build_pb
 
 
 @ppm_proto.regist_subcmd
-def build(argv:Sequence[str]):
+def build(argv:Sequence[str])->None:
     """ppm proto build [-flag] <files>
 
     编译proto文件
@@ -28,7 +28,7 @@ def build(argv:Sequence[str]):
     args.func(args)
 
 
-def cmd_build_pb(args: argparse.Namespace):
+def cmd_build_pb(args: argparse.Namespace)->None:
     if not args.includes:
         args.includes = []
     build_pb(env=args.env,files=args.files,includes=args.includes,to=args.to,grpc=args.grpc,source_relative=args.source_relative)

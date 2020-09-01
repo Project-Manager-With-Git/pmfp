@@ -3,7 +3,7 @@ import argparse
 from ..core import ppm,EntryPoint
 from typing import Sequence
 
-ppm_stack = EntryPoint()
+ppm_stack = EntryPoint("stack")
 ppm_stack.__doc__ = """ppm stack <subcmd>
 
     ppm stack 的子命令有:
@@ -19,5 +19,5 @@ ppm_stack.__doc__ = """ppm stack <subcmd>
     一个项目组必须有一个`meta`项目用于维护项目组的部署配置,文档以及数据对接的schema等信息.
     项目组中的增加和删除并不会真的处理文件系统中的内容项目组只是维护路径.
     """
-ppm_stack.__name__="project"
+
 ppm.regist_subcmd(ppm_stack)

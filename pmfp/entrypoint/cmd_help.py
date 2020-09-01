@@ -5,7 +5,7 @@ from typing import Sequence
 
 
 @ppm.regist_subcmd
-def help(argv:Sequence[str]):
+def help(argv:Sequence[str])->None:
     """ppm help <subcommand>
 ppm工具的子命令有:
 
@@ -34,5 +34,5 @@ ppm工具的子命令有:
     args = parser.parse_args(argv)
     args.func(args)
 
-def cmd_help(args:argparse.Namespace):
+def cmd_help(args:argparse.Namespace)->None:
     print(ppm.subcmds.get(args.subcmd).__doc__)

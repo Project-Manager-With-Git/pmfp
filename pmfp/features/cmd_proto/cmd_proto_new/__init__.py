@@ -3,18 +3,25 @@ import subprocess
 import warnings
 from pathlib import Path
 import pkgutil
-from typing import Dict, Any,List,NoReturn,Optional
+from typing import Dict, Any,List,Optional
 import chardet
 from pmfp.utils.template_utils import template_2_content
 
+proto_template = ""
+grpc_template = ""
+proto_template_io= pkgutil.get_data('pmfp.features.cmd_proto.cmd_proto_new.prototemp', 'proto.temp')
+if proto_template_io:
+    proto_template = proto_template_io.decode('utf-8')
+else:
+    raise AttributeError("加载proto模板失败")
 
-proto_template = pkgutil.get_data('pmfp.features.cmd_proto.cmd_proto_new.prototemp', 'proto.temp').decode('utf-8')
+grpc_template_io = pkgutil.get_data('pmfp.features.cmd_proto.cmd_proto_new.grpctemp', 'grpc.temp')
+if grpc_template_io:
+    grpc_template = grpc_template_io.decode('utf-8')
+else:
+    raise AttributeError("加载grpc模板失败")
 
-grpc_template = pkgutil.get_data('pmfp.features.cmd_proto.cmd_proto_new.grpctemp', 'grpc.temp').decode('utf-8')
-
-
-
-def new_pb(name: str, to: str,*,parent_package:Optional[str]=None, grpc: bool=False) -> NoReturn:
+def new_pb(name: str, to: str,*,parent_package:Optional[str]=None, grpc: bool=False) -> None:
     """新建一个protpbuf文件.
 
     Args:
@@ -32,7 +39,7 @@ def new_pb(name: str, to: str,*,parent_package:Optional[str]=None, grpc: bool=Fa
 
     package_go = name
     if parent_package:
-            package_go = parent_package.repalce(".","_") + "/"+ name
+            package_go = parent_package.replace(".","_") + "/"+ name
     if grpc:
         content = template_2_content(template=grpc_template,parent_package=parent_package,name=name,package_go=package_go,name_upper=name.upper())
     else:

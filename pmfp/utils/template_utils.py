@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Dict, Any
 
 
-def template_2_content(template:str,**kwargs:Dict[str,str])->str:
+def template_2_content(template:str,**kwargs:Any)->str:
     """将模板转换为文件内容.
 
     Args:
@@ -25,7 +25,7 @@ def template_2_content(template:str,**kwargs:Dict[str,str])->str:
         return content
 
 
-def jsontemplate_2_content(template:str,**kwargs:Dict[str,Any])->str:
+def jsontemplate_2_content(template:str,**kwargs:Any)->str:
     """将模板转换为文件内容.
 
     Args:

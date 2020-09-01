@@ -3,8 +3,7 @@ import argparse
 from ..core import ppm,EntryPoint
 from typing import Sequence
 
-ppm_http = EntryPoint()
-ppm_http.__name__="http"
+ppm_http = EntryPoint("http")
 ppm_http.__doc__ = """ppm http <subcmd>
 
     ppm http 的子命令有:

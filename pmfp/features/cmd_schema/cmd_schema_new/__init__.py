@@ -2,14 +2,19 @@
 import pkgutil
 import json
 from pathlib import Path
-from typing import NoReturn,Optional
+from typing import Optional
 
 from pmfp.features.cmd_schema.utils import copy_schema
 
-schema_template = pkgutil.get_data('pmfp.features.cmd_schema.cmd_schema_new.schematemp', 'schema.json').decode('utf-8')
+schema_template = ""
+schema_template_io = pkgutil.get_data('pmfp.features.cmd_schema.cmd_schema_new.schematemp', 'schema.json')
+if schema_template_io:
+    schema_template = schema_template_io.decode('utf-8')
+else:
+    raise AttributeError("加载json schema 模板失败")
 
 
-def new_schema(name:str,path:str,version:str,root:str,addr:Optional[str]=None) -> NoReturn:
+def new_schema(name:str,path:str,version:str,root:str,addr:Optional[str]=None) -> None:
     """新建一个json schema文件.
 
     Args:

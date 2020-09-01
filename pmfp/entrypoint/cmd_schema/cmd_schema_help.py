@@ -3,9 +3,8 @@ import argparse
 from .core import ppm_schema
 from typing import Sequence
 
-
 @ppm_schema.regist_subcmd
-def help(argv:Sequence[str]):
+def help(argv:Sequence[str])->None:
     """ppm schema help <subcommand>
 ppm schema工具的子命令有:
 
@@ -25,5 +24,5 @@ ppm schema工具的子命令有:
     args = parser.parse_args(argv)
     args.func(args)
 
-def cmd_help(args:argparse.Namespace):
+def cmd_help(args:argparse.Namespace)->None:
     print(ppm_schema.subcmds.get(args.subcmd).__doc__)
