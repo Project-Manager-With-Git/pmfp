@@ -9,7 +9,7 @@ from pmfp.features.cmd_schema.cmd_schema_new import new_schema
 def new(argv:Sequence[str])->None:
     """ppm schema new [-flags] <name>
 
-    将schema文件移动到指定路径,也用于版本升级以及替换网址
+    创建一个json schema 模板.
     """
     parser = argparse.ArgumentParser(
         prog='ppm schema new',

@@ -17,7 +17,7 @@ def new(argv:Sequence[str])->None:
         usage= ppm_proto.subcmds.get("build").__doc__
     )
     parser.add_argument("-g","--grpc", action="store_true", help="是否是grpc")
-    parser.add_argument("-t", "--to", type=str,required=True, help="存放的地方")
+    parser.add_argument("-t", "--to", type=str,default=".", help="存放的地方")
     parser.add_argument("-p", "--parent_package", type=str, help="package父package")
     parser.add_argument("name",type=str, help="proto文件名,也是package名")
     parser.set_defaults(func=cmd_new_pb)

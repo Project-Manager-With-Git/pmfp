@@ -1,19 +1,19 @@
 from .run_command_utils import run_command
-
+from .fs_utils import get_abs_path
 def _git_check(p:str) -> bool:
     """检测项目有没有.git可以用于上传和打标签等操作."""
-    
-    if not .joinpath(".git").exists():
+    root = get_abs_path(p)
+    if not root.joinpath(".git").exists():
         return False
     else:
         return True
 
 
-def _git_check_and_find_remote() -> str:
+def _git_check_and_find_remote(p:str) -> str:
     """从项目的.git中找到远端仓库url."""
     if not _git_check():
         raise AttributeError(
-            "upload to git should have a .git dir in root path")
+            "git项目下需要有`.git`文件夹")
     else:
         pointgit = PROJECT_HOME.joinpath(".git")
         gitconfig = pointgit.joinpath('config')
