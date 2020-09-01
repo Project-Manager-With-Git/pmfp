@@ -10,6 +10,7 @@ def run_command(command:str,*,succ_cb:Optional[Callable[[],None]]=None,fail_cb:O
         command (str): 命令行命令
         succ_cb (Optional[Callable[[],None]], optional): 执行成功的回调函数. Defaults to None.
         fail_cb (Optional[Callable[[],None]], optional): 执行失败的回调函数. Defaults to None.
+
     """
     res = subprocess.run(command, capture_output=True, shell=True)
     if res.returncode != 0:
