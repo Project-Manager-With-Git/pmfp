@@ -42,10 +42,41 @@ def jsontemplate_2_content(template:str,**kwargs:Any)->str:
         raise
     else:
         return json.dumps(content, indent=4,ensure_ascii=False,sort_keys=True)
-https://github.com/
-TENPLATE_URL = "{group_name}/{template_name}/{component_name}"
 
-def template_url
 
-class ModelTemplate:
+
+class ComponentTemplate:
+    TENPLATE_URL = "{host}::{repo_name}::{tag}::{component_path}"
+
+    @classmethod
+    def from_component_string(clz,component_string:str)->"ComponentTemplate":
+        host,repo_name,tag,component_path = component_string.split("::")
+        return clz(host=host,repo_name=repo_name,tag=tag,component_path=component_path)
+
+    def __init__(self,tag:str,repo_name:str,component_path:str,host:str="https://github.com")->None:
+        self.host = host
+        self.repo_name = repo_name
+        self.tag = tag
+        self.component_path = component_path
+
+    def as_component_string(self)->str:
+        return TENPLATE_URL.format(
+            host=self.host,
+            repo_name=self.repo_name,
+            tag=self.tag,
+            component_path=self.component_path
+            )
+
+    def cache(self,cache_root:str)->None:
+        pass
+
+    def to_component(self,root:str,**kwargs:str):
+        pass
+
+
+
+    
+
+
+
     
