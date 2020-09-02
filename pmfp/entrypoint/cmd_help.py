@@ -21,7 +21,8 @@ ppm工具的子命令有:
     常用工具类:
     proto             管理protobuffer文件
     schema            管理json schema文件
-    http              http服务相关的工具     
+    http              http服务相关的工具
+    test              执行测试
     """
     parser = argparse.ArgumentParser(
         prog='ppm help',

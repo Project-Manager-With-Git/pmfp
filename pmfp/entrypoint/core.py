@@ -71,6 +71,7 @@ ppm.__doc__= """ppm <subcmd> [<args>]
     proto             管理protobuffer文件
     schema            管理json schema文件
     http              http服务相关的工具
+    test              执行测试
     """
 
 ppm.prog = "ppm"

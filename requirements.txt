@@ -15,3 +15,5 @@ boom
 chardet
 grpclib
 pyyaml
+colorama
+termcolor

@@ -5,3 +5,7 @@ import platform
 PLATFORM = platform.system()
 
 GOLBAL_PYTHON = "python" if PLATFORM == 'Windows' else "python3"
+
+DEFAULT_PPMRC = {
+    "cache_dir":""
+}

@@ -1,9 +1,10 @@
 """执行命令行任务的通用组件."""
 import subprocess
 import chardet
-from typing import Callable,Optional
+from typing import Callable,Optional,Union,Mapping,Any
+from termcolor import colored
 
-def run_command(command:str,*,succ_cb:Optional[Callable[[],None]]=None,fail_cb:Optional[Callable[[],None]]=None)->None:
+def run_command(command:str,*,cwd:Optional[Any]=None,env:Optional[Any]=None,succ_cb:Optional[Callable[[],None]]=None,fail_cb:Optional[Callable[[],None]]=None)->None:
     """执行命令行命令.
 
     Args:
@@ -12,13 +13,19 @@ def run_command(command:str,*,succ_cb:Optional[Callable[[],None]]=None,fail_cb:O
         fail_cb (Optional[Callable[[],None]], optional): 执行失败的回调函数. Defaults to None.
 
     """
-    res = subprocess.run(command, capture_output=True, shell=True)
+    res = subprocess.run(command, capture_output=True, shell=True,cwd=cwd,env=env)
     if res.returncode != 0:
         print(f"命令{command}执行失败")
-        encoding = chardet.detect(res.stderr).get("encoding")
-        print(res.stderr.decode(encoding))
+        if res.stderr:
+            encoding = chardet.detect(res.stderr).get("encoding")
+            print(colored(res.stderr.decode(encoding).strip(),'white', 'on_magenta'))
+        else:
+            encoding = chardet.detect(res.stdout).get("encoding")
+            print(colored(res.stdout.decode(encoding).strip(),'white', 'on_magenta'))
         if fail_cb:
             fail_cb()
     else:
+        encoding = chardet.detect(res.stdout).get("encoding")
+        print(colored(res.stdout.decode(encoding).strip(),'white', 'on_cyan'))
         if succ_cb:
             succ_cb()

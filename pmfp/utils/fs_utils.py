@@ -1,3 +1,5 @@
+"""文件系统相关的通用组件."""
+import tempfile
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -53,3 +55,16 @@ def iter_dir_to_end(path:Path,
                 else:
                     print(f"{p} not match")
     
+def tempdir(p:str,cb:Callable[[Path],None])->None:
+    """临时文件夹相关处理.
+
+    Args:
+        p (str): 临时文件夹所在的文件夹
+        cb (Callable[[Path],None]): 创建临时文件夹后的操作.
+
+    """
+    root = get_abs_path(p)
+    with tempfile.TemporaryDirectory(suffix="pmfp_cache", dir=root) as tmpdirname:
+        print('created temporary directory', tmpdirname)
+        temp_path = root.joinpath(tmpdirname)
+        cb(temp_path)
