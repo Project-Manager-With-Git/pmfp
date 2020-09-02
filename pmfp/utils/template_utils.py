@@ -42,3 +42,10 @@ def jsontemplate_2_content(template:str,**kwargs:Any)->str:
         raise
     else:
         return json.dumps(content, indent=4,ensure_ascii=False,sort_keys=True)
+https://github.com/
+TENPLATE_URL = "{group_name}/{template_name}/{component_name}"
+
+def template_url
+
+class ModelTemplate:
+    
