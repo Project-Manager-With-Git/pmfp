@@ -18,7 +18,7 @@ PMFP_CONFIG_HOME = Path.Home().resolve().joinpath(".pmfprc")
 # PMFP_CONFIG_PATH pmfp工具的配置项
 PMFP_CONFIG_PATH = PMFP_CONFIG_HOME.joinpath("pmfprc.json")
 
-PY_ENV_PATH ="env"
+PY_ENV_PATH = "env"
 JS_ENV_PATH = "package.json"
 GO_ENV_PATH = "go.mod"
 DOC_PATH = "document"
@@ -26,7 +26,7 @@ TEST_PATH = "test"
 TYPECHECK_PATH = "typecheck"
 
 DEFAULT_PMFPRC = {
-    "cache_dir":str(PMFP_CONFIG_HOME.joinpath("cache")),
+    "cache_dir": str(PMFP_CONFIG_HOME.joinpath("cache")),
     "python": GOLBAL_PYTHON,
     "cc": GOLBAL_CC
 }

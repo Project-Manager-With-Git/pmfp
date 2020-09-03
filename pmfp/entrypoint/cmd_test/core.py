@@ -1,7 +1,6 @@
 """ppm test命令的处理."""
-import argparse
-from ..core import ppm,EntryPoint
-from typing import Sequence
+from ..core import ppm, EntryPoint
+
 
 ppm_test = EntryPoint("test")
 ppm_test.__doc__ = """ppm test <subcmd>

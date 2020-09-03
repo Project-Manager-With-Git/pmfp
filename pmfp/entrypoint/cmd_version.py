@@ -6,9 +6,9 @@ from pmfp import VERSION
 
 @ppm.regist_subcmd
 def version(argv:Sequence[str])->None:
-    """ppm version
+    """获取pmfp工具的版本.
 
-    获取pmfp工具的版本
+    ppm version
     """
     cmd_version()
 

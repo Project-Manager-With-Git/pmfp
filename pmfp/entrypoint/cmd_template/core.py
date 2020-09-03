@@ -1,7 +1,6 @@
 """project命令的处理."""
-import argparse
-from ..core import ppm,EntryPoint
-from typing import Sequence
+from ..core import ppm, EntryPoint
+
 
 ppm_template = EntryPoint("template")
 ppm_template.__doc__ = """ppm template <subcmd>

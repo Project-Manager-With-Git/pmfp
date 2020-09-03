@@ -1,4 +1,4 @@
-"""ppm schema new命令的处理."""
+"""ppm schema clone命令的处理."""
 import argparse
 from typing import Sequence
 from pmfp.features.cmd_schema.cmd_schema_clone import clone_schema

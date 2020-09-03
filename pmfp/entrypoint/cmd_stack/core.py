@@ -1,7 +1,6 @@
 """project命令的处理."""
-import argparse
-from ..core import ppm,EntryPoint
-from typing import Sequence
+from ..core import ppm, EntryPoint
+
 
 ppm_stack = EntryPoint("stack")
 ppm_stack.__doc__ = """ppm stack <subcmd>

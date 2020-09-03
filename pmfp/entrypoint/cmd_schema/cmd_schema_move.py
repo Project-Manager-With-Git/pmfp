@@ -1,4 +1,4 @@
-"""ppm schema new命令的处理."""
+"""ppm schema move命令的处理."""
 import argparse
 from typing import Sequence
 from pmfp.features.cmd_schema.cmd_schema_move import move_schema

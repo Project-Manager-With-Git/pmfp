@@ -1,12 +1,11 @@
 """与url字符串相关的工具代码."""
 import json
-from typing import Dict, Any,List,Optional,Callable
-from pathlib import Path
+from typing import Optional, Callable
 from urllib.parse import urlparse
 import requests as rq
 
 
-def is_url(url:str)->bool:
+def is_url(url: str) -> bool:
     """判断url是否是url.
 
     Args:
@@ -18,11 +17,12 @@ def is_url(url:str)->bool:
     """
     try:
         result = urlparse(url)
-        return all([result.scheme]) 
+        return all([result.scheme])
     except ValueError:
         return False
 
-def is_http_url(url:str)->bool:
+
+def is_http_url(url: str) -> bool:
     """判断url是否是http请求的url.
 
     Args:
@@ -34,11 +34,12 @@ def is_http_url(url:str)->bool:
     """
     try:
         result = urlparse(url)
-        return all([result.scheme, result.netloc]) and result.scheme in ("http","https")
+        return all([result.scheme, result.netloc]) and result.scheme in ("http", "https")
     except ValueError:
         return False
 
-def is_file_url(url:str)->bool:
+
+def is_file_url(url: str) -> bool:
     """判断url是否是文件协议相关的url.
 
     Args:
@@ -54,15 +55,16 @@ def is_file_url(url:str)->bool:
     except ValueError:
         return False
 
-def http_query(url:str,method:str,*,
-                auth:Optional[str]=None,
-                auth_type:Optional[str]=None,
-                payload:Optional[str]=None,
-                payload_type:Optional[str]=None,
-                stream:bool=False,
-                verify:bool=False,
-                cert:Optional[str]=None,
-                cb:Optional[Callable[[str],None]]=None) ->None:
+
+def http_query(url: str, method: str, *,
+               auth: Optional[str] = None,
+               auth_type: Optional[str] = None,
+               payload: Optional[str] = None,
+               payload_type: Optional[str] = None,
+               stream: bool = False,
+               verify: bool = False,
+               cert: Optional[str] = None,
+               cb: Optional[Callable[[str], None]] = None) -> None:
     """http请求并打印结果.
 
     Args:
@@ -84,20 +86,20 @@ def http_query(url:str,method:str,*,
         if auth_type and auth:
             if auth_type == "basic":
                 from requests.auth import HTTPBasicAuth
-                user,pwd=auth.split(",")
-                s.auth=HTTPBasicAuth(user,pwd)
+                user, pwd = auth.split(",")
+                s.auth = HTTPBasicAuth(user, pwd)
 
             if auth_type == "digest":
                 from requests.auth import HTTPDigestAuth
-                user,pwd=auth.split(",")
-                s.auth=HTTPDigestAuth(user,pwd)
-                
+                user, pwd = auth.split(",")
+                s.auth = HTTPDigestAuth(user, pwd)
+
             elif auth_type == "jwt":
-                s.headers=rq.structures.CaseInsensitiveDict({"Authorization": "Bearer " + auth})
+                s.headers = rq.structures.CaseInsensitiveDict({"Authorization": "Bearer " + auth})
             elif auth_type == "oauth1":
                 from requests_oauthlib import OAuth1
-                app_key,app_secret,oauth_token,oauth_token_secret=auth.split(",")
-                s.auth = OAuth1(app_key,app_secret,oauth_token,oauth_token_secret)
+                app_key, app_secret, oauth_token, oauth_token_secret = auth.split(",")
+                s.auth = OAuth1(app_key, app_secret, oauth_token, oauth_token_secret)
             else:
                 raise AttributeError(f"auth_type 参数 {auth_type} 目前不支持")
         if cert:
@@ -106,57 +108,57 @@ def http_query(url:str,method:str,*,
             if cert_list_len == 1:
                 s.cert = cert_list[0]
             elif cert_list_len == 2:
-                s.cert= (cert_list[0],cert_list[1])
+                s.cert = (cert_list[0], cert_list[1])
             else:
                 raise AttributeError(f"cert 参数 {cert} 不合法")
-        
+
         if payload is None:
             if stream is True:
-                with s.request(method.upper(),url,stream=True) as res:
+                with s.request(method.upper(), url, stream=True) as res:
                     for line in res.iter_lines(decode_unicode=True):
                         if line:
                             if cb:
                                 cb(line)
-                            
+
             else:
-                res = s.request(method.upper(),url)
+                res = s.request(method.upper(), url)
                 if cb:
                     cb(res.text)
 
         else:
             if payload_type == "stream":
-                if stream is True :
-                    with open(payload,"rb") as f:
-                        with s.request(method.upper(),url,data=f, stream=True) as res:
+                if stream is True:
+                    with open(payload, "rb") as f:
+                        with s.request(method.upper(), url, data=f, stream=True) as res:
                             for line in res.iter_lines(decode_unicode=True):
                                 if line:
                                     if cb:
                                         cb(line)
                 else:
-                    with open(payload,"rb") as f:
-                        res = s.request(method.upper(),url,data=f)
+                    with open(payload, "rb") as f:
+                        res = s.request(method.upper(), url, data=f)
                         if cb:
                             cb(res.text)
 
             else:
-                with open(payload,"r", encoding='utf-8') as fu:
+                with open(payload, "r", encoding='utf-8') as fu:
                     payload_dict = json.load(fu)
 
                 if stream is True:
                     if payload_type == "json":
-                        with s.request(method.upper(),url,json=payload_dict, stream=True) as res:
+                        with s.request(method.upper(), url, json=payload_dict, stream=True) as res:
                             for line in res.iter_lines(decode_unicode=True):
                                 if line:
                                     if cb:
                                         cb(line)
                     elif payload_type == "form":
-                        with s.request(method.upper(),url,data=payload_dict, stream=True) as res:
+                        with s.request(method.upper(), url, data=payload_dict, stream=True) as res:
                             for line in res.iter_lines(decode_unicode=True):
                                 if line:
                                     if cb:
                                         cb(line)
                     elif payload_type == "url":
-                        with s.request(method.upper(),url,params=payload_dict, stream=True) as res:
+                        with s.request(method.upper(), url, params=payload_dict, stream=True) as res:
                             for line in res.iter_lines(decode_unicode=True):
                                 if line:
                                     if cb:
@@ -165,22 +167,22 @@ def http_query(url:str,method:str,*,
                         raise AttributeError(f"不支持的负载类型{payload_type}")
                 else:
                     if payload_type == "json":
-                        res = s.request(method.upper(),url,json=payload_dict)
+                        res = s.request(method.upper(), url, json=payload_dict)
                         if cb:
                             cb(res.text)
                     elif payload_type == "form":
-                        res = s.request(method.upper(),url,data=payload_dict)
+                        res = s.request(method.upper(), url, data=payload_dict)
                         if cb:
                             cb(res.text)
                     elif payload_type == "url":
-                        res = s.request(method.upper(),url,params=payload_dict)
+                        res = s.request(method.upper(), url, params=payload_dict)
                         if cb:
                             cb(res.text)
                     else:
                         raise AttributeError(f"不支持的负载类型{payload_type}")
 
 
-def parse_file_url(url:str)->str:
+def parse_file_url(url: str) -> str:
     """从file url中提取文件系统中的路径.
 
     Args:
@@ -197,7 +199,8 @@ def parse_file_url(url:str)->str:
         path = path_str
     return path
 
-def parse_http_url(url:str)->str:
+
+def parse_http_url(url: str) -> str:
     """从file url中提取文件系统中的路径.
 
     Args:
@@ -208,11 +211,11 @@ def parse_http_url(url:str)->str:
 
     """
     path = urlparse(url).path
-    
+
     return path
 
 
-def get_source_from_url(url:str)->str:
+def get_source_from_url(url: str) -> str:
     """从指定url中回去源数据.
 
     注意只能获取静态http资源.
@@ -236,9 +239,8 @@ def get_source_from_url(url:str)->str:
             return rs.text
     elif is_file_url(url):
         path = parse_file_url(url)
-        with open(path,"r", encoding='utf-8') as f:
+        with open(path, "r", encoding='utf-8') as f:
             content = f.read()
         return content
     else:
         raise AttributeError(f"url {url} 未支持的类型")
-

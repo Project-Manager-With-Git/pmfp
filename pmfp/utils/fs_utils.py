@@ -3,7 +3,8 @@ import tempfile
 from pathlib import Path
 from typing import Callable, Optional
 
-def get_abs_path(path_str:str)->Path:
+
+def get_abs_path(path_str: str) -> Path:
     """由路径字符串获取绝对路径.
 
     Args:
@@ -20,11 +21,12 @@ def get_abs_path(path_str:str)->Path:
         root_path = Path(".").resolve().joinpath(path_str)
     return root_path
 
-def iter_dir_to_end(path:Path,
-    match:Callable[[Path],bool],*,
-    skip_dir:Optional[Callable[[Path],bool]]=None,
-    succ_cb:Optional[Callable[[Path],None]]=None,
-    fail_cb:Optional[Callable[[Path],None]]=None)->None:
+
+def iter_dir_to_end(path: Path,
+                    match: Callable[[Path], bool], *,
+                    skip_dir: Optional[Callable[[Path], bool]] = None,
+                    succ_cb: Optional[Callable[[Path], None]] = None,
+                    fail_cb: Optional[Callable[[Path], None]] = None) -> None:
     """遍历文件夹到底,并按指定的函数来做区分.
 
     Args:
@@ -40,9 +42,9 @@ def iter_dir_to_end(path:Path,
                 if skip_dir(p):
                     continue
                 else:
-                    iter_dir_to_end(p,match,skip_dir=skip_dir,succ_cb=succ_cb,fail_cb=fail_cb)
+                    iter_dir_to_end(p, match, skip_dir=skip_dir, succ_cb=succ_cb, fail_cb=fail_cb)
             else:
-                iter_dir_to_end(p,match,skip_dir=skip_dir,succ_cb=succ_cb,fail_cb=fail_cb)
+                iter_dir_to_end(p, match, skip_dir=skip_dir, succ_cb=succ_cb, fail_cb=fail_cb)
         else:
             if match(p):
                 if succ_cb:
@@ -54,8 +56,9 @@ def iter_dir_to_end(path:Path,
                     fail_cb(p)
                 else:
                     print(f"{p} not match")
-    
-def tempdir(p:str,cb:Callable[[Path],None])->None:
+
+
+def tempdir(p: str, cb: Callable[[Path], None]) -> None:
     """临时文件夹相关处理.
 
     Args:

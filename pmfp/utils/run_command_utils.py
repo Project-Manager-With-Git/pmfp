@@ -1,7 +1,7 @@
 """执行命令行任务的通用组件."""
 import subprocess
+from typing import Callable, Optional, Any
 import chardet
-from typing import Callable, Optional, Union, Mapping, Any
 from termcolor import colored
 
 

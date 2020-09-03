@@ -1,28 +1,30 @@
 """help命令的处理."""
 import argparse
-from .core import ppm
 from typing import Sequence
-
+from .core import ppm
 
 @ppm.regist_subcmd
 def help(argv:Sequence[str])->None:
-    """ppm help <subcommand>
-ppm工具的子命令有:
+    """帮助信息.
 
-    工具自身相关:
-    help              展示ppm的帮助说明
-    version           展示ppm的版本
+    ppm help <subcommand>
 
-    项目管理类:
-    template          管理模板项目
-    project           管理项目
-    stack             管理项目组
-    
-    常用工具类:
-    proto             管理protobuffer文件
-    schema            管理json schema文件
-    http              http服务相关的工具
-    test              执行测试
+    ppm工具的子命令有:
+
+        工具自身相关:
+        help              展示ppm的帮助说明
+        version           展示ppm的版本
+
+        项目管理类:
+        template          管理模板项目
+        project           管理项目
+        stack             管理项目组
+        
+        常用工具类:
+        proto             管理protobuffer文件
+        schema            管理json schema文件
+        http              http服务相关的工具
+        test              执行测试
     """
     parser = argparse.ArgumentParser(
         prog='ppm help',
@@ -36,4 +38,5 @@ ppm工具的子命令有:
     args.func(args)
 
 def cmd_help(args:argparse.Namespace)->None:
+    """帮助信息"""
     print(ppm.subcmds.get(args.subcmd).__doc__)

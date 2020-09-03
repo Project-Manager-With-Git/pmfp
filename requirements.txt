@@ -17,3 +17,4 @@ grpclib
 pyyaml
 colorama
 termcolor
+requests_oauthlib
