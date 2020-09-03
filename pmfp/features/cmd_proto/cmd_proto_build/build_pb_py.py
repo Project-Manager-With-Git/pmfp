@@ -1,8 +1,8 @@
 """编译python语言模块."""
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command
+from typing import List, Dict
 from pmfp.utils.fs_utils import get_abs_path
-from typing import List, Optional, Dict
+from pmfp.utils.run_command_utils import run_command
 
 
 def _find_pypackage(final_path: Path, packs: List[str]) -> None:
@@ -39,7 +39,7 @@ def find_py_grpc_pb2_import_string(name: str) -> str:
     return "__".join(name.split("_"))
 
 
-def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str]) -> None:
+def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: str) -> None:
     includes_str = " ".join([f"-I {include}" for include in includes])
     target_str = " ".join(files)
     flag_str = ""
@@ -52,7 +52,8 @@ def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[
                 succ_cb=lambda x: print(f"编译{task}项目{target_str}为python语言模块完成!"))
 
 
-def _build_grpc_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str]) -> None:
+def _build_grpc_py(files: List[str], includes: List[str], to: str,
+                   **kwargs: str) -> None:
     includes_str = " ".join([f"-I {include}" for include in includes])
     target_str = " ".join(files)
     flag_str = ""
@@ -85,7 +86,6 @@ def trans_grpc_model_py(to: str) -> None:
                 grpc_name = p.name
                 grpc_package = grpc_name.split(".")[0]
                 pb_package = "_".join(x[:-1])
-                pb_name = pb_package + ".py"
                 to_path.joinpath("__init__.py").open("a").write(
                     f"""
 from .{pb_package} import *
@@ -108,7 +108,8 @@ from .{grpc_package} import *
                 print(f"转换python项目的grpc文件{grpc_name}为python模块完成!")
 
 
-def build_pb_py(files: List[str], includes: List[str], to: str, grpc: bool, **kwargs: Dict[str, str]) -> None:
+def build_pb_py(files: List[str], includes: List[str], to: str, grpc: bool,
+                **kwargs: str) -> None:
     """编译python语言模块.
 
     Args:

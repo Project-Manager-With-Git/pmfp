@@ -3,14 +3,14 @@ import subprocess
 import warnings
 from pathlib import Path
 import pkgutil
-from typing import Dict, Any,List,Optional
+from typing import Dict, Any, List, Optional
 import chardet
 from pmfp.utils.template_utils import template_2_content
 from pmfp.utils.fs_utils import get_abs_path
 
 proto_template = ""
 grpc_template = ""
-proto_template_io= pkgutil.get_data('pmfp.features.cmd_proto.cmd_proto_new.prototemp', 'proto.temp')
+proto_template_io = pkgutil.get_data('pmfp.features.cmd_proto.cmd_proto_new.prototemp', 'proto.temp')
 if proto_template_io:
     proto_template = proto_template_io.decode('utf-8')
 else:
@@ -22,7 +22,8 @@ if grpc_template_io:
 else:
     raise AttributeError("加载grpc模板失败")
 
-def new_pb(name: str, to: str,*,parent_package:Optional[str]=None, grpc: bool=False) -> None:
+
+def new_pb(name: str, to: str, *, parent_package: Optional[str] = None, grpc: bool = False) -> None:
     """新建一个protpbuf文件.
 
     Args:
@@ -32,17 +33,22 @@ def new_pb(name: str, to: str,*,parent_package:Optional[str]=None, grpc: bool=Fa
         grpc (bool, optional): 是否是grpc. Defaults to False.
 
     """
-    to_path =get_abs_path(to)
+    to_path = get_abs_path(to)
     package_go = name
     if parent_package:
-            package_go = parent_package.replace(".","_") + "/"+ name
+        package_go = parent_package.replace(".", "_") + "/" + name
     if grpc:
-        content = template_2_content(template=grpc_template,parent_package=parent_package,name=name,package_go=package_go,name_upper=name.upper())
+        content = template_2_content(
+            template=grpc_template,
+            parent_package=parent_package,
+            name=name,
+            package_go=package_go,
+            name_upper=name.upper())
     else:
-        content = template_2_content(template=proto_template,parent_package=parent_package,name=name,package_go=package_go)
-    with open(str(to_path.joinpath(f"{name}.proto")),"w", encoding='utf-8') as f:
+        content = template_2_content(
+            template=proto_template,
+            parent_package=parent_package,
+            name=name,
+            package_go=package_go)
+    with open(str(to_path.joinpath(f"{name}.proto")), "w", encoding='utf-8') as f:
         f.write(content)
-
-
-    
-    

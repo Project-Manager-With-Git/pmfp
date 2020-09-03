@@ -14,7 +14,7 @@ else:
     raise AttributeError("加载json schema 模板失败")
 
 
-def new_schema(name:str,path:str,version:str,root:str,addr:Optional[str]=None) -> None:
+def new_schema(name: str, path: str, version: str, root: str, addr: Optional[str] = None) -> None:
     """新建一个json schema文件.
 
     Args:
@@ -25,6 +25,5 @@ def new_schema(name:str,path:str,version:str,root:str,addr:Optional[str]=None) -
         addr (str, optional): 网站域名.
 
     """
-    
     version_name = "_".join(version.split("."))
-    copy_schema(template= schema_template,name=name,path=path,version_name=version_name,root=root,addr=addr)
+    copy_schema(template=schema_template, name=name, path=path, version_name=version_name, root=root, addr=addr)

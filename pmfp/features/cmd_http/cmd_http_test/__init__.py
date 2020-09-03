@@ -1,18 +1,19 @@
 """编译protobuf的schema为不同语言的代码."""
 import json
 import yaml
-from pmfp.utils.url_utils import http_query,is_url,get_source_from_url
+from pmfp.utils.url_utils import http_query, is_url, get_source_from_url
 from pmfp.utils.schema_utils import is_validated
-from typing import Optional,Callable,Any
+from typing import Optional, Callable, Any
 
-def http_test(schema:str,serialization:str,url:str,method:str,*,
-                auth:Optional[str]=None,
-                auth_type:Optional[str]=None,
-                payload:Optional[str]=None,
-                payload_type:Optional[str]=None,
-                stream:bool=False,
-                verify:bool=False,
-                cert:Optional[str]=None)->None:
+
+def http_test(schema: str, serialization: str, url: str, method: str, *,
+              auth: Optional[str] = None,
+              auth_type: Optional[str] = None,
+              payload: Optional[str] = None,
+              payload_type: Optional[str] = None,
+              stream: bool = False,
+              verify: bool = False,
+              cert: Optional[str] = None) -> None:
     """检测http请求的结果是否满足模式.
 
     Args:
@@ -33,9 +34,9 @@ def http_test(schema:str,serialization:str,url:str,method:str,*,
     if is_url(schema):
         schema_obj = json.loads(get_source_from_url(schema))
     else:
-        with open(schema,"r", encoding='utf-8') as f:
+        with open(schema, "r", encoding='utf-8') as f:
             schema_obj = json.load(f)
-    serialization_func: Callable[[str],Any]
+    serialization_func: Callable[[str], Any]
     if serialization == "json":
         serialization_func = json.loads
     elif serialization == "yaml":
@@ -43,20 +44,20 @@ def http_test(schema:str,serialization:str,url:str,method:str,*,
     else:
         raise AttributeError(f"不支持的序列化格式{serialization}")
 
-    def _(x:str)->None:
-        if is_validated(serialization_func(x),schema_obj):
-            print("validated") 
+    def _(x: str) -> None:
+        if is_validated(serialization_func(x), schema_obj):
+            print("validated")
         else:
             print("not validated")
     http_query(
         url=url,
         method=method,
-        auth=auth, 
-        auth_type=auth_type, 
-        payload=payload, 
-        payload_type=payload_type, 
-        stream=stream, 
-        verify=verify, 
-        cert=cert, 
+        auth=auth,
+        auth_type=auth_type,
+        payload=payload,
+        payload_type=payload_type,
+        stream=stream,
+        verify=verify,
+        cert=cert,
         cb=_
     )

@@ -1,12 +1,9 @@
 """编译protobuf的schema为不同语言的代码."""
-from typing import Dict, Any,List
+from typing import Dict, Any, List
 from .test_py import static_test_py
 
 
-
-
-
-def static_test(language:str,code:str,model: bool, coverage:bool,output:str) -> None:
+def static_test(language: str, code: str, model: bool, coverage: bool, output: str) -> None:
     """对动态语言做静态类型检验.
 
     Args:
@@ -18,7 +15,6 @@ def static_test(language:str,code:str,model: bool, coverage:bool,output:str) -> 
 
     """
     if language == "py":
-        static_test_py(code,model, coverage,output)
+        static_test_py(code, model, coverage, output)
     else:
         print(f"未支持的语言{language}")
-    

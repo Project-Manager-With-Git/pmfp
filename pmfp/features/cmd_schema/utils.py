@@ -1,9 +1,11 @@
-from pathlib import Path
+"""schema模块的公用工具."""
 from typing import Optional
 from pmfp.utils.template_utils import jsontemplate_2_content
 from pmfp.utils.fs_utils import get_abs_path
 
-def make_url_id(name:str,path:str,version_name:str,root:str,addr:Optional[str]=None)->str:
+
+def make_url_id(name: str, path: str, version_name: str, root: str, *,
+                addr: Optional[str] = None) -> str:
     """构造json schema 的id.
 
     Args:
@@ -25,7 +27,9 @@ def make_url_id(name:str,path:str,version_name:str,root:str,addr:Optional[str]=N
         _id = file_path.as_uri()
     return _id
 
-def copy_schema(template:str,name:str,path:str,version_name:str,root:str,addr:Optional[str]=None) -> None:
+
+def copy_schema(template: str, name: str, path: str, version_name: str, root: str, *,
+                addr: Optional[str] = None) -> None:
     """以一个json schema 为模板copy一个json schema文件.
 
     Args:
@@ -36,18 +40,18 @@ def copy_schema(template:str,name:str,path:str,version_name:str,root:str,addr:Op
         addr (str, optional): 网站域名.
 
     """
-    _id = make_url_id(name=name,path=path,version_name=version_name,root=root,addr=addr) 
+    _id = make_url_id(name=name, path=path, version_name=version_name, root=root, addr=addr)
     root_path = get_abs_path(root)
     filepath = root_path.joinpath(f"{path}/{name}/{version_name}/{name}.schema.json")
     parentpath = filepath.parent
     kwargs = {
         "$id": _id
     }
-    content = jsontemplate_2_content(template=template,**kwargs)
+    content = jsontemplate_2_content(template=template, **kwargs)
     if parentpath.exists():
         if parentpath.is_file():
             raise AttributeError(f"{parentpath} is file")
     else:
         parentpath.mkdir(parents=True)
-    with open(str(filepath),"w") as f:
+    with open(str(filepath), "w") as f:
         f.write(content)

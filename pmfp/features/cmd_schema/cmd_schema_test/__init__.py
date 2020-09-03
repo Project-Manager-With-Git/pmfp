@@ -3,10 +3,11 @@ import json
 import sys
 from pathlib import Path
 from typing import Optional
-from pmfp.utils.url_utils import is_url,get_source_from_url
+from pmfp.utils.url_utils import is_url, get_source_from_url
 from pmfp.utils.schema_utils import is_validated
 
-def test_schema(file:str) -> None:
+
+def test_schema(file: str) -> None:
     """检查一个json schema文件中的例子是否符合自身的schema.
 
     Args:
@@ -16,7 +17,7 @@ def test_schema(file:str) -> None:
     if is_url(file):
         schema_obj = json.loads(get_source_from_url(file))
     else:
-        with open(file,"r", encoding='utf-8') as f:
+        with open(file, "r", encoding='utf-8') as f:
             schema_obj = json.load(f)
 
     schema_examples = schema_obj.get("examples")
@@ -26,7 +27,7 @@ def test_schema(file:str) -> None:
     else:
         validated = True
         for example in schema_examples:
-            if not is_validated(example,schema_obj):
+            if not is_validated(example, schema_obj):
                 content = f"""not validated:
                 {example}
                 """

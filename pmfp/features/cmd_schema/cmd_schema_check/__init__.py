@@ -3,7 +3,7 @@ import json
 import yaml
 import sys
 from pathlib import Path
-from typing import Optional,Callable,IO,Any
+from typing import Optional, Callable, IO, Any
 from pmfp.utils.url_utils import (
     is_url,
     is_http_url,
@@ -15,15 +15,14 @@ from pmfp.utils.schema_utils import is_validated
 from pmfp.features.cmd_http.cmd_http_test import http_test
 
 
-
-def check_schema(schema:str,serialization:str,url:str,method:str,*,
-                auth:Optional[str]=None,
-                auth_type:Optional[str]=None,
-                payload:Optional[str]=None,
-                payload_type:Optional[str]=None,
-                stream:bool=False,
-                verify:bool=False,
-                cert:Optional[str]=None) -> None:
+def check_schema(schema: str, serialization: str, url: str, method: str, *,
+                 auth: Optional[str] = None,
+                 auth_type: Optional[str] = None,
+                 payload: Optional[str] = None,
+                 payload_type: Optional[str] = None,
+                 stream: bool = False,
+                 verify: bool = False,
+                 cert: Optional[str] = None) -> None:
     """检测指定的数据是否满足模式.
 
     Args:
@@ -59,21 +58,19 @@ def check_schema(schema:str,serialization:str,url:str,method:str,*,
             path = parse_file_url(url)
         else:
             path = url
-        serialization_func: Callable[[IO[str]],Any]
+        serialization_func: Callable[[IO[str]], Any]
         if serialization == "json":
             serialization_func = json.load
         elif serialization == "yaml":
             serialization_func = yaml.load
-        with open(path,"r", encoding='utf-8') as f:
+        with open(path, "r", encoding='utf-8') as f:
             instance = serialization_func(f)
         if is_url(schema):
             schema_obj = json.loads(get_source_from_url(schema))
         else:
-            with open(schema,"r", encoding='utf-8') as f:
+            with open(schema, "r", encoding='utf-8') as f:
                 schema_obj = json.load(f)
-        if is_validated(instance,schema_obj):
-            print("validated")  
+        if is_validated(instance, schema_obj):
+            print("validated")
         else:
             print("not validated")
-
-    

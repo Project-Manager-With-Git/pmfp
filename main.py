@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+"""PMFP.
+
+一个项目管理脚手架.
+"""
 
 import sys
 
