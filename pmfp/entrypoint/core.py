@@ -61,6 +61,8 @@ ppm.__doc__= """ppm <subcmd> [<args>]
     工具自身相关:
     help              展示ppm的帮助说明
     version           展示ppm的版本
+    reset             将ppm工具的设置初始化
+    cache             管理ppm的缓存             
 
     项目管理类:
     template          管理模板项目

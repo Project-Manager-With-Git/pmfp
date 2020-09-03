@@ -4,6 +4,12 @@ import chardet
 from typing import Callable,Optional,Union,Mapping,Any
 from termcolor import colored
 
+def default_succ_cb(content):
+    print(colored(content,'white', 'on_cyan'))
+
+def default_fail_cb(content):
+    print(colored(content,'white', 'on_magenta'))
+
 def run_command(command:str,*,cwd:Optional[Any]=None,env:Optional[Any]=None,succ_cb:Optional[Callable[[],None]]=None,fail_cb:Optional[Callable[[],None]]=None)->None:
     """执行命令行命令.
 

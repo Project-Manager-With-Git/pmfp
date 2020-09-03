@@ -124,6 +124,12 @@ def git_clone(url:str,to:str,*,branch:str="master",succ_cb:Optional[Callable[[],
     command = "git clone -b {branch} {url} {to}"
     run_command(command,succ_cb=succ_cb, fail_cb=fail_cb)
 
+def get_latest(p:str)->str:
+    command = "git fetch --depth=1"
+    result = ""
+    def get_latest_succcb():
+        
+    run_command(command,succ_cb=succ_cb)
 
 def git_push(p:str,msg:str="update")->None:
     """git项目推代码到远端仓库.
