@@ -1,9 +1,13 @@
 """命令行执行脚本模块."""
+from gevent import monkey
+monkey.patch_all()
 import sys
 from colorama import init
-from gevent import monkey
 from typing import List
 from .core import ppm
+from .cmd_version import *
+from .cmd_help import *
+from .cmd_reset import *
 from .cmd_test import *
 from .cmd_http import *
 from .cmd_schema import *
@@ -11,10 +15,9 @@ from .cmd_proto import *
 from .cmd_template import *
 from .cmd_stack import *
 from .cmd_project import *
-from .cmd_version import *
-from .cmd_help import *
 
-monkey.patch_all()
+
+
 init()
 
 

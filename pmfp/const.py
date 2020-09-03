@@ -14,7 +14,7 @@ GOLBAL_CC = "MSVC" if PLATFORM == 'Windows' else "gcc"
 # GOLBAL_PYTHON_VERSION 全局python的版本
 GOLBAL_PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1])
 # PMFP_CONFIG_HOME pmfp工具的默认缓存和配置位置
-PMFP_CONFIG_HOME = Path.Home().resolve().joinpath(".pmfprc")
+PMFP_CONFIG_HOME = Path.home().resolve().joinpath(".pmfprc")
 # PMFP_CONFIG_PATH pmfp工具的配置项
 PMFP_CONFIG_PATH = PMFP_CONFIG_HOME.joinpath("pmfprc.json")
 
