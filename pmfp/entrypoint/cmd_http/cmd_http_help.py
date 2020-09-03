@@ -6,7 +6,7 @@ from .core import ppm_http
 
 @ppm_http.regist_subcmd
 def help(argv: Sequence[str]) -> None:
-    """ppm http子命令的帮助信息.
+    """子命令ppm http的帮助信息.
 
     ppm http help <subcommand>
 

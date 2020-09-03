@@ -1,7 +1,5 @@
 """ppm schema命令的处理."""
-import argparse
-from ..core import ppm,EntryPoint
-from typing import Sequence
+from ..core import ppm, EntryPoint
 
 ppm_schema = EntryPoint("schema")
 ppm_schema.__doc__ = """ppm schema <subcmd>
