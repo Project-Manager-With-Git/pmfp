@@ -3,7 +3,7 @@ from typing import List, Dict
 from pmfp.utils.run_command_utils import run_command
 
 
-def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,source_relative:bool, **kwargs: Dict[str, str]) -> None:
+def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool, source_relative: bool, **kwargs: Dict[str, str]) -> None:
     """编译protobuffer为go语言模块.
 
     Args:
@@ -25,12 +25,10 @@ def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,sourc
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
     task = "protobuf"
     if grpc:
-        command = f"protoc {includes_str} {flag_str} --go_out=plugins=grpc:{to}  {target_str}"  
+        command = f"protoc {includes_str} {flag_str} --go_out=plugins=grpc:{to}  {target_str}"
         task = "grpc"
     else:
         command = f"protoc  {includes_str} {flag_str} --go_out={to} {target_str}"
     print(f"编译命令:{command}")
-    run_command(
-        command,
-        succ_cb=lambda : print(f"编译{task}项目 {target_str} 为go语言模块完成!"),
-        fail_cb=lambda : print(f"编译{task}项目 {target_str} 为go语言模块失败!"))
+    run_command(command,
+                succ_cb=lambda x: print(f"编译{task}项目 {target_str} 为go语言模块完成!"))

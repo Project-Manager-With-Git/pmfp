@@ -22,10 +22,8 @@ def build_pb_web(files: List[str], includes: List[str], to: str,grpc:bool, **kwa
         task = "grpc"
         command = f"protoc {includes_str} {flag_str} --js_out=import_style=commonjs:{to} --grpc-web_out=import_style=commonjs,mode=grpcwebtext:{to} {target_str}"
         print(f"编译命令:{command}")
-        run_command(
-            command,
-            succ_cb=lambda : print(f"编译{task}项目 {target_str} 为web环境模块完成!"),
-            fail_cb=lambda : print(f"编译{task}项目 {target_str} 为web环境模块失败!"))
+        run_command(command,
+            succ_cb=lambda x: print(f"编译{task}项目 {target_str} 为web环境模块完成!"))
 
     else:
         print("web环境只有grpc,如果需要编译普通protobuf文件,应该使用js环境")

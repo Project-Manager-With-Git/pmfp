@@ -7,7 +7,7 @@ from pathlib import Path
 import recommonmark
 from recommonmark.transform import AutoStructify
 from recommonmark.parser import CommonMarkParser
-project_home = Path(__file__).absolute().parent.parent
+project_home = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_home))
 
 with open(project_home.joinpath("pmfprc.json")) as project_info_json:

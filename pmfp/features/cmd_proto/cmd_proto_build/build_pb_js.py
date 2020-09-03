@@ -37,7 +37,5 @@ def build_pb_js(files: List[str], includes: List[str], to: str, grpc: bool, **kw
         task = "protobuf"
         command = f"protoc {includes_str} --js_out=import_style=commonjs,binary:{to} {target_str}"
     print(f"编译命令:{command}")
-    run_command(
-        command,
-        succ_cb=lambda : print(f"编译{task}项目 {target_str} 为js语言模块完成!"),
-        fail_cb=lambda : print(f"编译{task}项目 {target_str} 为js语言模块失败!"))
+    run_command(command,
+        succ_cb=lambda x: print(f"编译{task}项目 {target_str} 为js语言模块完成!"))

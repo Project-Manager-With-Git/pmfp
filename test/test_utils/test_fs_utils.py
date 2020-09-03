@@ -8,7 +8,7 @@ try:
 except:
     import sys
     from pathlib import Path
-    test_dir = str(Path(__file__).absolute().parent.parent.parent)
+    test_dir = str(Path(__file__).resolve().parent.parent.parent)
     if test_dir not in sys.path:
         sys.path.append(test_dir)
     from pmfp.utils.fs_utils import (

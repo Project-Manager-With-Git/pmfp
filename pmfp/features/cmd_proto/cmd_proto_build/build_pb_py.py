@@ -2,9 +2,10 @@
 from pathlib import Path
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.fs_utils import get_abs_path
-from typing import List, Optional,Dict
+from typing import List, Optional, Dict
 
-def _find_pypackage(final_path: Path, packs: List[str])->None:
+
+def _find_pypackage(final_path: Path, packs: List[str]) -> None:
     has_init = False
     for i in final_path.iterdir():
         if i.name == "__init__.py":
@@ -33,9 +34,10 @@ def find_pypackage_string(to_path: str) -> str:
     return packstr
 
 
-def find_py_grpc_pb2_import_string(name: str)->str:
+def find_py_grpc_pb2_import_string(name: str) -> str:
     """python的grpc模块as的内容."""
     return "__".join(name.split("_"))
+
 
 def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str]) -> None:
     includes_str = " ".join([f"-I {include}" for include in includes])
@@ -46,13 +48,11 @@ def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[
     task = "protobuf"
     command = f"protoc  {includes_str} {flag_str} --python_out={to} {target_str}"
     print(f"编译命令:{command}")
-    run_command(
-        command,
-        succ_cb=lambda : print(f"编译{task}项目{target_str}为python语言模块完成!"),
-        fail_cb=lambda : print(f"编译{task}项目{target_str}为python语言模块失败!"))
+    run_command(command,
+                succ_cb=lambda x: print(f"编译{task}项目{target_str}为python语言模块完成!"))
 
 
-def _build_grpc_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str])->None:
+def _build_grpc_py(files: List[str], includes: List[str], to: str, **kwargs: Dict[str, str]) -> None:
     includes_str = " ".join([f"-I {include}" for include in includes])
     target_str = " ".join(files)
     flag_str = ""
@@ -61,16 +61,15 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str, **kwargs: Dic
     task = "grpc"
     command = f"python -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
     print(f"编译命令:{command}")
-    def _()->None:
+
+    def _(x: str) -> None:
         print(f"编译{task}项目 {target_str} 为python模块完成!")
         trans_grpc_model_py(to)
 
-    run_command(
-        command,
-        succ_cb=_,
-        fail_cb=lambda : print(f"编译{task}项目 {target_str} 为python模块失败!"))
+    run_command(command, succ_cb=_)
 
-def trans_grpc_model_py(to:str)->None:
+
+def trans_grpc_model_py(to: str) -> None:
     """转换python的grpc输出为一个python模块.
 
     Args:
@@ -79,16 +78,16 @@ def trans_grpc_model_py(to:str)->None:
     """
     to_path = get_abs_path(to)
     for p in to_path.iterdir():
-        if p.is_file() and p.suffix==".py" and p.name != "__init__.py":
+        if p.is_file() and p.suffix == ".py" and p.name != "__init__.py":
             x = p.name.split("_")
-            if x[-1]=="grpc.py":
+            if x[-1] == "grpc.py":
                 grpc_file = p
                 grpc_name = p.name
                 grpc_package = grpc_name.split(".")[0]
                 pb_package = "_".join(x[:-1])
-                pb_name = pb_package + ".py"         
+                pb_name = pb_package + ".py"
                 to_path.joinpath("__init__.py").open("a").write(
-f"""
+                    f"""
 from .{pb_package} import *
 from .{grpc_package} import *
 """)
@@ -109,7 +108,7 @@ from .{grpc_package} import *
                 print(f"转换python项目的grpc文件{grpc_name}为python模块完成!")
 
 
-def build_pb_py(files: List[str], includes: List[str], to: str,grpc:bool, **kwargs: Dict[str, str]) -> None:
+def build_pb_py(files: List[str], includes: List[str], to: str, grpc: bool, **kwargs: Dict[str, str]) -> None:
     """编译python语言模块.
 
     Args:

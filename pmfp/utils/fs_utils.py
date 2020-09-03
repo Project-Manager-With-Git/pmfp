@@ -17,7 +17,7 @@ def get_abs_path(path_str:str)->Path:
     if rootp.is_absolute():
         root_path = rootp
     else:
-        root_path = Path(".").absolute().joinpath(path_str)
+        root_path = Path(".").resolve().joinpath(path_str)
     return root_path
 
 def iter_dir_to_end(path:Path,
