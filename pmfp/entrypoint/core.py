@@ -64,7 +64,7 @@ ppm.__doc__ = """ppm <subcmd> [<args>]
 
     工具自身相关:
     help              展示ppm的帮助说明
-    version           展示ppm的版本
+    version           展示ppm的版本和基本信息
     reset             将ppm工具的设置初始化
     cache             管理ppm的缓存             
 
