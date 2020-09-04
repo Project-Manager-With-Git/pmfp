@@ -69,7 +69,6 @@ ppm.__doc__ = """ppm <subcmd> [<args>]
     cache             管理ppm的缓存             
 
     项目管理类:
-    template          管理模板项目
     project           管理项目
     stack             管理项目组
     

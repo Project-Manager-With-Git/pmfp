@@ -2,6 +2,8 @@
 import tempfile
 from pathlib import Path
 from typing import Callable, Optional
+from pmfp.const import PMFP_CONFIG_PATH,PMFP_CONFIG_HOME,DEFAULT_PMFPRC
+
 
 
 def get_abs_path(path_str: str) -> Path:
@@ -71,3 +73,16 @@ def tempdir(p: str, cb: Callable[[Path], None]) -> None:
         print('created temporary directory', tmpdirname)
         temp_path = root.joinpath(tmpdirname)
         cb(temp_path)
+
+def get_cache_dir()->str:
+    if not PMFP_CONFIG_PATH.exists():
+        if not PMFP_CONFIG_HOME.exists():
+            PMFP_CONFIG_HOME.mkdir(parents=True)
+        config = {}
+        config.update(DEFAULT_PMFPRC)
+        with open(PMFP_CONFIG_PATH, "w") as fw:
+            json.dump(config, fw, ensure_ascii=False, indent=4, sort_keys=True)
+    with open(PMFP_CONFIG_PATH,"r",encoding="utf-8") as f:
+        config = json.load(f)
+        cache_dir = config["cache_dir"]
+    return cache_dir
