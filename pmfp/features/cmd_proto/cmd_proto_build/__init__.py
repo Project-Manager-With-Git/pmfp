@@ -7,7 +7,7 @@ from .build_pb_web import build_pb_web
 
 
 def _build_pb(env: str, files: List[str], includes: List[str], to: str, grpc: bool,
-              source_relative: bool, **kwargs: Dict[str, str]) -> None:
+              source_relative: bool, **kwargs: str) -> None:
     if env.lower() == "go":
         build_pb_go(files, includes, to, grpc, source_relative, **kwargs)
     elif env.lower() == "py":
@@ -21,7 +21,7 @@ def _build_pb(env: str, files: List[str], includes: List[str], to: str, grpc: bo
 
 
 def build_pb(env: List[str], files: List[str], includes: List[str], to: str, grpc: bool,
-             source_relative: bool, **kwargs: Dict[str, str]) -> None:
+             source_relative: bool, **kwargs: str) -> None:
     """编译protobuf的schema为不同语言的代码.
 
     Args:

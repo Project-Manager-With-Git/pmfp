@@ -1,20 +1,20 @@
 """ppm proto new命令的处理."""
 import argparse
 from typing import Sequence
-from pmfp.features.cmd_proto.cmd_proto_new import new_pb
-from .core import ppm_proto
+from pmfp.features.cmd_project.cmd_project_init import init_project
+from .core import ppm_project
 
 
-@ppm_proto.regist_subcmd
-def new(argv: Sequence[str]) -> None:
-    """使用默认模板创建新的protobuf文件.
+@ppm_project.regist_subcmd
+def init(argv: Sequence[str]) -> None:
+    """创建一个新项目.
 
-    ppm proto new [-flag] <name>
+    ppm proto init [-flag]
     """
     parser = argparse.ArgumentParser(
         prog='ppm proto new',
         description='创建pb文件',
-        usage=ppm_proto.subcmds.get("new").__doc__
+        usage=ppm_project.subcmds.get("new").__doc__
     )
     parser.add_argument("-g", "--grpc", action="store_true",
                         help="是否是grpc")

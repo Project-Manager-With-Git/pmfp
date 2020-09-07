@@ -23,10 +23,15 @@ def help(argv:Sequence[str])->None:
         stack             管理项目组
         
         常用工具类:
+        run               执行一条bash/ps1命令
         proto             管理protobuffer文件
         schema            管理json schema文件
         http              http服务相关的工具
         test              执行测试
+        apidoc            维护api文档
+        build             编译静态语言
+        env               环境初始化
+        
     """
     parser = argparse.ArgumentParser(
         prog='ppm help',

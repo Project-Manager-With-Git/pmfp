@@ -12,8 +12,8 @@
     "author-email": "hsz1273327@gmail.com",
     "keywords": ["tools", "project_manager"],
     "description": "a simple package manager for python like npm.",
-    "modules":[],
-    "scripts":{
+    "modules": [],
+    "scripts": {
 
     }
 }

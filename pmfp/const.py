@@ -30,5 +30,3 @@ DEFAULT_PMFPRC = {
     "python": GOLBAL_PYTHON,
     "cc": GOLBAL_CC
 }
-
-

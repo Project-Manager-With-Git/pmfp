@@ -8,10 +8,12 @@ from .core import ppm
 from .cmd_version import *
 from .cmd_help import *
 from .cmd_reset import *
+from .cmd_cache import *
 from .cmd_test import *
 from .cmd_http import *
 from .cmd_schema import *
 from .cmd_proto import *
+from .cmd_run import *
 from .cmd_template import *
 from .cmd_stack import *
 from .cmd_project import *

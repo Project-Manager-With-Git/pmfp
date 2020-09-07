@@ -7,7 +7,7 @@ ppm_project.__doc__ = """ppm project <subcmd>
     ppm project 的子命令有:
 
     init              初始化一个项目.
-    add               新增一个组件
+    add               新增组件
     info              查看项目信息
     update            更新项目
     build             编译项目

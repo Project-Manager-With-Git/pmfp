@@ -12,7 +12,7 @@ def help(argv: Sequence[str]) -> None:
 
     ppm test 的子命令有:
 
-    unit                执行代码单元测试
+    unittest            执行代码单元测试
     benchmark           执行代码性能测试
     static              执行代码静态类型检验
     """

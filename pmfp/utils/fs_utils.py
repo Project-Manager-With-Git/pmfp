@@ -1,7 +1,11 @@
 """文件系统相关的通用组件."""
+import json
+import os
+import stat
+import shutil
 import tempfile
 from pathlib import Path
-from typing import Callable, Optional
+from typing import Callable, Optional,Any
 from pmfp.const import PMFP_CONFIG_PATH,PMFP_CONFIG_HOME,DEFAULT_PMFPRC
 
 
@@ -59,6 +63,10 @@ def iter_dir_to_end(path: Path,
                 else:
                     print(f"{p} not match")
 
+def remove_readonly(func: Callable, path: str, _: Any)->None:
+    """Clear the readonly bit and reattempt the removal."""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
 
 def tempdir(p: str, cb: Callable[[Path], None]) -> None:
     """临时文件夹相关处理.
@@ -68,13 +76,25 @@ def tempdir(p: str, cb: Callable[[Path], None]) -> None:
         cb (Callable[[Path],None]): 创建临时文件夹后的操作.
 
     """
+    print("构造临时文件夹ing...")
     root = get_abs_path(p)
-    with tempfile.TemporaryDirectory(suffix="pmfp_cache", dir=root) as tmpdirname:
-        print('created temporary directory', tmpdirname)
-        temp_path = root.joinpath(tmpdirname)
-        cb(temp_path)
+    temp_dir = tempfile.TemporaryDirectory(suffix="pmfp_cache", dir=root)
+    temp_path = root.joinpath(temp_dir.name)
+    cb(temp_path)
+    try:
+       temp_dir.cleanup()
+    except PermissionError:
+        try:
+            shutil.rmtree(str(temp_path), onerror=remove_readonly)
+        except Exception as e:
+            print(f"因为错误{str(e)}跳过删除目录 {str(p)}")
+    except Exception as e:
+        raise e
+
+
 
 def get_cache_dir()->str:
+    """获取缓存根目录."""
     if not PMFP_CONFIG_PATH.exists():
         if not PMFP_CONFIG_HOME.exists():
             PMFP_CONFIG_HOME.mkdir(parents=True)

@@ -46,3 +46,4 @@ def run_command(command: str, *, cwd: Optional[Any] = None, env: Optional[Any] =
             succ_cb(content)
         else:
             default_succ_cb(content)
+

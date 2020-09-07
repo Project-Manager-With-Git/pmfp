@@ -8,10 +8,10 @@ ppm_cache.__doc__ = """ppm cache <subcommand>
     管理资源包缓存
     ppm cache 的子命令有:
 
-    list                 创建一个protobuf文件
-    build               编译protobuf到指定位置      
+    get                  获取资源包放入缓存
+    clean                清除所有资源包缓存  
     """
-ppm_cache.prog = "ppm proto"
+ppm_cache.prog = "ppm cache"
 ppm_cache.epilog = ''
-ppm_cache.description = '管理protobuf文件的子命令'
+ppm_cache.description = '管理资源包缓存'
 ppm.regist_subcmd(ppm_cache)
