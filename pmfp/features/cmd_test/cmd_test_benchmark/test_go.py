@@ -14,7 +14,7 @@ def benchmark_test_go(testcode:str,*,mem:bool=False) -> None:
 
     """
     if mem:
-        command = f"go test -v -run=^$ {testcode} -bench ."
+        command = f"go test -v -run=^${testcode} -bench ."
     else:
-        command = f"go test -v -benchmem -run=^$ {testcode} -bench ."
+        command = f"go test -v -benchmem -run=^${testcode} -bench ."
     run_command(command)
