@@ -13,3 +13,4 @@ def new_env_py(root:str,
     python = get_global_python()
     command = f"{python} -m venv env"
     run_command(command,cwd=root_path)
+    
