@@ -1,6 +1,7 @@
 """维护常量."""
 import sys
 import platform
+import getpass
 from pathlib import Path
 
 # PLATFORM 执行平台
@@ -30,3 +31,4 @@ DEFAULT_PMFPRC = {
     "python": GOLBAL_PYTHON,
     "cc": GOLBAL_CC
 }
+DEFAULT_AUTHOR = getpass.getuser()
