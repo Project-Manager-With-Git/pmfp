@@ -2,7 +2,7 @@
 from pathlib import Path
 from typing import List, Dict
 from pmfp.utils.fs_utils import get_abs_path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run_command,get_global_python
 
 
 def _find_pypackage(final_path: Path, packs: List[str]) -> None:
@@ -60,7 +60,8 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str,
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
     task = "grpc"
-    command = f"python -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
+    python = get_global_python()
+    command = f"{python} -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
     print(f"编译命令:{command}")
 
     def _(x: str) -> None:

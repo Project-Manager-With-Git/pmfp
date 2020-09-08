@@ -77,7 +77,7 @@ ppm.__doc__ = """ppm <subcmd> [<args>]
         run               执行一条bash/ps1命令
         proto             管理protobuffer文件
         schema            管理json schema文件
-        http              http服务相关的工具
+        http              http服务相关的工具  
         test              执行测试
         env               环境初始化
         apidoc            维护api文档

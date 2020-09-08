@@ -1,11 +1,12 @@
 """执行命令行任务的通用组件."""
-import subprocess
+import json
 import warnings
+import subprocess
 from pathlib import Path
 from typing import Callable, Optional, Any
 import chardet
 from termcolor import colored
-from pmfp.const import GOLBAL_PYTHON
+from pmfp.const import PMFP_CONFIG_PATH
 
 
 def default_succ_cb(content: str) -> None:
@@ -92,6 +93,12 @@ def get_protoc_version() -> Optional[str]:
     return result
 
 
+def get_global_python()->str:
+    """获取全局python."""
+    with open(PMFP_CONFIG_PATH,"r") as f:
+        pmfprc = json.load(f)
+        return pmfprc.get("python",GOLBAL_PYTHON)
+
 def get_local_python_path(env_path_str:str) -> str:
     """获取本地环境python解释器的地址.
 
@@ -110,5 +117,5 @@ def get_local_python_path(env_path_str:str) -> str:
             python_path = env_path.joinpath("python")
             if not python_path.exists():
                 warnings.warn("目录中未找到python环境.使用全局python")
-                return GOLBAL_PYTHON
+                return get_global_python()
     return str(python_path)
