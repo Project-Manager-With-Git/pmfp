@@ -1,8 +1,10 @@
 """构造不同执行环境."""
 from typing import Dict, Any, List
-from pmfp.utils.run_command_utils import run_command,get_global_python
+from pmfp.utils.run_command_utils import run_command
 from .env_py import new_env_py,new_env_conda
 from .env_go import new_env_go
+
+
 def new_env(env:str,*,
         root:str,
         project_name:str) -> None:

@@ -1,7 +1,7 @@
 """编译protobuf的schema为不同语言的代码."""
 from typing import Dict, Any, List
-from pmfp.utils.run_command_utils import run_command,get_global_python
-
+from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.fs_utils import get_global_python
 
 def http_serv(port: str, root: str, bind: str) -> None:
     """启动http静态服务.

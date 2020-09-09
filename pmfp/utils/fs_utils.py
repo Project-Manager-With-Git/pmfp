@@ -5,8 +5,18 @@ import stat
 import shutil
 import tempfile
 from pathlib import Path
-from typing import Callable, Optional,Any
-from pmfp.const import PMFP_CONFIG_PATH,PMFP_CONFIG_HOME,DEFAULT_PMFPRC
+from typing import (
+    Callable, 
+    Optional,
+    Any
+)
+from pmfp.const import (
+    PMFP_CONFIG_PATH,
+    PMFP_CONFIG_HOME,
+    DEFAULT_PMFPRC,
+    GOLBAL_PYTHON,
+    GOLBAL_CC
+)
 
 
 
@@ -91,10 +101,8 @@ def tempdir(p: str, cb: Callable[[Path], None]) -> None:
     except Exception as e:
         raise e
 
-
-
-def get_cache_dir()->str:
-    """获取缓存根目录."""
+def init_pmfprc()->None:
+    """初始化pmfp的配置."""
     if not PMFP_CONFIG_PATH.exists():
         if not PMFP_CONFIG_HOME.exists():
             PMFP_CONFIG_HOME.mkdir(parents=True)
@@ -102,7 +110,26 @@ def get_cache_dir()->str:
         config.update(DEFAULT_PMFPRC)
         with open(PMFP_CONFIG_PATH, "w") as fw:
             json.dump(config, fw, ensure_ascii=False, indent=4, sort_keys=True)
+
+
+def get_cache_dir()->str:
+    """获取缓存根目录."""
+    init_pmfprc()
     with open(PMFP_CONFIG_PATH,"r",encoding="utf-8") as f:
         config = json.load(f)
         cache_dir = config["cache_dir"]
     return cache_dir
+
+def get_global_python()->str:
+    """获取全局python."""
+    init_pmfprc()
+    with open(PMFP_CONFIG_PATH,"r") as f:
+        pmfprc = json.load(f)
+        return pmfprc.get("python",GOLBAL_PYTHON)
+
+def get_global_cc()->str:
+    """获取全局c编译器."""
+    init_pmfprc()
+    with open(PMFP_CONFIG_PATH,"r") as f:
+        pmfprc = json.load(f)
+        return pmfprc.get("cc",GOLBAL_CC)

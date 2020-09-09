@@ -1,7 +1,7 @@
 """初始化python的执行环境."""
 import warnings
-from pmfp.utils.run_command_utils import run_command,get_global_python
-from pmfp.utils.fs_utils import get_abs_path
+from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.fs_utils import get_abs_path,get_global_python
 from pmfp.const import GOLBAL_PYTHON_VERSION
 
 def new_env_py(root:str,

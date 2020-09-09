@@ -2,7 +2,8 @@
 from pathlib import Path
 from typing import List, Dict
 from pmfp.utils.fs_utils import get_abs_path
-from pmfp.utils.run_command_utils import run_command,get_global_python
+from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.fs_utils import get_global_python
 
 
 def _find_pypackage(final_path: Path, packs: List[str]) -> None:

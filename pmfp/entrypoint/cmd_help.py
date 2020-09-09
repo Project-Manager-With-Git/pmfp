@@ -28,9 +28,9 @@ def help(argv:Sequence[str])->None:
         schema            管理json schema文件
         http              http服务相关的工具
         test              执行测试
+        env               环境初始化
         apidoc            维护api文档
         build             编译静态语言
-        env               环境初始化
         
     """
     parser = argparse.ArgumentParser(

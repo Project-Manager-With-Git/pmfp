@@ -82,7 +82,6 @@ ppm.__doc__ = """ppm <subcmd> [<args>]
         env               环境初始化
         apidoc            维护api文档
         build             编译静态语言
-        env               环境初始化
     """
 
 ppm.prog = "ppm"

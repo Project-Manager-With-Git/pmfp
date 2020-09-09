@@ -6,8 +6,8 @@ from pathlib import Path
 from typing import Callable, Optional, Any
 import chardet
 from termcolor import colored
-from pmfp.const import PMFP_CONFIG_PATH
-
+from pmfp.const import PMFP_CONFIG_PATH,GOLBAL_PYTHON
+from pmfp.utils.fs_utils import get_global_python
 
 def default_succ_cb(content: str) -> None:
     """当执行成功时默认执行的回调."""
@@ -58,6 +58,7 @@ def get_node_version() -> Optional[str]:
     command = "node -v"
     result = None
     def node_succ_cb(content:str)->None:
+        nonlocal result
         result = content[1:]
 
     def node_fail_cb(_:str)->None:
@@ -72,6 +73,7 @@ def get_golang_version() -> Optional[str]:
     command = "go version"
     result = None
     def go_succ_cb(content:str)->None:
+        nonlocal result
         result = [i for i in content.split(" ") if "."in i][0][2:]
 
     def go_fail_cb(_:str)->None:
@@ -85,6 +87,7 @@ def get_protoc_version() -> Optional[str]:
     command = "protoc --version"
     result = None
     def go_succ_cb(content:str)->None:
+        nonlocal result
         result = [i for i in content.split(" ") if "."in i][0]
 
     def go_fail_cb(_:str)->None:
@@ -93,11 +96,8 @@ def get_protoc_version() -> Optional[str]:
     return result
 
 
-def get_global_python()->str:
-    """获取全局python."""
-    with open(PMFP_CONFIG_PATH,"r") as f:
-        pmfprc = json.load(f)
-        return pmfprc.get("python",GOLBAL_PYTHON)
+
+
 
 def get_local_python_path(env_path_str:str) -> str:
     """获取本地环境python解释器的地址.
