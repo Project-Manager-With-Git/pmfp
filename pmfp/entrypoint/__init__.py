@@ -14,7 +14,7 @@ from .cmd_http import *
 from .cmd_schema import *
 from .cmd_proto import *
 from .cmd_run import *
-from .cmd_template import *
+from .cmd_env import *
 from .cmd_stack import *
 from .cmd_project import *
 

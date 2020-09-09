@@ -8,7 +8,6 @@ from pathlib import Path
 PLATFORM = platform.system()
 # GOLBAL_PYTHON 全局python
 GOLBAL_PYTHON = "python" if PLATFORM == 'Windows' else "python3"
-
 # GOLBAL_CC 全局c编译器
 GOLBAL_CC = "MSVC" if PLATFORM == 'Windows' else "gcc"
 
