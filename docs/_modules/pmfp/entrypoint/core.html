@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>pmfp.entrypoint.core &#8212; pmfp 4.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.entrypoint.core</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;入口类的定义和一级入口对象.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Dict</span>
+
+
+<div class="viewcode-block" id="EntryPoint"><a class="viewcode-back" href="../../../pmfp.entrypoint.html#pmfp.entrypoint.core.EntryPoint">[docs]</a><span class="k">class</span> <span class="nc">EntryPoint</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;入口类.&quot;&quot;&quot;</span>
+
+    <span class="n">prog</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">epilog</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">subcmds</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]]</span>
+    <span class="vm">__name__</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;初始化复杂入口.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subcmds</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prog</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argv</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EntryPoint.regist_subcmd"><a class="viewcode-back" href="../../../pmfp.entrypoint.html#pmfp.entrypoint.core.EntryPoint.regist_subcmd">[docs]</a>    <span class="k">def</span> <span class="nf">regist_subcmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;注册子命令.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            func (Callabel[[Sequence[str]],]): 子命令的处理函数</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Callabel[[Sequence[str]],]: 包装后的子命令处理函数</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">warp</span><span class="p">(</span><span class="n">argv</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">func</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subcmds</span><span class="p">[</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">return</span> <span class="n">warp</span></div>
+
+<div class="viewcode-block" id="EntryPoint.parse_args"><a class="viewcode-back" href="../../../pmfp.entrypoint.html#pmfp.entrypoint.core.EntryPoint.parse_args">[docs]</a>    <span class="k">def</span> <span class="nf">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argv</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;解析复杂命令行.&quot;&quot;&quot;</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+            <span class="n">prog</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prog</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;prog&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">epilog</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">epilog</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;epilog&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">usage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;__doc__&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;subcmd&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;执行子命令&#39;</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subcmds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">subcmd</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subcmds</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">subcmd</span><span class="p">](</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;未知的子命令 </span><span class="si">{argv[1:]}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div></div>
+
+
+<span class="n">ppm</span> <span class="o">=</span> <span class="n">EntryPoint</span><span class="p">(</span><span class="s2">&quot;ppm&quot;</span><span class="p">)</span>
+<span class="n">ppm</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;ppm &lt;subcmd&gt; [&lt;args&gt;]</span>
+<span class="s2">    ppm工具的子命令有:</span>
+
+<span class="s2">        工具自身相关:</span>
+<span class="s2">        help              展示ppm的帮助说明</span>
+<span class="s2">        version           展示ppm的版本</span>
+<span class="s2">        reset             将ppm工具的设置初始化</span>
+<span class="s2">        cache             管理ppm的缓存             </span>
+
+<span class="s2">        项目管理类:</span>
+<span class="s2">        template          管理模板项目</span>
+<span class="s2">        project           管理项目</span>
+<span class="s2">        stack             管理项目组</span>
+<span class="s2">        </span>
+<span class="s2">        常用工具类:</span>
+<span class="s2">        run               执行一条bash/ps1命令</span>
+<span class="s2">        proto             管理protobuffer文件</span>
+<span class="s2">        schema            管理json schema文件</span>
+<span class="s2">        http              http服务相关的工具  </span>
+<span class="s2">        test              执行测试</span>
+<span class="s2">        env               环境初始化</span>
+<span class="s2">        apidoc            维护api文档</span>
+<span class="s2">        build             编译静态语言</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="n">ppm</span><span class="o">.</span><span class="n">prog</span> <span class="o">=</span> <span class="s2">&quot;ppm&quot;</span>
+<span class="n">ppm</span><span class="o">.</span><span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">ppm</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;项目脚手架&#39;</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">pmfp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pmfp.html">pmfp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test.html">test package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../entrypoint.html">pmfp.entrypoint</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, hsz12.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

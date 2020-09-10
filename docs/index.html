@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>欢迎使用脚手架项目PMFP &#8212; pmfp  documentation</title>
+    <title>Welcome to pmfp’s documentation! &#8212; pmfp 4.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pmfp package" href="pmfp.html" />
+    <link rel="next" title="&lt;no title&gt;" href="main.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -31,263 +31,48 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pmfp">
-<h1>欢迎使用脚手架项目PMFP<a class="headerlink" href="#pmfp" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p>version: 3.0.15</p></li>
-<li><p>status: dev</p></li>
-<li><p>author: hsz</p></li>
-<li><p>email: <a class="reference external" href="mailto:hsz1273327&#37;&#52;&#48;gmail&#46;com">hsz1273327<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
-</ul>
-<div class="section" id="desc">
-<h2>Desc<a class="headerlink" href="#desc" title="Permalink to this headline">¶</a></h2>
-<p>一个用于管理python及相关开发的工具</p>
-<p>keywords:tool,project_manager</p>
-</div>
-<div class="section" id="feature">
-<h2>Feature<a class="headerlink" href="#feature" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>根据模板快速构建pytho项目,支持flask,sanic,celery等</p></li>
-<li><p>简单的编译和打包指令,支持wheel,egg,cython,和docker编译</p></li>
-<li><p>快速测试</p></li>
-<li><p>文档维护,支持github page</p></li>
-</ul>
-</div>
-<div class="section" id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pmfp</span></code></p></li>
-</ul>
-</div>
-<div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://github.com/Python-Tools/pmfp">Documentation on Readthedocs</a>.</p>
-</div>
-<div class="section" id="todo">
-<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>增加对github release的支持</p></li>
-<li><p>添加更多模板</p></li>
-<li><p>添加node支持</p></li>
-<li><p>添加C语言支持</p></li>
-<li><p>添加go语言支持</p></li>
-</ul>
-</div>
-<div class="section" id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>只支持python3.5+</p></li>
-<li><p>mac osx下会有bug,venv的虚拟环境无法自动安装</p></li>
-</ul>
-</div>
-<div class="section" id="version-update">
-<h2>Version Update<a class="headerlink" href="#version-update" title="Permalink to this headline">¶</a></h2>
-<p>3.x版本是对之前版本的重构,相较于之前的版本使用了更加简练的写法,同时配置文件前面不加`.`号以方便自己编辑.</p>
-<p>计划3.0.x版本的目标是将现有的模板整理重新发布,3.1.x版本的目标是支持上go语言和c语言.</p>
-<p>3.0.3版本之前的版本具体改了多少东西已经不可考以下是更新的记录</p>
-<div class="section" id="new-in-3-0-15">
-<h3>New in 3.0.15<a class="headerlink" href="#new-in-3-0-15" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>doc初始化增加了对国际化的支持,默认`zh`和`en`</p></li>
-<li><p>可以使用doc命令`locale`新增小语种支持.</p></li>
-<li><p>doc命令新增了`update`</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-14">
-<h3>New in 3.0.14<a class="headerlink" href="#new-in-3-0-14" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>修正了upload命令不加-m内容就显示None的bug.</p></li>
-<li><p>修正了js中koa模板的一些bug</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-13">
-<h3>New in 3.0.13<a class="headerlink" href="#new-in-3-0-13" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>修改模板的``setup.py.temp``,``cmd_setup.py.temp``以及``cython_setup.py.temp``和``cython_numpy_setup.py.temp``使其依赖于文件``pmfprc.json``,并修改``new setup``命令的实现.</p></li>
-<li><p>修改doc的config部分文件,使版本更新依赖于项目配置文件.,并修改``new doc``命令的实现.</p></li>
-<li><p>修改update命令的实现,因为已经不再需要更新``setup.py``和``document``的``config.py``了,并且现在需要修改python项目源码中的``info.py``</p></li>
-<li><p>现在可以在python项目的源码文件夹根目录加一个``info.py``文件,以如下形式描述项目的自身情况</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;描述项目自身状态.&quot;&quot;&quot;</span>
-<span class="n">VERSION</span> <span class="o">=</span> <span class="s2">&quot;3.0.12&quot;</span>
-<span class="n">STATUS</span> <span class="o">=</span> <span class="s2">&quot;dev&quot;</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>pmfp本身运行不再支持python 3.5</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-12">
-<h3>New in 3.0.12<a class="headerlink" href="#new-in-3-0-12" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>修正创建python的module项目时因为entry字段引起的错误.</p></li>
-<li><p>新增python通用的test组件,现在可以在new中使用</p></li>
-<li><p>TODO新增node.js对grpc的支持.</p></li>
-<li><p>TODO新增node.js对zerorpc的支持.</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-11">
-<h3>New in 3.0.11<a class="headerlink" href="#new-in-3-0-11" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>新增js前端环境``frontend``</p></li>
-<li><p>为js项目新增``eslint``作为dev依赖</p></li>
-<li><p>为pmfp增加类型注解</p></li>
-<li><p>部分代码微调</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-10">
-<h3>New in 3.0.10<a class="headerlink" href="#new-in-3-0-10" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>新增js的前端环境``webpack``</p></li>
-<li><p>新增js模板``frontend-webpack``</p></li>
-<li><p>修改js下`run``子命令,执行package.json中的``start``,即行为与``npm start``一致</p></li>
-<li><p>新增``version``子命令用于展示当前pmfp工具的版本</p></li>
-<li><p>新增``help``子命令用于展示pmfp工具的用法</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-9">
-<h3>New in 3.0.9<a class="headerlink" href="#new-in-3-0-9" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>修正了模板``task-schedule``的bug,现在可以正常生成</p></li>
-<li><p>模板现在可以添加``env``,``gcc``和``entry``字段作为默认</p></li>
-<li><p>修正了windows下python模板编码问题</p></li>
-<li><p>python模板 rpc-grpc现在可以在实现接口时使用self.app获取到它注册的app信息</p></li>
-<li><p>python模板 rpc-zerorpc现在可以在实现接口时使用self.app获取到它注册的app信息</p></li>
-<li><p>修复python组件 database-model的bug</p></li>
-<li><p>现在new操作可以在没有配置文件的地方执行</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-8">
-<h3>New in 3.0.8<a class="headerlink" href="#new-in-3-0-8" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>修改了install命令不会将包名写入配置的bug</p></li>
-<li><p>对``server-static_server``模板代码结构进行了优化</p></li>
-<li><dl class="simple">
-<dt>新增了koa模板,包括</dt><dd><ul>
-<li><p>带socketio和restful接口的koa模板``server-koa``</p></li>
-<li><p>使用rest风格接口的koa模板``server-koa_rest``</p></li>
-<li><p>使用socketio的koa模板``server-koa_socketio``</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-7">
-<h3>New in 3.0.7<a class="headerlink" href="#new-in-3-0-7" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><dl class="simple">
-<dt>修改了cython模板,使之可以和纯python配合使用,如果要让application类型的项目支持,</dt><dd><ul>
-<li><p>先修改``pmfp.json``中的``template``字段,只要里面有cython字样就可以编译</p></li>
-<li><p>使用new命令``new -t “-” -r &lt;name without suffix&gt; cython-simple.pyx.temp``</p></li>
-<li><p>使用new命令``new -r setup.py cython_numpy_setup``或者``new -r setup.py cython_setup``创建``setup.py``文件配置编译行为</p></li>
-<li><p>之后虽然是是application,但不会打包为.pyz</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>build命令现在有参数``–inplace``,专为cython模块编译项目到本地使用</p></li>
-<li><p>重构grpc的客户端组件,使之可以嵌入到项目中</p></li>
-<li><p>重构zerorpc的客户端组件,使之可以嵌入到项目中</p></li>
-<li><p>重构xmlrpc的客户端组件,使之可以嵌入到项目中</p></li>
-<li><p>重构jsonrpc的客户端组件,使之可以嵌入到项目中</p></li>
-<li><dl class="simple">
-<dt>新增node支持(babel),不再打算支持typescript,新增了相关模板:</dt><dd><ul>
-<li><p>一个简易静态http服务器``server-static_server``</p></li>
-<li><p>一个简易的单文件node模块``module-classmodel``</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-6">
-<h3>New in 3.0.6<a class="headerlink" href="#new-in-3-0-6" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><dl class="simple">
-<dt>增加了对cython的支持.现在支持两种模板:</dt><dd><ul>
-<li><p>module-cython_simple</p></li>
-<li><p>module-cython_numpy</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>cython模板使用c语言编译器而非c++,需要的话可以自己改setup.py</p>
-<ul class="simple">
-<li><p>build命令现在可以对module类型的python项目生效了</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-5">
-<h3>New in 3.0.5<a class="headerlink" href="#new-in-3-0-5" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>修正了python的task-celery模板的依赖问题</p></li>
-<li><p>修正了模板中几处命名错误</p></li>
-<li><p>新增了python的task-schedule模板用于创建定时执行的任务</p></li>
-<li><p>修正了build 命令对python的application类型项目打包后.pyz文件无法执行的bug</p></li>
-<li><dl class="simple">
-<dt>新增python组件类型``partten``,包括:</dt><dd><ul>
-<li><p>异步接口的简单actor模型实现``aio_actor.py.temp``</p></li>
-<li><p>异步接口的简单发布订阅模式实现``aio_pubsub.py.temp``</p></li>
-<li><p>面向切面编程中的回调函数装饰器``callback.py.temp``</p></li>
-<li><p>面向切面编程中的简单计时器装饰器``timer.py.temp``</p></li>
-<li><p>中介模式的简单实现``mediator.py.temp``</p></li>
-<li><p>池模式的简单实现``pool.py.temp``</p></li>
-<li><p>代理模式的简单实现``proxy.py.temp``</p></li>
-<li><p>单例模式的简单实现``singleton.py.temp``</p></li>
-<li><p>用于通过url导入远程文件服务器中模块的``import hook``的``import_url.py.temp``</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-4">
-<h3>New in 3.0.4<a class="headerlink" href="#new-in-3-0-4" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>修正了config中导入json配置文件的一处bug</p></li>
-</ul>
-</div>
-<div class="section" id="new-in-3-0-3">
-<h3>New in 3.0.3<a class="headerlink" href="#new-in-3-0-3" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>新增对celery的支持</p></li>
-<li><p>为sanic新增了exception组件,用于定义全局的异常</p></li>
-</ul>
+  <div class="section" id="welcome-to-pmfp-s-documentation">
+<h1>Welcome to pmfp’s documentation!<a class="headerlink" href="#welcome-to-pmfp-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pmfp.html">pmfp package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pmfp.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.build_.html">pmfp.build_ package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.config.html">pmfp.config package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.init.html">pmfp.init package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.install.html">pmfp.install package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.new.html">pmfp.new package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.release.html">pmfp.release package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.run.html">pmfp.run package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.scripts.html">pmfp.scripts package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.show.html">pmfp.show package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pmfp.test_.html">pmfp.test_ package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.entrypoint.html">pmfp.entrypoint package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.entrypoint.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.entrypoint.html#module-pmfp.entrypoint.cmd_env">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.entrypoint.html#module-pmfp.entrypoint">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.build_pb">pmfp.build_pb module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.clean">pmfp.clean module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.const">pmfp.const module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.doc">pmfp.doc module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.freeze">pmfp.freeze module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.info">pmfp.info module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.status">pmfp.status module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.update">pmfp.update module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.upload">pmfp.upload module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.utils">pmfp.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.features.html">pmfp.features package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.features.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.features.html#module-pmfp.features">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.utils.html">pmfp.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.utils.html#module-pmfp.utils.fs_utils">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.utils.html#module-pmfp.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.const">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="test.test_utils.html">test.test_utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="test.test_utils.html#module-test.test_utils.test_fs_utils">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="test.test_utils.html#module-test.test_utils">Module contents</a></li>
 </ul>
-</div>
-</div>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="test.html#module-test">Module contents</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -319,13 +104,14 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pmfp.html">pmfp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test package</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="pmfp.html" title="next chapter">pmfp package</a></li>
+      <li>Next: <a href="main.html" title="next chapter">&lt;no title&gt;</a></li>
   </ul></li>
 </ul>
 </div>
@@ -338,7 +124,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -352,10 +138,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, hsz.
+      &copy;2020, hsz12.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

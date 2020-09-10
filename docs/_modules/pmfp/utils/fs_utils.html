@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>pmfp.utils.fs_utils &#8212; pmfp 4.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.utils.fs_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;文件系统相关的通用组件.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Callable</span><span class="p">,</span> 
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Any</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pmfp.const</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span>
+    <span class="n">PMFP_CONFIG_HOME</span><span class="p">,</span>
+    <span class="n">DEFAULT_PMFPRC</span><span class="p">,</span>
+    <span class="n">GOLBAL_PYTHON</span><span class="p">,</span>
+    <span class="n">GOLBAL_CC</span>
+<span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="get_abs_path"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.get_abs_path">[docs]</a><span class="k">def</span> <span class="nf">get_abs_path</span><span class="p">(</span><span class="n">path_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;由路径字符串获取绝对路径.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path_str (str): 路径字符创</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path: 路径字符串的绝对路径</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rootp</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path_str</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rootp</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">():</span>
+        <span class="n">root_path</span> <span class="o">=</span> <span class="n">rootp</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">root_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">path_str</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">root_path</span></div>
+
+
+<div class="viewcode-block" id="iter_dir_to_end"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.iter_dir_to_end">[docs]</a><span class="k">def</span> <span class="nf">iter_dir_to_end</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+                    <span class="n">match</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Path</span><span class="p">],</span> <span class="nb">bool</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span>
+                    <span class="n">skip_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Path</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">succ_cb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Path</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">fail_cb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Path</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;遍历文件夹到底,并按指定的函数来做区分.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (Path): 文件夹路径</span>
+<span class="sd">        match (Callable[[Path],bool]): 筛选条件</span>
+<span class="sd">        succ_cb (Optional[Callable[[Path],None]], optional): 路径满足筛选条件后执行的回调函数. Defaults to None.</span>
+<span class="sd">        fail_cb (Optional[Callable[[Path],None]], optional): 路径不满足筛选条件执行的回调函数. Defaults to None.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">skip_dir</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">skip_dir</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">iter_dir_to_end</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">skip_dir</span><span class="o">=</span><span class="n">skip_dir</span><span class="p">,</span> <span class="n">succ_cb</span><span class="o">=</span><span class="n">succ_cb</span><span class="p">,</span> <span class="n">fail_cb</span><span class="o">=</span><span class="n">fail_cb</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">iter_dir_to_end</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">skip_dir</span><span class="o">=</span><span class="n">skip_dir</span><span class="p">,</span> <span class="n">succ_cb</span><span class="o">=</span><span class="n">succ_cb</span><span class="p">,</span> <span class="n">fail_cb</span><span class="o">=</span><span class="n">fail_cb</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">succ_cb</span><span class="p">:</span>
+                    <span class="n">succ_cb</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{p}</span><span class="s2"> matched&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">fail_cb</span><span class="p">:</span>
+                    <span class="n">fail_cb</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{p}</span><span class="s2"> not match&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="remove_readonly"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.remove_readonly">[docs]</a><span class="k">def</span> <span class="nf">remove_readonly</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Clear the readonly bit and reattempt the removal.&quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWRITE</span><span class="p">)</span>
+    <span class="n">func</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="tempdir"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.tempdir">[docs]</a><span class="k">def</span> <span class="nf">tempdir</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Path</span><span class="p">],</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;临时文件夹相关处理.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): 临时文件夹所在的文件夹</span>
+<span class="sd">        cb (Callable[[Path],None]): 创建临时文件夹后的操作.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;构造临时文件夹ing...&quot;</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">temp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;pmfp_cache&quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+    <span class="n">temp_path</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">temp_dir</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">cb</span><span class="p">(</span><span class="n">temp_path</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+       <span class="n">temp_dir</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temp_path</span><span class="p">),</span> <span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;因为错误{str(e)}跳过删除目录 {str(p)}&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="init_pmfprc"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.init_pmfprc">[docs]</a><span class="k">def</span> <span class="nf">init_pmfprc</span><span class="p">()</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;初始化pmfp的配置.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">PMFP_CONFIG_PATH</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">PMFP_CONFIG_HOME</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">PMFP_CONFIG_HOME</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">DEFAULT_PMFPRC</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">fw</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_cache_dir"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.get_cache_dir">[docs]</a><span class="k">def</span> <span class="nf">get_cache_dir</span><span class="p">()</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;获取缓存根目录.&quot;&quot;&quot;</span>
+    <span class="n">init_pmfprc</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;cache_dir&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">cache_dir</span></div>
+
+<div class="viewcode-block" id="get_global_python"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.get_global_python">[docs]</a><span class="k">def</span> <span class="nf">get_global_python</span><span class="p">()</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;获取全局python.&quot;&quot;&quot;</span>
+    <span class="n">init_pmfprc</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pmfprc</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pmfprc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="n">GOLBAL_PYTHON</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_global_cc"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.fs_utils.get_global_cc">[docs]</a><span class="k">def</span> <span class="nf">get_global_cc</span><span class="p">()</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;获取全局c编译器.&quot;&quot;&quot;</span>
+    <span class="n">init_pmfprc</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pmfprc</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pmfprc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cc&quot;</span><span class="p">,</span><span class="n">GOLBAL_CC</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">pmfp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pmfp.html">pmfp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test.html">test package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, hsz12.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

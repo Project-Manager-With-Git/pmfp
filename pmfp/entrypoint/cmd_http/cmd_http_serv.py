@@ -17,10 +17,10 @@ def serv(argv: Sequence[str]) -> None:
         usage=ppm_http.subcmds.get("serv").__doc__
     )
     parser.add_argument("-r", "--root", type=str,
-                        default="", help="http服务的根目录")
+                        default=".", help="http服务的根目录")
     parser.add_argument("-b", "--bind", type=str,
                         default="", help="模式的版本")
-    parser.add_argument("port", type=str,
+    parser.add_argument("port", type=int,
                         help="端口名")
     parser.set_defaults(func=cmd_serv_http)
     args = parser.parse_args(argv)
@@ -29,9 +29,5 @@ def serv(argv: Sequence[str]) -> None:
 
 def cmd_serv_http(args: argparse.Namespace) -> None:
     """Http static serv."""
-    try:
-        http_serv(port=args.port, root=args.root, bind=args.bind)
-    except KeyboardInterrupt:
-        print("http静态服务关闭")
-    except Exception as e:
-        raise e
+    http_serv(port=args.port, root=args.root, bind=args.bind)
+    

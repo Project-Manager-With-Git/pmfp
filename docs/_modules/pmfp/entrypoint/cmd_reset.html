@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>pmfp.entrypoint.cmd_reset &#8212; pmfp 4.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.entrypoint.cmd_reset</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;reset命令的处理.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">pmfp.const</span> <span class="kn">import</span> <span class="n">DEFAULT_PMFPRC</span><span class="p">,</span> <span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span> <span class="n">PMFP_CONFIG_HOME</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">ppm</span>
+
+
+<div class="viewcode-block" id="reset"><a class="viewcode-back" href="../../../pmfp.entrypoint.html#pmfp.entrypoint.cmd_reset.reset">[docs]</a><span class="nd">@ppm</span><span class="o">.</span><span class="n">regist_subcmd</span>
+<span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="n">argv</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;重置pmfp的配置.</span>
+
+<span class="sd">    ppm reset [--flags]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;ppm reset&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;重置pmfp的配置&#39;</span><span class="p">,</span>
+        <span class="n">usage</span><span class="o">=</span><span class="n">ppm</span><span class="o">.</span><span class="n">subcmds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">)</span><span class="o">.</span><span class="vm">__doc__</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--python&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;指定全局python路径&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--cc&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;指定全局c编译器&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--cache_dir&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;指定缓存的存储位置&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">cmd_reset</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cmd_reset"><a class="viewcode-back" href="../../../pmfp.entrypoint.html#pmfp.entrypoint.cmd_reset.cmd_reset">[docs]</a><span class="k">def</span> <span class="nf">cmd_reset</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;重置pmfp工具的配置.&quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">DEFAULT_PMFPRC</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">python</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">python</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cc</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cc</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cc</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">PMFP_CONFIG_HOME</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">PMFP_CONFIG_HOME</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">PMFP_CONFIG_HOME</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">PMFP_CONFIG_PATH</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fr</span><span class="p">:</span>
+                <span class="n">old_config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fr</span><span class="p">)</span>
+
+            <span class="n">old_cache_dir</span> <span class="o">=</span> <span class="n">old_config</span><span class="p">[</span><span class="s2">&quot;cache_dir&quot;</span><span class="p">]</span>
+            <span class="n">old_cache_dir_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">old_cache_dir</span><span class="p">)</span>
+            <span class="n">new_cache_dir</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;cache_dir&quot;</span><span class="p">]</span>
+            <span class="n">new_cache_dir_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">new_cache_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">old_cache_dir_path</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span> <span class="o">!=</span> <span class="n">new_cache_dir_path</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span> <span class="ow">and</span> <span class="n">old_cache_dir_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">new_cache_dir_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;新的缓存地址</span><span class="si">{new_cache_dir}</span><span class="s2">已经存在,请删除后重新执行&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span>
+                        <span class="n">old_cache_dir</span><span class="p">,</span>
+                        <span class="n">new_cache_dir</span>
+                    <span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">PMFP_CONFIG_PATH</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">fw</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pmfp配置重置完成.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;配置保存路径{str(PMFP_CONFIG_HOME)}已被占用&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">pmfp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pmfp.html">pmfp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test.html">test package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../entrypoint.html">pmfp.entrypoint</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, hsz12.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

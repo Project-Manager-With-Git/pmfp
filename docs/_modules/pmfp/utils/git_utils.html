@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>pmfp.utils.git_utils &#8212; pmfp 4.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.utils.git_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;git相关的动作.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">configparser</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">.run_command_utils</span> <span class="kn">import</span> <span class="n">run_command</span>
+<span class="kn">from</span> <span class="nn">.fs_utils</span> <span class="kn">import</span> <span class="n">get_abs_path</span>
+
+
+<span class="k">def</span> <span class="nf">_git_check</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;检测项目有没有.git可以用于上传和打标签等操作.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): 目标地址</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: 是否是git项目</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">root</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+
+<div class="viewcode-block" id="NoRemoteURL"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.git_utils.NoRemoteURL">[docs]</a><span class="k">class</span> <span class="nc">NoRemoteURL</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;目标项目没有指定远程仓库.&quot;&quot;&quot;</span></div>
+
+
+<span class="k">def</span> <span class="nf">_git_find_remote</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;从项目的.git中找到远端仓库url.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): 目标地址</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AttributeError: 如果路径下没有`.git`文件夹则会报错.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: 远程仓库的地址</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_git_check</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;目标路径</span><span class="si">{p}</span><span class="s2">不是git仓库.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">pointgit</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">)</span>
+        <span class="n">gitconfig</span> <span class="o">=</span> <span class="n">pointgit</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">)</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">(</span><span class="n">allow_no_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">gitconfig</span><span class="p">))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">parser</span><span class="p">[</span><span class="s1">&#39;remote &quot;origin&quot;&#39;</span><span class="p">][</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">path</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NoRemoteURL</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;目标路径</span><span class="si">{p}</span><span class="s2">的git仓库未指定远程仓库.&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="git_add_remote"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.git_utils.git_add_remote">[docs]</a><span class="k">def</span> <span class="nf">git_add_remote</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">remote_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;为本地git仓库关联远程仓库.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): 本地仓库路径</span>
+<span class="sd">        remote_url (str): 远程仓库url</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">_git_find_remote</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">NoRemoteURL</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">git_remoteadd_succeed_callback</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;git fetch --all&quot;</span>
+            <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                        <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                        <span class="n">succ_cb</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;添加远程仓库</span><span class="si">{remote_url}</span><span class="s2">到本地仓库</span><span class="si">{p}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                        <span class="p">)</span>
+
+        <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;git remote add origin </span><span class="si">{remote_url}</span><span class="s2">&quot;</span>
+        <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                    <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                    <span class="n">succ_cb</span><span class="o">=</span><span class="n">git_remoteadd_succeed_callback</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">e</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;本地git项目</span><span class="si">{p}</span><span class="s2">已经有了远程仓库&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="git_init"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.git_utils.git_init">[docs]</a><span class="k">def</span> <span class="nf">git_init</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">remote_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;初始化本地git仓库.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): 本地git仓库位置</span>
+<span class="sd">        remote_url (Optional[str], optional): 远程关联仓库url. Defaults to None.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">git_init_succeed_cb</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;git本地仓库初始化完成.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">remote_url</span><span class="p">:</span>
+            <span class="n">git_add_remote</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">remote_url</span><span class="p">)</span>
+
+    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;git init {str(root)}&quot;</span>
+    <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                <span class="n">succ_cb</span><span class="o">=</span><span class="n">git_init_succeed_cb</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="git_clone"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.git_utils.git_clone">[docs]</a><span class="k">def</span> <span class="nf">git_clone</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+              <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="n">succ_cb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">fail_cb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;从远程克隆项目到本地.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url (str): 远程url</span>
+<span class="sd">        to (str): 本地项目路径</span>
+<span class="sd">        branch (str, optional): 拉取的分支. Defaults to &quot;master&quot;.</span>
+<span class="sd">        succ_cb (Optional[Callable[[],None]], optional): 拉取成功的回调. Defaults to None.</span>
+<span class="sd">        fail_cb (Optional[Callable[[],None]], optional): 拉取失败的回调. Defaults to None.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;git clone -b </span><span class="si">{branch}</span><span class="s2"> </span><span class="si">{url}</span><span class="s2"> </span><span class="si">{to}</span><span class="s2">&quot;</span>
+    <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">succ_cb</span><span class="o">=</span><span class="n">succ_cb</span><span class="p">,</span> <span class="n">fail_cb</span><span class="o">=</span><span class="n">fail_cb</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_latest_commit"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.git_utils.get_latest_commit">[docs]</a><span class="k">def</span> <span class="nf">get_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;获取git项目的最近一个master分支的commit号.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): git项目位置</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: commit号</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;git fetch --depth=1&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_latest_succcb</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">nonlocal</span> <span class="n">result</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;.git/FETCH_HEAD&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+                <span class="k">if</span> <span class="s2">&quot;master&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="n">eles</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">eles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">break</span>
+
+    <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">succ_cb</span><span class="o">=</span><span class="n">get_latest_succcb</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="git_push"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.git_utils.git_push">[docs]</a><span class="k">def</span> <span class="nf">git_push</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;update&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;git项目推代码到远端仓库.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): 本地仓库位置</span>
+<span class="sd">        msg (str): 注释消息</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">remote</span> <span class="o">=</span> <span class="n">_git_find_remote</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;git add .&quot;</span>
+
+    <span class="k">def</span> <span class="nf">git_add_succeed_callback</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;git add .执行成功&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">git_commit_succeed_callback</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;git commit执行成功&quot;</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">git_pull_succeed_callback</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;git pull执行成功&quot;</span><span class="p">)</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;git push&quot;</span>
+                <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                            <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                            <span class="n">succ_cb</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;推送源码到git仓库 </span><span class="si">{remote}</span><span class="s2"> 成功&quot;</span><span class="p">)</span>
+                            <span class="p">)</span>
+
+            <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;git pull&quot;</span>
+            <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                        <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                        <span class="n">succ_cb</span><span class="o">=</span><span class="n">git_pull_succeed_callback</span>
+                        <span class="p">)</span>
+
+        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;git commit -m &quot;</span><span class="si">{msg}</span><span class="s1">@</span><span class="si">{now}</span><span class="s1">&quot;&#39;</span>
+        <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                    <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                    <span class="n">succ_cb</span><span class="o">=</span><span class="n">git_commit_succeed_callback</span>
+                    <span class="p">)</span>
+
+    <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                <span class="n">succ_cb</span><span class="o">=</span><span class="n">git_add_succeed_callback</span>
+                <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="git_tag"><a class="viewcode-back" href="../../../pmfp.utils.html#pmfp.utils.git_utils.git_tag">[docs]</a><span class="k">def</span> <span class="nf">git_tag</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;为代码打tag.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (str): 本地仓库位置</span>
+<span class="sd">        version (str): 项目代码版本</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">remote</span> <span class="o">=</span> <span class="n">_git_find_remote</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;v</span><span class="si">{version}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">git_tag_succeed_callback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;git tag -a </span><span class="si">{tag}</span><span class="s2"> -m &#39;version: </span><span class="si">{tag}</span><span class="s2">&#39; 执行成功&quot;</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;git push --tag&quot;</span>
+        <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                    <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                    <span class="n">succ_cb</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;推送 tag版本</span><span class="si">{tag}</span><span class="s2">到git仓库</span><span class="si">{remote}</span><span class="s2">完成&quot;</span><span class="p">)</span>
+                    <span class="p">)</span>
+
+    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;git tag -a </span><span class="si">{tag}</span><span class="s2"> -m &#39;version: </span><span class="si">{tag}</span><span class="s2">&#39;&quot;</span>
+    <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                <span class="n">succ_cb</span><span class="o">=</span><span class="n">git_tag_succeed_callback</span>
+                <span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">pmfp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pmfp.html">pmfp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test.html">test package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, hsz12.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

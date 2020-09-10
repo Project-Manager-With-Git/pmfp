@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>pmfp.features.cmd_proto.cmd_proto_build package &#8212; pmfp 4.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pmfp.features.cmd_proto.cmd_proto_new package" href="pmfp.features.cmd_proto.cmd_proto_new.html" />
+    <link rel="prev" title="pmfp.features.cmd_proto package" href="pmfp.features.cmd_proto.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pmfp-features-cmd-proto-cmd-proto-build-package">
+<h1>pmfp.features.cmd_proto.cmd_proto_build package<a class="headerlink" href="#pmfp-features-cmd-proto-cmd-proto-build-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pmfp.features.cmd_proto.cmd_proto_build.build_pb_go">
+<span id="submodules"></span><h2>Submodules<a class="headerlink" href="#module-pmfp.features.cmd_proto.cmd_proto_build.build_pb_go" title="Permalink to this headline">¶</a></h2>
+<p>编译go语言模块.</p>
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb_go.build_pb_go">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.build_pb_go.</code><code class="sig-name descname">build_pb_go</code><span class="sig-paren">(</span><em class="sig-param">files: List[str], includes: List[str], to: str, grpc: bool, source_relative: bool, **kwargs: str</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build/build_pb_go.html#build_pb_go"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb_go.build_pb_go" title="Permalink to this definition">¶</a></dt>
+<dd><p>编译protobuffer为go语言模块.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件</p></li>
+<li><p><strong>includes</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件所在的文件夹</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – 编译成的模块文件放到的路径</p></li>
+<li><p><strong>grpc</strong> (<em>bool</em>) – 是否编译为grpc</p></li>
+<li><p><strong>source_relative</strong> (<em>bool</em>) – 是否使用路径作为包名,只针对go语言</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-pmfp.features.cmd_proto.cmd_proto_build.build_pb_js"></span><p>编译js语言模块.</p>
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb_js.build_pb_js">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.build_pb_js.</code><code class="sig-name descname">build_pb_js</code><span class="sig-paren">(</span><em class="sig-param">files: List[str], includes: List[str], to: str, grpc: bool, **kwargs: Dict[str, str]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build/build_pb_js.html#build_pb_js"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb_js.build_pb_js" title="Permalink to this definition">¶</a></dt>
+<dd><p>编译js语言模块.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件</p></li>
+<li><p><strong>includes</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件所在的文件夹</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – 编译成的模块文件放到的路径</p></li>
+<li><p><strong>grpc</strong> (<em>bool</em>) – 是否编译为grpc</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-pmfp.features.cmd_proto.cmd_proto_build.build_pb_py"></span><p>编译python语言模块.</p>
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.build_pb_py">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.</code><code class="sig-name descname">build_pb_py</code><span class="sig-paren">(</span><em class="sig-param">files: List[str], includes: List[str], to: str, grpc: bool, **kwargs: str</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build/build_pb_py.html#build_pb_py"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.build_pb_py" title="Permalink to this definition">¶</a></dt>
+<dd><p>编译python语言模块.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件</p></li>
+<li><p><strong>includes</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件所在的文件夹</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – 编译成的模块文件放到的路径</p></li>
+<li><p><strong>grpc</strong> (<em>bool</em>) – 是否编译为grpc</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.find_py_grpc_pb2_import_string">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.</code><code class="sig-name descname">find_py_grpc_pb2_import_string</code><span class="sig-paren">(</span><em class="sig-param">name: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build/build_pb_py.html#find_py_grpc_pb2_import_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.find_py_grpc_pb2_import_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>python的grpc模块as的内容.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.find_pypackage_string">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.</code><code class="sig-name descname">find_pypackage_string</code><span class="sig-paren">(</span><em class="sig-param">to_path: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build/build_pb_py.html#find_pypackage_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.find_pypackage_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>find_pypackage_string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>to_path</strong> (<em>str</em>) – 目标地址</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>package地址</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.trans_grpc_model_py">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.</code><code class="sig-name descname">trans_grpc_model_py</code><span class="sig-paren">(</span><em class="sig-param">to: str</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build/build_pb_py.html#trans_grpc_model_py"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.trans_grpc_model_py" title="Permalink to this definition">¶</a></dt>
+<dd><p>转换python的grpc输出为一个python模块.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>to</strong> (<em>str</em>) – 目标地址</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-pmfp.features.cmd_proto.cmd_proto_build.build_pb_web"></span><p>编译js语言的grpc-web模块.</p>
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb_web.build_pb_web">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.build_pb_web.</code><code class="sig-name descname">build_pb_web</code><span class="sig-paren">(</span><em class="sig-param">files: List[str], includes: List[str], to: str, grpc: bool, **kwargs: str</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build/build_pb_web.html#build_pb_web"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb_web.build_pb_web" title="Permalink to this definition">¶</a></dt>
+<dd><p>编译js语言的grpc-web模块.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件</p></li>
+<li><p><strong>includes</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的protobuffer文件所在的文件夹</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – 编译成的模块文件放到的路径</p></li>
+<li><p><strong>grpc</strong> (<em>bool</em>) – 是否编译为grpc</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pmfp.features.cmd_proto.cmd_proto_build">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pmfp.features.cmd_proto.cmd_proto_build" title="Permalink to this headline">¶</a></h2>
+<p>编译protobuf的schema为不同语言的代码.</p>
+<dl class="function">
+<dt id="pmfp.features.cmd_proto.cmd_proto_build.build_pb">
+<code class="sig-prename descclassname">pmfp.features.cmd_proto.cmd_proto_build.</code><code class="sig-name descname">build_pb</code><span class="sig-paren">(</span><em class="sig-param">env: List[str], files: List[str], includes: List[str], to: str, grpc: bool, source_relative: bool, **kwargs: str</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pmfp/features/cmd_proto/cmd_proto_build.html#build_pb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pmfp.features.cmd_proto.cmd_proto_build.build_pb" title="Permalink to this definition">¶</a></dt>
+<dd><p>编译protobuf的schema为不同语言的代码.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>env</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 编译到的执行环境,可选的有”go”,”py”,”js”,”web”</p></li>
+<li><p><strong>files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译的文件列表</p></li>
+<li><p><strong>includes</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – 待编译文件及其依赖所在文件夹列表</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – 编译到的模块所在文件夹.</p></li>
+<li><p><strong>grpc</strong> (<em>bool</em>) – 是否是grpc</p></li>
+<li><p><strong>source_relative</strong> (<em>bool</em>) – 是否使用路径作为包名,只针对go语言</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pmfp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pmfp.html">pmfp package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pmfp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pmfp.entrypoint.html">pmfp.entrypoint package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="pmfp.features.html">pmfp.features package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="pmfp.features.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pmfp.features.html#module-pmfp.features">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pmfp.utils.html">pmfp.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp.const">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pmfp.html#module-pmfp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="pmfp.html">pmfp package</a><ul>
+  <li><a href="pmfp.features.html">pmfp.features package</a><ul>
+  <li><a href="pmfp.features.cmd_proto.html">pmfp.features.cmd_proto package</a><ul>
+      <li>Previous: <a href="pmfp.features.cmd_proto.html" title="previous chapter">pmfp.features.cmd_proto package</a></li>
+      <li>Next: <a href="pmfp.features.cmd_proto.cmd_proto_new.html" title="next chapter">pmfp.features.cmd_proto.cmd_proto_new package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, hsz12.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pmfp.features.cmd_proto.cmd_proto_build.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

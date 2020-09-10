@@ -15,6 +15,7 @@ from .cmd_schema import *
 from .cmd_proto import *
 from .cmd_run import *
 from .cmd_env import *
+from .cmd_apidoc import *
 from .cmd_stack import *
 from .cmd_project import *
 

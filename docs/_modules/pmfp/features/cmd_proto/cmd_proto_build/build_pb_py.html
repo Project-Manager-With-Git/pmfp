@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>pmfp.features.cmd_proto.cmd_proto_build.build_pb_py &#8212; pmfp 4.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pmfp.features.cmd_proto.cmd_proto_build.build_pb_py</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;编译python语言模块.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">get_abs_path</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.run_command_utils</span> <span class="kn">import</span> <span class="n">run_command</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">get_global_python</span>
+
+
+<span class="k">def</span> <span class="nf">_find_pypackage</span><span class="p">(</span><span class="n">final_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">packs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">has_init</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">final_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">:</span>
+            <span class="n">has_init</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">has_init</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lates_p</span> <span class="o">=</span> <span class="n">final_path</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">packs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lates_p</span><span class="p">)</span>
+        <span class="n">_find_pypackage</span><span class="p">(</span><span class="n">final_path</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">packs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="find_pypackage_string"><a class="viewcode-back" href="../../../../../pmfp.features.cmd_proto.cmd_proto_build.html#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.find_pypackage_string">[docs]</a><span class="k">def</span> <span class="nf">find_pypackage_string</span><span class="p">(</span><span class="n">to_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;find_pypackage_string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        to_path (str): 目标地址</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        str: package地址</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">packs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">final_path</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">to_path</span><span class="p">)</span>
+    <span class="n">_find_pypackage</span><span class="p">(</span><span class="n">final_path</span><span class="p">,</span> <span class="n">packs</span><span class="p">)</span>
+    <span class="n">packstr</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">packs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">packstr</span></div>
+
+
+<div class="viewcode-block" id="find_py_grpc_pb2_import_string"><a class="viewcode-back" href="../../../../../pmfp.features.cmd_proto.cmd_proto_build.html#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.find_py_grpc_pb2_import_string">[docs]</a><span class="k">def</span> <span class="nf">find_py_grpc_pb2_import_string</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;python的grpc模块as的内容.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;__&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">_build_pb_py</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">includes_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;-I </span><span class="si">{include}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">includes</span><span class="p">])</span>
+    <span class="n">target_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">flag_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{k}</span><span class="s2">=</span><span class="si">{v}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="s2">&quot;protobuf&quot;</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;protoc  </span><span class="si">{includes_str}</span><span class="s2"> </span><span class="si">{flag_str}</span><span class="s2"> --python_out=</span><span class="si">{to}</span><span class="s2"> </span><span class="si">{target_str}</span><span class="s2">&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译命令:</span><span class="si">{command}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                <span class="n">succ_cb</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译</span><span class="si">{task}</span><span class="s2">项目</span><span class="si">{target_str}</span><span class="s2">为python语言模块完成!&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_build_grpc_py</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                   <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">includes_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;-I </span><span class="si">{include}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">includes</span><span class="p">])</span>
+    <span class="n">target_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">flag_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{k}</span><span class="s2">=</span><span class="si">{v}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="s2">&quot;grpc&quot;</span>
+    <span class="n">python</span> <span class="o">=</span> <span class="n">get_global_python</span><span class="p">()</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{python}</span><span class="s2"> -m grpc_tools.protoc </span><span class="si">{includes_str}</span><span class="s2"> </span><span class="si">{flag_str}</span><span class="s2"> --python_out=</span><span class="si">{to}</span><span class="s2"> --grpc_python_out=</span><span class="si">{to}</span><span class="s2"> </span><span class="si">{target_str}</span><span class="s2">&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译命令:</span><span class="si">{command}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译</span><span class="si">{task}</span><span class="s2">项目 </span><span class="si">{target_str}</span><span class="s2"> 为python模块完成!&quot;</span><span class="p">)</span>
+        <span class="n">trans_grpc_model_py</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+
+    <span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">succ_cb</span><span class="o">=</span><span class="n">_</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="trans_grpc_model_py"><a class="viewcode-back" href="../../../../../pmfp.features.cmd_proto.cmd_proto_build.html#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.trans_grpc_model_py">[docs]</a><span class="k">def</span> <span class="nf">trans_grpc_model_py</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;转换python的grpc输出为一个python模块.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        to (str): 目标地址</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">to_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.py&quot;</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;grpc.py&quot;</span><span class="p">:</span>
+                <span class="n">grpc_file</span> <span class="o">=</span> <span class="n">p</span>
+                <span class="n">grpc_name</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">grpc_package</span> <span class="o">=</span> <span class="n">grpc_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">pb_package</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">to_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">from .</span><span class="si">{pb_package}</span><span class="s2"> import *</span>
+<span class="s2">from .</span><span class="si">{grpc_package}</span><span class="s2"> import *</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">grpc_file</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+                <span class="n">new_lines</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">packstr</span> <span class="o">=</span> <span class="n">find_pypackage_string</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+                <span class="n">as_package</span> <span class="o">=</span> <span class="n">find_py_grpc_pb2_import_string</span><span class="p">(</span><span class="n">pb_package</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;import </span><span class="si">{pb_package}</span><span class="s2"> as </span><span class="si">{as_package}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                        <span class="n">t</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;import </span><span class="si">{packstr}</span><span class="s2">.</span><span class="si">{pb_package}</span><span class="s2"> as </span><span class="si">{as_package}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">new_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">grpc_file</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">new_lines</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;转换python项目的grpc文件</span><span class="si">{grpc_name}</span><span class="s2">为python模块完成!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="build_pb_py"><a class="viewcode-back" href="../../../../../pmfp.features.cmd_proto.cmd_proto_build.html#pmfp.features.cmd_proto.cmd_proto_build.build_pb_py.build_pb_py">[docs]</a><span class="k">def</span> <span class="nf">build_pb_py</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">grpc</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;编译python语言模块.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        files (List[str]): 待编译的protobuffer文件</span>
+<span class="sd">        includes (List[str]): 待编译的protobuffer文件所在的文件夹</span>
+<span class="sd">        to (str): 编译成的模块文件放到的路径</span>
+<span class="sd">        grpc (bool): 是否编译为grpc</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">grpc</span><span class="p">:</span>
+        <span class="n">_build_grpc_py</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_build_pb_py</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../index.html">pmfp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pmfp.html">pmfp package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../test.html">test package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../index.html">Module code</a><ul>
+  <li><a href="../cmd_proto_build.html">pmfp.features.cmd_proto.cmd_proto_build</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, hsz12.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
