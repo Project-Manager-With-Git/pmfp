@@ -24,7 +24,7 @@ def unittest_test_py(testcode: str,*,coverage: Optional[bool],source:Optional[Li
             run_command(command)
 
         sources = ",".join(source)
-        command = f"{python} -m coverage run --source={sources} -m unittest discover -v -s ."
+        command = f"{python} -m coverage run --source={sources} -m unittest discover -v -s {testcode}"
         run_command(command,succ_cb=coverage_success)
     else:
         command = f"{python} -m unittest discover -v -s {testcode}"

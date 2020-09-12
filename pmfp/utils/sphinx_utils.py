@@ -39,7 +39,7 @@ def no_jekyll(output:str):
     if not nojekyll.exists():
         nojekyll.touch()
 
-def sphinx_new(code:str,source_dir:str,*,project_name:str,author:str, version:str,*,succ_cb:Optional[Callable[[str], None]] = None,fail_cb: Optional[Callable[[str], None]] = None) -> None:
+def sphinx_new(code:str,source_dir:str,project_name:str,author:str, version:str,*,succ_cb:Optional[Callable[[str], None]] = None,fail_cb: Optional[Callable[[str], None]] = None) -> None:
     """为python项目构造api文档.
 
     Args:
