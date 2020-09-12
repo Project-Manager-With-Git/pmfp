@@ -18,3 +18,4 @@ pyyaml
 colorama
 termcolor
 requests_oauthlib
+sphinx_rtd_theme

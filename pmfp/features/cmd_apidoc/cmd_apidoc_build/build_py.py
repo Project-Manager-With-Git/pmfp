@@ -6,11 +6,11 @@ from pmfp.utils.sphinx_utils import (
     no_jekyll,
     sphinx_config,
     sphinx_build,
-    sphinx_update_locale,
-    sphinx_new_locale
+    sphinx_init_locale,
+    sphinx_update_locale
 )
 
-def apidoc_new_py(code:str,output:str,source_dir:str,*,project_name:str,author:str, version:str) -> None:
+def apidoc_build_py(code:str,output:str,source_dir:str,*,project_name:str,author:str, version:str) -> None:
     """为python项目构造api文档.
 
     Args:
@@ -26,7 +26,6 @@ def apidoc_new_py(code:str,output:str,source_dir:str,*,project_name:str,author:s
         default_succ_cb(content)
         print(f"在{source_dir}创建api文档源文件成功")
         append_content = """
-language = 'zh'
 import sphinx_rtd_theme
 extensions += ['recommonmark', 'sphinx.ext.napoleon', 'sphinx.ext.mathjax','sphinx_rtd_theme']
 html_theme = "sphinx_rtd_theme"
@@ -40,20 +39,8 @@ gettext_compact = False     # optional.
 """     
         sphinx_config(source_dir,append_content)
         print('完成初始化文档源文件')
-        
-        def build_succ_cb(coutent:str)->None:
-            default_succ_cb(coutent)
-            no_jekyll(output)
-            print('文档编译完成')
-
-            def init_locale_succ_cb(coutent:str)->None:
-                default_succ_cb(coutent)
-                print("初始化文档国际化完成")
-                sphinx_new_locale(output=output,source_dir=source_dir,locales=["zh","en"])
-
-            sphinx_update_locale(output=output,source_dir=source_dir,succ_cb=init_locale_succ_cb)
-
-        sphinx_build(output=output,source_dir=source_dir,succ_cb=build_succ_cb)
+        print("编译项目文档")
+        sphinx_build(output=output,source_dir=source_dir,succ_cb=lambda x:no_jekyll(output))
 
     sphinx_new(code=code,source_dir=source_dir,project_name=project_name,author=author, version=version,
         succ_cb=new_succ_cb
