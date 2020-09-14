@@ -17,14 +17,16 @@ def update(argv: Sequence[str]) -> None:
         description='为指定编程语言构造api文档.',
         usage=ppm_apidoc.subcmds.get("update").__doc__
     )
-    parser.add_argument("-l", "--language", type=str,required=True,
+    parser.add_argument("-l", "--language", type=str, required=True,
                         choices=("py"), help="指定编程语言.")
-    parser.add_argument("-v","--version",type=str,help="项目版本")
-    parser.add_argument("-s","--source_dir",type=str,
-                        default="document",help="文档源文件的输出位置")  
+    parser.add_argument("--root", type=str, default=".",
+                        help="指定要覆盖的项目根目录")
+    parser.add_argument("-v", "--version", type=str, help="项目版本")
+    parser.add_argument("-s", "--source_dir", type=str,
+                        default="document", help="文档源文件的输出位置")
     parser.add_argument("-o", "--output", type=str,
                         default="docs", help="文档静态html文件的输出位置")
-    parser.add_argument("code",type=str,
+    parser.add_argument("code", type=str,
                         help="指定要覆盖的代码位置")
     parser.set_defaults(func=cmd_update_apidoc)
     args = parser.parse_args(argv)
@@ -35,8 +37,9 @@ def cmd_update_apidoc(args: argparse.Namespace) -> None:
     """检测动态语言的类型."""
     update_apidoc(
         language=args.language,
-        version=args.version, 
+        version=args.version,
         output=args.output,
         source_dir=args.source_dir,
-        code=args.code
+        code=args.code,
+        root=args.root
     )

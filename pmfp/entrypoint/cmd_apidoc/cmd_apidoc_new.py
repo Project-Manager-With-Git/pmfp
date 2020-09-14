@@ -19,6 +19,8 @@ def new(argv: Sequence[str]) -> None:
     )
     parser.add_argument("-l", "--language", type=str,required=True,
                         choices=("py"), help="指定编程语言.")
+    parser.add_argument("--root",type=str,default=".",
+                        help="指定要覆盖的项目根目录")
     parser.add_argument("-n","--project_name",type=str,
                         default="example",help="项目名")
     parser.add_argument("-a","--author",type=str,
@@ -30,7 +32,7 @@ def new(argv: Sequence[str]) -> None:
     parser.add_argument("-o", "--output", type=str,
                         default="docs", help="文档静态html文件的输出位置")
     parser.add_argument("code",type=str,
-                        help="指定要覆盖的代码位置")
+                        help="指定要覆盖的代码对根目录的相对位置")
     parser.set_defaults(func=cmd_new_apidoc)
     args = parser.parse_args(argv)
     args.func(args)
@@ -45,4 +47,5 @@ def cmd_new_apidoc(args: argparse.Namespace) -> None:
         version=args.version, 
         output=args.output,
         source_dir=args.source_dir,
-        code=args.code)
+        code=args.code,
+        root=args.root)

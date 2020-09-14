@@ -5,11 +5,13 @@ from pmfp.utils.sphinx_utils import (
     sphinx_update,
     sphinx_build,
     sphinx_update_locale,
-    sphinx_new_locale
+    sphinx_new_locale,
+    move_to_source
 )
 from typing import Optional
 
-def apidoc_update_py(code:str,output:str,source_dir:str,*,version:Optional[str]=None) -> None:
+
+def apidoc_update_py(code: str, output: str, source_dir: str, *, root: str, version: Optional[str] = None) -> None:
     """为python项目构造api文档.
 
     Args:
@@ -21,23 +23,24 @@ def apidoc_update_py(code:str,output:str,source_dir:str,*,version:Optional[str]=
         version (str): 项目版本
 
     """
-    def update_succ_cb(content:str)->None:
+    def update_succ_cb(content: str) -> None:
         default_succ_cb(content)
         print('完成更新文档源文件')
+        move_to_source(source_dir=source_dir, root=root)
 
-        def init_locale_succ_cb(coutent:str)->None:
+        def init_locale_succ_cb(coutent: str) -> None:
             default_succ_cb(coutent)
             print("更新多语言支持")
 
-            def new_locale_succ_cb(coutent:str)->None:
+            def new_locale_succ_cb(coutent: str) -> None:
                 default_succ_cb(coutent)
                 print('导入多语言完成')
-                sphinx_build(output=output,source_dir=source_dir,locale="zh")
+                sphinx_build(output=output, source_dir=source_dir, locale="zh")
 
-            sphinx_new_locale(output=output,source_dir=source_dir,succ_cb=new_locale_succ_cb)
+            sphinx_new_locale(output=output, source_dir=source_dir, succ_cb=new_locale_succ_cb)
 
-        sphinx_update_locale(output=output,source_dir=source_dir,succ_cb=init_locale_succ_cb)
+        sphinx_update_locale(output=output, source_dir=source_dir, succ_cb=init_locale_succ_cb)
 
-    sphinx_update(code=code,source_dir=source_dir,version=version,
-        succ_cb=update_succ_cb
-    )
+    sphinx_update(code=code, source_dir=source_dir, version=version, root=root,
+                  succ_cb=update_succ_cb
+                  )

@@ -2,7 +2,7 @@
 from typing import Dict, Any, List,Optional
 from .new_py import apidoc_new_py
 
-def new_apidoc(language:str,code:str,output:str,source_dir:str,*,project_name:str,author:str, version:str)->None:
+def new_apidoc(language:str,code:str,output:str,source_dir:str,*,root:str,project_name:str,author:str, version:str)->None:
     """对指定代码做单元测试.
 
     Args:
@@ -14,7 +14,7 @@ def new_apidoc(language:str,code:str,output:str,source_dir:str,*,project_name:st
 
     """
     if language == "py":
-        apidoc_new_py(code=code,output=output,source_dir=source_dir,project_name=project_name,author=author, version=version)
+        apidoc_new_py(code=code,output=output,source_dir=source_dir,root=root,project_name=project_name,author=author, version=version)
     
     else:
         print(f"未支持的语言{language}")

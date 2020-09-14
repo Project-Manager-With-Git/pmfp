@@ -2,7 +2,7 @@
 from typing import Dict, Any, List,Optional
 from .update_py import apidoc_update_py
 
-def update_apidoc(language:str,code:str,output:str,source_dir:str,*, version:Optional[str]=None)->None:
+def update_apidoc(language:str,code:str,output:str,source_dir:str,*, root:str,version:Optional[str]=None)->None:
     """对指定代码做单元测试.
 
     Args:
@@ -14,7 +14,7 @@ def update_apidoc(language:str,code:str,output:str,source_dir:str,*, version:Opt
 
     """
     if language == "py":
-        apidoc_update_py(code=code,output=output,source_dir=source_dir,version=version)
+        apidoc_update_py(code=code,output=output,root=root,source_dir=source_dir,version=version)
     
     else:
         print(f"未支持的语言{language}")

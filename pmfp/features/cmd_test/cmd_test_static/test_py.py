@@ -15,18 +15,18 @@ def static_test_py(code: str, model: bool, coverage: bool, output: str) -> None:
     """
     if model:
         if coverage and output:
-            command = f"mypy --ignore-missing-imports --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --html-report={output} -m {code}"
+            command = f"mypy --ignore-missing-imports --show-column-numbers --follow-imports=silent --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --html-report={output} -m {code}"
         else:
-            command = f"mypy --ignore-missing-imports --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores -m {code}"
+            command = f"mypy --ignore-missing-imports --show-column-numbers --follow-imports=silent --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores -m {code}"
     else:
         if Path(code).is_dir():
             if coverage and output:
-                command = f"mypy --ignore-missing-imports --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --scripts-are-modules --html-report={output} {code}"
+                command = f"mypy --ignore-missing-imports --show-column-numbers --follow-imports=silent --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --scripts-are-modules --html-report={output} {code}"
             else:
-                command = f"mypy --ignore-missing-imports --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --scripts-are-modules {code}"
+                command = f"mypy --ignore-missing-imports --show-column-numbers --follow-imports=silent --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --scripts-are-modules {code}"
         else:
             if coverage and output:
-                command = f"mypy --ignore-missing-imports --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --html-report={output} {code}"
+                command = f"mypy --ignore-missing-imports --show-column-numbers --follow-imports=silent --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores --html-report={output} {code}"
             else:
-                command = f"mypy --ignore-missing-imports --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores {code}"
+                command = f"mypy --ignore-missing-imports --show-column-numbers --follow-imports=silent --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores {code}"
     run_command(command)
