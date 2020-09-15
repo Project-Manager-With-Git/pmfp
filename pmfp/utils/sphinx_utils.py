@@ -121,7 +121,7 @@ def sphinx_index(source_dir: Path, project_name: str) -> None:
 * :ref:`modindex`
 * :ref:`search`
 """
-    content = template_2_content(template, project_name=project_name)
+    content = template_2_content(template, project_name=project_name.replace("-", "_"))
     with open(source_dir.joinpath("index.rst"), "w", encoding="utf-8") as wf:
         wf.write(content)
 
