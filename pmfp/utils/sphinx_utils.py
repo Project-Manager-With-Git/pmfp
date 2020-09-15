@@ -80,7 +80,7 @@ def sphinx_config(source_dir: Path, append_content: str) -> None:
     """
     with open(source_dir.joinpath("conf.py"), "r", encoding="utf-8") as fr:
         content = fr.read()
-    with open(source_dir.joinpath("conf.py"), "w") as fw:
+    with open(source_dir.joinpath("conf.py"), "w", encoding="utf-8") as fw:
         new_content = content + append_content
         fw.write(new_content)
 
@@ -112,7 +112,7 @@ def sphinx_index(source_dir: Path, project_name: str) -> None:
    :maxdepth: 2
    :caption: 接口文档:
 
-   {project_name}
+   ${project_name}
 
 索引与搜索
 ==================
@@ -122,7 +122,7 @@ def sphinx_index(source_dir: Path, project_name: str) -> None:
 * :ref:`search`
 """
     content = template_2_content(template, project_name=project_name)
-    with open(source_dir.joinpath("index.rst"), "w") as wf:
+    with open(source_dir.joinpath("index.rst"), "w", encoding="utf-8") as wf:
         wf.write(content)
 
 

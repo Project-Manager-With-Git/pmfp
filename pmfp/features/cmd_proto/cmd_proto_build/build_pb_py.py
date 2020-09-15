@@ -88,7 +88,7 @@ def trans_grpc_model_py(to: str) -> None:
                 grpc_name = p.name
                 grpc_package = grpc_name.split(".")[0]
                 pb_package = "_".join(x[:-1])
-                to_path.joinpath("__init__.py").open("a").write(
+                to_path.joinpath("__init__.py").open("a", encoding="utf-8").write(
                     f"""
 from .{pb_package} import *
 from .{grpc_package} import *
@@ -105,7 +105,7 @@ from .{grpc_package} import *
                         new_lines.append(t)
                     else:
                         new_lines.append(line)
-                with open(str(grpc_file), "w") as f:
+                with open(str(grpc_file), "w", encoding="utf-8") as f:
                     f.writelines(new_lines)
                 print(f"转换python项目的grpc文件{grpc_name}为python模块完成!")
 

@@ -9,6 +9,7 @@ from pmfp.utils.sphinx_utils import (
     sphinx_build,
     sphinx_update_locale,
     sphinx_new_locale,
+    sphinx_index,
     move_to_source
 )
 
@@ -52,6 +53,9 @@ gettext_compact = False     # optional.
         sphinx_config(source_dirp, append_content)
         print('完成初始化文档源文件')
         move_to_source(source_dir=source_dirp, root=rootp)
+        print("完成对readme和changelog的复制")
+        sphinx_index(source_dir=source_dirp, project_name=project_name)
+        print("完成重写入口模板")
 
         def build_succ_cb(coutent: str) -> None:
             default_succ_cb(coutent)
