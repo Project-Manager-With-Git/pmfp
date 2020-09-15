@@ -1,20 +1,21 @@
-"""编译protobuf的schema为不同语言的代码."""
-from typing import Dict, Any, List,Optional
+"""更新不同语言的api文档."""
+from typing import Dict, Any, List, Optional
 from .update_py import apidoc_update_py
 
-def update_apidoc(language:str,code:str,output:str,source_dir:str,*, root:str,version:Optional[str]=None)->None:
-    """对指定代码做单元测试.
+
+def update_apidoc(language: str, code: str, output: str, source_dir: str, *, root: str) -> None:
+    """更新不同语言的api文档.
 
     Args:
-        language (str): 目标语言
-        testcode (str): 目标测试代码
-        coverage (Optional[bool]): 是否输出检测的覆盖率文档
-        source (Optional[List[str]]): 测试覆盖代码
-        output (Optional[str]): 覆盖率文档位置
+        language (str): 指定的编程语言
+        code (str): 项目的源码位置
+        output (str): 文档所在文件夹
+        source_dir (str): 文档源码文件夹
+        root (str): 项目根目录
 
     """
     if language == "py":
-        apidoc_update_py(code=code,output=output,root=root,source_dir=source_dir,version=version)
-    
+        apidoc_update_py(code=code, output=output, root=root, source_dir=source_dir)
+
     else:
         print(f"未支持的语言{language}")

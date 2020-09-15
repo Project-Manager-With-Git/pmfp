@@ -1,7 +1,7 @@
 """reset命令的处理."""
 import argparse
 from pathlib import Path
-from typing import Sequence
+from typing import Sequence, Optional, Dict
 from pmfp.utils.run_command_utils import run_command
 from .core import ppm
 
@@ -27,13 +27,16 @@ def run(argv: Sequence[str]) -> None:
 
 def cmd_run(args: argparse.Namespace) -> None:
     """重置pmfp工具的配置."""
+    cwd: Optional[Path]
+    env: Optional[Dict[str, str]]
     command = " ".join(args.commands)
+
     if args.cwd:
         cwd = Path(args.cwd).resolve()
     else:
         cwd = None
     if args.env:
-        env= dict([ pair.split(":") for pair in args.env.split(";")])
+        env = dict([pair.split(":") for pair in args.env.split(";")])
     else:
         env = None
-    run_command(command=command,cwd=cwd,env=env)
+    run_command(command=command, cwd=cwd, env=env)

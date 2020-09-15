@@ -2,7 +2,6 @@
 import json
 from string import Template
 from typing import Any
-from pmfp.const import PMFP_CONFIG_PATH,PMFP_CONFIG_HOME,DEFAULT_PMFPRC
 
 
 def template_2_content(template: str, **kwargs: Any) -> str:
@@ -42,5 +41,3 @@ def jsontemplate_2_content(template: str, **kwargs: Any) -> str:
         raise
     else:
         return json.dumps(content, indent=4, ensure_ascii=False, sort_keys=True)
-
-

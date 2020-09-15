@@ -1,2 +1,2 @@
-"""编译protobuf的schema为不同语言的代码."""
+"""使用http请求获取资源."""
 from pmfp.utils.url_utils import http_query

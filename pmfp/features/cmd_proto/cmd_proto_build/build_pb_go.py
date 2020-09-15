@@ -1,5 +1,5 @@
 """编译go语言模块."""
-from typing import List, Dict
+from typing import List
 from pmfp.utils.run_command_utils import run_command
 
 

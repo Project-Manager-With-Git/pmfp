@@ -1,6 +1,6 @@
 """用于检测数据模式的公用组件."""
-from jsonschema import validate
 from typing import Dict, Any
+from jsonschema import validate
 
 
 def is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool:

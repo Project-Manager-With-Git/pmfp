@@ -1,9 +1,10 @@
-"""编译protobuf的schema为不同语言的代码."""
+"""测试http请求的结果是否符合模式."""
 import json
+from typing import Optional, Callable, Any
 import yaml
 from pmfp.utils.url_utils import http_query, is_url, get_source_from_url
 from pmfp.utils.schema_utils import is_validated
-from typing import Optional, Callable, Any
+
 
 
 def http_test(schema: str, serialization: str, url: str, method: str, *,

@@ -20,7 +20,6 @@ def parse_id_from_relative_path(relative_path: Path) -> Dict[str, str]:
         Dict[str,str]: 构造id时的参数字段
 
     """
-    file_name = relative_path.name
     version_str = relative_path.parent.name
     schema_name = relative_path.parent.parent.name
     schema_path = relative_path.parent.parent.parent.as_posix()

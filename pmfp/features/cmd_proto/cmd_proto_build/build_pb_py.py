@@ -1,6 +1,6 @@
 """编译python语言模块."""
 from pathlib import Path
-from typing import List, Dict
+from typing import List
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.fs_utils import get_global_python
@@ -65,7 +65,7 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str,
     command = f"{python} -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
     print(f"编译命令:{command}")
 
-    def _(x: str) -> None:
+    def _(_: str) -> None:
         print(f"编译{task}项目 {target_str} 为python模块完成!")
         trans_grpc_model_py(to)
 

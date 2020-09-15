@@ -3,6 +3,8 @@ import json
 from typing import Optional, Callable
 from urllib.parse import urlparse
 import requests as rq
+from requests.auth import HTTPBasicAuth, HTTPDigestAuth
+from requests_oauthlib import OAuth1
 
 
 def is_url(url: str) -> bool:
@@ -85,19 +87,19 @@ def http_query(url: str, method: str, *,
             s.verify = verify
         if auth_type and auth:
             if auth_type == "basic":
-                from requests.auth import HTTPBasicAuth
+
                 user, pwd = auth.split(",")
                 s.auth = HTTPBasicAuth(user, pwd)
 
             if auth_type == "digest":
-                from requests.auth import HTTPDigestAuth
+
                 user, pwd = auth.split(",")
                 s.auth = HTTPDigestAuth(user, pwd)
 
             elif auth_type == "jwt":
                 s.headers = rq.structures.CaseInsensitiveDict({"Authorization": "Bearer " + auth})
             elif auth_type == "oauth1":
-                from requests_oauthlib import OAuth1
+
                 app_key, app_secret, oauth_token, oauth_token_secret = auth.split(",")
                 s.auth = OAuth1(app_key, app_secret, oauth_token, oauth_token_secret)
             else:

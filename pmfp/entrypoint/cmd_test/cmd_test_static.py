@@ -18,6 +18,7 @@ def static(argv: Sequence[str]) -> None:
     )
     parser.add_argument("-l", "--language", type=str,
                         choices=("py",), help="静态类型检验针对的语言.")
+    parser.add_argument("--root", type=str, help="静态类型检验执行的位置.")
     parser.add_argument("-m", "--model", action="store_true",
                         help="静态类型检验针对是模块还是执行脚本.")
     parser.add_argument("-c", "--coverage", action="store_true",
@@ -33,4 +34,4 @@ def static(argv: Sequence[str]) -> None:
 
 def cmd_static_test(args: argparse.Namespace) -> None:
     """检测动态语言的类型."""
-    static_test(args.language, args.code, args.model, args.coverage, args.output)
+    static_test(args.language, args.code, args.model, args.coverage, args.output, root=args.root)

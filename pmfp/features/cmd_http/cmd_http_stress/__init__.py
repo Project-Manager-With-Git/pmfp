@@ -1,4 +1,4 @@
-"""编译protobuf的schema为不同语言的代码."""
+"""对http服务进行简单压测."""
 import json
 from typing import Dict, Any
 from boom.boom import load, print_stats

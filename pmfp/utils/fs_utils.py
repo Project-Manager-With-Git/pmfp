@@ -6,7 +6,7 @@ import shutil
 import tempfile
 from pathlib import Path
 from typing import (
-    Callable, 
+    Callable,
     Optional,
     Any
 )
@@ -19,8 +19,7 @@ from pmfp.const import (
 )
 
 
-
-def get_abs_path(path_str: str) -> Path:
+def get_abs_path(path_str: str, root: Optional[Path] = None) -> Path:
     """由路径字符串获取绝对路径.
 
     Args:
@@ -30,12 +29,15 @@ def get_abs_path(path_str: str) -> Path:
         Path: 路径字符串的绝对路径
 
     """
-    rootp = Path(path_str)
-    if rootp.is_absolute():
-        root_path = rootp
+    p = Path(path_str)
+    if p.is_absolute():
+        r_path = p
     else:
-        root_path = Path(".").resolve().joinpath(path_str)
-    return root_path
+        if root:
+            r_path = root.resolve().joinpath(path_str)
+        else:
+            r_path = Path(".").resolve().joinpath(path_str)
+    return r_path
 
 
 def iter_dir_to_end(path: Path,
@@ -73,26 +75,27 @@ def iter_dir_to_end(path: Path,
                 else:
                     print(f"{p} not match")
 
-def remove_readonly(func: Callable, path: str, _: Any)->None:
+
+def remove_readonly(func: Callable, path: str, _: Any) -> None:
     """Clear the readonly bit and reattempt the removal."""
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
-def tempdir(p: str, cb: Callable[[Path], None]) -> None:
+
+def tempdir(p: Path, cb: Callable[[Path], None]) -> None:
     """临时文件夹相关处理.
 
     Args:
-        p (str): 临时文件夹所在的文件夹
+        p (Path): 临时文件夹所在的文件夹
         cb (Callable[[Path],None]): 创建临时文件夹后的操作.
 
     """
     print("构造临时文件夹ing...")
-    root = get_abs_path(p)
-    temp_dir = tempfile.TemporaryDirectory(suffix="pmfp_cache", dir=root)
-    temp_path = root.joinpath(temp_dir.name)
+    temp_dir = tempfile.TemporaryDirectory(suffix="pmfp_cache", dir=p)
+    temp_path = p.joinpath(temp_dir.name)
     cb(temp_path)
     try:
-       temp_dir.cleanup()
+        temp_dir.cleanup()
     except PermissionError:
         try:
             shutil.rmtree(str(temp_path), onerror=remove_readonly)
@@ -101,7 +104,8 @@ def tempdir(p: str, cb: Callable[[Path], None]) -> None:
     except Exception as e:
         raise e
 
-def init_pmfprc()->None:
+
+def init_pmfprc() -> None:
     """初始化pmfp的配置."""
     if not PMFP_CONFIG_PATH.exists():
         if not PMFP_CONFIG_HOME.exists():
@@ -112,24 +116,26 @@ def init_pmfprc()->None:
             json.dump(config, fw, ensure_ascii=False, indent=4, sort_keys=True)
 
 
-def get_cache_dir()->str:
+def get_cache_dir() -> Path:
     """获取缓存根目录."""
     init_pmfprc()
-    with open(PMFP_CONFIG_PATH,"r",encoding="utf-8") as f:
+    with open(PMFP_CONFIG_PATH, "r", encoding="utf-8") as f:
         config = json.load(f)
-        cache_dir = config["cache_dir"]
+        cache_dir = Path(config["cache_dir"])
     return cache_dir
 
-def get_global_python()->str:
+
+def get_global_python() -> str:
     """获取全局python."""
     init_pmfprc()
-    with open(PMFP_CONFIG_PATH,"r") as f:
+    with open(PMFP_CONFIG_PATH, "r") as f:
         pmfprc = json.load(f)
-        return pmfprc.get("python",GOLBAL_PYTHON)
+        return pmfprc.get("python", GOLBAL_PYTHON)
 
-def get_global_cc()->str:
+
+def get_global_cc() -> str:
     """获取全局c编译器."""
     init_pmfprc()
-    with open(PMFP_CONFIG_PATH,"r") as f:
+    with open(PMFP_CONFIG_PATH, "r") as f:
         pmfprc = json.load(f)
-        return pmfprc.get("cc",GOLBAL_CC)
+        return pmfprc.get("cc", GOLBAL_CC)

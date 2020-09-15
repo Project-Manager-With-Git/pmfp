@@ -1,9 +1,11 @@
 """编译python语言模块."""
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command,get_local_python_path
+from typing import Optional
+from pmfp.utils.run_command_utils import run_command, get_local_python
+from pmfp.utils.fs_utils import get_abs_path
 
 
-def benchmark_test_py(testcode:str,*,mem:bool=False,env_dir:str="env") -> None:
+def benchmark_test_py(testcode: str, *, root: Optional[str] = None, mem: bool = False) -> None:
     """对python代码做静态检测.
 
     Args:
@@ -13,7 +15,12 @@ def benchmark_test_py(testcode:str,*,mem:bool=False,env_dir:str="env") -> None:
         output (str): 覆盖率文档位置
 
     """
-    python = get_local_python_path(env_dir)
+    if root:
+        rootp = get_abs_path(root)
+    else:
+        rootp = Path(".")
+    env_dir = rootp.joinpath("env")
+    python = get_local_python(env_dir)
     if mem:
         command = f"{python} -m kernprof -l -v {testcode}"
     else:

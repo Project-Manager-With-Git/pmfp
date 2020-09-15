@@ -1,9 +1,10 @@
 """编译protobuf的schema为不同语言的代码."""
-from typing import Dict, Any, List,Optional
+from typing import Dict, Any, List, Optional
 from .test_py import unittest_test_py
 from .test_go import unittest_test_go
 
-def unittest_test(language: str, testcode: str,*,coverage: Optional[bool],source:Optional[List[str]], output: Optional[str]) -> None:
+
+def unittest_test(language: str, testcode: str, *, root: str, coverage: Optional[bool], source: Optional[List[str]], output: Optional[str]) -> None:
     """对指定代码做单元测试.
 
     Args:
@@ -15,8 +16,8 @@ def unittest_test(language: str, testcode: str,*,coverage: Optional[bool],source
 
     """
     if language == "py":
-        unittest_test_py(testcode=testcode,coverage=coverage,source=source, output=output)
+        unittest_test_py(testcode=testcode, root=root, coverage=coverage, source=source, output=output)
     elif language == "go":
-        unittest_test_go(testcode=testcode,coverage=coverage,source=source, output=output)
+        unittest_test_go(testcode=testcode, root=root, coverage=coverage, output=output)
     else:
         print(f"未支持的语言{language}")

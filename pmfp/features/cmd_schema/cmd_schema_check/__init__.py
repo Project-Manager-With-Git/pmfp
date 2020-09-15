@@ -1,9 +1,9 @@
 """检测json schema的example是否符合定义的模式schema."""
 import json
-import yaml
 import sys
 from pathlib import Path
 from typing import Optional, Callable, IO, Any
+import yaml
 from pmfp.utils.url_utils import (
     is_url,
     is_http_url,

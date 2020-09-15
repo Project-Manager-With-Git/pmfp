@@ -1,9 +1,12 @@
 """编译python语言模块."""
+import warnings
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command,default_succ_cb,get_local_python_path
-from typing import List,Optional
+from typing import List, Optional
+from pmfp.utils.fs_utils import get_abs_path, get_global_python
+from pmfp.utils.run_command_utils import run_command, default_succ_cb, get_local_python
 
-def unittest_test_py(testcode: str,*,coverage: Optional[bool],source:Optional[List[str]], output: Optional[str]) -> None:
+
+def unittest_test_py(testcode: str, *, coverage: Optional[bool], source: Optional[List[str]], output: Optional[str], root: Optional[str] = None) -> None:
     """对python代码做单元测试.
 
     Args:
@@ -13,19 +16,29 @@ def unittest_test_py(testcode: str,*,coverage: Optional[bool],source:Optional[Li
         output (Optional[str]): 覆盖率文档位置
 
     """
-    python = get_local_python_path()
+    if root:
+        rootp = get_abs_path(root)
+        python = get_local_python(rootp)
+        test_code_path = get_abs_path(testcode, rootp)
+    else:
+        rootp = Path(".")
+        python = get_global_python()
+        test_code_path = get_abs_path(testcode)
     if coverage:
-        def coverage_success(content:str)->None:
+        def coverage_success(content: str) -> None:
             default_succ_cb(content)
             if output:
-                command = f"{python} -m coverage html -d {output}"
+                output_path = get_abs_path(testcode, rootp)
+                command = f"{python} -m coverage html -d {str(output_path)}"
             else:
                 command = f"{python} -m coverage report"
-            run_command(command)
-
+            run_command(command, cwd=rootp)
+        if not source or len(source) == 0:
+            warnings.warn("要获得覆盖率必须指定要覆盖的源码")
+            return
         sources = ",".join(source)
-        command = f"{python} -m coverage run --source={sources} -m unittest discover -v -s {testcode}"
-        run_command(command,succ_cb=coverage_success)
+        command = f"{python} -m coverage run --source={sources} -m unittest discover -v -s {str(test_code_path)}"
+        run_command(command, cwd=rootp, succ_cb=coverage_success)
     else:
-        command = f"{python} -m unittest discover -v -s {testcode}"
-        run_command(command)
+        command = f"{python} -m unittest discover -v -s {str(test_code_path)}"
+        run_command(command, cwd=rootp)

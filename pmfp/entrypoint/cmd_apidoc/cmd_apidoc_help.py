@@ -14,6 +14,7 @@ def help(argv: Sequence[str]) -> None:
     update          更新api文档
     newlocale       新增小语种支持
     build           编译文档源文件为html静态页面
+
     """
     parser = argparse.ArgumentParser(
         prog='ppm apidoc help',

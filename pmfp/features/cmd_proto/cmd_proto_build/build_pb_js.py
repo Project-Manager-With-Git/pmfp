@@ -1,12 +1,12 @@
 """编译js语言模块."""
 import os
 import warnings
-from typing import List, Dict
+from typing import List
 from pmfp.utils.run_command_utils import run_command
 
 
 def build_pb_js(files: List[str], includes: List[str], to: str, grpc: bool,
-                **kwargs: Dict[str, str]) -> None:
+                **kwargs: str) -> None:
     """编译js语言模块.
 
     Args:
