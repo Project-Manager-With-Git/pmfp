@@ -158,7 +158,7 @@ def move_to_source(source_dir: Path, *, root: Path) -> None:
 
     """
     _move_to_source(source_dir=source_dir, root=root, file_name="README.md")
-    _move_to_source(source_dir=source_dir, root=root, file_name="Changelog.md")
+    _move_to_source(source_dir=source_dir, root=root, file_name="CHANGELOG.md")
 
 
 def sphinx_new(code: Path, source_dir: Path, project_name: str, author: str, version: str, *,

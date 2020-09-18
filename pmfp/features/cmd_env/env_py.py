@@ -5,6 +5,8 @@ from pmfp.utils.fs_utils import get_abs_path, get_global_python
 from pmfp.const import GOLBAL_PYTHON_VERSION
 
 
+def new_env
+
 def new_env_py(root: str,
                project_name: str) -> None:
     """初始化python默认的虚拟环境.
