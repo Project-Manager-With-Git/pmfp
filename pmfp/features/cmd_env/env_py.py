@@ -2,10 +2,29 @@
 import warnings
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.fs_utils import get_abs_path, get_global_python
+from pmfp.utils.template_utils import template_2_content
 from pmfp.const import GOLBAL_PYTHON_VERSION
 
 
-def new_env
+def new_env_manifest(root: str) -> None:
+    """在项目下创建MANIFEST.in文件.
+
+    Args:
+        root (str): [description]
+    """
+    root_path = get_abs_path(root)
+    manifest_path = root_path.joinpath("MANIFEST.in")
+    template = """include LICENSE
+include README.md
+inclued CHANELOG.md
+include requirements.txt
+recursive-include src *.pyx *.pxd *.pxi *.py *.c *.h
+"""
+    content = template_2_content(template=template)
+    if not manifest_path.exists():
+        with open(manifest_path, "w", encoding="utf-8") as f:
+            f.write(content)
+
 
 def new_env_py(root: str,
                project_name: str) -> None:

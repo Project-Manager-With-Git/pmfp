@@ -18,7 +18,7 @@ def update(argv: Sequence[str]) -> None:
         usage=ppm_apidoc.subcmds.get("update").__doc__
     )
     parser.add_argument("-l", "--language", type=str, required=True,
-                        choices=("py"), help="指定编程语言.")
+                        choices=("py",), help="指定编程语言.")
     parser.add_argument("--root", type=str, default=".",
                         help="指定要覆盖的项目根目录")
     parser.add_argument("-s", "--source_dir", type=str,
