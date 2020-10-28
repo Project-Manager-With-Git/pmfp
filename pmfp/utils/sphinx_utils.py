@@ -96,6 +96,14 @@ def sphinx_index(source_dir: Path, project_name: str) -> None:
     template = """欢迎使用${project_name}!
 ======================================
 
+类型申明覆盖率 typecheck_
+
+.. _typecheck: typecheck/index.html
+
+单元测试覆盖率 test_coverage_
+
+.. _test_coverage: test_coverage/index.html
+
 .. toctree::
    :maxdepth: 1
    :caption: 使用指引:
@@ -106,13 +114,15 @@ def sphinx_index(source_dir: Path, project_name: str) -> None:
    :maxdepth: 1
    :caption: 版本变更:
 
-   Changelog
+   CHANGELOG
 
 .. toctree::
    :maxdepth: 2
    :caption: 接口文档:
 
    ${project_name}
+
+
 
 索引与搜索
 ==================
