@@ -187,9 +187,24 @@ def sphinx_new(code: Path, source_dir: Path, project_name: str, author: str, ver
         fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
 
     """
-    command = f"sphinx-apidoc -F -E -H {project_name} -A {author} -V {version} -a -o {str(source_dir)} {str(code)}"
+    command = f"sphinx-quickstart --no-sep -v {version} -r {version} -p {project_name} -a {author} -l en --ext-todo --ext-mathjax --ext-viewcode {str(source_dir)}"
     run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
 
+def sphinx_build(code: Path, source_dir: Path, *,
+                  cwd: Optional[Path] = None,
+                  succ_cb: Optional[Callable[[str], None]] = None,
+                  fail_cb: Optional[Callable[[str], None]] = None) -> None:
+    """根据源码更新文档的源文件.
+
+    Args:
+        code (Path): 项目源码位置
+        source_dir (Path): 文档源码位置
+        succ_cb (Optional[Callable[[str], None]], optional): 成功的回调函数. Defaults to None.
+        fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
+
+    """
+    command = f"sphinx-build {str(source_dir)} {builddir}"
+    run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
 
 def sphinx_update(code: Path, source_dir: Path, *,
                   cwd: Optional[Path] = None,
