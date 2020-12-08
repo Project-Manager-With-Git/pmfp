@@ -1,2 +1,3 @@
 """pmfp项目."""
-__VERSION___ = "4.0.0"
+from pmfp.features import *
+#__VERSION__ = "4.0.0"

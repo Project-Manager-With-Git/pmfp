@@ -7,7 +7,7 @@ from .cmd_version import version
 # from .cmd_test import *
 # from .cmd_http import *
 # from .cmd_schema import *
-# from .cmd_proto import *
+from .cmd_proto import *
 # from .cmd_run import *
 # from .cmd_env import *
 # from .cmd_apidoc import *

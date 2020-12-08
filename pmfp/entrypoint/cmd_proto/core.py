@@ -1,16 +1,10 @@
 """ppm proto命令的处理."""
-from ..core import ppm, EntryPoint
+from schema_entry import EntryPoint
+from ..core import ppm
 
 
-ppm_proto = EntryPoint("proto")
-ppm_proto.__doc__ = """ppm proto <subcommand>
+class Proto(EntryPoint):
+    """protobuf和grpc相关的工具."""
 
-    ppm proto 的子命令有:
 
-    new                 创建一个protobuf文件
-    build               编译protobuf到指定位置      
-    """
-ppm_proto.prog = "ppm proto"
-ppm_proto.epilog = ''
-ppm_proto.description = '管理protobuf文件的子命令'
-ppm.regist_subcmd(ppm_proto)
+proto = ppm.regist_sub(Proto)

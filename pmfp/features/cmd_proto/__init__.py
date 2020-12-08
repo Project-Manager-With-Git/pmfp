@@ -1,0 +1,1 @@
+from .cmd_proto_new import new_pb

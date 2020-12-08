@@ -3,15 +3,15 @@ import json
 import configparser
 from pathlib import Path
 from schema_entry import EntryPoint
-from pmfp import __VERSION___
+#from pmfp import __VERSION__
 from .core import ppm
+
+__VERSION__ = "4.0.0"
 
 
 class VERSION(EntryPoint):
-    """获取pmfp工具的版本.
-
-    ppm version
-    """
+    """获取pmfp工具的版本."""
+    verify_schema = False
 
 
 version = ppm.regist_sub(VERSION)

@@ -7,6 +7,7 @@ from typing import Dict, Any, List, Optional
 import chardet
 from pmfp.utils.template_utils import template_2_content
 from pmfp.utils.fs_utils import get_abs_path
+from pmfp.entrypoint import proto_new
 
 proto_template = ""
 grpc_template = ""
@@ -22,7 +23,7 @@ if grpc_template_io:
 else:
     raise AttributeError("加载grpc模板失败")
 
-
+@proto_new.as_main
 def new_pb(name: str, to: str, *, parent_package: Optional[str] = None, grpc: bool = False) -> None:
     """新建一个protpbuf文件.
 
