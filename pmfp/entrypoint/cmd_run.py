@@ -40,3 +40,45 @@ def cmd_run(args: argparse.Namespace) -> None:
     else:
         env = None
     run_command(command=command, cwd=cwd, env=env)
+
+
+from .core import ppm
+
+
+class RUN(EntryPoint):
+    """执行命令行操作."""
+
+    argparse_noflag = "files"
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required":["commands"],
+        "properties": {
+            "commands": {
+                "description": "要执行的命令",
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "env": {
+                "type": "boolean",
+                "description": "是否是grpc",
+                "default": False
+            },
+            "cwd": {
+                "type": "string",
+                "description": "存放的地方",
+                "default": "."
+            }
+        }
+    }
+
+
+run = ppm.regist_sub(RUN)
+
+
+@version.as_main
+def cmd_version() -> None:
+    """打印工具的版本."""
+    print(f"pmfp version: {__VERSION__}")

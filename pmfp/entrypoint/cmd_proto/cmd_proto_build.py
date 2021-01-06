@@ -1,42 +1,60 @@
 """ppm proto build命令的处理."""
-import argparse
-from typing import Sequence
-from pmfp.features.cmd_proto.cmd_proto_build import build_pb
-from .core import ppm_proto
+from schema_entry import EntryPoint
+from .core import proto
 
 
-@ppm_proto.regist_subcmd
-def build(argv: Sequence[str]) -> None:
-    """编译proto文件.
+class Build(EntryPoint):
+    """创建protobuf文件."""
+    argparse_noflag = "files"
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required":["env","grpc","source_relative","includes","files"],
+        "properties": {
+            "env": {
+                "description": "proto文件名,也是package名",
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "enum":["py","js","go","web"]
+                }
+            },
+            "grpc": {
+                "type": "boolean",
+                "description": "是否是grpc",
+                "default": False
+            },
+            "to": {
+                "type": "string",
+                "description": "存放的地方",
+                "default": "."
+            },
+            "source_relative": {
+                "type": "boolean",
+                "description": "使用路径作为包名,只针对go语言",
+                "default": False
+            },
+            "includes":{
+                "type": "array",
+                "description": "待编译的文件的依赖所在的文件夹",
+                "items": {
+                    "type": "string"
+                },
+                "default":["pbschema"]
+            },
+            "kwargs":{
+                "type": "string",
+                "description": "其他键值对的额外参数,使用`key::value,key::value`的形式"
+            },
+            "files":{
+                "type": "array",
+                "description": "待编译的文件名",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 
-    ppm proto build [-flag] <files>
-    """
-    parser = argparse.ArgumentParser(
-        prog='ppm proto build',
-        description='编译pb文件',
-        usage=ppm_proto.subcmds.get("build").__doc__
-    )
-    parser.add_argument("-e", "--env", nargs='+', type=str,
-                        choices=("py", "js", "go", "web"), required=True, help="编译为什么语言或环境")
-    parser.add_argument("-I", "--includes", nargs='+', type=str,
-                        required=True, help="待编译的文件的依赖所在的文件夹")
-    parser.add_argument("-g", "--grpc", action="store_true",
-                        help="是否是grpc")
-    parser.add_argument("-t", "--to", type=str, required=True,
-                        help="存放的地方")
-    parser.add_argument("-s", "--source_relative", action="store_true",
-                        help="使用路径作为包名,只针对go语言")
-    parser.add_argument("-k", "--kwargs", type=str,
-                        help="其他键值对的额外参数,使用`key::value,key::value`的形式")
-    parser.add_argument("files", nargs='+', type=str,
-                        help="待编译的文件名")
-    parser.set_defaults(func=cmd_build_pb)
-    args = parser.parse_args(argv)
-    args.func(args)
 
-
-def cmd_build_pb(args: argparse.Namespace) -> None:
-    """编译protobuf文件."""
-    if not args.includes:
-        args.includes = []
-    build_pb(env=args.env, files=args.files, includes=args.includes, to=args.to, grpc=args.grpc, source_relative=args.source_relative)
+proto_build = proto.regist_sub(Build)

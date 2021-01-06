@@ -23,7 +23,6 @@ def template_2_content(template: str, **kwargs: Any) -> str:
     else:
         return content
 
-
 def jsontemplate_2_content(template: str, **kwargs: Any) -> str:
     """将模板转换为文件内容.
 

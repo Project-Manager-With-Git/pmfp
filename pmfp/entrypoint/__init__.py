@@ -1,7 +1,6 @@
 """命令行执行脚本模块."""
 from .core import ppm
 from .cmd_version import version
-# from .cmd_help import *
 # from .cmd_reset import *
 # from .cmd_cache import *
 # from .cmd_test import *

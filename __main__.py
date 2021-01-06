@@ -12,7 +12,7 @@ from colorama import init
 from gevent import monkey
 monkey.patch_all()
 init()
-from .entrypoint import ppm
+from pmfp.entrypoint import ppm
 
 
 def main(argv: List[str] = sys.argv[1:]) -> None:
