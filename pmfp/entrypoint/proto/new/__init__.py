@@ -4,60 +4,25 @@ import warnings
 import pkgutil
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from schema_entry import EntryPoint
+
 from pmfp.utils.template_utils import template_2_content
 from pmfp.utils.fs_utils import get_abs_path
 
-from ..core import proto
+from .core import proto_new
 
 proto_template = ""
 grpc_template = ""
-proto_template_io = pkgutil.get_data('pmfp.entrypoint.proto.new.prototemp', 'proto.temp')
+proto_template_io = pkgutil.get_data('pmfp.entrypoint.proto.new.source_temp', 'proto.temp')
 if proto_template_io:
     proto_template = proto_template_io.decode('utf-8')
 else:
     raise AttributeError("加载proto模板失败")
 
-grpc_template_io = pkgutil.get_data('pmfp.entrypoint.proto.new.grpctemp', 'grpc.temp')
+grpc_template_io = pkgutil.get_data('pmfp.entrypoint.proto.new.source_temp', 'grpc.temp')
 if grpc_template_io:
     grpc_template = grpc_template_io.decode('utf-8')
 else:
     raise AttributeError("加载grpc模板失败")
-
-class New(EntryPoint):
-    """创建protobuf文件."""
-    argparse_noflag = "name"
-    schema = {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "type": "object",
-        "properties": {
-            "name": {
-                "type": "string",
-                "description": "proto文件名,也是package名"
-            },
-            "grpc": {
-                "type": "boolean",
-                "description": "是否是grpc"
-            },
-            "to": {
-                "type": "string",
-                "description": "存放的地方",
-                "default": "."
-            },
-            "parent_package": {
-                "type": "string",
-                "description": "package父package"
-            },
-            "cwd": {
-                "type": "string",
-                "description": "",
-                "default": "."
-            }
-        }
-    }
-
-
-proto_new = proto.regist_sub(New)
 
 
 @proto_new.as_main
@@ -71,30 +36,38 @@ def new_pb(name: str, to: str, *, parent_package: Optional[str] = None, grpc: bo
         grpc (bool, optional): 是否是grpc. Defaults to False.
 
     """
-    to_path = get_abs_path(to,Path(cwd))
-    if not to_path.exists():
-        to_path.mkdir(parents=True)
-    package_go = name
-    if parent_package:
-        if parent_package.endswith("."):
-            package_go = parent_package[:-1].replace(".", "_") + "/" + name
+    try:
+        to_path = get_abs_path(to,Path(cwd))
+        if not to_path.exists():
+            to_path.mkdir(parents=True)
+        package_go = name
+        if parent_package:
+            if parent_package.endswith("."):
+                package_go = parent_package[:-1].replace(".", "_") + "/" + name
+            else:
+                package_go = parent_package.replace(".", "_") + "/" + name
+                parent_package = parent_package+"."
         else:
-            package_go = parent_package.replace(".", "_") + "/" + name
-            parent_package = parent_package+"."
+            parent_package = ""
+        if grpc:
+            content = template_2_content(
+                template=grpc_template,
+                parent_package=parent_package,
+                name=name,
+                package_go=package_go,
+                name_upper=name.upper())
+        else:
+            content = template_2_content(
+                template=proto_template,
+                parent_package=parent_package,
+                name=name,
+                package_go=package_go)
+        with open(str(to_path.joinpath(f"{name}.proto")), "w", encoding='utf-8') as f:
+            f.write(content)
+    except Exception as e:
+        warnings.warn(f"""构造protobuffer文件失败:
+
+        Error: {str(e)}
+        """)
     else:
-        parent_package = ""
-    if grpc:
-        content = template_2_content(
-            template=grpc_template,
-            parent_package=parent_package,
-            name=name,
-            package_go=package_go,
-            name_upper=name.upper())
-    else:
-        content = template_2_content(
-            template=proto_template,
-            parent_package=parent_package,
-            name=name,
-            package_go=package_go)
-    with open(str(to_path.joinpath(f"{name}.proto")), "w", encoding='utf-8') as f:
-        f.write(content)
+        print("构造protobuffer文件成功")

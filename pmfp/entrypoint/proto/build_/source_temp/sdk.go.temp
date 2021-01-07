@@ -1,0 +1,131 @@
+${package}
+import (
+	"errors"
+	"fmt"
+
+	log "github.com/Golang-Tools/loggerhelper"
+	"github.com/liyue201/grpc-lb/balancer"
+	registry "github.com/liyue201/grpc-lb/registry/zookeeper"
+	grpc "google.golang.org/grpc"
+	resolver "google.golang.org/grpc/resolver"
+)
+
+//SDKConfig 的客户端类型
+type SDKConfig struct {
+	Address              []string `json:"address"`
+	BalanceWithZookeeper bool     `json:"balance_with_zookeeper,omitempty"`
+	AppName              string   `json:"app_name,omitempty"`
+	AppVersion           string   `json:"app_version,omitempty"`
+}
+
+//SDK 的客户端类型
+type SDK struct {
+	*SDKConfig
+	${registclient}
+	conn *grpc.ClientConn
+}
+
+//New 创建客户端对象
+func New() *SDK {
+	c := new(SDK)
+	return c
+}
+
+//Init 初始化sdk客户端
+func (c *SDK) Init(conf *SDKConfig) error {
+	c.SDKConfig = conf
+	if conf.Address == nil {
+		return errors.New("必须至少有一个地址")
+	}
+	switch len(conf.Address) {
+	case 0:
+		{
+			return errors.New("必须至少有一个地址")
+		}
+	case 1:
+		{
+			if conf.BalanceWithZookeeper {
+				c.initWithZooKeeperBalance()
+			} else {
+				c.initStandalone()
+			}
+		}
+	default:
+		{
+			if conf.BalanceWithZookeeper {
+				c.initWithZooKeeperBalance()
+			} else {
+				c.initWithLocalBalance()
+			}
+		}
+	}
+	return nil
+}
+
+//InitStandalone 初始化客户端对象
+func (c *SDK) initStandalone() error {
+	conn, err := grpc.Dial(c.Address[0], grpc.WithInsecure())
+	if err != nil {
+		return err
+	}
+	c.conn = conn
+	c.${registclient} = ${registclient_new}(conn)
+	return nil
+}
+
+//Build 构造本地负载均衡
+func (c *SDK) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
+	r := &localResolver{
+		target: target,
+		cc:     cc,
+		addrsStore: map[string][]string{
+			fmt.Sprintf("%s-%s", c.AppName, c.AppVersion): c.Address,
+		},
+	}
+	r.start()
+	return r, nil
+}
+
+//Scheme 构造本地schema
+func (c *SDK) Scheme() string { return "localbalancer" }
+
+//RegistToResolver 将服务注册到resolver
+func (c *SDK) RegistToResolver() {
+	resolver.Register(c)
+}
+
+//InitWithLocalBalance 创建带负载均衡的客户端对象
+func (c *SDK) initWithLocalBalance() error {
+	Address := fmt.Sprintf("localbalancer:///%s", fmt.Sprintf("%s-%s", c.AppName, c.AppVersion))
+	c.RegistToResolver()
+	conn, err := grpc.Dial(Address, grpc.WithBalancerName("round_robin"), grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		return err
+	}
+	c.conn = conn
+	c.${registclient} = ${registclient_new}(conn)
+	return nil
+}
+
+//InitWithZooKeeperBalance 创建带zookeeper负载均衡的客户端对象
+func (c *SDK) initWithZooKeeperBalance() error {
+	registry.RegisterResolver("zk", c.Address, "/backend/services", c.AppName, c.AppVersion)
+	conn, err := grpc.Dial("zk:///", grpc.WithInsecure(), grpc.WithBalancerName(balancer.RoundRobin))
+	if err != nil {
+		return err
+	}
+	log.Info("grpc dial ok", log.Dict{
+		"addr": c.Address,
+	})
+	c.conn = conn
+	c.${registclient} = ${registclient_new}(conn)
+	return nil
+}
+
+//Close 断开连接
+func (c *SDK) Close() error {
+	return c.conn.Close()
+}
+
+//DefaultClient 默认的sdk客户端
+var DefaultClient = New()

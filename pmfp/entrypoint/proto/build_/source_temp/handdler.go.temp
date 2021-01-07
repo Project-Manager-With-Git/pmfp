@@ -1,0 +1,9 @@
+${package}
+import (
+	"context"
+
+)
+//Example 方法实现模板
+func (s *Server) Example (ctx context.Context, in *Query) (*Response, error) {
+    return &Response{}, nil
+}

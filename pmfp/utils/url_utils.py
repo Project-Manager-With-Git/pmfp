@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 import requests as rq
 from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 from requests_oauthlib import OAuth1
-
+from promise import Promise
 
 def is_url(url: str) -> bool:
     """判断url是否是url.
@@ -57,8 +57,7 @@ def is_file_url(url: str) -> bool:
     except ValueError:
         return False
 
-
-def http_query(url: str, method: str, *,
+def query_http(url: str, method: str, *,
                auth: Optional[str] = None,
                auth_type: Optional[str] = None,
                payload: Optional[str] = None,
@@ -66,7 +65,7 @@ def http_query(url: str, method: str, *,
                stream: bool = False,
                verify: bool = False,
                cert: Optional[str] = None,
-               cb: Optional[Callable[[str], None]] = None) -> None:
+               cb: Optional[Callable[[str], None]]) -> str:
     """http请求并打印结果.
 
     Args:
@@ -87,19 +86,14 @@ def http_query(url: str, method: str, *,
             s.verify = verify
         if auth_type and auth:
             if auth_type == "basic":
-
                 user, pwd = auth.split(",")
                 s.auth = HTTPBasicAuth(user, pwd)
-
             if auth_type == "digest":
-
                 user, pwd = auth.split(",")
                 s.auth = HTTPDigestAuth(user, pwd)
-
             elif auth_type == "jwt":
                 s.headers = rq.structures.CaseInsensitiveDict({"Authorization": "Bearer " + auth})
             elif auth_type == "oauth1":
-
                 app_key, app_secret, oauth_token, oauth_token_secret = auth.split(",")
                 s.auth = OAuth1(app_key, app_secret, oauth_token, oauth_token_secret)
             else:

@@ -1,17 +1,40 @@
 """编译go语言模块."""
 import re
+import pkgutil
 import warnings
 from typing import List
 from pathlib import Path
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.template_utils import template_2_content
-from .build_pb_go_source import (
-    ServiceSource,
-    HanddlerSource,
-    LocalresolverSource,
-    SDKSource
-)
 
+ServiceSource = ""
+HanddlerSource = ""
+LocalresolverSource = ""
+SDKSource = ""
+
+source_io = pkgutil.get_data('pmfp.entrypoint.proto.build_.source_temp', 'serv.go.temp')
+if source_io:
+    ServiceSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载handdler.go.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.proto.build_.source_temp', 'handdler.go.temp')
+if source_io:
+    HanddlerSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载handdler.go.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.proto.build_.source_temp', 'localresolver.go.temp')
+if source_io:
+    LocalresolverSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载localresolver.go.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.proto.build_.source_temp', 'sdk.go.temp')
+if source_io:
+    SDKSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载sdk.go.temp模板失败")
 
 def _build_pb(includes:str,flag:str,to:str,target:str)->None:
     command = f"protoc  {includes} {flag} --go_out={to} {target}"
