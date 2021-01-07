@@ -46,11 +46,18 @@ def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: str) 
     flag_str = ""
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
-    task = "protobuf"
     command = f"protoc  {includes_str} {flag_str} --python_out={to} {target_str}"
     print(f"编译命令:{command}")
-    run_command(command,
-                succ_cb=lambda x: print(f"编译{task}项目{target_str}为python语言模块完成!"))
+    run_command(
+        command
+    ).then(
+        lambda x: print(f"编译protobuf项目{target_str}为python语言模块完成!")
+    ).catch(
+        lambda content :warnings.warn(f"""编译protobuf项目 {target_str} 为python模块失败:
+
+        {content}
+        """)
+    ).get()
 
 
 def _build_grpc_py(files: List[str], includes: List[str], to: str,
@@ -68,8 +75,17 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str,
     def _(_: str) -> None:
         print(f"编译{task}项目 {target_str} 为python模块完成!")
         trans_grpc_model_py(to)
+    
+    run_command(
+        command
+    ).then(
+        _
+    ).catch(
+        lambda content :warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
 
-    run_command(command, succ_cb=_)
+        {content}
+        """)
+    ).get()
 
 
 def trans_grpc_model_py(to: str) -> None:

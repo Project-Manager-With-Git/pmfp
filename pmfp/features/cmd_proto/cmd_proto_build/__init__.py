@@ -4,7 +4,6 @@ from typing import Dict, Any, List, Optional
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py
-from .build_pb_web import build_pb_web
 from pmfp.entrypoint import proto_build
 
 def _build_pb(env: str, files: List[str], includes: List[str], to: str, grpc: bool,
@@ -15,8 +14,6 @@ def _build_pb(env: str, files: List[str], includes: List[str], to: str, grpc: bo
         build_pb_py(files, includes, to, grpc, **kwargs)
     elif env == "js":
         build_pb_js(files, includes, to, grpc, **kwargs)
-    elif env == "web":
-        build_pb_web(files, includes, to, grpc, **kwargs)
     else:
         print(f"未知的环境类型{env}")
 
@@ -26,7 +23,7 @@ def build_pb(env: List[str], files: List[str],includes: List[str] , to: str, grp
     """编译protobuf的schema为不同语言的代码.
 
     Args:
-        env (List[str]): 编译到的执行环境,可选的有"go","py","js","web"
+        env (List[str]): 编译到的执行环境,可选的有"go","py","js"
         files (List[str]): 待编译的文件列表
         includes (List[str]): 待编译文件及其依赖所在文件夹列表
         to (str): 编译到的模块所在文件夹.

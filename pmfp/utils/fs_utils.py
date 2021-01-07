@@ -19,11 +19,12 @@ from pmfp.const import (
 )
 
 
-def get_abs_path(path_str: str, root: Optional[Path] = None) -> Path:
+def get_abs_path(path_str: str, cwd: Optional[Path] = None) -> Path:
     """由路径字符串获取绝对路径.
 
     Args:
         path_str (str): 路径字符创
+        cwd (Optional[Path]): 指定执行时的位置
 
     Returns:
         Path: 路径字符串的绝对路径
@@ -33,8 +34,8 @@ def get_abs_path(path_str: str, root: Optional[Path] = None) -> Path:
     if p.is_absolute():
         r_path = p
     else:
-        if root:
-            r_path = root.resolve().joinpath(path_str)
+        if cwd:
+            r_path = cwd.resolve().joinpath(path_str)
         else:
             r_path = Path(".").resolve().joinpath(path_str)
     return r_path
@@ -125,17 +126,4 @@ def get_cache_dir() -> Path:
     return cache_dir
 
 
-def get_global_python() -> str:
-    """获取全局python."""
-    init_pmfprc()
-    with open(PMFP_CONFIG_PATH, "r") as f:
-        pmfprc = json.load(f)
-        return pmfprc.get("python", GOLBAL_PYTHON)
 
-
-def get_global_cc() -> str:
-    """获取全局c编译器."""
-    init_pmfprc()
-    with open(PMFP_CONFIG_PATH, "r") as f:
-        pmfprc = json.load(f)
-        return pmfprc.get("cc", GOLBAL_CC)

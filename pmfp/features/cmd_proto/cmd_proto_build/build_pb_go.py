@@ -1,5 +1,6 @@
 """编译go语言模块."""
 import re
+import warnings
 from typing import List
 from pathlib import Path
 from pmfp.utils.run_command_utils import run_command
@@ -15,8 +16,16 @@ from .build_pb_go_source import (
 def _build_pb(includes:str,flag:str,to:str,target:str)->None:
     command = f"protoc  {includes} {flag} --go_out={to} {target}"
     print(f"编译命令:{command}")
-    run_command(command,
-                succ_cb=lambda x: print(f"编译protobuf项目 {target} 为go语言模块完成!"))
+    run_command(
+        command
+        ).then(
+            lambda x: print(f"编译protobuf项目 {target} 为go语言模块完成!")
+        ).catch(
+            lambda content :warnings.warn(f"""编译protobuf项目 {target} 为go语言模块失败:
+
+            {content}
+            """)
+        ).get()
     
 def find_grpc_package(to:str)->List[str]:
     path = Path(to)
@@ -76,7 +85,16 @@ def _build_grpc(includes:str,flag:str,to:str,target:str)->None:
     
     command = f"protoc {includes} {flag} --go_out=plugins=grpc:{to} {target}"
     print(f"编译命令:{command}")
-    run_command(command,succ_cb=_build_pb_succ_cb)
+    run_command(
+        command
+    ).then(
+        _build_pb_succ_cb
+    ).catch(
+        lambda content :warnings.warn(f"""编译grpc项目 {target} 为go语言模块失败:
+
+            {content}
+            """)
+    ).get()
 
 def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,
                 source_relative: bool, **kwargs: str) -> None:

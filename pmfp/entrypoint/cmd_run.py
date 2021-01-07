@@ -76,9 +76,3 @@ class RUN(EntryPoint):
 
 
 run = ppm.regist_sub(RUN)
-
-
-@version.as_main
-def cmd_version() -> None:
-    """打印工具的版本."""
-    print(f"pmfp version: {__VERSION__}")

@@ -11,12 +11,17 @@ class Build(EntryPoint):
         "type": "object",
         "required":["env","grpc","source_relative","includes","files"],
         "properties": {
+            "cwd": {
+                "type": "string",
+                "description": "",
+                "default": "."
+            },
             "env": {
                 "description": "proto文件名,也是package名",
                 "type": "array",
                 "items": {
                     "type": "string",
-                    "enum":["py","js","go","web"]
+                    "enum":["py","js","go"]
                 }
             },
             "grpc": {

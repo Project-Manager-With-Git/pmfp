@@ -29,6 +29,11 @@ class New(EntryPoint):
             "parent_package": {
                 "type": "string",
                 "description": "package父package"
+            },
+            "cwd": {
+                "type": "string",
+                "description": "",
+                "default": "."
             }
         }
     }

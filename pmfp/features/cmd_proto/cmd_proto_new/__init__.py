@@ -24,7 +24,7 @@ else:
     raise AttributeError("加载grpc模板失败")
 
 @proto_new.as_main
-def new_pb(name: str, to: str, *, parent_package: Optional[str] = None, grpc: bool = False) -> None:
+def new_pb(name: str, to: str, *, parent_package: Optional[str] = None, grpc: bool = False,cwd: str=".") -> None:
     """新建一个protpbuf文件.
 
     Args:

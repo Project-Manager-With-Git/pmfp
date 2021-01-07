@@ -1,32 +1,14 @@
 """执行命令行任务的通用组件."""
-import warnings
 import subprocess
+from functools import partial
 from pathlib import Path
 from typing import Callable, Optional, Any
 import chardet
 from termcolor import colored
-from pmfp.utils.fs_utils import get_global_python
+from promise import Promise
 
-
-def default_succ_cb(content: str) -> None:
-    """当执行成功时默认执行的回调."""
-    print(colored(content, 'white', 'on_cyan'))
-
-
-def default_fail_cb(content: str) -> None:
-    """当执行失败时默认执行的回调."""
-    print(colored(content, 'white', 'on_magenta'))
-
-
-def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None, succ_cb: Optional[Callable[[str], None]] = None, fail_cb: Optional[Callable[[str], None]] = None) -> None:
-    """执行命令行命令.
-
-    Args:
-        command (str): 命令行命令
-        succ_cb (Optional[Callable[[str],None]], optional): 执行成功的回调函数. Defaults to None.
-        fail_cb (Optional[Callable[[str],None]], optional): 执行失败的回调函数. Defaults to None.
-
-    """
+def _run_command(resolve: Callable[[Any], Promise], reject: Callable[[Any], Promise],
+    command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None,visible:bool=False)->Promise:
     res = subprocess.run(command, capture_output=True, shell=True, cwd=cwd, env=env)
     if res.returncode != 0:
         print(f"命令{command}执行失败")
@@ -36,82 +18,32 @@ def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] 
         else:
             encoding = chardet.detect(res.stdout).get("encoding")
             content = res.stdout.decode(encoding).strip()
-        if fail_cb:
-            fail_cb(content)
-        else:
-            default_fail_cb(content)
+        if visible:
+            print(colored(content, 'white', 'on_magenta'))
+        return reject(content)
     else:
         content = ""
         if res.stdout:
             encoding = chardet.detect(res.stdout).get("encoding")
             content = res.stdout.decode(encoding).strip()
-        if succ_cb:
-            succ_cb(content)
-        else:
-            default_succ_cb(content)
+        if visible:
+            print(colored(content, 'white', 'on_cyan'))
+        return resolve(content)
 
-
-def get_node_version() -> Optional[str]:
-    """获取系统中node的版本."""
-    command = "node -v"
-    result = None
-
-    def node_succ_cb(content: str) -> None:
-        nonlocal result
-        result = content[1:]
-
-    def node_fail_cb(_: str) -> None:
-        warnings.warn("系统中未找到node环境,如有需要请安装")
-    run_command(command, succ_cb=node_succ_cb, fail_cb=node_fail_cb)
-    return result
-
-
-def get_golang_version() -> Optional[str]:
-    """获取本地golang的版本."""
-    command = "go version"
-    result = None
-
-    def go_succ_cb(content: str) -> None:
-        nonlocal result
-        result = [i for i in content.split(" ") if "."in i][0][2:]
-
-    def go_fail_cb(_: str) -> None:
-        warnings.warn("系统中未找到golang环境,如有需要请安装")
-    run_command(command, succ_cb=go_succ_cb, fail_cb=go_fail_cb)
-    return result
-
-
-def get_protoc_version() -> Optional[str]:
-    """获取本地protoc的版本."""
-    command = "protoc --version"
-    result = None
-
-    def go_succ_cb(content: str) -> None:
-        nonlocal result
-        result = [i for i in content.split(" ") if "."in i][0]
-
-    def go_fail_cb(_: str) -> None:
-        warnings.warn("系统中未找到protoc环境,如有需要请安装")
-    run_command(command, succ_cb=go_succ_cb, fail_cb=go_fail_cb)
-    return result
-
-
-def get_local_python(env_path: Path) -> str:
-    """获取本地环境python解释器的地址.
+def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None,visible:bool=False) -> Promise:
+    """执行命令行命令.
 
     Args:
-        env_path_str (Path): python本地环境目录.
+        command (str): 命令行命令
+        cwd (Optional[Path]): 执行命令时的位置.Default: None
+        env (Optional[Any]): 执行命令时的环境变量. Default:None
+        visible (bool): 命令结果的可见度. Default: False
 
-    Returns:
-        str: python位置字符串
-
+    Return:
+        (Promise): 可以在后续根据执行的成功与否添加回调
     """
-    python_path = env_path.joinpath("bin/python")
-    if not python_path.exists():
-        python_path = env_path.joinpath("Scripts/python")
-        if not python_path.exists():
-            python_path = env_path.joinpath("python")
-            if not python_path.exists():
-                warnings.warn("目录中未找到python环境.使用全局python")
-                return get_global_python()
-    return str(python_path)
+    promise = Promise(
+        partial(_run_command,command=command,cwd=cwd,env=env)
+    )
+    return promise
+
