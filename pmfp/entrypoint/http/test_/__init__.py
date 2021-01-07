@@ -4,10 +4,11 @@ from typing import Optional, Callable, Any
 import yaml
 from pmfp.utils.url_utils import http_query, is_url, get_source_from_url
 from pmfp.utils.schema_utils import is_validated
+from .core import http_test
 
 
-
-def http_test(schema: str, serialization: str, url: str, method: str, *,
+@http_test.as_main
+def test_http(schema: str, serialization: str, url: str, method: str, *,
               auth: Optional[str] = None,
               auth_type: Optional[str] = None,
               payload: Optional[str] = None,

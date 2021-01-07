@@ -9,7 +9,7 @@ class Query(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required":["url","method"],
+        "required": ["url", "method"],
         "properties": {
             "url": {
                 "type": "string",
@@ -19,7 +19,7 @@ class Query(EntryPoint):
                 "type": "string",
                 "description": "访问资源的方法",
                 "default": "GET",
-                "enum":["get","GET","Get","post","POST","Post","delete","DELETE","Delete","put","PUT","Put"]
+                "enum": [ "GET", "POST", "DELETE", "PUT"]
             },
             "payload": {
                 "type": "string",
@@ -32,12 +32,12 @@ class Query(EntryPoint):
             "auth_type": {
                 "type": "string",
                 "description": "用户身份的验证类型",
-                "enum":["basic","digest","jwt","oauth1"]
+                "enum": ["basic", "digest", "jwt", "oauth1"]
             },
             "payload_type": {
                 "type": "string",
                 "description": "请求的负载类型",
-                "enum":["json","form","url","stream"]
+                "enum": ["json", "form", "url", "stream"]
             },
             "stream": {
                 "type": "boolean",
@@ -55,5 +55,6 @@ class Query(EntryPoint):
             }
         }
     }
+
 
 http_query = http.regist_sub(Query)
