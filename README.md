@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 4.0.0
++ version: 4.0.0-per
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -9,10 +9,11 @@
 
 一个用于管理项目及相关开发的工具
 
-keywords:tool,project_manager
+keywords: tool,project_manager
 
 ## 特点
 
++ 可以独立使用功能模块
 + 根据模板快速构建项目
 + 简单的编译和打包指令
 + 快速测试
@@ -29,7 +30,6 @@ keywords:tool,project_manager
 ## Install
 
 `python -m pip install pmfp`
-
 
 ## Documentation
 

@@ -1,9 +1,10 @@
 from schema_entry import EntryPoint
-from ..core import proto
+from ..core import grpc
 
 
 class Build(EntryPoint):
-    """创建protobuf文件.
+    """根据grpc的定义protobuf文件编译指定语言的模块.
+
     需要本地有`protoc`,可以在`https://github.com/protocolbuffers/protobuf/releases`下载安装
     """
     argparse_noflag = "files"
@@ -58,4 +59,4 @@ class Build(EntryPoint):
     }
 
 
-proto_build = proto.regist_sub(Build)
+grpc_build = grpc.regist_sub(Build)

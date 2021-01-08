@@ -1,26 +1,10 @@
-schema_entry
-colorama
-gevent
-
-
-wheel
-pep8
-coverage
-mypy-extensions
-pydocstyle
-autopep8
-sphinx
-recommonmark
-sphinxcontrib-napoleon
-sphinx-intl
-mypy
-lxml
-mypy-extensions
-boom
-chardet
-grpclib
-pyyaml
-colorama
-termcolor
-requests_oauthlib
-sphinx_rtd_theme
+promise >= 2.3
+schema_entry >= 0.0.6
+colorama >= 0.4.0
+gevent >= 20.0.0
+termcolor >= 1.0.0
+chardet >= 3.0.4
+jsonschema >= 3.2.0
+requests >= 2.24.0
+requests_oauthlib >= 1.3.0
+GitPython >= 3.1.0

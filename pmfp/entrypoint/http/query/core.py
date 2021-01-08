@@ -19,7 +19,7 @@ class Query(EntryPoint):
                 "type": "string",
                 "description": "访问资源的方法",
                 "default": "GET",
-                "enum": [ "GET", "POST", "DELETE", "PUT"]
+                "enum": ["GET", "POST", "DELETE", "PUT"]
             },
             "payload": {
                 "type": "string",

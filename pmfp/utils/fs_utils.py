@@ -13,9 +13,7 @@ from typing import (
 from pmfp.const import (
     PMFP_CONFIG_PATH,
     PMFP_CONFIG_HOME,
-    DEFAULT_PMFPRC,
-    GOLBAL_PYTHON,
-    GOLBAL_CC
+    DEFAULT_PMFPRC
 )
 
 
@@ -124,6 +122,3 @@ def get_cache_dir() -> Path:
         config = json.load(f)
         cache_dir = Path(config["cache_dir"])
     return cache_dir
-
-
-

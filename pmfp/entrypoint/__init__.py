@@ -5,6 +5,7 @@ from .version import __VERSION__
 # from .cmd_cache import *
 # from .cmd_test import *
 from .http import *
+from .grpc import *
 from .schema import *
 from .proto import *
 from .run import run_cmd

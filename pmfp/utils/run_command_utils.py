@@ -7,8 +7,9 @@ import chardet
 from termcolor import colored
 from promise import Promise
 
+
 def _run_command(resolve: Callable[[Any], Promise], reject: Callable[[Any], Promise],
-    command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None,visible:bool=False)->Promise:
+                 command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None, visible: bool = False) -> Promise:
     res = subprocess.run(command, capture_output=True, shell=True, cwd=cwd, env=env)
     if res.returncode != 0:
         print(f"命令{command}执行失败")
@@ -30,7 +31,8 @@ def _run_command(resolve: Callable[[Any], Promise], reject: Callable[[Any], Prom
             print(colored(content, 'white', 'on_cyan'))
         return resolve(content)
 
-def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None,visible:bool=False) -> Promise:
+
+def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None, visible: bool = False) -> Promise:
     """执行命令行命令.
 
     Args:
@@ -43,7 +45,6 @@ def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] 
         (Promise): 可以在后续根据执行的成功与否添加回调
     """
     promise = Promise(
-        partial(_run_command,command=command,cwd=cwd,env=env)
+        partial(_run_command, command=command, cwd=cwd, env=env)
     )
     return promise
-

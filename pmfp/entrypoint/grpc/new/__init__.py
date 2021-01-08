@@ -8,26 +8,26 @@ from typing import Dict, Any, List, Optional
 from pmfp.utils.template_utils import template_2_content
 from pmfp.utils.fs_utils import get_abs_path
 
-from .core import proto_new
+from .core import grpc_new
 
-proto_template = ""
 grpc_template = ""
-proto_template_io = pkgutil.get_data('pmfp.entrypoint.proto.new.source_temp', 'proto.temp')
-if proto_template_io:
-    proto_template = proto_template_io.decode('utf-8')
+
+
+grpc_template_io = pkgutil.get_data('pmfp.entrypoint.grpc.new.source_temp', 'grpc.temp')
+if grpc_template_io:
+    grpc_template = grpc_template_io.decode('utf-8')
 else:
-    raise AttributeError("加载proto模板失败")
+    raise AttributeError("加载grpc模板失败")
 
 
-@proto_new.as_main
-def new_pb(name: str, to: str, *, parent_package: Optional[str] = None, cwd: str = ".") -> None:
+@grpc_new.as_main
+def new_grpc(name: str, to: str, *, parent_package: Optional[str] = None, cwd: str = ".") -> None:
     """新建一个protpbuf文件.
 
     Args:
         name (str): 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名
         to (str): protobuf文件路径
         parent_package (Optional[str], optional): 父包名. Defaults to None.
-        grpc (bool, optional): 是否是grpc. Defaults to False.
 
     """
     try:
@@ -45,10 +45,12 @@ def new_pb(name: str, to: str, *, parent_package: Optional[str] = None, cwd: str
             parent_package = ""
 
         content = template_2_content(
-            template=proto_template,
+            template=grpc_template,
             parent_package=parent_package,
             name=name,
-            package_go=package_go)
+            package_go=package_go,
+            name_upper=name.upper())
+
         with open(str(to_path.joinpath(f"{name}.proto")), "w", encoding='utf-8') as f:
             f.write(content)
     except Exception as e:

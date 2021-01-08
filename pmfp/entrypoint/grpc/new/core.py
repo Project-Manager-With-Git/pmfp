@@ -1,10 +1,10 @@
 from schema_entry import EntryPoint
 
-from ..core import proto
+from ..core import grpc
 
 
 class New(EntryPoint):
-    """创建protobuf文件."""
+    """创建Grpc定义文件."""
     argparse_noflag = "name"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -32,4 +32,4 @@ class New(EntryPoint):
     }
 
 
-proto_new = proto.regist_sub(New)
+grpc_new = grpc.regist_sub(New)

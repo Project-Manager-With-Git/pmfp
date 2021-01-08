@@ -5,9 +5,15 @@
 import warnings
 import json
 from pathlib import Path
-from typing import  Optional
+from typing import Optional
 from pmfp.utils.fs_utils import init_pmfprc
 from pmfp.utils.run_command_utils import run_command
+from pmfp.const import (
+    PMFP_CONFIG_PATH,
+    GOLBAL_PYTHON,
+    GOLBAL_CC
+)
+
 
 def get_global_python() -> str:
     """获取全局python."""
@@ -24,15 +30,16 @@ def get_global_cc() -> str:
         pmfprc = json.load(f)
         return pmfprc.get("cc", GOLBAL_CC)
 
+
 def get_node_version() -> Optional[str]:
     """获取系统中node的版本."""
     p = run_command(
         "node -v"
-        ).then(
-            lambda x: x[1:]
-        ).catch(
-            lambda _:warnings.warn("系统中未找到node环境,如有需要请安装")
-        )
+    ).then(
+        lambda x: x[1:]
+    ).catch(
+        lambda _: warnings.warn("系统中未找到node环境,如有需要请安装")
+    )
     return p.get()
 
 
@@ -40,11 +47,11 @@ def get_golang_version() -> Optional[str]:
     """获取本地golang的版本."""
     p = run_command(
         "go version"
-        ).then(
-            lambda content: [i for i in content.split(" ") if "."in i][0][2:]
-        ).catch(
-            lambda _:warnings.warn("系统中未找到golang环境,如有需要请安装")
-        )
+    ).then(
+        lambda content: [i for i in content.split(" ") if "." in i][0][2:]
+    ).catch(
+        lambda _: warnings.warn("系统中未找到golang环境,如有需要请安装")
+    )
     return p.get()
 
 
@@ -52,11 +59,11 @@ def get_protoc_version() -> Optional[str]:
     """获取本地protoc的版本."""
     p = run_command(
         "protoc --version"
-        ).then(
-            lambda content: [i for i in content.split(" ") if "."in i][0]
-        ).catch(
-            lambda _:warnings.warn("系统中未找到protoc环境,如有需要请安装")
-        )
+    ).then(
+        lambda content: [i for i in content.split(" ") if "." in i][0]
+    ).catch(
+        lambda _: warnings.warn("系统中未找到protoc环境,如有需要请安装")
+    )
     return p.get()
 
 

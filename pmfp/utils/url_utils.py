@@ -7,6 +7,7 @@ from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 from requests_oauthlib import OAuth1
 from promise import Promise
 
+
 def is_url(url: str) -> bool:
     """判断url是否是url.
 
@@ -56,6 +57,7 @@ def is_file_url(url: str) -> bool:
         return all([result.scheme]) and result.scheme == "file"
     except ValueError:
         return False
+
 
 def query_http(url: str, method: str, *,
                auth: Optional[str] = None,

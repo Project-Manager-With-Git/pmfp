@@ -5,7 +5,7 @@ from pmfp.utils.fs_utils import get_abs_path
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py
-from .core import proto_build
+from .core import grpc_build
 
 
 def _build_pb(env: str, files: List[str], includes: List[str], to: str,
@@ -20,10 +20,10 @@ def _build_pb(env: str, files: List[str], includes: List[str], to: str,
         print(f"未知的环境类型{env}")
 
 
-@proto_build.as_main
-def build_pb(env: List[str], files: List[str], includes: List[str], to: str,
-             source_relative: bool, kwargs: Optional[str] = None, cwd: str = ".") -> None:
-    """编译protobuf的schema为不同语言的代码.
+@grpc_build.as_main
+def build_grpc(env: List[str], files: List[str], includes: List[str], to: str,
+               source_relative: bool, kwargs: Optional[str] = None, cwd: str = ".") -> None:
+    """编译grpc的protobuf的schema为不同语言的代码.
 
     Args:
         env (List[str]): 编译到的执行环境,可选的有"go","py","js"
