@@ -89,6 +89,7 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
         if init:
             print("初次创建项目,根据模板构造grpc项目")
             package, registservice, registclient, registclient_new = find_grpc_package(to)
+            print(f"{package}, {registservice}, {registclient}, {registclient_new}")
             _make_server_temp(package, registservice)
             print(f"为grpc项目 {target} 构造服务端模板!")
             _make_client_temp(package, registclient, registclient_new)
@@ -98,7 +99,8 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
     print(f"编译命令:{command}")
     run_command(
         command
-    ).catch(
+    ).then(
+        _build_pb_succ_cb,
         lambda content: warnings.warn(f"""编译grpc项目 {target} 为go语言模块失败:
 
             {content}
@@ -107,11 +109,8 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
             "google.golang.org/protobuf/cmd/protoc-gen-go"
             "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
             """)
-    ).then(
-        _build_pb_succ_cb
     ).catch(
-        lambda content: warnings.warn(f"""根据模板构造grpc项目失败:
-
+        lambda content: warnings.warn(f"""根据模板构造grpc项目失败
             {content}
             """)
     ).get()
@@ -119,7 +118,7 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
 
 def build_pb_go(files: List[str], includes: List[str], to: str,
                 source_relative: bool, **kwargs: str) -> None:
-    """编译protobuffer为go语言模块.
+    """编译grpc的protobuffer定义文件为go语言模块.
 
     Args:
         files (List[str]): 待编译的protobuffer文件

@@ -90,7 +90,7 @@ from .{grpc_package} import *
 
 def build_pb_py(files: List[str], includes: List[str], to: str,
                 **kwargs: str) -> None:
-    """编译python语言模块.
+    """编译grpc的protobuf定义文件为python语言模块.
 
     Args:
         files (List[str]): 待编译的protobuffer文件

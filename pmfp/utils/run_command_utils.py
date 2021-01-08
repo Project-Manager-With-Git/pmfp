@@ -27,6 +27,7 @@ def _run_command(resolve: Callable[[Any], Promise], reject: Callable[[Any], Prom
         if res.stdout:
             encoding = chardet.detect(res.stdout).get("encoding")
             content = res.stdout.decode(encoding).strip()
+
         if visible:
             print(colored(content, 'white', 'on_cyan'))
         return resolve(content)

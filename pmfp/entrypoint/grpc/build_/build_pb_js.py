@@ -7,7 +7,7 @@ from pmfp.utils.run_command_utils import run_command
 
 def build_pb_js(files: List[str], includes: List[str], to: str,
                 **kwargs: str) -> None:
-    """编译js语言模块.
+    """编译grpc的protobuf定义文件为js语言模块.
 
     Args:
         files (List[str]): 待编译的protobuffer文件
