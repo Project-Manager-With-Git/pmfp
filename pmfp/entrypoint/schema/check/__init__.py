@@ -12,9 +12,11 @@ from pmfp.utils.url_utils import (
     get_source_from_url
 )
 from pmfp.utils.schema_utils import is_validated
-from pmfp.features.cmd_http.cmd_http_test import http_test
+from pmfp.entrypoint.http.test_ import test_http
+from .core import schema_check
 
 
+@schema_check.as_main
 def check_schema(schema: str, serialization: str, url: str, method: str, *,
                  auth: Optional[str] = None,
                  auth_type: Optional[str] = None,
@@ -28,7 +30,7 @@ def check_schema(schema: str, serialization: str, url: str, method: str, *,
     Args:
         schema (str): 模式的地址,可以是url或者文件路径.
         serialization (str): 使用的序列化协议.
-        url (str): 要访问的http资源的地址.
+        url (str): "请求的路径,可以是http/file的url或者文件系统的路径".
         method (str): 访问资源的方法.
         auth (Optional[str], optional): 用户身份验证字符串. Defaults to None.
         auth_type (Optional[str], optional): 用户身份的验证类型. Defaults to None.
@@ -40,7 +42,7 @@ def check_schema(schema: str, serialization: str, url: str, method: str, *,
 
     """
     if is_http_url(url):
-        http_test(
+        test_http(
             schema=schema,
             serialization=serialization,
             url=url,

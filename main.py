@@ -3,12 +3,9 @@
 
 一个项目管理脚手架.
 """
-
-
 import sys
 from typing import List
 from colorama import init
-
 from gevent import monkey
 monkey.patch_all()
 init()

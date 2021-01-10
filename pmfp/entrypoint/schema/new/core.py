@@ -8,7 +8,7 @@ class New(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required":["name","to","version"],
+        "required": ["name", "to", "version"],
         "properties": {
             "name": {
                 "type": "string",
@@ -18,17 +18,17 @@ class New(EntryPoint):
                 "type": "string",
                 "description": "从执行目录起的路径",
             },
-            "version":{
+            "version": {
                 "type": "string",
                 "description": "模式版本",
                 "default": "0.0.0"
             },
-            "cwd":{
+            "cwd": {
                 "type": "string",
                 "description": "执行目录",
                 "default": "."
             },
-            "addr":{
+            "addr": {
                 "type": "string",
                 "description": "网站域名"
             }

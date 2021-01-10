@@ -1,23 +1,24 @@
 from schema_entry import EntryPoint
+from ..core import schema
 
-from ..core import http
 
-
-class Test(EntryPoint):
-    """检查http请求返回的数据是否满足json schema定义的模式."""
+class Check(EntryPoint):
+    """检查请求结果是否符合指定的json schema模式.
+    这个schema文件可以是文件地址或者http/fiil的url
+    """
     argparse_noflag = "url"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["url", "schema", "serialization"],
+        "required": ["url", "schema"],
         "properties": {
-            "schema": {
-                "type": "string",
-                "description": "用于验证的json schema,可以是路径也可以是url"
-            },
             "url": {
                 "type": "string",
-                "description": "要访问的http资源的地址"
+                "description": "请求的路径,可以是http/file的url或者文件系统的路径",
+            },
+            "schema": {
+                "type": "string",
+                "description": "用于验证的json schema,可以是路径也可以是url",
             },
             "method": {
                 "type": "string",
@@ -67,4 +68,4 @@ class Test(EntryPoint):
     }
 
 
-http_test = http.regist_sub(Test)
+schema_check = schema.regist_sub(Check)

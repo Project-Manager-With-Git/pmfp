@@ -5,8 +5,10 @@ from pathlib import Path
 from typing import Optional
 from pmfp.utils.url_utils import is_url, get_source_from_url
 from pmfp.utils.schema_utils import is_validated
+from .core import schema_test
 
 
+@schema_test.as_main
 def test_schema(file: str) -> None:
     """检查一个json schema文件中的例子是否符合自身的schema.
 

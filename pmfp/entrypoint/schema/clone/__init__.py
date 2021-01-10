@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Optional, Dict
 from pmfp.utils.template_utils import jsontemplate_2_content
-from pmfp.utils.url_utils import http_query, is_http_url, parse_http_url, is_file_url, parse_file_url
+from pmfp.utils.url_utils import query_http, is_http_url, parse_http_url, is_file_url, parse_file_url
 from pmfp.utils.fs_utils import get_abs_path
 
 
@@ -44,7 +44,7 @@ def clone_schema(url: str, method: str, out: str, *,
             with open(out_p.joinpath(name).as_posix(), "w") as f:
                 json.dump(schema, f, ensure_ascii=False, indent=4, sort_keys=True)
 
-    http_query(url, method,
+    query_http(url, method,
                auth=auth,
                auth_type=auth_type,
                payload=payload,

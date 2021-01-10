@@ -1,36 +1,31 @@
 from schema_entry import EntryPoint
+from ..core import schema
 
-from ..core import http
 
-
-class Test(EntryPoint):
-    """检查http请求返回的数据是否满足json schema定义的模式."""
+class Clone(EntryPoint):
+    """克隆json schema模式文本."""
     argparse_noflag = "url"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["url", "schema", "serialization"],
+        "required": ["url", "schema"],
         "properties": {
-            "schema": {
-                "type": "string",
-                "description": "用于验证的json schema,可以是路径也可以是url"
-            },
             "url": {
                 "type": "string",
-                "description": "要访问的http资源的地址"
+                "description": "请求的路径,可以是http/file的url或者文件系统的路径",
+            },
+            "out": {
+                "type": "string",
+                "description": "输出位置",
+                "default": "."
             },
             "method": {
                 "type": "string",
                 "description": "访问资源的方法",
                 "default": "GET",
-                "enum": ["GET", "POST", "DELETE", "PUT"]
+                "enum": ["GET", "POST"]
             },
-            "serialization": {
-                "type": "string",
-                "description": "请求的返回值序列化协议.默认json",
-                "default": "json",
-                "enum": ["json", "yaml"]
-            },
+
             "auth": {
                 "type": "string",
                 "description": "认证字符串,多字段的使用,分隔"
@@ -47,12 +42,7 @@ class Test(EntryPoint):
             "payload_type": {
                 "type": "string",
                 "description": "请求的负载类型",
-                "enum": ["json", "form", "url", "stream"]
-            },
-            "stream": {
-                "type": "boolean",
-                "description": "返回是否为流数据",
-                "default": False
+                "enum": ["json", "form", "url"]
             },
             "verify": {
                 "type": "boolean",
@@ -67,4 +57,4 @@ class Test(EntryPoint):
     }
 
 
-http_test = http.regist_sub(Test)
+schema_clone = schema.regist_sub(Clone)
