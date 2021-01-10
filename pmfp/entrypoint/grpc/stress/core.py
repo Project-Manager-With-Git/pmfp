@@ -2,8 +2,8 @@ from schema_entry import EntryPoint
 from ..core import grpc
 
 
-class DescService(EntryPoint):
-    """查看指定grpc的服务详情.
+class Stress(EntryPoint):
+    """请求指定grpc的服务.
 
     需要本地有`grpcurl`,可以在`https://github.com/fullstorydev/grpcurl/releases`下载安装
     """
@@ -11,15 +11,34 @@ class DescService(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["url", "service"],
+        "required": ["url", "method"],
         "properties": {
             "url": {
                 "type": "string",
                 "description": "grpc的服务位置.",
             },
-            "service": {
+            "method": {
                 "type": "string",
-                "description": "grpc的服务位置.",
+                "description": "请求grpc的方法.",
+            },
+            "requests": {
+                "type": "integer",
+                "description": "请求的总次数",
+                "default": 100
+            },
+            "concurrency": {
+                "type": "integer",
+                "description": "并发量",
+                "default": 10
+            },
+            "duration": {
+                "type": "integer",
+                "description": "间隔时间,单位s",
+                "default": 0
+            },
+            "payload": {
+                "type": "string",
+                "description": "请求grpc的负载.",
             },
             "cwd": {
                 "type": "string",
@@ -52,4 +71,4 @@ class DescService(EntryPoint):
     }
 
 
-grpc_descservice = grpc.regist_sub(DescService)
+grpc_stress_test = grpc.regist_sub(Stress)

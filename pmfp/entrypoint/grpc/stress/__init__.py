@@ -4,19 +4,23 @@ import warnings
 from pathlib import Path
 from typing import Optional
 from pmfp.utils.run_command_utils import run_command
-from .core import grpc_query
+from .core import grpc_stress_test
 
 
-@grpc_query.as_main
-def query_grpc(url: str, method: str, payload: str, *,
-               cwd: str = ".", plaintext: bool = False, insecure: bool = False,
-               cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None:
-    """请求grpc.
+@grpc_stress_test.as_main
+def tress_test_grpc(url: str, method: str, payload: str, *,
+                    requests: int = 200, concurrency: int = 10, duration: int = 0,
+                    cwd: str = ".", plaintext: bool = False, insecure: bool = False,
+                    cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None:
+    """列出grpc支持的服务.
 
     Args:
         url (str): grpc的url
         method (str): 要请求的方法
         payload (str): 请求的负载
+        requests (int): 总请求量
+        concurrency (int): 并发量
+        duration (int): 并发间隔
         cwd (str, optional): 执行操作时的操作目录. Defaults to ".".
         plaintext (bool, optional): 是否不使用TLS加密传输. Defaults to False.
         insecure (bool, optional): 跳过服务器证书和域验证. Defaults to False.
@@ -26,19 +30,19 @@ def query_grpc(url: str, method: str, payload: str, *,
     """
     flags = " "
     if plaintext:
-        flags += "-plaintext "
+        flags += "--insecure "
     if insecure:
-        flags += "-insecure "
+        flags += "--skipTLS "
     if cert:
-        flags += "-cert={cert} "
+        flags += "--cert={cert} "
     if key:
-        flags += "-key={key} "
+        flags += "--key={key} "
     if cacert:
-        flags += "-cacert={cacert} "
-    command = f"grpcurl -d '{payload}'{flags}{url} {method}"
+        flags += "--cacert={cacert} "
+    command = f"ghz --duration={duration} --concurrency={concurrency} --total={requests} --call={method} -d '{payload}'{flags}{url}"
     print(command)
     run_command(
         command, cwd=Path(cwd), visible=True
     ).catch(
-        lambda _: warnings.warn("""执行query命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
+        lambda _: warnings.warn("""执行stress命令需要先安装ghz<https://github.com/bojand/ghz>""")
     ).get()

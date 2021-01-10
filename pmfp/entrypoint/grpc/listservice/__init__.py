@@ -38,7 +38,5 @@ def list_grpc(url: str, *,
     run_command(
         command, cwd=Path(cwd), visible=True
     ).catch(
-        lambda _: warnings.warn(f"""
-        执行list命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>
-        """)
+        lambda _: warnings.warn("""执行listservice命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
     ).get()

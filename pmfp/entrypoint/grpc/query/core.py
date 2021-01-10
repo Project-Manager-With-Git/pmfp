@@ -11,7 +11,7 @@ class Query(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["url"],
+        "required": ["url", "method", "payload"],
         "properties": {
             "url": {
                 "type": "string",

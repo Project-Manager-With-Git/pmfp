@@ -4,3 +4,4 @@ from .new import new_grpc
 from .listservice import list_grpc
 from .descservice import desc_grpc
 from .query import query_grpc
+from .stress import tress_test_grpc

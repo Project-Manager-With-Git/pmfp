@@ -11,7 +11,7 @@ from .core import grpc_descservice
 def desc_grpc(url: str, service: str, *,
               cwd: str = ".", plaintext: bool = False, insecure: bool = False,
               cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None:
-    """列出grpc支持的服务.
+    """描述grpc支持的服务.
 
     Args:
         url (str): grpc的url
@@ -39,5 +39,5 @@ def desc_grpc(url: str, service: str, *,
     run_command(
         command, cwd=Path(cwd), visible=True
     ).catch(
-        lambda _: warnings.warn("""执行list命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
+        lambda _: warnings.warn("""执行descservice命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
     ).get()
