@@ -17,6 +17,7 @@ import (
 
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/reflection"
 )
 
 //Server grpc的服务器结构体
@@ -95,6 +96,7 @@ func (s *Server) RunServer() {
 	gs := grpc.NewServer()
 	defer gs.Stop()
 	${registservice}(gs, s)
+	reflection.Register(gs)
 	err = gs.Serve(lis)
 	if err != nil {
 		log.Error("Failed to Serve", log.Dict{"error": err})

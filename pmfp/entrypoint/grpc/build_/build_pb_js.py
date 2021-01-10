@@ -33,14 +33,14 @@ def build_pb_js(files: List[str], includes: List[str], to: str,
     run_command(
         command
     ).catch(
-        lambda content: warnings.warn(
+        lambda err: warnings.warn(
             f"""编译grpc项目 {target_str} 为python模块失败:
 
-            {content}
+            {str(err)}
 
             编译grpc-js需要安装grpc-tools <https://www.npmjs.com/package/grpc-tools>,
             并将插件grpc_node_plugin`的路径指定到环境变量`PROTOC_GEN_GRPC_JS_PATH"""
         )
     ).then(
-        lambda x: print(f"编译grpc项目 {target_str} 为js语言模块完成!")
+        lambda _: print(f"编译grpc项目 {target_str} 为js语言模块完成!")
     ).get()

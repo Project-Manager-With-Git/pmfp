@@ -35,10 +35,10 @@ def get_node_version() -> Optional[str]:
     """获取系统中node的版本."""
     p = run_command(
         "node -v"
-    ).then(
-        lambda x: x[1:]
     ).catch(
         lambda _: warnings.warn("系统中未找到node环境,如有需要请安装")
+    ).then(
+        lambda x: x[1:]
     )
     return p.get()
 
@@ -47,10 +47,10 @@ def get_golang_version() -> Optional[str]:
     """获取本地golang的版本."""
     p = run_command(
         "go version"
-    ).then(
-        lambda content: [i for i in content.split(" ") if "." in i][0][2:]
     ).catch(
         lambda _: warnings.warn("系统中未找到golang环境,如有需要请安装")
+    ).then(
+        lambda content: [i for i in content.split(" ") if "." in i][0][2:]
     )
     return p.get()
 
@@ -59,10 +59,10 @@ def get_protoc_version() -> Optional[str]:
     """获取本地protoc的版本."""
     p = run_command(
         "protoc --version"
-    ).then(
-        lambda content: [i for i in content.split(" ") if "." in i][0]
     ).catch(
         lambda _: warnings.warn("系统中未找到protoc环境,如有需要请安装")
+    ).then(
+        lambda content: [i for i in content.split(" ") if "." in i][0]
     )
     return p.get()
 

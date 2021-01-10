@@ -30,7 +30,7 @@ def _run_command(resolve: Callable[[Any], Promise], reject: Callable[[Any], Prom
 
         if visible:
             print(colored(content, 'white', 'on_cyan'))
-        return resolve(content)
+        return resolve(Exception(content))
 
 
 def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None, visible: bool = False) -> Promise:
@@ -46,6 +46,6 @@ def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] 
         (Promise): 可以在后续根据执行的成功与否添加回调
     """
     promise = Promise(
-        partial(_run_command, command=command, cwd=cwd, env=env)
+        partial(_run_command, command=command, cwd=cwd, env=env, visible=visible)
     )
     return promise

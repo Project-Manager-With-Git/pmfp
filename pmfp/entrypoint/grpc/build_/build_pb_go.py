@@ -99,6 +99,10 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
     print(f"编译命令:{command}")
     run_command(
         command
+    ).catch(
+        lambda err: warnings.warn(f"""根据模板构造grpc项目失败
+            {str(err)}
+            """)
     ).then(
         _build_pb_succ_cb,
         lambda content: warnings.warn(f"""编译grpc项目 {target} 为go语言模块失败:
@@ -108,10 +112,6 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
             编译为go语言依赖如下插件,请检查是否安装:
             "google.golang.org/protobuf/cmd/protoc-gen-go"
             "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
-            """)
-    ).catch(
-        lambda content: warnings.warn(f"""根据模板构造grpc项目失败
-            {content}
             """)
     ).get()
 

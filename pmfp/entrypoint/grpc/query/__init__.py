@@ -1,12 +1,44 @@
 
-# def query_grpc(url: str, protofile: str, method: str, payload: str, *,insecure:bool=False, plaintext: bool = False,format="json",cacert=None,cert=None,key=None) -> None:
-#     """编译protobuffer为go语言模块.
+"""列出远程grpc上的服务列表"""
+import warnings
+from pathlib import Path
+from typing import Optional
+from pmfp.utils.run_command_utils import run_command
+from .core import grpc_query
 
-#     Args:
-#         files (List[str]): 待编译的protobuffer文件
-#         includes (List[str]): 待编译的protobuffer文件所在的文件夹
-#         to (str): 编译成的模块文件放到的路径
-#         source_relative (bool): 是否使用路径作为包名,只针对go语言
 
-#     """
-#     command = "grpcurl -plaintext -d '{"value":"grpcurl"}' localhost:8888 proto.HelloService/Hello"
+@grpc_query.as_main
+def query_grpc(url: str, method: str, payload: str, *,
+               cwd: str = ".", plaintext: bool = False, insecure: bool = False,
+               cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None:
+    """列出grpc支持的服务.
+
+    Args:
+        url (str): grpc的url
+        method (str): 要请求的方法
+        payload (str): 请求的负载
+        cwd (str, optional): 执行操作时的操作目录. Defaults to ".".
+        plaintext (bool, optional): 是否不使用TLS加密传输. Defaults to False.
+        insecure (bool, optional): 跳过服务器证书和域验证. Defaults to False.
+        cacert (Optional[str], optional): 根证书位置. Defaults to None.
+        cert (Optional[str], optional): 服务证书位置. Defaults to None.
+        key (Optional[str], optional): 服务证书对应的私钥位置. Defaults to None.
+    """
+    flags = " "
+    if plaintext:
+        flags += "-plaintext "
+    if insecure:
+        flags += "-insecure "
+    if cert:
+        flags += "-cert={cert} "
+    if key:
+        flags += "-key={key} "
+    if cacert:
+        flags += "-cacert={cacert} "
+    command = f"grpcurl -d '{payload}'{flags}{url} {method}"
+    print(command)
+    run_command(
+        command, cwd=Path(cwd), visible=True
+    ).catch(
+        lambda _: warnings.warn("""执行list命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
+    ).get()

@@ -1,10 +1,11 @@
 """run命令的处理."""
 from pathlib import Path
-from typing import Optional,Any
+from typing import Optional, Any
 
 from schema_entry import EntryPoint
 from pmfp.utils.run_command_utils import run_command
 from .core import ppm
+
 
 class RUN(EntryPoint):
     """执行命令行操作."""
@@ -13,7 +14,7 @@ class RUN(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required":["commands"],
+        "required": ["commands"],
         "properties": {
             "commands": {
                 "description": "要执行的命令",
@@ -38,6 +39,7 @@ class RUN(EntryPoint):
 
 run = ppm.regist_sub(RUN)
 
+
 @run.as_main
-def run_cmd(command: str, *, cwd: str=".", env: Optional[Any]=None):
+def run_cmd(command: str, *, cwd: str = ".", env: Optional[Any] = None):
     run_command(command, cwd=Path(cwd), env=env, visible=True).get()

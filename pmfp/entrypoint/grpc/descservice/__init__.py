@@ -1,20 +1,21 @@
 
-"""列出远程grpc上的服务列表"""
+"""列出远程grpc上的服务信息"""
 import warnings
 from pathlib import Path
 from typing import Optional
 from pmfp.utils.run_command_utils import run_command
-from .core import grpc_listservice
+from .core import grpc_descservice
 
 
-@grpc_listservice.as_main
-def list_grpc(url: str, *,
+@grpc_descservice.as_main
+def desc_grpc(url: str, service: str, *,
               cwd: str = ".", plaintext: bool = False, insecure: bool = False,
               cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None:
     """列出grpc支持的服务.
 
     Args:
         url (str): grpc的url
+        service (str): 要查看的服务名
         cwd (str, optional): 执行操作时的操作目录. Defaults to ".".
         plaintext (bool, optional): 是否不使用TLS加密传输. Defaults to False.
         insecure (bool, optional): 跳过服务器证书和域验证. Defaults to False.
@@ -33,12 +34,10 @@ def list_grpc(url: str, *,
         flags += "-key={key} "
     if cacert:
         flags += "-cacert={cacert} "
-    command = f"grpcurl {flags}{url} list"
+    command = f"grpcurl {flags}{url} describe {service}"
     print(command)
     run_command(
         command, cwd=Path(cwd), visible=True
     ).catch(
-        lambda _: warnings.warn(f"""
-        执行list命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>
-        """)
+        lambda _: warnings.warn("""执行list命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
     ).get()

@@ -18,9 +18,9 @@ def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: str) 
     run_command(
         command
     ).catch(
-        lambda content: warnings.warn(f"""编译protobuf项目 {target_str} 为python模块失败:
+        lambda err: warnings.warn(f"""编译protobuf项目 {target_str} 为python模块失败:
 
-        {content}
+        {str(err)}
         """)
     ).then(
         lambda x: print(f"编译protobuf项目{target_str}为python语言模块完成!")

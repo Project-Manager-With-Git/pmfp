@@ -2,8 +2,8 @@ from schema_entry import EntryPoint
 from ..core import grpc
 
 
-class ListService(EntryPoint):
-    """查看指定grpc的服务列表.
+class DescService(EntryPoint):
+    """查看指定grpc的服务详情.
 
     需要本地有`grpcurl`,可以在`https://github.com/fullstorydev/grpcurl/releases`下载安装
     """
@@ -19,7 +19,7 @@ class ListService(EntryPoint):
             },
             "service": {
                 "type": "string",
-                "description": "grpc的服务名.",
+                "description": "grpc的服务位置.",
             },
             "cwd": {
                 "type": "string",
@@ -52,4 +52,4 @@ class ListService(EntryPoint):
     }
 
 
-grpc_listservice = grpc.regist_sub(ListService)
+grpc_descservice = grpc.regist_sub(DescService)

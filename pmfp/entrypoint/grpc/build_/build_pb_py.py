@@ -31,9 +31,9 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str,
     run_command(
         command
     ).catch(
-        lambda content: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
+        lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
 
-        {content}
+        {str(err)}
 
         编译grpc的python项目依赖如下插件,请检查是否安装:
 
@@ -45,7 +45,7 @@ def _build_grpc_py(files: List[str], includes: List[str], to: str,
     ).catch(
         lambda content: warnings.warn(f"""转换python的grpc输出为一个模块失败:
 
-        {content}
+        {str(content)}
         """)
     ).get()
 

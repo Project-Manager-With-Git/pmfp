@@ -25,9 +25,9 @@ def build_pb_js(files: List[str], includes: List[str], to: str,
     run_command(
         command
     ).catch(
-        lambda content: warnings.warn(f"""编译protobuf项目 {target_str} 为python模块失败:
+        lambda err: warnings.warn(f"""编译protobuf项目 {target_str} 为python模块失败:
 
-        {content}
+        {str(err)}
 
         编译为js模块需要安装`protoc-gen-js`<https://www.npmjs.com/package/protoc-gen>
         """)

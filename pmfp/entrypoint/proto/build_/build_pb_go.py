@@ -13,9 +13,9 @@ def _build_pb(includes: str, flag: str, to: str, target: str) -> None:
     run_command(
         command
     ).catch(
-        lambda content: warnings.warn(f"""编译protobuf项目 {target} 为go语言模块失败:
+        lambda err: warnings.warn(f"""编译protobuf项目 {target} 为go语言模块失败:
 
-            {content}
+            {str(err)}
 
             需要安装额外插件"google.golang.org/protobuf/cmd/protoc-gen-go"
             """)
