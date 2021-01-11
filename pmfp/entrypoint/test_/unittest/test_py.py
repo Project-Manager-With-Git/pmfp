@@ -2,11 +2,13 @@
 import warnings
 from pathlib import Path
 from typing import List, Optional
-from pmfp.utils.fs_utils import get_abs_path, get_global_python
-from pmfp.utils.run_command_utils import run_command, default_succ_cb, get_local_python
+from pmfp.utils.fs_utils import get_abs_path
+from pmfp.utils.tools_info_utils import get_local_python, get_global_python
+from pmfp.utils.run_command_utils import run_command
 
 
-def unittest_test_py(code: str, *, coverage: Optional[bool], source: Optional[List[str]], output: Optional[str], cwd: Optional[str] = None) -> None:
+def unittest_test_py(code: str, source: Optional[List[str]], *,
+                     coverage: Optional[bool] = False, output: Optional[str] = "doc_unittest", cwd: Optional[str] = ".") -> None:
     """对python代码做单元测试.
 
     Args:
@@ -25,10 +27,9 @@ def unittest_test_py(code: str, *, coverage: Optional[bool], source: Optional[Li
         python = get_global_python()
         test_code_path = get_abs_path(code)
     if coverage:
-        def coverage_success(content: str) -> None:
-            default_succ_cb(content)
+        def coverage_success(_: str) -> None:
             if output:
-                output_path = get_abs_path(code, cwdp)
+                output_path = get_abs_path(output, cwdp)
                 command = f"{python} -m coverage html -d {str(output_path)}"
             else:
                 command = f"{python} -m coverage report"
@@ -38,7 +39,9 @@ def unittest_test_py(code: str, *, coverage: Optional[bool], source: Optional[Li
             return
         sources = ",".join(source)
         command = f"{python} -m coverage run --source={sources} -m unittest discover -v -s {str(test_code_path)}"
-        run_command(command, cwd=cwdp, succ_cb=coverage_success)
+        run_command(
+            command, cwd=cwdp, visible=True
+        ).then(coverage_success).get()
     else:
         command = f"{python} -m unittest discover -v -s {str(test_code_path)}"
-        run_command(command, cwd=cwdp)
+        run_command(command, cwd=cwdp, visible=True).get()

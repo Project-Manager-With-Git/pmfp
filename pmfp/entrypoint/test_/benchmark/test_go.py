@@ -5,7 +5,7 @@ from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.fs_utils import get_abs_path
 
 
-def benchmark_test_go(testcode: str, *, root: Optional[str] = None, mem: bool = False) -> None:
+def benchmark_test_go(code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None:
     """对python代码做静态检测.
 
     Args:
@@ -15,13 +15,13 @@ def benchmark_test_go(testcode: str, *, root: Optional[str] = None, mem: bool = 
         output (str): 覆盖率文档位置
 
     """
-    if root:
-        rootp = get_abs_path(root)
+    if cwd:
+        cwdp = get_abs_path(cwd)
     else:
-        rootp = Path(".")
+        cwdp = Path(".")
 
     if mem:
-        command = f"go test -v -run=^${testcode} -bench ."
+        command = f"go test -v -run=^${code} -bench ."
     else:
-        command = f"go test -v -benchmem -run=^${testcode} -bench ."
-    run_command(command, cwd=rootp)
+        command = f"go test -v -benchmem -run=^${code} -bench ."
+    run_command(command, cwd=cwdp, visible=True).get()

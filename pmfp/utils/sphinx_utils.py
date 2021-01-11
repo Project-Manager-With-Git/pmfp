@@ -4,70 +4,58 @@ from pathlib import Path
 from typing import Optional, Callable, List
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.template_utils import template_2_content
+from promise import Promise
 
 
-def sphinx_new_locale(output: Path, source_dir: Path, *,
-                      cwd: Optional[Path] = None,
-                      locales: List[str] = [],
-                      succ_cb: Optional[Callable[[str], None]] = None,
-                      fail_cb: Optional[Callable[[str], None]] = None) -> None:
-    """更新添加小语种支持.
+# def sphinx_new_locale(output: Path, source_dir: Path, *,
+#                       cwd: Optional[Path] = None,
+#                       locales: List[str] = []) -> Promise:
+#     """更新添加小语种支持.
 
-    Args:
-        output (Path): 文档目录
-        source_dir (Path): 文档源文件位置
-        locales (List[str], optional): 支持的语种. Defaults to [].
-        succ_cb (Optional[Callable[[str], None]], optional): 成功的回调函数. Defaults to None.
-        fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
+#     Args:
+#         output (Path): 文档目录
+#         source_dir (Path): 文档源文件位置
+#         locales (List[str], optional): 支持的语种. Defaults to [].
 
-    """
-    command = f"sphinx-intl update -p {str(output)}/locale -d {str(source_dir.joinpath('locale'))}"
-    for i in locales:
-        command += f" -l {i}"
-    run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
+#     """
+#     command = f"sphinx-intl update -p {str(output)}/locale -d {str(source_dir.joinpath('locale'))}"
+#     for i in locales:
+#         command += f" -l {i}"
+#     return run_command(command, cwd=cwd)
 
 
-def sphinx_update_locale(output: Path, source_dir: Path, *,
-                         cwd: Optional[Path] = None,
-                         succ_cb: Optional[Callable[[str], None]] = None,
-                         fail_cb: Optional[Callable[[str], None]] = None) -> None:
-    """初始化文档的小语种支持.
+# def sphinx_update_locale(output: Path, source_dir: Path, *,
+#                          cwd: Optional[Path] = None) -> Promise:
+#     """初始化文档的小语种支持.
 
-    Args:
-        output (Path): 文档目录
-        source_dir (Path): 文档源文件位置
-        succ_cb (Optional[Callable[[str], None]], optional): 成功的回调函数. Defaults to None.
-        fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
-
-    """
-    command = f"sphinx-build -b gettext {str(source_dir)} {str(output.joinpath('locale'))}"
-    run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
+#     Args:
+#         output (Path): 文档目录
+#         source_dir (Path): 文档源文件位置
+#     """
+#     command = f"sphinx-build -b gettext {str(source_dir)} {str(output.joinpath('locale'))}"
+#     return run_command(command, cwd=cwd)
 
 
-def sphinx_build(output: Path, source_dir: Path, *,
-                 cwd: Optional[Path] = None,
-                 locale: Optional[str] = None,
-                 succ_cb: Optional[Callable[[str], None]] = None,
-                 fail_cb: Optional[Callable[[str], None]] = None) -> None:
-    """执行sphinx的编译操作.
+# def sphinx_build(output: Path, source_dir: Path, *,
+#                  cwd: Optional[Path] = None,
+#                  locale: Optional[str] = None) -> Promise:
+#     """执行sphinx的编译操作.
 
-    Args:
-        output (Path): 最终的文档文件夹位置.
-        source_dir (Path): 文档资源文件夹位置.
-        locale (Optional[str], optional): 要编译的小语种类型. Defaults to None.
-        succ_cb (Optional[Callable[[str], None]], optional): 成功的回调函数. Defaults to None.
-        fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
+#     Args:
+#         output (Path): 最终的文档文件夹位置.
+#         source_dir (Path): 文档资源文件夹位置.
+#         locale (Optional[str], optional): 要编译的小语种类型. Defaults to None.
 
-    """
-    if locale:
-        if locale == "zh":
-            command = f"sphinx-build -D language={locale} -b html {str(source_dir)} {str(output)}"
-        else:
-            command = f"sphinx-build -D language={locale} -b html {str(source_dir)} {output.joinpath(locale)}"
+#     """
+#     if locale:
+#         if locale == "zh":
+#             command = f"sphinx-build -D language={locale} -b html {str(source_dir)} {str(output)}"
+#         else:
+#             command = f"sphinx-build -D language={locale} -b html {str(source_dir)} {output.joinpath(locale)}"
 
-    else:
-        command = f"sphinx-build -b html {str(source_dir)} {str(output)}"
-    run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
+#     else:
+#         command = f"sphinx-build -b html {str(source_dir)} {str(output)}"
+#     return run_command(command, cwd=cwd)
 
 
 def sphinx_config(source_dir: Path, append_content: str) -> None:
@@ -172,10 +160,8 @@ def move_to_source(source_dir: Path, *, root: Path) -> None:
 
 
 def sphinx_new(code: Path, source_dir: Path, project_name: str, author: str, version: str, *,
-               cwd: Optional[Path] = None,
-               succ_cb: Optional[Callable[[str], None]] = None,
-               fail_cb: Optional[Callable[[str], None]] = None) -> None:
-    """为python项目构造api文档.
+               cwd: Optional[Path] = None) -> Promise:
+    """为python/c++项目构造api文档.
 
     Args:
         code (str): 项目源码位置
@@ -183,41 +169,33 @@ def sphinx_new(code: Path, source_dir: Path, project_name: str, author: str, ver
         project_name (str): 项目名
         author (str): 项目作者
         version (str): 项目版本
-        succ_cb (Optional[Callable[[str], None]], optional): 成功的回调函数. Defaults to None.
-        fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
 
     """
     command = f"sphinx-quickstart --no-sep -v {version} -r {version} -p {project_name} -a {author} -l en --ext-todo --ext-mathjax --ext-viewcode {str(source_dir)}"
-    run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
+    return run_command(command, cwd=cwd)
 
-def sphinx_build(code: Path, source_dir: Path, *,
-                  cwd: Optional[Path] = None,
-                  succ_cb: Optional[Callable[[str], None]] = None,
-                  fail_cb: Optional[Callable[[str], None]] = None) -> None:
+def sphinx_build(source_dir: Path, doc_dir: Path, *,cwd:Path = Path(".")) -> None:
     """根据源码更新文档的源文件.
 
     Args:
         code (Path): 项目源码位置
         source_dir (Path): 文档源码位置
-        succ_cb (Optional[Callable[[str], None]], optional): 成功的回调函数. Defaults to None.
-        fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
+        doc_dir (Path): 文档输出目标位置
+        cwd (Path): 执行位置
 
     """
-    command = f"sphinx-build {str(source_dir)} {builddir}"
-    run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
+    command = f"sphinx-build {str(source_dir)} {str(doc_dir)}"
+    return run_command(command, cwd=cwd)
 
-def sphinx_update(code: Path, source_dir: Path, *,
-                  cwd: Optional[Path] = None,
-                  succ_cb: Optional[Callable[[str], None]] = None,
-                  fail_cb: Optional[Callable[[str], None]] = None) -> None:
-    """根据源码更新文档的源文件.
 
-    Args:
-        code (Path): 项目源码位置
-        source_dir (Path): 文档源码位置
-        succ_cb (Optional[Callable[[str], None]], optional): 成功的回调函数. Defaults to None.
-        fail_cb (Optional[Callable[[str], None]], optional): 失败的回调函数. Defaults to None.
+# def sphinx_update(code: Path, source_dir: Path, *,
+#                   cwd: Optional[Path] = None) -> Promise:
+#     """根据源码更新文档的源文件.
 
-    """
-    command = f"sphinx-apidoc -o {str(source_dir)} {str(code)}"
-    run_command(command, cwd=cwd, succ_cb=succ_cb, fail_cb=fail_cb)
+#     Args:
+#         code (Path): 项目源码位置
+#         source_dir (Path): 文档源码位置
+
+#     """
+#     command = f"sphinx-apidoc -o {str(source_dir)} {str(code)}"
+#     return run_command(command, cwd=cwd)

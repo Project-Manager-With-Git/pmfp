@@ -6,7 +6,7 @@ from .core import test_unittest
 
 
 @test_unittest.as_main
-def unittest_test(language: str, code: str, *, cwd: str, coverage: Optional[bool], source: Optional[List[str]], output: Optional[str]) -> None:
+def unittest_test(language: str, code: str, source: Optional[List[str]], *, cwd: str = ".", coverage: bool = False, output: str = "doc_unittest") -> None:
     """对指定代码做单元测试.
 
     Args:
@@ -19,7 +19,7 @@ def unittest_test(language: str, code: str, *, cwd: str, coverage: Optional[bool
 
     """
     if language == "py":
-        unittest_test_py(code=code, cwd=cwd, coverage=coverage, source=source, output=output)
+        unittest_test_py(code=code, source=source, cwd=cwd, coverage=coverage, output=output)
     elif language == "go":
         unittest_test_go(code=code, cwd=cwd, coverage=coverage, output=output)
     else:

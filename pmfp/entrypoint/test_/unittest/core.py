@@ -8,11 +8,11 @@ class Unittest(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["code", "language"],
+        "required": ["code", "language", "source"],
         "properties": {
             "language": {
                 "type": "string",
-                "description": "静态类型检验针对的语言",
+                "description": "单元测试检验针对的语言",
                 "enum": ["py", "go"]
             },
             "code": {
@@ -21,12 +21,12 @@ class Unittest(EntryPoint):
             },
             "output": {
                 "type": "string",
-                "description": "静态类型检验结果输出位置",
-                "default": "typecheck"
+                "description": "单元测试检验结果输出位置",
+                "default": "doc_unittest"
             },
             "coverage": {
                 "type": "boolean",
-                "description": "静态类型检验是否输出覆盖率报告."
+                "description": "单元测试检验是否输出覆盖率报告."
             },
             "source": {
                 "type": "string",
@@ -34,7 +34,7 @@ class Unittest(EntryPoint):
             },
             "cwd": {
                 "type": "string",
-                "description": "静态类型检验执行的位置",
+                "description": "单元测试检验执行的位置",
                 "default": "."
             }
         }

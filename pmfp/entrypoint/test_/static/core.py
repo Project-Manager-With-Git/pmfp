@@ -22,7 +22,7 @@ class Static(EntryPoint):
             "output": {
                 "type": "string",
                 "description": "静态类型检验结果输出位置",
-                "default": "typecheck"
+                "default": "doc_typecheck"
             },
             "coverage": {
                 "type": "boolean",
