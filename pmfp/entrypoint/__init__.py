@@ -3,7 +3,7 @@ from .core import ppm
 from .version import __VERSION__
 # from .cmd_reset import *
 # from .cmd_cache import *
-# from .cmd_test import *
+from .test_ import *
 from .http import *
 from .grpc import *
 from .schema import *
