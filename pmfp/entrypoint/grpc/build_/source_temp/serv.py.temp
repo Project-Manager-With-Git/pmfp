@@ -1,0 +1,97 @@
+from concurrent import futures
+from typing import Optional, Any
+import grpc
+from grpc_reflection.v1alpha import reflection
+from schema_entry import EntryPoint
+from .${service_name_lower}_pb2_grpc import ${service_name}Servicer, add_${service_name}Servicer_to_server
+from .${service_name_lower}_pb2 import *
+
+
+class Serv(EntryPoint, ${service_name}):
+    """grpc的服务端启动入口."""
+    argparse_noflag = "files"
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required": ["address", "log_level"],
+        "properties": {
+            "app_version": {
+                "type": "string",
+                "description": "应用版本"
+            },
+            "app_name": {
+                "type": "string",
+                "description": "应用名"
+            },
+            "address": {
+                "type": "string",
+                "description": "服务启动的地址",
+                "default": "localhost:5000"
+            },
+            "log_level": {
+                "type": "string",
+                "description": "log版本",
+                "default": "DEBUG"
+            },
+            "max_workers": {
+                "type": "integer",
+                "description": "多线程下的最大线程数",
+                "default": 30
+            },
+            "maximum_concurrent_rpcs": {
+                "type": "integer",
+                "description": "最大并发量",
+                "default": 50
+            },
+            "aio": {
+                "type": "boolean",
+                "description": "是否使用协程替代线程",
+                "default": True
+            }
+        }
+    }
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.grpc_serv: Optional[grpc.Server] = None
+
+    async def Echo(self, request: Any, context: Any) -> Any:
+        return Message(message=request.message)
+
+    async def run_service_aio(self) -> None:
+        config = self.config
+        self.grpc_serv = grpc.aio.server()
+        add_${service_name}Servicer_to_server(self, self.grpc_serv)
+        SERVICE_NAMES = (
+            DESCRIPTOR.services_by_name['${service_name}'].full_name,
+            reflection.SERVICE_NAME
+        )
+        reflection.enable_server_reflection(SERVICE_NAMES, self.grpc_serv)
+        addr = config.get("address", "localhost:5000")
+        print(f"grpc start @{addr}")
+        self.grpc_serv.add_insecure_port(addr)
+        await self.grpc_serv.start()
+        await self.grpc_serv.wait_for_termination()
+
+    def run_service(self) -> None:
+        config = self.config
+        self.grpc_serv = grpc.server(
+            futures.ThreadPoolExecutor(
+                max_workers=config.get("max_workers", 30)
+            ),
+            maximum_concurrent_rpcs=config.get("maximum_concurrent_rpcs", 50)
+        )
+        add_${service_name}Servicer_to_server(self, self.grpc_serv)
+        SERVICE_NAMES = (
+            DESCRIPTOR.services_by_name['${service_name}'].full_name,
+            reflection.SERVICE_NAME
+        )
+        reflection.enable_server_reflection(SERVICE_NAMES, self.grpc_serv)
+        addr = config.get("address", "localhost:5000")
+        print(f"grpc start @{addr}")
+        self.grpc_serv.add_insecure_port(addr)
+        self.grpc_serv.start()
+        self.grpc_serv.wait_for_termination()
+
+
+serv_node = Serv()

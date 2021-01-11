@@ -60,9 +60,8 @@ def find_grpc_package(to: str) -> List[str]:
     return package, registservice, registclient, registclient_new
 
 
-def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
+def _build_grpc(includes: str, flag: str, to: str, as_type: str, target: str) -> None:
     topath = Path(to)
-    init = True
     for file in topath.iterdir():
         if file.suffix == ".go":
             init = False
@@ -86,12 +85,14 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
 
     def _build_pb_succ_cb(_: str) -> None:
         print(f"编译grpc项目 {target} 为go语言模块完成!")
-        if init:
-            print("初次创建项目,根据模板构造grpc项目")
+        if as_type != "source":
+            print("根据模板构造grpc项目")
             package, registservice, registclient, registclient_new = find_grpc_package(to)
             print(f"{package}, {registservice}, {registclient}, {registclient_new}")
+        if as_type in ("service", "all"):
             _make_server_temp(package, registservice)
             print(f"为grpc项目 {target} 构造服务端模板!")
+        if as_type in ("client", "all"):
             _make_client_temp(package, registclient, registclient_new)
             print(f"为grpc项目 {target} 构造客户端端模板!")
 
@@ -116,7 +117,7 @@ def _build_grpc(includes: str, flag: str, to: str, target: str) -> None:
     ).get()
 
 
-def build_pb_go(files: List[str], includes: List[str], to: str,
+def build_pb_go(files: List[str], includes: List[str], to: str, as_type: str,
                 source_relative: bool, **kwargs: str) -> None:
     """编译grpc的protobuffer定义文件为go语言模块.
 
@@ -124,6 +125,7 @@ def build_pb_go(files: List[str], includes: List[str], to: str,
         files (List[str]): 待编译的protobuffer文件
         includes (List[str]): 待编译的protobuffer文件所在的文件夹
         to (str): 编译成的模块文件放到的路径
+        as_type (str): 执行的目的.
         source_relative (bool): 是否使用路径作为包名,只针对go语言
 
     """
@@ -136,4 +138,4 @@ def build_pb_go(files: List[str], includes: List[str], to: str,
         if flag_str:
             flag_str += " "
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
-    _build_grpc(includes_str, flag_str, to, target_str)
+    _build_grpc(includes_str, flag_str, to, as_type, target_str)

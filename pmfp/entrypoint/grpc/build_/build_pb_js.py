@@ -5,14 +5,15 @@ from typing import List
 from pmfp.utils.run_command_utils import run_command
 
 
-def build_pb_js(files: List[str], includes: List[str], to: str,
-                **kwargs: str) -> None:
+def build_pb_js(files: List[str], includes: List[str], to: str, as_type: str,
+                ** kwargs: str) -> None:
     """编译grpc的protobuf定义文件为js语言模块.
 
     Args:
         files (List[str]): 待编译的protobuffer文件
         includes (List[str]): 待编译的protobuffer文件所在的文件夹
         to (str): 编译成的模块文件放到的路径
+        as_type (str): 执行的目的. Default: "source"
 
     """
     includes_str = " ".join([f"-I {include}" for include in includes])

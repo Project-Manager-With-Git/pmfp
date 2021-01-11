@@ -26,6 +26,12 @@ class Build(EntryPoint):
                     "enum": ["py", "js", "go"]
                 }
             },
+            "as_type": {
+                "type": "string",
+                "description": "目的,可以是服务端,客户端,或者既有服务端又有客户端,或者单纯源码",
+                "enum": ["service", "client", "all", "source"],
+                "default": "source"
+            },
             "to": {
                 "type": "string",
                 "description": "存放的地方",

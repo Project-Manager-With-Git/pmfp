@@ -8,21 +8,21 @@ from .build_pb_py import build_pb_py
 from .core import grpc_build
 
 
-def _build_pb(env: str, files: List[str], includes: List[str], to: str,
+def _build_pb(env: str, files: List[str], includes: List[str], to: str, as_type: str,
               source_relative: bool, **kwargs: str) -> None:
     if env.lower() == "go":
-        build_pb_go(files, includes, to, source_relative, **kwargs)
+        build_pb_go(files, includes, to, as_type, source_relative, **kwargs)
     elif env.lower() == "py":
-        build_pb_py(files, includes, to, **kwargs)
+        build_pb_py(files, includes, to, as_type, **kwargs)
     elif env == "js":
-        build_pb_js(files, includes, to, **kwargs)
+        build_pb_js(files, includes, to, as_type, **kwargs)
     else:
         print(f"未知的环境类型{env}")
 
 
 @grpc_build.as_main
 def build_grpc(env: List[str], files: List[str], includes: List[str], to: str,
-               source_relative: bool, kwargs: Optional[str] = None, cwd: str = ".") -> None:
+               source_relative: bool, kwargs: Optional[str] = None, cwd: str = ".", as_type: str = "source") -> None:
     """编译grpc的protobuf的schema为不同语言的代码.
 
     Args:
@@ -33,6 +33,8 @@ def build_grpc(env: List[str], files: List[str], includes: List[str], to: str,
         source_relative (bool): 是否使用路径作为包名,只针对go语言
         kwargs (Optional[str]): Default: None,
         cwd (str): 执行的根目录. Default: "."
+        as_type (str): 执行的目的. Default: "source"
+
     """
     if len(env) <= 0:
         print("必须至少有一个目标环境")
@@ -48,8 +50,8 @@ def build_grpc(env: List[str], files: List[str], includes: List[str], to: str,
         else:
             kw = {}
         if len(env) == 1:
-            _build_pb(env[0], files, includes, to, source_relative, **kw)
+            _build_pb(env[0], files, includes, to, as_type, source_relative, **kw)
         else:
             for e in env:
                 new_to = "{to}/{e}"
-                _build_pb(e, files, includes, new_to, source_relative, **kw)
+                _build_pb(e, files, includes, new_to, as_type, source_relative, **kw)
