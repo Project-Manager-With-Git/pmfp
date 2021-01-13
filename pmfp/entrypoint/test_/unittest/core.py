@@ -4,11 +4,11 @@ from ..core import test
 
 class Unittest(EntryPoint):
     """对源码做单元测试."""
-    argparse_noflag = "code"
+    argparse_noflag = "test_code"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["code", "language", "source"],
+        "required": ["code", "language", "test_code"],
         "properties": {
             "language": {
                 "type": "string",
@@ -17,7 +17,7 @@ class Unittest(EntryPoint):
             },
             "code": {
                 "type": "string",
-                "description": "指定要测的项目代码"
+                "description": "指定要测的项目源码"
             },
             "output": {
                 "type": "string",
@@ -28,9 +28,9 @@ class Unittest(EntryPoint):
                 "type": "boolean",
                 "description": "单元测试检验是否输出覆盖率报告."
             },
-            "source": {
+            "test_code": {
                 "type": "string",
-                "description": "测试覆盖代码",
+                "description": "测试代码",
             },
             "cwd": {
                 "type": "string",

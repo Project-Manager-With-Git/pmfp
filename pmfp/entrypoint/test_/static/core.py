@@ -17,7 +17,7 @@ class Static(EntryPoint):
             },
             "code": {
                 "type": "string",
-                "description": "指定要测的项目代码"
+                "description": "指定要测的项目源码位置"
             },
             "output": {
                 "type": "string",

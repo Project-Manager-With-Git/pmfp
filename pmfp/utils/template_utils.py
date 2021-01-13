@@ -18,7 +18,7 @@ def template_2_content(template: str, **kwargs: Any) -> str:
             **kwargs
         )
     except:
-        print(f"template_2_content出错")
+        print("template_2_content出错")
         raise
     else:
         return content

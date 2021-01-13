@@ -1,8 +1,10 @@
+import os
 import shutil
 from pathlib import Path
+from typing import Any
+from promise import Promise
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.template_utils import template_2_content
-from promise import Promise
 
 
 def sphinx_build(source_dir: Path, doc_dir: Path, *, cwd: Path = Path(".")) -> Promise:
@@ -15,6 +17,7 @@ def sphinx_build(source_dir: Path, doc_dir: Path, *, cwd: Path = Path(".")) -> P
 
     """
     command = f"sphinx-build {str(source_dir)} {str(doc_dir)}"
+    print(f"执行命令: {command}")
     return run_command(command, cwd=cwd)
 
 
@@ -29,7 +32,8 @@ def sphinx_new(source_dir: Path, project_name: str, author: str, version: str, *
         version (str): 项目版本
 
     """
-    command = f"sphinx-quickstart --no-sep -v {version} -r {version} -p {project_name} -a {author} -l en --ext-todo --ext-mathjax --ext-viewcode {str(source_dir)}"
+    command = f"sphinx-quickstart --no-sep -v {version} -r {version} -p {project_name} -a {author} -l zh_CN --ext-todo --ext-mathjax --ext-viewcode {str(source_dir)}"
+    print(f"执行命令: {command}")
     return run_command(command, cwd=cwd)
 
 
@@ -41,11 +45,33 @@ def sphinx_config(source_dir: Path, append_content: str) -> None:
         append_content (str): 要添加的配置文本.
 
     """
+    print("更新配置文件")
     with open(source_dir.joinpath("conf.py"), "r", encoding="utf-8") as fr:
         content = fr.read()
     with open(source_dir.joinpath("conf.py"), "w", encoding="utf-8") as fw:
         new_content = content + append_content
         fw.write(new_content)
+
+
+def sphinx_config_update_version(source_dir: Path, version: str) -> None:
+    """为sphinx的配置增加配置项.
+
+    Args:
+        version (str): 要更新的版本好.
+
+    """
+    print("更新项目配置中的版本号")
+    content = []
+    with open(source_dir.joinpath("conf.py"), "r", encoding="utf-8") as fr:
+        for line in fr.readlines():
+            if line.startswith("version"):
+                line = f"version = '{version}'"
+            if line.startswith("release"):
+                line = f"release= '{version}'"
+            content.append(line)
+
+    with open(source_dir.joinpath("conf.py"), "w", encoding="utf-8") as fw:
+        fw.write("".join(content))
 
 
 def no_jekyll(output: Path) -> None:
@@ -57,6 +83,7 @@ def no_jekyll(output: Path) -> None:
     """
     nojekyll = output.joinpath(".nojekyll")
     if not nojekyll.exists():
+        print("添加`.nojekyll文件`")
         nojekyll.touch()
 
 
@@ -79,5 +106,21 @@ def move_to_source(source_dir: Path, *, root: Path) -> None:
         root (Path): 要移动文档的项目根目录.
 
     """
+    print("复制README.md")
     _move_to_source(source_dir=source_dir, root=root, file_name="README.md")
+    print("复制CHANGELOG.md")
     _move_to_source(source_dir=source_dir, root=root, file_name="CHANGELOG.md")
+
+
+def makeindex(source_dir: Path, template: str, **kwargs: Any) -> None:
+    """创建index.md.
+
+    Args:
+        source_dir (Path): [description]
+        root (Path): [description]
+    """
+    content = template_2_content(template, **kwargs)
+    if source_dir.joinpath("index.rst").exists():
+        os.remove(source_dir.joinpath("index.rst"))
+    with open(source_dir.joinpath("index.md"), "w", encoding="utf-8") as f:
+        f.write(content)

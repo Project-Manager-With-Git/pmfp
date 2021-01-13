@@ -4,20 +4,20 @@ from ..core import test
 
 class Benchmark(EntryPoint):
     """对指定语言的源码做性能检验."""
-    argparse_noflag = "code"
+    argparse_noflag = "test_code"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["code", "language"],
+        "required": ["test_code", "language"],
         "properties": {
             "language": {
                 "type": "string",
                 "description": "性能检验针对的语言",
-                "enum": ["py","go"]
+                "enum": ["py", "go"]
             },
-            "code": {
+            "testcode": {
                 "type": "string",
-                "description": "指定要测的项目代码"
+                "description": "指定要测的测试代码"
             },
             "mem": {
                 "type": "boolean",

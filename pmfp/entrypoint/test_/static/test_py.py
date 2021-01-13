@@ -38,4 +38,4 @@ def static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: 
                 command = command_base + f" --html-report={str(outputp)} {str(codep)}"
             else:
                 command = command_base + f" {str(codep)}"
-    run_command(command, cwd=cwdp, visible=True).get()
+    run_command(command, cwd=cwdp, visible=True).catch(lambda _: str(_)).get()
