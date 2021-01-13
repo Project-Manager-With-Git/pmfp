@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import List
 from pmfp.utils.fs_utils import get_abs_path
 
+
 def _find_pypackage(final_path: Path, packs: List[str]) -> None:
     has_init = False
     for i in final_path.iterdir():

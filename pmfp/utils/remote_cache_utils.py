@@ -9,6 +9,7 @@ class SourcePack:
     """资源包类."""
 
     TENPLATE_URL = "{host}::{repo_name}::{tag}"
+
     @classmethod
     def from_sourcepack_string(cls, sourcepack_string: str) -> "SourcePack":
         """从资源包字符串构造资源包对象.

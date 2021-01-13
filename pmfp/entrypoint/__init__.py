@@ -10,6 +10,6 @@ from .grpc import *
 from .schema import *
 from .proto import *
 from .doc_ import *
-# from .cmd_env import *
+from .env_ import *
 # from .cmd_stack import *
 # from .cmd_project import *
