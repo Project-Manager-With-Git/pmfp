@@ -3,8 +3,8 @@ from schema_entry import EntryPoint
 from ..core import ppm
 
 
-class Doc(EntryPoint):
-    """文档相关的工具."""
+class Env(EntryPoint):
+    """执行环境相关的工具."""
 
 
-doc = ppm.regist_sub(Doc)
+env = ppm.regist_sub(Env)

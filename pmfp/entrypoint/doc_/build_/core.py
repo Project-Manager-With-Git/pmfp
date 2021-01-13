@@ -17,7 +17,7 @@ class Build(EntryPoint):
             "output": {
                 "type": "string",
                 "description": "html文档位置",
-                "default": "doc"
+                "default": "docs"
             },
             "source_dir": {
                 "type": "string",
