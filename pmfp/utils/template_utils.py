@@ -85,5 +85,5 @@ def cfgtemplate_2_file(template: str, file: Path, **kwargs: Any) -> None:
     else:
         if not file.exists():
             file.touch()
-        with open(file, "w".encoding="utf-8") as f:
+        with open(file, "w", encoding="utf-8") as f:
             config.write(f)
