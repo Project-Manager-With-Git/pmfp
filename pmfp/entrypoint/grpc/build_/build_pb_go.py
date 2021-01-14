@@ -2,7 +2,7 @@
 import re
 import pkgutil
 import warnings
-from typing import List
+from typing import List, Optional
 from pathlib import Path
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.template_utils import template_2_content
@@ -60,7 +60,7 @@ def find_grpc_package(to: str) -> List[str]:
     return package, registservice, registclient, registclient_new
 
 
-def _build_grpc(includes: str, flag: str, to: str, as_type: str, target: str) -> None:
+def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]], target: str) -> None:
     topath = Path(to)
     for file in topath.iterdir():
         if file.suffix == ".go":
@@ -85,16 +85,19 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: str, target: str) ->
 
     def _build_pb_succ_cb(_: str) -> None:
         print(f"编译grpc项目 {target} 为go语言模块完成!")
-        if as_type != "source":
+        if as_type is not None:
             print("根据模板构造grpc项目")
             package, registservice, registclient, registclient_new = find_grpc_package(to)
             print(f"{package}, {registservice}, {registclient}, {registclient_new}")
-        if as_type in ("service", "all"):
-            _make_server_temp(package, registservice)
-            print(f"为grpc项目 {target} 构造服务端模板!")
-        if as_type in ("client", "all"):
-            _make_client_temp(package, registclient, registclient_new)
-            print(f"为grpc项目 {target} 构造客户端端模板!")
+            for t in as_type:
+                if as_type == "service":
+                    _make_server_temp(package, registservice)
+                    print(f"为grpc项目 {target} 构造{t}模板成功!")
+                elif as_type == "client":
+                    _make_client_temp(package, registclient, registclient_new)
+                    print(f"为grpc项目 {target} 构造{t}端模板成功!")
+                else:
+                    print(f"为grpc项目 {target} 构造{t}模板失败,go语言不支持")
 
     command = f"protoc {includes} {flag} --go_out=plugins=grpc:{to} {target}"
     print(f"编译命令:{command}")

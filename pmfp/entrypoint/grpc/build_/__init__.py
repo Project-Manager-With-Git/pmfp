@@ -8,7 +8,7 @@ from .build_pb_py import build_pb_py
 from .core import grpc_build
 
 
-def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_type: str,
+def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
               source_relative: bool, **kwargs: str) -> None:
     if language.lower() == "go":
         build_pb_go(files, includes, to, as_type, source_relative, **kwargs)
@@ -22,7 +22,8 @@ def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_
 
 @grpc_build.as_main
 def build_grpc(language: str, files: List[str], includes: List[str], to: str,
-               source_relative: bool, kwargs: Optional[str] = None, cwd: str = ".", as_type: str = "source") -> None:
+               source_relative: bool, kwargs: Optional[str] = None,
+               cwd: str = ".", as_type: Optional[List[str]] = None) -> None:
     """编译grpc的protobuf的schema为不同语言的代码.
 
     Args:
@@ -33,7 +34,7 @@ def build_grpc(language: str, files: List[str], includes: List[str], to: str,
         source_relative (bool): 是否使用路径作为包名,只针对go语言
         kwargs (Optional[str]): Default: None,
         cwd (str): 执行的根目录. Default: "."
-        as_type (str): 执行的目的. Default: "source"
+        as_type (Optional[List[str]]): 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
 
     """
     topath = get_abs_path(to, Path(cwd))
