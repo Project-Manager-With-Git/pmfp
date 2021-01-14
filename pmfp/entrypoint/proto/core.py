@@ -4,7 +4,7 @@ from ..core import ppm
 
 
 class Proto(EntryPoint):
-    """protobuf和grpc相关的工具."""
+    """protobuffer相关的工具."""
 
 
 proto = ppm.regist_sub(Proto)

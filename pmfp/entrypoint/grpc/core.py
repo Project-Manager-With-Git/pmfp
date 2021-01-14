@@ -4,7 +4,7 @@ from ..core import ppm
 
 
 class Grpc(EntryPoint):
-    """protobuf和grpc相关的工具."""
+    """grpc相关的工具."""
 
 
 grpc = ppm.regist_sub(Grpc)

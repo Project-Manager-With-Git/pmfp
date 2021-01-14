@@ -21,12 +21,12 @@ def _build_pb(env: str, files: List[str], includes: List[str], to: str,
 
 
 @proto_build.as_main
-def build_pb(env: List[str], files: List[str], includes: List[str], to: str,
+def build_pb(language: str, files: List[str], includes: List[str], to: str,
              source_relative: bool, kwargs: Optional[str] = None, cwd: str = ".") -> None:
     """编译protobuf的schema为不同语言的代码.
 
     Args:
-        env (List[str]): 编译到的执行环境,可选的有"go","py","js"
+        language (str): 编译到的执行环境,可选的有"go","py","js"
         files (List[str]): 待编译的文件列表
         includes (List[str]): 待编译文件及其依赖所在文件夹列表
         to (str): 编译到的模块所在文件夹.
@@ -34,22 +34,15 @@ def build_pb(env: List[str], files: List[str], includes: List[str], to: str,
         kwargs (Optional[str]): Default: None,
         cwd (str): 执行的根目录. Default: "."
     """
-    if len(env) <= 0:
-        print("必须至少有一个目标环境")
-    else:
-        topath = get_abs_path(to, Path(cwd))
-        if not topath.is_dir():
-            topath.mkdir(parents=True)
 
-        includes = [get_abs_path(i, Path(cwd)) for i in includes]
-        if kwargs:
-            kwpairs = kwargs.split(",")
-            kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}
-        else:
-            kw = {}
-        if len(env) == 1:
-            _build_pb(env[0], files, includes, to, source_relative, **kw)
-        else:
-            for e in env:
-                new_to = "{to}/{e}"
-                _build_pb(e, files, includes, new_to, source_relative, **kw)
+    topath = get_abs_path(to, Path(cwd))
+    if not topath.is_dir():
+        topath.mkdir(parents=True)
+
+    includes = [get_abs_path(i, Path(cwd)) for i in includes]
+    if kwargs:
+        kwpairs = kwargs.split(",")
+        kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}
+    else:
+        kw = {}
+    _build_pb(language, files, includes, to, source_relative, **kw)

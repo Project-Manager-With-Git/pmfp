@@ -10,20 +10,17 @@ class Build(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["env", "source_relative", "includes", "files"],
+        "required": ["language", "source_relative", "includes", "files"],
         "properties": {
             "cwd": {
                 "type": "string",
                 "description": "",
                 "default": "."
             },
-            "env": {
+            "language": {
                 "description": "proto文件名,也是package名",
-                "type": "array",
-                "items": {
-                    "type": "string",
-                    "enum": ["py", "js", "go"]
-                }
+                "type": "string",
+                "enum": ["py", "js", "go"]
             },
             "to": {
                 "type": "string",
