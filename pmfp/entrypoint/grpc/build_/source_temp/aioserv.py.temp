@@ -1,0 +1,150 @@
+import os
+import socket
+import asyncio
+import warnings
+import contextlib
+import multiprocessing
+from ipaddress import ip_address
+from typing import Optional, Any, Dict, Iterator
+import grpc
+from grpc_reflection.v1alpha import reflection
+from schema_entry import EntryPoint
+from .${service_name_lower}_pb2_grpc import ${service_name}Servicer, add_${service_name}Servicer_to_server
+from .${service_name_lower}_pb2 import DESCRIPTOR, Message
+
+
+class Handdler(${service_name}Servicer):
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__()
+        self.config = config
+
+    async def Echo(self, request: Any, context: grpc.aio.ServicerContext) -> Any:
+        return Message(Message=request.Message)
+
+
+class AioServ(EntryPoint):
+    """grpc的服务端启动入口."""
+    argparse_noflag = "files"
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required": ["address", "log_level"],
+        "properties": {
+            "app_version": {
+                "type": "string",
+                "description": "应用版本"
+            },
+            "app_name": {
+                "type": "string",
+                "description": "应用名"
+            },
+            "address": {
+                "type": "string",
+                "description": "服务启动的地址",
+                "default": "0.0.0.0:5000"
+            },
+            "log_level": {
+                "type": "string",
+                "description": "log版本",
+                "default": "DEBUG"
+            },
+            "workers": {
+                "type": "integer",
+                "description": "启动的进程数,设置为<=0的数则使用与本机cpu数一致的进程数",
+                "default": 1
+            }
+        }
+    }
+
+    @contextlib.contextmanager
+    def _reserve_port(self) -> Iterator[int]:
+        """Find and reserve a port for all subprocesses to use."""
+        config = self.config
+        host, ports = config.get("address", "0.0.0.0:5000").split(":")
+        port = int(ports)
+        ip = ip_address(host)
+        host = str(ip)
+        sock = socket.socket(
+            socket.AF_INET6 if ip.version == 6 else socket.AF_INET,
+            socket.SOCK_STREAM
+        )
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
+            raise RuntimeError("Failed to set SO_REUSEPORT.")
+        sock.bind((host, port))
+        try:
+            yield sock.getsockname()[1]
+        finally:
+            sock.close()
+
+    async def _run_singal_serv(self, config: Dict[str, Any], pid: Optional[int], bind_address: Optional[str] = None) -> None:
+        grpc_serv = grpc.aio.server()
+        handdler = Handdler(config)
+        add_${service_name}Servicer_to_server(handdler, grpc_serv)
+        SERVICE_NAMES = (
+            DESCRIPTOR.services_by_name['${service_name}'].full_name,
+            reflection.SERVICE_NAME
+        )
+        reflection.enable_server_reflection(SERVICE_NAMES, grpc_serv)
+        if bind_address:
+            grpc_serv.add_insecure_port(bind_address)
+            print(f"worker {pid} start @{bind_address}")
+        else:
+            addr = config.get("address", "localhost:5000")
+            grpc_serv.add_insecure_port(addr)
+            print(f"grpc @process:{pid} start @{addr}")
+        await grpc_serv.start()
+        await grpc_serv.wait_for_termination()
+
+    def run_singal_serv(self, config: Dict[str, Any], bind_address: Optional[str] = None) -> None:
+        pid = os.getpid()
+        try:
+            asyncio.run(self._run_singal_serv(config=config, pid=pid, bind_address=bind_address))
+        except KeyboardInterrupt:
+            if bind_address:
+                print(f"worker {pid} stoped")
+            else:
+                print("grpc stoped")
+        except Exception as e:
+            raise e
+
+    def run_mp_serv(self, worker_num: int) -> None:
+        workers = []
+        config = self.config
+        try:
+            with self._reserve_port() as port:
+                bind_address = 'localhost:{}'.format(port)
+                for _ in range(worker_num):
+                    worker = multiprocessing.Process(
+                        target=self.run_singal_serv,
+                        kwargs={
+                            "config": config,
+                            "bind_address": bind_address
+                        })
+                    worker.start()
+                    workers.append(worker)
+                for worker in workers:
+                    worker.join()
+        except KeyboardInterrupt:
+            print("grpc workers stoping")
+        except Exception as e:
+            raise e
+
+    def run_service(self) -> None:
+        config = self.config
+        workers = config.get("workers", 1)
+        if workers <= 0:
+            workers = multiprocessing.cpu_count()
+        if workers == 1:
+            self.run_singal_serv(config=config)
+        else:
+            try:
+                self.run_mp_serv(worker_num=workers)
+            except Exception as e:
+                warnings.warn(f"""多进程执行失败: 
+                {str(e)} 
+                改为单进程执行""")
+                self.run_singal_serv(config=config)
+
+
+aioserv_node = AioServ()

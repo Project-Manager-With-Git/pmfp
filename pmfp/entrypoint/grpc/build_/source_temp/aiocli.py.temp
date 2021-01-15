@@ -4,7 +4,7 @@ from pyproxypattern import Proxy
 from .${service_name_lower}_pb2_grpc import ${service_name}Stub
 
 
-class Client(Proxy):
+class AioClient(Proxy):
     __slots__ = ("url", "options", "channel", 'instance', '_callbacks', '_instance_check')
     url: Optional[str]
     options: Optional[Dict[str, Any]]
@@ -29,9 +29,9 @@ class Client(Proxy):
             raise AttributeError("新建对象必须至少有设置url")
         if self.options:
             options = [(k, v) for k, v in self.options.items()]
-            self.channel = grpc.insecure_channel(self.url, options=options)
+            self.channel = grpc.aio.insecure_channel(self.url, options=options)
         else:
-            self.channel = grpc.insecure_channel(self.url)
+            self.channel = grpc.aio.insecure_channel(self.url)
         client = ${service_name}Stub(self.channel)
         return client
 
@@ -41,9 +41,9 @@ class Client(Proxy):
         instance = self.new_instance()
         self.initialize(instance)
 
-    def close(self, grace: Optional[float] = None) -> None:
+    async def close(self, grace: Optional[float] = None) -> None:
         if self.channel:
-            return self.channel.close(grace)
+            return await self.channel.close(grace)
 
 
-client = Client()
+aioclient = AioClient()
