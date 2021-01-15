@@ -46,4 +46,4 @@ class AioClient(Proxy):
             return await self.channel.close(grace)
 
 
-aioclient = AioClient()
+aio_client = AioClient()

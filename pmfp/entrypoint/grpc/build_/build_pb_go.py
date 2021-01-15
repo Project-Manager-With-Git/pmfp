@@ -16,7 +16,7 @@ source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.go
 if source_io:
     ServiceSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载handdler.go.temp模板失败")
+    raise AttributeError("加载serv.go.temp模板失败")
 
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.go.temp')
 if source_io:

@@ -147,4 +147,4 @@ class AioServ(EntryPoint):
                 self.run_singal_serv(config=config)
 
 
-aioserv_node = AioServ()
+aio_server = AioServ()

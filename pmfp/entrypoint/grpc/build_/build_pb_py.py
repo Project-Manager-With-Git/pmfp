@@ -1,11 +1,44 @@
 """编译python语言模块."""
-from pathlib import Path
+import re
+import pkgutil
 import warnings
-from typing import List,Optional
+from pathlib import Path
+from typing import List, Optional
+from promise import Promise
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.tools_info_utils import get_global_python
 from pmfp.utils.python_package_find_utils import find_pypackage_string
+from pmfp.utils.template_utils import template_2_content
+
+ServSource = ""
+AioServSource = ""
+CliSource = ""
+AioCliSource = ""
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.py.temp')
+if source_io:
+    ServSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载serv.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aioserv.py.temp')
+if source_io:
+    AioServSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aioserv.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli.py.temp')
+if source_io:
+    CliSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载cli.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli.py.temp')
+if source_io:
+    AioCliSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aiocli.py.temp模板失败")
 
 
 def find_py_grpc_pb2_import_string(name: str) -> str:
@@ -50,14 +83,8 @@ from .{grpc_package} import *
                     f.writelines(new_lines)
 
 
-def gen_code(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
-                   **kwargs: str)->None:
+def gen_code(includes_str: str, to: str, flag_str: str, target_str: str) -> Promise:
     """生成python模块."""
-    includes_str = " ".join([f"-I {include}" for include in includes])
-    target_str = " ".join(files)
-    flag_str = ""
-    if kwargs:
-        flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
     python = get_global_python()
     command = f"{python} -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
     print(f"编译命令:{command}")
@@ -66,7 +93,8 @@ def gen_code(files: List[str], includes: List[str], to: str, as_type: Optional[L
         print(f"编译grpc项目 {target_str} 为python模块完成!")
         trans_grpc_model_py(to)
         print(f"转换python项目的grpc文件为python模块完成!")
-    run_command(
+
+    return run_command(
         command
     ).catch(
         lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
@@ -86,109 +114,76 @@ def gen_code(files: List[str], includes: List[str], to: str, as_type: Optional[L
 
         {str(content)}
         """)
-    ).get()
+    )
 
 
-def move_proto(files: List[str],includes: List[str],to: str):
-    """将目标位置的proto文件指定到指定目录."""
-    pass
+def find_grpc_package(to: Path) -> List[str]:
+    service_name_lower = ""
+    service_name = ""
+    for file in to.iterdir():
+        if file.name.endswith("_pb2_grpc.py"):
+            service_name_lower = file.name.replace("_pb2_grpc.py", "")
+            with open(file) as f:
+                content = f.read()
+                p = re.search(r"add_\w+Servicer_to_server", content)
+                if p is not None:
+                    c = p.group(0)
+                    service_name = c.replace("add_", "").replace("Servicer_to_server", "")
+    return service_name_lower, service_name
 
-def gen_serv():
-    pass
 
-def gen_cli():
-    pass
+def gen_serv(service_name_lower: str, service_name: str, to: Path):
+    content = template_2_content(
+        ServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    to.joinpath("serv.py", "w").write_text(content, encoding="utf-8")
+    to.joinpath("__init__.py", "a").write_text("from .serv import server\n", encoding="utf-8")
 
-def gen_aio_serv():
-    pass
 
-def gen_aio_cli():
-    pass
+def gen_cli(service_name_lower: str, service_name: str, to: Path):
+    content = template_2_content(
+        CliSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    to.joinpath("cli.py", "w").write_text(content, encoding="utf-8")
+    to.joinpath("__init__.py", "a").write_text("from .cli import client\n", encoding="utf-8")
 
-def gen_nogen_serv():
-    pass
 
-def gen_nogen_cli():
-    pass
+def gen_aio_serv(service_name_lower: str, service_name: str, to: Path):
+    content = template_2_content(
+        AioServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    to.joinpath("aioserv.py", "w").write_text(content, encoding="utf-8")
+    to.joinpath("__init__.py", "a").write_text("from .aioserv import aio_server\n", encoding="utf-8")
 
-def _build_grpc_py(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
-                   **kwargs: str) -> None:
-    includes_str = " ".join([f"-I {include}" for include in includes])
-    target_str = " ".join(files)
-    flag_str = ""
-    if kwargs:
-        flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
-    python = get_global_python()
-    command = f"{python} -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
-    print(f"编译命令:{command}")
 
-    def _(_: str) -> None:
-        print(f"编译grpc项目 {target_str} 为python模块完成!")
-        trans_grpc_model_py(to)
-        print(f"转换python项目的grpc文件为python模块完成!")
-    if as_type is None:
-        run_command(
-            command
-        ).catch(
-            lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
+def gen_aio_cli(service_name_lower: str, service_name: str, to: Path):
+    content = template_2_content(
+        AioCliSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    to.joinpath("aiocli.py", "w").write_text(content, encoding="utf-8")
+    to.joinpath("__init__.py", "a").write_text("from .aiocli import aio_client\n", encoding="utf-8")
 
-            {str(err)}
 
-            编译grpc的python项目依赖如下插件,请检查是否安装:
-
-            `pip install grpcio`
-            `pip install grpcio-tools`
-            `pip install grpcio-reflection`
-            """)
-        ).then(
-            _
-        ).catch(
-            lambda content: warnings.warn(f"""转换python的grpc输出为一个模块失败:
-
-            {str(content)}
-            """)
-        ).get()
-    else:
-        if len([i for i in as_type if i.starts_with("nogen")])>0:
-            # TODO move pb to topath
-            pass
+def _build_grpc_py_more(to: str, target: str, as_type: Optional[List[str]]) -> None:
+    if not as_type:
+        return
+    path = Path(to)
+    service_name_lower, service_name = find_grpc_package(path)
+    for t in as_type:
+        if t == "service":
+            gen_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+        elif t == "client":
+            gen_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
+        elif t == "aiocli":
+            gen_aio_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
+        elif t == "aioserv":
+            gen_aio_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
         else:
-            run_command(
-                command
-            ).catch(
-                lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
-
-                {str(err)}
-
-                编译grpc的python项目依赖如下插件,请检查是否安装:
-
-                `pip install grpcio`
-                `pip install grpcio-tools`
-                `pip install grpcio-reflection`
-                """)
-            )
-
-    run_command(
-        command
-    ).catch(
-        lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
-
-        {str(err)}
-
-        编译grpc的python项目依赖如下插件,请检查是否安装:
-
-        `pip install grpcio`
-        `pip install grpcio-tools`
-        `pip install grpcio-reflection`
-        """)
-    ).then(
-        _
-    ).catch(
-        lambda content: warnings.warn(f"""转换python的grpc输出为一个模块失败:
-
-        {str(content)}
-        """)
-    ).get()
+            print(f"为grpc项目 {target} 构造{t}模板失败,python语言不支持")
 
 
 def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
@@ -202,4 +197,11 @@ def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optiona
         as_type (str): 执行的目的. Default: "source"
 
     """
-    _build_grpc_py(files, includes, to, as_type, **kwargs)
+    includes_str = " ".join([f"-I {include}" for include in includes])
+    target_str = " ".join(files)
+    flag_str = ""
+    if kwargs:
+        flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
+    gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str).then(
+        lambda _: _build_grpc_py_more(to=to, target=target_str, as_type=as_type)
+    )

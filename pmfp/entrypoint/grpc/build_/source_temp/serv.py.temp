@@ -158,4 +158,4 @@ class Serv(EntryPoint):
                 self.run_singal_serv(config=config)
 
 
-serv_node = Serv()
+server = Serv()
