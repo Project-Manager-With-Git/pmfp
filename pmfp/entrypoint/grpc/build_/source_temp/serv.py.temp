@@ -1,13 +1,28 @@
+import os
+import socket
+import warnings
+import contextlib
+import multiprocessing
+from ipaddress import ip_address
 from concurrent import futures
-from typing import Optional, Any
+from typing import Optional, Any, Dict, Iterator
 import grpc
 from grpc_reflection.v1alpha import reflection
 from schema_entry import EntryPoint
 from .${service_name_lower}_pb2_grpc import ${service_name}Servicer, add_${service_name}Servicer_to_server
-from .${service_name_lower}_pb2 import *
+from .${service_name_lower}_pb2 import DESCRIPTOR, Message
 
 
-class Serv(EntryPoint, ${service_name}):
+class Handdler(${service_name}Servicer):
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__()
+        self.config = config
+
+    def Echo(self, request: Any, context: Any) -> Any:
+        return Message(Message=request.Message)
+
+
+class Serv(EntryPoint):
     """grpc的服务端启动入口."""
     argparse_noflag = "files"
     schema = {
@@ -26,14 +41,19 @@ class Serv(EntryPoint, ${service_name}):
             "address": {
                 "type": "string",
                 "description": "服务启动的地址",
-                "default": "localhost:5000"
+                "default": "0.0.0.0:5000"
             },
             "log_level": {
                 "type": "string",
                 "description": "log版本",
                 "default": "DEBUG"
             },
-            "max_workers": {
+            "workers": {
+                "type": "integer",
+                "description": "启动的进程数,设置为<=0的数则使用与本机cpu数一致的进程数",
+                "default": 1
+            },
+            "max_threads": {
                 "type": "integer",
                 "description": "多线程下的最大线程数",
                 "default": 30
@@ -42,56 +62,100 @@ class Serv(EntryPoint, ${service_name}):
                 "type": "integer",
                 "description": "最大并发量",
                 "default": 50
-            },
-            "aio": {
-                "type": "boolean",
-                "description": "是否使用协程替代线程",
-                "default": True
             }
         }
     }
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.grpc_serv: Optional[grpc.Server] = None
-
-    async def Echo(self, request: Any, context: Any) -> Any:
-        return Message(message=request.message)
-
-    async def run_service_aio(self) -> None:
+    @contextlib.contextmanager
+    def _reserve_port(self) -> Iterator[int]:
+        """Find and reserve a port for all subprocesses to use."""
         config = self.config
-        self.grpc_serv = grpc.aio.server()
-        add_${service_name}Servicer_to_server(self, self.grpc_serv)
-        SERVICE_NAMES = (
-            DESCRIPTOR.services_by_name['${service_name}'].full_name,
-            reflection.SERVICE_NAME
+        host, ports = config.get("address", "0.0.0.0:5000").split(":")
+        port = int(ports)
+        ip = ip_address(host)
+        host = str(ip)
+        sock = socket.socket(
+            socket.AF_INET6 if ip.version == 6 else socket.AF_INET,
+            socket.SOCK_STREAM
         )
-        reflection.enable_server_reflection(SERVICE_NAMES, self.grpc_serv)
-        addr = config.get("address", "localhost:5000")
-        print(f"grpc start @{addr}")
-        self.grpc_serv.add_insecure_port(addr)
-        await self.grpc_serv.start()
-        await self.grpc_serv.wait_for_termination()
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
+            raise RuntimeError("Failed to set SO_REUSEPORT.")
+        sock.bind((host, port))
+        try:
+            yield sock.getsockname()[1]
+        finally:
+            sock.close()
 
-    def run_service(self) -> None:
-        config = self.config
-        self.grpc_serv = grpc.server(
+    def run_singal_serv(self, config: Dict[str, Any], bind_address: Optional[str] = None) -> None:
+        grpc_serv = grpc.server(
             futures.ThreadPoolExecutor(
-                max_workers=config.get("max_workers", 30)
+                max_workers=config.get("max_threads", 30)
             ),
             maximum_concurrent_rpcs=config.get("maximum_concurrent_rpcs", 50)
         )
-        add_${service_name}Servicer_to_server(self, self.grpc_serv)
+        handdler = Handdler(config)
+        add_${service_name}Servicer_to_server(handdler, grpc_serv)
         SERVICE_NAMES = (
             DESCRIPTOR.services_by_name['${service_name}'].full_name,
             reflection.SERVICE_NAME
         )
-        reflection.enable_server_reflection(SERVICE_NAMES, self.grpc_serv)
-        addr = config.get("address", "localhost:5000")
-        print(f"grpc start @{addr}")
-        self.grpc_serv.add_insecure_port(addr)
-        self.grpc_serv.start()
-        self.grpc_serv.wait_for_termination()
+        reflection.enable_server_reflection(SERVICE_NAMES, grpc_serv)
+        if bind_address:
+            pid = os.getpid()
+            grpc_serv.add_insecure_port(bind_address)
+            print(f"worker {pid} start @{bind_address}")
+        else:
+            addr = config.get("address", "localhost:5000")
+            grpc_serv.add_insecure_port(addr)
+            print(f"grpc start @{addr}")
+        grpc_serv.start()
+        try:
+            grpc_serv.wait_for_termination()
+        except KeyboardInterrupt:
+            if bind_address:
+                print(f"worker {pid} stoped")
+            else:
+                print("grpc stoped")
+        except Exception as e:
+            raise e
+
+    def run_mp_serv(self, worker_num: int) -> None:
+        workers = []
+        config = self.config
+        try:
+            with self._reserve_port() as port:
+                bind_address = 'localhost:{}'.format(port)
+                for _ in range(worker_num):
+                    worker = multiprocessing.Process(
+                        target=self.run_singal_serv,
+                        kwargs={
+                            "config": config,
+                            "bind_address": bind_address
+                        })
+                    worker.start()
+                    workers.append(worker)
+                for worker in workers:
+                    worker.join()
+        except KeyboardInterrupt:
+            print("grpc workers stoping")
+        except Exception as e:
+            raise e
+
+    def run_service(self) -> None:
+        config = self.config
+        workers = config.get("workers", 1)
+        if workers <= 0:
+            workers = multiprocessing.cpu_count()
+        if workers == 1:
+            self.run_singal_serv(config=config)
+        else:
+            try:
+                self.run_mp_serv(worker_num=workers)
+            except Exception as e:
+                warnings.warn(f"""多进程执行失败: {e} 
+                改为单进程执行""")
+                self.run_singal_serv(config=config)
 
 
 serv_node = Serv()

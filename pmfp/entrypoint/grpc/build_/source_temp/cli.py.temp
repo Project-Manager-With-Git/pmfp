@@ -1,0 +1,31 @@
+from typing import Any, Optional
+import grpc
+from pyproxypattern import Proxy
+
+from .${service_name_lower}_pb2_grpc import ${service_name}Stub
+
+
+class Client(Proxy):
+    __slots__ = ("url", "channel", 'instance', '_callbacks', '_instance_check')
+
+    def __init__(self, url: Optional[str] = None) -> None:
+        if not url:
+            super().__init__()
+        else:
+            instance = self.new_instance(url)
+            super().__init__(instance)
+
+    def new_instance(self, url: str) -> ${service_name}Stub:
+        self.channel = grpc.insecure_channel(url)
+        client = ECHO_RPCStub(self.channel)
+        return client
+
+    def initialize_from_url(self, url: str) -> None:
+        instance = self.new_instance(url)
+        self.initialize(instance)
+
+    def close(self) -> None:
+        return self.channel.close()
+
+
+client = Client()
