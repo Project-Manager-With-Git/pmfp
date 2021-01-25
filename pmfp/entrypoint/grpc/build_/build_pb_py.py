@@ -123,7 +123,7 @@ def find_grpc_package(to: Path) -> List[str]:
     for file in to.iterdir():
         if file.name.endswith("_pb2_grpc.py"):
             service_name_lower = file.name.replace("_pb2_grpc.py", "")
-            with open(file) as f:
+            with open(file, "r", encoding="utf-8") as f:
                 content = f.read()
                 p = re.search(r"add_\w+Servicer_to_server", content)
                 if p is not None:
@@ -138,16 +138,20 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path):
         service_name_lower=service_name_lower,
         service_name=service_name)
     to.joinpath("serv.py", "w").write_text(content, encoding="utf-8")
-    to.joinpath("__init__.py", "a").write_text("from .serv import server\n", encoding="utf-8")
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .serv import server\n")
 
 
 def gen_cli(service_name_lower: str, service_name: str, to: Path):
+    print(service_name_lower)
+    print(service_name)
     content = template_2_content(
         CliSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("cli.py", "w").write_text(content, encoding="utf-8")
-    to.joinpath("__init__.py", "a").write_text("from .cli import client\n", encoding="utf-8")
+    to.joinpath("cli.py").write_text(content, encoding="utf-8")
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .cli import client\n")
 
 
 def gen_aio_serv(service_name_lower: str, service_name: str, to: Path):
@@ -155,8 +159,9 @@ def gen_aio_serv(service_name_lower: str, service_name: str, to: Path):
         AioServSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("aioserv.py", "w").write_text(content, encoding="utf-8")
-    to.joinpath("__init__.py", "a").write_text("from .aioserv import aio_server\n", encoding="utf-8")
+    to.joinpath("aioserv.py").write_text(content, encoding="utf-8")
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .aioserv import aio_server\n")
 
 
 def gen_aio_cli(service_name_lower: str, service_name: str, to: Path):
@@ -165,10 +170,12 @@ def gen_aio_cli(service_name_lower: str, service_name: str, to: Path):
         service_name_lower=service_name_lower,
         service_name=service_name)
     to.joinpath("aiocli.py", "w").write_text(content, encoding="utf-8")
-    to.joinpath("__init__.py", "a").write_text("from .aiocli import aio_client\n", encoding="utf-8")
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .aiocli import aio_client\n")
 
 
 def _build_grpc_py_more(to: str, target: str, as_type: Optional[List[str]]) -> None:
+
     if not as_type:
         return
     path = Path(to)
@@ -176,12 +183,16 @@ def _build_grpc_py_more(to: str, target: str, as_type: Optional[List[str]]) -> N
     for t in as_type:
         if t == "service":
             gen_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            print("gen service code done")
         elif t == "client":
             gen_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            print("gen client code done")
         elif t == "aiocli":
             gen_aio_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            print("gen asyncio client code done")
         elif t == "aioserv":
             gen_aio_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            print("gen asyncio service code done")
         else:
             print(f"为grpc项目 {target} 构造{t}模板失败,python语言不支持")
 
@@ -204,4 +215,6 @@ def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optiona
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
     gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str).then(
         lambda _: _build_grpc_py_more(to=to, target=target_str, as_type=as_type)
+    ).catch(
+        lambda e: print(f"!!!!!!!!!!!!!!!!!!{e}$$$$$$$$$$$$$$$")
     )

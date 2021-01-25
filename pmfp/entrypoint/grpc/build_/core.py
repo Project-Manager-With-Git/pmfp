@@ -29,8 +29,7 @@ class Build(EntryPoint):
                     "type": "string",
                     "enum": ["service", "client", "aiocli", "aioserv", "nogencli", "nogenserv"]
                 },
-                "description": "目的,可以是服务端,客户端,或者既有服务端又有客户端,或者单纯源码",
-                "default": ["source"]
+                "description": "目的,可以是服务端,客户端,或者既有服务端又有客户端,或者单纯源码"
             },
             "to": {
                 "type": "string",

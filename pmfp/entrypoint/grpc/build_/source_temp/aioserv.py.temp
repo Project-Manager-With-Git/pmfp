@@ -32,25 +32,25 @@ class AioServ(EntryPoint):
         "properties": {
             "app_version": {
                 "type": "string",
-                "description": "应用版本"
+                "description": "application version"
             },
             "app_name": {
                 "type": "string",
-                "description": "应用名"
+                "description": "application name"
             },
             "address": {
                 "type": "string",
-                "description": "服务启动的地址",
+                "description": "service address",
                 "default": "0.0.0.0:5000"
             },
             "log_level": {
                 "type": "string",
-                "description": "log版本",
+                "description": "log level",
                 "default": "DEBUG"
             },
             "workers": {
                 "type": "integer",
-                "description": "启动的进程数,设置为<=0的数则使用与本机cpu数一致的进程数",
+                "description": "start processes,when <=0 will set as the host's core number",
                 "default": 1
             }
         }
@@ -141,9 +141,9 @@ class AioServ(EntryPoint):
             try:
                 self.run_mp_serv(worker_num=workers)
             except Exception as e:
-                warnings.warn(f"""多进程执行失败: 
+                warnings.warn(f"""MultiProcess error: 
                 {str(e)} 
-                改为单进程执行""")
+                change to one process""")
                 self.run_singal_serv(config=config)
 
 

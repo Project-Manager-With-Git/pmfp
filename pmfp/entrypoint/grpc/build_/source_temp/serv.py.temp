@@ -32,35 +32,35 @@ class Serv(EntryPoint):
         "properties": {
             "app_version": {
                 "type": "string",
-                "description": "应用版本"
+                "description": "application version"
             },
             "app_name": {
                 "type": "string",
-                "description": "应用名"
+                "description": "application name"
             },
             "address": {
                 "type": "string",
-                "description": "服务启动的地址",
+                "description": "service address",
                 "default": "0.0.0.0:5000"
             },
             "log_level": {
                 "type": "string",
-                "description": "log版本",
+                "description": "log level",
                 "default": "DEBUG"
             },
             "workers": {
                 "type": "integer",
-                "description": "启动的进程数,设置为<=0的数则使用与本机cpu数一致的进程数",
+                "description": "start processes,when <=0 will set as the host's core number",
                 "default": 1
             },
             "max_threads": {
                 "type": "integer",
-                "description": "多线程下的最大线程数",
+                "description": "max threads",
                 "default": 30
             },
             "maximum_concurrent_rpcs": {
                 "type": "integer",
-                "description": "最大并发量",
+                "description": "maximum concurrent",
                 "default": 50
             }
         }
@@ -153,8 +153,9 @@ class Serv(EntryPoint):
             try:
                 self.run_mp_serv(worker_num=workers)
             except Exception as e:
-                warnings.warn(f"""多进程执行失败: {e} 
-                改为单进程执行""")
+                warnings.warn(f""MultiProcess error: 
+                {str(e)} 
+                change to one process""")
                 self.run_singal_serv(config=config)
 
 
