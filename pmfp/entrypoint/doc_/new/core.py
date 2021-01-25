@@ -15,7 +15,7 @@ class New(EntryPoint):
             "language": {
                 "type": "string",
                 "description": "单元测试检验针对的语言",
-                "enum": ["py"]
+                "enum": ["py", "go"]
             },
             "code": {
                 "type": "string",

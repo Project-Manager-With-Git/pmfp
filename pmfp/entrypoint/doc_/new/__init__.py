@@ -1,7 +1,9 @@
+import warnings
 from pathlib import Path
 from typing import Optional
 from pmfp.const import DEFAULT_AUTHOR
 from .new_py import doc_new_py
+from .new_go import doc_new_go
 from .core import doc_new
 
 
@@ -26,3 +28,7 @@ def new_doc(language: str, code: str, output: str, source_dir: str, *,
         version = "0.0.0"
     if language == "py":
         doc_new_py(code=code, output=output, source_dir=source_dir, project_name=project_name, author=author, version=version, cwd=cwd)
+    elif language == "go":
+        doc_new_go(code=code, output=output, source_dir=source_dir, project_name=project_name, author=author, version=version, cwd=cwd)
+    else:
+        warnings.warn(f"不支持的语言{language}")
