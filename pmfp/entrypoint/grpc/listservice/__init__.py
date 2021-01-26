@@ -35,8 +35,7 @@ def list_grpc(url: str, *,
         flags += "-cacert={cacert} "
     command = f"grpcurl {flags}{url} list"
     print(command)
-    run_command(
-        command, cwd=Path(cwd), visible=True
+    run_command(command, cwd=Path(cwd), visible=True
     ).catch(
         lambda _: warnings.warn("""执行listservice命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
     ).get()

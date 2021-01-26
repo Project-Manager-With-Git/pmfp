@@ -7,7 +7,7 @@ from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.tools_info_utils import get_global_python
 
 
-def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: str) -> None:
+def _build_pb_py(files: List[str], includes: List[str], to: str, cwd: Path, **kwargs: str) -> None:
     includes_str = " ".join([f"-I {include}" for include in includes])
     target_str = " ".join(files)
     flag_str = ""
@@ -16,7 +16,7 @@ def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: str) 
     command = f"protoc  {includes_str} {flag_str} --python_out={to} {target_str}"
     print(f"编译命令:{command}")
     run_command(
-        command
+        command, cwd=cwd
     ).catch(
         lambda err: warnings.warn(f"""编译protobuf项目 {target_str} 为python模块失败:
 
@@ -27,7 +27,7 @@ def _build_pb_py(files: List[str], includes: List[str], to: str, **kwargs: str) 
     ).get()
 
 
-def build_pb_py(files: List[str], includes: List[str], to: str,
+def build_pb_py(files: List[str], includes: List[str], to: str, cwd: Path,
                 **kwargs: str) -> None:
     """编译python语言模块.
 

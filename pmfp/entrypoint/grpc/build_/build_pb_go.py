@@ -4,6 +4,7 @@ import pkgutil
 import warnings
 from typing import List, Optional
 from pathlib import Path
+from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.template_utils import template_2_content
 
@@ -60,8 +61,8 @@ def find_grpc_package(to: str) -> List[str]:
     return package, registservice, registclient, registclient_new
 
 
-def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]], target: str) -> None:
-    topath = Path(to)
+def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]], target: str, cwd: Path) -> None:
+    topath = get_abs_path(to, cwd)
     for file in topath.iterdir():
         if file.suffix == ".go":
             init = False
@@ -101,9 +102,7 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]],
 
     command = f"protoc {includes} {flag} --go_out=plugins=grpc:{to} {target}"
     print(f"编译命令:{command}")
-    run_command(
-        command
-    ).catch(
+    run_command(command, cwd=cwd).catch(
         lambda err: warnings.warn(f"""根据模板构造grpc项目失败
             {str(err)}
             """)
@@ -121,7 +120,7 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]],
 
 
 def build_pb_go(files: List[str], includes: List[str], to: str, as_type: str,
-                source_relative: bool, **kwargs: str) -> None:
+                source_relative: bool, cwd: Path, **kwargs: str) -> None:
     """编译grpc的protobuffer定义文件为go语言模块.
 
     Args:
@@ -141,4 +140,4 @@ def build_pb_go(files: List[str], includes: List[str], to: str, as_type: str,
         if flag_str:
             flag_str += " "
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
-    _build_grpc(includes_str, flag_str, to, as_type, target_str)
+    _build_grpc(includes_str, flag_str, to, as_type, target_str, cwd)

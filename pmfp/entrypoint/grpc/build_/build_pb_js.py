@@ -5,7 +5,7 @@ from typing import List
 from pmfp.utils.run_command_utils import run_command
 
 
-def build_pb_js(files: List[str], includes: List[str], to: str, as_type: str,
+def build_pb_js(files: List[str], includes: List[str], to: str, as_type: str, cwd: Path,
                 ** kwargs: str) -> None:
     """编译grpc的protobuf定义文件为js语言模块.
 
@@ -31,8 +31,7 @@ def build_pb_js(files: List[str], includes: List[str], to: str, as_type: str,
         raise AttributeError("需要先设定环境变量`PROTOC_GEN_GRPC_JS_PATH`")
 
     print(f"编译命令:{command}")
-    run_command(
-        command
+    run_command(command, cwd=cwd
     ).catch(
         lambda err: warnings.warn(
             f"""编译grpc项目 {target_str} 为python模块失败:

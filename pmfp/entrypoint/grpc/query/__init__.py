@@ -37,8 +37,7 @@ def query_grpc(url: str, method: str, payload: str, *,
         flags += "-cacert={cacert} "
     command = f"grpcurl -d '{payload}'{flags}{url} {method}"
     print(command)
-    run_command(
-        command, cwd=Path(cwd), visible=True
+    run_command(command, cwd=Path(cwd), visible=True
     ).catch(
         lambda _: warnings.warn("""执行query命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
     ).get()

@@ -5,7 +5,7 @@ from typing import List
 from pmfp.utils.run_command_utils import run_command
 
 
-def build_pb_js(files: List[str], includes: List[str], to: str,
+def build_pb_js(files: List[str], includes: List[str], to: str, cwd: Path,
                 **kwargs: str) -> None:
     """编译js语言模块.
 
@@ -22,9 +22,8 @@ def build_pb_js(files: List[str], includes: List[str], to: str,
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
     command = f"protoc {includes_str} --js_out=import_style=commonjs,binary:{to} {target_str}"
     print(f"编译命令:{command}")
-    run_command(
-        command
-    ).catch(
+    run_command(command, cwd=cwd
+                ).catch(
         lambda err: warnings.warn(f"""编译protobuf项目 {target_str} 为python模块失败:
 
         {str(err)}

@@ -36,8 +36,7 @@ def desc_grpc(url: str, service: str, *,
         flags += "-cacert={cacert} "
     command = f"grpcurl {flags}{url} describe {service}"
     print(command)
-    run_command(
-        command, cwd=Path(cwd), visible=True
+    run_command(command, cwd=Path(cwd), visible=True
     ).catch(
         lambda _: warnings.warn("""执行descservice命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
     ).get()

@@ -83,7 +83,7 @@ from .{grpc_package} import *
                     f.writelines(new_lines)
 
 
-def gen_code(includes_str: str, to: str, flag_str: str, target_str: str) -> Promise:
+def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Path) -> Promise:
     """生成python模块."""
     python = get_global_python()
     command = f"{python} -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
@@ -94,8 +94,7 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str) -> Prom
         trans_grpc_model_py(to)
         print(f"转换python项目的grpc文件为python模块完成!")
 
-    return run_command(
-        command
+    return run_command(command, cwd=cwd
     ).catch(
         lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
 
@@ -197,7 +196,7 @@ def _build_grpc_py_more(to: str, target: str, as_type: Optional[List[str]]) -> N
             print(f"为grpc项目 {target} 构造{t}模板失败,python语言不支持")
 
 
-def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
+def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: Path,
                 **kwargs: str) -> None:
     """编译grpc的protobuf定义文件为python语言模块.
 
@@ -213,7 +212,7 @@ def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optiona
     flag_str = ""
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
-    gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str).then(
+    gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd).then(
         lambda _: _build_grpc_py_more(to=to, target=target_str, as_type=as_type)
     ).catch(
         lambda e: print(f"!!!!!!!!!!!!!!!!!!{e}$$$$$$$$$$$$$$$")

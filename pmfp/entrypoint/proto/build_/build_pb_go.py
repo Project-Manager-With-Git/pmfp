@@ -7,12 +7,11 @@ from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.template_utils import template_2_content
 
 
-def _build_pb(includes: str, flag: str, to: str, target: str) -> None:
+def _build_pb(includes: str, flag: str, to: str, target: str, cwd: Path) -> None:
     command = f"protoc  {includes} {flag} --go_out={to} {target}"
     print(f"编译命令:{command}")
-    run_command(
-        command
-    ).catch(
+    run_command(command, cwd=cwd
+                ).catch(
         lambda err: warnings.warn(f"""编译protobuf项目 {target} 为go语言模块失败:
 
             {str(err)}
@@ -25,7 +24,7 @@ def _build_pb(includes: str, flag: str, to: str, target: str) -> None:
 
 
 def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,
-                source_relative: bool = False, **kwargs: str) -> None:
+                source_relative: bool = False, cwd: Path, **kwargs: str) -> None:
     """编译protobuffer为go语言模块.
 
     Args:

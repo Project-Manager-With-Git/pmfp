@@ -7,57 +7,6 @@ from pmfp.utils.template_utils import template_2_content
 from promise import Promise
 
 
-# def sphinx_new_locale(output: Path, source_dir: Path, *,
-#                       cwd: Optional[Path] = None,
-#                       locales: List[str] = []) -> Promise:
-#     """更新添加小语种支持.
-
-#     Args:
-#         output (Path): 文档目录
-#         source_dir (Path): 文档源文件位置
-#         locales (List[str], optional): 支持的语种. Defaults to [].
-
-#     """
-#     command = f"sphinx-intl update -p {str(output)}/locale -d {str(source_dir.joinpath('locale'))}"
-#     for i in locales:
-#         command += f" -l {i}"
-#     return run_command(command, cwd=cwd)
-
-
-# def sphinx_update_locale(output: Path, source_dir: Path, *,
-#                          cwd: Optional[Path] = None) -> Promise:
-#     """初始化文档的小语种支持.
-
-#     Args:
-#         output (Path): 文档目录
-#         source_dir (Path): 文档源文件位置
-#     """
-#     command = f"sphinx-build -b gettext {str(source_dir)} {str(output.joinpath('locale'))}"
-#     return run_command(command, cwd=cwd)
-
-
-# def sphinx_build(output: Path, source_dir: Path, *,
-#                  cwd: Optional[Path] = None,
-#                  locale: Optional[str] = None) -> Promise:
-#     """执行sphinx的编译操作.
-
-#     Args:
-#         output (Path): 最终的文档文件夹位置.
-#         source_dir (Path): 文档资源文件夹位置.
-#         locale (Optional[str], optional): 要编译的小语种类型. Defaults to None.
-
-#     """
-#     if locale:
-#         if locale == "zh":
-#             command = f"sphinx-build -D language={locale} -b html {str(source_dir)} {str(output)}"
-#         else:
-#             command = f"sphinx-build -D language={locale} -b html {str(source_dir)} {output.joinpath(locale)}"
-
-#     else:
-#         command = f"sphinx-build -b html {str(source_dir)} {str(output)}"
-#     return run_command(command, cwd=cwd)
-
-
 def sphinx_config(source_dir: Path, append_content: str) -> None:
     """为sphinx的配置增加配置项.
 
@@ -174,7 +123,8 @@ def sphinx_new(code: Path, source_dir: Path, project_name: str, author: str, ver
     command = f"sphinx-quickstart --no-sep -v {version} -r {version} -p {project_name} -a {author} -l en --ext-todo --ext-mathjax --ext-viewcode {str(source_dir)}"
     return run_command(command, cwd=cwd)
 
-def sphinx_build(source_dir: Path, doc_dir: Path, *,cwd:Path = Path(".")) -> None:
+
+def sphinx_build(source_dir: Path, doc_dir: Path, *, cwd: Path = Path(".")) -> None:
     """根据源码更新文档的源文件.
 
     Args:
@@ -186,16 +136,3 @@ def sphinx_build(source_dir: Path, doc_dir: Path, *,cwd:Path = Path(".")) -> Non
     """
     command = f"sphinx-build {str(source_dir)} {str(doc_dir)}"
     return run_command(command, cwd=cwd)
-
-
-# def sphinx_update(code: Path, source_dir: Path, *,
-#                   cwd: Optional[Path] = None) -> Promise:
-#     """根据源码更新文档的源文件.
-
-#     Args:
-#         code (Path): 项目源码位置
-#         source_dir (Path): 文档源码位置
-
-#     """
-#     command = f"sphinx-apidoc -o {str(source_dir)} {str(code)}"
-#     return run_command(command, cwd=cwd)

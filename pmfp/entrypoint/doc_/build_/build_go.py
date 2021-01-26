@@ -47,7 +47,7 @@ def doc_build_go(output: str, source_dir: str, *, version: Optional[str] = None,
         source_dirp_str = str(source_dirp)
 
     command = f"golds -gen -dir={source_dirp_str} -wdpkgs-listing=solo -nouses ./..."
-    run_command(command).catch(
+    run_command(command, cwd=cwdp).catch(
         lambda e: warnings.warn(f"""gen doc get error {str(e)}
         you need to install golds first
 

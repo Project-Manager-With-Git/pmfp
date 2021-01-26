@@ -9,13 +9,13 @@ from .core import grpc_build
 
 
 def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
-              source_relative: bool, **kwargs: str) -> None:
+              source_relative: bool, cwd: Path, **kwargs: str) -> None:
     if language.lower() == "go":
-        build_pb_go(files, includes, to, as_type, source_relative, **kwargs)
+        build_pb_go(files, includes, to, as_type, source_relative, cwd=cwd, **kwargs)
     elif language.lower() == "py":
-        build_pb_py(files, includes, to, as_type, **kwargs)
+        build_pb_py(files, includes, to, as_type, cwd=cwd, **kwargs)
     elif language == "js":
-        build_pb_js(files, includes, to, as_type, **kwargs)
+        build_pb_js(files, includes, to, as_type, cwd=cwd, **kwargs)
     else:
         print(f"未知的环境类型{language}")
 
@@ -37,7 +37,8 @@ def build_grpc(language: str, files: List[str], includes: List[str], to: str,
         as_type (Optional[List[str]]): 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
 
     """
-    topath = get_abs_path(to, Path(cwd))
+    cwdp = get_abs_path(cwd)
+    topath = get_abs_path(to, cwdp)
     if not topath.is_dir():
         topath.mkdir(parents=True)
 
@@ -47,4 +48,4 @@ def build_grpc(language: str, files: List[str], includes: List[str], to: str,
         kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}
     else:
         kw = {}
-    _build_pb(language, files, includes, to, as_type, source_relative, **kw)
+    _build_pb(language, files, includes, to, as_type, source_relative, cwd=cwdp, **kw)

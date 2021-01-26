@@ -9,13 +9,13 @@ from .core import proto_build
 
 
 def _build_pb(env: str, files: List[str], includes: List[str], to: str,
-              source_relative: bool, **kwargs: str) -> None:
+              source_relative: bool, cwd: Path, **kwargs: str) -> None:
     if env.lower() == "go":
-        build_pb_go(files, includes, to, source_relative, **kwargs)
+        build_pb_go(files, includes, to, source_relative, cwd=cwd, **kwargs)
     elif env.lower() == "py":
-        build_pb_py(files, includes, to, **kwargs)
+        build_pb_py(files, includes, to, cwd=cwd, **kwargs)
     elif env == "js":
-        build_pb_js(files, includes, to, **kwargs)
+        build_pb_js(files, includes, to, cwd=cwd, **kwargs)
     else:
         print(f"未知的环境类型{env}")
 
@@ -34,15 +34,15 @@ def build_pb(language: str, files: List[str], includes: List[str], to: str,
         kwargs (Optional[str]): Default: None,
         cwd (str): 执行的根目录. Default: "."
     """
-
-    topath = get_abs_path(to, Path(cwd))
+    cwdp = get_abs_path(cwd)
+    topath = get_abs_path(to, cwdp)
     if not topath.is_dir():
         topath.mkdir(parents=True)
 
-    includes = [get_abs_path(i, Path(cwd)) for i in includes]
+    includes = [get_abs_path(i, cwdp) for i in includes]
     if kwargs:
         kwpairs = kwargs.split(",")
         kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}
     else:
         kw = {}
-    _build_pb(language, files, includes, to, source_relative, **kw)
+    _build_pb(language, files, includes, to, source_relative, cwd=cwdp, **kw)
