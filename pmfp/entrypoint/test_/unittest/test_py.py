@@ -20,12 +20,11 @@ def unittest_test_py(test_code: str, code: str, *,
     """
     if cwd:
         cwdp = get_abs_path(cwd)
-        python = get_local_python(cwdp)
-        test_code_path = get_abs_path(test_code, cwdp)
     else:
         cwdp = Path(".")
-        python = get_global_python()
-        test_code_path = get_abs_path(test_code)
+
+    python = get_local_python(cwdp.joinpath("env"))
+    test_code_path = get_abs_path(test_code, cwdp)
     if coverage:
         def coverage_command(_: str) -> None:
             if output:
@@ -39,7 +38,7 @@ def unittest_test_py(test_code: str, code: str, *,
         if not code:
             warnings.warn("要获得覆盖率必须指定要覆盖的源码")
             return
-        
+
         command = f"{python} -m coverage run --source={code} -m unittest discover -v -s {str(test_code_path)}"
         print(f"执行命令:{command}")
         run_command(

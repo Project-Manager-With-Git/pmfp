@@ -18,6 +18,9 @@ def go_build(code: str, project_name: str, *,
     if build_as != "exec":
         warnings.warn("go语言只支持编译为可执行文件")
         return
+    if not cwd.joinpath("go.mod").exists():
+        warnings.warn("go语言项目需要先有go.mod")
+        return
     env = {"GO111MODULE": "on", "GOPROXY": "https://goproxy.io"}
     command = "go build"
     if mini:
@@ -28,7 +31,7 @@ def go_build(code: str, project_name: str, *,
     else:
         output_dir_str = str(output_dir)
     target_str = f"{output_dir_str}/{project_name}"
-    command += " -o {target_str} {code}"
+    command += f" -o {target_str} {code}"
     if for_linux_arch:
         env.update({
             "GOARCH": for_linux_arch,
