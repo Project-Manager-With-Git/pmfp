@@ -11,11 +11,11 @@ from .core import pack_cmd
 
 
 @pack_cmd.as_main
-def build(language: str, code: str, project_name: str, *,
-          output_dir: str = ".",
-          pypi_mirror: Optional[str] = None,
-          build_as: str = "exec",
-          cwd: str = ".") -> None:
+def pack(language: str, code: str, project_name: str, *,
+         output_dir: str = ".",
+         pypi_mirror: Optional[str] = None,
+         pack_as: str = "exec",
+         cwd: str = ".") -> None:
     """编译指定代码.
 
     只支持对linux的交叉编译.
@@ -49,5 +49,5 @@ def build(language: str, code: str, project_name: str, *,
                 project_name=project_name,
                 output_dir=output_dirp,
                 pypi_mirror=pypi_mirror,
-                build_as=build_as,
+                pack_as=pack_as,
                 cwd=cwdp)

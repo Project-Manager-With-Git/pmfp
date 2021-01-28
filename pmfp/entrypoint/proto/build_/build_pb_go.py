@@ -1,10 +1,8 @@
 """编译go语言模块."""
-import re
 import warnings
 from typing import List
 from pathlib import Path
 from pmfp.utils.run_command_utils import run_command
-from pmfp.utils.template_utils import template_2_content
 
 
 def _build_pb(includes: str, flag: str, to: str, target: str, cwd: Path) -> None:
@@ -23,8 +21,8 @@ def _build_pb(includes: str, flag: str, to: str, target: str, cwd: Path) -> None
     ).get()
 
 
-def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,
-                source_relative: bool = False, cwd: Path, **kwargs: str) -> None:
+def build_pb_go(files: List[str], includes: List[str], to: str, cwd: Path,
+                source_relative: bool = False, **kwargs: str) -> None:
     """编译protobuffer为go语言模块.
 
     Args:
@@ -44,4 +42,4 @@ def build_pb_go(files: List[str], includes: List[str], to: str, grpc: bool,
             flag_str += " "
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
 
-    _build_pb(includes_str, flag_str, to, target_str)
+    _build_pb(includes=includes_str, flag=flag_str, to=to, target=target_str, cwd=cwd)

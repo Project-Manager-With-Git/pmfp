@@ -12,5 +12,6 @@ from .proto import *
 from .doc_ import *
 from .env_ import *
 from .build_ import build
+from .pack import pack
 # from .cmd_stack import *
 # from .cmd_project import *

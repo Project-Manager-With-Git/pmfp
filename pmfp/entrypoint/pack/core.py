@@ -29,7 +29,7 @@ class Pack(EntryPoint):
                 "type": "string",
                 "description": "项目名"
             },
-            "build_as": {
+            "pack_as": {
                 "type": "string",
                 "description": "打包的目标,可选有exec,lib",
                 "enum": ["exec", "lib"],

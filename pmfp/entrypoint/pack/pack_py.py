@@ -1,4 +1,5 @@
 """打包py语言模块."""
+import zipapp
 import shutil
 import compileall
 import warnings
@@ -8,6 +9,7 @@ from pmfp.const import PLATFORM
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.tools_info_utils import get_local_python
 from pmfp.utils.fs_utils import get_abs_path, delete_source
+from pmfp.utils.url_utils import is_http_url
 
 
 def _delete_py_source(root_path: Path) -> None:
@@ -42,10 +44,10 @@ def py_pack_lib(output_dir: Path, cwd: Path) -> None:
 
 def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, pypi_mirror: Optional[str] = None) -> None:
     python = get_local_python(cwd.joinpath("env"))
-    if PLATFORM == 'Windows':
-        output_dir_str = str(output_dir).replace("\\", "\\\\")
-    else:
-        output_dir_str = str(output_dir)
+    # if PLATFORM == 'Windows':
+    #     output_dir_str = str(output_dir).replace("\\", "\\\\")
+    # else:
+    #     output_dir_str = str(output_dir)
 
     code_path = get_abs_path(code, cwd)
     temp_path = cwd.joinpath("app")
@@ -74,7 +76,7 @@ def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, p
 
         zipapp.create_archive(
             temp_path,
-            target=project_name + ".pyz",
+            target=output_dir.joinpath(f"{project_name}.pyz"),
             interpreter='/usr/bin/env python3'
         )
     except Exception as e:
@@ -82,6 +84,7 @@ def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, p
         raise e
     else:
         print("完成编译打包python项目{project_name}为pyz文件!")
+
     finally:
         if temp_path.exists():
             shutil.rmtree(temp_path)
@@ -91,36 +94,15 @@ def py_pack(code: str, project_name: str, *,
             output_dir: Path,
             cwd: Path,
             pypi_mirror: Optional[str] = None,
-            build_as: str = "exec",
+            pack_as: str = "exec",
             ) -> None:
 
     if not cwd.joinpath("go.mod").exists():
         warnings.warn("go语言项目需要先有go.mod")
         return
-    if build_as == "exec":
+    if pack_as == "exec":
         py_pack_exec(code=code, project_name=project_name, output_dir=output_dir, cwd=cwd, pypi_mirror=pypi_mirror)
-    elif:
+    elif pack_as == "lib":
         py_pack_lib(output_dir=output_dir, cwd=cwd)
     else:
-        warnings.warn(f"python语言不支持打包类型{build_as}")
-
-    command = "go build"
-    output_dir_str = ""
-    if PLATFORM == 'Windows':
-        output_dir_str = str(output_dir).replace("\\", "\\\\")
-    else:
-        output_dir_str = str(output_dir)
-    target_str = f"{output_dir_str}/{project_name}"
-    command += f" -o {target_str} {code}"
-    if for_linux_arch:
-        env.update({
-            "GOARCH": for_linux_arch,
-            "GOOS": "linux"
-        })
-    run_command(
-        command, cwd=cwd, env=env
-    ).catch(
-        lambda err: warnings.warn(f"""编译失败
-            {str(err)}
-            """)
-    ).get()
+        warnings.warn(f"python语言不支持打包类型{pack_as}")

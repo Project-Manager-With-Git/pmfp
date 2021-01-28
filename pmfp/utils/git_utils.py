@@ -2,31 +2,25 @@
 import configparser
 import time
 from pathlib import Path
-from typing import Optional, Callable
-from .run_command_utils import run_command
+from typing import Optional, Callable, Dict, List
+from git import Repo
+from git.repo.fun import is_git_dir
+from pmfp.const import PLATFORM
 
 
-def _git_check(p: Path) -> bool:
-    """检测项目有没有.git可以用于上传和打标签等操作.
-
-    Args:
-        p (Path): 目标地址
-
-    Returns:
-        bool: 是否是git项目
-
-    """
-    if not p.joinpath(".git").exists():
-        return False
+def make_repod(p: Path) -> Path:
+    if PLATFORM == "windows":
+        d = p.joinpath(".git")
     else:
-        return True
+        d = p
+    return d
 
 
-class NoRemoteURL(Exception):
-    """目标项目没有指定远程仓库."""
+# class NoRemoteURL(Exception):
+#     """目标项目没有指定远程仓库."""
 
 
-def _git_find_remote(p: Path) -> str:
+def git_find_remotes(p: Path) -> Dict[str, str]:
     """从项目的.git中找到远端仓库url.
 
     Args:
@@ -36,50 +30,59 @@ def _git_find_remote(p: Path) -> str:
         AttributeError: 如果路径下没有`.git`文件夹则会报错.
 
     Returns:
-        str: 远程仓库的地址
+        Dict[str, str]: 远程仓库的本地命名和对应地址
 
     """
-    if not _git_check(p):
+    d = make_repod(p)
+    if not is_git_dir(d):
         raise AttributeError(f"目标路径{p}不是git仓库.")
     else:
-        pointgit = p.joinpath(".git")
-        gitconfig = pointgit.joinpath('config')
-        parser = configparser.ConfigParser(allow_no_value=True)
-        parser.read(str(gitconfig))
-        url = parser['remote "origin"']['url']
-        if url:
-            return url
-        else:
-            raise NoRemoteURL(f"目标路径{p}的git仓库未指定远程仓库.")
+        with Repo(d) as repo:
+            result = {}
+            for i in repo.remotes:
+                urls = list(i.urls)
+                if urls:
+                    result[i.name] = urls[0]
+            return result
 
 
-def git_add_remote(p: Path, remote_url: str) -> None:
+def git_find_origin(p: Path) -> str:
+    d = make_repod(p)
+    if not is_git_dir(d):
+        raise AttributeError(f"目标路径{p}不是git仓库.")
+    else:
+        with Repo(d) as repo:
+            result = {}
+            for i in repo.remotes:
+                if i.name == "origin":
+                    urls = list(i.urls)
+                    if urls:
+                        return urls[0]
+                    raise AttributeError(f"origin未设置路径")
+
+
+def git_add_remote(p: Path, remote_name: str, remote_url: str) -> None:
     """为本地git仓库关联远程仓库.
 
     Args:
         p (Path): 本地仓库路径
+        remote_name (str): 远程仓库名
         remote_url (str): 远程仓库url
 
     """
-    try:
-        _ = _git_find_remote(p)
-    except NoRemoteURL as e:
-
-        def git_remoteadd_succeed_callback(_: str) -> None:
-            command = "git fetch --all"
-            run_command(command,
-                        cwd=p,
-                        succ_cb=lambda x: print(f"添加远程仓库{remote_url}到本地仓库{p}.")
-                        )
-
-        command = f"git remote add origin {remote_url}"
-        run_command(command,
-                    cwd=p,
-                    succ_cb=git_remoteadd_succeed_callback)
-    except Exception as e:
-        raise e
+    d = make_repod(p)
+    if not is_git_dir(d):
+        raise AttributeError(f"目标路径{p}不是git仓库.")
     else:
-        print(f"本地git项目{p}已经有了远程仓库")
+        with Repo(d) as repo:
+            for i in repo.remotes:
+                if remote_name == i.name:
+                    raise AttributeError(f"远程仓库名{remote_name}已被设置")
+            repo.create_remote(remote_name, remote_url)
+
+
+def git_add_origin(p: Path, remote_url: str) -> None:
+    git_add_remote(p, remote_name="origin", remote_url=remote_url)
 
 
 def git_init(p: Path, *, remote_url: Optional[str] = None) -> None:
@@ -90,34 +93,39 @@ def git_init(p: Path, *, remote_url: Optional[str] = None) -> None:
         remote_url (Optional[str], optional): 远程关联仓库url. Defaults to None.
 
     """
-    def git_init_succeed_cb(x: str) -> None:
+    with Repo.init(p, mkdir=True) as repo:
         print("git本地仓库初始化完成.")
         if remote_url:
-            git_add_remote(p, remote_url)
-
-    command = f"git init {str(p)}"
-    run_command(command,
-                succ_cb=git_init_succeed_cb)
+            repo.create_remote('origin', remote_url)
+            print("绑定远程仓库完成")
 
 
 def git_clone(url: str, to: Path, *,
-              branch: str = "master", succ_cb: Optional[Callable[[str], None]] = None,
-              fail_cb: Optional[Callable[[str], None]] = None) -> None:
+              branch: str = "master") -> None:
     """从远程克隆项目到本地.
 
     Args:
         url (str): 远程url
         to (Path): 本地项目路径
         branch (str, optional): 拉取的分支. Defaults to "master".
-        succ_cb (Optional[Callable[[],None]], optional): 拉取成功的回调. Defaults to None.
-        fail_cb (Optional[Callable[[],None]], optional): 拉取失败的回调. Defaults to None.
-
     """
-    command = f"git clone -b {branch} {url} {str(to)}"
-    run_command(command, succ_cb=succ_cb, fail_cb=fail_cb)
+    with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"]) as repo:
+        print("git clone ok")
 
 
-def get_latest_commit(p: Path) -> str:
+def get_latest_commits(p: Path) -> Dict[str, str]:
+    d = make_repod(p)
+    if not is_git_dir(d):
+        raise AttributeError(f"目标路径{p}不是git仓库.")
+    else:
+        with Repo(d) as repo:
+            result = {}
+            for i in repo.heads:
+                result[i.name] = i.commit.hexsha
+            return result
+
+
+def get_master_latest_commit(p: Path) -> str:
     """获取git项目的最近一个master分支的commit号.
 
     Args:
@@ -127,20 +135,16 @@ def get_latest_commit(p: Path) -> str:
         str: commit号
 
     """
-    command = "git fetch --depth=1"
-    result = ""
-
-    def get_latest_succcb(_: str) -> None:
-        nonlocal result
-        with open(p.joinpath(".git/FETCH_HEAD"), "r", encoding="utf-8") as f:
-            for line in f.readlines():
-                if "master" in line:
-                    eles = line.split("\t")
-                    result = eles[0]
-                    break
-
-    run_command(command, cwd=p, succ_cb=get_latest_succcb)
-    return result
+    d = make_repod(p)
+    if not is_git_dir(d):
+        raise AttributeError(f"目标路径{p}不是git仓库.")
+    else:
+        with Repo(d) as repo:
+            for i in repo.heads:
+                if i.name == "master":
+                    return i.commit.hexsha
+            else:
+                raise AttributeError(f"git仓库没有master分支")
 
 
 def git_push(p: Path, msg: str = "update") -> None:

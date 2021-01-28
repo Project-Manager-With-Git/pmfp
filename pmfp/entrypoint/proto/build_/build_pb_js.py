@@ -1,6 +1,6 @@
 """编译js语言模块."""
-import os
 import warnings
+from pathlib import Path
 from typing import List
 from pmfp.utils.run_command_utils import run_command
 

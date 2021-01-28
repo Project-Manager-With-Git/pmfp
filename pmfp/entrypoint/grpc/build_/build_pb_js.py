@@ -1,6 +1,7 @@
 """编译js语言模块."""
 import os
 import warnings
+from pathlib import Path
 from typing import List
 from pmfp.utils.run_command_utils import run_command
 
@@ -32,7 +33,7 @@ def build_pb_js(files: List[str], includes: List[str], to: str, as_type: str, cw
 
     print(f"编译命令:{command}")
     run_command(command, cwd=cwd
-    ).catch(
+                ).catch(
         lambda err: warnings.warn(
             f"""编译grpc项目 {target_str} 为python模块失败:
 
