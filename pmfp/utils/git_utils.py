@@ -141,10 +141,10 @@ def get_master_latest_commit(p: Path) -> str:
     else:
         with Repo(d) as repo:
             for i in repo.heads:
-                if i.name == "master":
+                if i.name == "master" or i.name == "main":
                     return i.commit.hexsha
             else:
-                raise AttributeError(f"git仓库没有master分支")
+                raise AttributeError(f"git仓库没有master或者main分支")
 
 
 def git_push(p: Path, msg: str = "update") -> None:
@@ -155,7 +155,8 @@ def git_push(p: Path, msg: str = "update") -> None:
         msg (str): 注释消息
 
     """
-    remote = _git_find_remote(p)
+    remote = git_find_origin(p)
+    
     command = "git add ."
 
     def git_add_succeed_callback(_: str) -> None:
