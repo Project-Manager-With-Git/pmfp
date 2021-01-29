@@ -1,5 +1,5 @@
 promise >= 2.3
-schema_entry >= 0.0.6
+schema_entry >= 0.0.9
 colorama >= 0.4.0
 gevent >= 20.0.0
 termcolor >= 1.0.0
