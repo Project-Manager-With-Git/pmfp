@@ -92,10 +92,9 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Pa
     def _(_: str) -> None:
         print(f"编译grpc项目 {target_str} 为python模块完成!")
         trans_grpc_model_py(to)
-        print(f"转换python项目的grpc文件为python模块完成!")
+        print("转换python项目的grpc文件为python模块完成!")
 
-    return run_command(command, cwd=cwd
-    ).catch(
+    return run_command(command, cwd=cwd).catch(
         lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
 
         {str(err)}
@@ -110,7 +109,6 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Pa
         _
     ).catch(
         lambda content: warnings.warn(f"""转换python的grpc输出为一个模块失败:
-
         {str(content)}
         """)
     )

@@ -9,25 +9,18 @@ from pmfp.const import PLATFORM
 
 
 def make_repod(p: Path) -> Path:
-    if PLATFORM == "windows":
-        d = p.joinpath(".git")
-    else:
-        d = p
+    d = p.joinpath(".git")
     return d
 
 
-# class NoRemoteURL(Exception):
-#     """目标项目没有指定远程仓库."""
-
-
 def git_find_remotes(p: Path) -> Dict[str, str]:
-    """从项目的.git中找到远端仓库url.
+    """从git项目中找到远端仓库url.
 
     Args:
         p (Path): 目标地址
 
     Raises:
-        AttributeError: 如果路径下没有`.git`文件夹则会报错.
+        AttributeError: 如果路径不是git项目则会抛出
 
     Returns:
         Dict[str, str]: 远程仓库的本地命名和对应地址
@@ -46,19 +39,32 @@ def git_find_remotes(p: Path) -> Dict[str, str]:
             return result
 
 
-def git_find_origin(p: Path) -> str:
+def git_find_origin(p: Path) -> Optional[str]:
+    """从git项目中找到远端origin仓库url.
+
+    Args:
+        p (Path): 目标地址
+
+    Raises:
+        AttributeError: 如果路径不是git项目则会抛出
+
+    Returns:
+        Optional[str]: 远程origin仓库的对应地址
+
+    """
     d = make_repod(p)
     if not is_git_dir(d):
         raise AttributeError(f"目标路径{p}不是git仓库.")
     else:
         with Repo(d) as repo:
-            result = {}
             for i in repo.remotes:
                 if i.name == "origin":
                     urls = list(i.urls)
                     if urls:
                         return urls[0]
                     raise AttributeError(f"origin未设置路径")
+            else:
+                return None
 
 
 def git_add_remote(p: Path, remote_name: str, remote_url: str) -> None:
@@ -68,6 +74,9 @@ def git_add_remote(p: Path, remote_name: str, remote_url: str) -> None:
         p (Path): 本地仓库路径
         remote_name (str): 远程仓库名
         remote_url (str): 远程仓库url
+
+    Raises:
+        AttributeError: 如果路径不是git项目则会抛出
 
     """
     d = make_repod(p)
@@ -82,6 +91,16 @@ def git_add_remote(p: Path, remote_name: str, remote_url: str) -> None:
 
 
 def git_add_origin(p: Path, remote_url: str) -> None:
+    """为本地git仓库关联origin远程仓库
+
+    Args:
+        p (Path): 本地仓库路径
+        remote_url (str): 远程仓库url
+
+    Raises:
+        AttributeError: 如果路径不是git项目则会抛出
+
+    """
     git_add_remote(p, remote_name="origin", remote_url=remote_url)
 
 
@@ -114,6 +133,17 @@ def git_clone(url: str, to: Path, *,
 
 
 def get_latest_commits(p: Path) -> Dict[str, str]:
+    """获取git项目的各个分支最近一次commit的hash值.
+
+    Args:
+        p (Path): [description]
+
+    Raises:
+        AttributeError: 如果路径不是git项目则会抛出
+
+    Returns:
+        Dict[str, str]: [description]
+    """
     d = make_repod(p)
     if not is_git_dir(d):
         raise AttributeError(f"目标路径{p}不是git仓库.")
@@ -131,6 +161,10 @@ def get_master_latest_commit(p: Path) -> str:
     Args:
         p (Path): git项目位置
 
+    Raises:
+        AttributeError: 如果路径不是git项目则会抛出
+        AttributeError: git仓库没有master或者main分支
+
     Returns:
         str: commit号
 
@@ -144,10 +178,10 @@ def get_master_latest_commit(p: Path) -> str:
                 if i.name == "master" or i.name == "main":
                     return i.commit.hexsha
             else:
-                raise AttributeError(f"git仓库没有master或者main分支")
+                raise AttributeError("git仓库没有master或者main分支")
 
 
-def git_push(p: Path, msg: str = "update") -> None:
+def git_push(p: Path, *, msg: str = "update") -> None:
     """git项目推代码到远端仓库.
 
     Args:
@@ -155,64 +189,36 @@ def git_push(p: Path, msg: str = "update") -> None:
         msg (str): 注释消息
 
     """
-    remote = git_find_origin(p)
-    
-    command = "git add ."
-
-    def git_add_succeed_callback(_: str) -> None:
+    d = make_repod(p)
+    with Repo(d) as repo:
+        repo.index.add(".")
         print("git add .执行成功")
-
-        def git_commit_succeed_callback(_: str) -> None:
-            print("git commit执行成功")
-
-            def git_pull_succeed_callback(_: str) -> None:
-                print("git pull执行成功")
-                command = "git push"
-                run_command(command,
-                            cwd=p,
-                            succ_cb=lambda x: print(f"推送源码到git仓库 {remote} 成功")
-                            )
-
-            command = "git pull"
-            run_command(command,
-                        cwd=p,
-                        succ_cb=git_pull_succeed_callback
-                        )
-
         now = time.time()
-        command = f'git commit -m "{msg}@{now}"'
-        run_command(command,
-                    cwd=p,
-                    succ_cb=git_commit_succeed_callback
-                    )
-
-    run_command(command,
-                cwd=p,
-                succ_cb=git_add_succeed_callback
-                )
+        repo.index.commit(message=f"{msg} commit @{now}")
+        print("git commit执行成功")
+        repo.remote().pull()
+        print("git pull执行成功")
+        repo.remote().push()
+        print("git push执行成功")
 
 
-def git_tag(p: Path, version: str) -> None:
+def git_new_tag(p: Path, version: str, message: Optional[str] = None, remote: bool = False) -> None:
     """为代码打tag.
 
     Args:
         p (Path): 本地仓库位置
         version (str): 项目代码版本
+        message (Optional[str]): tag的消息
+        remote (bool): 是否推送到远程仓库origin
 
     """
-    remote = _git_find_remote(p)
+    d = make_repod(p)
     tag = f"v{version}"
-
-    def git_tag_succeed_callback(_: str) -> None:
-        print(f"git tag -a {tag} -m 'version: {tag}' 执行成功")
-        command = "git push --tag"
-        run_command(command,
-                    cwd=p,
-                    succ_cb=lambda x: print(f"推送 tag版本{tag}到git仓库{remote}完成")
-                    )
-
-    command = f"git tag -a {tag} -m 'version: {tag}'"
-    run_command(command,
-                cwd=p,
-                succ_cb=git_tag_succeed_callback
-                )
+    if version.startswith("v"):
+        tag = version
+    with Repo(d) as repo:
+        repo.create_tag(tag, message=message)
+        print("git new tag 执行成功")
+        if remote is True:
+            repo.remote().push(tags=True)
+            print(f"tag {tag} 推送至远程仓库")

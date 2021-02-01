@@ -4,8 +4,7 @@ DEFAULTRCSCHEMA = {
     "description": "An address similar to http://microformats.org/wiki/h-card",
     "examples": [
         {
-            "project-name": "pmfp",
-            "project-type": "tool",
+            "project_name": "pmfp",
             "remote_registry": "https://github.com/Project-Manager-With-Git/pmfp.git",
             "license": "MIT",
             "version": "4.0.0",
@@ -20,10 +19,7 @@ DEFAULTRCSCHEMA = {
     ],
     "type": "object",
     "properties": {
-        "project-name": {
-            "type": "string"
-        },
-        "project-type": {
+        "project_name": {
             "type": "string"
         },
         "remote_registry": {
@@ -57,7 +53,7 @@ DEFAULTRCSCHEMA = {
             "type": "string"
         }
     },
-    "required": ["project-name", "project-type", "version", "author", "keywords", "description"]
+    "required": ["project_name", "project_type", "version", "author", "keywords", "description"]
 }
 
 
