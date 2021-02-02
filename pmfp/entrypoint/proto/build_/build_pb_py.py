@@ -37,4 +37,4 @@ def build_pb_py(files: List[str], includes: List[str], to: str, cwd: Path,
         to (str): 编译成的模块文件放到的路径
 
     """
-    _build_pb_py(files, includes, to, **kwargs)
+    _build_pb_py(files, includes, to, cwd, **kwargs)
