@@ -134,7 +134,7 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path):
         ServSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("serv.py", "w").write_text(content, encoding="utf-8")
+    to.joinpath("serv.py").write_text(content, encoding="utf-8")
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .serv import server\n")
 
@@ -166,7 +166,7 @@ def gen_aio_cli(service_name_lower: str, service_name: str, to: Path):
         AioCliSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("aiocli.py", "w").write_text(content, encoding="utf-8")
+    to.joinpath("aiocli.py").write_text(content, encoding="utf-8")
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .aiocli import aio_client\n")
 
