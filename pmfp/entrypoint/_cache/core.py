@@ -4,6 +4,7 @@ from ..core import ppm
 
 
 class Cache(EntryPoint):
-    """编译指定位置项目."""
-    
-cache_cmd = ppm.regist_sub(Cache)
+    """资源包缓存相关命令."""
+
+
+cache = ppm.regist_sub(Cache)

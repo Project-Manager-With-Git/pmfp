@@ -1,8 +1,10 @@
 """从远程获取资源包."""
 from pmfp.utils.remote_cache_utils import SourcePack
 from pmfp.utils.fs_utils import get_cache_dir
+from .core import cache_get
 
 
+@cache_get.as_main
 def get_sourcepack(source_pack_string: str) -> None:
     """从远程指定位置获取资源包.
 

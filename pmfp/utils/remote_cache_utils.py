@@ -2,7 +2,7 @@
 from pathlib import Path
 import shutil
 from .fs_utils import tempdir
-from .git_utils import git_clone, get_latest_commit
+from .git_utils import git_clone, get_master_latest_commit
 
 
 class SourcePack:
@@ -61,25 +61,25 @@ class SourcePack:
 
     def _clone_source_pack(self, temp_dir: Path) -> None:
         url = self.git_url()
-
-        def clone_succ_cb(content: str) -> None:
-            if self.tag == "latest":
-                self.tag = get_latest_commit(temp_dir)
-            tempalte_dir = self.source_pack_path(temp_dir.parent)
-            for p in temp_dir.iterdir():
-                if ".git" not in p.name:
-                    try:
-                        shutil.move(str(p), str(tempalte_dir.joinpath(p.name)))
-                    except Exception as e:
-                        print(f"移动{p.name}出错: {e}")
-
         if self.tag == "latest":
             branch = "master"
         else:
             branch = self.tag
-        git_clone(url, temp_dir, branch=branch,
-                  succ_cb=clone_succ_cb,
-                  )
+        git_clone(url, temp_dir, branch=branch)
+        if self.tag == "latest":
+            self.tag = get_master_latest_commit(temp_dir)
+        tempalte_dir = self.source_pack_path(temp_dir.parent)
+        if not temp_dir.joinpath("ispmfpsource").exists():
+            print("git项目不是pmfp的资源项目,清理下载的缓存")
+            shutil.rmtree(temp_dir)
+            print("清理下载的缓存完成")
+            return None
+        for p in temp_dir.iterdir():
+            if ".git" not in p.name:
+                try:
+                    shutil.move(str(p), str(tempalte_dir.joinpath(p.name)))
+                except Exception as e:
+                    print(f"移动{p.name}出错: {e}")
         print("_clone_source_pack 执行完成")
 
     def clone_source_pack(self, cache_dir: Path) -> None:
