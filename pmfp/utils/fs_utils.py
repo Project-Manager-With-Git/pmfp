@@ -13,7 +13,8 @@ from typing import (
 from pmfp.const import (
     PMFP_CONFIG_PATH,
     PMFP_CONFIG_HOME,
-    DEFAULT_PMFPRC
+    DEFAULT_PMFPRC,
+    PLATFORM
 )
 
 
@@ -37,6 +38,29 @@ def get_abs_path(path_str: str, cwd: Optional[Path] = None) -> Path:
         else:
             r_path = Path(".").resolve().joinpath(path_str)
     return r_path
+
+
+def path_to_str(p: Path) -> str:
+    if PLATFORM == 'Windows':
+        source_dirp_str = str(p).replace("\\", "\\\\")
+    else:
+        source_dirp_str = str(p)
+    return source_dirp_str
+
+
+def get_abs_path_str(path_str: str, cwd: Optional[Path] = None) -> str:
+    """由路径字符串获取绝对路径.
+
+    Args:
+        path_str (str): 路径字符创
+        cwd (Optional[Path]): 指定执行时的位置
+
+    Returns:
+        str: 路径字符串的绝对路径字符串
+
+    """
+    source_dirp = get_abs_path(path_str, cwd)
+    return path_to_str(source_dirp)
 
 
 def iter_dir_to_end(path: Path,

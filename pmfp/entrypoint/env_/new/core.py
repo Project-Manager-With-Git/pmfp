@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import env
 
 
-class New(EntryPoint):
+class New(EndPoint):
     """在目标文件夹构造执行环境."""
     argparse_noflag = "env"
     default_config_file_paths = ["./ppmrc.json"]

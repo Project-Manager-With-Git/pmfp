@@ -2,8 +2,10 @@
 from typing import Dict, Any, List, Optional
 from .test_py import benchmark_test_py
 from .test_go import benchmark_test_go
+from .core import test_benchmark
 
 
+@test_benchmark.as_main
 def benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None:
     """对指定语言的代码做性能测试.
 

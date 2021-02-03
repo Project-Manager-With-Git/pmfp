@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import test
 
 
-class Benchmark(EntryPoint):
+class Benchmark(EndPoint):
     """对指定语言的源码做性能检验."""
     argparse_noflag = "benchmark_code"
     schema = {

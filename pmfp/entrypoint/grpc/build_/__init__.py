@@ -1,7 +1,7 @@
 """编译protobuf的schema为不同语言的代码."""
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from pmfp.utils.fs_utils import get_abs_path
+from pmfp.utils.fs_utils import get_abs_path, get_abs_path_str
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py
@@ -42,7 +42,7 @@ def build_grpc(language: str, files: List[str], includes: List[str], to: str,
     if not topath.is_dir():
         topath.mkdir(parents=True)
 
-    includes = [get_abs_path(i, Path(cwd)) for i in includes]
+    includes = [get_abs_path_str(i, Path(cwd)) for i in includes]
     if kwargs:
         kwpairs = kwargs.split(",")
         kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}

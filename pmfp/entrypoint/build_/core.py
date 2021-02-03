@@ -1,9 +1,9 @@
 """ppm build命令的处理."""
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import ppm
 
 
-class Build(EntryPoint):
+class Build(EndPoint):
     """编译指定位置项目."""
     argparse_noflag = "code"
     schema = {

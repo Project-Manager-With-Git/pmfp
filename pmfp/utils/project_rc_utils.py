@@ -52,8 +52,7 @@ DEFAULTRCSCHEMA = {
         "scripts": {
             "type": "string"
         }
-    },
-    "required": ["project_name", "project_type", "version", "author", "keywords", "description"]
+    }
 }
 
 

@@ -70,20 +70,22 @@ def freeze(env: List[str], *, cwd: Path,
            author_email: Optional[str] = None,
            description: Optional[str] = None,
            keywords: Optional[List[str]] = None,
-           ):
+           ) -> None:
     """将创建的环境信息保存到目录下的`ppmrc.json`中."""
     ppmrc = cwd.joinpath("ppmrc.json")
     content = {
         "env": env,
-        "project_name": project_name,
-        "version": version,
-        "author": author,
-        "author_email": author_email,
-        "description": description,
-        "keywords": keywords
     }
-    with open(ppmrc, "w", encoding="utf-8") as f:
-        json.dump(content, f)
+    if ppmrc.exists():
+        with open(ppmrc) as f:
+            old = json.load(f)
+        with open(ppmrc, "w", encoding="utf-8") as f:
+            old.update(**content)
+            json.dump(old, f)
+    else:
+        with open(ppmrc, "w", encoding="utf-8") as f:
+            json.dump(content, f)
+    return None
 
 
 def _new_nev(e: str, cwd: Path, project_name: str,

@@ -1,9 +1,8 @@
-from schema_entry import EntryPoint
-
+from pmfp.utils.endpoint import EndPoint
 from ..core import proto
 
 
-class New(EntryPoint):
+class New(EndPoint):
     """创建protobuf文件."""
     argparse_noflag = "name"
     schema = {

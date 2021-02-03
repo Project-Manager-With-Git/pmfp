@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import doc
 
 
-class New(EntryPoint):
+class New(EndPoint):
     """为指定编程语言构造api文档.
     如果不指定项目名则项目名为cwd目录名,不指定version则为0.0.0,不指定author则为系统用户.
     """

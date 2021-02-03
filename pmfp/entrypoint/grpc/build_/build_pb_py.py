@@ -3,7 +3,7 @@ import re
 import pkgutil
 import warnings
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from promise import Promise
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run_command
@@ -114,7 +114,7 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Pa
     )
 
 
-def find_grpc_package(to: Path) -> List[str]:
+def find_grpc_package(to: Path) -> Tuple[str, str]:
     service_name_lower = ""
     service_name = ""
     for file in to.iterdir():
@@ -129,7 +129,7 @@ def find_grpc_package(to: Path) -> List[str]:
     return service_name_lower, service_name
 
 
-def gen_serv(service_name_lower: str, service_name: str, to: Path):
+def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     content = template_2_content(
         ServSource,
         service_name_lower=service_name_lower,
@@ -139,7 +139,7 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path):
         f.write("from .serv import server\n")
 
 
-def gen_cli(service_name_lower: str, service_name: str, to: Path):
+def gen_cli(service_name_lower: str, service_name: str, to: Path) -> None:
     print(service_name_lower)
     print(service_name)
     content = template_2_content(
@@ -151,7 +151,7 @@ def gen_cli(service_name_lower: str, service_name: str, to: Path):
         f.write("from .cli import client\n")
 
 
-def gen_aio_serv(service_name_lower: str, service_name: str, to: Path):
+def gen_aio_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     content = template_2_content(
         AioServSource,
         service_name_lower=service_name_lower,
@@ -161,7 +161,7 @@ def gen_aio_serv(service_name_lower: str, service_name: str, to: Path):
         f.write("from .aioserv import aio_server\n")
 
 
-def gen_aio_cli(service_name_lower: str, service_name: str, to: Path):
+def gen_aio_cli(service_name_lower: str, service_name: str, to: Path) -> None:
     content = template_2_content(
         AioCliSource,
         service_name_lower=service_name_lower,

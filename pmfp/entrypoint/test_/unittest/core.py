@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import test
 
 
-class Unittest(EntryPoint):
+class Unittest(EndPoint):
     """对源码做单元测试."""
     argparse_noflag = "test_code"
     schema = {

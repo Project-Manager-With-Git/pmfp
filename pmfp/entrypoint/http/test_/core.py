@@ -1,9 +1,8 @@
-from schema_entry import EntryPoint
-
+from pmfp.utils.endpoint import EndPoint
 from ..core import http
 
 
-class Test(EntryPoint):
+class Test(EndPoint):
     """检查http请求返回的数据是否满足json schema定义的模式."""
     argparse_noflag = "url"
     schema = {

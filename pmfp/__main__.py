@@ -3,13 +3,13 @@
 
 一个项目管理脚手架.
 """
+from .entrypoint import ppm
 import sys
 from typing import List
 from colorama import init
 
 from gevent import monkey
 monkey.patch_all()
-from .entrypoint import ppm
 init()
 
 
@@ -20,5 +20,7 @@ def main(argv: List[str] = sys.argv[1:]) -> None:
     """
     ppm(argv)
 
+    return None
 
-sys.exit(main(sys.argv[1:]))
+
+main(sys.argv[1:])

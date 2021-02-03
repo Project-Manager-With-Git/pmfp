@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import grpc
 
 
-class Build(EntryPoint):
+class Build(EndPoint):
     """根据grpc的定义protobuf文件编译指定语言的模块.
 
     需要本地有`protoc`,可以在`https://github.com/protocolbuffers/protobuf/releases`下载安装

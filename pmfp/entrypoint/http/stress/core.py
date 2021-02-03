@@ -1,9 +1,8 @@
-from schema_entry import EntryPoint
-
+from pmfp.utils.endpoint import EndPoint
 from ..core import http
 
 
-class Stress(EntryPoint):
+class Stress(EndPoint):
     """对一个http资源做压测."""
     argparse_noflag = "url"
     schema = {

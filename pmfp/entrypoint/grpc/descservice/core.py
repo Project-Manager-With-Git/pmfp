@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import grpc
 
 
-class DescService(EntryPoint):
+class DescService(EndPoint):
     """查看指定grpc的服务详情.
 
     需要本地有`grpcurl`,可以在`https://github.com/fullstorydev/grpcurl/releases`下载安装

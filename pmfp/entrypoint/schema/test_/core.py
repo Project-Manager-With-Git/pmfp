@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import schema
 
 
-class Test(EntryPoint):
+class Test(EndPoint):
     """检查json schema文件."""
     argparse_noflag = "file"
     schema = {

@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Optional, Callable, Dict, List
 from git import Repo
 from git.repo.fun import is_git_dir
-from pmfp.const import PLATFORM
 
 
 def make_repod(p: Path) -> Path:

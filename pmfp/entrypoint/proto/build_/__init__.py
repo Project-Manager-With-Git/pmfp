@@ -1,7 +1,7 @@
 """编译protobuf的schema为不同语言的代码."""
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from pmfp.utils.fs_utils import get_abs_path
+from pmfp.utils.fs_utils import get_abs_path, get_abs_path_str
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py
@@ -11,7 +11,7 @@ from .core import proto_build
 def _build_pb(env: str, files: List[str], includes: List[str], to: str,
               source_relative: bool, cwd: Path, **kwargs: str) -> None:
     if env.lower() == "go":
-        build_pb_go(files, includes, to, source_relative, cwd=cwd, **kwargs)
+        build_pb_go(files, includes, to, cwd, source_relative=source_relative, **kwargs)
     elif env.lower() == "py":
         build_pb_py(files, includes, to, cwd=cwd, **kwargs)
     elif env == "js":
@@ -39,7 +39,7 @@ def build_pb(language: str, files: List[str], includes: List[str], to: str,
     if not topath.is_dir():
         topath.mkdir(parents=True)
 
-    includes = [get_abs_path(i, cwdp) for i in includes]
+    includes = [get_abs_path_str(i, cwdp) for i in includes]
     if kwargs:
         kwpairs = kwargs.split(",")
         kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}

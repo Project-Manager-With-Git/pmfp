@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import schema
 
 
-class Move(EntryPoint):
+class Move(EndPoint):
     """迁移旧的json schema模式文件."""
     argparse_noflag = "file"
     schema = {

@@ -21,6 +21,6 @@ def unittest_test(language: str, test_code: str, code: str, *, cwd: str = ".", c
     if language == "py":
         unittest_test_py(test_code=test_code, code=code, cwd=cwd, coverage=coverage, output=output)
     elif language == "go":
-        unittest_test_go(test_code=test_code, code=code, cwd=cwd, coverage=coverage, output=output)
+        unittest_test_go(test_code=test_code, cwd=cwd, coverage=coverage, output=output)
     else:
         print(f"未支持的语言{language}")

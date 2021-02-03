@@ -1,10 +1,9 @@
 import shutil
 import warnings
 from pathlib import Path
-from pmfp.utils.fs_utils import get_abs_path
+from pmfp.utils.fs_utils import get_abs_path, path_to_str
 from pmfp.utils.run_command_utils import run_command
 from ..utils import no_jekyll
-from pmfp.const import PLATFORM
 
 
 def move_doc(sourcep: Path, outputp: Path) -> None:
@@ -16,8 +15,8 @@ def move_doc(sourcep: Path, outputp: Path) -> None:
     if p is None:
         raise AttributeError("not generated")
 
-    shutil.move(p, outputp)
-    shutil.rmtree(sourcep)
+    shutil.move(path_to_str(p), outputp)
+    shutil.rmtree(path_to_str(sourcep))
     no_jekyll(outputp)
     print("文档构建成功")
 
@@ -42,11 +41,7 @@ def doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, au
         warnings.warn("文档已存在!")
         return
     source_dirp = get_abs_path(source_dir, cwd=cwdp)
-    if PLATFORM == 'Windows':
-        source_dirp_str = str(source_dirp).replace("\\", "\\\\")
-    else:
-        source_dirp_str = str(source_dirp)
-
+    source_dirp_str = path_to_str(source_dirp)
     command = f"golds -gen -dir={source_dirp_str} -wdpkgs-listing=solo -nouses ./..."
     run_command(command, cwd=cwdp).catch(
         lambda e: warnings.warn(f"""gen doc get error {str(e)}

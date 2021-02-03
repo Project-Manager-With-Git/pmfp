@@ -2,7 +2,7 @@
 import re
 import pkgutil
 import warnings
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from pathlib import Path
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run_command
@@ -38,7 +38,7 @@ else:
     raise AttributeError("加载sdk.go.temp模板失败")
 
 
-def find_grpc_package(to: str) -> List[str]:
+def find_grpc_package(to: str) -> Tuple[str, str, str, str]:
     path = Path(to)
     package = ""
     registservice = ""
@@ -119,7 +119,7 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]],
     ).get()
 
 
-def build_pb_go(files: List[str], includes: List[str], to: str, as_type: str,
+def build_pb_go(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
                 source_relative: bool, cwd: Path, **kwargs: str) -> None:
     """编译grpc的protobuffer定义文件为go语言模块.
 

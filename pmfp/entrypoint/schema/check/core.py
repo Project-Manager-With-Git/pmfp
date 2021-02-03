@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import schema
 
 
-class Check(EntryPoint):
+class Check(EndPoint):
     """检查请求结果是否符合指定的json schema模式.
     这个schema文件可以是文件地址或者http/fiil的url
     """

@@ -1,9 +1,8 @@
-from schema_entry import EntryPoint
-
+from pmfp.utils.endpoint import EndPoint
 from ..core import http
 
 
-class Serv(EntryPoint):
+class Serv(EndPoint):
     """以指定位置作为http服务的根目录启动一个静态http服务器."""
     argparse_noflag = "port"
     schema = {

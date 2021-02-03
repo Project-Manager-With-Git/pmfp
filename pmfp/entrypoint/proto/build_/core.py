@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import proto
 
 
-class Build(EntryPoint):
+class Build(EndPoint):
     """创建protobuf文件.
     需要本地有`protoc`,可以在`https://github.com/protocolbuffers/protobuf/releases`下载安装
     """

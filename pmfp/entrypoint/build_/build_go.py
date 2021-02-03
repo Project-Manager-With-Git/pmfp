@@ -3,8 +3,9 @@ import os
 import warnings
 from typing import Optional
 from pathlib import Path
-from pmfp.const import PLATFORM
 from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.fs_utils import path_to_str
+from pmfp.const import PLATFORM
 from .utils import upx_process
 
 
@@ -28,14 +29,11 @@ def go_build(code: str, project_name: str, *,
     command = "go build"
     if mini:
         command += ' -ldflags "-s -w"'
-    target_str = ""
-    if PLATFORM == 'Windows':
-        if not for_linux_arch:
-            target_str = str(output_dir.joinpath(f"{project_name}.exe")).replace("\\", "\\\\")
-        else:
-            target_str = str(output_dir.joinpath(project_name)).replace("\\", "\\\\")
-    else:
-        target_str = str(output_dir.joinpath(project_name))
+
+    bin_name = project_name
+    if PLATFORM == 'Windows' and not for_linux_arch:
+        bin_name = f"{project_name}.exe"
+    target_str = path_to_str(output_dir.joinpath(bin_name))
     command += f" -o {target_str} {code}"
     if for_linux_arch:
         env.update({

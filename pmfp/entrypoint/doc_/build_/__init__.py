@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Optional
 from pmfp.const import DEFAULT_AUTHOR
 from .build_py import doc_build_py
+from .build_go import doc_build_go
 from .core import doc_build
 
 
@@ -19,3 +20,5 @@ def build_doc(language: str, output: str, doc_source_dir: str, *, version: Optio
     """
     if language == "py":
         doc_build_py(output=output, source_dir=doc_source_dir, version=version, cwd=cwd)
+    elif language == "go":
+        doc_build_go(output=output, source_dir=doc_source_dir, cwd=cwd)

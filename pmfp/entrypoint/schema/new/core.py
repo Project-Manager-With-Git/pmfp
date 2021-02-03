@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import schema
 
 
-class New(EntryPoint):
+class New(EndPoint):
     """创建一个json schema 模板."""
     argparse_noflag = "name"
     schema = {

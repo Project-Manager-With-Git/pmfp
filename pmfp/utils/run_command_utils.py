@@ -2,7 +2,7 @@
 import subprocess
 from functools import partial
 from pathlib import Path
-from typing import Callable, Optional, Any
+from typing import Callable, Optional, Any, Dict
 import chardet
 from termcolor import colored
 from promise import Promise
@@ -33,7 +33,7 @@ def _run_command(resolve: Callable[[Any], Promise], reject: Callable[[Any], Prom
         return resolve(Exception(content))
 
 
-def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None, visible: bool = False) -> Promise:
+def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False) -> Promise:
     """执行命令行命令.
 
     Args:
@@ -45,7 +45,7 @@ def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Any] 
     Return:
         (Promise): 可以在后续根据执行的成功与否添加回调
     """
-    promise = Promise(
-        partial(_run_command, command=command, cwd=cwd, env=env, visible=visible)
-    )
+
+    f = partial(_run_command, command=command, cwd=cwd, env=env, visible=visible)
+    promise: Promise = Promise(f)
     return promise

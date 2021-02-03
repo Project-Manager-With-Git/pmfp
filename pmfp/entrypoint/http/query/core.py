@@ -1,9 +1,8 @@
-from schema_entry import EntryPoint
-
+from pmfp.utils.endpoint import EndPoint
 from ..core import http
 
 
-class Query(EntryPoint):
+class Query(EndPoint):
     """使用http请求获取资源."""
     argparse_noflag = "url"
     schema = {

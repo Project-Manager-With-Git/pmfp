@@ -39,26 +39,7 @@ def jsontemplate_2_content(template: str, **kwargs: Any) -> str:
         content.update(kwargs)
 
     except:
-        print(f"template_2_content出错")
-        raise
-    else:
-        return json.dumps(content, indent=4, ensure_ascii=False, sort_keys=True)
-
-
-def jsontemplate_2_content(template: str, **kwargs: Any) -> str:
-    """将模板转换为文件内容.
-
-    Args:
-        template (str): 模板字符串
-        kwargs (Dict[str,str]): 由模板构造内容的关键字
-
-    """
-    try:
-        content = json.loads(template)
-        content.update(kwargs)
-
-    except:
-        print(f"template_2_content出错")
+        print("template_2_content出错")
         raise
     else:
         return json.dumps(content, indent=4, ensure_ascii=False, sort_keys=True)
@@ -80,7 +61,7 @@ def cfgtemplate_2_file(template: str, file: Path, **kwargs: Any) -> None:
             for k, v in kvs.items():
                 config[section][k] = v
     except:
-        print(f"template_2_content出错")
+        print("template_2_content出错")
         raise
     else:
         if not file.exists():

@@ -135,4 +135,4 @@ def sphinx_build(source_dir: Path, doc_dir: Path, *, cwd: Path = Path(".")) -> N
 
     """
     command = f"sphinx-build {str(source_dir)} {str(doc_dir)}"
-    return run_command(command, cwd=cwd)
+    run_command(command, cwd=cwd).get()

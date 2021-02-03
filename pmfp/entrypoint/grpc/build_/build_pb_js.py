@@ -2,11 +2,11 @@
 import os
 import warnings
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 from pmfp.utils.run_command_utils import run_command
 
 
-def build_pb_js(files: List[str], includes: List[str], to: str, as_type: str, cwd: Path,
+def build_pb_js(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: Path,
                 ** kwargs: str) -> None:
     """编译grpc的protobuf定义文件为js语言模块.
 

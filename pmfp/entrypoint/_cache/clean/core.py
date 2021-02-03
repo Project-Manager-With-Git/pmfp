@@ -1,9 +1,9 @@
 """ppm cache管理资源包缓存"""
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import cache
 
 
-class Clean(EntryPoint):
+class Clean(EndPoint):
     """清除所有资源包."""
 
 

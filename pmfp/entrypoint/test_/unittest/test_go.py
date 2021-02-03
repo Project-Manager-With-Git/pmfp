@@ -1,15 +1,11 @@
 """编译python语言模块."""
 import warnings
 from pathlib import Path
-from typing import Optional
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.fs_utils import get_abs_path
 
 
-def unittest_test_go(test_code: str, *,
-                     coverage: bool = False,
-                     output: str = "doc_unittest",
-                     cwd: str = ".") -> None:
+def unittest_test_go(test_code: str, *, coverage: bool = False, output: str = "doc_unittest", cwd: str = ".") -> None:
     """对python代码做单元测试.
 
     Args:
@@ -38,7 +34,7 @@ def unittest_test_go(test_code: str, *,
             command = f"go test -v -coverprofile=cover.out {str(test_code_path)}"
             run_command(
                 command, cwd=cwdp, visible=True
-            ).catch(lambda _: str(_)).then(
+            ).catch(lambda e: str(e)).then(
                 coverage_success
             ).get()
         else:

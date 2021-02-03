@@ -1,7 +1,7 @@
 import pkgutil
 import warnings
 from pathlib import Path
-from pmfp.utils.fs_utils import get_abs_path
+from pmfp.utils.fs_utils import get_abs_path, path_to_str
 from ..utils import (
     sphinx_new,
     no_jekyll,
@@ -10,7 +10,6 @@ from ..utils import (
     move_to_source,
     makeindex
 )
-from pmfp.const import PLATFORM
 from pmfp.utils.template_utils import template_2_content
 
 
@@ -47,10 +46,7 @@ def doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, au
     else:
         cwdp = Path(".")
     codep = get_abs_path(code, cwd=cwdp)
-    if PLATFORM == 'Windows':
-        codep_str = str(codep).replace("\\", "\\\\")
-    else:
-        codep_str = str(codep)
+    codep_str = path_to_str(codep)
     outputp = get_abs_path(output, cwd=cwdp)
     source_dirp = get_abs_path(source_dir, cwd=cwdp)
 

@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import test
 
 
-class Static(EntryPoint):
+class Static(EndPoint):
     """对动态语言的源码做静态类型检验."""
     argparse_noflag = "code"
     schema = {

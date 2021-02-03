@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import doc
 
 
-class Build(EntryPoint):
+class Build(EndPoint):
     """为指定编程语言编译api文档."""
     argparse_noflag = "doc_source_dir"
     schema = {

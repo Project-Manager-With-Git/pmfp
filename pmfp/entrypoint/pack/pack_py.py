@@ -5,10 +5,9 @@ import compileall
 import warnings
 from typing import Optional
 from pathlib import Path
-from pmfp.const import PLATFORM
 from pmfp.utils.run_command_utils import run_command
 from pmfp.utils.tools_info_utils import get_local_python
-from pmfp.utils.fs_utils import get_abs_path, delete_source
+from pmfp.utils.fs_utils import get_abs_path, delete_source, path_to_str
 from pmfp.utils.url_utils import is_http_url
 
 
@@ -28,10 +27,7 @@ def _delete_py_source(root_path: Path) -> None:
 
 def py_pack_lib(output_dir: Path, cwd: Path) -> None:
     python = get_local_python(cwd.joinpath("env"))
-    if PLATFORM == 'Windows':
-        output_dir_str = str(output_dir).replace("\\", "\\\\")
-    else:
-        output_dir_str = str(output_dir)
+    output_dir_str = path_to_str(output_dir)
     command = f"{python} setup.py bdist_wheel --dist-dir={output_dir_str}"
     run_command(
         command, cwd=cwd
@@ -44,11 +40,6 @@ def py_pack_lib(output_dir: Path, cwd: Path) -> None:
 
 def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, pypi_mirror: Optional[str] = None) -> None:
     python = get_local_python(cwd.joinpath("env"))
-    # if PLATFORM == 'Windows':
-    #     output_dir_str = str(output_dir).replace("\\", "\\\\")
-    # else:
-    #     output_dir_str = str(output_dir)
-
     code_path = get_abs_path(code, cwd)
     temp_path = cwd.joinpath("app")
     try:

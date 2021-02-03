@@ -1,6 +1,7 @@
 """run命令的处理."""
+import os
 from pathlib import Path
-from typing import Optional, Any
+from typing import Optional, List, Dict
 
 from schema_entry import EntryPoint
 from pmfp.utils.run_command_utils import run_command
@@ -18,15 +19,14 @@ class RUN(EntryPoint):
         "properties": {
             "commands": {
                 "description": "要执行的命令",
+                "type": "string"
+            },
+            "env": {
                 "type": "array",
+                "description": "执行命令时的环境变量",
                 "items": {
                     "type": "string"
                 }
-            },
-            "env": {
-                "type": "boolean",
-                "description": "是否是grpc",
-                "default": False
             },
             "cwd": {
                 "type": "string",
@@ -41,5 +41,13 @@ run = ppm.regist_sub(RUN)
 
 
 @run.as_main
-def run_cmd(command: str, *, cwd: str = ".", env: Optional[Any] = None):
-    run_command(command, cwd=Path(cwd), env=env, visible=True).get()
+def run_cmd(command: str, *, cwd: str = ".", env: Optional[List[str]] = None) -> None:
+    if env:
+        envs = {i.split(":")[0]: i.split(":")[1] for i in env if len(i.split(":")) == 2}
+        default_environ = dict(os.environ)
+        e: Dict[str, str] = {}
+        e.update(**default_environ)
+        e.update(**envs)
+        run_command(command, cwd=Path(cwd), env=e, visible=True).get()
+    else:
+        run_command(command, cwd=Path(cwd), visible=True).get()

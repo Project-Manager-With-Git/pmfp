@@ -1,8 +1,8 @@
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import schema
 
 
-class Clone(EntryPoint):
+class Clone(EndPoint):
     """克隆json schema模式文本."""
     argparse_noflag = "url"
     schema = {

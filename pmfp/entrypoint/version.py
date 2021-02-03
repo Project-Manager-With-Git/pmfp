@@ -12,11 +12,8 @@ class VERSION(EntryPoint):
     """获取pmfp工具的版本."""
     verify_schema = False
 
+    def do_main(self) -> None:
+        print(f"pmfp version: {__VERSION__}")
+
 
 version = ppm.regist_sub(VERSION)
-
-
-@version.as_main
-def cmd_version() -> None:
-    """打印工具的版本."""
-    print(f"pmfp version: {__VERSION__}")

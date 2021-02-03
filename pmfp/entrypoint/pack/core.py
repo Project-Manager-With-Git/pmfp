@@ -1,9 +1,9 @@
 """ppm pack命令的处理."""
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import ppm
 
 
-class Pack(EntryPoint):
+class Pack(EndPoint):
     """打包指定位置项目."""
     argparse_noflag = "code"
     schema = {

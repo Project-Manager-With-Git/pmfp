@@ -26,7 +26,7 @@ def unittest_test_py(test_code: str, code: str, *,
     python = get_local_python(cwdp.joinpath("env"))
     test_code_path = get_abs_path(test_code, cwdp)
     if coverage:
-        def coverage_command(_: str) -> None:
+        def coverage_command(_: str) -> str:
             if output:
                 output_path = get_abs_path(output, cwdp)
                 command = f"{python} -m coverage html -d {str(output_path)}"

@@ -1,9 +1,9 @@
 """ppm cache管理资源包缓存"""
-from schema_entry import EntryPoint
+from pmfp.utils.endpoint import EndPoint
 from ..core import ppm
 
 
-class Cache(EntryPoint):
+class Cache(EndPoint):
     """资源包缓存相关命令."""
 
 
