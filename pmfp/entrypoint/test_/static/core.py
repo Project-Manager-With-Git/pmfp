@@ -12,6 +12,7 @@ class Static(EntryPoint):
         "properties": {
             "language": {
                 "type": "string",
+                "title": "l",
                 "description": "静态类型检验针对的语言",
                 "enum": ["py"]
             },
@@ -21,15 +22,18 @@ class Static(EntryPoint):
             },
             "output": {
                 "type": "string",
+                "title": "o",
                 "description": "静态类型检验结果输出位置",
                 "default": "doc_typecheck"
             },
             "coverage": {
                 "type": "boolean",
+                "title": "v",
                 "description": "静态类型检验是否输出覆盖率报告."
             },
             "model": {
                 "type": "boolean",
+                "title": "m",
                 "description": "静态类型检验针对的是否是模块",
             },
             "cwd": {

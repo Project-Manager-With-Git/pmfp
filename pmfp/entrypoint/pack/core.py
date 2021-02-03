@@ -13,30 +13,36 @@ class Pack(EntryPoint):
         "properties": {
             "language": {
                 "type": "string",
+                "title": "l",
                 "description": "打包的代码语言",
                 "enum": ["py"]
             },
             "code": {
                 "description": "语言源码位置",
+                "title": "s",
                 "type": "string",
             },
             "output_dir": {
                 "type": "string",
+                "title": "d",
                 "description": "打包结果目录",
                 "default": "dist"
             },
             "project_name": {
                 "type": "string",
+                "title": "n",
                 "description": "项目名"
             },
             "pack_as": {
                 "type": "string",
+                "title": "a",
                 "description": "打包的目标,可选有exec,lib",
                 "enum": ["exec", "lib"],
                 "default": "exec"
             },
             "pypi_mirror": {
                 "type": "string",
+                "title": "m",
                 "description": "pypi的镜像源,比如https://pypi.tuna.tsinghua.edu.cn/simple",
             },
             "cwd": {

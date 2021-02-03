@@ -16,27 +16,33 @@ class Move(EntryPoint):
             },
             "old_cwd": {
                 "type": "string",
+                "title": "o",
                 "description": "旧schema的根目录地址.",
                 "default": "."
             },
             "remove_old": {
                 "type": "boolean",
+                "title": "-r",
                 "description": "是否删除旧的json schema模式文件.",
             },
             "name": {
                 "type": "string",
+                "title": "n",
                 "description": "模式名",
             },
             "addr": {
                 "type": "string",
+                "title": "a",
                 "description": "网站域名"
             },
             "to": {
                 "type": "string",
+                "title": "t",
                 "description": "从执行目录起的路径",
             },
             "version": {
                 "type": "string",
+                "title": "v",
                 "description": "模式版本",
                 "default": "0.0.0"
             },

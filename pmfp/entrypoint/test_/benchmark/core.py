@@ -12,6 +12,7 @@ class Benchmark(EntryPoint):
         "properties": {
             "language": {
                 "type": "string",
+                "title": "l",
                 "description": "性能检验针对的语言",
                 "enum": ["py", "go"]
             },
@@ -21,6 +22,7 @@ class Benchmark(EntryPoint):
             },
             "mem": {
                 "type": "boolean",
+                "title": "m",
                 "description": "是否测试内存性能",
             },
             "cwd": {

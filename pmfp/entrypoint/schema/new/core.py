@@ -16,21 +16,24 @@ class New(EntryPoint):
             },
             "to": {
                 "type": "string",
+                "title": "t",
                 "description": "从执行目录起的路径",
             },
             "version": {
                 "type": "string",
+                "title": "v",
                 "description": "模式版本",
                 "default": "0.0.0"
+            },
+            "addr": {
+                "type": "string",
+                "title": "a",
+                "description": "网站域名"
             },
             "cwd": {
                 "type": "string",
                 "description": "执行目录",
                 "default": "."
-            },
-            "addr": {
-                "type": "string",
-                "description": "网站域名"
             }
         }
     }

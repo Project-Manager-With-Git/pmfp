@@ -13,6 +13,7 @@ class Build(EntryPoint):
         "properties": {
             "language": {
                 "type": "string",
+                "title": "l",
                 "description": "编译的代码语言",
                 "enum": ["go"]
             },
@@ -22,28 +23,34 @@ class Build(EntryPoint):
             },
             "output_dir": {
                 "type": "string",
+                "title": "t",
                 "description": "编译结果目录",
                 "default": "."
             },
             "project_name": {
                 "type": "string",
+                "title": "n",
                 "description": "项目名"
             },
             "upx": {
                 "type": "boolean",
+                "title": "u",
                 "description": "是否使用upx给可执行文件加壳"
             },
             "static": {
                 "type": "boolean",
+                "title": "s",
                 "description": "是否编译为无依赖的静态文件",
                 "default": True
             },
             "mini": {
                 "type": "boolean",
+                "title": "m",
                 "description": "是否最小化编译"
             },
             "includes": {
                 "type": "array",
+                "title": "i",
                 "description": "包含的头文件路径",
                 "items": {
                     "type": "string"
@@ -51,6 +58,7 @@ class Build(EntryPoint):
             },
             "libs": {
                 "type": "array",
+                "title": "l",
                 "description": "使用的库名",
                 "items": {
                     "type": "string"
@@ -58,6 +66,7 @@ class Build(EntryPoint):
             },
             "lib_dir": {
                 "type": "array",
+                "title": "b",
                 "description": "使用的库的位置",
                 "items": {
                     "type": "string"
@@ -65,12 +74,14 @@ class Build(EntryPoint):
             },
             "build_as": {
                 "type": "string",
+                "title": "a",
                 "description": "编译为的目标,可选有exec,alib,dlib",
                 "enum": ["exec", "alib", "dlib"],
                 "default": "exec"
             },
             "for_linux_arch": {
                 "type": "string",
+                "title": "f",
                 "description": "是否交叉编译支持其他指令集版本的linux",
                 "enum": ["arm64", "amd64"]
             },

@@ -13,15 +13,18 @@ class Serv(EntryPoint):
         "properties": {
             "bind": {
                 "type": "string",
+                "title": "b",
                 "description": "绑定的网址",
                 "default": "localhost"
             },
             "port": {
                 "type": "integer",
+                "title": "p",
                 "description": "端口号"
             },
             "root": {
                 "type": "string",
+                "title": "r",
                 "description": "http服务的根目录",
                 "default": "."
             }

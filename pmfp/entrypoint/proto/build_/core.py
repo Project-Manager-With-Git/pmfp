@@ -19,21 +19,25 @@ class Build(EntryPoint):
             },
             "language": {
                 "description": "proto文件名,也是package名",
+                "title": "l",
                 "type": "string",
                 "enum": ["py", "js", "go"]
             },
             "to": {
                 "type": "string",
+                "title": "t",
                 "description": "存放的地方",
                 "default": "."
             },
             "source_relative": {
                 "type": "boolean",
+                "title": "s",
                 "description": "使用路径作为包名,只针对go语言",
                 "default": False
             },
             "includes": {
                 "type": "array",
+                "title": "i",
                 "description": "待编译的文件的依赖所在的文件夹",
                 "items": {
                     "type": "string"

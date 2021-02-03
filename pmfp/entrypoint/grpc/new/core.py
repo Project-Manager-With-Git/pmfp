@@ -16,11 +16,13 @@ class New(EntryPoint):
             },
             "to": {
                 "type": "string",
+                "title": "t",
                 "description": "存放的地方",
                 "default": "."
             },
             "parent_package": {
                 "type": "string",
+                "title": "p",
                 "description": "package父package"
             },
             "cwd": {

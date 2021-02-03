@@ -14,6 +14,7 @@ class New(EntryPoint):
         "properties": {
             "language": {
                 "type": "string",
+                "title": "l",
                 "description": "单元测试检验针对的语言",
                 "enum": ["py", "go"]
             },
@@ -23,24 +24,29 @@ class New(EntryPoint):
             },
             "output": {
                 "type": "string",
+                "title": "o",
                 "description": "html文档位置",
                 "default": "docs"
             },
-            "source_dir": {
+            "doc_source_dir": {
                 "type": "string",
+                "title": "s",
                 "description": "文档源码位置",
                 "default": "document"
             },
             "project_name": {
                 "type": "string",
+                "title": "n",
                 "description": "文档源码位置"
             },
             "author": {
                 "type": "string",
+                "title": "a",
                 "description": "文档源码位置"
             },
             "version": {
                 "type": "string",
+                "title": "v",
                 "description": "文档源码位置"
             },
             "cwd": {

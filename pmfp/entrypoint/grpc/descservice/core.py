@@ -19,6 +19,7 @@ class DescService(EntryPoint):
             },
             "service": {
                 "type": "string",
+                "title": "s",
                 "description": "grpc的服务位置.",
             },
             "cwd": {
@@ -28,24 +29,29 @@ class DescService(EntryPoint):
             },
             "plaintext": {
                 "type": "boolean",
+                "title": "p",
                 "description": "是否不使用TLS加密传输.",
                 "default": False
             },
             "insecure": {
                 "type": "boolean",
+                "title": "i",
                 "description": "跳过服务器证书和域验证.",
                 "default": False
             },
             "cacert": {
                 "type": "string",
+                "title": "a",
                 "description": "根证书位置."
             },
             "cert": {
                 "type": "string",
+                "title": "e",
                 "description": "服务证书位置."
             },
             "key": {
                 "type": "string",
+                "title": "k",
                 "description": "服务证书对应的私钥位置."
             },
         }
