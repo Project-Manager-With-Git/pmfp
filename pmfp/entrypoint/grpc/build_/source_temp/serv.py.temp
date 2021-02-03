@@ -24,7 +24,6 @@ class Handdler(${service_name}Servicer):
 
 class Serv(EntryPoint):
     """grpc的服务端启动入口."""
-    argparse_noflag = "files"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
