@@ -1,10 +1,10 @@
 """ppm test命令的处理."""
 from schema_entry import EntryPoint
-from ..core import ppm
+from ..core import docker
 
 
-class Env(EntryPoint):
-    """执行环境相关的工具."""
+class File(EntryPoint):
+    """dockerfile相关的工具."""
 
 
-env = ppm.regist_sub(Env)
+dockerfile = docker.regist_sub(File)

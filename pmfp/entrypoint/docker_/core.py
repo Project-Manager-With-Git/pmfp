@@ -3,8 +3,8 @@ from schema_entry import EntryPoint
 from ..core import ppm
 
 
-class Env(EntryPoint):
-    """执行环境相关的工具."""
+class Docker(EntryPoint):
+    """docker相关的工具."""
 
 
-env = ppm.regist_sub(Env)
+docker = ppm.regist_sub(Docker)

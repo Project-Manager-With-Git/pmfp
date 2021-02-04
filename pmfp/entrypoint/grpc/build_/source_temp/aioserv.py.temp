@@ -8,6 +8,9 @@ from ipaddress import ip_address
 from typing import Optional, Any, Dict, Iterator
 import grpc
 from grpc_reflection.v1alpha import reflection
+from grpc_health.v1 import _async as health
+from grpc_health.v1 import health_pb2
+from grpc_health.v1 import health_pb2_grpc
 from schema_entry import EntryPoint
 from .${service_name_lower}_pb2_grpc import ${service_name}Servicer, add_${service_name}Servicer_to_server
 from .${service_name_lower}_pb2 import DESCRIPTOR, Message
@@ -80,19 +83,33 @@ class AioServ(EntryPoint):
         grpc_serv = grpc.aio.server()
         handdler = Handdler(config)
         add_${service_name}Servicer_to_server(handdler, grpc_serv)
-        SERVICE_NAMES = (
-            DESCRIPTOR.services_by_name['${service_name}'].full_name,
-            reflection.SERVICE_NAME
+
+        # 健康检查
+        health_servicer = health.HealthServicer()
+        health_pb2_grpc.add_HealthServicer_to_server(health_servicer, grpc_serv)
+
+        # 反射
+        services = tuple(
+            service.full_name
+            for service in DESCRIPTOR.services_by_name.values()
+        ) + (
+            reflection.SERVICE_NAME,
+            health.SERVICE_NAME
         )
-        reflection.enable_server_reflection(SERVICE_NAMES, grpc_serv)
+        reflection.enable_server_reflection(services, grpc_serv)
+        # 绑定端口
         if bind_address:
             grpc_serv.add_insecure_port(bind_address)
-            print(f"worker {pid} start @{bind_address}")
+            warnings.warn(f"worker {pid} start @{bind_address}")
         else:
             addr = config.get("address", "localhost:5000")
             grpc_serv.add_insecure_port(addr)
-            print(f"grpc @process:{pid} start @{addr}")
+            warnings.warn(f"grpc @process:{pid} start @{addr}")
         await grpc_serv.start()
+        # 设置服务为健康
+        overall_server_health = ""
+        for service in services + (overall_server_health,):
+            health_servicer.set(service, health_pb2.HealthCheckResponse.SERVING)
         await grpc_serv.wait_for_termination()
 
     def run_singal_serv(self, config: Dict[str, Any], bind_address: Optional[str] = None) -> None:
@@ -101,9 +118,9 @@ class AioServ(EntryPoint):
             asyncio.run(self._run_singal_serv(config=config, pid=pid, bind_address=bind_address))
         except KeyboardInterrupt:
             if bind_address:
-                print(f"worker {pid} stoped")
+                warnings.warn(f"worker {pid} stoped")
             else:
-                print("grpc stoped")
+                warnings.warn("grpc stoped")
         except Exception as e:
             raise e
 
@@ -125,7 +142,7 @@ class AioServ(EntryPoint):
                 for worker in workers:
                     worker.join()
         except KeyboardInterrupt:
-            print("grpc workers stoping")
+            warnings.warn("grpc workers stoping")
         except Exception as e:
             raise e
 
@@ -140,9 +157,9 @@ class AioServ(EntryPoint):
             try:
                 self.run_mp_serv(worker_num=workers)
             except Exception as e:
-                warnings.warn(f"""MultiProcess error: 
-                {str(e)} 
-                change to one process""")
+                err = type(e)
+                err_msg = str(e)
+                warnings.warn(f"多进程执行失败,改为单进程执行: {err} with msg {err_msg}")
                 self.run_singal_serv(config=config)
 
 
