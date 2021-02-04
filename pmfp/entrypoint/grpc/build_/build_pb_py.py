@@ -134,19 +134,19 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
         ServSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("serv.py").write_text(content, encoding="utf-8")
+    with open(to.joinpath("serv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .serv import server\n")
 
 
 def gen_cli(service_name_lower: str, service_name: str, to: Path) -> None:
-    print(service_name_lower)
-    print(service_name)
     content = template_2_content(
         CliSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("cli.py").write_text(content, encoding="utf-8")
+    with open(to.joinpath("cli.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .cli import client\n")
 
@@ -156,7 +156,8 @@ def gen_aio_serv(service_name_lower: str, service_name: str, to: Path) -> None:
         AioServSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("aioserv.py").write_text(content, encoding="utf-8")
+    with open(to.joinpath("aioserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .aioserv import aio_server\n")
 
@@ -166,7 +167,8 @@ def gen_aio_cli(service_name_lower: str, service_name: str, to: Path) -> None:
         AioCliSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    to.joinpath("aiocli.py").write_text(content, encoding="utf-8")
+    with open(to.joinpath("aiocli.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .aiocli import aio_client\n")
 

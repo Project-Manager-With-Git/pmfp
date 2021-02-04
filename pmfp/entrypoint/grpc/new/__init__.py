@@ -21,17 +21,18 @@ else:
 
 
 @grpc_new.as_main
-def new_grpc(name: str, to: str, *, parent_package: Optional[str] = None, cwd: str = ".") -> None:
+def new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = ".") -> None:
     """新建一个protpbuf文件.
 
     Args:
         name (str): 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名
-        to (str): protobuf文件路径
+        pb_include (str): protobuf文件存放文件夹路径
         parent_package (Optional[str], optional): 父包名. Defaults to None.
+        cwd (str, optional): 执行位置. Defaults to `.`.
 
     """
     try:
-        to_path = get_abs_path(to, Path(cwd))
+        to_path = get_abs_path(pb_include, Path(cwd))
         if not to_path.exists():
             to_path.mkdir(parents=True)
         package_go = name

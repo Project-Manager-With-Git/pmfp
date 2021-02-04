@@ -13,11 +13,11 @@ class New(EndPoint):
                 "type": "string",
                 "description": "proto文件名,也是package名"
             },
-            "to": {
+            "pb_include": {
                 "type": "string",
                 "title": "t",
-                "description": "存放的地方",
-                "default": "."
+                "description": "protobuffer文件存放的路径",
+                "default": "pbschema"
             },
             "parent_package": {
                 "type": "string",

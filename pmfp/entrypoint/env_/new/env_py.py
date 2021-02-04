@@ -75,7 +75,8 @@ def new_env_py_manifest(cwd: Path, project_name: str) -> None:
         warnings.warn("MANIFEST.in文件已经存在")
     else:
         content = template_2_content(template=manifest_in_template, project_name=project_name)
-        manifest_path.write_text(content, encoding="utf-8")
+        with open(manifest_path, "w", newline="", encoding="utf-8") as f:
+            f.write(content)
         print("根据模板构造MANIFEST.in文件成功")
 
 
@@ -95,7 +96,8 @@ def new_env_py_setup(cwd: Path, project_name: str,
         warnings.warn("setup.py已存在!")
     else:
         content = template_2_content(template=setup_py_template)
-        setup_py_path.write_text(content, encoding="utf-8")
+        with open(setup_py_path, "w", newline="", encoding="utf-8") as f:
+            f.write(content)
         print("根据模板构造setup.py文件成功")
 
     setup_cfg_path = cwd.joinpath("setup.cfg")
@@ -111,5 +113,6 @@ def new_env_py_setup(cwd: Path, project_name: str,
             description=description,
             keywords=keywords
         )
-        setup_cfg_path.write_text(content, encoding="utf-8")
+        with open(setup_cfg_path, "w", newline="", encoding="utf-8") as f:
+            f.write(content)
         print("根据模板构造setup.cfg文件成功")

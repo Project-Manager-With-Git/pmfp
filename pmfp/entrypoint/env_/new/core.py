@@ -55,7 +55,7 @@ class New(EndPoint):
             },
             "cwd": {
                 "type": "string",
-                "description": "静态类型检验执行的位置",
+                "description": "执行指令的位置",
                 "default": "."
             }
         }

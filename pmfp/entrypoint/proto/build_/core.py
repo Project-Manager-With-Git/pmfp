@@ -10,7 +10,7 @@ class Build(EndPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["language", "source_relative", "includes", "files"],
+        "required": ["language", "source_relative", "pb_includes", "files"],
         "properties": {
             "cwd": {
                 "type": "string",
@@ -35,10 +35,10 @@ class Build(EndPoint):
                 "description": "使用路径作为包名,只针对go语言",
                 "default": False
             },
-            "includes": {
+            "pb_includes": {
                 "type": "array",
                 "title": "i",
-                "description": "待编译的文件的依赖所在的文件夹",
+                "description": "待编译的protobu文件及其依赖所在的文件夹",
                 "items": {
                     "type": "string"
                 },

@@ -50,7 +50,8 @@ def makereadme(cwd: Path, project_name: str,
             author_email=author_email,
             description=description,
             keywords=keywords)
-        readmepath.write_text(readme, "utf-8")
+        with open(readmepath, "w", newline="", encoding="utf-8") as f:
+            f.write(readme)
         print("根据模板创建README.md文件完成")
 
 
@@ -59,7 +60,8 @@ def makechangelog(cwd: Path) -> None:
     if changelogpath.exists():
         warnings.warn("changelog文件已经存在")
     else:
-        changelogpath.write_text(changelog_template, "utf-8")
+        with open(changelogpath, "w", newline="", encoding="utf-8") as f:
+            f.write(changelog_template)
         print("根据模板创建CHANGELOG.md文件完成")
 
 

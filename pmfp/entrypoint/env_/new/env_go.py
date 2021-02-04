@@ -30,6 +30,7 @@ def new_env_go(cwd: Path, project_name: str) -> None:
         language_version = get_golang_version()
         if language_version:
             content = template_2_content(template=go_mod_template, project_name=project_name, language_version=language_version)
-            go_env_path.write_text(content, encoding="utf-8")
+            with open(go_env_path, "w", newline="", encoding="utf-8") as f:
+                f.write(content)
         else:
             warnings.warn("""需要先安装go语言编译器.""")

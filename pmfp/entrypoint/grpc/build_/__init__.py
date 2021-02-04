@@ -21,7 +21,7 @@ def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_
 
 
 @grpc_build.as_main
-def build_grpc(language: str, files: List[str], includes: List[str], to: str,
+def build_grpc(language: str, files: List[str], pb_includes: List[str], to: str,
                source_relative: bool, kwargs: Optional[str] = None,
                cwd: str = ".", as_type: Optional[List[str]] = None) -> None:
     """编译grpc的protobuf的schema为不同语言的代码.
@@ -29,7 +29,7 @@ def build_grpc(language: str, files: List[str], includes: List[str], to: str,
     Args:
         language (List[str]): 编译到的执行环境,可选的有"go","py","js"
         files (List[str]): 待编译的文件列表
-        includes (List[str]): 待编译文件及其依赖所在文件夹列表
+        pb_includes (List[str]): 待编译文件及其依赖所在文件夹列表
         to (str): 编译到的模块所在文件夹.
         source_relative (bool): 是否使用路径作为包名,只针对go语言
         kwargs (Optional[str]): Default: None,
@@ -41,8 +41,8 @@ def build_grpc(language: str, files: List[str], includes: List[str], to: str,
     topath = get_abs_path(to, cwdp)
     if not topath.is_dir():
         topath.mkdir(parents=True)
-
-    includes = [get_abs_path_str(i, Path(cwd)) for i in includes]
+    files = [file if file.endswith(".proto") else f"{file}.proto" for file in files]
+    includes = [get_abs_path_str(i, Path(cwd)) for i in pb_includes]
     if kwargs:
         kwpairs = kwargs.split(",")
         kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}
