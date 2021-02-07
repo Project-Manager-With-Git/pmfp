@@ -12,9 +12,13 @@ from pmfp.utils.python_package_find_utils import find_pypackage_string
 from pmfp.utils.template_utils import template_2_content
 
 ServSource = ""
+HanddlerSource = ""
 AioServSource = ""
+AioHanddlerSource = ""
 CliSource = ""
+CliExampleSource = ""
 AioCliSource = ""
+AioCliExampleSource = ""
 
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.py.temp')
 if source_io:
@@ -22,9 +26,21 @@ if source_io:
 else:
     raise AttributeError("加载serv.py.temp模板失败")
 
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.py.temp')
+if source_io:
+    HanddlerSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载handdler.py.temp模板失败")
+
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aioserv.py.temp')
 if source_io:
     AioServSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aioserv.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiohanddler.py.temp')
+if source_io:
+    AioHanddlerSource = source_io.decode('utf-8')
 else:
     raise AttributeError("加载aioserv.py.temp模板失败")
 
@@ -34,9 +50,21 @@ if source_io:
 else:
     raise AttributeError("加载cli.py.temp模板失败")
 
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli_example.py.temp')
+if source_io:
+    CliExampleSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载cli_example.py.temp模板失败")
+
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli.py.temp')
 if source_io:
     AioCliSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aiocli.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli_example.py.temp')
+if source_io:
+    AioCliExampleSource = source_io.decode('utf-8')
 else:
     raise AttributeError("加载aiocli.py.temp模板失败")
 
@@ -130,6 +158,14 @@ def find_grpc_package(to: Path) -> Tuple[str, str]:
 
 
 def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    content = template_2_content(
+        HanddlerSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("handdler.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    # 再创建serv
     content = template_2_content(
         ServSource,
         service_name_lower=service_name_lower,
@@ -137,10 +173,20 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     with open(to.joinpath("serv.py"), "w", newline="", encoding="utf-8") as f:
         f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
-        f.write("from .serv import server\n")
+        f.write("from .serv import Serv\n")
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    """)
 
 
 def gen_cli(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建cli
     content = template_2_content(
         CliSource,
         service_name_lower=service_name_lower,
@@ -150,8 +196,31 @@ def gen_cli(service_name_lower: str, service_name: str, to: Path) -> None:
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .cli import client\n")
 
+    # 再创建example
+    content = template_2_content(
+        CliExampleSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("cli_example.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    print("""grpc cli需要安装依赖:
+    grpcio
+    pyproxypattern
+
+    通常还会使用到依赖:
+    grpcio-tools
+    """)
+
 
 def gen_aio_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    content = template_2_content(
+        AioHanddlerSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aiohanddler.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    # 再创建serv
     content = template_2_content(
         AioServSource,
         service_name_lower=service_name_lower,
@@ -159,10 +228,22 @@ def gen_aio_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     with open(to.joinpath("aioserv.py"), "w", newline="", encoding="utf-8") as f:
         f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
-        f.write("from .aioserv import aio_server\n")
+        f.write("from .aioserv import AioServ\n")
+
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    uvloop
+    """)
 
 
 def gen_aio_cli(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建cli
     content = template_2_content(
         AioCliSource,
         service_name_lower=service_name_lower,
@@ -171,6 +252,21 @@ def gen_aio_cli(service_name_lower: str, service_name: str, to: Path) -> None:
         f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
         f.write("from .aiocli import aio_client\n")
+    # 再创建example
+    content = template_2_content(
+        AioCliExampleSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("cli_example.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    print("""grpc cli需要安装依赖:
+    grpcio
+    pyproxypattern
+
+    通常还会使用到依赖:
+    grpcio-tools
+    uvloop
+    """)
 
 
 def _build_grpc_py_more(to: str, target: str, as_type: Optional[List[str]]) -> None:

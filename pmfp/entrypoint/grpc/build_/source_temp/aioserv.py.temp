@@ -5,24 +5,17 @@ import warnings
 import contextlib
 import multiprocessing
 from ipaddress import ip_address
-from typing import Optional, Any, Dict, Iterator
+from typing import Optional, Any, Dict, Iterator, Union, Tuple, List
 import grpc
 from grpc_reflection.v1alpha import reflection
-from grpc_health.v1 import _async as health
+from grpc_health.v1 import health
+from grpc_health.v1 import _async as health_async
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from schema_entry import EntryPoint
-from .${service_name_lower}_pb2_grpc import ${service_name}Servicer, add_${service_name}Servicer_to_server
-from .${service_name_lower}_pb2 import DESCRIPTOR, Message
-
-
-class Handdler(${service_name}Servicer):
-    def __init__(self, config: Dict[str, Any]):
-        super().__init__()
-        self.config = config
-
-    async def Echo(self, request: Any, context: grpc.aio.ServicerContext) -> Any:
-        return Message(Message=request.Message)
+from .${service_name_lower}_pb2_grpc import add_${service_name}Servicer_to_server
+from .${service_name_lower}_pb2 import DESCRIPTOR
+from .aiohanddler import Handdler
 
 
 class AioServ(EntryPoint):
@@ -54,38 +47,79 @@ class AioServ(EntryPoint):
                 "type": "integer",
                 "description": "start processes,when <=0 will set as the host's core number",
                 "default": 1
+            },
+            "uvloop": {
+                "type": "boolean",
+                "description": "using uvloop as eventloop",
+                "default": False
+            },
+            "maximum_concurrent_rpcs": {
+                "type": "integer",
+                "title": "m",
+                "description": "maximum concurrent",
+                "default": 50
+            },
+            "rpc_options": {
+                "type": "array",
+                "title": "o",
+                "description": "grpc options",
+                "items": {
+                    "type": "string"
+                }
             }
         }
     }
 
     @contextlib.contextmanager
-    def _reserve_port(self) -> Iterator[int]:
+    def _reserve_port(self) -> Iterator[Union[Tuple[str, int], Tuple[str, int, int, int]]]:
         """Find and reserve a port for all subprocesses to use."""
         config = self.config
         host, ports = config.get("address", "0.0.0.0:5000").split(":")
         port = int(ports)
+        if "[" in host:
+            host = host.replace("[", "").replace("]", "")
         ip = ip_address(host)
         host = str(ip)
-        sock = socket.socket(
-            socket.AF_INET6 if ip.version == 6 else socket.AF_INET,
-            socket.SOCK_STREAM
-        )
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
-            raise RuntimeError("Failed to set SO_REUSEPORT.")
-        sock.bind((host, port))
+        if ip.version == 6:
+            sock = socket.socket(
+                socket.AF_INET6,
+                socket.SOCK_STREAM
+            )
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+            if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
+                raise RuntimeError("Failed to set SO_REUSEPORT.")
+            sock.bind((host, port, 0, 0))
+        else:
+            sock = socket.socket(
+                socket.AF_INET,
+                socket.SOCK_STREAM
+            )
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+            if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
+                raise RuntimeError("Failed to set SO_REUSEPORT.")
+            sock.bind((host, port))
         try:
-            yield sock.getsockname()[1]
+            yield sock.getsockname()
         finally:
             sock.close()
 
-    async def _run_singal_serv(self, config: Dict[str, Any], pid: Optional[int], bind_address: Optional[str] = None) -> None:
-        grpc_serv = grpc.aio.server()
+    async def _run_singal_serv(self, config: Dict[str, Any], pid: Optional[int], as_worker: bool = False) -> None:
+        opts: Optional[List[Tuple[str, Union[str, int]]]] = None
+        if config.get("rpc_options"):
+            _opts = set([(pair[0], int(pair[1])) if pair[1].isdigit() else (pair[0], pair[1])
+                         for opt in config["rpc_options"] if len(pair := opt.split(":")) == 2])
+            if as_worker:
+                _opts.add(('grpc.so_reuseport', 1))
+            opts = list(_opts)
+        grpc_serv = grpc.aio.server(
+            options=opts,
+            maximum_concurrent_rpcs=config.get("maximum_concurrent_rpcs", 50)
+        )
         handdler = Handdler(config)
         add_${service_name}Servicer_to_server(handdler, grpc_serv)
 
         # 健康检查
-        health_servicer = health.HealthServicer()
+        health_servicer = health_async.HealthServicer()
         health_pb2_grpc.add_HealthServicer_to_server(health_servicer, grpc_serv)
 
         # 反射
@@ -98,27 +132,26 @@ class AioServ(EntryPoint):
         )
         reflection.enable_server_reflection(services, grpc_serv)
         # 绑定端口
-        if bind_address:
-            grpc_serv.add_insecure_port(bind_address)
-            warnings.warn(f"worker {pid} start @{bind_address}")
-        else:
-            addr = config.get("address", "localhost:5000")
-            grpc_serv.add_insecure_port(addr)
-            warnings.warn(f"grpc @process:{pid} start @{addr}")
+        addr = config["address"]
+        grpc_serv.add_insecure_port(addr)
+        warnings.warn(f"grpc @process:{pid} start @{addr}")
         await grpc_serv.start()
         # 设置服务为健康
         overall_server_health = ""
         for service in services + (overall_server_health,):
-            health_servicer.set(service, health_pb2.HealthCheckResponse.SERVING)
+            await health_servicer.set(service, health_pb2.HealthCheckResponse.SERVING)
         await grpc_serv.wait_for_termination()
 
-    def run_singal_serv(self, config: Dict[str, Any], bind_address: Optional[str] = None) -> None:
+    def run_singal_serv(self, config: Dict[str, Any], as_worker: bool = False) -> None:
         pid = os.getpid()
+        if config.get("uvloop"):
+            import uvloop
+            uvloop.install()
         try:
-            asyncio.run(self._run_singal_serv(config=config, pid=pid, bind_address=bind_address))
+            asyncio.run(self._run_singal_serv(config=config, pid=pid, as_worker=as_worker))
         except KeyboardInterrupt:
-            if bind_address:
-                warnings.warn(f"worker {pid} stoped")
+            if as_worker:
+                warnings.warn(f"worker Pid: {pid} stoped")
             else:
                 warnings.warn("grpc stoped")
         except Exception as e:
@@ -128,14 +161,13 @@ class AioServ(EntryPoint):
         workers = []
         config = self.config
         try:
-            with self._reserve_port() as port:
-                bind_address = 'localhost:{}'.format(port)
+            with self._reserve_port():
                 for _ in range(worker_num):
                     worker = multiprocessing.Process(
                         target=self.run_singal_serv,
                         kwargs={
                             "config": config,
-                            "bind_address": bind_address
+                            "as_worker": True
                         })
                     worker.start()
                     workers.append(worker)
@@ -162,5 +194,5 @@ class AioServ(EntryPoint):
                 warnings.warn(f"多进程执行失败,改为单进程执行: {err} with msg {err_msg}")
                 self.run_singal_serv(config=config)
 
-
-aio_server = AioServ()
+    def do_main(self) -> None:
+        self.run_service()

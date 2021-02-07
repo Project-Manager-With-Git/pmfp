@@ -5,24 +5,16 @@ import contextlib
 import multiprocessing
 from ipaddress import ip_address
 from concurrent import futures
-from typing import Optional, Any, Dict, Iterator
+from typing import Any, Dict, Iterator, Tuple, Union, Optional, List
 import grpc
 from grpc_reflection.v1alpha import reflection
 from grpc_health.v1 import health
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from schema_entry import EntryPoint
-from .${service_name_lower}_pb2_grpc import ${service_name}Servicer, add_${service_name}Servicer_to_server
-from .${service_name_lower}_pb2 import DESCRIPTOR, Message
-
-
-class Handdler(${service_name}Servicer):
-    def __init__(self, config: Dict[str, Any]):
-        super().__init__()
-        self.config = config
-
-    def Square(self, request: Any, context: Any) -> Any:
-        return Message(Message=request.Message**2)
+from .${service_name_lower}_pb2_grpc import add_${service_name}Servicer_to_server
+from .${service_name_lower}_pb2 import DESCRIPTOR
+from .handdler import Handdler
 
 
 class Serv(EntryPoint):
@@ -34,66 +26,101 @@ class Serv(EntryPoint):
         "properties": {
             "app_version": {
                 "type": "string",
+                "title": "v",
                 "description": "application version"
             },
             "app_name": {
                 "type": "string",
+                "title": "n",
                 "description": "application name"
             },
             "address": {
                 "type": "string",
+                "title": "a",
                 "description": "service address",
                 "default": "0.0.0.0:5000"
             },
             "log_level": {
                 "type": "string",
+                "title": "l",
                 "description": "log level",
                 "default": "DEBUG"
             },
             "workers": {
                 "type": "integer",
+                "title": "w",
                 "description": "start processes,when <=0 will set as the host's core number",
                 "default": 1
             },
             "max_threads": {
                 "type": "integer",
+                "title": "t",
                 "description": "max threads",
                 "default": 30
             },
             "maximum_concurrent_rpcs": {
                 "type": "integer",
+                "title": "m",
                 "description": "maximum concurrent",
                 "default": 50
+            },
+            "rpc_options": {
+                "type": "array",
+                "title": "o",
+                "description": "grpc options",
+                "items": {
+                    "type": "string"
+                }
             }
         }
     }
 
     @contextlib.contextmanager
-    def _reserve_port(self) -> Iterator[int]:
+    def _reserve_port(self) -> Iterator[Union[Tuple[str, int], Tuple[str, int, int, int]]]:
         """Find and reserve a port for all subprocesses to use."""
         config = self.config
         host, ports = config.get("address", "0.0.0.0:5000").split(":")
         port = int(ports)
+        if "[" in host:
+            host = host.replace("[", "").replace("]", "")
         ip = ip_address(host)
         host = str(ip)
-        sock = socket.socket(
-            socket.AF_INET6 if ip.version == 6 else socket.AF_INET,
-            socket.SOCK_STREAM
-        )
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
-            raise RuntimeError("Failed to set SO_REUSEPORT.")
-        sock.bind((host, port))
+        if ip.version == 6:
+            sock = socket.socket(
+                socket.AF_INET6,
+                socket.SOCK_STREAM
+            )
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+            if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
+                raise RuntimeError("Failed to set SO_REUSEPORT.")
+            sock.bind((host, port, 0, 0))
+        else:
+            sock = socket.socket(
+                socket.AF_INET,
+                socket.SOCK_STREAM
+            )
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+            if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
+                raise RuntimeError("Failed to set SO_REUSEPORT.")
+            sock.bind((host, port))
         try:
-            yield sock.getsockname()[1]
+            yield sock.getsockname()
         finally:
             sock.close()
 
-    def run_singal_serv(self, config: Dict[str, Any], bind_address: Optional[str] = None) -> None:
+    def run_singal_serv(self, config: Dict[str, Any], as_worker: bool = False) -> None:
+        opts: Optional[List[Tuple[str, Union[str, int]]]] = None
+        if config.get("rpc_options"):
+            _opts = set([(pair[0], int(pair[1])) if pair[1].isdigit() else (pair[0], pair[1])
+                         for opt in config["rpc_options"] if len(pair := opt.split(":")) == 2])
+            if as_worker:
+                _opts.add(('grpc.so_reuseport', 1))
+            opts = list(_opts)
         grpc_serv = grpc.server(
             futures.ThreadPoolExecutor(
                 max_workers=config.get("max_threads", 30)
             ),
+            options=opts,
             maximum_concurrent_rpcs=config.get("maximum_concurrent_rpcs", 50)
         )
         handdler = Handdler(config)
@@ -114,15 +141,11 @@ class Serv(EntryPoint):
             health.SERVICE_NAME
         )
         reflection.enable_server_reflection(services, grpc_serv)
-        # 绑定端口
-        if bind_address:
-            pid = os.getpid()
-            grpc_serv.add_insecure_port(bind_address)
-            warnings.warn(f"worker Pid:{pid} start @{bind_address}")
-        else:
-            addr = config.get("address", "localhost:5000")
-            grpc_serv.add_insecure_port(addr)
-            warnings.warn(f"grpc start @{addr}")
+        # 绑定地址
+        pid = os.getpid()
+        addr = config["address"]
+        grpc_serv.add_insecure_port(addr)
+        warnings.warn(f"grpc worker Pid:{pid} start @{addr}")
         grpc_serv.start()
         try:
             # 设置服务为健康
@@ -131,10 +154,7 @@ class Serv(EntryPoint):
                 health_servicer.set(service, health_pb2.HealthCheckResponse.SERVING)
             grpc_serv.wait_for_termination()
         except KeyboardInterrupt:
-            if bind_address:
-                warnings.warn(f"worker Pid:{pid} stoped")
-            else:
-                warnings.warn("grpc stoped")
+            warnings.warn(f"grpc worker Pid:{pid} stoped")
         except Exception as e:
             raise e
 
@@ -142,8 +162,8 @@ class Serv(EntryPoint):
         workers = []
         config = self.config
         try:
-            with self._reserve_port() as port:
-                bind_address = 'localhost:{}'.format(port)
+            with self._reserve_port():
+                bind_address = config[""]
                 for _ in range(worker_num):
                     worker = multiprocessing.Process(
                         target=self.run_singal_serv,
@@ -176,5 +196,5 @@ class Serv(EntryPoint):
                 warnings.warn(f"多进程执行失败,改为单进程执行: {err} with msg {err_msg}")
                 self.run_singal_serv(config=config)
 
-
-server = Serv()
+    def do_main(self) -> None:
+        self.run_service()

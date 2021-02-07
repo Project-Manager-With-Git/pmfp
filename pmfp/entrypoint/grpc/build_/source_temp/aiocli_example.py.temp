@@ -1,0 +1,30 @@
+import asyncio
+from google.protobuf.json_format import MessageToDict
+from .aiocli import aio_client, AioClient
+from .${service_name_lower}_rpc_pb2 import Message
+
+
+async def _cli_exp(url: str = "localhost:5000") -> None:
+    # req-res
+    async with aio_client.initialize_from_url(url) as client:
+        res = await client.Square(Message(Message=2.0))
+        print(MessageToDict(res))
+    # req-stream
+    async with AioClient(url) as client:
+        res_stream = client.RangeSquare(Message(Message=4.0))
+        async for res in res_stream:
+            print(MessageToDict(res))
+    # stream-res
+    aio_client.initialize_from_url(url)
+    async with aio_client:
+        res = await aio_client.SumSquare((Message(Message=float(i)) for i in range(4)))
+        print(MessageToDict(res))
+    # stream-stream
+    async with aio_client:
+        res_stream = aio_client.StreamrangeSquare((Message(Message=float(i)) for i in range(4)))
+        async for res in res_stream:
+            print(MessageToDict(res))
+
+
+def cli_exp(url: str = "localhost:5000"):
+    asyncio.run(_cli_exp(url))

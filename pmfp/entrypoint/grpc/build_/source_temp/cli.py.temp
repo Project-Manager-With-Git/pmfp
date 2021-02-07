@@ -13,18 +13,19 @@ class Client(Proxy):
 
     def __init__(self, url: Optional[str] = None, **options: Any) -> None:
         super().__init__()
-        if url:
-            self.url = url
-        else:
-            self.url = None
         self.channel = None
         self.instance = None
         if options:
             self.options = options
         else:
             self.options = None
+        if url:
+            self.url = url
+            self.new_instance()
+        else:
+            self.url = None
 
-    def new_instance(self) -> ${service_name}Stub:
+    def new_instance(self) -> None:
         if not self.url:
             raise AttributeError("need url!")
         if self.options:
@@ -33,17 +34,27 @@ class Client(Proxy):
         else:
             self.channel = grpc.insecure_channel(self.url)
         client = ${service_name}Stub(self.channel)
-        return client
+        self.initialize(client)
 
-    def initialize_from_url(self, url: str, **options: Any) -> None:
+    def initialize_from_url(self, url: str, **options: Any) -> "Client":
         self.url = url
         self.options = options
-        instance = self.new_instance()
-        self.initialize(instance)
+        self.new_instance()
+        return self
 
-    def close(self, grace: Optional[float] = None) -> None:
+    def close(self) -> None:
         if self.channel:
-            return self.channel.close(grace)
+            self.channel.close()
+            self.channel = None
+            self.instance = None
+
+    def __enter__(self) -> "Client":
+        if not self.instance:
+            self.new_instance()
+        return self
+
+    def __exit__(self, exc_type: Any, exc: Any, tb: Any) -> None:
+        self.close()
 
 
 client = Client()
