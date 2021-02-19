@@ -9,16 +9,17 @@ class Build(EndPoint):
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
         "properties": {
-            "cwd": {
-                "type": "string",
-                "description": "执行位置",
-                "default": "."
-            },
             "dockerfile_name": {
                 "type": "string",
                 "title": "f",
                 "description": "dockerfile名字",
                 "default": "Dockerfile"
+            },
+            "cross_compiling": {
+                "type": "boolean",
+                "title": "x",
+                "default": False,
+                "description": "是否交叉编译"
             },
             "platform": {
                 "type": "array",
@@ -26,7 +27,8 @@ class Build(EndPoint):
                 "description": "目标平台",
                 "items": {
                     "type": "string",
-                    "enum": ["linux/amd64", "linux/arm64", "linux/riscv64", "linux/ppc64le", "linux/s390x", "linux/386", "linux/arm/v7", "linux/arm/v6"]
+                    "enum": ["linux/amd64", "linux/arm64", "linux/riscv64",
+                             "linux/ppc64le", "linux/s390x", "linux/386", "linux/arm/v7", "linux/arm/v6"]
                 },
                 "default": ["linux/amd64", "linux/arm64", "linux/arm/v7"]
             },
@@ -43,22 +45,38 @@ class Build(EndPoint):
             "project_name": {
                 "type": "string",
                 "title": "n",
-                "description": "文档源码位置"
+                "description": "项目名"
             },
             "version": {
                 "type": "string",
                 "title": "v",
-                "description": "文档源码位置"
+                "description": "镜像版本"
             },
             "as_latest_img": {
                 "type": "boolean",
                 "title": "l",
-                "description": "是否打上latest标签"
+                "description": "是否打上latest标签",
+                "default": False
             },
             "push": {
                 "type": "boolean",
                 "title": "p",
-                "description": "是否编译完后推送去仓库"
+                "description": "是否编译完后推送去仓库",
+                "default": False
+            },
+            "cwd": {
+                "type": "string",
+                "description": "执行位置",
+                "default": "."
+            },
+            "use_sudo": {
+                "type": "boolean",
+                "description": "使用sudo执行命令",
+                "default": False
+            },
+            "sudo_pwd": {
+                "type": "string",
+                "description": "使用sudo执行命令的密码"
             }
         }
     }

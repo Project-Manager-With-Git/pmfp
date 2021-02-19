@@ -48,8 +48,17 @@ else:
 
 
 @dockerfile_new
-def new_dockerfile(language: str, dockerfile_name: str = "Dockerfile", cross_compiling: bool = False, extend: bool = False, app_name: str = "app", cwd: str = ".") -> None:
+def new_dockerfile(language: str, dockerfile_name: str = "Dockerfile",
+                   cross_compiling: bool = False, extend: bool = False,
+                   app_name: Optional[str] = None, project_name: Optional[str] = None,
+                   cwd: str = ".") -> None:
     cwdp = get_abs_path(cwd)
+    if app_name is None:
+        if project_name is None:
+            app_name = "app"
+        else:
+            app_name = project_name
+
     if language == "py":
         with open(cwdp.joinpath("pip.conf"), "w", newline="", encoding="utf-8") as f:
             f.write(PipConfSource)

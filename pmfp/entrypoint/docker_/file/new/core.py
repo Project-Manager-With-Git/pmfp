@@ -32,6 +32,11 @@ class New(EndPoint):
                 "title": "a",
                 "type": "string"
             },
+            "project_name": {
+                "type": "string",
+                "title": "n",
+                "description": "项目名"
+            },
             "extend": {
                 "description": "是否使用c扩展",
                 "title": "e",
