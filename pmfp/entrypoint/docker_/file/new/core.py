@@ -8,21 +8,40 @@ class New(EndPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["cwd"],
         "properties": {
-            "cwd": {
+            "dockerfile_name": {
                 "type": "string",
-                "description": "执行位置",
+                "title": "f",
+                "description": "dockerfile名字",
+                "default": "Dockerfile"
+            },
+            "language": {
+                "description": "目标语言使用的dockerfile",
+                "title": "l",
+                "type": "string",
+                "enum": ["py", "go"]
             },
             "cross_compiling": {
                 "type": "boolean",
                 "title": "x",
-                "description": "是否交叉编译"
+                "description": "是否交叉编译",
+                "default": False
             },
-            "file_name": {
+            "app_name": {
+                "description": "项目名",
+                "title": "a",
+                "type": "string"
+            },
+            "extend": {
+                "description": "是否使用c扩展",
+                "title": "e",
+                "type": "boolean",
+                "default": False
+            },
+            "cwd": {
                 "type": "string",
-                "title": "f",
-                "description": "dockerfile名字"
+                "description": "执行位置",
+                "default": "."
             }
         }
     }

@@ -8,16 +8,17 @@ class Build(EndPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["cwd"],
         "properties": {
             "cwd": {
                 "type": "string",
                 "description": "执行位置",
+                "default": "."
             },
-            "file_name": {
+            "dockerfile_name": {
                 "type": "string",
                 "title": "f",
-                "description": "dockerfile名字"
+                "description": "dockerfile名字",
+                "default": "Dockerfile"
             },
             "platform": {
                 "type": "array",
@@ -30,19 +31,18 @@ class Build(EndPoint):
                 "default": ["linux/amd64", "linux/arm64", "linux/arm/v7"]
             },
             "docker_register": {
-
+                "type": "string",
+                "title": "r",
+                "description": "docker的镜像仓库位置"
             },
             "docker_register_namespace": {
-
+                "type": "string",
+                "title": "s",
+                "description": "docker的镜像仓库中的命名空间"
             },
             "project_name": {
                 "type": "string",
                 "title": "n",
-                "description": "文档源码位置"
-            },
-            "author": {
-                "type": "string",
-                "title": "a",
                 "description": "文档源码位置"
             },
             "version": {

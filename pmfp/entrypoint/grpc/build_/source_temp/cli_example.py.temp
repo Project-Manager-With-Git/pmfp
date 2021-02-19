@@ -1,6 +1,6 @@
 from google.protobuf.json_format import MessageToDict
 from .cli import client, Client
-from .square_rpc_pb2 import Message
+from .{service_name_lower}_pb2 import Message
 
 
 def cli_exp(url: str = "localhost:5000") -> None:
