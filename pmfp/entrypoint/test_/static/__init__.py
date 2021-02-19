@@ -5,7 +5,7 @@ from .core import test_static
 
 
 @test_static.as_main
-def static_test(language: str, code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None:
+def static_test(language: str, code: str, output: str, *, model: bool=False, coverage: bool=False,cwd: str=".") -> None:
     """对动态语言做静态类型检验.
 
     Args:

@@ -29,12 +29,14 @@ class Static(EndPoint):
             "coverage": {
                 "type": "boolean",
                 "title": "v",
-                "description": "静态类型检验是否输出覆盖率报告."
+                "description": "静态类型检验是否输出覆盖率报告.",
+                "default": False
             },
             "model": {
                 "type": "boolean",
                 "title": "m",
                 "description": "静态类型检验针对的是否是模块",
+                "default": False
             },
             "cwd": {
                 "type": "string",

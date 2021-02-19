@@ -1,7 +1,7 @@
 """编译python语言模块."""
 from pathlib import Path
 from pmfp.utils.run_command_utils import run_command
-from pmfp.utils.fs_utils import get_abs_path
+from pmfp.utils.fs_utils import get_abs_path_str, get_abs_path
 
 
 def static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None:
@@ -15,10 +15,7 @@ def static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: 
         cwd (str): 执行任务的根目录
 
     """
-    if cwd:
-        cwdp = get_abs_path(cwd)
-    else:
-        cwdp = Path(".")
+    cwdp = get_abs_path(cwd)
     outputp = get_abs_path(output, cwd=cwdp)
     codep = get_abs_path(code, cwd=cwdp)
     command_base = "mypy --ignore-missing-imports --show-column-numbers --follow-imports=silent --check-untyped-defs --disallow-untyped-defs --no-implicit-optional --warn-unused-ignores"
@@ -38,4 +35,5 @@ def static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: 
                 command = command_base + f" --html-report={str(outputp)} {str(codep)}"
             else:
                 command = command_base + f" {str(codep)}"
+
     run_command(command, cwd=cwdp, visible=True).catch(lambda _: str(_)).get()
