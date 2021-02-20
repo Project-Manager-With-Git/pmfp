@@ -1,7 +1,7 @@
 """编译python语言模块."""
 from pathlib import Path
 from typing import Optional
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.fs_utils import get_abs_path
 
 
@@ -24,4 +24,4 @@ def benchmark_test_go(benchmark_code: str, *, cwd: Optional[str] = None, mem: bo
         command = f"go test -v -run=^${benchmark_code} -bench ."
     else:
         command = f"go test -v -benchmem -run=^${benchmark_code} -bench ."
-    run_command(command, cwd=cwdp, visible=True).get()
+    run(command, cwd=cwdp, visible=True, fail_exit=True)

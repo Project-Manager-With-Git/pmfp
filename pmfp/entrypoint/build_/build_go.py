@@ -3,7 +3,7 @@ import os
 import warnings
 from typing import Optional
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.fs_utils import path_to_str
 from pmfp.const import PLATFORM
 from .utils import upx_process
@@ -40,16 +40,6 @@ def go_build(code: str, project_name: str, *,
             "GOARCH": for_linux_arch,
             "GOOS": "linux"
         })
-    rc = run_command(
-        command, cwd=cwd, env=env, visible=True
-    ).catch(
-        lambda err: warnings.warn(f"""编译失败
-            {str(err)}
-            """)
-    )
+    run(command, cwd=cwd, env=env, visible=True, fail_exit=True)
     if upx:
-        rc.then(
-            lambda _: upx_process(target_str, cwd=cwd)
-        ).get()
-    else:
-        rc.get()
+        upx_process(target_str, cwd=cwd)

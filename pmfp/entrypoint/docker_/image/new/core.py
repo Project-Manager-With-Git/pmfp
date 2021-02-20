@@ -1,6 +1,6 @@
-"""ppm docker file new命令的处理."""
+"""ppm docker image new命令的处理."""
 from pmfp.utils.endpoint import EndPoint
-from ..core import dockerfile
+from ..core import dockerimage
 
 
 class New(EndPoint):
@@ -52,4 +52,4 @@ class New(EndPoint):
     }
 
 
-dockerfile_new = dockerfile.regist_sub(New)
+dockerfile_new = dockerimage.regist_sub(New)

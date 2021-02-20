@@ -3,7 +3,6 @@ import pkgutil
 import warnings
 from pathlib import Path
 from typing import List, Optional, Tuple
-from promise import Promise
 from pmfp.const import GOLBAL_PYTHON_VERSION
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.tools_info_utils import get_golang_version

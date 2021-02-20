@@ -3,7 +3,7 @@
 import warnings
 from pathlib import Path
 from typing import Optional
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from .core import grpc_query
 
 
@@ -36,8 +36,7 @@ def query_grpc(url: str, method: str, payload: str, *,
     if cacert:
         flags += "-cacert={cacert} "
     command = f"grpcurl -d '{payload}'{flags}{url} {method}"
-    print(command)
-    run_command(command, cwd=Path(cwd), visible=True
-    ).catch(
-        lambda _: warnings.warn("""执行query命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
-    ).get()
+    try:
+        run(command, cwd=Path(cwd), visible=True)
+    except Exception:
+        warnings.warn("""执行query命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")

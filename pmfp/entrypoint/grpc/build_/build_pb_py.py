@@ -1,12 +1,12 @@
 """编译python语言模块."""
 import re
+import sys
 import pkgutil
 import warnings
 from pathlib import Path
 from typing import List, Optional, Tuple
-from promise import Promise
 from pmfp.utils.fs_utils import get_abs_path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.tools_info_utils import get_global_python
 from pmfp.utils.python_package_find_utils import find_pypackage_string
 from pmfp.utils.template_utils import template_2_content
@@ -111,7 +111,7 @@ from .{grpc_package} import *
                     f.writelines(new_lines)
 
 
-def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Path) -> Promise:
+def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Path) -> None:
     """生成python模块."""
     python = get_global_python()
     command = f"{python} -m grpc_tools.protoc {includes_str} {flag_str} --python_out={to} --grpc_python_out={to} {target_str}"
@@ -122,8 +122,10 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Pa
         trans_grpc_model_py(to)
         print("转换python项目的grpc文件为python模块完成!")
 
-    return run_command(command, cwd=cwd).catch(
-        lambda err: warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
+    try:
+        run(command, cwd=cwd, visible=True)
+    except Exception as err:
+        warnings.warn(f"""编译grpc项目 {target_str} 为python模块失败:
 
         {str(err)}
 
@@ -133,13 +135,18 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Pa
         `pip install grpcio-tools`
         `pip install grpcio-reflection`
         """)
-    ).then(
-        _
-    ).catch(
-        lambda content: warnings.warn(f"""转换python的grpc输出为一个模块失败:
-        {str(content)}
-        """)
-    )
+        sys.exit(1)
+    else:
+        try:
+            print(f"编译grpc项目 {target_str} 为python模块完成!")
+            trans_grpc_model_py(to)
+        except Exception as e:
+            warnings.warn(f"""转换python的grpc输出为一个模块失败:
+                {str(e)}
+            """)
+            sys.exit(1)
+        else:
+            print("转换python项目的grpc文件为python模块完成!")
 
 
 def find_grpc_package(to: Path) -> Tuple[str, str]:
@@ -308,8 +315,5 @@ def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optiona
     flag_str = ""
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
-    gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd).then(
-        lambda _: _build_grpc_py_more(to=to, target=target_str, as_type=as_type)
-    ).catch(
-        lambda e: print(f"!!!!!!!!!!!!!!!!!!{e}$$$$$$$$$$$$$$$")
-    )
+    gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd)
+    _build_grpc_py_more(to=to, target=target_str, as_type=as_type)

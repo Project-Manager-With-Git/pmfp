@@ -1,7 +1,7 @@
 """编译python语言模块."""
 from pathlib import Path
 from typing import Optional
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.tools_info_utils import get_local_python
 from pmfp.utils.fs_utils import get_abs_path
 
@@ -26,4 +26,4 @@ def benchmark_test_py(benchmark_code: str, *, cwd: Optional[str] = None, mem: bo
         command = f"{python} -m kernprof -l -v {benchmark_code}"
     else:
         command = f"{python} -m memory_profiler {benchmark_code}"
-    run_command(command, cwd=cwdp, visible=True).get()
+    run(command, cwd=cwdp, visible=True, fail_exit=True)

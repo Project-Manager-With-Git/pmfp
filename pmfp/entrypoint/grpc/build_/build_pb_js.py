@@ -3,7 +3,7 @@ import os
 import warnings
 from pathlib import Path
 from typing import List, Optional
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 
 
 def build_pb_js(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: Path,
@@ -30,18 +30,16 @@ def build_pb_js(files: List[str], includes: List[str], to: str, as_type: Optiona
         command = f"protoc {includes_str} --plugin=protoc-gen-grpc={PROTOC_GEN_GRPC_JS_PATH} --js_out=import_style=commonjs,binary:{to} --grpc_out=grpc_js:{to} {target_str}"
     else:
         raise AttributeError("需要先设定环境变量`PROTOC_GEN_GRPC_JS_PATH`")
-
-    print(f"编译命令:{command}")
-    run_command(command, cwd=cwd
-                ).catch(
-        lambda err: warnings.warn(
+    try:
+        run(command, cwd=cwd, visible=True)
+    except Exception as err:
+        warnings.warn(
             f"""编译grpc项目 {target_str} 为python模块失败:
 
-            {str(err)}
+        {str(err)}
 
-            编译grpc-js需要安装grpc-tools <https://www.npmjs.com/package/grpc-tools>,
-            并将插件grpc_node_plugin`的路径指定到环境变量`PROTOC_GEN_GRPC_JS_PATH"""
+        编译grpc-js需要安装grpc-tools <https://www.npmjs.com/package/grpc-tools>,
+        并将插件grpc_node_plugin`的路径指定到环境变量`PROTOC_GEN_GRPC_JS_PATH"""
         )
-    ).then(
-        lambda _: print(f"编译grpc项目 {target_str} 为js语言模块完成!")
-    ).get()
+    else:
+        print(f"编译grpc项目 {target_str} 为js语言模块完成!")

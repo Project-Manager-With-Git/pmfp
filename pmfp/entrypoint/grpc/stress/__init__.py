@@ -3,7 +3,7 @@
 import warnings
 from pathlib import Path
 from typing import Optional
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from .core import grpc_stress_test
 
 
@@ -40,8 +40,7 @@ def tress_test_grpc(url: str, method: str, payload: str, *,
     if cacert:
         flags += "--cacert={cacert} "
     command = f"ghz --duration={duration} --concurrency={concurrency} --total={requests} --call={method} -d '{payload}'{flags}{url}"
-    print(command)
-    run_command(command, cwd=Path(cwd), visible=True
-    ).catch(
-        lambda _: warnings.warn("""执行stress命令需要先安装ghz<https://github.com/bojand/ghz>""")
-    ).get()
+    try:
+        run(command, cwd=Path(cwd), visible=True)
+    except Exception:
+        warnings.warn("""执行stress命令需要先安装ghz<https://github.com/bojand/ghz>""")

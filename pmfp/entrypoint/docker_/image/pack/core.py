@@ -1,26 +1,14 @@
-"""ppm docker file build命令的处理."""
+"""ppm docker image pack命令的处理."""
 from pmfp.utils.endpoint import EndPoint
-from ..core import dockerfile
+from ..core import dockerimage
 
 
-class Build(EndPoint):
-    """由一个dockerfile文件编译镜像."""
+class Pack(EndPoint):
+    """将多个不同平台的同名镜像打包到同一个manifest list."""
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
         "properties": {
-            "dockerfile_name": {
-                "type": "string",
-                "title": "f",
-                "description": "dockerfile名字",
-                "default": "Dockerfile"
-            },
-            "cross_compiling": {
-                "type": "boolean",
-                "title": "x",
-                "default": False,
-                "description": "是否交叉编译"
-            },
             "platform": {
                 "type": "array",
                 "title": "p",
@@ -82,4 +70,4 @@ class Build(EndPoint):
     }
 
 
-dockerfile_build = dockerfile.regist_sub(Build)
+dockerimage_pack = dockerimage.regist_sub(Pack)

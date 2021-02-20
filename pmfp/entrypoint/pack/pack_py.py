@@ -5,7 +5,7 @@ import compileall
 import warnings
 from typing import Optional
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.tools_info_utils import get_local_python
 from pmfp.utils.fs_utils import get_abs_path, delete_source, path_to_str
 from pmfp.utils.url_utils import is_http_url
@@ -29,13 +29,7 @@ def py_pack_lib(output_dir: Path, cwd: Path) -> None:
     python = get_local_python(cwd.joinpath("env"))
     output_dir_str = path_to_str(output_dir)
     command = f"{python} setup.py bdist_wheel --dist-dir={output_dir_str}"
-    run_command(
-        command, cwd=cwd
-    ).catch(
-        lambda err: warnings.warn(f"""打包为wheel失败
-            {str(err)}
-            """)
-    ).get()
+    run(command, cwd=cwd, visible=True, fail_exit=True)
 
 
 def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, pypi_mirror: Optional[str] = None) -> None:
@@ -57,13 +51,7 @@ def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, p
                 command = f"{python} -m pip install -i {pypi_mirror}  -r requirements.txt --target app"
             else:
                 command = f"{python} -m pip install  -r requirements.txt --target app"
-            run_command(
-                command, cwd=cwd
-            ).catch(
-                lambda err: warnings.warn(f"""为app安装依赖失败
-                    {str(err)}
-                    """)
-            ).get()
+            run(command, cwd=cwd, visible=True, fail_exit=True)
 
         zipapp.create_archive(
             temp_path,

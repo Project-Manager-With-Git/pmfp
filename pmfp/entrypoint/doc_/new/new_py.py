@@ -50,26 +50,16 @@ def doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, au
     outputp = get_abs_path(output, cwd=cwdp)
     source_dirp = get_abs_path(source_dir, cwd=cwdp)
 
-    sphinx_new(
-        source_dir=source_dirp,
-        project_name=project_name,
-        author=author,
-        version=version,
-        cwd=cwdp
-    ).then(
-        lambda _: template_2_content(AppendConfig, code_path=codep_str)
-    ).then(
-        lambda appconfig: sphinx_config(source_dirp, appconfig)
-    ).then(
-        lambda _: move_to_source(source_dir=source_dirp, root=cwdp)
-    ).then(
-        lambda _: makeindex(source_dir=source_dirp, template=pyindexmd, project_name=project_name)
-    ).then(
-        lambda _: sphinx_build(source_dir=source_dirp, doc_dir=outputp, cwd=cwdp)
-    ).then(
-        lambda _: no_jekyll(outputp)
-    ).catch(
-        lambda err: warnings.warn(f"""初始化python项目文档失败:
+    sphinx_new(source_dir=source_dirp, project_name=project_name, author=author, version=version, cwd=cwdp)
+    try:
+        appconfig = template_2_content(AppendConfig, code_path=codep_str)
+        sphinx_config(source_dirp, appconfig)
+        move_to_source(source_dir=source_dirp, root=cwdp)
+        makeindex(source_dir=source_dirp, template=pyindexmd, project_name=project_name)
+        sphinx_build(source_dir=source_dirp, doc_dir=outputp, cwd=cwdp)
+        no_jekyll(outputp)
+    except Exception as err:
+        warnings.warn(f"""初始化python项目文档失败:
 
             {str(err)}
 
@@ -80,4 +70,3 @@ def doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, au
             + pip install sphinx-autoapi
             + pip install sphinx_rtd_theme
             """)
-    ).get()

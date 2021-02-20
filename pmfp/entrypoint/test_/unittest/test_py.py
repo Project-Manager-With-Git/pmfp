@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Optional
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.tools_info_utils import get_local_python, get_global_python
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 
 
 def unittest_test_py(test_code: str, code: str, *,
@@ -40,15 +40,13 @@ def unittest_test_py(test_code: str, code: str, *,
             return
 
         command = f"{python} -m coverage run --source={code} -m unittest discover -v -s {str(test_code_path)}"
-        print(f"执行命令:{command}")
-        run_command(
-            command, cwd=cwdp, visible=True
-        ).then(
-            coverage_command
-        ).then(
-            lambda command: run_command(command, cwd=cwdp, visible=True)
-        ).catch(lambda _: str(_)).get()
+        run(command, cwd=cwdp, visible=True, fail_exit=True)
+        if output:
+            output_path = get_abs_path(output, cwdp)
+            command = f"{python} -m coverage html -d {str(output_path)}"
+        else:
+            command = f"{python} -m coverage report"
+        run(command, cwd=cwdp, visible=True, fail_exit=True)
     else:
         command = f"{python} -m unittest discover -v -s {str(test_code_path)}"
-        print(f"执行命令:{command}")
-        run_command(command, cwd=cwdp, visible=True).catch(lambda _: str(_)).get()
+        run(command, cwd=cwdp, visible=True, fail_exit=True)

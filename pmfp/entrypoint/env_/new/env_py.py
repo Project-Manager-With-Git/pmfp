@@ -2,7 +2,7 @@
 import pkgutil
 import warnings
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.tools_info_utils import get_global_python
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.template_utils import template_2_content
@@ -44,8 +44,7 @@ def new_env_py_venv(cwd: Path) -> None:
     else:
         python = get_global_python()
         command = f"{python} -m venv env"
-        print(f"执行命令: {command}")
-        run_command(command, cwd=cwd, visible=True).catch(lambda err: str(err)).get()
+        run(command, cwd=cwd, visible=True, fail_exit=True)
 
 
 def new_env_py_conda(cwd: Path) -> None:
@@ -59,8 +58,10 @@ def new_env_py_conda(cwd: Path) -> None:
         warnings.warn("python的虚拟环境已存在!")
     else:
         command = f"conda create -y -p env python={GOLBAL_PYTHON_VERSION}"
-        print(f"执行命令: {command}")
-        run_command(command, cwd=cwd, visible=True).catch(lambda _: warnings.warn("初始化conda环境需要先安装anaconda或者miniconda")).get()
+        try:
+            run(command, cwd=cwd, visible=True)
+        except Exception:
+            warnings.warn("初始化conda环境需要先安装anaconda或者miniconda")
 
 
 def new_env_py_manifest(cwd: Path, project_name: str) -> None:

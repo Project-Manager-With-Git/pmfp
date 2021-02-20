@@ -2,23 +2,22 @@
 import warnings
 from typing import List
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 
 
 def _build_pb(includes: str, flag: str, to: str, target: str, cwd: Path) -> None:
     command = f"protoc  {includes} {flag} --go_out={to} {target}"
-    print(f"编译命令:{command}")
-    run_command(command, cwd=cwd
-                ).catch(
-        lambda err: warnings.warn(f"""编译protobuf项目 {target} 为go语言模块失败:
+    try:
+        run(command, cwd=cwd, visible=True)
+    except Exception as err:
+        warnings.warn(f"""编译protobuf项目 {target} 为go语言模块失败:
 
             {str(err)}
 
             需要安装额外插件"google.golang.org/protobuf/cmd/protoc-gen-go"
             """)
-    ).then(
-        lambda x: print(f"编译protobuf项目 {target} 为go语言模块完成!")
-    ).get()
+    else:
+        print(f"编译protobuf项目 {target} 为go语言模块完成!")
 
 
 def build_pb_go(files: List[str], includes: List[str], to: str, cwd: Path,

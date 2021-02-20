@@ -5,7 +5,6 @@ from urllib.parse import urlparse
 import requests as rq
 from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 from requests_oauthlib import OAuth1
-from promise import Promise
 
 
 def is_url(url: str) -> bool:

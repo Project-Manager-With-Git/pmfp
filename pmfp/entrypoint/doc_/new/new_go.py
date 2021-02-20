@@ -2,7 +2,7 @@ import shutil
 import warnings
 from pathlib import Path
 from pmfp.utils.fs_utils import get_abs_path, path_to_str
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from ..utils import no_jekyll
 
 
@@ -43,13 +43,16 @@ def doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, au
     source_dirp = get_abs_path(source_dir, cwd=cwdp)
     source_dirp_str = path_to_str(source_dirp)
     command = f"golds -gen -dir={source_dirp_str} -wdpkgs-listing=solo -nouses ./..."
-    run_command(command, cwd=cwdp).catch(
-        lambda e: warnings.warn(f"""gen doc get error {str(e)}
+    try:
+        run(command, cwd=cwdp, visible=True)
+    except Exception as e:
+        warnings.warn(f"""gen doc get error {str(e)}
         you need to install golds first
 
         `go get -v -u go101.org/golds`""")
-    ).then(
-        lambda _: move_doc(source_dirp, outputp)
-    ).catch(
-        lambda e: warnings.warn(f"move doc get error {str(e)}")
-    )
+        return
+    else:
+        try:
+            move_doc(source_dirp, outputp)
+        except Exception as e:
+            warnings.warn(f"move doc get error {str(e)}")

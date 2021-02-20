@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Optional, List, Dict
 
 from schema_entry import EntryPoint
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run as run_command
 from .core import ppm
 
 
@@ -48,6 +48,6 @@ def run_cmd(command: str, *, cwd: str = ".", env: Optional[List[str]] = None) ->
         e: Dict[str, str] = {}
         e.update(**default_environ)
         e.update(**envs)
-        run_command(command, cwd=Path(cwd), env=e, visible=True).get()
+        run_command(command, cwd=Path(cwd), env=e, visible=True, fail_exit=True)
     else:
-        run_command(command, cwd=Path(cwd), visible=True).get()
+        run_command(command, cwd=Path(cwd), visible=True, fail_exit=True)

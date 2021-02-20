@@ -1,7 +1,6 @@
 """编译python语言模块."""
-import warnings
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.fs_utils import get_abs_path
 
 
@@ -23,23 +22,14 @@ def unittest_test_go(test_code: str, *, coverage: bool = False, output: str = "d
         test_code_path = get_abs_path(test_code)
     if coverage:
         if output:
-            def coverage_success(_: str) -> None:
-                if output:
-                    output_path = get_abs_path(output, cwd=cwdp).joinpath("index.html")
-                    command = f"go tool cover -html=cover.out -o {str(output_path)}"
-                    run_command(command, cwd=cwdp)
-                else:
-                    warnings.warn("要获得覆盖率文档必须指定输出文档位置")
-
             command = f"go test -v -coverprofile=cover.out {str(test_code_path)}"
-            run_command(
-                command, cwd=cwdp, visible=True
-            ).catch(lambda e: str(e)).then(
-                coverage_success
-            ).get()
+            run(command, cwd=cwdp, visible=True, fail_exit=True)
+            output_path = get_abs_path(output, cwd=cwdp).joinpath("index.html")
+            command = f"go tool cover -html=cover.out -o {str(output_path)}"
+            run(command, cwd=cwdp, visible=True, fail_exit=True)
         else:
             command = f"go test -v -cover {str(test_code_path)}"
-            run_command(command, cwd=cwdp, visible=True).catch(lambda _: str(_)).get()
+            run(command, cwd=cwdp, visible=True, fail_exit=True)
     else:
         command = f"go test -v {str(test_code_path)}"
-        run_command(command, cwd=cwdp, visible=True).catch(lambda _: str(_)).get()
+        run(command, cwd=cwdp, visible=True, fail_exit=True)

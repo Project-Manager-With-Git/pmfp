@@ -1,51 +1,67 @@
 """执行命令行任务的通用组件."""
+import sys
 import subprocess
 from functools import partial
 from pathlib import Path
 from typing import Callable, Optional, Any, Dict
 import chardet
 from termcolor import colored
-from promise import Promise
 
 
-def _run_command(resolve: Callable[[Any], Promise], reject: Callable[[Any], Promise],
-                 command: str, *, cwd: Optional[Path] = None, env: Optional[Any] = None, visible: bool = False) -> Promise:
-    res = subprocess.run(command, capture_output=True, shell=True, cwd=cwd, env=env)
-    if res.returncode != 0:
-        print(f"命令{command}执行失败")
-        if res.stderr:
-            encoding = chardet.detect(res.stderr).get("encoding")
-            content = res.stderr.decode(encoding).strip()
-        else:
-            encoding = chardet.detect(res.stdout).get("encoding")
-            content = res.stdout.decode(encoding).strip()
-        if visible:
-            print(colored(content, 'white', 'on_magenta'))
-        return reject(content)
-    else:
-        content = ""
-        if res.stdout:
-            encoding = chardet.detect(res.stdout).get("encoding")
-            content = res.stdout.decode(encoding).strip()
-
-        if visible:
-            print(colored(content, 'white', 'on_cyan'))
-        return resolve(Exception(content))
-
-
-def run_command(command: str, *, cwd: Optional[Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False) -> Promise:
-    """执行命令行命令.
+def run(command: str, *, cwd: Optional[Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str:
+    """执行命令行命令并返回其stdout的值
 
     Args:
         command (str): 命令行命令
         cwd (Optional[Path]): 执行命令时的位置.Default: None
         env (Optional[Any]): 执行命令时的环境变量. Default:None
         visible (bool): 命令结果的可见度. Default: False
+        fail_exit (bool): 当执行失败时退出程序. Default: False
 
-    Return:
-        (Promise): 可以在后续根据执行的成功与否添加回调
+    Returns:
+        str: stdout捕获的字符串
     """
+    try:
+        if visible:
+            print(colored(f"""执行命令:
+            {command}""", 'white', 'on_blue'))
+        res = subprocess.run(command, capture_output=True, shell=True, check=True, cwd=cwd, env=env)
+    except subprocess.CalledProcessError as ce:
+        print(colored(f"""命令:
+        {command}
+        执行失败""", 'white', 'on_red'))
+        if ce.stderr:
+            encoding = chardet.detect(ce.stderr).get("encoding")
+            content = ce.stderr.decode(encoding).strip()
+        else:
+            encoding = chardet.detect(ce.stdout).get("encoding")
+            content = ce.stdout.decode(encoding).strip()
+        if visible:
+            print(colored(content, 'white', 'on_magenta'))
+        if fail_exit:
+            sys.exit(1)
+        else:
+            raise ce
+    except Exception as e:
+        print(colored(f"""命令:
+        {command}
+        执行失败""", 'white', 'on_red'))
+        if visible:
+            print(f"error: {type(e)}")
+            print(f"error_message: {str(e)}")
+        if fail_exit:
+            sys.exit(1)
+        else:
+            raise e
+    else:
 
-    f = partial(_run_command, command=command, cwd=cwd, env=env, visible=visible)
-    promise: Promise = Promise(f)
-    return promise
+        content = ""
+        if res.stdout:
+            encoding = chardet.detect(res.stdout).get("encoding")
+            content = res.stdout.decode(encoding).strip()
+        if visible:
+            print(colored(f"""命令:
+            {command}
+            执行成功""", 'white', 'on_green'))
+            print(colored(content, 'white', 'on_yellow'))
+        return content

@@ -5,7 +5,7 @@ import warnings
 from typing import List, Optional, Tuple
 from pathlib import Path
 from pmfp.utils.fs_utils import get_abs_path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.template_utils import template_2_content
 
 ServiceSource = ""
@@ -84,39 +84,36 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]],
         with open(Path(to).joinpath("sdk.go"), "w", encoding="utf-8") as f:
             f.write(sdkcontent)
 
-    def _build_pb_succ_cb(_: str) -> None:
-        print(f"编译grpc项目 {target} 为go语言模块完成!")
-        if as_type is not None:
-            print("根据模板构造grpc项目")
-            package, registservice, registclient, registclient_new = find_grpc_package(to)
-            print(f"{package}, {registservice}, {registclient}, {registclient_new}")
-            for t in as_type:
-                if as_type == "service":
-                    _make_server_temp(package, registservice)
-                    print(f"为grpc项目 {target} 构造{t}模板成功!")
-                elif as_type == "client":
-                    _make_client_temp(package, registclient, registclient_new)
-                    print(f"为grpc项目 {target} 构造{t}端模板成功!")
-                else:
-                    print(f"为grpc项目 {target} 构造{t}模板失败,go语言不支持")
-
     command = f"protoc {includes} {flag} --go_out=plugins=grpc:{to} {target}"
-    print(f"编译命令:{command}")
-    run_command(command, cwd=cwd).catch(
-        lambda err: warnings.warn(f"""根据模板构造grpc项目失败
-            {str(err)}
-            """)
-    ).then(
-        _build_pb_succ_cb,
-        lambda content: warnings.warn(f"""编译grpc项目 {target} 为go语言模块失败:
+    try:
+        run(command, cwd=cwd, visible=True)
+    except Exception as e:
+        warnings.warn(f"""根据模板构造grpc项目失败{str(e)}""")
+    else:
+        try:
+            print(f"编译grpc项目 {target} 为go语言模块完成!")
+            if as_type is not None:
+                print("根据模板构造grpc项目")
+                package, registservice, registclient, registclient_new = find_grpc_package(to)
+                print(f"{package}, {registservice}, {registclient}, {registclient_new}")
+                for t in as_type:
+                    if as_type == "service":
+                        _make_server_temp(package, registservice)
+                        print(f"为grpc项目 {target} 构造{t}模板成功!")
+                    elif as_type == "client":
+                        _make_client_temp(package, registclient, registclient_new)
+                        print(f"为grpc项目 {target} 构造{t}端模板成功!")
+                    else:
+                        print(f"为grpc项目 {target} 构造{t}模板失败,go语言不支持")
+        except Exception as e:
+            warnings.warn(f"""编译grpc项目 {target} 为go语言模块失败:
 
-            {content}
+            {str(e)}
 
             编译为go语言依赖如下插件,请检查是否安装:
             "google.golang.org/protobuf/cmd/protoc-gen-go"
             "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
             """)
-    ).get()
 
 
 def build_pb_go(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],

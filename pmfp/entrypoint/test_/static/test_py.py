@@ -1,6 +1,7 @@
 """编译python语言模块."""
+import subprocess
 from pathlib import Path
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.fs_utils import get_abs_path_str, get_abs_path
 
 
@@ -36,4 +37,4 @@ def static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: 
             else:
                 command = command_base + f" {str(codep)}"
 
-    run_command(command, cwd=cwdp, visible=True).catch(lambda _: str(_)).get()
+    run(command, cwd=cwdp, visible=True, fail_exit=True)

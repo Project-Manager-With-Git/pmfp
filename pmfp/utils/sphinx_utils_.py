@@ -1,10 +1,9 @@
 """sphinx构造api文档相关的公用组件."""
 import shutil
 from pathlib import Path
-from typing import Optional, Callable, List
-from pmfp.utils.run_command_utils import run_command
+from typing import Optional
+from pmfp.utils.run_command_utils import run
 from pmfp.utils.template_utils import template_2_content
-from promise import Promise
 
 
 def sphinx_config(source_dir: Path, append_content: str) -> None:
@@ -109,7 +108,7 @@ def move_to_source(source_dir: Path, *, root: Path) -> None:
 
 
 def sphinx_new(code: Path, source_dir: Path, project_name: str, author: str, version: str, *,
-               cwd: Optional[Path] = None) -> Promise:
+               cwd: Optional[Path] = None) -> None:
     """为python/c++项目构造api文档.
 
     Args:
@@ -121,7 +120,7 @@ def sphinx_new(code: Path, source_dir: Path, project_name: str, author: str, ver
 
     """
     command = f"sphinx-quickstart --no-sep -v {version} -r {version} -p {project_name} -a {author} -l en --ext-todo --ext-mathjax --ext-viewcode {str(source_dir)}"
-    return run_command(command, cwd=cwd)
+    run(command, cwd=cwd, visible=True, fail_exit=True)
 
 
 def sphinx_build(source_dir: Path, doc_dir: Path, *, cwd: Path = Path(".")) -> None:
@@ -135,4 +134,4 @@ def sphinx_build(source_dir: Path, doc_dir: Path, *, cwd: Path = Path(".")) -> N
 
     """
     command = f"sphinx-build {str(source_dir)} {str(doc_dir)}"
-    run_command(command, cwd=cwd).get()
+    run(command, cwd=cwd, visible=True, fail_exit=True)

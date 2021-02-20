@@ -3,7 +3,7 @@
 import warnings
 from pathlib import Path
 from typing import Optional
-from pmfp.utils.run_command_utils import run_command
+from pmfp.utils.run_command_utils import run
 from .core import grpc_descservice
 
 
@@ -35,8 +35,7 @@ def desc_grpc(url: str, service: str, *,
     if cacert:
         flags += "-cacert={cacert} "
     command = f"grpcurl {flags}{url} describe {service}"
-    print(command)
-    run_command(command, cwd=Path(cwd), visible=True
-    ).catch(
-        lambda _: warnings.warn("""执行descservice命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")
-    ).get()
+    try:
+        run(command, cwd=Path(cwd), visible=True)
+    except Exception:
+        warnings.warn("""执行descservice命令需要先安装grpcurl<https://github.com/fullstorydev/grpcurl/releases>""")

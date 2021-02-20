@@ -27,8 +27,10 @@ def doc_build_py(output: str, source_dir: str, *, version: Optional[str] = None,
     if version:
         sphinx_config_update_version(source_dirp, version)
     move_to_source(source_dir=source_dirp, root=cwdp)
-    sphinx_build(source_dir=source_dirp, doc_dir=outputp, cwd=cwdp).catch(
-        lambda err: warnings.warn(f"""编译python项目文档失败:
+    try:
+        sphinx_build(source_dir=source_dirp, doc_dir=outputp, cwd=cwdp)
+    except Exception as err:
+        warnings.warn(f"""编译python项目文档失败:
 
             {str(err)}
 
@@ -39,4 +41,3 @@ def doc_build_py(output: str, source_dir: str, *, version: Optional[str] = None,
             + pip install sphinx-autoapi
             + pip install sphinx_rtd_theme
             """)
-    ).get()
