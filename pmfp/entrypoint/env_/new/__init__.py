@@ -83,10 +83,10 @@ def freeze(env: List[str], *, cwd: Path,
             old = json.load(f)
         with open(ppmrc, "w", encoding="utf-8") as f:
             old.update(**content)
-            json.dump(old, f)
+            json.dump(old, f, ensure_ascii=False, indent=4, sort_keys=True)
     else:
         with open(ppmrc, "w", encoding="utf-8") as f:
-            json.dump(content, f)
+            json.dump(content, f, ensure_ascii=False, indent=4, sort_keys=True)
     return None
 
 
