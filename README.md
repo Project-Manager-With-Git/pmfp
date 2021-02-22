@@ -31,9 +31,33 @@ keywords: tool,project_manager
 
 `python -m pip install pmfp`
 
-## Documentation
+## 使用
 
-Documentation on github page <https://github.com/Python-Tools/pmfp>
+pmfp现在被设计为两个部分:
+
+1. `项目管理部分`用于快速根据托管在github上的模板项目构造项目
+2. `调用功能部分`用于为不同的项目提供特定功能
+
+### 项目管理
+
+
+
+### 直接调用功能
+
+支持直接调用功能的子命令包括:
+
++ `build`快速编译支持的静态语言项目
++ `doc`快速构造项目的文档
++ `docker image`快速构造docker镜像
++ `docker compose`快速构造docker部署配置
++ `env`快速构建项目的独立执行环境
++ `grpc`快速构造了grpc的客户端和服务端
++ `http`用于构造静态http服务和构造http请求和压测
++ `pack`打包动态语言构造的项目
++ `proto`用于快速构建和编译protobuf文件
++ `schema`用于校验`jsonschema`
++ `test`用于对项目进行测试
++ `release`用于发布项目
 
 ## 设计
 

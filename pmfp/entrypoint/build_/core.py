@@ -58,7 +58,7 @@ class Build(EndPoint):
             },
             "libs": {
                 "type": "array",
-                "title": "l",
+                "title": "b",
                 "description": "使用的库名",
                 "items": {
                     "type": "string"
@@ -66,7 +66,7 @@ class Build(EndPoint):
             },
             "lib_dir": {
                 "type": "array",
-                "title": "b",
+                "title": "d",
                 "description": "使用的库的位置",
                 "items": {
                     "type": "string"

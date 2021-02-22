@@ -1,11 +1,12 @@
 ${package}
+
 import (
 	"fmt"
 	"net"
 	"os"
 	"os/signal"
 	"strings"
-	"sync"
+	sync "sync"
 	"syscall"
 	"time"
 
@@ -16,62 +17,38 @@ import (
 	zk "github.com/liyue201/grpc-lb/registry/zookeeper"
 
 	grpc "google.golang.org/grpc"
+	channelz "google.golang.org/grpc/channelz/service"
+	"google.golang.org/grpc/credentials"
+	_ "google.golang.org/grpc/encoding/gzip"
+	"google.golang.org/grpc/health"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
 )
 
 //Server grpc的服务器结构体
+//服务集成了如下特性:
+//设置收发最大消息长度
+//健康检测
+//gzip做消息压缩
+//接口反射
+//channelz支持
+//TLS支持
 type Server struct {
-	AppName                            string   `json:"app_name,omitempty"`
-	AppVersion                         string   `json:"app_version,omitempty"`
-	Address                            string   `json:"address,omitempty"`
-	LogLevel                           string   `json:"log_level,omitempty"`
-	ZookeeperURL                       []string `json:"zookeeper_url,omitempty"`
-	BalanceWeight                      string   `json:"balance_weight,omitempty"`
-
-	service   *registry.ServiceInfo
-	registrar *zk.Registrar
-}
-
-//Schema 参数的校验信息
-func (s *Server) Schema() string {
-	schema := `{
-		"description": "server config",
-		"type": "object",
-		"required": [ "address","log_level"],
-		"additionalProperties": false,
-		"properties": {
-			"app_name":{
-				"type": "string",
-				"description": "服务名"
-			},
-			"app_version":{
-				"type": "string",
-				"description": "服务版本"
-			},
-			"address": {
-				"type": "string",
-				"description": "服务的主机和端口"
-			},
-			"log_level":{
-				"type": "string",
-				"enum": ["TRACE","DEBUG","INFO","WARN","ERROR"],
-				"description": "项目的log等级"
-			},
-			"zookeeper_url":{
-				"type":"array",
-				"items":{
-					"type": "string"
-				},
-				"description": "负载均衡使用的zookeeper地址序列,以逗号分隔"
-			},
-			"balance_weight":{
-				"type": "string",
-				"description": "负载均衡的权重"
-			}
-		}
-	}`
-	return schema
+	AppName        string   `json:"app_name,omitempty" jsonschema:"description=服务名"`
+	AppVersion     string   `json:"app_version,omitempty" jsonschema:"description=服务版本"`
+	Address        string   `json:"address,omitempty" jsonschema:"description=服务的主机和端口"`
+	LogLevel       string   `json:"log_level,omitempty" jsonschema:"description=项目的log等级,enum=TRACE,enum=DEBUG,enum=INFO,enum=WARN,enum=ERROR"`
+	ZookeeperURL   []string `json:"zookeeper_url,omitempty" jsonschema:"description=负载均衡使用的zookeeper地址序列以逗号分隔"`
+	BalanceWeight  string   `json:"balance_weight,omitempty" jsonschema:"description=负载均衡的权重"`
+	MaxRecvMsgSize int      `json:"max_rec_msg_size,omitempty" jsonschema:"description=允许接收的最大消息长度"`
+	MaxSendMsgSize int      `json:"max_send_msg_size,omitempty" jsonschema:"description=允许发送的最大消息长度"`
+	UseChannelz    bool     `json:"use_channelz,omitempty" jsonschema:"description=是否使用channelz协助优化"`
+	ServerCertPath string   `json:"server_cert_path ,omitempty" jsonschema:"description=使用TLS时服务端的证书位置"`
+	ServerKeyPath  string   `json:"server_key_path,omitempty" jsonschema:"description=使用TLS时服务端证书的私钥位置"`
+	service        *registry.ServiceInfo
+	healthservice  *health.Server
+	registrar      *zk.Registrar
 }
 
 //Main 服务的入口函数
@@ -89,14 +66,52 @@ func (s *Server) Main() {
 func (s *Server) RunServer() {
 	lis, err := net.Listen("tcp", s.Address)
 	if err != nil {
-		log.Error("Failed to Listen", log.Dict{"error": err, "address": s.Address})
+		log.Error("Failed to Listen", log.Dict{"error": err.Error(), "address": s.Address})
 		os.Exit(1)
 	}
-	log.Info("Server Start", log.Dict{"address": s.Address})
-	gs := grpc.NewServer()
+	opts := []grpc.ServerOption{}
+	if s.MaxRecvMsgSize != 0 {
+		opts = append(opts, grpc.MaxRecvMsgSize(s.MaxRecvMsgSize))
+	}
+	if s.MaxSendMsgSize != 0 {
+		opts = append(opts, grpc.MaxSendMsgSize(s.MaxSendMsgSize))
+	}
+	if s.ServerCertPath != "" && s.ServerKeyPath != "" {
+		creds, err := credentials.NewServerTLSFromFile(s.ServerCertPath, s.ServerKeyPath)
+		if err != nil {
+			log.Warn("Failed to Listen as a TLS Server", log.Dict{"error": err.Error()})
+		}
+		opts = append(opts, grpc.Creds(creds))
+	}
+	if s.MaxConnectionIdle != 0 || s.MaxConnectionAge != 0 || s.MaxConnectionAgeGrace != 0 || s.PingDuration != 0 || s.PingAckTimeout != 0 {
+		kasp := keepalive.ServerParameters{
+			MaxConnectionIdle:     time.Duration(s.MaxConnectionIdle) * time.Second,
+			MaxConnectionAge:      time.Duration(s.MaxConnectionAge) * time.Second,
+			MaxConnectionAgeGrace: time.Duration(s.MaxConnectionAgeGrace) * time.Second,
+			Time:                  time.Duration(s.PingDuration) * time.Second,
+			Timeout:               time.Duration(s.PingAckTimeout) * time.Second,
+		}
+		opts = append(opts, grpc.KeepaliveParams(kasp))
+	}
+
+	if s.KeepaliveEnforcementMinTime != 0 || s.KeepaliveEnforcementPermitWithoutStream == true {
+		kaep := keepalive.EnforcementPolicy{
+			MinTime:             time.Duration(s.KeepaliveEnforcementMinTime) * time.Second,
+			PermitWithoutStream: s.KeepaliveEnforcementPermitWithoutStream,
+		}
+		opts = append(opts, grpc.KeepaliveEnforcementPolicy(kaep))
+	}
+	gs := grpc.NewServer(opts...)
 	defer gs.Stop()
+	s.healthservice = health.NewServer()
+	healthpb.RegisterHealthServer(gs, s.healthservice)
+
 	${registservice}(gs, s)
 	reflection.Register(gs)
+	if s.UseChannelz {
+		channelz.RegisterChannelzServiceToServer(gs)
+	}
+	log.Info("Server Start", log.Dict{"address": s.Address})
 	err = gs.Serve(lis)
 	if err != nil {
 		log.Error("Failed to Serve", log.Dict{"error": err})

@@ -53,5 +53,5 @@ def copy_schema(template: str, name: str, path: str, version_name: str, cwd: str
             raise AttributeError(f"{parentpath} is file")
     else:
         parentpath.mkdir(parents=True)
-    with open(str(filepath), "w", encoding="utf-8") as f:
+    with open(str(filepath), "w", newline="", encoding="utf-8") as f:
         f.write(content)

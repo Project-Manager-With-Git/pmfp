@@ -48,7 +48,7 @@ def new_pb(name: str, pb_include: str, *, parent_package: Optional[str] = None, 
             parent_package=parent_package,
             name=name,
             package_go=package_go)
-        with open(str(to_path.joinpath(f"{name}.proto")), "w", encoding='utf-8') as f:
+        with open(str(to_path.joinpath(f"{name}.proto")), "w", newline="", encoding='utf-8') as f:
             f.write(content)
     except Exception as e:
         warnings.warn(f"""构造protobuffer文件失败:

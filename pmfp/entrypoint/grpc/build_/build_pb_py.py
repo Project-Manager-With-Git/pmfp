@@ -107,7 +107,7 @@ from .{grpc_package} import *
                         new_lines.append(t)
                     else:
                         new_lines.append(line)
-                with open(str(grpc_file), "w", encoding="utf-8") as f:
+                with open(str(grpc_file), "w", newline="", encoding="utf-8") as f:
                     f.writelines(new_lines)
 
 

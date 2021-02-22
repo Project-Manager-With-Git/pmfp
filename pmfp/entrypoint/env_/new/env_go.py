@@ -3,7 +3,6 @@ import pkgutil
 import warnings
 from pathlib import Path
 from pmfp.utils.tools_info_utils import get_golang_version
-from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.template_utils import template_2_content
 
 go_mod_template = ""
@@ -29,6 +28,7 @@ def new_env_go(cwd: Path, project_name: str) -> None:
     else:
         language_version = get_golang_version()
         if language_version:
+            language_version = ".".join(language_version.split(".")[:2])
             content = template_2_content(template=go_mod_template, project_name=project_name, language_version=language_version)
             with open(go_env_path, "w", newline="", encoding="utf-8") as f:
                 f.write(content)

@@ -46,7 +46,7 @@ def find_grpc_package(to: str) -> Tuple[str, str, str, str]:
     registclient_new = ""
     for file in path.iterdir():
         if file.name.endswith(".pb.go"):
-            with open(file) as f:
+            with open(file, encoding="utf-8") as f:
                 content = f.read()
                 p = re.search(r"package \w+\s", content)
                 if p is not None:
@@ -63,25 +63,31 @@ def find_grpc_package(to: str) -> Tuple[str, str, str, str]:
 
 def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]], target: str, cwd: Path) -> None:
     topath = get_abs_path(to, cwd)
-    for file in topath.iterdir():
-        if file.suffix == ".go":
-            init = False
-            break
 
     def _make_server_temp(package: str, registservice: str) -> None:
+        """如果已经存在`serv.go则不会执行`"""
+        target_path = topath.joinpath("serv.go")
+        if target_path.exists():
+            print("项目已存在serv.go,不会重复初始化")
+            return
         servcontent = template_2_content(ServiceSource, package=package, registservice=registservice)
-        with open(Path(to).joinpath("serv.go"), "w", encoding="utf-8") as f:
+        with open(target_path, "w", newline="", encoding="utf-8") as f:
             f.write(servcontent)
         handdlercontent = template_2_content(HanddlerSource, package=package)
-        with open(Path(to).joinpath("handdler.go"), "w", encoding="utf-8") as f:
+        with open(topath.joinpath("handdler.go"), "w", newline="", encoding="utf-8") as f:
             f.write(handdlercontent)
 
     def _make_client_temp(package: str, registclient: str, registclient_new: str) -> None:
+        """如果已经存在`sdk.go则不会执行`"""
+        target_path = topath.joinpath("sdk.go")
+        if target_path.exists():
+            print("项目已存在sdk.go,不会重复初始化")
+            return
         Localresolvercontent = template_2_content(LocalresolverSource, package=package)
-        with open(Path(to).joinpath("localresolver.go"), "w", encoding="utf-8") as f:
+        with open(topath.joinpath("localresolver.go"), "w", newline="", encoding="utf-8") as f:
             f.write(Localresolvercontent)
         sdkcontent = template_2_content(SDKSource, package=package, registclient=registclient, registclient_new=registclient_new)
-        with open(Path(to).joinpath("sdk.go"), "w", encoding="utf-8") as f:
+        with open(target_path, "w", newline="", encoding="utf-8") as f:
             f.write(sdkcontent)
 
     command = f"protoc {includes} {flag} --go_out=plugins=grpc:{to} {target}"
@@ -97,10 +103,10 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]],
                 package, registservice, registclient, registclient_new = find_grpc_package(to)
                 print(f"{package}, {registservice}, {registclient}, {registclient_new}")
                 for t in as_type:
-                    if as_type == "service":
+                    if t == "service":
                         _make_server_temp(package, registservice)
                         print(f"为grpc项目 {target} 构造{t}模板成功!")
-                    elif as_type == "client":
+                    elif t == "client":
                         _make_client_temp(package, registclient, registclient_new)
                         print(f"为grpc项目 {target} 构造{t}端模板成功!")
                     else:

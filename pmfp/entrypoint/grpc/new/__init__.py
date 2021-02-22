@@ -52,7 +52,7 @@ def new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None
             package_go=package_go,
             name_upper=name.upper())
 
-        with open(str(to_path.joinpath(f"{name}.proto")), "w", encoding='utf-8') as f:
+        with open(str(to_path.joinpath(f"{name}.proto")), "w", newline="", encoding='utf-8') as f:
             f.write(content)
     except Exception as e:
         warnings.warn(f"""构造protobuffer文件失败:

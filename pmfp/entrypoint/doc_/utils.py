@@ -45,7 +45,7 @@ def sphinx_config(source_dir: Path, append_content: str) -> None:
     print("更新配置文件")
     with open(source_dir.joinpath("conf.py"), "r", encoding="utf-8") as fr:
         content = fr.read()
-    with open(source_dir.joinpath("conf.py"), "w", encoding="utf-8") as fw:
+    with open(source_dir.joinpath("conf.py"), "w", newline="", encoding="utf-8") as fw:
         new_content = content + append_content
         fw.write(new_content)
 
@@ -67,7 +67,7 @@ def sphinx_config_update_version(source_dir: Path, version: str) -> None:
                 line = f"release= '{version}'"
             content.append(line)
 
-    with open(source_dir.joinpath("conf.py"), "w", encoding="utf-8") as fw:
+    with open(source_dir.joinpath("conf.py"), "w", newline="", encoding="utf-8") as fw:
         fw.write("".join(content))
 
 
@@ -119,5 +119,5 @@ def makeindex(source_dir: Path, template: str, **kwargs: Any) -> None:
     content = template_2_content(template, **kwargs)
     if source_dir.joinpath("index.rst").exists():
         os.remove(source_dir.joinpath("index.rst"))
-    with open(source_dir.joinpath("index.md"), "w", encoding="utf-8") as f:
+    with open(source_dir.joinpath("index.md"), "w", newline="", encoding="utf-8") as f:
         f.write(content)
