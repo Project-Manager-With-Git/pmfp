@@ -8,10 +8,10 @@ ENV CGO_ENABLED=0
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 RUN apk update && apk --no-cache add build-base && rm -rf /var/cache/apk/* 
 WORKDIR /code
-ADD go.mod /code/go.mod
-ADD go.sum /code/go.sum
+COPY go.mod /code/go.mod
+COPY go.sum /code/go.sum
 # 添加源文件
-ADD ${app_name}.go /code/${app_name}.go
+COPY ${app_name}.go /code/${app_name}.go
 RUN go build -ldflags "-s -w" -o ${app_name}-go ${app_name}.go
 
 # 直接使用可执行文件构造scratch镜像

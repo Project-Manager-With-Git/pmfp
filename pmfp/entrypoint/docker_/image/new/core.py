@@ -39,7 +39,6 @@ class New(EndPoint):
             },
             "extend": {
                 "description": "是否使用c扩展",
-                "title": "e",
                 "type": "boolean",
                 "default": False
             },

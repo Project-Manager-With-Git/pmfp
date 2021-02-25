@@ -5,7 +5,6 @@ from ..core import env
 class New(EndPoint):
     """在目标文件夹构造执行环境."""
     argparse_noflag = "env"
-    default_config_file_paths = ["./ppmrc.json"]
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",

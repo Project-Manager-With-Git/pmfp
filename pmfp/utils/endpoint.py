@@ -3,7 +3,7 @@ from pathlib import Path
 from configparser import ConfigParser
 from typing import Dict, Any, List, Union
 from schema_entry import EntryPoint
-from pmfp.const import PMFP_CONFIG_HOME
+from pmfp.const import PMFP_CONFIG_HOME,PMFP_CONFIG_DEFAULT_NAME
 
 
 def setup_cfg_handdler(p: Path) -> Dict[str, Any]:
@@ -80,8 +80,8 @@ class EndPoint(EntryPoint):
     load_all_config_file = True
     config_file_only_get_need = True
     default_config_file_paths = [
-        str(PMFP_CONFIG_HOME.joinpath("pmfprc.json")),
-        "./pmfprc.json",
+        str(PMFP_CONFIG_HOME.joinpath(PMFP_CONFIG_DEFAULT_NAME)),
+        f"./{PMFP_CONFIG_DEFAULT_NAME}",
         "setup.cfg",
         # "package.json",
         "go.mod"

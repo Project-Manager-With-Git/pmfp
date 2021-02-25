@@ -6,10 +6,10 @@ ENV GOPROXY=https://goproxy.io
 ENV CGO_ENABLED=1
 WORKDIR /code
 # 复制依赖列表
-ADD go.mod /code/go.mod
-ADD go.sum /code/go.sum
+COPY go.mod /code/go.mod
+COPY go.sum /code/go.sum
 # 复制源码
-ADD ${app_name}.go /code/${app_name}.go
+COPY ${app_name}.go /code/${app_name}.go
 # 编译可执行文件
 RUN go build -ldflags "-s -w" -o ${app_name}-go ${app_name}.go
 

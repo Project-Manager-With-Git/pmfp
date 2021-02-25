@@ -5,7 +5,7 @@ import pkgutil
 import warnings
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from pmfp.const import DEFAULT_AUTHOR
+from pmfp.const import DEFAULT_AUTHOR, PMFP_CONFIG_DEFAULT_NAME
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.template_utils import template_2_content
 from .env_py import (
@@ -73,8 +73,8 @@ def freeze(env: List[str], *, cwd: Path,
            description: Optional[str] = None,
            keywords: Optional[List[str]] = None,
            ) -> None:
-    """将创建的环境信息保存到目录下的`ppmrc.json`中."""
-    ppmrc = cwd.joinpath("ppmrc.json")
+    """将创建的环境信息保存到目录下的`pmfprc.json`中."""
+    ppmrc = cwd.joinpath(PMFP_CONFIG_DEFAULT_NAME)
     content = {
         "env": env,
     }

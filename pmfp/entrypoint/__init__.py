@@ -4,8 +4,7 @@ from .version import __VERSION__
 from .info import info
 # from .cmd_reset import *
 # from .cmd_cache import *
-from .run import run_cmd
-from .test_ import *
+from .docker_ import *
 from .http import *
 from .grpc import *
 from .schema import *
@@ -14,5 +13,7 @@ from .doc_ import *
 from .env_ import *
 from .build_ import build
 from .pack import pack
+from .run import run_cmd
+from .test_ import *
 # from .cmd_stack import *
 # from .cmd_project import *
