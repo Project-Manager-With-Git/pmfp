@@ -12,10 +12,8 @@ from grpc_health.v1 import health_pb2_grpc
 from grpc_channelz.v1 import channelz
 from grpc_reflection.v1alpha import reflection
 from schema_entry import EntryPoint
-from .${service_name_lower}_pb2_grpc import add_${service_name}Servicer_to_server
-from .${service_name_lower}_pb2 import DESCRIPTOR
-from .aiohanddler import Handdler
-
+from .aionogenhanddler import Handdler
+rpc_protos, rpc_services = grpc.protos_and_services("${service_name_lower}.proto")
 _COMPRESSION_OPTIONS = {
     "none": grpc.Compression.NoCompression,
     "deflate": grpc.Compression.Deflate,
@@ -209,7 +207,7 @@ class Serv(EntryPoint):
             maximum_concurrent_rpcs=config.get("maximum_concurrent_rpcs", 50)
         )
         handdler = Handdler(config)
-        add_${service_name}Servicer_to_server(handdler, grpc_serv)
+        rpc_services.add_${service_name}Servicer_to_server(handdler, grpc_serv)
 
         # 健康检查
         health_servicer = health_async.HealthServicer()
@@ -218,7 +216,7 @@ class Serv(EntryPoint):
         # 反射
         services = tuple(
             service.full_name
-            for service in DESCRIPTOR.services_by_name.values()
+            for service in rpc_protos.DESCRIPTOR.services_by_name.values()
         ) + (
             reflection.SERVICE_NAME,
             health.SERVICE_NAME

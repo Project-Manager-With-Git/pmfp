@@ -1,15 +1,18 @@
 from typing import Any, Optional, Dict
+
 import grpc
+import grpc.experimental
 from pyproxypattern import Proxy
-from .${service_name_lower}_pb2_grpc import ${service_name}Stub
+
+rpc_services = grpc.services("${service_name_lower}.proto")
 
 
 class Client(Proxy):
     __slots__ = ("url", "options", "channel", "tls", "credentials", 'instance', 'compression', '_callbacks', '_instance_check')
     url: Optional[str]
     options: Dict[str, Any]
-    channel: Optional[grpc.Channel]
-    instance: Optional[${service_name}Stub]
+    channel: Optional[Any]
+    instance: Optional[Any]
 
     def __init__(self, *,
                  url: Optional[str] = None,
@@ -47,7 +50,7 @@ class Client(Proxy):
                 self.channel = grpc.secure_channel(self.url, self.credentials, compression=self.compression)
             else:
                 self.channel = grpc.insecure_channel(self.url, compression=self.compression)
-        client = ${service_name}Stub(self.channel)
+        client = rpc_services.${service_name}Stub(self.channel)
         self.initialize(client)
 
     def initialize_from_url(self, url: str, *,

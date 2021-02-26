@@ -4,21 +4,29 @@ from pyproxypattern import Proxy
 from .${service_name_lower}_pb2_grpc import ${service_name}Stub
 
 
-class AioClient(Proxy):
-    __slots__ = ("url", "options", "channel", 'instance', '_callbacks', '_instance_check')
+class Client(Proxy):
+    __slots__ = ("url", "options", "channel", "tls", "credentials", 'instance', 'compression', '_callbacks', '_instance_check')
     url: Optional[str]
-    options: Optional[Dict[str, Any]]
-    channel: Optional[Any]
+    options: Dict[str, Any]
+    channel: Optional[grpc.Channel]
     instance: Optional[${service_name}Stub]
 
-    def __init__(self, url: Optional[str] = None, **options: Any) -> None:
+    def __init__(self, *,
+                 url: Optional[str] = None,
+                 tls: bool = False,
+                 credentials: Optional[grpc.ChannelCredentials] = None,
+                 compression: Optional[Any] = None,
+                 **options: Any) -> None:
         super().__init__()
         self.channel = None
         self.instance = None
+        self.tls = tls
+        self.credentials = credentials
+        self.compression = compression
         if options:
             self.options = options
         else:
-            self.options = None
+            self.options = {}
         if url:
             self.url = url
             self.new_instance()
@@ -30,15 +38,32 @@ class AioClient(Proxy):
             raise AttributeError("need url!")
         if self.options:
             options = [(k, v) for k, v in self.options.items()]
-            self.channel = grpc.aio.insecure_channel(self.url, options=options)
+            if self.tls:
+                self.channel = grpc.aio.secure_channel(self.url, self.credentials, compression=self.compression, options=options)
+            else:
+                self.channel = grpc.aio.insecure_channel(self.url, compression=self.compression, options=options)
         else:
-            self.channel = grpc.aio.insecure_channel(self.url)
+            if self.tls:
+                self.channel = grpc.aio.secure_channel(self.url, self.credentials, compression=self.compression)
+            else:
+                self.channel = grpc.aio.insecure_channel(self.url, compression=self.compression)
         client = ${service_name}Stub(self.channel)
         self.initialize(client)
 
-    def initialize_from_url(self, url: str, **options: Any) -> "AioClient":
+    def initialize_from_url(self, url: str, *,
+                            tls: bool = False,
+                            credentials: Optional[grpc.ChannelCredentials] = None,
+                            compression: Optional[Any] = None,
+                            **options: Any) -> "Client":
         self.url = url
-        self.options = options
+        if options:
+            self.options.update(options)
+        if tls:
+            self.tls = tls
+        if credentials:
+            self.credentials = credentials
+        if compression:
+            self.compression = compression
         self.new_instance()
         return self
 
@@ -48,7 +73,7 @@ class AioClient(Proxy):
             self.channel = None
             self.instance = None
 
-    async def __aenter__(self) -> "AioClient":
+    async def __aenter__(self) -> "Client":
         if not self.instance:
             self.new_instance()
         return self
@@ -57,4 +82,4 @@ class AioClient(Proxy):
         await self.close()
 
 
-aio_client = AioClient()
+client = Client()

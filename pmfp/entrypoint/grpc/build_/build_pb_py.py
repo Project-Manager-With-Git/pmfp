@@ -1,6 +1,7 @@
 """编译python语言模块."""
 import re
 import sys
+import shutil
 import pkgutil
 import warnings
 from pathlib import Path
@@ -11,26 +12,110 @@ from pmfp.utils.tools_info_utils import get_global_python
 from pmfp.utils.python_package_find_utils import find_pypackage_string
 from pmfp.utils.template_utils import template_2_content
 
-ServSource = ""
-HanddlerSource = ""
-AioServSource = ""
-AioHanddlerSource = ""
-CliSource = ""
-CliExampleSource = ""
-AioCliSource = ""
-AioCliExampleSource = ""
+TRANS_GRPC_MODEL_IMPORT_TEMP = """
+from .{pb_package} import *
+from .{grpc_package} import *
+"""
 
+HanddlerSource = ""
+NogenHanddlerSource = ""
+AioHanddlerSource = ""
+AioNogenHanddlerSource = ""
+
+CliExampleSource = ""
+NogenCliExampleSource = ""
+AioCliExampleSource = ""
+AioNogenCliExampleSource = ""
+
+ServSource = ""
+MpServSource = ""
+NogenServSource = ""
+NogenMpServSource = ""
+AioServSource = ""
+AioMpServSource = ""
+AioNogenServSource = ""
+AioNogenMpServSource = ""
+
+CliSource = ""
+NogenCliSource = ""
+AioCliSource = ""
+AioNogenCliSource = ""
+
+# handdler
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.py.temp')
+if source_io:
+    HanddlerSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载handdler.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiohanddler.py.temp')
+if source_io:
+    AioHanddlerSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aiohanddler.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenhanddler.py.temp')
+if source_io:
+    NogenHanddlerSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载nogenhanddler.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenhanddler.py.temp')
+if source_io:
+    AioNogenHanddlerSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aionogenhanddler.py.temp模板失败")
+
+# example
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli_example.py.temp')
+if source_io:
+    CliExampleSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载cli_example.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogencli_example.py.temp')
+if source_io:
+    NogenCliExampleSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载nogencli_example.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli_example.py.temp')
+if source_io:
+    AioCliExampleSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aiocli_example.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogencli_example.py.temp')
+if source_io:
+    AioNogenCliExampleSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aionogencli_example.py.temp模板失败")
+
+
+# serv
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.py.temp')
 if source_io:
     ServSource = source_io.decode('utf-8')
 else:
     raise AttributeError("加载serv.py.temp模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'mpserv.py.temp')
 if source_io:
-    HanddlerSource = source_io.decode('utf-8')
+    MpServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载handdler.py.temp模板失败")
+    raise AttributeError("加载mpserv.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenserv.py.temp')
+if source_io:
+    NogenServSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载nogenserv.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenmpserv.py.temp')
+if source_io:
+    NogenMpServSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载nogenmpserv.py.temp模板失败")
 
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aioserv.py.temp')
 if source_io:
@@ -38,23 +123,36 @@ if source_io:
 else:
     raise AttributeError("加载aioserv.py.temp模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiohanddler.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiompserv.py.temp')
 if source_io:
-    AioHanddlerSource = source_io.decode('utf-8')
+    AioMpServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aioserv.py.temp模板失败")
+    raise AttributeError("加载aiompserv.py.temp模板失败")
 
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenserv.py.temp')
+if source_io:
+    AioNogenServSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aionogenserv.py.temp模板失败")
+
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenmpserv.py.temp')
+if source_io:
+    AioNogenMpServSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载aionogenmpserv.py.temp模板失败")
+
+# cli
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli.py.temp')
 if source_io:
     CliSource = source_io.decode('utf-8')
 else:
     raise AttributeError("加载cli.py.temp模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli_example.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogencli.py.temp')
 if source_io:
-    CliExampleSource = source_io.decode('utf-8')
+    NogenCliSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载cli_example.py.temp模板失败")
+    raise AttributeError("加载nogencli.py.temp模板失败")
 
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli.py.temp')
 if source_io:
@@ -62,11 +160,11 @@ if source_io:
 else:
     raise AttributeError("加载aiocli.py.temp模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli_example.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogencli.py.temp')
 if source_io:
-    AioCliExampleSource = source_io.decode('utf-8')
+    AioNogenCliSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aiocli.py.temp模板失败")
+    raise AttributeError("加载aionogencli.py.temp模板失败")
 
 
 def find_py_grpc_pb2_import_string(name: str) -> str:
@@ -90,11 +188,13 @@ def trans_grpc_model_py(to: str) -> None:
                 grpc_name = p.name
                 grpc_package = grpc_name.split(".")[0]
                 pb_package = "_".join(x[:-1])
-                to_path.joinpath("__init__.py").open("a", encoding="utf-8").write(
-                    f"""
-from .{pb_package} import *
-from .{grpc_package} import *
-""")
+                to_path.joinpath("__init__.py").open(
+                    "a", encoding="utf-8", newline=""
+                ).write(
+                    TRANS_GRPC_MODEL_IMPORT_TEMP.format(
+                        pb_package=pb_package, grpc_package=grpc_package
+                    )
+                )
 
                 with open(str(grpc_file), "r", encoding='utf-8') as f:
                     lines = f.readlines()
@@ -166,12 +266,15 @@ def find_grpc_package(to: Path) -> Tuple[str, str]:
 
 def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     # 先创建handdler
-    content = template_2_content(
-        HanddlerSource,
-        service_name_lower=service_name_lower,
-        service_name=service_name)
-    with open(to.joinpath("handdler.py"), "w", newline="", encoding="utf-8") as f:
-        f.write(content)
+    if to.joinpath("handdler.py").exists():
+        print("handdler已经存在,不生成")
+    else:
+        content = template_2_content(
+            HanddlerSource,
+            service_name_lower=service_name_lower,
+            service_name=service_name)
+        with open(to.joinpath("handdler.py"), "w", newline="", encoding="utf-8") as f:
+            f.write(content)
     # 再创建serv
     content = template_2_content(
         ServSource,
@@ -189,6 +292,219 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
 
     通常还会使用到依赖:
     grpcio-tools
+    """)
+
+
+def gen_mp_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    if to.joinpath("handdler.py").exists():
+        print("handdler已经存在,不生成")
+    else:
+        content = template_2_content(
+            HanddlerSource,
+            service_name_lower=service_name_lower,
+            service_name=service_name)
+        with open(to.joinpath("handdler.py"), "w", newline="", encoding="utf-8") as f:
+            f.write(content)
+    # 再创建serv
+    content = template_2_content(
+        MpServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("mpserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .mpserv import Serv\n")
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    """)
+
+
+def gen_nogen_mp_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    if to.joinpath("handdler.py").exists():
+        print("handdler已经存在,不生成")
+    else:
+        content = template_2_content(
+            NogenHanddlerSource,
+            service_name_lower=service_name_lower,
+            service_name=service_name)
+        with open(to.joinpath("nogenhanddler.py"), "w", newline="", encoding="utf-8") as f:
+            f.write(content)
+    # 再创建serv
+    content = template_2_content(
+        NogenMpServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("nogenmpserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .nogenmpserv import Serv\n")
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    """)
+
+
+def gen_nogen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    if to.joinpath("handdler.py").exists():
+        print("handdler已经存在,不生成")
+    else:
+        content = template_2_content(
+            NogenHanddlerSource,
+            service_name_lower=service_name_lower,
+            service_name=service_name)
+        with open(to.joinpath("nogenhanddler.py"), "w", newline="", encoding="utf-8") as f:
+            f.write(content)
+    # 再创建serv
+    content = template_2_content(
+        NogenMpServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("nogenserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .nogenserv import Serv\n")
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    """)
+
+
+def gen_aio_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    content = template_2_content(
+        AioHanddlerSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aiohanddler.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    # 再创建serv
+    content = template_2_content(
+        AioServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aioserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .aioserv import Serv\n")
+
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    uvloop
+    """)
+
+
+def gen_aio_mp_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    content = template_2_content(
+        AioHanddlerSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aiohanddler.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    # 再创建serv
+    content = template_2_content(
+        AioMpServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aiompserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .aiompserv import Serv\n")
+
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    uvloop
+    """)
+
+
+def gen_aio_nogen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    content = template_2_content(
+        AioNogenHanddlerSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aiohanddler.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    # 再创建serv
+    content = template_2_content(
+        AioNogenServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aionogenserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .aionogenserv import Serv\n")
+
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    uvloop
+    """)
+
+
+def gen_aio_nogen_mp_serv(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建handdler
+    content = template_2_content(
+        AioNogenHanddlerSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aiohanddler.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    # 再创建serv
+    content = template_2_content(
+        AioNogenMpServSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aionogenmpserv.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .aionogenmpserv import Serv\n")
+
+    print("""grpc serv需要安装依赖:
+    grpcio --no-binary grpcio
+    grpcio-reflection
+    grpcio-health-checking
+    schema-entry
+
+    通常还会使用到依赖:
+    grpcio-tools
+    uvloop
     """)
 
 
@@ -219,33 +535,30 @@ def gen_cli(service_name_lower: str, service_name: str, to: Path) -> None:
     """)
 
 
-def gen_aio_serv(service_name_lower: str, service_name: str, to: Path) -> None:
-    # 先创建handdler
+def gen_nogen_cli(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建cli
     content = template_2_content(
-        AioHanddlerSource,
+        NogenCliSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    with open(to.joinpath("aiohanddler.py"), "w", newline="", encoding="utf-8") as f:
-        f.write(content)
-    # 再创建serv
-    content = template_2_content(
-        AioServSource,
-        service_name_lower=service_name_lower,
-        service_name=service_name)
-    with open(to.joinpath("aioserv.py"), "w", newline="", encoding="utf-8") as f:
+    with open(to.joinpath("nogencli.py"), "w", newline="", encoding="utf-8") as f:
         f.write(content)
     with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
-        f.write("from .aioserv import AioServ\n")
+        f.write("from .nogencli import client\n")
 
-    print("""grpc serv需要安装依赖:
-    grpcio --no-binary grpcio
-    grpcio-reflection
-    grpcio-health-checking
-    schema-entry
+    # 再创建example
+    content = template_2_content(
+        NogenCliExampleSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("nogencli_example.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    print("""grpc cli需要安装依赖:
+    grpcio
+    pyproxypattern
 
     通常还会使用到依赖:
     grpcio-tools
-    uvloop
     """)
 
 
@@ -264,7 +577,34 @@ def gen_aio_cli(service_name_lower: str, service_name: str, to: Path) -> None:
         AioCliExampleSource,
         service_name_lower=service_name_lower,
         service_name=service_name)
-    with open(to.joinpath("cli_example.py"), "w", newline="", encoding="utf-8") as f:
+    with open(to.joinpath("aiocli_example.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    print("""grpc cli需要安装依赖:
+    grpcio
+    pyproxypattern
+
+    通常还会使用到依赖:
+    grpcio-tools
+    uvloop
+    """)
+
+
+def gen_aio_nogen_cli(service_name_lower: str, service_name: str, to: Path) -> None:
+    # 先创建cli
+    content = template_2_content(
+        AioNogenCliSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aionogencli.py"), "w", newline="", encoding="utf-8") as f:
+        f.write(content)
+    with open(to.joinpath("__init__.py"), "a", encoding="utf-8") as f:
+        f.write("from .aionogencli import aio_client\n")
+    # 再创建example
+    content = template_2_content(
+        AioNogenCliExampleSource,
+        service_name_lower=service_name_lower,
+        service_name=service_name)
+    with open(to.joinpath("aionogencli_example.py"), "w", newline="", encoding="utf-8") as f:
         f.write(content)
     print("""grpc cli需要安装依赖:
     grpcio
@@ -282,21 +622,41 @@ def _build_grpc_py_more(to: str, target: str, as_type: Optional[List[str]]) -> N
         return
     path = Path(to)
     service_name_lower, service_name = find_grpc_package(path)
-    for t in as_type:
-        if t == "service":
-            gen_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
-            print("gen service code done")
-        elif t == "client":
-            gen_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
-            print("gen client code done")
-        elif t == "aiocli":
-            gen_aio_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
-            print("gen asyncio client code done")
-        elif t == "aioserv":
-            gen_aio_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
-            print("gen asyncio service code done")
+    if "serv" in as_type:
+        if "aio" in as_type:
+            if "mp" in as_type:
+                if "nogen" in as_type:
+                    pass
+                    #gen_aio_nogen_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+                else:
+                    gen_aio_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            else:
+                if "nogen" in as_type:
+                    gen_aio_nogen_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+                else:
+                    gen_aio_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
         else:
-            print(f"为grpc项目 {target} 构造{t}模板失败,python语言不支持")
+            if "mp" in as_type:
+                if "nogen" in as_type:
+                    gen_nogen_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+                else:
+                    gen_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            else:
+                if "nogen" in as_type:
+                    gen_nogen_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+                else:
+                    gen_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+    if "cli" in as_type:
+        if "aio" in as_type:
+            if "nogen" in as_type:
+                gen_aio_nogen_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            else:
+                gen_aio_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
+        else:
+            if "nogen" in as_type:
+                gen_nogen_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
+            else:
+                gen_cli(service_name_lower=service_name_lower, service_name=service_name, to=path)
 
 
 def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: Path,
@@ -315,5 +675,14 @@ def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optiona
     flag_str = ""
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
-    gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd)
+    if as_type and "nogen" in as_type:
+        topp = cwd.joinpath(to).parent
+        for include_dir in includes:
+            include_dirp = cwd.joinpath(include_dir)
+            for file in files:
+                file_p = include_dirp.joinpath(file)
+                if file_p.exists():
+                    shutil.copyfile(file_p, topp)
+    else:
+        gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd)
     _build_grpc_py_more(to=to, target=target_str, as_type=as_type)

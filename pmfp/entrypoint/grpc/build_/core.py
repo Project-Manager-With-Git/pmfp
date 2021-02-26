@@ -29,7 +29,7 @@ class Build(EndPoint):
                 "title": "a",
                 "items": {
                     "type": "string",
-                    "enum": ["service", "client", "aiocli", "aioserv", "nogencli", "nogenserv"]
+                    "enum": ["serv", "cli", "aio", "nogen","mp"]
                 },
                 "description": "目的,可以是服务端,客户端,或者既有服务端又有客户端,或者单纯源码"
             },

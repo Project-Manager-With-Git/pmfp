@@ -1,21 +1,17 @@
 import os
-import asyncio
 import warnings
 from pathlib import Path
 from concurrent import futures
 from typing import Any, Dict, Tuple, Union, List
 import grpc
 from grpc_health.v1 import health
-from grpc_health.v1 import _async as health_async
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from grpc_channelz.v1 import channelz
 from grpc_reflection.v1alpha import reflection
 from schema_entry import EntryPoint
-from .${service_name_lower}_pb2_grpc import add_${service_name}Servicer_to_server
-from .${service_name_lower}_pb2 import DESCRIPTOR
-from .aiohanddler import Handdler
-
+from .nogenhanddler import Handdler
+rpc_protos, rpc_services = grpc.protos_and_services("${service_name_lower}.proto")
 _COMPRESSION_OPTIONS = {
     "none": grpc.Compression.NoCompression,
     "deflate": grpc.Compression.Deflate,
@@ -200,25 +196,29 @@ class Serv(EntryPoint):
             })
         return [(k, v) for k, v in _opt.items()]
 
-    async def run_singal_serv(self, config: Dict[str, Any]) -> None:
-        opts = self.make_opts(config)
-        grpc_serv = grpc.aio.server(
+    def do_main(self) -> None:
+        """服务程序入口."""
+        config = self.config
+        opts = self.make_opts(config,)
+        grpc_serv = grpc.server(
             futures.ThreadPoolExecutor(max_workers=config.get("max_threads", 1000)),
             compression=_COMPRESSION_OPTIONS.get(self.config.get("compression"), grpc.Compression.NoCompression),
             options=opts,
             maximum_concurrent_rpcs=config.get("maximum_concurrent_rpcs", 50)
         )
         handdler = Handdler(config)
-        add_${service_name}Servicer_to_server(handdler, grpc_serv)
-
+        rpc_services.add_${service_name}Servicer_to_server(handdler, grpc_serv)
         # 健康检查
-        health_servicer = health_async.HealthServicer()
+        health_servicer = health.HealthServicer(
+            experimental_non_blocking=True,
+            experimental_thread_pool=futures.ThreadPoolExecutor(max_workers=1)
+        )
         health_pb2_grpc.add_HealthServicer_to_server(health_servicer, grpc_serv)
 
         # 反射
         services = tuple(
             service.full_name
-            for service in DESCRIPTOR.services_by_name.values()
+            for service in rpc_protos.DESCRIPTOR.services_by_name.values()
         ) + (
             reflection.SERVICE_NAME,
             health.SERVICE_NAME
@@ -228,7 +228,7 @@ class Serv(EntryPoint):
         # channelz
         if self.config.get("use_channelz"):
             channelz.add_channelz_servicer(grpc_serv)
-        # 绑定端口
+        # 绑定地址
         pid = os.getpid()
         addr = config["address"]
         if self.config.get("server_cert_path") and self.config.get("server_key_path"):
@@ -249,30 +249,15 @@ class Serv(EntryPoint):
                 grpc_serv.add_insecure_port(addr)
         else:
             grpc_serv.add_insecure_port(addr)
-
-        warnings.warn(f"grpc @process:{pid} start @{addr}")
-        await grpc_serv.start()
-        # 设置服务为健康
-        overall_server_health = ""
-        for service in services + (overall_server_health,):
-            await health_servicer.set(service, health_pb2.HealthCheckResponse.SERVING)
-        await grpc_serv.wait_for_termination()
-
-    def do_main(self) -> None:
-        """服务程序入口."""
-        config = self.config
-        if config.get("uvloop"):
-            try:
-                import uvloop
-                uvloop.install()
-                warnings.warn("grpc try to use uvloop")
-            except Exception:
-                warnings.warn("import uvloop error")
-            else:
-                warnings.warn("grpc using uvloop")
+        warnings.warn(f"grpc worker Pid:{pid} start @{addr}")
+        grpc_serv.start()
         try:
-            asyncio.run(self.run_singal_serv(config=config))
+            # 设置服务为健康
+            overall_server_health = ""
+            for service in services + (overall_server_health,):
+                health_servicer.set(service, health_pb2.HealthCheckResponse.SERVING)
+            grpc_serv.wait_for_termination()
         except KeyboardInterrupt:
-            warnings.warn("grpc stoped")
+            warnings.warn(f"grpc worker Pid:{pid} stoped")
         except Exception as e:
             raise e

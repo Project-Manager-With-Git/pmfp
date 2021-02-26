@@ -103,10 +103,10 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]],
                 package, registservice, registclient, registclient_new = find_grpc_package(to)
                 print(f"{package}, {registservice}, {registclient}, {registclient_new}")
                 for t in as_type:
-                    if t == "service":
+                    if t == "serv":
                         _make_server_temp(package, registservice)
                         print(f"为grpc项目 {target} 构造{t}模板成功!")
-                    elif t == "client":
+                    elif t == "cli":
                         _make_client_temp(package, registclient, registclient_new)
                         print(f"为grpc项目 {target} 构造{t}端模板成功!")
                     else:
