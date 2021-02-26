@@ -15,7 +15,7 @@ COPY ${app_name}.go /code/${app_name}.go
 RUN go build -ldflags "-s -w" -o ${app_name}-go ${app_name}.go
 
 # 直接使用可执行文件构造scratch镜像
-FROM ${cross_compiling}scratch as build_img
+FROM ${cross_compiling}scratch as build_scratch_img
 COPY --from=build_bin /code/${app_name}-go .
 CMD [ "/${app_name}-go"]
 
@@ -35,7 +35,7 @@ COPY --from=build_bin /code/${app_name}-go .
 RUN upx --best --lzma -o ${app_name} ${app_name}-go
 
 # 使用压缩过的可执行文件构造scratch镜像
-FROM ${cross_compiling}scratch as build_upximg
+FROM ${cross_compiling}scratch as build_scratch_upximg
 COPY --from=upx /code/${app_name} .
 CMD [ "/${app_name}"]
 
