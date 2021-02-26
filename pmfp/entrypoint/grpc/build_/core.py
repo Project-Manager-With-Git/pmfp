@@ -29,9 +29,9 @@ class Build(EndPoint):
                 "title": "a",
                 "items": {
                     "type": "string",
-                    "enum": ["serv", "cli", "aio", "nogen","mp"]
+                    "enum": ["serv", "cli", "aio", "nogen", "mp"]
                 },
-                "description": "目的,可以是服务端,客户端,或者既有服务端又有客户端,或者单纯源码"
+                "description": "目的,为空时不会生成代码,当有`serv`时会生成服务端代码;当有`cli`时会生成客户端代码;当有`nogen`只是将proto文件复制到目标文件夹"
             },
             "to": {
                 "type": "string",
