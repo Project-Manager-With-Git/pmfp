@@ -1,4 +1,4 @@
-${package}
+package ${package}
 
 import (
 	"fmt"
@@ -22,6 +22,7 @@ import (
 	_ "google.golang.org/grpc/encoding/gzip"
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
+	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
 )
@@ -34,21 +35,36 @@ import (
 //接口反射
 //channelz支持
 //TLS支持
+//keep alive 支持
 type Server struct {
-	AppName        string   `json:"app_name,omitempty" jsonschema:"description=服务名"`
-	AppVersion     string   `json:"app_version,omitempty" jsonschema:"description=服务版本"`
-	Address        string   `json:"address,omitempty" jsonschema:"description=服务的主机和端口"`
-	LogLevel       string   `json:"log_level,omitempty" jsonschema:"description=项目的log等级,enum=TRACE,enum=DEBUG,enum=INFO,enum=WARN,enum=ERROR"`
-	ZookeeperURL   []string `json:"zookeeper_url,omitempty" jsonschema:"description=负载均衡使用的zookeeper地址序列以逗号分隔"`
-	BalanceWeight  string   `json:"balance_weight,omitempty" jsonschema:"description=负载均衡的权重"`
-	MaxRecvMsgSize int      `json:"max_rec_msg_size,omitempty" jsonschema:"description=允许接收的最大消息长度"`
-	MaxSendMsgSize int      `json:"max_send_msg_size,omitempty" jsonschema:"description=允许发送的最大消息长度"`
-	UseChannelz    bool     `json:"use_channelz,omitempty" jsonschema:"description=是否使用channelz协助优化"`
-	ServerCertPath string   `json:"server_cert_path ,omitempty" jsonschema:"description=使用TLS时服务端的证书位置"`
-	ServerKeyPath  string   `json:"server_key_path,omitempty" jsonschema:"description=使用TLS时服务端证书的私钥位置"`
-	service        *registry.ServiceInfo
-	healthservice  *health.Server
-	registrar      *zk.Registrar
+	AppName       string   `json:"app_name,omitempty" jsonschema:"description=服务名"`
+	AppVersion    string   `json:"app_version,omitempty" jsonschema:"description=服务版本"`
+	Address       string   `json:"address,omitempty" jsonschema:"description=服务的主机和端口"`
+	LogLevel      string   `json:"log_level,omitempty" jsonschema:"description=项目的log等级,enum=TRACE,enum=DEBUG,enum=INFO,enum=WARN,enum=ERROR"`
+	ZookeeperURL  []string `json:"zookeeper_url,omitempty" jsonschema:"description=负载均衡使用的zookeeper地址序列以逗号分隔"`
+	BalanceWeight string   `json:"balance_weight,omitempty" jsonschema:"description=负载均衡的权重"`
+
+	MaxRecvMsgSize int `json:"max_rec_msg_size,omitempty" jsonschema:"description=允许接收的最大消息长度"`
+	MaxSendMsgSize int `json:"max_send_msg_size,omitempty" jsonschema:"description=允许发送的最大消息长度"`
+
+	InitialWindowSize     int `json:"initial_window_size,omitempty" jsonschema:"description=基于Stream的滑动窗口大小"`
+	InitialConnWindowSize int `json:"initial_conn_window_size,omitempty" jsonschema:"description=基于Connection的滑动窗口大小"`
+	MaxConcurrentStreams  int `json:"max_concurrent_streams,omitempty" jsonschema:"description=一个连接中最大并发Stream数"`
+
+	UseChannelz                             bool   `json:"use_channelz,omitempty" jsonschema:"description=是否使用channelz协助优化"`
+	ServerCertPath                          string `json:"server_cert_path ,omitempty" jsonschema:"description=使用TLS时服务端的证书位置"`
+	ServerKeyPath                           string `json:"server_key_path,omitempty" jsonschema:"description=使用TLS时服务端证书的私钥位置"`
+	MaxConnectionIdle                       int    `json:"max_connection_idle,omitempty" jsonschema:"description=客户端连接的最大空闲时长"`
+	MaxConnectionAge                        int    `json:"max_connection_age,omitempty" jsonschema:"description=如果连接存活超过n则发送goaway"`
+	MaxConnectionAgeGrace                   int    `json:"max_connection_age_grace,omitempty" jsonschema:"description=强制关闭连接之前允许等待的rpc在n秒内完成"`
+	KeepaliveTime                           int    `json:"keepalive_time,omitempty" jsonschema:"description=空闲连接每隔n秒ping一次客户端已确保连接存活"`
+	KeepaliveTimeout                        int    `json:"keepalive_timeout,omitempty" jsonschema:"description=ping时长超过n则认为连接已死"`
+	KeepaliveEnforcementMinTime             int    `json:"keepalive_enforement_min_time,omitempty" jsonschema:"description=如果客户端超过每n秒ping一次则终止连接"`
+	KeepaliveEnforcementPermitWithoutStream bool   `json:"keepalive_enforement_permit_without_stream,omitempty" jsonschema:"description=即使没有活动流也允许ping"`
+
+	service       *registry.ServiceInfo
+	healthservice *health.Server
+	registrar     *zk.Registrar
 }
 
 //Main 服务的入口函数
@@ -76,6 +92,15 @@ func (s *Server) RunServer() {
 	if s.MaxSendMsgSize != 0 {
 		opts = append(opts, grpc.MaxSendMsgSize(s.MaxSendMsgSize))
 	}
+	if s.InitialWindowSize != 0 {
+		opts = append(opts, grpc.InitialWindowSize(int32(s.InitialWindowSize)))
+	}
+	if s.InitialConnWindowSize != 0 {
+		opts = append(opts, grpc.InitialConnWindowSize(int32(s.InitialConnWindowSize)))
+	}
+	if s.MaxConcurrentStreams != 0 {
+		opts = append(opts, grpc.MaxConcurrentStreams(uint32(s.MaxConcurrentStreams)))
+	}
 	if s.ServerCertPath != "" && s.ServerKeyPath != "" {
 		creds, err := credentials.NewServerTLSFromFile(s.ServerCertPath, s.ServerKeyPath)
 		if err != nil {
@@ -83,13 +108,13 @@ func (s *Server) RunServer() {
 		}
 		opts = append(opts, grpc.Creds(creds))
 	}
-	if s.MaxConnectionIdle != 0 || s.MaxConnectionAge != 0 || s.MaxConnectionAgeGrace != 0 || s.PingDuration != 0 || s.PingAckTimeout != 0 {
+	if s.MaxConnectionIdle != 0 || s.MaxConnectionAge != 0 || s.MaxConnectionAgeGrace != 0 || s.KeepaliveTime != 0 || s.KeepaliveTimeout != 0 {
 		kasp := keepalive.ServerParameters{
 			MaxConnectionIdle:     time.Duration(s.MaxConnectionIdle) * time.Second,
 			MaxConnectionAge:      time.Duration(s.MaxConnectionAge) * time.Second,
 			MaxConnectionAgeGrace: time.Duration(s.MaxConnectionAgeGrace) * time.Second,
-			Time:                  time.Duration(s.PingDuration) * time.Second,
-			Timeout:               time.Duration(s.PingAckTimeout) * time.Second,
+			Time:                  time.Duration(s.KeepaliveTime) * time.Second,
+			Timeout:               time.Duration(s.KeepaliveTimeout) * time.Second,
 		}
 		opts = append(opts, grpc.KeepaliveParams(kasp))
 	}

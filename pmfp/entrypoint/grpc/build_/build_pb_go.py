@@ -10,7 +10,7 @@ from pmfp.utils.template_utils import template_2_content
 
 ServiceSource = ""
 HanddlerSource = ""
-LocalresolverSource = ""
+ExampleSource = ""
 SDKSource = ""
 
 source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.go.temp')
@@ -25,9 +25,9 @@ if source_io:
 else:
     raise AttributeError("加载handdler.go.temp模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'localresolver.go.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'example.go.temp')
 if source_io:
-    LocalresolverSource = source_io.decode('utf-8')
+    ExampleSource = source_io.decode('utf-8')
 else:
     raise AttributeError("加载localresolver.go.temp模板失败")
 
@@ -50,7 +50,8 @@ def find_grpc_package(to: str) -> Tuple[str, str, str, str]:
                 content = f.read()
                 p = re.search(r"package \w+\s", content)
                 if p is not None:
-                    package = p.group(0)
+                    package_new = p.group(0)
+                    package = package_new.replace("package ", "")
                 m = re.search(r"Register\w+Server", content)
                 if m is not None:
                     registservice = m.group(0)
@@ -66,29 +67,57 @@ def _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]],
 
     def _make_server_temp(package: str, registservice: str) -> None:
         """如果已经存在`serv.go则不会执行`"""
+        # 创建serv.go
         target_path = topath.joinpath("serv.go")
         if target_path.exists():
             print("项目已存在serv.go,不会重复初始化")
-            return
-        servcontent = template_2_content(ServiceSource, package=package, registservice=registservice)
-        with open(target_path, "w", newline="", encoding="utf-8") as f:
-            f.write(servcontent)
-        handdlercontent = template_2_content(HanddlerSource, package=package)
-        with open(topath.joinpath("handdler.go"), "w", newline="", encoding="utf-8") as f:
-            f.write(handdlercontent)
+        else:
+            servcontent = template_2_content(ServiceSource, package=package, registservice=registservice)
+            with open(target_path, "w", newline="", encoding="utf-8") as f:
+                f.write(servcontent)
+
+        # 创建hanndler.go
+        target_path = topath.joinpath("handdler.go")
+        if target_path.exists():
+            print("项目已存在handdler.go,不会重复初始化")
+        else:
+            package_upper = package.upper()
+            handdlercontent = template_2_content(HanddlerSource, package=package, package_upper=package_upper)
+            with open(target_path, "w", newline="", encoding="utf-8") as f:
+                f.write(handdlercontent)
 
     def _make_client_temp(package: str, registclient: str, registclient_new: str) -> None:
         """如果已经存在`sdk.go则不会执行`"""
+        # 创建sdk.go
         target_path = topath.joinpath("sdk.go")
         if target_path.exists():
             print("项目已存在sdk.go,不会重复初始化")
-            return
-        Localresolvercontent = template_2_content(LocalresolverSource, package=package)
-        with open(topath.joinpath("localresolver.go"), "w", newline="", encoding="utf-8") as f:
-            f.write(Localresolvercontent)
-        sdkcontent = template_2_content(SDKSource, package=package, registclient=registclient, registclient_new=registclient_new)
-        with open(target_path, "w", newline="", encoding="utf-8") as f:
-            f.write(sdkcontent)
+        else:
+            sdkcontent = template_2_content(
+                SDKSource,
+                package=package,
+                registclient=registclient,
+                registclient_new=registclient_new
+            )
+            with open(target_path, "w", newline="", encoding="utf-8") as f:
+                f.write(sdkcontent)
+
+        # 创建example.go
+        target_path = topath.joinpath("example.go")
+        if target_path.exists():
+            print("项目已存在example.go,不会重复初始化")
+        else:
+            examplecontent = template_2_content(
+                ExampleSource,
+                package=package,
+                registclient=registclient,
+                registclient_new=registclient_new
+            )
+            with open(target_path, "w", newline="", encoding="utf-8") as f:
+                f.write(examplecontent)
+        # Localresolvercontent = template_2_content(LocalresolverSource, package=package)
+        # with open(topath.joinpath("localresolver.go"), "w", newline="", encoding="utf-8") as f:
+        #     f.write(Localresolvercontent)
 
     command = f"protoc {includes} {flag} --go_out=plugins=grpc:{to} {target}"
     try:
