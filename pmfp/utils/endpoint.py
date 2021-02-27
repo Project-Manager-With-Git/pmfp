@@ -3,7 +3,7 @@ from pathlib import Path
 from configparser import ConfigParser
 from typing import Dict, Any, List, Union
 from schema_entry import EntryPoint
-from pmfp.const import PMFP_CONFIG_HOME,PMFP_CONFIG_DEFAULT_NAME
+from pmfp.const import PMFP_CONFIG_HOME, PMFP_CONFIG_DEFAULT_NAME
 
 
 def setup_cfg_handdler(p: Path) -> Dict[str, Any]:
@@ -34,26 +34,31 @@ def setup_cfg_handdler(p: Path) -> Dict[str, Any]:
             result.update({"keywords": [i.strip() for i in keywords.split(",")]})
     options = config_dict.get("options")
     if options:
+        # 安装依赖
         requires = config["options"].get("install_requires")
         if requires:
             result.update(requires=[i.strip() for i in requires.splitlines() if i.strip() != ""])
-
-        dev_requires: List[str] = []
         # 测试依赖
         test_requires = config["options"].get("tests_require")
         if test_requires:
-            dev_requires += [i.strip() for i in test_requires.splitlines() if i.strip() != ""]
+            result.update(test_requires=[i.strip() for i in test_requires.splitlines() if i.strip() != ""])
         # setup依赖
         setup_requires = config["options"].get("setup_requires")
         if setup_requires:
-            dev_requires += [i.strip() for i in setup_requires.splitlines() if i.strip() != ""]
+            if "cython" in setup_requires or "Cython" in setup_requires:
+                result.update({"language": "cython"})
+            setup_requires_str = [i.strip() for i in setup_requires.splitlines() if i.strip() != ""]
+            result.update(setup_requires=setup_requires_str)
         # 其他依赖
         extras_require = config_dict.get("options.extras_require")
         if extras_require:
-            for _, v in extras_require.items():
-                dev_requires += [i.strip() for i in v.splitlines() if i.strip() != ""]
-        if dev_requires:
-            result.update(dev_requires=list(set(dev_requires)))
+            extras_requires = []
+            for key, v in extras_require.items():
+                extras_requires += [f"{key}:" + i.strip() for i in v.splitlines() if i.strip() != ""]
+            if extras_requires:
+                result.update(
+                    extras_requires=extras_requires
+                )
 
     return result
 
@@ -66,13 +71,6 @@ def go_mod_handdler(p: Path) -> Dict[str, Any]:
     if r:
         s = r.group(0)
         result.update(project_name=s.replace("module ", "").strip())
-
-    r = re.search(r"require \(([\s|\S]+?)\)", con)
-    if r:
-        s = r.group(0)
-        result.update({"requires": [i.strip()
-                                    for i in s.replace("require (", "").replace(")", "").strip().splitlines()
-                                    if i.strip() != ""]})
     return result
 
 

@@ -14,8 +14,8 @@ class Build(EndPoint):
             "language": {
                 "type": "string",
                 "title": "l",
-                "description": "编译的代码语言",
-                "enum": ["go"]
+                "description": "编译的代码语言,如果language为`cython则只能编译为动态链接库`",
+                "enum": ["go", "cython"]
             },
             "code": {
                 "description": "语言源码位置或者入口文件位置",
@@ -35,12 +35,12 @@ class Build(EndPoint):
             "upx": {
                 "type": "boolean",
                 "title": "u",
-                "description": "是否使用upx给可执行文件加壳"
+                "description": "是否使用upx给可执行文件加壳(`build_as`为`exec`有效)"
             },
             "static": {
                 "type": "boolean",
                 "title": "s",
-                "description": "是否编译为无依赖的静态文件",
+                "description": "是否编译为无依赖的静态文件(`build_as`为`exec`有效)",
                 "default": True
             },
             "mini": {

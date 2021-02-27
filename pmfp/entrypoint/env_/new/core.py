@@ -11,13 +11,16 @@ class New(EndPoint):
         "required": ["env"],
         "properties": {
             "env": {
-                "description": "静态类型检验针对的语言",
+                "description": "执行环境",
                 "title": "e",
-                "type": "array",
-                "items": {
-                    "type": "string",
-                    "enum": ["venv", "conda", "gomod"]
-                }
+                "type": "string",
+                "enum": ["venv", "conda", "gomod"]
+            },
+            "language": {
+                "type": "string",
+                "title": "l",
+                "description": "初始化的语言",
+                "enum": ["py", "cython", "go"]
             },
             "project_name": {
                 "type": "string",
@@ -48,6 +51,34 @@ class New(EndPoint):
                 "description": "关键字",
                 "title": "k",
                 "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "requires": {
+                "type": "array",
+                "description": "最小化执行的依赖",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "test_requires": {
+                "type": "array",
+                "description": "开发测试时的依赖",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "setup_requires": {
+                "type": "array",
+                "description": "安装时的依赖",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "extras_requires": {
+                "type": "array",
+                "description": "扩展的依赖",
                 "items": {
                     "type": "string"
                 }

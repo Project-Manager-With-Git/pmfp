@@ -12,7 +12,7 @@ def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_
               source_relative: bool, cwd: Path, **kwargs: str) -> None:
     if language.lower() == "go":
         build_pb_go(files, includes, to, as_type, source_relative, cwd=cwd, **kwargs)
-    elif language.lower() == "py":
+    elif language.lower() in ("py", "cython"):
         build_pb_py(files, includes, to, as_type, cwd=cwd, **kwargs)
     elif language == "js":
         build_pb_js(files, includes, to, as_type, cwd=cwd, **kwargs)

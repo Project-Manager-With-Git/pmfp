@@ -9,7 +9,7 @@ PLATFORM = platform.system()
 # GOLBAL_PYTHON 全局python
 GOLBAL_PYTHON = "python" if PLATFORM == 'Windows' else "python3"
 # GOLBAL_CC 全局c编译器
-GOLBAL_CC = "MSVC" if PLATFORM == 'Windows' else "gcc"
+GOLBAL_CC = "msvc" if PLATFORM == 'Windows' else "gcc"
 
 # GOLBAL_PYTHON_VERSION 全局python的版本
 GOLBAL_PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1])
