@@ -204,7 +204,7 @@ class Serv(EntryPoint):
             })
         return [(k, v) for k, v in _opt.items()]
 
-    async def run_singal_serv(self, config: Dict[str, Any]) -> None:
+    async def run_singal_serv(self,handdler: Handdler config: Dict[str, Any]) -> None:
         opts = self.make_opts(config)
         grpc_serv = grpc.aio.server(
             futures.ThreadPoolExecutor(max_workers=config.get("max_threads", 1000)),
@@ -212,7 +212,6 @@ class Serv(EntryPoint):
             options=opts,
             maximum_concurrent_rpcs=config.get("maximum_concurrent_rpcs", 50)
         )
-        handdler = Handdler(config)
         add_${service_name}Servicer_to_server(handdler, grpc_serv)
 
         # 健康检查
@@ -275,7 +274,8 @@ class Serv(EntryPoint):
             else:
                 warnings.warn("grpc using uvloop")
         try:
-            asyncio.run(self.run_singal_serv(config=config))
+            handdler = Handdler(config)
+            asyncio.run(self.run_singal_serv( handdler=handdler,config=config))
         except KeyboardInterrupt:
             warnings.warn("grpc stoped")
         except Exception as e:
