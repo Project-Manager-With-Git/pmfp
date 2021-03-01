@@ -1,17 +1,21 @@
 from typing import List, Optional
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run
-from .core import dockerimage
+from .core import dockerimage_build
 
 
-@dockerimage.as_main
+@dockerimage_build.as_main
 def build_dockerimage(docker_register_namespace: str, project_name: str, version: str,
                       dockerfile_name: str = "Dockerfile", docker_register: Optional[str] = None,
                       as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False,
                       platform: List[str] = ["linux/amd64", "linux/arm64", "linux/arm/v7"],
                       cwd: str = ".", use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None:
     cwdp = get_abs_path(cwd)
-    image_name = f"{docker_register}/{docker_register_namespace}/{project_name}"
+    if docker_register:
+        docker_register = docker_register + "/"
+    else:
+        docker_register = ""
+    image_name = f"{docker_register}{docker_register_namespace}/{project_name}"
 
     if cross_compiling is False:
         tags = f" -t {image_name}:amd64-{version}"

@@ -90,7 +90,7 @@ def new_compose(
         })
 
     # command
-    if language == "py" and extend is True:
+    if language == "cython" or (language == "py" and extend is True):
         project_serv.update({
             "command": ["python", "app"]
         })

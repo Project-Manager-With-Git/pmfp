@@ -682,7 +682,7 @@ def build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optiona
             for file in files:
                 file_p = include_dirp.joinpath(file)
                 if file_p.exists():
-                    shutil.copyfile(file_p, topp)
+                    shutil.copyfile(file_p, topp.joinpath(file))
     else:
         gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd)
     _build_grpc_py_more(to=to, target=target_str, as_type=as_type)

@@ -19,7 +19,7 @@ class New(EndPoint):
                 "description": "目标语言使用的dockerfile",
                 "title": "l",
                 "type": "string",
-                "enum": ["py", "go"]
+                "enum": ["py", "cython", "go"]
             },
             "cross_compiling": {
                 "type": "boolean",

@@ -60,7 +60,6 @@ class Build(EndPoint):
             },
             "push": {
                 "type": "boolean",
-                "title": "p",
                 "description": "是否编译完后推送去仓库",
                 "default": False
             },

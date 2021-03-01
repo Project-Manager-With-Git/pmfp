@@ -9,7 +9,7 @@ from pmfp.const import PMFP_CONFIG_HOME, PMFP_CONFIG_DEFAULT_NAME
 def setup_cfg_handdler(p: Path) -> Dict[str, Any]:
     config = ConfigParser()
     result: Dict[str, Union[str, List[str]]] = {"language": "py"}
-    with open(p) as f:
+    with open(p, encoding="utf-8") as f:
         config.read_file(f)
     config_dict = dict(config.items())
     metadata = config_dict.get("metadata")

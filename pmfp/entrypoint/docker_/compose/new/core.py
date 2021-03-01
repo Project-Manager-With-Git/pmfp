@@ -65,7 +65,7 @@ class New(EndPoint):
                 "description": "目标语言使用的dockerfile,如果指定则会构造出`command`段",
                 "title": "l",
                 "type": "string",
-                "enum": ["py", "go"]
+                "enum": ["py","cython", "go"]
             },
             "extend": {
                 "description": "项目是否使用c扩展",

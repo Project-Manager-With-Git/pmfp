@@ -136,6 +136,10 @@ class Serv(EntryPoint):
                     "type": "string"
                 }
             },
+            "uvloop":{
+                "type":"boolean",
+                "description":"是否使用uvloop作为事件循环"
+            }
         }
     }
 

@@ -58,10 +58,10 @@ def new_dockerfile(language: str, dockerfile_name: str = "Dockerfile",
         else:
             app_name = project_name
 
-    if language == "py":
+    if language in ("py", "cython"):
         with open(cwdp.joinpath("pip.conf"), "w", newline="", encoding="utf-8") as f:
             f.write(PipConfSource)
-        if extend:
+        if extend or language == "cython":
             content = template_2_content(
                 PythonExtendSource,
                 python_version=GOLBAL_PYTHON_VERSION,
