@@ -233,7 +233,6 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Pa
 
         `pip install grpcio`
         `pip install grpcio-tools`
-        `pip install grpcio-reflection`
         """)
         sys.exit(1)
     else:
