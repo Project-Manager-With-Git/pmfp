@@ -37,7 +37,9 @@ def new_compose(
         "x-log": default_log,
         "default_log": default_log,
     }
-    services = {}
+    services = {
+        "init": True
+    }
     project_serv = {}
     # build and image
     if docker_register_namespace and project_name:
