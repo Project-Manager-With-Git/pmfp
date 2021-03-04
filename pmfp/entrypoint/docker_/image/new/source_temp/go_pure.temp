@@ -22,7 +22,7 @@ CMD [ "/${app_name}-go"]
 # 直接使用可执行文件构造镜像
 FROM ${cross_compiling}alpine:3.12.2 as build_img
 COPY --from=build_bin /code/${app_name}-go .
-RUN chmod +x /${app_name}
+RUN chmod +x /${app_name}-go
 ENTRYPOINT [ "/${app_name}-go"]
 
 # 使用upx压缩可执行文件
