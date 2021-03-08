@@ -147,6 +147,8 @@ def _new_nev(e: str, cwd: Path,
 
     elif e == "gomod":
         new_env_go(cwd=cwd, project_name=project_name)
+    # elif e == "cmake":
+    #     new_env_cpp(cwd=cwd, project_name=project_name)
     else:
         print(f"暂不支持初始化环境{e}")
 

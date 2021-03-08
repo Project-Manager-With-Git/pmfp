@@ -5,17 +5,20 @@ from pmfp.utils.fs_utils import get_abs_path, get_abs_path_str
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py
+from .build_pb_cpp import build_pb_cpp
 from .core import proto_build
 
 
-def _build_pb(env: str, files: List[str], includes: List[str], to: str,
+def _build_pb(language: str, files: List[str], includes: List[str], to: str,
               source_relative: bool, cwd: Path, **kwargs: str) -> None:
-    if env.lower() == "go":
+    if language.lower() == "go":
         build_pb_go(files, includes, to, cwd, source_relative=source_relative, **kwargs)
-    elif env.lower() == "py":
+    elif language.lower() == "py":
         build_pb_py(files, includes, to, cwd=cwd, **kwargs)
-    elif env == "js":
+    elif language.lower() == "js":
         build_pb_js(files, includes, to, cwd=cwd, **kwargs)
+    elif language.lower() == "cpp":
+        build_pb_cpp(files, includes, to, cwd=cwd, **kwargs)
     else:
         print(f"未知的环境类型{env}")
 
