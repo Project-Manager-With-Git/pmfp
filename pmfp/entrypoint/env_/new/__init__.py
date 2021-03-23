@@ -15,7 +15,7 @@ from .env_py import (
     new_env_py_setup
 )
 from .env_go import new_env_go
-
+from .env_cmake import new_env_cmake
 from .core import env_new
 
 
@@ -101,7 +101,21 @@ def freeze(env: str, *, cwd: Path,
             content.update({"setup_requires": setup_requires})
         if extras_requires:
             content.update({"extras_requires": extras_requires})
-
+    if env == "cmake":
+        if author:
+            content.update({"author": author})
+        if author_email:
+            content.update({"author_email": author_email})
+        if keywords:
+            content.update({"keywords": keywords})
+        if requires:
+            content.update({"requires": requires})
+        if test_requires:
+            content.update({"test_requires": test_requires})
+        if setup_requires:
+            content.update({"setup_requires": setup_requires})
+        if extras_requires:
+            content.update({"extras_requires": extras_requires})
     if ppmrc.exists():
         with open(ppmrc) as f:
             old = json.load(f)
@@ -143,12 +157,12 @@ def _new_nev(e: str, cwd: Path,
                          test_requires=test_requires,
                          setup_requires=setup_requires,
                          extras_requires=extras_requires, cython=True if language == "cython" else False)
-        print(f"构造python环境完成")
+        print("构造python环境完成")
 
     elif e == "gomod":
         new_env_go(cwd=cwd, project_name=project_name)
-    # elif e == "cmake":
-    #     new_env_cpp(cwd=cwd, project_name=project_name)
+    elif e == "cmake":
+        new_env_cmake(cwd=cwd, project_name=project_name, version=version, description=description, language=language)
     else:
         print(f"暂不支持初始化环境{e}")
 

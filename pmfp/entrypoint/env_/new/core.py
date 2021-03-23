@@ -20,7 +20,7 @@ class New(EndPoint):
                 "type": "string",
                 "title": "l",
                 "description": "初始化的语言",
-                "enum": ["py", "cython", "go", "cpp"]
+                "enum": ["py", "cython", "go", "CXX", "C"]
             },
             "project_name": {
                 "type": "string",
