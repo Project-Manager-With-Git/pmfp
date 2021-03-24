@@ -16,6 +16,8 @@ PipConfSource = ""
 GoPureSource = ""
 GoExtendSource = ""
 
+CXXExtendSource = ""
+
 source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'python_pure.temp')
 if source_io:
     PythonPureSource = source_io.decode('utf-8')
@@ -45,6 +47,12 @@ if source_io:
 else:
     raise AttributeError("加载go_extend.temp模板失败")
 
+
+source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'cxx_extend.temp')
+if source_io:
+    CXXExtendSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载cxx_extend.temp模板失败")
 
 @dockerfile_new.as_main
 def new_dockerfile(language: str, dockerfile_name: str = "Dockerfile",
@@ -86,6 +94,18 @@ def new_dockerfile(language: str, dockerfile_name: str = "Dockerfile",
                 golang_version=get_golang_version(),
                 cross_compiling="--platform=$TARGETPLATFORM " if cross_compiling else "",
                 app_name=app_name)
+    elif language == "CXX":
+        if extend:
+            content = template_2_content(
+                CXXExtendSource,
+                cross_compiling="--platform=$TARGETPLATFORM " if cross_compiling else "",
+                app_name=app_name)
+        # else:
+        #     content = template_2_content(
+        #         GoPureSource,
+        #         golang_version=get_golang_version(),
+        #         cross_compiling="--platform=$TARGETPLATFORM " if cross_compiling else "",
+        #         app_name=app_name)
     else:
         print(f"未知的环境类型{language}")
         return

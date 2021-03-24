@@ -85,6 +85,7 @@ add_executable(${project_name}
     # ${GRPC_SRCS}
 #)
 # target_link_libraries(${project_name}
+#    # PUBLIC  "-static" #纯静态编译
 #    PRIVATE nlohmann_json::nlohmann_json
 #    PRIVATE spdlog::spdlog
 #    PRIVATE argparse::argparse
