@@ -3,16 +3,10 @@
 和其他不同为了照顾windows下的使用,cpp的grpc使用docker编译.
 由于使用cpp写grpc一定是作为计算密集型任务的处理终端使用的,所以只提供了同步服务端
 """
-import re
-import sys
-import shutil
 import pkgutil
 import warnings
 from pathlib import Path
-from typing import List, Optional, Tuple
-from pmfp.utils.fs_utils import get_abs_path
-from pmfp.utils.run_command_utils import run
-from pmfp.utils.tools_info_utils import get_global_python
+from typing import List
 from pmfp.utils.template_utils import template_2_content
 
 MainSource = ""
@@ -69,21 +63,21 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     if not to.joinpath("cmake").exists():
         to.joinpath("cmake").mkdir(parents=True)
     if to.joinpath("cmake/FindGRPC.cmake").exists():
-        print("cmake/FindGRPC.cmake已经存在,不生成")
+        warnings.warn("cmake/FindGRPC.cmake已经存在,不生成")
     else:
         content = FindGRPCCmakeSource
-        with open(to.joinpath("makeflie"), "w", newline="", encoding="utf-8") as f:
+        with open(to.joinpath("cmake/FindGRPC.cmake"), "w", newline="", encoding="utf-8") as f:
             f.write(content)
     if to.joinpath("cmake/FindProtobuf.cmake").exists():
-        print("cmake/FindProtobuf.cmake已经存在,不生成")
+        warnings.warn("cmake/FindProtobuf.cmake已经存在,不生成")
     else:
         content = FindProtobufCmakeSource
-        with open(to.joinpath("makeflie"), "w", newline="", encoding="utf-8") as f:
+        with open(to.joinpath("cmake/FindProtobuf.cmake"), "w", newline="", encoding="utf-8") as f:
             f.write(content)
 
     # 再创建dockerfile
     if to.joinpath("Dockerflie").exists():
-        print("Dockerflie已经存在,不生成")
+        warnings.warn("Dockerflie已经存在,不生成")
     else:
         content = template_2_content(
             DockerfileSource,
@@ -95,8 +89,8 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     src_dir = to.joinpath("src")
     if not src_dir.exists():
         src_dir.mkdir(parents=True)
-    if src_dir.joinpath(f"{service_name_lower}.cc"):
-        print(f"{service_name_lower}.cc已经存在,不生成")
+    if src_dir.joinpath(f"{service_name_lower}.cc").exists():
+        warnings.warn(f"{service_name_lower}.cc已经存在,不生成")
     else:
         content = template_2_content(
             MainSource,
@@ -104,8 +98,8 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
             service_name=service_name)
         with open(src_dir.joinpath(f"{service_name_lower}.cc"), "w", newline="", encoding="utf-8") as f:
             f.write(content)
-    if src_dir.joinpath(f"{service_name_lower}_serv.cc"):
-        print(f"{service_name_lower}_serv.cc已经存在,不生成")
+    if src_dir.joinpath(f"{service_name_lower}_serv.cc").exists():
+        warnings.warn(f"{service_name_lower}_serv.cc已经存在,不生成")
     else:
         content = template_2_content(
             ServSource,
@@ -113,8 +107,8 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
             service_name=service_name)
         with open(src_dir.joinpath(f"{service_name_lower}_serv.cc"), "w", newline="", encoding="utf-8") as f:
             f.write(content)
-    if src_dir.joinpath(f"{service_name_lower}_serv.h"):
-        print(f"{service_name_lower}_serv.h已经存在,不生成")
+    if src_dir.joinpath(f"{service_name_lower}_serv.h").exists():
+        warnings.warn(f"{service_name_lower}_serv.h已经存在,不生成")
     else:
         content = template_2_content(
             ServHeadSource,
@@ -122,19 +116,21 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
             service_name=service_name)
         with open(src_dir.joinpath(f"{service_name_lower}_serv.h"), "w", newline="", encoding="utf-8") as f:
             f.write(content)
-    print("""grpc serv需要在docker环境下编译""")
+    warnings.warn("""C++的grpc项目由cmake管理,请确保已经安装好了protobuf和grpc++.
+    取消本工具cmake环境配置中protobuf和grpc部分的内容配置相应路径以激活对应支持.
+    本项目只提供c++版本的服务端模板.
+    同时提供一个dockerfile用于在docker中编译可执行文件.
+    """)
 
 
-def build_pb_cpp(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: Path,
-                 **kwargs: str) -> None:
-    """编译grpc的protobuf定义文件为python语言模块.
+def build_pb_cxx(files: List[str], cwd: Path) -> None:
+    """为c++版本的grpc构造模板.
+
+    由于使用cmake管理,而cmake难以解析所以只能给个大致
 
     Args:
         files (List[str]): 待编译的protobuffer文件
-        includes (List[str]): 待编译的protobuffer文件所在的文件夹
-        to (str): 编译成的模块文件放到的路径
-        as_type (str): 执行的目的. Default: "source"
-
+        cwd (Path): 执行时候的根目录
     """
     target = files[0]
     if target.endswith(".proto"):

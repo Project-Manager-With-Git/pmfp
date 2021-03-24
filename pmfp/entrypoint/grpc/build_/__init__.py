@@ -5,6 +5,7 @@ from pmfp.utils.fs_utils import get_abs_path, get_abs_path_str
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py
+from .build_pb_cxx import build_pb_cxx
 from .core import grpc_build
 
 
@@ -16,6 +17,8 @@ def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_
         build_pb_py(files, includes, to, as_type, cwd=cwd, **kwargs)
     elif language == "js":
         build_pb_js(files, includes, to, as_type, cwd=cwd, **kwargs)
+    elif language == "CXX":
+        build_pb_cxx(files, cwd=cwd)
     else:
         print(f"未知的环境类型{language}")
 

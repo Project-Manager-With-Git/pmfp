@@ -65,12 +65,42 @@ def setup_cfg_handdler(p: Path) -> Dict[str, Any]:
 
 def go_mod_handdler(p: Path) -> Dict[str, Any]:
     result: Dict[str, Union[str, List[str]]] = {"language": "go"}
-    with open(p) as f:
+    with open(p, encoding="utf-8") as f:
         con = f.read()
     r = re.search(r"module \w+\s", con)
     if r:
         s = r.group(0)
         result.update(project_name=s.replace("module ", "").strip())
+    return result
+
+
+def cmake_handdler(p: Path) -> Dict[str, Any]:
+    result: Dict[str, Union[str, List[str]]] = {"language": "CXX"}
+    with open(p, encoding="utf-8") as f:
+        con = f.read()
+    r = re.search(r"project\s*\(\w+", con)
+    if r:
+        s = r.group(0)
+        project_name = s.replace("project", "").replace("(", "").strip()
+        result.update(project_name=project_name)
+        r = re.search(r"project\s*\(" + project_name + r"\s+ VERSION \S+", con)
+        if r:
+            s = r.group(0)
+            version = s.replace("project", "").replace("(", "").replace(project_name, "").replace("VERSION", "").strip()
+            result.update(version=version)
+
+        r = re.search(r'DESCRIPTION\s+".*"', con)
+        if r:
+            s = r.group(0)
+            description = s.replace("DESCRIPTION", "").replace('"', "").strip()
+            result.update(description=description)
+
+        r = re.search(r'LANGUAGES\s+\w+', con)
+        if r:
+            s = r.group(0)
+            language = s.replace("LANGUAGES", "").strip()
+            result.update(language=language)
+
     return result
 
 
@@ -82,9 +112,11 @@ class EndPoint(EntryPoint):
         f"./{PMFP_CONFIG_DEFAULT_NAME}",
         "setup.cfg",
         # "package.json",
-        "go.mod"
+        "go.mod",
+        "CMakeLists.txt"
     ]
     _config_file_parser_map = {
         "setup.cfg": setup_cfg_handdler,
-        "go.mod": go_mod_handdler
+        "go.mod": go_mod_handdler,
+        "CMakeLists.txt": cmake_handdler
     }

@@ -22,7 +22,7 @@ class Build(EndPoint):
                 "description": "编译成的目标语言",
                 "title": "l",
                 "type": "string",
-                "enum": ["py", "cython", "go", "js"]
+                "enum": ["py", "cython", "go", "js", "CXX"]
             },
             "as_type": {
                 "type": "array",

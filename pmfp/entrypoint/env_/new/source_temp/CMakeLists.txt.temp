@@ -1,5 +1,5 @@
 #项目编译环境
-cmake_minimum_required (VERSION 3.10)
+cmake_minimum_required (VERSION 3.13)
 project (${project_name}
     VERSION ${version}
     DESCRIPTION "${description}"
@@ -81,8 +81,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 add_executable(${project_name}
     ${SRC_DIR}/${project_name}.cc
 )
-# target_link_libraries(square_rpc
-#     PRIVATE spdlog::spdlog
-#     PRIVATE argparse::argparse
+    # ${PROTO_SRCS}
+    # ${GRPC_SRCS}
+#)
+# target_link_libraries(${project_name}
+#    PRIVATE nlohmann_json::nlohmann_json
+#    PRIVATE spdlog::spdlog
+#    PRIVATE argparse::argparse
+#    PRIVATE gRPC::grpc++_reflection
+#    PRIVATE protobuf::libprotobuf
 # )
 

@@ -21,7 +21,7 @@ class Build(EndPoint):
                 "description": "proto文件名,也是package名",
                 "title": "l",
                 "type": "string",
-                "enum": ["py", "cython", "js", "go", "cpp"]
+                "enum": ["py", "cython", "js", "go", "CXX"]
             },
             "to": {
                 "type": "string",

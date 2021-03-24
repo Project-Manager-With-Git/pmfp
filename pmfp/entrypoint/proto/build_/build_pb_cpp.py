@@ -26,7 +26,7 @@ def _build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: Path, **k
 
 
 def build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: Path,
-                **kwargs: str) -> None:
+                 **kwargs: str) -> None:
     """编译c++语言模块.
 
     Args:
