@@ -1,7 +1,7 @@
 import warnings
 from pathlib import Path
 from typing import Optional, List
-import pyaml
+import yaml
 
 
 def new_compose(
@@ -353,6 +353,6 @@ def new_compose(
             "services": services
         }
     )
-    content = pyaml.dump(compose, sort_dicts=False, force_embed=False)
+    content = yaml.dump(compose, sort_keys=False, force_embed=False)
     with open(cwdp.joinpath(dockercompose_name), "w", newline="", encoding="utf-8") as f:
         f.write(content.replace("default_log: *default_log", "").replace("default_extra_hosts: *default_extra_hosts", ""))

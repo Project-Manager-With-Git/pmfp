@@ -25,7 +25,19 @@ def run(command: str, *, cwd: Optional[Path] = None, env: Optional[Dict[str, str
         if visible:
             print(colored(f"""执行命令:
             {command}""", 'white', 'on_blue'))
-        res = subprocess.run(command, capture_output=True, shell=True, check=True, cwd=cwd, env=env)
+        if command.startswith("[") and command.endswith("]"):
+            try:
+                command_list = eval(command)
+            except SyntaxError:
+                print(colored(f"""命令:{command} 语法错误""", 'white', 'on_red'))
+                sys.exit(1)
+            except Exception:
+                print(colored(f"""命令:{command} 解析错误""", 'white', 'on_red'))
+                sys.exit(1)
+            else:
+                res = subprocess.run(command_list, capture_output=True, shell=True, check=True, cwd=cwd, env=env)
+        else:
+            res = subprocess.run(command, capture_output=True, shell=True, check=True, cwd=cwd, env=env)
     except subprocess.CalledProcessError as ce:
         print(colored(f"""命令:
         {command}

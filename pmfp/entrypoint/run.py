@@ -15,10 +15,10 @@ class RUN(EntryPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["commands"],
+        "required": ["command"],
         "properties": {
-            "commands": {
-                "description": "要执行的命令",
+            "command": {
+                "description": "要执行的命令,可以是形式为列表的字符串,会被解析为列表",
                 "type": "string"
             },
             "env": {
