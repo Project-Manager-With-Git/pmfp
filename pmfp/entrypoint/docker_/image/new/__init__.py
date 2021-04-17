@@ -54,6 +54,7 @@ if source_io:
 else:
     raise AttributeError("加载cxx_extend.temp模板失败")
 
+
 @dockerfile_new.as_main
 def new_dockerfile(language: str, dockerfile_name: str = "Dockerfile",
                    cross_compiling: bool = False, extend: bool = False,
