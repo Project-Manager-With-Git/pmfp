@@ -256,6 +256,7 @@ def gen_project_service_compose(compose_version: str,
                                 add_extra_secrets: Optional[List[str]] = None,
                                 add_extra_configs: Optional[List[str]] = None,
                                 add_volumes: Optional[List[str]] = None,
+                                with_deploy_config: Optional[str] = None,
                                 default_extra_hosts: Optional[List[str]] = None,
                                 default_log: Optional[LogSchema] = None
                                 ) -> ServiceSchema:
@@ -277,6 +278,7 @@ def gen_project_service_compose(compose_version: str,
         add_extra_secrets (Optional[List[str]], optional): 使用的密码. Defaults to None.
         add_extra_configs (Optional[List[str]], optional): 使用的配置. Defaults to None.
         add_volumes (Optional[List[str]], optional): 使用的挂载. Defaults to None.
+        with_deploy_config (Optional[str], optional): 是否添加部署项模板. Defaults to None.
         default_extra_hosts (Optional[List[str]], optional): 域名映射. Defaults to None.
         default_log (Optional[LogSchema], optional): log配置. Defaults to None.
 
@@ -358,9 +360,7 @@ def gen_project_service_compose(compose_version: str,
 
     if default_extra_hosts:
         project_serv.update({
-            "extra_hosts": {
-                "<<": default_extra_hosts
-            }
+            "extra_hosts": default_extra_hosts
         })
 
     # volumes
@@ -450,90 +450,227 @@ def gen_project_service_compose(compose_version: str,
             })
 
     # deploy
-    if compose_version == "2.4":
-        project_serv.update({
-            "cpus": "0.5",
-            "mem_limit": "256m",
-            "mem_reservation": "64m",
-            "restart": "on-failure",
-        })
+    if with_deploy_config:
+        if compose_version == "2.4":
+            if with_deploy_config == "replicated":
+                project_serv.update({
+                    "cpus": "0.5",
+                    "mem_limit": "256m",
+                    "mem_reservation": "64m",
+                    "restart": "on-failure",
+                    "scale": 3,
+                })
+            else:
+                project_serv.update({
+                    "cpus": "0.5",
+                    "mem_limit": "256m",
+                    "mem_reservation": "64m",
+                    "restart": "on-failure",
+                })
 
-    elif compose_version == "3.7":
-        project_serv.update({
-            "deploy": {
-                "mode": "global",
-                "resources": {
-                    "limits": {
-                        "cpus": "1.0",
-                        "memory": "400M"
-                    },
-                    "reservations": {
-                        "cpus": "0.25",
-                        "memory": "20M"
+        elif compose_version == "3.7":
+            if with_deploy_config == "replicated":
+                project_serv.update({
+                    "deploy": {
+                        "mode": "replicated",
+                        "replicas": 3,
+                        "resources": {
+                            "limits": {
+                                "cpus": "1.0",
+                                "memory": "400M"
+                            },
+                            "reservations": {
+                                "cpus": "0.25",
+                                "memory": "20M"
+                            }
+                        },
+                        "restart_policy": {
+                            "condition": "on-failure",
+                            "delay": "5s",
+                            "max_attempts": 3,
+                            "window": "100s"
+                        },
+                        "placement": {
+                            "constraints": ["node.role==manager"],
+                            "preferences": ["spread: node.labels.zone"]
+                        },
+                        "update_config": {
+                            "parallelism": 2,
+                            "delay": "10s",
+                            "order": "stop-first",
+                            "failure_action": "rollback"
+                        },
+                        "rollback_config": {
+                            "parallelism": 2,
+                            "delay": "2s",
+                            "order": "stop-first",
+                        }
                     }
-                },
-                "restart_policy": {
-                    "condition": "on-failure",
-                    "delay": "5s",
-                    "max_attempts": 3,
-                    "window": "100s"
-                },
-                "placement": {
-                    "constraints": ["node.role==manager"],
-                    "preferences": ["spread: node.labels.zone"]
-                },
-                "update_config": {
-                    "parallelism": 2,
-                    "delay": "10s",
-                    "order": "stop-first",
-                    "failure_action": "rollback"
-                },
-                "rollback_config": {
-                    "parallelism": 2,
-                    "delay": "2s",
-                    "order": "stop-first",
-                }
-            }
-        })
+                })
+            elif with_deploy_config == "global":
+                project_serv.update({
+                    "deploy": {
+                        "mode": "global",
+                        "resources": {
+                            "limits": {
+                                "cpus": "1.0",
+                                "memory": "400M"
+                            },
+                            "reservations": {
+                                "cpus": "0.25",
+                                "memory": "20M"
+                            }
+                        },
+                        "restart_policy": {
+                            "condition": "on-failure",
+                            "delay": "5s",
+                            "max_attempts": 3,
+                            "window": "100s"
+                        },
+                        "placement": {
+                            "constraints": ["node.role==manager"],
+                            "preferences": ["spread: node.labels.zone"]
+                        },
+                        "update_config": {
+                            "parallelism": 2,
+                            "delay": "10s",
+                            "order": "stop-first",
+                            "failure_action": "rollback"
+                        },
+                        "rollback_config": {
+                            "parallelism": 2,
+                            "delay": "2s",
+                            "order": "stop-first",
+                        }
+                    }
+                })
+            else:
+                project_serv.update({
+                    "deploy": {
+                        "resources": {
+                            "limits": {
+                                "cpus": "1.0",
+                                "memory": "400M"
+                            },
+                            "reservations": {
+                                "cpus": "0.25",
+                                "memory": "20M"
+                            }
+                        },
+                        "restart_policy": {
+                            "condition": "on-failure",
+                            "delay": "5s",
+                            "max_attempts": 3,
+                            "window": "100s"
+                        },
+                        "placement": {
+                            "constraints": ["node.role==manager"],
+                            "preferences": ["spread: node.labels.zone"]
+                        }
+                    }
+                })
     elif compose_version == "3.8":
-        project_serv.update({
-            "deploy": {
-                "mode": "replicated",
-                "replicas": 6,
-                "resources": {
-                    "limits": {
-                        "cpus": "1.0",
-                        "memory": "400M"
+        if with_deploy_config == "replicated":
+            project_serv.update({
+                "deploy": {
+                    "mode": "replicated",
+                    "replicas": 6,
+                    "resources": {
+                        "limits": {
+                            "cpus": "1.0",
+                            "memory": "400M"
+                        },
+                        "reservations": {
+                            "cpus": "0.25",
+                            "memory": "20M"
+                        }
                     },
-                    "reservations": {
-                        "cpus": "0.25",
-                        "memory": "20M"
+                    "restart_policy": {
+                        "condition": "on-failure",
+                        "delay": "5s",
+                        "max_attempts": 3,
+                        "window": "100s"
+                    },
+                    "placement": {
+                        "constraints": ["node.role==manager", "engine.labels.operatingsystem==ubuntu 18.04"],
+                        "preferences": ["spread: node.labels.zone"],
+                        "max_replicas_per_node": 1
+                    },
+                    "update_config": {
+                        "parallelism": 2,
+                        "delay": "10s",
+                        "order": "stop-first",
+                        "failure_action": "rollback"
+                    },
+                    "rollback_config": {
+                        "parallelism": 2,
+                        "delay": "2s",
+                        "order": "stop-first",
                     }
-                },
-                "restart_policy": {
-                    "condition": "on-failure",
-                    "delay": "5s",
-                    "max_attempts": 3,
-                    "window": "100s"
-                },
-                "placement": {
-                    "constraints": ["node.role==manager", "engine.labels.operatingsystem==ubuntu 18.04"],
-                    "preferences": ["spread: node.labels.zone"],
-                    "max_replicas_per_node": 1
-                },
-                "update_config": {
-                    "parallelism": 2,
-                    "delay": "10s",
-                    "order": "stop-first",
-                    "failure_action": "rollback"
-                },
-                "rollback_config": {
-                    "parallelism": 2,
-                    "delay": "2s",
-                    "order": "stop-first",
                 }
-            }
-        })
+            })
+        elif with_deploy_config == "global":
+            project_serv.update({
+                "deploy": {
+                    "mode": "global",
+                    "resources": {
+                        "limits": {
+                            "cpus": "1.0",
+                            "memory": "400M"
+                        },
+                        "reservations": {
+                            "cpus": "0.25",
+                            "memory": "20M"
+                        }
+                    },
+                    "restart_policy": {
+                        "condition": "on-failure",
+                        "delay": "5s",
+                        "max_attempts": 3,
+                        "window": "100s"
+                    },
+                    "placement": {
+                        "constraints": ["node.role==manager"],
+                        "preferences": ["spread: node.labels.zone"]
+                    },
+                    "update_config": {
+                        "parallelism": 2,
+                        "delay": "10s",
+                        "order": "stop-first",
+                        "failure_action": "rollback"
+                    },
+                    "rollback_config": {
+                        "parallelism": 2,
+                        "delay": "2s",
+                        "order": "stop-first",
+                    }
+                }
+            })
+        else:
+            project_serv.update({
+                "deploy": {
+                    "resources": {
+                        "limits": {
+                                "cpus": "1.0",
+                                "memory": "400M"
+                                },
+                        "reservations": {
+                            "cpus": "0.25",
+                            "memory": "20M"
+                        }
+                    },
+                    "restart_policy": {
+                        "condition": "on-failure",
+                        "delay": "5s",
+                        "max_attempts": 3,
+                        "window": "100s"
+                    },
+                    "placement": {
+                        "constraints": ["node.role==manager"],
+                        "preferences": ["spread: node.labels.zone"]
+                    }
+                }
+            })
     else:
         raise AttributeError(f"unsupport compose_version {compose_version}")
 
@@ -553,7 +690,8 @@ def gen_compose(compose_version: str,
                 add_volumes: Optional[List[str]] = None,
                 fluentd_url: Optional[str] = None,
                 extra_hosts: Optional[List[str]] = None,
-                add_service: Optional[List[str]] = None
+                add_service: Optional[List[str]] = None,
+                with_deploy_config: Optional[str] = None
                 ) -> ComposeSchema:
     """生成compose字典.
 
@@ -576,6 +714,7 @@ def gen_compose(compose_version: str,
         extra_hosts (Optional[List[str]], optional): 全局extra域名映射. Defaults to None.
         fluentd_url (Optional[str], optional): fluentd的地址. Defaults to None.
         add_service (Optional[List[str]], optional): 添加的额外服务项
+        with_deploy_config (Optional[str], optional): 是否添加部署项模板. Defaults to None.
 
     Returns:
         ComposeSchema: compose 文件整体
@@ -586,15 +725,13 @@ def gen_compose(compose_version: str,
     compose.update({
         "version": compose_version,
         "x-log": default_log,
-        "default_log": default_log,
     })
     default_extra_hosts = None
     if extra_hosts:
         default_extra_hosts = gen_default_extra_hosts_compose(extra_hosts)
-        compose.update({
-            "x-extra_hosts": default_extra_hosts,
-            "default_extra_hosts": default_extra_hosts,
-        })
+        # compose.update({
+        #     "x-extra_hosts": default_extra_hosts,
+        # })
     # service
     services: ServicesSchema = {}
     project_service = gen_project_service_compose(
@@ -613,6 +750,7 @@ def gen_compose(compose_version: str,
         add_extra_secrets=add_extra_secrets,
         add_extra_configs=add_extra_configs,
         add_volumes=add_volumes,
+        with_deploy_config=with_deploy_config,
         default_extra_hosts=default_extra_hosts,
         default_log=default_log)
     if project_name:

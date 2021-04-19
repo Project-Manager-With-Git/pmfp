@@ -1,9 +1,6 @@
 from typing import Optional
 from .typedef import (
-    LogSchema,
-    VolumesSchema,
     NetworksSchema,
-    ConfigAndSecretSchema,
     ServiceSchema,
     ServicesSchema,
     ComposeSchema
@@ -13,7 +10,6 @@ from .typedef import (
 def level1(old: ComposeSchema, new: ComposeSchema) -> ComposeSchema:
     """尽量更新."""
     old_log = new.get("x-log")
-    old_extra_hosts = old.get("x-extra_hosts")
     old_services: Optional[ServicesSchema] = old.get("services")
     old_networks = old.get("networks")
     old_volumes = old.get("volumes")
@@ -22,7 +18,6 @@ def level1(old: ComposeSchema, new: ComposeSchema) -> ComposeSchema:
 
     new_version = new["version"]
     new_log = new.get("x-log")
-    new_extra_hosts = new.get("x-extra_hosts")
     new_services = new.get("services")
     new_networks = new.get("networks")
     new_volumes = new.get("volumes")
@@ -35,24 +30,9 @@ def level1(old: ComposeSchema, new: ComposeSchema) -> ComposeSchema:
     # log
     if new_log:
         result["x-log"] = new_log
-        result["default_log"] = new_log
     else:
         if old_log:
             result["x-log"] = old_log
-            result["default_log"] = old_log
-    # new_extra_hosts
-    if new_extra_hosts:
-        new_extra_hosts_set = set(new_extra_hosts)
-    else:
-        new_extra_hosts_set = set([])
-    if old_extra_hosts:
-        old_extra_hosts_set = set(old_extra_hosts)
-    else:
-        old_extra_hosts_set = set([])
-    merged_extra_hosts = list(old_extra_hosts_set | new_extra_hosts_set)
-    result["x-extra_hosts"] = merged_extra_hosts
-    result["default_extra_hosts"] = merged_extra_hosts
-
     # services
     services = {}
     if old_services:
@@ -103,7 +83,6 @@ def level1(old: ComposeSchema, new: ComposeSchema) -> ComposeSchema:
 def level2(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") -> ComposeSchema:
     old_version = old["version"]
     old_log = new.get("x-log")
-    old_extra_hosts = old.get("x-extra_hosts")
     old_services: Optional[ServicesSchema] = old.get("services")
     old_other_servs: ServicesSchema = {}
     old_project_serv: ServiceSchema = {}
@@ -120,7 +99,6 @@ def level2(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
 
     new_version = new["version"]
     new_log = new.get("x-log")
-    new_extra_hosts = new.get("x-extra_hosts")
     new_services = new.get("services")
     new_other_servs: ServicesSchema = {}
     new_project_serv: ServiceSchema = {}
@@ -142,23 +120,9 @@ def level2(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
     # log
     if new_log:
         result["x-log"] = new_log
-        result["default_log"] = new_log
     else:
         if old_log:
             result["x-log"] = old_log
-            result["default_log"] = old_log
-    # new_extra_hosts
-    if new_extra_hosts:
-        new_extra_hosts_set = set(new_extra_hosts)
-    else:
-        new_extra_hosts_set = set([])
-    if old_extra_hosts:
-        old_extra_hosts_set = set(old_extra_hosts)
-    else:
-        old_extra_hosts_set = set([])
-    merged_extra_hosts = list(old_extra_hosts_set | new_extra_hosts_set)
-    result["x-extra_hosts"] = merged_extra_hosts
-    result["default_extra_hosts"] = merged_extra_hosts
 
     # services
     services = {}
@@ -215,7 +179,6 @@ def level2(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
 def level3(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") -> ComposeSchema:
     old_version = old["version"]
     old_log = new.get("x-log")
-    old_extra_hosts = old.get("x-extra_hosts")
     old_services: Optional[ServicesSchema] = old.get("services")
     old_other_servs: ServicesSchema = {}
     old_project_serv: ServiceSchema = {}
@@ -232,7 +195,6 @@ def level3(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
 
     new_version = new["version"]
     new_log = new.get("x-log")
-    new_extra_hosts = new.get("x-extra_hosts")
     new_services = new.get("services")
     new_other_servs: ServicesSchema = {}
     new_project_serv: ServiceSchema = {}
@@ -254,24 +216,9 @@ def level3(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
     # log
     if old_log:
         result["x-log"] = old_log
-        result["default_log"] = old_log
     else:
         if new_log:
             result["x-log"] = new_log
-            result["default_log"] = new_log
-
-    # new_extra_hosts
-    if new_extra_hosts:
-        new_extra_hosts_set = set(new_extra_hosts)
-    else:
-        new_extra_hosts_set = set([])
-    if old_extra_hosts:
-        old_extra_hosts_set = set(old_extra_hosts)
-    else:
-        old_extra_hosts_set = set([])
-    merged_extra_hosts = list(old_extra_hosts_set | new_extra_hosts_set)
-    result["x-extra_hosts"] = merged_extra_hosts
-    result["default_extra_hosts"] = merged_extra_hosts
 
     # services
     services = {}
@@ -346,7 +293,6 @@ def level3(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
 def level4(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") -> ComposeSchema:
     old_version = old["version"]
     old_log = new.get("x-log")
-    old_extra_hosts = old.get("x-extra_hosts")
     old_services: Optional[ServicesSchema] = old.get("services")
     old_other_servs: ServicesSchema = {}
     old_project_serv: ServiceSchema = {}
@@ -363,7 +309,6 @@ def level4(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
 
     new_version = new["version"]
     new_log = new.get("x-log")
-    new_extra_hosts = new.get("x-extra_hosts")
     new_services = new.get("services")
     new_other_servs: ServicesSchema = {}
     new_project_serv: ServiceSchema = {}
@@ -385,24 +330,9 @@ def level4(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
     # log
     if new_log:
         result["x-log"] = new_log
-        result["default_log"] = new_log
     else:
         if old_log:
             result["x-log"] = old_log
-            result["default_log"] = old_log
-    # new_extra_hosts
-    if new_extra_hosts:
-        new_extra_hosts_set = set(new_extra_hosts)
-    else:
-        new_extra_hosts_set = set([])
-    if old_extra_hosts:
-        old_extra_hosts_set = set(old_extra_hosts)
-    else:
-        old_extra_hosts_set = set([])
-    merged_extra_hosts = list(old_extra_hosts_set | new_extra_hosts_set)
-    result["x-extra_hosts"] = merged_extra_hosts
-    result["default_extra_hosts"] = merged_extra_hosts
-
     # services
     services = {}
     if old_other_servs:
@@ -410,16 +340,33 @@ def level4(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
     if new_other_servs:
         services.update(new_other_servs)
     project_serv: ServiceSchema = {}
-    
     if old_project_serv:
         project_serv.update(old_project_serv)
     if new_project_serv:
-        project_serv.update(new_project_serv)
+        for key, value in project_serv.items():
+            if isinstance(value, list):
+                if new_project_serv.get(key):
+                    if isinstance(new_project_serv.get(key), list):
+                        project_serv[key] = list(set(new_project_serv.get(key)) | set(value))
+                    else:
+                        project_serv[key] = new_project_serv.get(key)
+            elif isinstance(value, dict):
+                if new_project_serv.get(key):
+                    if isinstance(new_project_serv.get(key), dict):
+                        project_serv[key].update(new_project_serv.get(key))
+                    else:
+                        project_serv[key] = new_project_serv.get(key)
+            else:
+                if new_project_serv.get(key):
+                    project_serv[key] = new_project_serv.get(key)
+
+        for k, v in new_project_serv.items():
+            if k not in project_serv:
+                project_serv[k] = v
     services[project_name] = project_serv
 
     if services:
         result["services"] = services
-
 
     # networks
     networks = {}
@@ -460,9 +407,7 @@ def level4(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
 
 
 def level5(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") -> ComposeSchema:
-    old_version = old["version"]
     old_log = new.get("x-log")
-    old_extra_hosts = old.get("x-extra_hosts")
     old_services: Optional[ServicesSchema] = old.get("services")
     old_other_servs: ServicesSchema = {}
     old_project_serv: ServiceSchema = {}
@@ -479,7 +424,6 @@ def level5(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
 
     new_version = new["version"]
     new_log = new.get("x-log")
-    new_extra_hosts = new.get("x-extra_hosts")
     new_services = new.get("services")
     new_other_servs: ServicesSchema = {}
     new_project_serv: ServiceSchema = {}
@@ -501,24 +445,9 @@ def level5(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
     # log
     if old_log:
         result["x-log"] = old_log
-        result["default_log"] = old_log
     else:
         if new_log:
             result["x-log"] = new_log
-            result["default_log"] = new_log
-
-    # new_extra_hosts
-    if new_extra_hosts:
-        new_extra_hosts_set = set(new_extra_hosts)
-    else:
-        new_extra_hosts_set = set([])
-    if old_extra_hosts:
-        old_extra_hosts_set = set(old_extra_hosts)
-    else:
-        old_extra_hosts_set = set([])
-    merged_extra_hosts = list(old_extra_hosts_set | new_extra_hosts_set)
-    result["x-extra_hosts"] = merged_extra_hosts
-    result["default_extra_hosts"] = merged_extra_hosts
 
     # services
     services = {}
@@ -532,7 +461,28 @@ def level5(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
     if old_project_serv:
         project_serv.update(old_project_serv)
     if new_project_serv:
-        project_serv.update(new_project_serv)
+        for key, value in project_serv.items():
+            if key in ("deploy", "cpus", "mem_limit", "mem_reservation", "restart",):
+                continue
+            new_project_compose = new_project_serv.get(key)
+            if new_project_compose:
+                if isinstance(value, list):
+                    if isinstance(new_project_compose, list):
+                        project_serv[key] = list(set(new_project_compose) | set(value))
+                    else:
+                        project_serv[key] = new_project_compose
+                elif isinstance(value, dict):
+                    if isinstance(new_project_compose, dict):
+                        project_serv[key].update(new_project_serv.get(key))
+                    else:
+                        project_serv[key] = new_project_compose
+                else:
+
+                    project_serv[key] = new_project_compose
+
+        for k, v in new_project_serv.items():
+            if k not in project_serv:
+                project_serv[k] = v
     services[project_name] = project_serv
     if services:
         result["services"] = services
@@ -590,16 +540,18 @@ def level5(old: ComposeSchema, new: ComposeSchema, project_name: str = "app") ->
     return result
 
 
-def merge_compose(old: ComposeSchema, new: ComposeSchema, project_name: str = "app", updatemode: str = "level2") -> ComposeSchema:
-    if updatemode == "level1":
+def merge_compose(old: ComposeSchema, new: ComposeSchema, project_name: str = "app", updatemode: str = "level5") -> ComposeSchema:
+    if updatemode == "cover":
+        return new
+    elif updatemode == "level1":
         return level1(old, new)
     elif updatemode == "level2":
         return level2(old, new, project_name)
     elif updatemode == "level3":
         return level3(old, new, project_name)
     elif updatemode == "level4":
-        return level2(old, new, project_name)
+        return level4(old, new, project_name)
     elif updatemode == "level5":
-        return level3(old, new, project_name)
+        return level5(old, new, project_name)
     else:
         raise AttributeError(f"un support updatemode {updatemode}")

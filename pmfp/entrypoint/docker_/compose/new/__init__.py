@@ -6,6 +6,7 @@ from pmfp.utils.fs_utils import get_abs_path
 from .core import dockercompose_new
 
 from .new_compose_dict import gen_compose
+from .merge_compose_dict import merge_compose
 from .save_compose import save_compose
 
 
@@ -13,7 +14,7 @@ from .save_compose import save_compose
 def new_dockercompose(
         compose_version: str,
         dockercompose_name: str = "docker-compose.yml",
-        updatemode: str = "level2",
+        updatemode: str = "level5",
         dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None,
         docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None,
         project_name: Optional[str] = None, version: Optional[str] = None,
@@ -27,6 +28,7 @@ def new_dockercompose(
         fluentd_url: Optional[str] = None,
         extra_hosts: Optional[List[str]] = None,
         add_service: Optional[List[str]] = None,
+        with_deploy_config: Optional[str] = None,
         cwd: str = ".") -> None:
 
     cwdp = get_abs_path(cwd)
@@ -49,7 +51,8 @@ def new_dockercompose(
         add_volumes=add_volumes,
         fluentd_url=fluentd_url,
         extra_hosts=extra_hosts,
-        add_service=add_service
+        add_service=add_service,
+        with_deploy_config=with_deploy_config
     )
     if docker_composep.exists():
         # 如果指定名字的compose文件已经存在,则执行更新操作
@@ -61,30 +64,10 @@ def new_dockercompose(
         with open(docker_composep_bak, "w", newline="", encoding="utf-8") as f:
             f.write(StackFileContent)
         # 执行更新
-        if updatetype == "cover":
-            save_compose(compose=new_compose, cwdp=cwdp, dockercompose_name=dockercompose_name)
-        else:
-            pass
-
-        # new_compose(compose_version=compose_version,
-        #             dockercompose_name=dockercompose_name,
-        #             dockerfile_dir=dockerfile_dir,
-        #             dockerfile_name=dockerfile_name,
-        #             docker_register=docker_register,
-        #             docker_register_namespace=docker_register_namespace,
-        #             project_name=project_name,
-        #             version=version,
-        #             nfs_addr=nfs_addr,
-        #             nfs_shared_path=nfs_shared_path,
-        #             use_nfs_v4=use_nfs_v4,
-        #             language=language,
-        #             extend=extend,
-        #             fluentd_url=fluentd_url,
-        #             extra_hosts=extra_hosts,
-        #             use_host_network=use_host_network,
-        #             ports=ports,
-        #             add_service=add_service,
-        #             cwdp=cwdp)
+        if not project_name:
+            project_name = "app"
+        merged_compose = merge_compose(old=yaml.load(StackFileContent), new=new_compose, project_name=project_name, updatemode=updatemode)
+        save_compose(compose=merged_compose, cwdp=cwdp, dockercompose_name=dockercompose_name)
     else:
         # 如果指定名字的compose文件不存在,则执行创建操作
         save_compose(compose=new_compose, cwdp=cwdp, dockercompose_name=dockercompose_name)

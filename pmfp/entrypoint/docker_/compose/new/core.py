@@ -7,6 +7,12 @@ from ..core import (
 )
 
 properties: Dict[str, object] = {
+    "dockercompose_name": {
+        "type": "string",
+        "title": "f",
+        "description": "指定docker-compose文件名字",
+        "default": "docker-compose.yml"
+    },
     "dockerfile_dir": {
         "type": "string",
         "description": "dockerfile文件所在的文件夹,如果指定则会构造`build`段,在未指定`docker_register_namespace`时会被默认指定为`.`"
@@ -14,18 +20,6 @@ properties: Dict[str, object] = {
     "dockerfile_name": {
         "type": "string",
         "description": "dockerfile文件名字,只有在dockerfile_dir有值时才会生效"
-    },
-    "updatemode": {
-        "type": "string",
-        "description": """当指定名称的compose已经存在时使用哪种方式更新,可以选择:
-        `cover`:新的覆盖旧的,
-        `level1`:以第一层为基准合并(services,volumes...),
-        `level2`:以第二层为基准合并(level1基础上项目service单独更新)
-        `level3`:以第二层为基准合并(service单独更新,并且尽量不动旧的)
-        `level4`:以第三层为基准合并(level1基础上项目service单独更新,且service更新精细到内容一级)
-        `level5`:以第三层为基准合并(service单独更新,且service更新精细到内容一级,并且尽量不动旧的)""",
-        "enum": ["cover", "level1", "level2", "level3","level4", "level5"],
-        "default": "merge_only_project"
     }
 }
 

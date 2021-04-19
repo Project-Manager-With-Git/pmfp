@@ -125,16 +125,14 @@ LoggingAliasSchema = TypedDict("LoggingAliasSchema", {
     "<<": LogSchema
 })
 
-ExtraHostsAliasSchema = TypedDict("ExtraHostsAliasSchema", {
-    "<<": List[str]
-})
+
 ServiceSchema = TypedDict("ServiceSchema", {
     "hostname": str,
     "image": str,
     "build": Union[str, BuildSchema],
     "logging": Union[LogSchema, LoggingAliasSchema],
     "network_mode": str,
-    "extra_hosts": Union[List[str], ExtraHostsAliasSchema],
+    "extra_hosts": List[str],
     "networks": List[str],
     "ports": Sequence[Union[str, PortSchema]],
     "volumes": List[str],
@@ -146,6 +144,7 @@ ServiceSchema = TypedDict("ServiceSchema", {
     "mem_limit": str,
     "mem_reservation": str,
     "restart": str,
+    "scale": int,
     "deploy": DeploySchema
 }, total=False)
 
@@ -156,10 +155,6 @@ ServicesSchema = Dict[str, ServiceSchema]
 ComposeSchema = TypedDict("ComposeSchema", {
     "version": str,
     "x-log": LogSchema,
-    "default_log": LogSchema,
-    "x-extra_hosts": List[str],
-    "default_extra_hosts": List[str],
-    "extra_hosts": List[str],
     "services": ServicesSchema,
     "networks": NetworksSchema,
     "volumes": VolumesSchema,

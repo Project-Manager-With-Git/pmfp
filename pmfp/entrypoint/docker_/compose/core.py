@@ -11,22 +11,6 @@ dockercompose = docker.regist_sub(Compose)
 
 
 common_schema_properties = {
-    "compose_version": {
-        "type": "string",
-        "title": "w",
-        "description": "指定生成的docker-compose版本",
-        "enum": ["2.4", "3.7", "3.8"]
-    },
-    "dockercompose_name": {
-        "type": "string",
-        "title": "f",
-        "description": "指定生成的docker-compose文件名字",
-        "default": "docker-compose.yml"
-    },
-    "fluentd_url": {
-        "description": "使用fluentd收集log的url,如果未定义则使用json-log",
-        "type": "string"
-    },
     "docker_register": {
         "type": "string",
         "title": "r",
@@ -46,6 +30,33 @@ common_schema_properties = {
         "type": "string",
         "title": "v",
         "description": "镜像版本,用于构造镜像名"
+    },
+    "cwd": {
+        "type": "string",
+        "description": "执行位置",
+        "default": "."
+    },
+    "updatemode": {
+        "type": "string",
+        "description": """当指定名称的compose已经存在时使用哪种方式更新,可以选择:
+        `cover`:新的覆盖旧的,
+        `level1`:以第一层为基准合并(services,volumes...),
+        `level2`:以第二层为基准合并(level1基础上项目service单独更新)
+        `level3`:以第二层为基准合并(service单独更新,并且尽量不动旧的)
+        `level4`:以第三层为基准合并(level1基础上项目service单独更新,且service更新精细到内容一级)
+        `level5`:以第三层为基准合并(service单独更新,且service更新精细到内容一级,并且尽量不动旧的,注意deploy部分不会改变,默认)""",
+        "enum": ["cover", "level1", "level2", "level3", "level4", "level5"],
+        "default": "level5"
+    },
+    "compose_version": {
+        "type": "string",
+        "title": "w",
+        "description": "指定生成的docker-compose版本",
+        "enum": ["2.4", "3.7", "3.8"]
+    },
+    "fluentd_url": {
+        "description": "使用fluentd收集log的url,如果未定义则使用json-log",
+        "type": "string"
     },
     "command": {
         "type": "string",
@@ -123,9 +134,9 @@ common_schema_properties = {
             "type": "string"
         }
     },
-    "cwd": {
+    "with_deploy_config": {
         "type": "string",
-        "description": "执行位置",
-        "default": "."
-    },
+        "description": "是否配置部署项模板",
+        "enmu": ["simple", "global", "replicated"]
+    }
 }
