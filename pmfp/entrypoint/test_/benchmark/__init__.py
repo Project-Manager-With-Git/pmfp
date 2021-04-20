@@ -1,4 +1,4 @@
-"""编译protobuf的schema为不同语言的代码."""
+"""性能基准测试."""
 from typing import Dict, Any, List, Optional
 from .test_py import benchmark_test_py
 from .test_go import benchmark_test_go

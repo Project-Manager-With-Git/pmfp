@@ -1,3 +1,4 @@
+"""ppm docker image new命令的处理."""
 import re
 import pkgutil
 import warnings

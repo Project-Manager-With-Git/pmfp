@@ -1,4 +1,4 @@
-"""ppm docker image new命令的处理."""
+"""ppm docker compose new命令的处理."""
 from typing import Dict
 from pmfp.utils.endpoint import EndPoint
 from ..core import (

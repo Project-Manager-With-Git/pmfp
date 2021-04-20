@@ -1,3 +1,4 @@
+"""ppm docker compose deploy命令的处理."""
 import warnings
 from typing import Optional, List
 from pmfp.utils.fs_utils import get_abs_path

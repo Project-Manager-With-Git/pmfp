@@ -62,9 +62,9 @@ def sphinx_config_update_version(source_dir: Path, version: str) -> None:
     with open(source_dir.joinpath("conf.py"), "r", encoding="utf-8") as fr:
         for line in fr.readlines():
             if line.startswith("version"):
-                line = f"version = '{version}'"
+                line = f"version = '{version}'\n"
             if line.startswith("release"):
-                line = f"release= '{version}'"
+                line = f"release= '{version}'\n"
             content.append(line)
 
     with open(source_dir.joinpath("conf.py"), "w", newline="", encoding="utf-8") as fw:

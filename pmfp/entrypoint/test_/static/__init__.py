@@ -1,11 +1,11 @@
-"""编译protobuf的schema为不同语言的代码."""
+"""动态语言做静态类型检测."""
 from typing import Dict, Any, List
 from .test_py import static_test_py
 from .core import test_static
 
 
 @test_static.as_main
-def static_test(language: str, code: str, output: str, *, model: bool=False, coverage: bool=False,cwd: str=".") -> None:
+def static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = ".") -> None:
     """对动态语言做静态类型检验.
 
     Args:

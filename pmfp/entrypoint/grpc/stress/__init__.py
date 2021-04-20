@@ -1,5 +1,5 @@
 
-"""列出远程grpc上的服务列表"""
+"""压测grpc服务."""
 import warnings
 from pathlib import Path
 from typing import Optional

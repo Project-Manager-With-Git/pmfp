@@ -5,7 +5,6 @@ from ..core import ppm
 
 class Install(EndPoint):
     """为执行环境安装依赖."""
-    argparse_noflag = "packages"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
@@ -14,11 +13,8 @@ class Install(EndPoint):
             "env": {
                 "description": "静态类型检验针对的语言",
                 "title": "e",
-                "type": "array",
-                "items": {
-                    "type": "string",
-                    "enum": ["venv", "conda", "gomod"]
-                }
+                "type": "string",
+                "enum": ["venv", "conda", "gomod"]
             },
             "requires": {
                 "type": "array",

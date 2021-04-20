@@ -1,4 +1,4 @@
-"""ppm test命令的处理."""
+"""ppm doc命令的处理."""
 from schema_entry import EntryPoint
 from ..core import ppm
 

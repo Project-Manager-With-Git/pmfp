@@ -1,5 +1,5 @@
 
-"""构造不同执行环境."""
+"""不同执行环境安装依赖."""
 import sys
 import json
 import warnings
@@ -12,7 +12,7 @@ from .python_install import python_install
 
 
 @install.as_main
-def install_requires(env: List[str], *,
+def install_requires(env: str, *,
                      requires: Optional[List[str]] = None,
                      test_requires: Optional[List[str]] = None,
                      setup_requires: Optional[List[str]] = None,
@@ -27,7 +27,7 @@ def install_requires(env: List[str], *,
                    setup_requires=setup_requires,
                    extras_requires=extras_requires)
     if env in ("conda", "venv"):
-        python_install(cwd=cwdp,
+        python_install(cwd=cwdp, env=env,
                        requires=requires,
                        test_requires=test_requires,
                        setup_requires=setup_requires,

@@ -1,4 +1,4 @@
-"""创建protobuf的schema."""
+"""创建grpc的protobuf文件."""
 import subprocess
 import warnings
 import pkgutil

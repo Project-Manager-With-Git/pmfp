@@ -3,7 +3,10 @@ from ..core import test
 
 
 class Unittest(EndPoint):
-    """对源码做单元测试."""
+    """对源码做单元测试.
+
+    单元测试的覆盖率会放到指定位置.
+    """
     argparse_noflag = "test_code"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",

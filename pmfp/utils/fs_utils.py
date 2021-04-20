@@ -11,9 +11,6 @@ from typing import (
     Any
 )
 from pmfp.const import (
-    PMFP_CONFIG_PATH,
-    PMFP_CONFIG_HOME,
-    DEFAULT_PMFPRC,
     PLATFORM
 )
 
@@ -126,26 +123,6 @@ def tempdir(p: Path, cb: Callable[[Path], None]) -> None:
             print(f"因为错误{str(e)}跳过删除目录 {str(p)}")
     except Exception as e:
         raise e
-
-
-def init_pmfprc() -> None:
-    """初始化pmfp的配置."""
-    if not PMFP_CONFIG_PATH.exists():
-        if not PMFP_CONFIG_HOME.exists():
-            PMFP_CONFIG_HOME.mkdir(parents=True)
-        config = {}
-        config.update(DEFAULT_PMFPRC)
-        with open(PMFP_CONFIG_PATH, "w") as fw:
-            json.dump(config, fw, ensure_ascii=False, indent=4, sort_keys=True)
-
-
-def get_cache_dir() -> Path:
-    """获取缓存根目录."""
-    init_pmfprc()
-    with open(PMFP_CONFIG_PATH, "r", encoding="utf-8") as f:
-        config = json.load(f)
-        cache_dir = Path(config["cache_dir"])
-    return cache_dir
 
 
 def delete_source(root_path: Path, *,

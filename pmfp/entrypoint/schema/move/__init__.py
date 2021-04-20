@@ -1,4 +1,4 @@
-"""创建json schema的schema."""
+"""迁移旧的json schema模式文件."""
 import os
 import json
 from pathlib import Path

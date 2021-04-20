@@ -1,4 +1,4 @@
-"""ppm test命令的处理."""
+"""ppm docker compose deploy命令的处理."""
 from typing import Dict
 from schema_entry import EntryPoint
 from ..core import dockercompose, common_schema_properties
@@ -39,7 +39,7 @@ properties: Dict[str, object] = {
         "default": False
     },
     "update_version": {
-        "type": bool,
+        "type": "boolean",
         "description": "是否更新版本为当前项目版本",
         "default": False
     }

@@ -1,6 +1,6 @@
 """打包指定项目.
 
-打包操作只对静态语言有效
+打包操作只对动态语言有效
 """
 import warnings
 from pathlib import Path

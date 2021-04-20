@@ -10,7 +10,8 @@ PLATFORM = platform.system()
 GOLBAL_PYTHON = "python" if PLATFORM == 'Windows' else "python3"
 # GOLBAL_CC 全局c编译器
 GOLBAL_CC = "msvc" if PLATFORM == 'Windows' else "gcc"
-
+# GOLBAL_CXX 全局c++编译器
+GOLBAL_CXX = "msvc" if PLATFORM == 'Windows' else "g++"
 # GOLBAL_PYTHON_VERSION 全局python的版本
 GOLBAL_PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1])
 # PMFP_CONFIG_DEFAULT_NAME
@@ -30,7 +31,11 @@ TYPECHECK_PATH = "typecheck"
 
 DEFAULT_PMFPRC = {
     "cache_dir": str(PMFP_CONFIG_HOME.joinpath("cache")),
+    "default_template_host": "github.com",
+    "default_template_namespace": "Project-Manager-With-Git",
+    "template_config_name": ".pmfp_template.json",
     "python": GOLBAL_PYTHON,
-    "cc": GOLBAL_CC
+    "cc": GOLBAL_CC,
+    "cxx": GOLBAL_CXX
 }
 DEFAULT_AUTHOR = getpass.getuser()

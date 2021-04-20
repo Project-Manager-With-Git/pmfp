@@ -1,4 +1,4 @@
-"""编译protobuf的schema为不同语言的代码."""
+"""编译grpc的protobuf为不同语言的代码并构造模板."""
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from pmfp.utils.fs_utils import get_abs_path, get_abs_path_str

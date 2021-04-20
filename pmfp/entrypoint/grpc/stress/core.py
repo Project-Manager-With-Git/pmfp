@@ -3,9 +3,9 @@ from ..core import grpc
 
 
 class Stress(EndPoint):
-    """请求指定grpc的服务.
+    """压测指定grpc的服务.
 
-    需要本地有`grpcurl`,可以在`https://github.com/fullstorydev/grpcurl/releases`下载安装
+    需要本地有`ghz`,可以在`https://github.com/bojand/ghz`下载安装
     """
     argparse_noflag = "url"
     schema = {

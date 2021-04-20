@@ -1,2 +1,2 @@
-from .new import new_env
+from .info import project_info
 # from .build_ import build_doc

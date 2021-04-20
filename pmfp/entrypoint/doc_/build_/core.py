@@ -4,7 +4,6 @@ from ..core import doc
 
 class Build(EndPoint):
     """为指定编程语言编译api文档."""
-    argparse_noflag = "doc_source_dir"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
@@ -13,7 +12,7 @@ class Build(EndPoint):
             "language": {
                 "type": "string",
                 "title": "l",
-                "description": "单元测试检验针对的语言",
+                "description": "文档针对的语言",
                 "enum": ["py"]
             },
             "output": {
@@ -30,7 +29,7 @@ class Build(EndPoint):
             "version": {
                 "type": "string",
                 "title": "v",
-                "description": "文档源码位置"
+                "description": "项目版本"
             },
             "cwd": {
                 "type": "string",

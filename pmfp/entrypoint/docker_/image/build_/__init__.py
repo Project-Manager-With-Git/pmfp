@@ -1,3 +1,4 @@
+"""ppm docker image build命令的处理."""
 from typing import List, Optional
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run

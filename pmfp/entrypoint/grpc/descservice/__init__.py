@@ -1,5 +1,4 @@
-
-"""列出远程grpc上的服务信息"""
+"""查看远程grpc上的指定接口服务信息"""
 import warnings
 from pathlib import Path
 from typing import Optional

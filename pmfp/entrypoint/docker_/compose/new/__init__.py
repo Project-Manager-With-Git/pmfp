@@ -1,3 +1,4 @@
+"""ppm docker compose new命令的处理."""
 import warnings
 import time
 from typing import Optional, List

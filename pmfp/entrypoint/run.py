@@ -21,7 +21,7 @@ class RUN(EntryPoint):
                 "description": "要执行的命令,可以是形式为列表的字符串,会被解析为列表",
                 "type": "string"
             },
-            "env": {
+            "env_args": {
                 "type": "array",
                 "description": "执行命令时的环境变量",
                 "items": {
@@ -41,9 +41,9 @@ run = ppm.regist_sub(RUN)
 
 
 @run.as_main
-def run_cmd(command: str, *, cwd: str = ".", env: Optional[List[str]] = None) -> None:
-    if env:
-        envs = {i.split(":")[0]: i.split(":")[1] for i in env if len(i.split(":")) == 2}
+def run_cmd(command: str, *, cwd: str = ".", env_args: Optional[List[str]] = None) -> None:
+    if env_args:
+        envs = {i.split(":")[0]: i.split(":")[1] for i in env_args if len(i.split(":")) == 2}
         default_environ = dict(os.environ)
         e: Dict[str, str] = {}
         e.update(**default_environ)

@@ -9,6 +9,7 @@ from pmfp.const import PMFP_CONFIG_DEFAULT_NAME
 
 
 def python_install(cwd: Path,
+                   env: str,
                    requires: Optional[List[str]] = None,
                    test_requires: Optional[List[str]] = None,
                    setup_requires: Optional[List[str]] = None,
@@ -18,8 +19,10 @@ def python_install(cwd: Path,
     if setupcfg_path.exists():
         with open(setupcfg_path) as f:
             config.read_file(f)
-
-    command_temp = "python install "
+    if env == "conda":
+        command_temp = "conda install {req}"
+    else:
+        command_temp = "pip install {req}"
     if any([requires, test_requires, setup_requires, extras_requires]):
         if any([requires, test_requires, setup_requires]) and "options" not in config.sections():
             config.add_section("options")

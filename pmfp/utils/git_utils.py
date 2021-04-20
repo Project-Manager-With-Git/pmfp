@@ -1,4 +1,5 @@
 """git相关的动作."""
+import warnings
 import configparser
 import time
 from pathlib import Path
@@ -127,7 +128,7 @@ def git_clone(url: str, to: Path, *,
         to (Path): 本地项目路径
         branch (str, optional): 拉取的分支. Defaults to "master".
     """
-    with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"]) as repo:
+    with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"]):
         print("git clone ok")
 
 
@@ -199,6 +200,23 @@ def git_push(p: Path, *, msg: str = "update") -> None:
         print("git pull执行成功")
         repo.remote().push()
         print("git push执行成功")
+
+
+def git_pull_master(p: Path) -> None:
+    """git项目推代码到远端仓库.
+
+    Args:
+        p (Path): 本地仓库位置
+        msg (str): 注释消息
+
+    """
+    d = make_repod(p)
+    with Repo(d) as repo:
+        if repo.active_branch != "master":
+            warnings.warn(f"active_branch {repo.active_branch} not master")
+        orgin = repo.remote()
+        orgin.pull()
+        print(f"pull master from orgin {orgin.urls} ok")
 
 
 def git_new_tag(p: Path, version: str, message: Optional[str] = None, remote: bool = False) -> None:

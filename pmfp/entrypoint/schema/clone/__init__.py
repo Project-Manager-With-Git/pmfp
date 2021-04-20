@@ -1,4 +1,4 @@
-"""创建json schema的schema."""
+"""克隆json schema模式文本."""
 import os
 import json
 from pathlib import Path

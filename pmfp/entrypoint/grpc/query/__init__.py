@@ -1,5 +1,5 @@
 
-"""列出远程grpc上的服务列表"""
+"""请求指定grpc接口"""
 import warnings
 from pathlib import Path
 from typing import Optional

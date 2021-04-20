@@ -137,6 +137,6 @@ common_schema_properties = {
     "with_deploy_config": {
         "type": "string",
         "description": "是否配置部署项模板",
-        "enmu": ["simple", "global", "replicated"]
+        "enum": ["simple", "global", "replicated"]
     }
 }

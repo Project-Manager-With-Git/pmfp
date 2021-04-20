@@ -1,4 +1,4 @@
-"""编译protobuf的schema为不同语言的代码."""
+"""单元测试."""
 from typing import Dict, Any, List, Optional
 from .test_py import unittest_test_py
 from .test_go import unittest_test_go
