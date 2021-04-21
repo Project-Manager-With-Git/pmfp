@@ -1,10 +1,10 @@
 """ppm test命令的处理."""
-from schema_entry import EntryPoint
-from ..core import ppm
+from pmfp.utils.endpoint import EndPoint
+from ..core import project
 
 
-class Env(EntryPoint):
-    """执行环境相关的工具."""
+class New(EndPoint):
+    """根据模板创建项目."""
 
 
-env = ppm.regist_sub(Env)
+project_new = project.regist_sub(New)

@@ -26,14 +26,14 @@ def _delete_py_source(root_path: Path) -> None:
 
 
 def py_pack_lib(output_dir: Path, cwd: Path) -> None:
-    python = get_local_python(cwd.joinpath("env"))
+    python = get_local_python(cwd)
     output_dir_str = path_to_str(output_dir)
     command = f"{python} setup.py bdist_wheel --dist-dir={output_dir_str}"
     run(command, cwd=cwd, visible=True, fail_exit=True)
 
 
 def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, pypi_mirror: Optional[str] = None) -> None:
-    python = get_local_python(cwd.joinpath("env"))
+    python = get_local_python(cwd)
     code_path = get_abs_path(code, cwd)
     temp_path = cwd.joinpath("app")
     try:

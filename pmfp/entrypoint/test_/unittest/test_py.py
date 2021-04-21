@@ -23,7 +23,7 @@ def unittest_test_py(test_code: str, code: str, *,
     else:
         cwdp = Path(".")
 
-    python = get_local_python(cwdp.joinpath("env"))
+    python = get_local_python(cwdp)
     test_code_path = get_abs_path(test_code, cwdp)
     if coverage:
         def coverage_command(_: str) -> str:

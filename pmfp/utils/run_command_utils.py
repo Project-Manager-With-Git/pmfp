@@ -1,11 +1,36 @@
 """执行命令行任务的通用组件."""
 import sys
+import os
+import warnings
 import subprocess
-from functools import partial
 from pathlib import Path
-from typing import Callable, Optional, Any, Dict
+from typing import Optional, Dict, List
 import chardet
 from termcolor import colored
+
+
+def make_env_args(env_args: Optional[List[str]]) -> Dict[str, str]:
+    """构造环境变量字典
+
+    Args:
+        env_args (Optional[List[str]]): 外部添加环境变量字符串,以`::`区分键值
+
+    Returns:
+        Dict[str, str]: 执行时的环境变量字典
+    """
+    default_environ = dict(os.environ)
+    env = {}
+    env.update(default_environ)
+    if env_args:
+        for i in env_args:
+            try:
+                key, value = i.split("::")
+            except:
+                warnings.warn(f"{i} not support as env_args,skip")
+                continue
+            else:
+                env[key] = value
+    return env
 
 
 def run(command: str, *, cwd: Optional[Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str:

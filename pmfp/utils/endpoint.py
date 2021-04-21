@@ -71,6 +71,10 @@ def go_mod_handdler(p: Path) -> Dict[str, Any]:
     if r:
         s = r.group(0)
         result.update(project_name=s.replace("module ", "").strip())
+    _, req1 = con.split("require (")
+    infos = req1.split(")")
+    requirements = infos[0].strip()
+    result["install_requires"] = [i.strip().replace(" ", "@") for i in requirements.splitlines()]
     return result
 
 

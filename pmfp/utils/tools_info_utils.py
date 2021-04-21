@@ -68,26 +68,6 @@ def get_protoc_version() -> Optional[str]:
         return [i for i in content.split(" ") if "." in i][0]
 
 
-def get_local_python(env_path: Path) -> str:
-    """获取本地环境python解释器的地址.
-
-    Args:
-        env_path_str (Path): python本地环境目录.
-
-    Returns:
-        str: python位置字符串
-    """
-    python_path = env_path.joinpath("bin/python")
-    if not python_path.exists():
-        python_path = env_path.joinpath("Scripts/python")
-        if not python_path.exists():
-            python_path = env_path.joinpath("python")
-            if not python_path.exists():
-                warnings.warn("目录中未找到python环境.使用全局python")
-                return get_global_python()
-    return str(python_path)
-
-
 def init_pmfprc() -> None:
     """初始化pmfp的配置."""
     if not PMFP_CONFIG_PATH.exists():
@@ -120,3 +100,25 @@ def get_cache_dir() -> Path:
     """获取缓存根目录."""
     config = get_config_info()
     return Path(config["cache_dir"])
+
+
+def get_local_python(cwdp: Path) -> str:
+    """获取本地环境python解释器的地址.
+
+    Args:
+        cwdp (Path): python本地环境目录.
+
+    Returns:
+        str: python位置字符串
+    """
+
+    env_path = cwdp.joinpath(get_config_info()["python_local_env_dir"])
+    python_path = env_path.joinpath("bin/python")
+    if not python_path.exists():
+        python_path = env_path.joinpath("Scripts/python.exe")
+        if not python_path.exists():
+            python_path = env_path.joinpath("python")
+            if not python_path.exists():
+                warnings.warn("目录中未找到python环境.使用全局python")
+                return get_global_python()
+    return str(python_path)

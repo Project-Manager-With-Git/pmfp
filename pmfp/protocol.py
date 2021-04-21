@@ -26,8 +26,8 @@ TEMPLATE_INFO_SCHEMA = {
         },
         "template_type": {
             "type": "string",
-            "description": "模板的类型",
-            "enum": ["server", "client", "GUI", "script", "cmd", "module"]
+            "description": "模板库的类型,components表示是组件集合,不能用作模板独立构建项目",
+            "enum": ["server", "client", "GUI", "script", "cmd", "module", "components"]
         },
         "env": {
             "type": "string",
@@ -69,6 +69,26 @@ TEMPLATE_INFO_SCHEMA = {
         "command": {
             "description": "模板的操作命令,可以是形式为列表的字符串,会被解析为列表",
             "type": "string"
+        },
+        "template_keys": {
+            "type": "object",
+            "description": "模板需要的key",
+            "patternProperties": {
+                r"^\w+$": {
+                    "type": "object",
+                    "description": "键名对应的配置",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "描述键的含义"
+                        },
+                        "default": {
+                            "type": "string",
+                            "description": "默认值,如果以`{{字段名}}`包裹则表示使用项目配置中的对应字段,支持指定函数`upper(字段名)/lower(字段名)/Title(字段名)`处理变量"
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -101,6 +121,10 @@ PMFP_CONFIG_SCHEMA = {
         "python": {
             "type": "string",
             "description": "默认使用的python"
+        },
+        "python_local_env_dir": {
+            "type": "string",
+            "description": "默认使用的python本地环境的运行环境存放文件"
         },
         "cc": {
             "type": "string",

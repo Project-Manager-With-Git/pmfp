@@ -6,7 +6,7 @@ from configparser import ConfigParser
 from typing import Optional, List, Dict, Any
 import toml
 from pmfp.utils.run_command_utils import run
-from pmfp.utils.tools_info_utils import get_global_python
+from pmfp.utils.tools_info_utils import get_global_python, get_config_info
 from pmfp.utils.template_utils import template_2_content
 from pmfp.const import GOLBAL_PYTHON_VERSION, GOLBAL_CC
 
@@ -40,12 +40,14 @@ def new_env_py_venv(cwd: Path) -> None:
         cwd (Path): 虚拟环境所在的根目录
 
     """
-    env_path = cwd.joinpath("env")
+    pmfp_conf = get_config_info()
+    env_dir = pmfp_conf["python_local_env_dir"]
+    env_path = cwd.joinpath(env_dir)
     if env_path.exists():
         warnings.warn("python的虚拟环境已存在!")
     else:
         python = get_global_python()
-        command = f"{python} -m venv env"
+        command = f"{python} -m venv {env_dir}"
         run(command, cwd=cwd, visible=True, fail_exit=True)
 
 
@@ -55,11 +57,13 @@ def new_env_py_conda(cwd: Path) -> None:
     Args:
         cwd (Path): 虚拟环境所在的根目录
     """
-    env_path = cwd.joinpath("env")
+    pmfp_conf = get_config_info()
+    env_dir = pmfp_conf["python_local_env_dir"]
+    env_path = cwd.joinpath(env_dir)
     if env_path.exists():
         warnings.warn("python的虚拟环境已存在!")
     else:
-        command = f"conda create -y -p env python={GOLBAL_PYTHON_VERSION}"
+        command = f"conda create -y -p {env_dir} python={GOLBAL_PYTHON_VERSION}"
         try:
             run(command, cwd=cwd, visible=True)
         except Exception:

@@ -20,8 +20,7 @@ def benchmark_test_py(benchmark_code: str, *, cwd: Optional[str] = None, mem: bo
         cwdp = get_abs_path(cwd)
     else:
         cwdp = Path(".")
-    env_dir = cwdp.joinpath("env")
-    python = get_local_python(env_dir)
+    python = get_local_python(cwdp)
     if mem:
         command = f"{python} -m kernprof -l -v {benchmark_code}"
     else:
