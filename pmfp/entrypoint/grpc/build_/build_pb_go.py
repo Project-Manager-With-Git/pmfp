@@ -13,29 +13,29 @@ HanddlerSource = ""
 ExampleSource = ""
 SDKSource = ""
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.go.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.go.jinja')
 if source_io:
     ServiceSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载serv.go.temp模板失败")
+    raise AttributeError("加载serv.go.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.go.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.go.jinja')
 if source_io:
     HanddlerSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载handdler.go.temp模板失败")
+    raise AttributeError("加载handdler.go.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'example.go.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'example.go.jinja')
 if source_io:
     ExampleSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载localresolver.go.temp模板失败")
+    raise AttributeError("加载localresolver.go.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'sdk.go.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'sdk.go.jinja')
 if source_io:
     SDKSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载sdk.go.temp模板失败")
+    raise AttributeError("加载sdk.go.jinja模板失败")
 
 
 def find_grpc_package(to: str) -> Tuple[str, str, str, str]:

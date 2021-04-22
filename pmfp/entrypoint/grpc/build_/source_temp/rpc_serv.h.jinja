@@ -1,0 +1,46 @@
+#ifndef {{ service_name }}_SERV__INCLUDED
+#define {{ service_name }}_SERV__INCLUDED
+#include <string>
+#include "nlohmann/json.hpp"
+
+namespace {{ service_name_lower }}_serv {
+
+    class {{ service_name }}Conf {
+        public:
+        std::string app_version = "0.0.0";
+        std::string app_name = "{{ service_name_lower }}";
+        std::string address = "0.0.0.0:5000";
+        std::string log_level = "debug";
+        //tls
+        std::string server_cert_path = "";
+        std::string server_key_path = "";
+        std::string root_cert_path = "";
+        //"not_request","not_verify","request_and_verify","enforce_request","enforce_request_and_verify"
+        std::string client_certificate_request = "";
+        //msg size
+        int max_rec_msg_size = 1024 * 1024;
+        int max_send_msg_size = 1024 * 1024;
+        //http2
+        int max_concurrent_streams = 100;
+        int max_connection_idle = 0;
+        int max_connection_age = 0;
+        int max_connection_age_grace = 0;
+        //keepalive
+        int keepalive_time = 0;
+        int keepalive_timeout = 0;
+        bool keepalive_enforement_permit_without_stream = true;
+        //compression
+        std::string compression = "";
+
+        {{ service_name }}Conf() = default;
+        {{ service_name }}Conf(const nlohmann::json& j);
+        nlohmann::json to_json() const;
+        void RunServer();
+        };
+    void to_json(nlohmann::json& j, const {{ service_name }}Conf& p);
+
+    void from_json(const nlohmann::json& j, {{ service_name }}Conf& p);
+    // void RunServer(faiss_grpc_serv::FaissGrpcConf = faiss_grpc_serv::FaissGrpcConf());
+    }
+
+#endif

@@ -1,0 +1,46 @@
+# 编译
+FROM {{ cross_compiling }}debian:buster-slim as builder
+WORKDIR /code
+# 安装依赖
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN apt update -y
+RUN apt install -y --no-install-recommends build-essential cmake autoconf libtool pkg-config
+RUN apt install -y --no-install-recommends libprotobuf-dev libgrpc++-dev protobuf-compiler protobuf-compiler-grpc
+RUN rm -rf /var/lib/apt/lists/*
+# 源码依赖
+COPY pbschema /code/pbschema
+COPY thirdpart /code/thirdpart
+# cmake模块
+COPY cmake /code/cmake
+COPY CMakeLists.txt /code/CMakeLists.txt
+# 源码
+COPY src /code/src
+# 编译
+RUN cmake .
+RUN make
+
+
+# 压缩
+FROM {{ cross_compiling }}debian:buster-slim as upx
+WORKDIR /code
+# 安装依赖
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN apt update -y && \
+    apt install -y --no-install-recommends build-essential cmake autoconf libtool pkg-config upx-ucl && \
+    rm -rf /var/lib/apt/lists/*
+COPY --from=builder /code/bin/{{ app_name }} .
+# 压缩
+RUN mkdir bin
+RUN upx --best --lzma -o /code/bin/{{ app_name } {{ app_name }}
+
+# 部署
+FROM {{ cross_compiling }}debian:buster-slim as bin
+# 安装依赖
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN apt update -y && \
+    apt install -y --no-install-recommends libprotobuf-dev libgrpc++-dev && \
+    rm -rf /var/lib/apt/lists/*
+COPY --from=upx /code/bin/{{ app_name }} .
+# 赋予执行权限
+RUN chmod +x /{{ app_name }}
+ENTRYPOINT  ["./{{ app_name }}"]

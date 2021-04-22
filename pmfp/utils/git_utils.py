@@ -1,4 +1,5 @@
 """git相关的动作."""
+import os
 import warnings
 import configparser
 import time
@@ -6,6 +7,8 @@ from pathlib import Path
 from typing import Optional, Callable, Dict, List
 from git import Repo
 from git.repo.fun import is_git_dir
+import git
+from pmfp.utils.run_command_utils import run, make_env_args
 
 
 def make_repod(p: Path) -> Path:
@@ -128,7 +131,7 @@ def git_clone(url: str, to: Path, *,
         to (Path): 本地项目路径
         branch (str, optional): 拉取的分支. Defaults to "master".
     """
-    with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"]):
+    with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"], config='http.sslVerify=false'):
         print("git clone ok")
 
 
@@ -210,13 +213,14 @@ def git_pull_master(p: Path) -> None:
         msg (str): 注释消息
 
     """
-    d = make_repod(p)
-    with Repo(d) as repo:
-        if repo.active_branch != "master":
-            warnings.warn(f"active_branch {repo.active_branch} not master")
-        orgin = repo.remote()
-        orgin.pull()
-        print(f"pull master from orgin {orgin.urls} ok")
+    # print(f"pull path {p}********************")
+    # d = make_repod(p)
+    # with Repo() as repo:
+    #     if str(repo.active_branch) != "master":
+    #         warnings.warn(f"active_branch {repo.active_branch} not master")
+    #         return
+    print(f"pull path {p}++++++++++++++++++++++")
+    run("git pull", cwd=p, env=make_env_args(["GIT_SSL_NO_VERIFY::1"]), visible=True, fail_exit=True)
 
 
 def git_new_tag(p: Path, version: str, message: Optional[str] = None, remote: bool = False) -> None:

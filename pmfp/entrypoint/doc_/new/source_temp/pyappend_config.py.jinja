@@ -1,0 +1,42 @@
+
+# 不进行编译的文件/文件夹 
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# 设置不同后缀的文件使用不同解析器(这个需要后加) 
+source_suffix = {
+    '.rst': 'restructuredtext'
+}
+# 主题
+extensions.append('sphinx_rtd_theme')
+html_theme = "sphinx_rtd_theme"
+html_theme_options = {
+    'logo_only': True,
+    'navigation_depth': 5,
+}
+
+# 使用插件支持markdowm
+from recommonmark.transform import AutoStructify
+from recommonmark.parser import CommonMarkParser
+extensions.append('recommonmark')
+# 针对`.md`为后缀的文件做markdown渲染
+source_suffix[".md"] = 'markdown'
+
+# 设置markdown渲染器的自定义项
+def setup(app):
+    github_doc_root = 'https://localhost:5000'
+    app.add_config_value('recommonmark_config', {
+        # 'url_resolver': lambda url: github_doc_root + url,
+        "enable_auto_toc_tree": True,
+        "auto_toc_tree_section": "目录",
+        'auto_toc_maxdepth': 2,
+        "enable_math": True,
+        'enable_eval_rst': True
+    }, True)
+
+    app.add_transform(AutoStructify)
+
+# autoapi-python
+extensions.append('autoapi.extension')
+extensions.append("sphinx.ext.napoleon")
+autoapi_type = 'python'
+autoapi_dirs = ["{{ code_path }}"]

@@ -17,45 +17,45 @@ FindGRPCCmakeSource = ""
 FindProtobufCmakeSource = ""
 
 # cmake
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'FindGRPC.cmake.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'FindGRPC.cmake.jinja')
 if source_io:
     FindGRPCCmakeSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载FindGRPC.cmake.temp模板失败")
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'FindProtobuf.cmake.temp')
+    raise AttributeError("加载FindGRPC.cmake.jinja模板失败")
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'FindProtobuf.cmake.jinja')
 if source_io:
     FindProtobufCmakeSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载FindProtobuf.cmake.temp模板失败")
+    raise AttributeError("加载FindProtobuf.cmake.jinja模板失败")
 
 
 # main
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'rpc.cc.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'rpc.cc.jinja')
 if source_io:
     MainSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载rpc.cc.temp模板失败")
+    raise AttributeError("加载rpc.cc.jinja模板失败")
 
 # serv
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'rpc_serv.cc.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'rpc_serv.cc.jinja')
 if source_io:
     ServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载rpc_serv.cc.temp模板失败")
+    raise AttributeError("加载rpc_serv.cc.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'rpc_serv.h.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'rpc_serv.h.jinja')
 if source_io:
     ServHeadSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载rpc_serv.h.temp模板失败")
+    raise AttributeError("加载rpc_serv.h.jinja模板失败")
 
 
 # dockerfile
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'Dockerfile.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'Dockerfile.jinja')
 if source_io:
     DockerfileSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载Dockerfile.temp模板失败")
+    raise AttributeError("加载Dockerfile.jinja模板失败")
 
 
 def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:

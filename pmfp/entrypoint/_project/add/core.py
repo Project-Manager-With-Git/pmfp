@@ -1,10 +1,32 @@
 """ppm test命令的处理."""
 from pmfp.utils.endpoint import EndPoint
-from ..core import ppm
+from ..core import project
 
 
 class Add(EndPoint):
     """为项目添加组件."""
 
+    argparse_noflag = "component_string"
+    schema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "required": ["component_string"],
+        "properties": {
+            "component_string": {
+                "type": "string",
+                "description": "组件字符串指示资源位置,形式为`[{host}::]{repo_namespace}::{repo_name}[@{tag}]//{component_path}`"
+            },
+            "located_path": {
+                "type": "string",
+                "description": "放置位置,不设置则使用自带默认路径,可以使用jinja2模板"
+            },
+            "cwd": {
+                "type": "string",
+                "description": "放置位置,不设置则使用自带默认路径,可以使用jinja2模板",
+                "default": "."
+            }
+        }
+    }
 
-env = ppm.regist_sub(Add)
+
+project_add = project.regist_sub(Add)

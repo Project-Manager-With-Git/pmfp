@@ -8,7 +8,7 @@ from typing import Optional
 from jsonschema import validate
 from pmfp.protocol import TEMPLATE_INFO_SCHEMA
 from .fs_utils import remove_readonly
-from .git_utils import git_clone, get_master_latest_commit, git_pull_master
+from .git_utils import git_clone, get_master_latest_commit, git_pull_master, make_repod, is_git_dir
 from .tools_info_utils import get_config_info
 
 
@@ -100,17 +100,28 @@ class SourcePack:
         """
         return f"{schema}://{self.host}/{self.repo_namespace}/{self.repo_name}.git"
 
-    def pull_latest(self, cache_dir: Path) -> None:
+    def pull_latest(self, cache_dir: Path, throw: bool = True) -> None:
         """拉取最新镜像,并将原来的版本以hash为tag保存
 
         Args:
             temp_dir (Path): [description]
+            throw (bool): 是否抛出异常
         """
         conf = get_config_info()
         if self.tag != "latest":
-            warnings.warn("only latest tag can pull latest")
-            return
+            if throw:
+                raise AttributeError("only latest tag can pull latest")
+            else:
+                warnings.warn("only latest tag can pull latest")
+                return None
         pack_dir = self.source_pack_path(cache_dir)
+        d = make_repod(pack_dir)
+        if not is_git_dir(d):
+            if throw:
+                raise AttributeError(f"目标路径{pack_dir}不是git仓库.")
+            else:
+                warnings.warn("only latest tag can pull latest")
+                return None
         # 保存之前的版本
         commit_hash = get_master_latest_commit(pack_dir)
         copy_dir = pack_dir.parent.joinpath(commit_hash)
@@ -125,19 +136,26 @@ class SourcePack:
             if p.name.startswith(".") and p.name != conf["template_config_name"]:
                 continue
             else:
-                shutil.move(str(p), copy_dir.joinpath(p.name))
+                if p.is_dir():
+                    shutil.copytree(str(p), copy_dir.joinpath(p.name))
+                else:
+                    shutil.copyfile(str(p), copy_dir.joinpath(p.name))
         # 更新
-        git_pull_master(pack_dir)
-        print("pull_latest 执行完成")
+        try:
+            git_pull_master(pack_dir)
+        except Exception as e:
+            warnings.warn(f"pull repo get error {str(e)}")
+        else:
+            print("pull_latest 执行完成")
 
-    def clone_source_pack(self, cache_dir: Path) -> None:
+    def clone_source_pack(self, cache_dir: Path, throw: bool = False) -> None:
         """克隆资源包到本地缓存临时文件夹.
 
         如果资源包的tag不是latest则clone下来后删除.git文件夹,否则保存
 
         Args:
             cache_dir (Path): 缓存文件夹地址.
-
+            throw (bool): 是否抛出异常
         """
         conf = get_config_info()
         url = self.git_url()
@@ -146,33 +164,48 @@ class SourcePack:
         else:
             branch = self.tag
         pack_dir = self.source_pack_path(cache_dir)
-        git_clone(url, pack_dir, branch=branch)
-        if not pack_dir.joinpath(conf["template_config_name"]).exists():
-            warnings.warn("git项目不是pmfp的资源项目,清理下载的缓存")
-            shutil.rmtree(pack_dir, onerror=remove_readonly)
-            # os.rmdir(pack_dir)
-            print("清理下载的缓存完成")
-            return None
+        try:
+            git_clone(url, pack_dir, branch=branch)
+        except Exception as e:
+            warnings.warn(f"clone repo get error {str(e)}")
+            if pack_dir.exists():
+                shutil.rmtree(pack_dir, onerror=remove_readonly)
+                print("清理下载的缓存完成")
+            if throw:
+                raise e
+            else:
+                return None
         else:
-            try:
-                with open(pack_dir.joinpath(conf["template_config_name"]), encoding="utf-8") as f:
-                    instance = json.load(f)
-                validate(instance=instance, schema=TEMPLATE_INFO_SCHEMA)
-            except Exception:
-                warnings.warn("项目的pmfp_template.json文件不符合规范")
+            if not pack_dir.joinpath(conf["template_config_name"]).exists():
+                warnings.warn("git项目不是pmfp的资源项目,清理下载的缓存")
                 shutil.rmtree(pack_dir, onerror=remove_readonly)
                 # os.rmdir(pack_dir)
                 print("清理下载的缓存完成")
+                return None
             else:
-                if self.tag != "latest":
-                    for p in pack_dir.iterdir():
-                        if p.name.startswith(".") and p.name != conf["template_config_name"]:
-                            if p.is_dir():
-                                shutil.rmtree(p, onerror=remove_readonly)
-                                # os.rmdir(p)
-                            if p.is_file():
-                                os.remove(p)
-                print("clone_source_pack 执行完成")
+                try:
+                    with open(pack_dir.joinpath(conf["template_config_name"]), encoding="utf-8") as f:
+                        instance = json.load(f)
+                    validate(instance=instance, schema=TEMPLATE_INFO_SCHEMA)
+                except Exception as e:
+                    warnings.warn("项目的pmfp_template.json文件不符合规范")
+                    shutil.rmtree(pack_dir, onerror=remove_readonly)
+                    # os.rmdir(pack_dir)
+                    print("清理下载的缓存完成")
+                    if throw:
+                        raise e
+                    else:
+                        return None
+                else:
+                    if self.tag != "latest":
+                        for p in pack_dir.iterdir():
+                            if p.name.startswith(".") and p.name != conf["template_config_name"]:
+                                if p.is_dir():
+                                    shutil.rmtree(p, onerror=remove_readonly)
+                                    # os.rmdir(p)
+                                if p.is_file():
+                                    os.remove(p)
+                    print("clone_source_pack 执行完成")
 
     def source_pack_path(self, cache_dir: Path) -> Path:
         """构造资源包的本地路径.
@@ -186,24 +219,25 @@ class SourcePack:
         """
         return cache_dir.joinpath(f"{self.host}/{self.repo_namespace}/{self.repo_name}/{self.tag}")
 
-    def cache(self, cache_dir: Path) -> None:
+    def cache(self, cache_dir: Path, throw: bool = False) -> None:
         """缓存资源包到本地.
 
         Args:
             cache_dir (Path): 缓存文件夹地址.
+            throw (bool): 是否抛出异常
 
         """
         if self.tag != "latest":
-            if self.source_pack_path(Path(cache_dir)).exists():
+            if self.source_pack_path(cache_dir).exists():
                 warnings.warn(f"资源缓存{self.as_sourcepack_string()}已经存在")
             else:
-                self.clone_source_pack(cache_dir)
+                self.clone_source_pack(cache_dir, throw=throw)
 
         else:
-            if self.source_pack_path(Path(cache_dir)).exists():
-                self.pull_latest(Path(cache_dir))
+            if self.source_pack_path(cache_dir).exists():
+                self.pull_latest(cache_dir, throw=throw)
             else:
-                self.clone_source_pack(cache_dir)
+                self.clone_source_pack(cache_dir, throw=throw)
 
 
 class ComponentTemplate:

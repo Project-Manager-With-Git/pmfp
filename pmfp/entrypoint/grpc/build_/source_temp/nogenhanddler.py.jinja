@@ -1,0 +1,30 @@
+from typing import Any, Dict
+import grpc
+
+rpc_protos, rpc_services = grpc.protos_and_services("{{ service_name_lower }}.proto")
+
+
+class Handdler(rpc_services.{{ service_name }}Servicer):
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__()
+        self.config = config
+
+    def Square(self, request: Any, context: grpc.ServicerContext) -> Any:
+        return rpc_protos.Message(Message=request.Message**2)
+
+    def RangeSquare(self, request: Any, context: Any) -> Any:
+        for i in range(int(request.Message + 1)):
+            yield rpc_protos.Message(Message=i**2)
+
+    def SumSquare(self, request_iterator: Any, context: grpc.ServicerContext) -> Any:
+        result = 0
+        for i in request_iterator:
+            result += i.Message**2
+        return rpc_protos.Message(Message=result)
+
+    def StreamrangeSquare(self, request_iterator: Any, context: grpc.ServicerContext) -> Any:
+        result = []
+        for i in request_iterator:
+            result.append(i.Message**2)
+        for j in result:
+            yield rpc_protos.Message(Message=j)

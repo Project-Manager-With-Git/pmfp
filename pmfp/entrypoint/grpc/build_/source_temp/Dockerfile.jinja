@@ -1,0 +1,13 @@
+# 使用upx压缩可执行文件
+FROM --platform=$TARGETPLATFORM debian:buster-slim as builder
+WORKDIR /code
+# 安装grpc
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN apt update -y && \
+    apt install -y --no-install-recommends build-essential autoconf libtool pkg-config libprotobuf-dev libgrpc++-dev protobuf-compiler protobuf-compiler-grpc libspdlog-dev && \
+    rm -rf /var/lib/apt/lists/*
+COPY pbschema /code/pbschema
+COPY serv.cc /code/serv.cc
+COPY makefile /code/makefile
+RUN make
+CMD ["./{{ service_name_lower }}"]

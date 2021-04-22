@@ -21,13 +21,13 @@ from .core import env_new
 
 readme_template = ""
 changelog_template = ""
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'readme.md.temp')
+template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'readme.md.jinja')
 if template_io:
     readme_template = template_io.decode('utf-8')
 else:
     raise AttributeError("加载readme模板失败")
 
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'changelog.md.temp')
+template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'changelog.md.jinja')
 if template_io:
     changelog_template = template_io.decode('utf-8')
 else:

@@ -8,14 +8,15 @@ from ..utils import copy_schema
 from .core import schema_new
 
 schema_template = ""
-schema_template_io = pkgutil.get_data('pmfp.entrypoint.schema.new.source_temp', 'schema.json.temp')
+schema_template_io = pkgutil.get_data('pmfp.entrypoint.schema.new.source_temp', 'schema.json.jinja')
 if schema_template_io:
     schema_template = schema_template_io.decode('utf-8')
 else:
     raise AttributeError("加载json schema 模板失败")
 
+
 @schema_new.as_main
-def new_schema(name: str, to: str, version: str, *,cwd: str=".", addr: Optional[str] = None) -> None:
+def new_schema(name: str, to: str, version: str, *, cwd: str = ".", addr: Optional[str] = None) -> None:
     """新建一个json schema文件.
 
     Args:

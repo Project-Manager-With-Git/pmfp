@@ -19,41 +19,41 @@ GoExtendSource = ""
 
 CXXExtendSource = ""
 
-source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'python_pure.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'python_pure.jinja')
 if source_io:
     PythonPureSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载python_pure.temp模板失败")
+    raise AttributeError("加载python_pure.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'python_extend.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'python_extend.jinja')
 if source_io:
     PythonExtendSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载python_extend.temp模板失败")
-source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'pip.conf.temp')
+    raise AttributeError("加载python_extend.jinja模板失败")
+source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'pip.conf.jinja')
 if source_io:
     PipConfSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载pip.conf.temp模板失败")
+    raise AttributeError("加载pip.conf.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'go_pure.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'go_pure.jinja')
 if source_io:
     GoPureSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载go_pure.temp模板失败")
+    raise AttributeError("加载go_pure.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'go_extend.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'go_extend.jinja')
 if source_io:
     GoExtendSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载go_extend.temp模板失败")
+    raise AttributeError("加载go_extend.jinja模板失败")
 
 
-source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'cxx_extend.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.docker_.image.new.source_temp', 'cxx_extend.jinja')
 if source_io:
     CXXExtendSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载cxx_extend.temp模板失败")
+    raise AttributeError("加载cxx_extend.jinja模板失败")
 
 
 @dockerfile_new.as_main

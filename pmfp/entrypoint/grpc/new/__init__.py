@@ -13,7 +13,7 @@ from .core import grpc_new
 grpc_template = ""
 
 
-grpc_template_io = pkgutil.get_data('pmfp.entrypoint.grpc.new.source_temp', 'grpc.temp')
+grpc_template_io = pkgutil.get_data('pmfp.entrypoint.grpc.new.source_temp', 'grpc.jinja')
 if grpc_template_io:
     grpc_template = grpc_template_io.decode('utf-8')
 else:

@@ -2,5 +2,4 @@ include LICENSE
 include README.rst
 include pmfprc.json
 include requirements.txt
-recursive-include pmfp/source *
-recursive-include pmfp *.pyx *.pxd *.pxi *.py *.c *.h
+recursive-include pmfp *.pyx *.pxd *.pxi *.py *.c *.h *.jinja

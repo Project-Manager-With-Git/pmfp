@@ -12,7 +12,7 @@ from .core import proto_new
 
 proto_template = ""
 grpc_template = ""
-proto_template_io = pkgutil.get_data('pmfp.entrypoint.proto.new.source_temp', 'proto.temp')
+proto_template_io = pkgutil.get_data('pmfp.entrypoint.proto.new.source_temp', 'proto.jinja')
 if proto_template_io:
     proto_template = proto_template_io.decode('utf-8')
 else:

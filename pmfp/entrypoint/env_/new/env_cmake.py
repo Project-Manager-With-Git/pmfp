@@ -7,7 +7,7 @@ from pmfp.utils.tools_info_utils import get_golang_version
 from pmfp.utils.template_utils import template_2_content
 
 CMakeLists_txt_template = ""
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'CMakeLists.txt.temp')
+template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'CMakeLists.txt.jinja')
 if template_io:
     CMakeLists_txt_template = template_io.decode('utf-8')
 else:

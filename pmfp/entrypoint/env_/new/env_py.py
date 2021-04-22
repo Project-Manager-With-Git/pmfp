@@ -12,21 +12,21 @@ from pmfp.const import GOLBAL_PYTHON_VERSION, GOLBAL_CC
 
 
 manifest_in_template = ""
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'MANIFEST.in.temp')
+template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'MANIFEST.in.jinja')
 if template_io:
     manifest_in_template = template_io.decode('utf-8')
 else:
     raise AttributeError("MANIFEST.in模板失败")
 
 setup_py_template = ""
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'setup.py.temp')
+template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'setup.py.jinja')
 if template_io:
     setup_py_template = template_io.decode('utf-8')
 else:
     raise AttributeError("setup.py模板失败")
 
 cython_setup_py_template = ""
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'cython_setup.py.temp')
+template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'cython_setup.py.jinja')
 if template_io:
     cython_setup_py_template = template_io.decode('utf-8')
 else:

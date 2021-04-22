@@ -42,129 +42,129 @@ AioCliSource = ""
 AioNogenCliSource = ""
 
 # handdler
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'handdler.py.jinja')
 if source_io:
     HanddlerSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载handdler.py.temp模板失败")
+    raise AttributeError("加载handdler.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiohanddler.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiohanddler.py.jinja')
 if source_io:
     AioHanddlerSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aiohanddler.py.temp模板失败")
+    raise AttributeError("加载aiohanddler.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenhanddler.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenhanddler.py.jinja')
 if source_io:
     NogenHanddlerSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载nogenhanddler.py.temp模板失败")
+    raise AttributeError("加载nogenhanddler.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenhanddler.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenhanddler.py.jinja')
 if source_io:
     AioNogenHanddlerSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aionogenhanddler.py.temp模板失败")
+    raise AttributeError("加载aionogenhanddler.py.jinja模板失败")
 
 # example
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli_example.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli_example.py.jinja')
 if source_io:
     CliExampleSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载cli_example.py.temp模板失败")
+    raise AttributeError("加载cli_example.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogencli_example.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogencli_example.py.jinja')
 if source_io:
     NogenCliExampleSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载nogencli_example.py.temp模板失败")
+    raise AttributeError("加载nogencli_example.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli_example.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli_example.py.jinja')
 if source_io:
     AioCliExampleSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aiocli_example.py.temp模板失败")
+    raise AttributeError("加载aiocli_example.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogencli_example.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogencli_example.py.jinja')
 if source_io:
     AioNogenCliExampleSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aionogencli_example.py.temp模板失败")
+    raise AttributeError("加载aionogencli_example.py.jinja模板失败")
 
 
 # serv
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'serv.py.jinja')
 if source_io:
     ServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载serv.py.temp模板失败")
+    raise AttributeError("加载serv.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'mpserv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'mpserv.py.jinja')
 if source_io:
     MpServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载mpserv.py.temp模板失败")
+    raise AttributeError("加载mpserv.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenserv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenserv.py.jinja')
 if source_io:
     NogenServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载nogenserv.py.temp模板失败")
+    raise AttributeError("加载nogenserv.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenmpserv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogenmpserv.py.jinja')
 if source_io:
     NogenMpServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载nogenmpserv.py.temp模板失败")
+    raise AttributeError("加载nogenmpserv.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aioserv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aioserv.py.jinja')
 if source_io:
     AioServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aioserv.py.temp模板失败")
+    raise AttributeError("加载aioserv.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiompserv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiompserv.py.jinja')
 if source_io:
     AioMpServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aiompserv.py.temp模板失败")
+    raise AttributeError("加载aiompserv.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenserv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenserv.py.jinja')
 if source_io:
     AioNogenServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aionogenserv.py.temp模板失败")
+    raise AttributeError("加载aionogenserv.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenmpserv.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogenmpserv.py.jinja')
 if source_io:
     AioNogenMpServSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aionogenmpserv.py.temp模板失败")
+    raise AttributeError("加载aionogenmpserv.py.jinja模板失败")
 
 # cli
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'cli.py.jinja')
 if source_io:
     CliSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载cli.py.temp模板失败")
+    raise AttributeError("加载cli.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogencli.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'nogencli.py.jinja')
 if source_io:
     NogenCliSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载nogencli.py.temp模板失败")
+    raise AttributeError("加载nogencli.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aiocli.py.jinja')
 if source_io:
     AioCliSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aiocli.py.temp模板失败")
+    raise AttributeError("加载aiocli.py.jinja模板失败")
 
-source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogencli.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.grpc.build_.source_temp', 'aionogencli.py.jinja')
 if source_io:
     AioNogenCliSource = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载aionogencli.py.temp模板失败")
+    raise AttributeError("加载aionogencli.py.jinja模板失败")
 
 
 def find_py_grpc_pb2_import_string(name: str) -> str:
@@ -626,7 +626,7 @@ def _build_grpc_py_more(to: str, target: str, as_type: Optional[List[str]]) -> N
             if "mp" in as_type:
                 if "nogen" in as_type:
                     pass
-                    #gen_aio_nogen_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
+                    # gen_aio_nogen_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
                 else:
                     gen_aio_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)
             else:

@@ -5,7 +5,8 @@
 TEMPLATE_INFO_SCHEMA = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
-    "required": ["language"],
+    "required": ["language", "template_type", "components"],
+    "additionalProperties": False,
     "properties": {
         "language": {
             "type": "string",
@@ -27,7 +28,7 @@ TEMPLATE_INFO_SCHEMA = {
         "template_type": {
             "type": "string",
             "description": "模板库的类型,components表示是组件集合,不能用作模板独立构建项目",
-            "enum": ["server", "client", "GUI", "script", "cmd", "module", "components"]
+            "enum": ["server", "client", "c&s", "GUI", "script", "cmd", "module", "components"]
         },
         "env": {
             "type": "string",
@@ -70,12 +71,36 @@ TEMPLATE_INFO_SCHEMA = {
             "description": "模板的操作命令,可以是形式为列表的字符串,会被解析为列表",
             "type": "string"
         },
+        "components": {
+            "type": "object",
+            "description": "模板库中的组件",
+            "patternProperties": {
+                r"^\w+$": {
+                    "type": "object",
+                    "additionalProperties": False,
+                    "required": ["default_path"],
+                    "description": "组件名对应的配置,组件名为相对模板仓库根目录的相对地址",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "描述键的含义"
+                        },
+                        "default_path": {
+                            "type": "string",
+                            "description": "默认放置路径,支持jinja2语法模板"
+                        }
+                    }
+                }
+            }
+        },
         "template_keys": {
             "type": "object",
             "description": "模板需要的key",
             "patternProperties": {
                 r"^\w+$": {
                     "type": "object",
+                    "additionalProperties": False,
+                    "required": ["default"],
                     "description": "键名对应的配置",
                     "properties": {
                         "description": {
@@ -84,7 +109,7 @@ TEMPLATE_INFO_SCHEMA = {
                         },
                         "default": {
                             "type": "string",
-                            "description": "默认值,如果以`{{字段名}}`包裹则表示使用项目配置中的对应字段,支持指定函数`upper(字段名)/lower(字段名)/Title(字段名)`处理变量"
+                            "description": "默认值,如果以`{{ 字段名 }}`包裹则表示使用项目配置中的对应字段,支持指定函数`upper(字段名)/lower(字段名)/Title(字段名)`处理变量"
                         }
                     }
                 }

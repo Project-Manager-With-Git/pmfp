@@ -15,19 +15,19 @@ from pmfp.utils.template_utils import template_2_content
 
 AppendConfig = ""
 
-source_io = pkgutil.get_data('pmfp.entrypoint.doc_.new.source_temp', 'pyappend_config.py.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.doc_.new.source_temp', 'pyappend_config.py.jinja')
 if source_io:
     AppendConfig = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载pyappend_config.py.temp模板失败")
+    raise AttributeError("加载pyappend_config.py.jinja模板失败")
 
 pyindexmd = ""
 
-source_io = pkgutil.get_data('pmfp.entrypoint.doc_.new.source_temp', 'pyindex.md.temp')
+source_io = pkgutil.get_data('pmfp.entrypoint.doc_.new.source_temp', 'pyindex.md.jinja')
 if source_io:
     pyindexmd = source_io.decode('utf-8')
 else:
-    raise AttributeError("加载pyindex.md.temp模板失败")
+    raise AttributeError("加载pyindex.md.jinja模板失败")
 
 
 def doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = ".") -> None:

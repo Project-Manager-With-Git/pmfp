@@ -2,7 +2,8 @@
 import json
 from pathlib import Path
 from configparser import ConfigParser
-from string import Template
+# from string import Template
+from jinja2 import Template
 from typing import Any
 
 
@@ -16,7 +17,10 @@ def template_2_content(template: str, **kwargs: Any) -> str:
     """
     try:
         template_content = Template(template)
-        content = template_content.safe_substitute(
+        # content = template_content.safe_substitute(
+        #     **kwargs
+        # )
+        content = template_content.render(
             **kwargs
         )
     except:
