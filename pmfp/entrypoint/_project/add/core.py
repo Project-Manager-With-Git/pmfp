@@ -20,6 +20,13 @@ class Add(EndPoint):
                 "type": "string",
                 "description": "放置位置,不设置则使用自带默认路径,可以使用jinja2模板"
             },
+            "kv": {
+                "type": "array",
+                "description": "替换模板的默认参数,格式为`<key>::<value>`",
+                "items": {
+                    "type": "string"
+                }
+            },
             "cwd": {
                 "type": "string",
                 "description": "放置位置,不设置则使用自带默认路径,可以使用jinja2模板",

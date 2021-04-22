@@ -167,7 +167,7 @@ class SourcePack:
         try:
             git_clone(url, pack_dir, branch=branch)
         except Exception as e:
-            warnings.warn(f"clone repo get error {str(e)}")
+            warnings.warn(f"clone repo get error {str(e)} url: {url} @ {pack_dir}")
             if pack_dir.exists():
                 shutil.rmtree(pack_dir, onerror=remove_readonly)
                 print("清理下载的缓存完成")

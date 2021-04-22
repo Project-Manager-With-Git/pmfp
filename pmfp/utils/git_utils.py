@@ -131,8 +131,10 @@ def git_clone(url: str, to: Path, *,
         to (Path): 本地项目路径
         branch (str, optional): 拉取的分支. Defaults to "master".
     """
-    with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"], config='http.sslVerify=false'):
-        print("git clone ok")
+    # with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"], config='http.sslVerify=false'):
+    #     print("git clone ok")
+    run(f'git clone -b {branch} -c http.sslVerify=false {url} {to}',visible=True)
+    print("git clone ok")
 
 
 def get_latest_commits(p: Path) -> Dict[str, str]:
@@ -147,6 +149,7 @@ def get_latest_commits(p: Path) -> Dict[str, str]:
     Returns:
         Dict[str, str]: [description]
     """
+    
     d = make_repod(p)
     if not is_git_dir(d):
         raise AttributeError(f"目标路径{p}不是git仓库.")
@@ -176,12 +179,19 @@ def get_master_latest_commit(p: Path) -> str:
     if not is_git_dir(d):
         raise AttributeError(f"目标路径{p}不是git仓库.")
     else:
-        with Repo(d) as repo:
-            for i in repo.heads:
-                if i.name == "master" or i.name == "main":
-                    return i.commit.hexsha
-            else:
-                raise AttributeError("git仓库没有master或者main分支")
+        infos = run("git show-ref master", cwd=p)
+        for line in infos.splitlines():
+            hs, ref = line.split(" ")
+            if ref == "refs/heads/master" or ref == "refs/heads/main":
+                return hs
+        else:
+            raise AttributeError("git仓库没有master或者main分支")
+        # with Repo(d) as repo:
+        #     for i in repo.heads:
+        #         if i.name == "master" or i.name == "main":
+        #             return i.commit.hexsha
+        #     else:
+        #         raise AttributeError("git仓库没有master或者main分支")
 
 
 def git_push(p: Path, *, msg: str = "update") -> None:
@@ -219,7 +229,6 @@ def git_pull_master(p: Path) -> None:
     #     if str(repo.active_branch) != "master":
     #         warnings.warn(f"active_branch {repo.active_branch} not master")
     #         return
-    print(f"pull path {p}++++++++++++++++++++++")
     run("git pull", cwd=p, env=make_env_args(["GIT_SSL_NO_VERIFY::1"]), visible=True, fail_exit=True)
 
 

@@ -19,6 +19,7 @@ def main(argv: List[str] = sys.argv[1:]) -> None:
     if "http" in argv:
         from gevent import monkey
         monkey.patch_all()
+        print("patch")
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         from pmfp.entrypoint import ppm

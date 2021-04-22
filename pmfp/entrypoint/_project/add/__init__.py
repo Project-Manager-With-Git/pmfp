@@ -1,8 +1,12 @@
 """ppm project add命令的处理."""
+import os
 import warnings
 import json
 import shutil
-from typing import Optional
+import subprocess
+from pathlib import Path
+from typing import Optional, List
+from pmfp.const import PMFP_CONFIG_DEFAULT_NAME
 from pmfp.utils.fs_utils import iter_dir_to_end, get_abs_path
 from pmfp.utils.remote_cache_utils import ComponentTemplate
 from pmfp.utils.tools_info_utils import get_cache_dir, get_config_info
@@ -12,7 +16,7 @@ from .core import project_add
 
 
 @project_add.as_main
-def add_component(component_string: str, located_path: Optional[str] = None, cwd: str = ".") -> None:
+def add_component(component_string: str, located_path: Optional[str] = None,kv: Optional[List[str]]=None, cwd: str = ".") -> None:
     """为项目添加组件.
 
     Args:
@@ -21,7 +25,6 @@ def add_component(component_string: str, located_path: Optional[str] = None, cwd
     """
     projctinfo = InfoBase()
     projctinfo([])
-    projctinfo.config
     cwdp = get_abs_path(cwd)
     # 检查组件是否已经缓存
     cache_dir = get_cache_dir()
@@ -39,8 +42,7 @@ def add_component(component_string: str, located_path: Optional[str] = None, cwd
                     return
     except Exception as e:
         print("检查组件是否已经缓存 失败")
-        print(e)
-        return
+        raise e
     print("检查组件是否已经缓存 完成")
     # 确保缓存后迁移到本项目后复制组件到项目
     pmfpconf = get_config_info()
@@ -56,6 +58,25 @@ def add_component(component_string: str, located_path: Optional[str] = None, cwd
     if project_env and sourcepack_env and sourcepack_env != project_env:
         warnings.warn(f"组件{component_string}执行环境{sourcepack_language}与项目执行环境{project_language}不匹配")
         return
+    sourcepack_kws = sourcepack_config["template_keys"]
+
+    kvs = {}
+    if kv:
+        for i in kv.items():
+            try:
+                k, v = i.split("::")
+            except Exception:
+                warnings.warn(f"kv {kv} 解析错误,跳过")
+                continue
+            else:
+                kvs[k] = v
+    tempkv = {}
+    for key, info in sourcepack_kws.items():
+        t = info["default"]
+        if kvs.get(key):
+            t = kvs.get(key)
+        tempkv[key] = template_2_content(t, **projctinfo.config)
+
     sourcepack_components = sourcepack_config["components"]
     target_component_info = sourcepack_components.get(componentpack.component_path)
     if not target_component_info:
@@ -66,23 +87,47 @@ def add_component(component_string: str, located_path: Optional[str] = None, cwd
         warnings.warn(f"组件{component_string}不存在")
         return
     if not located_path:
-        default_path = target_component_info["default_path"]
-        located_path = template_2_content(default_path, **projctinfo.config)
-    target_located_path = cwdp.joinpath(located_path)
+        located_path = target_component_info["default_path"]
+    located_path_str = template_2_content(located_path, **projctinfo.config)
+    target_located_path = cwdp.joinpath(located_path_str)
     if target_component_path.is_dir():
+        def succ_callback(p: Path) -> None:
+            with open(p, encoding="utf-8") as f:
+                content = template_2_content(f.read(), **tempkv)
+            pp = p.with_name(p.stem)
+            with open(pp, "w", newline="") as fw:
+                fw.write(content)
+            os.remove(p)
         if not target_located_path.exists():
             # target_located_path.mkdir(parents=True, exist_ok=False)
             shutil.copytree(target_component_path, target_located_path)
+            iter_dir_to_end(target_located_path,
+                            match=lambda p: p.suffix == ".jinja",
+                            succ_cb=succ_callback)
         else:
             warnings.warn(f"组件{component_string}的放置位置{target_located_path}已经存在")
             return
         # iter_dir_to_end(target_component_path, match=lambda x:)
     else:
         if not target_located_path.exists():
-            # target_located_path.mkdir(parents=True, exist_ok=False)
-            shutil.copyfile(target_component_path, target_located_path)
+            if target_component_path.suffix == ".jinja":
+                # 使用模板渲染成结果
+                with open(target_component_path, encoding="utf-8") as f:
+                    content = template_2_content(f.read(), **tempkv)
+                if not target_located_path.parent.exists():
+                    target_located_path.parent.mkdir(parents=True)
+                with open(target_located_path, "w", newline="") as fw:
+                    fw.write(content)
+            else:
+                shutil.copyfile(target_component_path, target_located_path)
         else:
             warnings.warn(f"组件{component_string}的放置位置{target_located_path}已经存在")
             return
-
-   
+    # 记录到项目配置
+    with open(cwdp.joinpath(PMFP_CONFIG_DEFAULT_NAME), encoding='utf-8') as cf:
+        c = json.load(cf)
+    added_components = c.get("added_components", {})
+    added_components[component_string] = located_path_str
+    c.update(added_components=added_components)
+    with open(cwdp.joinpath(PMFP_CONFIG_DEFAULT_NAME), "w", encoding='utf-8') as cfw:
+        json.dump(c, cfw, indent=4)
