@@ -219,7 +219,7 @@ class SourcePack:
         """
         return cache_dir.joinpath(f"{self.host}/{self.repo_namespace}/{self.repo_name}/{self.tag}")
 
-    def cache(self, cache_dir: Path, throw: bool = False) -> None:
+    def cache(self, cache_dir: Path, throw_clone: bool = False, throw_pull: bool = False) -> None:
         """缓存资源包到本地.
 
         Args:
@@ -231,13 +231,13 @@ class SourcePack:
             if self.source_pack_path(cache_dir).exists():
                 warnings.warn(f"资源缓存{self.as_sourcepack_string()}已经存在")
             else:
-                self.clone_source_pack(cache_dir, throw=throw)
+                self.clone_source_pack(cache_dir, throw=throw_clone)
 
         else:
             if self.source_pack_path(cache_dir).exists():
-                self.pull_latest(cache_dir, throw=throw)
+                self.pull_latest(cache_dir, throw=throw_pull)
             else:
-                self.clone_source_pack(cache_dir, throw=throw)
+                self.clone_source_pack(cache_dir, throw=throw_clone)
 
 
 class ComponentTemplate:

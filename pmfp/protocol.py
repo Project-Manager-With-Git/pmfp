@@ -71,6 +71,22 @@ TEMPLATE_INFO_SCHEMA = {
             "description": "模板的操作命令,可以是形式为列表的字符串,会被解析为列表",
             "type": "string"
         },
+        "test": {
+            "type": "object",
+            "additionalProperties": False,
+            "required": ["default_path", "source"],
+            "description": "测试组件名",
+            "properties": {
+                "source": {
+                    "type": "string",
+                    "description": "组件在仓库中的存放位置,可以是本地地址`xxx`或者其他外部组件`sss//xxx`"
+                },
+                "default_path": {
+                    "type": "string",
+                    "description": "默认放置路径,支持jinja2语法模板"
+                }
+            }
+        },
         "components": {
             "type": "object",
             "description": "模板库中的组件",
@@ -78,12 +94,16 @@ TEMPLATE_INFO_SCHEMA = {
                 r"^\w+$": {
                     "type": "object",
                     "additionalProperties": False,
-                    "required": ["default_path"],
+                    "required": ["default_path", "source"],
                     "description": "组件名对应的配置,组件名为相对模板仓库根目录的相对地址",
                     "properties": {
+                        "source": {
+                            "type": "string",
+                            "description": "组件在仓库中的存放位置,可以是本地地址`xxx`或者其他外部组件`sss//xxx`"
+                        },
                         "description": {
                             "type": "string",
-                            "description": "描述键的含义"
+                            "description": "描述组件作用义"
                         },
                         "default_path": {
                             "type": "string",
