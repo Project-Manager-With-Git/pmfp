@@ -1,5 +1,8 @@
 from pmfp.utils.endpoint import EndPoint
+from pmfp.utils.tools_info_utils import get_config_info
 from ..core import test
+
+pmfpinfo = get_config_info()
 
 
 class Unittest(EndPoint):
@@ -28,7 +31,7 @@ class Unittest(EndPoint):
                 "type": "string",
                 "title": "o",
                 "description": "单元测试检验结果输出位置",
-                "default": "doc_unittest"
+                "default": pmfpinfo.get("default_unittest_doc_dir", "doc_unittest")
             },
             "coverage": {
                 "title": "v",

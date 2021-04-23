@@ -64,7 +64,9 @@ def iter_dir_to_end(path: Path,
                     match: Callable[[Path], bool], *,
                     skip_dir: Optional[Callable[[Path], bool]] = None,
                     succ_cb: Optional[Callable[[Path], None]] = None,
-                    fail_cb: Optional[Callable[[Path], None]] = None) -> None:
+                    fail_cb: Optional[Callable[[Path], None]] = None,
+                    skip_dir_handdler: Optional[Callable[[Path], None]] = None
+                    ) -> None:
     """遍历文件夹到底,并按指定的函数来做区分.
 
     Args:
@@ -78,11 +80,14 @@ def iter_dir_to_end(path: Path,
         if p.is_dir():
             if skip_dir:
                 if skip_dir(p):
-                    continue
+                    if skip_dir_handdler:
+                        skip_dir_handdler(p)
+                    else:
+                        print(f"{p} skiped")
                 else:
-                    iter_dir_to_end(p, match, skip_dir=skip_dir, succ_cb=succ_cb, fail_cb=fail_cb)
+                    iter_dir_to_end(p, match, skip_dir=skip_dir, succ_cb=succ_cb, fail_cb=fail_cb, skip_dir_handdler=skip_dir_handdler)
             else:
-                iter_dir_to_end(p, match, skip_dir=skip_dir, succ_cb=succ_cb, fail_cb=fail_cb)
+                iter_dir_to_end(p, match, skip_dir=skip_dir, succ_cb=succ_cb, fail_cb=fail_cb, skip_dir_handdler=skip_dir_handdler)
         else:
             if match(p):
                 if succ_cb:

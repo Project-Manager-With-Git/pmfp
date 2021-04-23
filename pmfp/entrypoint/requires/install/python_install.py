@@ -57,7 +57,7 @@ def _install(package_names: List[str],
         empty = False
     installed_lines = installed.splitlines()
     for req in package_names:
-        req = req.replace(" ", "")
+        req = req.replace(" ", "").strip()
         package_name = get_req_package_name(req)
         run(command_temp.format(req=req), cwd=cwd, env=env_dict, visible=True, fail_exit=True)
         pkgname = get_package_with_version(req, local_package, cwd)

@@ -144,7 +144,10 @@ class SourcePack:
         try:
             git_pull_master(pack_dir)
         except Exception as e:
-            warnings.warn(f"pull repo get error {str(e)}")
+            if throw:
+                raise e
+            else:
+                warnings.warn(f"pull repo get error {str(e)}")
         else:
             print("pull_latest 执行完成")
 

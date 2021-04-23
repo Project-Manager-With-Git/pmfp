@@ -1,5 +1,8 @@
 from pmfp.utils.endpoint import EndPoint
+from pmfp.utils.tools_info_utils import get_config_info
 from ..core import test
+
+pmfpinfo = get_config_info()
 
 
 class Static(EndPoint):
@@ -24,7 +27,7 @@ class Static(EndPoint):
                 "type": "string",
                 "title": "o",
                 "description": "静态类型检验结果输出位置",
-                "default": "doc_typecheck"
+                "default": pmfpinfo.get("default_typecheck_doc_dir", "doc_typecheck")
             },
             "coverage": {
                 "type": "boolean",

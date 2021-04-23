@@ -108,7 +108,7 @@ def to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[
         with open(p, encoding="utf-8") as f:
             content = template_2_content(f.read(), **tempkv)
         pp = p.with_name(p.stem)
-        with open(pp, "w", newline="") as fw:
+        with open(pp, "w", encoding="utf-8", newline="") as fw:
             fw.write(content)
         os.remove(p)
 
@@ -125,7 +125,7 @@ def to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[
         if not target_located_path.exists():
             shutil.copytree(target_component_path, target_located_path)
             iter_dir_to_end(target_located_path,
-                            match=lambda p: p.suffix == ".jinja",
+                            match=lambda p: p.suffix == ".jinja" and ".jinja" not in p.stem,
                             succ_cb=succ_callback)
         else:
             raise AttributeError(f"放置位置{target_located_path}已经存在")

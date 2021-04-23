@@ -29,7 +29,7 @@ class Add(EndPoint):
             },
             "cwd": {
                 "type": "string",
-                "description": "放置位置,不设置则使用自带默认路径,可以使用jinja2模板",
+                "description": "项目目录",
                 "default": "."
             }
         }

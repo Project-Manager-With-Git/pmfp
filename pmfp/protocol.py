@@ -163,6 +163,16 @@ PMFP_CONFIG_SCHEMA = {
             "description": "模板的配置文件名",
             "default": ".pmfp_template.json"
         },
+        "default_typecheck_doc_dir": {
+            "type": "string",
+            "description": "类型检测报告的默认文档输出目录",
+            "default": "doc_typecheck"
+        },
+        "default_unittest_doc_dir": {
+            "type": "string",
+            "description": "单元测试报告的默认文档输出目录",
+            "default": "doc_unittest"
+        },
         "python": {
             "type": "string",
             "description": "默认使用的python"

@@ -36,6 +36,8 @@ DEFAULT_PMFPRC = {
     "template_config_name": ".pmfp_template.json",
     "python": GOLBAL_PYTHON,
     "python_local_env_dir": "env",
+    "default_typecheck_doc_dir": "doc_typecheck",
+    "default_unittest_doc_dir": "doc_unittest",
     "cc": GOLBAL_CC,
     "cxx": GOLBAL_CXX
 }

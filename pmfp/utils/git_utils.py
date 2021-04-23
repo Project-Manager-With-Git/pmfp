@@ -133,7 +133,7 @@ def git_clone(url: str, to: Path, *,
     """
     # with Repo.clone_from(url, to_path=to, multi_options=[f"--branch={branch}"], config='http.sslVerify=false'):
     #     print("git clone ok")
-    run(f'git clone -b {branch} -c http.sslVerify=false {url} {to}',visible=True)
+    run(f'git clone -b {branch} -c http.sslVerify=false {url} {to}', visible=True)
     print("git clone ok")
 
 
@@ -149,7 +149,7 @@ def get_latest_commits(p: Path) -> Dict[str, str]:
     Returns:
         Dict[str, str]: [description]
     """
-    
+
     d = make_repod(p)
     if not is_git_dir(d):
         raise AttributeError(f"目标路径{p}不是git仓库.")
@@ -229,7 +229,7 @@ def git_pull_master(p: Path) -> None:
     #     if str(repo.active_branch) != "master":
     #         warnings.warn(f"active_branch {repo.active_branch} not master")
     #         return
-    run("git pull", cwd=p, env=make_env_args(["GIT_SSL_NO_VERIFY::1"]), visible=True, fail_exit=True)
+    run("git pull", cwd=p, env=make_env_args(["GIT_SSL_NO_VERIFY::1"]), visible=True, fail_exit=False)
 
 
 def git_new_tag(p: Path, version: str, message: Optional[str] = None, remote: bool = False) -> None:
