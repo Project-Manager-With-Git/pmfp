@@ -222,7 +222,7 @@ class SourcePack:
         """
         return cache_dir.joinpath(f"{self.host}/{self.repo_namespace}/{self.repo_name}/{self.tag}")
 
-    def cache(self, cache_dir: Path, throw_clone: bool = False, throw_pull: bool = False) -> None:
+    def cache(self, cache_dir: Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None:
         """缓存资源包到本地.
 
         Args:
@@ -238,7 +238,8 @@ class SourcePack:
 
         else:
             if self.source_pack_path(cache_dir).exists():
-                self.pull_latest(cache_dir, throw=throw_pull)
+                if not not_pull:
+                    self.pull_latest(cache_dir, throw=throw_pull)
             else:
                 self.clone_source_pack(cache_dir, throw=throw_clone)
 

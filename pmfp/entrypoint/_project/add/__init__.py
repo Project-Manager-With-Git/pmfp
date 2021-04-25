@@ -8,19 +8,55 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any, Tuple
 from pmfp.const import PMFP_CONFIG_DEFAULT_NAME
 from pmfp.utils.fs_utils import iter_dir_to_end, get_abs_path
-from pmfp.utils.remote_cache_utils import ComponentTemplate
+from pmfp.utils.remote_cache_utils import ComponentTemplate, SourcePack
 from pmfp.utils.tools_info_utils import get_cache_dir, get_config_info
 from pmfp.utils.template_utils import template_2_content
 from pmfp.entrypoint._project.info import InfoBase
 from .core import project_add
 
 
-def check_and_cached(component_string: str, cache_dir: Path) -> Tuple[ComponentTemplate, Path]:
+def sourcepack_check_and_cached(cached_sourcepack: List[str], source_pack: SourcePack, cache_dir: Path) -> Path:
+    """检测资源包是否已经有缓存,没有就缓存.
+
+    Args:
+        cached_sourcepack (List[str]): 已经缓存过的资源包列表
+        source_pack (SourcePack): 资源包对象
+        cache_dir (Path): 缓存根目录
+
+    Raises:
+        AttributeError: 不是目录,请确认情况
+
+    Returns:
+        Path: 资源包的本地缓存路径
+    """
+    sourcepack_str = source_pack.as_sourcepack_string()
+    sourcepackdir = source_pack.source_pack_path(cache_dir)
+    if sourcepack_str in cached_sourcepack:
+        return sourcepackdir
+    else:
+        try:
+            if source_pack.tag == "latest":
+                source_pack.cache(cache_dir)
+            else:
+                if not sourcepackdir.exists():
+                    source_pack.cache(cache_dir, throw_clone=True)
+                else:
+                    if not sourcepackdir.is_dir():
+                        raise AttributeError(f"{sourcepackdir} 不是目录,请确认情况.")
+        except Exception as e:
+            raise e
+        else:
+            cached_sourcepack.append(sourcepack_str)
+            return sourcepackdir
+
+
+def check_and_cached(cached_sourcepack: List[str], component_string: str, cache_dir: Path) -> Tuple[ComponentTemplate, Path]:
     """检查组件的模板库是否有缓存,没有的话进行缓存.
 
     `latest`标签的模板库都会进行缓存更新.
 
     Args:
+        cached_sourcepack (List[str]): 已经缓存过的资源包列表
         component_string (str): 组件字符串
         cache_dir (Path): 缓存根目录
 
@@ -33,23 +69,15 @@ def check_and_cached(component_string: str, cache_dir: Path) -> Tuple[ComponentT
     """
 
     componentpack = ComponentTemplate.from_component_string(component_string)
-    sourcepackdir = componentpack.source_pack.source_pack_path(cache_dir)
-    try:
-        if componentpack.source_pack.tag == "latest":
-            componentpack.source_pack.cache(cache_dir)
-        else:
-            if not sourcepackdir.exists():
-                componentpack.source_pack.cache(cache_dir, throw_clone=True)
-            else:
-                if not sourcepackdir.is_dir():
-                    raise AttributeError(f"{sourcepackdir} 不是目录,请确认情况.")
-    except Exception as e:
-        raise e
-    else:
-        return componentpack, sourcepackdir
+    source_pack = componentpack.source_pack
+    sourcepackdir = sourcepack_check_and_cached(
+        cached_sourcepack=cached_sourcepack,
+        source_pack=source_pack,
+        cache_dir=cache_dir)
+    return componentpack, sourcepackdir
 
 
-def make_template_kv(sourcepack_config: Dict[str, Any], projctconfig: Dict[str, Any], kv: Optional[List[str]] = None) -> Dict[str, str]:
+def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None) -> Dict[str, str]:
     """构造模板中匹配的kv.
 
     Args:
@@ -74,7 +102,7 @@ def make_template_kv(sourcepack_config: Dict[str, Any], projctconfig: Dict[str, 
         t = info["default"]
         if kvs.get(key):
             t = kvs.get(key)
-        tempkv[key] = template_2_content(t, **projctconfig)
+        tempkv[key] = template_2_content(t, **projectconfig)
     return tempkv
 
 
@@ -89,7 +117,7 @@ def check_source(pmfpconf: Dict[str, Any], projectconfig: Dict[str, Any], source
     sourcepack_env = sourcepack_config.get("env")
     project_env = projectconfig.get("env")
     if project_env and sourcepack_env and sourcepack_env != project_env:
-        raise AttributeError(f"组件{component_string}执行环境{sourcepack_language}与项目执行环境{project_language}不匹配")
+        raise AttributeError(f"组件{component_string}执行环境{sourcepack_env}与项目执行环境{project_env}不匹配")
     return sourcepack_config
 
 
@@ -160,16 +188,46 @@ def save_to_components(cwdp: Path, component_string: str, located_path_str: str)
         json.dump(c, cfw, indent=4)
 
 
-def _add_component(projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: Path, component_string: str, cwdp: Path, *,
-                   located_path: Optional[str] = None, kv: Optional[List[str]] = None) -> None:
-    componentpack, sourcepackdir = check_and_cached(component_string, cache_dir)
-    sourcepack_config = check_source(pmfpconf, projectconfig, sourcepackdir, component_string)
-    target_component_info = check_component(sourcepack_config, componentpack, component_string)
+def _add_component(cached_sourcepacks: List[str],
+                   projectconfig: Dict[str, Any],
+                   pmfpconf: Dict[str, Any],
+                   cache_dir: Path,
+                   component_string: str,
+                   cwdp: Path, *,
+                   located_path: Optional[str] = None,
+                   kv: Optional[List[str]] = None) -> None:
+    componentpack, sourcepackdir = check_and_cached(
+        cached_sourcepack=cached_sourcepacks,
+        component_string=component_string,
+        cache_dir=cache_dir
+    )
+    sourcepack_config = check_source(
+        pmfpconf=pmfpconf,
+        projectconfig=projectconfig,
+        sourcepackdir=sourcepackdir,
+        component_string=component_string
+    )
+    target_component_info = check_component(
+        sourcepack_config=sourcepack_config,
+        componentpack=componentpack,
+        component_string=component_string
+    )
     target_source = target_component_info["source"]
     if "//" in target_source:
-        _add_component(projectconfig, pmfpconf, cache_dir, target_source, cwdp, located_path=located_path, kv=kv)
+        _add_component(
+            cached_sourcepacks=cached_sourcepacks,
+            projectconfig=projectconfig,
+            pmfpconf=pmfpconf,
+            cache_dir=cache_dir,
+            component_string=target_source,
+            cwdp=cwdp,
+            located_path=located_path,
+            kv=kv)
     else:
-        tempkv = make_template_kv(sourcepack_config, projectconfig, kv)
+        tempkv = make_template_kv(
+            sourcepack_config=sourcepack_config,
+            projectconfig=projectconfig,
+            kv=kv)
         located_path_str = to_target_source(projectconfig=projectconfig,
                                             target_component_info=target_component_info,
                                             cwdp=cwdp,
@@ -194,6 +252,12 @@ def add_component(component_string: str, located_path: Optional[str] = None, kv:
     pmfpconf = get_config_info()
     cwdp = get_abs_path(cwd)
     cache_dir = get_cache_dir()
-    _add_component(projectconfig=projectconfig, pmfpconf=pmfpconf, cache_dir=cache_dir,
-                   component_string=component_string, cwdp=cwdp,
-                   located_path=located_path, kv=kv)
+    cached_sourcepacks: List[str] = []
+    _add_component(
+        cached_sourcepacks=cached_sourcepacks,
+        projectconfig=projectconfig,
+        pmfpconf=pmfpconf,
+        cache_dir=cache_dir,
+        component_string=component_string,
+        cwdp=cwdp,
+        located_path=located_path, kv=kv)
