@@ -22,4 +22,5 @@ def main(argv: List[str] = sys.argv[1:]) -> None:
     return None
 
 
-main(sys.argv[1:])
+if __name__ == "__main__":
+    main(sys.argv[1:])
