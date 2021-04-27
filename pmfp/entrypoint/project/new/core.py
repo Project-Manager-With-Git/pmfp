@@ -57,24 +57,35 @@ class New(EndPoint):
                     "type": "string"
                 }
             },
-            "requires": {
-                "type": "array",
-                "title": "r",
-                "description": "最小化执行的依赖",
-                "items": {
-                    "type": "string"
-                }
-            },
             "template_string": {
                 "type": "string",
                 "title": "t",
                 "description": "使用的模板"
+            },
+            "with_test": {
+                "type": "boolean",
+                "description": "是否安装依赖",
+                "default": False
             },
             "install": {
                 "type": "boolean",
                 "title": "i",
                 "description": "是否安装依赖",
                 "default": False
+            },
+            "install_env_args": {
+                "type": "array",
+                "description": "执行指令时的环境变量,<key::value>",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "kv": {
+                "type": "array",
+                "description": "替换模板的默认参数,格式为`<key>::<value>`",
+                "items": {
+                    "type": "string"
+                }
             },
             "cwd": {
                 "type": "string",

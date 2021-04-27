@@ -59,7 +59,10 @@ def _install(package_names: List[str],
     for req in package_names:
         req = req.replace(" ", "").strip()
         package_name = get_req_package_name(req)
-        run(command_temp.format(req=req), cwd=cwd, env=env_dict, visible=True, fail_exit=True)
+        if "==" in req:
+            run(command_temp.format(req=req), cwd=cwd, env=env_dict, visible=True, fail_exit=True)
+        else:
+            run(command_temp.format(req=package_name), cwd=cwd, env=env_dict, visible=True, fail_exit=True)
         pkgname = get_package_with_version(req, local_package, cwd)
         add = True
         for index, line in enumerate(installed_lines):

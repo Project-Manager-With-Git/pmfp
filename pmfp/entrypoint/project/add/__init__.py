@@ -11,7 +11,7 @@ from pmfp.utils.fs_utils import iter_dir_to_end, get_abs_path
 from pmfp.utils.remote_cache_utils import ComponentTemplate, SourcePack
 from pmfp.utils.tools_info_utils import get_cache_dir, get_config_info
 from pmfp.utils.template_utils import template_2_content
-from pmfp.entrypoint._project.info import InfoBase
+from pmfp.entrypoint.project.info import InfoBase
 from .core import project_add
 
 
@@ -195,7 +195,8 @@ def _add_component(cached_sourcepacks: List[str],
                    component_string: str,
                    cwdp: Path, *,
                    located_path: Optional[str] = None,
-                   kv: Optional[List[str]] = None) -> None:
+                   save: bool = True,
+                   kv: Optional[List[str]] = None) -> Tuple[ComponentTemplate, Dict[str, Any]]:
     componentpack, sourcepackdir = check_and_cached(
         cached_sourcepack=cached_sourcepacks,
         component_string=component_string,
@@ -222,6 +223,7 @@ def _add_component(cached_sourcepacks: List[str],
             component_string=target_source,
             cwdp=cwdp,
             located_path=located_path,
+            save=save,
             kv=kv)
     else:
         tempkv = make_template_kv(
@@ -235,7 +237,9 @@ def _add_component(cached_sourcepacks: List[str],
                                             target_source=target_source,
                                             tempkv=tempkv,
                                             located_path=located_path)
-        save_to_components(cwdp=cwdp, component_string=component_string, located_path_str=located_path_str)
+        if save:
+            save_to_components(cwdp=cwdp, component_string=component_string, located_path_str=located_path_str)
+        return componentpack, sourcepack_config
 
 
 @project_add.as_main
@@ -253,7 +257,7 @@ def add_component(component_string: str, located_path: Optional[str] = None, kv:
     cwdp = get_abs_path(cwd)
     cache_dir = get_cache_dir()
     cached_sourcepacks: List[str] = []
-    _add_component(
+    componentpack, sourcepack_config = _add_component(
         cached_sourcepacks=cached_sourcepacks,
         projectconfig=projectconfig,
         pmfpconf=pmfpconf,
@@ -261,3 +265,4 @@ def add_component(component_string: str, located_path: Optional[str] = None, kv:
         component_string=component_string,
         cwdp=cwdp,
         located_path=located_path, kv=kv)
+    sourcepack_config

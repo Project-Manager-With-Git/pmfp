@@ -1,7 +1,7 @@
 """命令行执行脚本模块."""
 from .core import ppm
 # from .cmd_reset import *
-from ._project import *
+from .project import *
 from .build_ import build
 from .cache import *
 from .doc_ import *
@@ -18,4 +18,3 @@ from .info import info
 from .run import run_cmd
 from .version import __VERSION__
 # from .cmd_stack import *
-# from .cmd_project import *
