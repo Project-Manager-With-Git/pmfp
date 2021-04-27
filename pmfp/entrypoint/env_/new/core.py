@@ -14,13 +14,13 @@ class New(EndPoint):
                 "description": "执行环境",
                 "title": "e",
                 "type": "string",
-                "enum": ["venv", "conda", "gomod", "cmake"]
+                "enum": ["venv", "conda", "gomod", "cmake", "node"]
             },
             "language": {
                 "type": "string",
                 "title": "l",
                 "description": "初始化的语言",
-                "enum": ["py", "cython", "go", "CXX", "C"]
+                "enum": ["py", "cython", "go", "CXX", "C", "js"]
             },
             "project_name": {
                 "type": "string",

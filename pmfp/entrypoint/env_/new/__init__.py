@@ -16,6 +16,8 @@ from .env_py import (
 )
 from .env_go import new_env_go
 from .env_cmake import new_env_cmake
+from .env_node import new_env_node
+from .env_webpack import new_env_webpack
 from .core import env_new
 
 
@@ -163,6 +165,12 @@ def _new_nev(e: str, cwd: Path,
         new_env_go(cwd=cwd, project_name=project_name)
     elif e == "cmake":
         new_env_cmake(cwd=cwd, project_name=project_name, version=version, description=description, language=language)
+    elif e == "node":
+        new_env_node(cwd=cwd, project_name=project_name, version=version, description=description, author=author, language=language, requires=requires,
+                     test_requires=test_requires)
+    elif e == "webpack":
+        new_env_webpack(cwd=cwd, project_name=project_name, version=version, description=description, author=author, language=language, requires=requires,
+                        test_requires=test_requires)
     else:
         print(f"暂不支持初始化环境{e}")
 

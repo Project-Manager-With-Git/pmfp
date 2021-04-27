@@ -59,3 +59,8 @@ def install_requires(env: str, *,
                        setup_requires=setup_requires,
                        extras_requires=extras_requires,
                        env_args=env_args)
+    if env in ("node", "webpack"):
+        node_install(cwd=cwdp,
+                       package_names=package_names,
+                       test=test,
+                       env_args=env_args)

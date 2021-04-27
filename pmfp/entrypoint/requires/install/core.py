@@ -19,7 +19,7 @@ class Install(EndPoint):
             "env": {
                 "description": "静态类型检验针对的语言",
                 "type": "string",
-                "enum": ["venv", "conda", "gomod"]
+                "enum": ["venv", "conda", "gomod", "node"]
             },
             "package_names": {
                 "type": "array",

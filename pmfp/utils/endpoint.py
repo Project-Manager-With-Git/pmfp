@@ -1,4 +1,5 @@
 import re
+import json
 from pathlib import Path
 from configparser import ConfigParser
 from typing import Dict, Any, List, Union
@@ -108,6 +109,23 @@ def cmake_handdler(p: Path) -> Dict[str, Any]:
     return result
 
 
+def package_json_handdler(p: Path) -> Dict[str, Any]:
+    result: Dict[str, Union[str, List[str]]] = {}
+    with open(p, encoding="utf-8") as f:
+        con = json.load(f)
+    result["project_name"] = con.get("name")
+    result["version"] = con.get("version")
+    result["description"] = con.get("description")
+    result["author"] = con.get("author")
+    result["requires"] = [f"{p}@{v.replace('^', '')}" for p, v in con.get("dependencies", {}).items()]
+    result["test_requires"] = [f"{p}@{v.replace('^', '')}" for p, v in con.get("devDependencies", {}).items()]
+    if p.parent.joinpath("tsconfig.json").exists():
+        result["language"] = "ts"
+    else:
+        result["language"] = "js"
+    return result
+
+
 class EndPoint(EntryPoint):
     load_all_config_file = True
     config_file_only_get_need = True
@@ -117,10 +135,12 @@ class EndPoint(EntryPoint):
         "setup.cfg",
         # "package.json",
         "go.mod",
-        "CMakeLists.txt"
+        "CMakeLists.txt",
+        "package.json"
     ]
     _config_file_parser_map = {
         "setup.cfg": setup_cfg_handdler,
         "go.mod": go_mod_handdler,
-        "CMakeLists.txt": cmake_handdler
+        "CMakeLists.txt": cmake_handdler,
+        "package.json": package_json_handdler
     }
