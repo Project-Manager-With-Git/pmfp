@@ -40,7 +40,7 @@ pmfp现在被设计为两个部分:
 
 ### 项目管理
 
-项目管理的整体设计思路是这样:
+项目管理使用的子命令为`project`,其整体设计思路是这样:
 
 1. 借助git仓库来保存组件模板.
 2. 每个组件模板使用jinja2作为模板引擎,允许使用其模板语法
@@ -51,6 +51,8 @@ pmfp现在被设计为两个部分:
 7. 根据模板包构造项目只要指定一个资源包路径即可,其形式为`[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]`
 8. 如果是已有项目要添加组件,则可以使用`[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]//{component_path_str}`
 9. 默认的host为`github.com`,默认的repo_namespace为`Project-Manager-With-Git`,默认的tag为`latest`,如果tag为latest它会拉取master分支的head
+
+另外我们还可以使用`cache`子命令管理资源包缓存
 
 ### 直接调用功能
 
@@ -67,5 +69,4 @@ pmfp现在被设计为两个部分:
 + `proto`用于快速构建和编译protobuf文件
 + `schema`用于校验`jsonschema`
 + `test`用于对项目进行测试
-+ `release`用于发布项目
 + `requires`用于管理依赖
