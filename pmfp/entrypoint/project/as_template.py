@@ -10,8 +10,8 @@ from pmfp.utils.fs_utils import iter_dir_to_end, get_abs_path, tempdir, remove_r
 from pmfp.utils.tools_info_utils import get_config_info, get_golang_version
 from .core import project
 
-acccept_suffix = (".py", ".js", ".ts", ".go", ".c", ".cpp", ".h", ".hpp", ".pyd", ".pyx", ".scala", ".cmake", ".jinja", "doc_typecheck", "doc_unittest")
-except_dir = ("vendor", "node_modules", "dist", "build", "doc", "docs", "document", "documents", "coverage", "__pycache__",)
+acccept_suffix = (".py", ".js", ".ts", ".go", ".c", ".cpp", ".h", ".hpp", ".pyd", ".pyx", ".scala", ".cmake", ".jinja", "md")
+except_dir = ("vendor", "node_modules", "dist", "build", "doc", "docs", "document", "documents", "coverage", "__pycache__", "doc_typecheck", "doc_unittest")
 
 
 class AsTemp(EndPoint):
@@ -146,7 +146,7 @@ class AsTemp(EndPoint):
                                 }
                                 shutil.copytree(p, tp.joinpath(p.name))
                         elif p.is_file():
-                            if p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE"):
+                            if p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE", "README.md", "CHANGELOG.md"):
                                 nameinfo = p.name.split(".")
                                 components[nameinfo[0]] = {
                                     "source": p.name,
@@ -172,7 +172,7 @@ class AsTemp(EndPoint):
 
                 iter_dir_to_end(
                     tp,
-                    match=lambda p: p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE"),
+                    match=lambda p: p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE", "README.md", "CHANGELOG.md"),
                     skip_dir=lambda p: p.name in (pmfpconfig["python_local_env_dir"], pmfpconfig["default_unittest_doc_dir"], pmfpconfig["default_typecheck_doc_dir"]) or p.name in except_dir,
                     skip_dir_handdler=lambda p: shutil.rmtree(p, onerror=remove_readonly),
                     fail_cb=lambda p: os.remove(p),

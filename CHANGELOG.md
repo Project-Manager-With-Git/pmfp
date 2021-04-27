@@ -3,6 +3,8 @@
 ## 改进
 
 1. 修改protocol,支持不声明language的组件
+2. 修改cc和cxx为全局项目配置
+3. 修改golang_version,python_version,node_version为全局项目配置
 
 # v4.0.0
 

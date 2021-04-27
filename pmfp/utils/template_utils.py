@@ -23,7 +23,7 @@ def template_2_content(template: str, **kwargs: Any) -> str:
         content = template_content.render(
             **kwargs
         )
-    except:
+    except Exception:
         print("template_2_content出错")
         raise
     else:
@@ -42,7 +42,7 @@ def jsontemplate_2_content(template: str, **kwargs: Any) -> str:
         content = json.loads(template)
         content.update(kwargs)
 
-    except:
+    except Exception:
         print("template_2_content出错")
         raise
     else:
@@ -64,7 +64,7 @@ def cfgtemplate_2_file(template: str, file: Path, **kwargs: Any) -> None:
         for section, kvs in kwargs.items():
             for k, v in kvs.items():
                 config[section][k] = v
-    except:
+    except Exception:
         print("template_2_content出错")
         raise
     else:

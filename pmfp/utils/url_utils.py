@@ -66,7 +66,7 @@ def query_http(url: str, method: str, *,
                stream: bool = False,
                verify: bool = False,
                cert: Optional[str] = None,
-               cb: Optional[Callable[[str], None]]) -> None:
+               cb: Optional[Callable[[str], None]] = None) -> None:
     """http请求并打印结果.
 
     Args:

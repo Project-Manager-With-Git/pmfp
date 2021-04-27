@@ -180,14 +180,6 @@ PMFP_CONFIG_SCHEMA = {
         "python_local_env_dir": {
             "type": "string",
             "description": "默认使用的python本地环境的运行环境存放文件"
-        },
-        "cc": {
-            "type": "string",
-            "description": "默认使用的c语言编译器"
-        },
-        "cxx": {
-            "type": "string",
-            "description": "默认使用的c++语言编译器"
         }
     }
 }
