@@ -32,6 +32,13 @@ if template_io:
 else:
     raise AttributeError("cython_setup.py模板失败")
 
+PipConfSource = ""
+source_io = pkgutil.get_data('pmfp.entrypoint..env_.new.source_temp', 'pip.conf.jinja')
+if source_io:
+    PipConfSource = source_io.decode('utf-8')
+else:
+    raise AttributeError("加载pip.conf.jinja模板失败")
+
 
 def new_env_py_venv(cwd: Path) -> None:
     """初始化python默认的虚拟环境.
@@ -142,6 +149,9 @@ def new_env_py_setup(cwd: Path, project_name: str,
 
                 }, f
             )
+    # pip.conf
+    with open(cwd.joinpath("pip.conf"), "w", newline="", encoding="utf-8") as f:
+        f.write(PipConfSource)
 
     # setup.cfg
     setup_cfg_path = cwd.joinpath("setup.cfg")
