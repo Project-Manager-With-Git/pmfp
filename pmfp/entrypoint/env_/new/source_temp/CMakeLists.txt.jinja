@@ -1,0 +1,95 @@
+#项目编译环境
+cmake_minimum_required (VERSION 3.13)
+project ({{ project_name }}
+    VERSION {{ version }}
+    DESCRIPTION "{{ description }}"
+    LANGUAGES {{ language }}
+)
+
+
+# # grpc
+# list(APPEND CMAKE_PREFIX_PATH "/opt/grpc" "/opt/protobuf")
+# # Cmake find modules
+# list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+# include_directories(inc)
+
+# # proto
+# find_package(Protobuf REQUIRED)
+# find_package(GRPC REQUIRED)
+# set(PROTOS
+#     ${CMAKE_CURRENT_BINARY_DIR}/pbschema/square_rpc.proto
+# )
+# set(PROTO_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/proto-src)
+# file(MAKE_DIRECTORY ${PROTO_SRC_DIR})
+# include_directories(${PROTO_SRC_DIR})
+# protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS  ${PROTO_SRC_DIR} ${PROTOS})
+# grpc_generate_cpp(GRPC_SRCS GRPC_HDRS ${PROTO_SRC_DIR} ${PROTOS})
+
+
+# # 下载外部依赖源码
+# include(FetchContent)
+# FetchContent_Declare(json
+#   GIT_REPOSITORY https://github.com/nlohmann/json.git
+#   GIT_TAG        v3.7.3
+# )
+# FetchContent_GetProperties(json)
+# if(NOT json_POPULATED)
+#   FetchContent_Populate(json)
+#   add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+# endif()
+
+# FetchContent_Declare(spdlog
+#   GIT_REPOSITORY https://github.com/gabime/spdlog.git
+#   GIT_TAG        v1.8.2
+# )
+# FetchContent_GetProperties(spdlog)
+# if(NOT spdlog_POPULATED)
+#   FetchContent_Populate(spdlog)
+#   add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR} EXCLUDE_FROM_ALL)
+# endif()
+
+# FetchContent_Declare(argparse
+#   GIT_REPOSITORY https://github.com/p-ranav/argparse.git
+#   GIT_TAG        9903a22904fed8176c4a1f69c4b691304b23c78e
+# )
+# FetchContent_GetProperties(argparse)
+# if(NOT argparse_POPULATED)
+#   FetchContent_Populate(argparse)
+#   add_subdirectory(${argparse_SOURCE_DIR} ${argparse_BINARY_DIR} EXCLUDE_FROM_ALL)
+# endif()
+
+
+# 添加外部依赖(如果可以最好还是用上面的下载方式)
+
+# set(THIRD_PART
+#     ${CMAKE_CURRENT_BINARY_DIR}/thirdpart
+# )
+# # https://github.com/nlohmann/json/archive/v3.9.1.tar.gz
+# add_subdirectory(${THIRD_PART}/nlohmann_json)
+# # https://github.com/gabime/spdlog/archive/v1.8.2.tar.gz
+# add_subdirectory(${THIRD_PART}/spdlog)
+# # https://github.com/p-ranav/argparse/archive/refs/tags/v2.0.tar.gz
+# add_subdirectory(${THIRD_PART}/argparse)
+
+# 编译
+add_compile_options(-std=c++17)
+set(SRC_DIR 
+    ${CMAKE_CURRENT_BINARY_DIR}/src
+)
+include_directories(${SRC_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+add_executable({{ project_name }}
+    ${SRC_DIR}/{{ project_name }}.cc
+)
+    # ${PROTO_SRCS}
+    # ${GRPC_SRCS}
+#)
+# target_link_libraries({{ project_name }}
+#    # PUBLIC  "-static" #纯静态编译
+#    PRIVATE nlohmann_json::nlohmann_json
+#    PRIVATE spdlog::spdlog
+#    PRIVATE argparse::argparse
+#    PRIVATE gRPC::grpc++_reflection
+#    PRIVATE protobuf::libprotobuf
+# )
+

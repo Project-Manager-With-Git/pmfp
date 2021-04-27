@@ -15,7 +15,7 @@ classifiers = [
     'Topic :: Documentation :: Sphinx',
 ]
 packages = find_packages(exclude=['contrib', 'docs', 'test'])
-with open(str(HERE.joinpath('README.rst')), encoding='utf-8') as f:
+with open(str(HERE.joinpath('README.md')), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(

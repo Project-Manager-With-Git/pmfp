@@ -1,8 +1,0 @@
-let footer = () => {
-    let greeting = document.createElement('p')
-    greeting.textContent = `greeting here is footer!`
-    let footer = document.createElement("footer")
-    footer.appendChild(greeting)
-    return footer
-}
-document.querySelector("#root").appendChild(footer())

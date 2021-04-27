@@ -1,0 +1,46 @@
+# 构造可执行文件
+FROM {{ cross_compiling }}golang:{{ golang_version }}-alpine as build_bin
+ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.io
+# 静态编译
+ENV CGO_ENABLED=0
+# 安装针对glibc的开发工具链
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN apk update && apk --no-cache add build-base && rm -rf /var/cache/apk/* 
+WORKDIR /code
+COPY go.mod /code/go.mod
+COPY go.sum /code/go.sum
+# 添加源文件
+COPY {{ app_name }}.go /code/{{ app_name }}.go
+RUN go build -ldflags "-s -w" -o {{ app_name }}-go {{ app_name }}.go
+
+# 直接使用可执行文件构造scratch镜像
+FROM {{ cross_compiling }}scratch as build_scratch_img
+COPY --from=build_bin /code/{{ app_name }}-go .
+CMD [ "/{{ app_name }}-go"]
+
+# 直接使用可执行文件构造镜像
+FROM {{ cross_compiling }}alpine:3.12.2 as build_img
+COPY --from=build_bin /code/{{ app_name }}-go .
+RUN chmod +x /{{ app_name }}-go
+ENTRYPOINT [ "/{{ app_name }}-go"]
+
+# 使用upx压缩可执行文件
+FROM {{ cross_compiling }}alpine:3.11 as upx
+WORKDIR /code
+# 安装upx
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN apk update && apk add --no-cache upx && rm -rf /var/cache/apk/*
+COPY --from=build_bin /code/{{ app_name }}-go .
+RUN upx --best --lzma -o {{ app_name }} {{ app_name }}-go
+
+# 使用压缩过的可执行文件构造scratch镜像
+FROM {{ cross_compiling }}scratch as build_scratch_upximg
+COPY --from=upx /code/{{ app_name }} .
+CMD [ "/{{ app_name }}"]
+
+# 使用压缩过的可执行文件构造镜像
+FROM {{ cross_compiling }}alpine:3.12.2 as build_upximg
+COPY --from=upx /code/{{ app_name }} .
+RUN chmod +x /{{ app_name }}
+ENTRYPOINT [ "/{{ app_name }}"]

@@ -1,21 +1,12 @@
-wheel
-pep8
-coverage
-mypy
-lxml
-mypy-extensions
-pydocstyle
-autopep8
-sphinx
-wheel
-coverage
-recommonmark
-sphinxcontrib-napoleon
-sphinx-intl
-mypy
-lxml
-mypy-extensions
-boom
-voluptuous
-chardet
-grpclib
+schema_entry >= 0.1.5
+colorama >= 0.4.0
+gevent >= 20.0.0
+termcolor >= 1.0.0
+chardet >= 3.0.4
+jsonschema >= 3.2.0
+requests >= 2.24.0
+requests_oauthlib >= 1.3.0
+GitPython >= 3.1.5
+PyYaml==5.3.1
+mypy >= 0.800
+jinja2 >= 2.11

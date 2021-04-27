@@ -1,0 +1,21 @@
+syntax = "proto3";
+package {{ parent_package }}{{ name }};
+option go_package = "{{ package_go }}";
+enum ExampleEnum {
+    UNIVERSAL = 0;
+    WEB = 1;
+    IMAGES = 2;
+    LOCAL = 3;
+    NEWS = 4;
+    PRODUCTS = 5;
+    VIDEO = 6;
+  }
+
+message ExampleMessage {
+    string query = 1;
+    int32 page_number = 2;
+    int32 result_per_page = 3;
+    ExampleEnum corpus = 4;
+    repeated int32 uids = 5;
+    map<string, float> weight =6;
+  }

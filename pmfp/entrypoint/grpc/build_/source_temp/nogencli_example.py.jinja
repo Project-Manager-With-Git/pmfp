@@ -1,0 +1,30 @@
+import grpc
+import grpc.experimental
+from google.protobuf.json_format import MessageToDict
+from .nogencli import client, client
+
+rpc_protos = grpc.protos("{{ service_name_lower }}.proto")
+
+
+
+def cli_exp(url: str = "localhost:5000") -> None:
+    # req-res
+    with client.initialize_from_url(url) as conn:
+        res = conn.Square(rpc_protos.Message(Message=2.0))
+        print(MessageToDict(res))
+    # req-stream
+    with Client(url=url) as conn:
+        res_stream = conn.RangeSquare(rpc_protos.Message(Message=4.0))
+        for res in res_stream:
+            print(MessageToDict(res))
+    # stream-res
+    client.initialize_from_url(url)
+    with client:
+        res = client.SumSquare((rpc_protos.Message(Message=float(i)) for i in range(4)))
+        print(MessageToDict(res))
+    # stream-stream
+    with client:
+        res_stream = client.StreamrangeSquare((rpc_protos.Message(Message=float(i)) for i in range(4)))
+        for res in res_stream:
+            print(MessageToDict(res))
+

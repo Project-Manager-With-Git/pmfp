@@ -1,7 +1,0 @@
-from grpc_schema import RPCServicer, Data
-
-
-class RPC(RPCServicer):
-    def DoFormat(self, request, context):
-        str = request.text
-        return Data(text=str.upper())

@@ -1,6 +1,0 @@
-module $project_name
-
-require (
-    
-)
-go ${language_version}

@@ -1,8 +1,0 @@
-import Application from "./core"
-
-
-function init_app(config) {
-  let app = new Application(config)
-  return app
-}
-export default init_app

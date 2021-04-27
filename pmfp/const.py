@@ -1,30 +1,44 @@
-"""pmfp的常量."""
-
+"""维护常量."""
 import sys
 import platform
+import getpass
 from pathlib import Path
 
+# PLATFORM 执行平台
 PLATFORM = platform.system()
+# GOLBAL_PYTHON 全局python
 GOLBAL_PYTHON = "python" if PLATFORM == 'Windows' else "python3"
+# GOLBAL_CC 全局c编译器
+GOLBAL_CC = "MSVC" if PLATFORM == 'Windows' else "gcc"
+# GOLBAL_CXX 全局c++编译器
+GOLBAL_CXX = "MSVC" if PLATFORM == 'Windows' else "g++"
+# GOLBAL_PYTHON_VERSION 全局python的版本
 GOLBAL_PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1])
-PROJECT_HOME = Path(".").absolute()
-PMFPRC_PATH = PROJECT_HOME.joinpath("pmfprc.json")
-PMFP_HOME = Path(__file__).parent.absolute()
-ENV_PATH = PROJECT_HOME.joinpath("env")
-JS_ENV_PATH = PROJECT_HOME.joinpath("package.json")
-GO_ENV_PATH = PROJECT_HOME.joinpath("go.mod")
-DOC_PATH = PROJECT_HOME.joinpath("document")
-TEST_PATH = PROJECT_HOME.joinpath("test")
-TYPECHECK_PATH = PROJECT_HOME.joinpath("typecheckhtml")
+# PMFP_CONFIG_DEFAULT_NAME
+PMFP_CONFIG_DEFAULT_NAME = "pmfprc.json"
 
-PMFP_SOURCE_HOME = PMFP_HOME.joinpath("source")
-PMFP_TEMPLATES_HOME = PMFP_SOURCE_HOME.joinpath("templates")
+# PMFP_CONFIG_HOME pmfp工具的默认缓存和配置位置
+PMFP_CONFIG_HOME = Path.home().resolve().joinpath(".pmfprc")
+# PMFP_CONFIG_PATH pmfp工具的配置项
+PMFP_CONFIG_PATH = PMFP_CONFIG_HOME.joinpath("config.json")
 
+PY_ENV_PATH = "env"
+JS_ENV_PATH = "package.json"
+GO_ENV_PATH = "go.mod"
+DOC_PATH = "document"
+TEST_PATH = "test"
+TYPECHECK_PATH = "typecheck"
 
-PMFP_COMPONENTS_HOME = PMFP_SOURCE_HOME.joinpath("components")
-PMFP_PB_TEMP = PMFP_SOURCE_HOME.joinpath("components/protobuf")
-PMFP_DOC_TEMP = PMFP_SOURCE_HOME.joinpath("components/doc")
-PMFP_README_TEMP = PMFP_SOURCE_HOME.joinpath("components/readme")
-PMFP_SETUP_TEMP = PMFP_SOURCE_HOME.joinpath("components/setup")
-PMFP_TEST_TEMP = PMFP_SOURCE_HOME.joinpath("components/test")
-PMFP_GOLANG_ENV_TEMP = PMFP_SOURCE_HOME.joinpath("components/golang/universal/go.mod.temp")
+DEFAULT_PMFPRC = {
+    "cache_dir": str(PMFP_CONFIG_HOME.joinpath("cache")),
+    "default_template_host": "github.com",
+    "default_template_namespace": "Project-Manager-With-Git",
+    "template_config_name": ".pmfp_template.json",
+    "python": GOLBAL_PYTHON,
+    "python_local_env_dir": "env",
+    "default_typecheck_doc_dir": "doc_typecheck",
+    "default_unittest_doc_dir": "doc_unittest",
+    "cc": GOLBAL_CC,
+    "cxx": GOLBAL_CXX
+}
+DEFAULT_AUTHOR = getpass.getuser()

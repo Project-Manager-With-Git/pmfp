@@ -1,0 +1,33 @@
+import asyncio
+
+import grpc
+import grpc.experimental
+from google.protobuf.json_format import MessageToDict
+from .aionogencli import client, Client
+rpc_protos = grpc.protos("{{ service_name_lower }}.proto")
+
+
+async def _cli_exp(url: str = "localhost:5000") -> None:
+    # req-res
+    async with client.initialize_from_url(url) as conn:
+        res = await conn.Square(rpc_protos.Message(Message=2.0))
+        print(MessageToDict(res))
+    # req-stream
+    async with Client(url=url) as conn:
+        res_stream = conn.RangeSquare(rpc_protos.Message(Message=4.0))
+        async for res in res_stream:
+            print(MessageToDict(res))
+    # stream-res
+    client.initialize_from_url(url)
+    async with client:
+        res = await client.SumSquare((rpc_protos.Message(Message=float(i)) for i in range(4)))
+        print(MessageToDict(res))
+    # stream-stream
+    async with client:
+        res_stream = client.StreamrangeSquare((rpc_protos.Message(Message=float(i)) for i in range(4)))
+        async for res in res_stream:
+            print(MessageToDict(res))
+
+
+def cli_exp(url: str = "localhost:5000") -> None:
+    asyncio.run(_cli_exp(url))

@@ -1,0 +1,16 @@
+FROM {{ cross_compiling }}python:{{ python_version }}-alpine as build_bin
+COPY pip.conf /etc/pip.conf
+RUN pip --no-cache-dir install --upgrade pip
+WORKDIR /code
+RUN mkdir /code/app
+COPY requirements.txt /code/requirements.txt
+RUN python -m pip --no-cache-dir install -r requirements.txt --target app
+RUN rm -rf app/*.dist-info
+# 复制源文件
+COPY {{ app_name }} /code/app/
+RUN python -m zipapp -p "/usr/bin/env python3" app
+
+FROM {{ cross_compiling }}python:{{ python_version }}-alpine as build_img
+WORKDIR /code
+COPY --from=build_bin /code/app/app.pyz /code
+CMD ["python" ,"app.pyz"]
