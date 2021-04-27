@@ -178,7 +178,7 @@ def new_env_py_setup(cwd: Path, project_name: str,
 
         if test_requires:
             options.update({
-                "test_requires": """
+                "tests_require": """
     """ + """
     """.join(test_requires)})
 

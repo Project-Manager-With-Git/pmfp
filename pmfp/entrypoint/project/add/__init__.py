@@ -36,7 +36,7 @@ def sourcepack_check_and_cached(cached_sourcepack: List[str], source_pack: Sourc
     else:
         try:
             if source_pack.tag == "latest":
-                source_pack.cache(cache_dir)
+                source_pack.cache(cache_dir, throw_clone=True)
             else:
                 if not sourcepackdir.exists():
                     source_pack.cache(cache_dir, throw_clone=True)
@@ -165,7 +165,7 @@ def to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[
                     content = template_2_content(f.read(), **tempkv)
                 if not target_located_path.parent.exists():
                     target_located_path.parent.mkdir(parents=True)
-                with open(target_located_path, "w", newline="") as fw:
+                with open(target_located_path, "w",encoding="utf-8", newline="") as fw:
                     fw.write(content)
             else:
                 shutil.copyfile(target_component_path, target_located_path)

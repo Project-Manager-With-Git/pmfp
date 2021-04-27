@@ -253,7 +253,7 @@ class ComponentTemplate:
     def from_component_string(cls, component_string: str) -> "ComponentTemplate":
         """从组件模板字符串构造组件模板对象.
 
-        组件模板字符串的形式为`"{host}::{repo_name}::{tag}::{component_path_str}"`
+        组件模板字符串的形式为`"[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]//{component_path_str}"`
 
         Returns:
             [ComponentTemplate]: 组件模板对象

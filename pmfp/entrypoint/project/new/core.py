@@ -60,7 +60,7 @@ class New(EndPoint):
             "template_string": {
                 "type": "string",
                 "title": "t",
-                "description": "使用的模板"
+                "description": "使用的模板的描述字符串,形式为[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]"
             },
             "with_test": {
                 "type": "boolean",

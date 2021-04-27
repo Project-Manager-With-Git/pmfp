@@ -51,6 +51,9 @@ def check_source(pmfpconf: Dict[str, Any], env: str, sourcepackdir: Path, templa
     sourcepack_env = sourcepack_config.get("env")
     if sourcepack_env and sourcepack_env != env:
         raise AttributeError(f"组件{template_string}执行环境{sourcepack_env}与项目执行环境{env}不匹配")
+    sourcepack_template_type = sourcepack_config["template_type"]
+    if sourcepack_template_type == "components":
+        raise AttributeError(f"资源包{template_string}是组件资源包,不能用于构造项目")
     return sourcepack_config
 
 
@@ -128,33 +131,36 @@ def new_project(env: str, *,
                     cwdp=cwdp, kv=kv)
             print("组件构造结束")
         if with_test:
-            sourcepack_test_config = sourcepack_config.get("test")
-            if not sourcepack_test_config:
-                print("模板没有提供测试资源")
-            else:
-                print("开始构造测试模板")
-                target_source = sourcepack_test_config["source"]
-                if "//" in target_source:
-                    _add_component(
-                        cached_sourcepacks=cached_sourcepacks,
-                        projectconfig=projectconfig,
-                        pmfpconf=pmfpconf,
-                        cache_dir=cache_dir,
-                        component_string=target_source,
-                        cwdp=cwdp,
-                        kv=kv,
-                        save=False)
+            try:
+                sourcepack_test_config = sourcepack_config.get("test")
+                if not sourcepack_test_config:
+                    print("模板没有提供测试资源")
                 else:
-                    tempkv = make_template_kv(
-                        sourcepack_config=sourcepack_config,
-                        projectconfig=projectconfig,
-                        kv=kv)
-                    located_path_str = to_target_source(projectconfig=projectconfig,
-                                                        target_component_info=sourcepack_test_config,
-                                                        cwdp=cwdp,
-                                                        sourcepackdir=sourcepackdir,
-                                                        target_source=target_source,
-                                                        tempkv=tempkv)
+                    print("开始构造测试模板")
+                    target_source = sourcepack_test_config["source"]
+                    if "//" in target_source:
+                        _add_component(
+                            cached_sourcepacks=cached_sourcepacks,
+                            projectconfig=projectconfig,
+                            pmfpconf=pmfpconf,
+                            cache_dir=cache_dir,
+                            component_string=target_source,
+                            cwdp=cwdp,
+                            kv=kv,
+                            save=False)
+                    else:
+                        tempkv = make_template_kv(
+                            sourcepack_config=sourcepack_config,
+                            projectconfig=projectconfig,
+                            kv=kv)
+                        located_path_str = to_target_source(projectconfig=projectconfig,
+                                                            target_component_info=sourcepack_test_config,
+                                                            cwdp=cwdp,
+                                                            sourcepackdir=sourcepackdir,
+                                                            target_source=target_source,
+                                                            tempkv=tempkv)
+            except Exception as e:
+                print(f"初始化测试模板错误:{str(e)}")
 
         if install:
             install_requires(env=env,
