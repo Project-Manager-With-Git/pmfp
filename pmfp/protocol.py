@@ -5,13 +5,13 @@
 TEMPLATE_INFO_SCHEMA = {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
-    "required": ["language", "template_type", "components"],
+    "required": ["template_type", "components"],
     "additionalProperties": False,
     "properties": {
         "language": {
             "type": "string",
             "description": "模板使用的编程语言",
-            "enum": ["py", "go"]
+            "enum": ["py", "go", "C", "CXX", "js"]
         },
         "mini_language_version": {
             "type": "string",
@@ -180,14 +180,6 @@ PMFP_CONFIG_SCHEMA = {
         "python_local_env_dir": {
             "type": "string",
             "description": "默认使用的python本地环境的运行环境存放文件"
-        },
-        "cc": {
-            "type": "string",
-            "description": "默认使用的c语言编译器"
-        },
-        "cxx": {
-            "type": "string",
-            "description": "默认使用的c++语言编译器"
         }
     }
 }

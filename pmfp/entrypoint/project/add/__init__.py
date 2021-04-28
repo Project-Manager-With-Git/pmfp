@@ -110,9 +110,9 @@ def check_source(pmfpconf: Dict[str, Any], projectconfig: Dict[str, Any], source
     """校验组件所在模板库的信息,通过的话返回模板库信息"""
     with open(sourcepackdir.joinpath(pmfpconf["template_config_name"]), encoding="utf-8") as f:
         sourcepack_config = json.load(f)
-    sourcepack_language = sourcepack_config["language"]
+    sourcepack_language = sourcepack_config.get("language")
     project_language = projectconfig.get("language")
-    if project_language and sourcepack_language != project_language:
+    if sourcepack_language and project_language and sourcepack_language != project_language:
         raise AttributeError(f"组件{component_string}语言{sourcepack_language}与项目语言{project_language}不匹配")
     sourcepack_env = sourcepack_config.get("env")
     project_env = projectconfig.get("env")
@@ -165,7 +165,7 @@ def to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[
                     content = template_2_content(f.read(), **tempkv)
                 if not target_located_path.parent.exists():
                     target_located_path.parent.mkdir(parents=True)
-                with open(target_located_path, "w",encoding="utf-8", newline="") as fw:
+                with open(target_located_path, "w", encoding="utf-8", newline="") as fw:
                     fw.write(content)
             else:
                 shutil.copyfile(target_component_path, target_located_path)

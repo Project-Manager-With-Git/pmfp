@@ -123,6 +123,7 @@ def package_json_handdler(p: Path) -> Dict[str, Any]:
         result["language"] = "ts"
     else:
         result["language"] = "js"
+    result["project_name"] = con.get("name")
     return result
 
 

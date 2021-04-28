@@ -21,6 +21,8 @@ PMFP_CONFIG_DEFAULT_NAME = "pmfprc.json"
 PMFP_CONFIG_HOME = Path.home().resolve().joinpath(".pmfprc")
 # PMFP_CONFIG_PATH pmfp工具的配置项
 PMFP_CONFIG_PATH = PMFP_CONFIG_HOME.joinpath("config.json")
+GLOBAL_CONFIG_PATH = PMFP_CONFIG_HOME.joinpath(PMFP_CONFIG_DEFAULT_NAME)
+
 
 PY_ENV_PATH = "env"
 JS_ENV_PATH = "package.json"
@@ -37,8 +39,6 @@ DEFAULT_PMFPRC = {
     "python": GOLBAL_PYTHON,
     "python_local_env_dir": "env",
     "default_typecheck_doc_dir": "doc_typecheck",
-    "default_unittest_doc_dir": "doc_unittest",
-    "cc": GOLBAL_CC,
-    "cxx": GOLBAL_CXX
+    "default_unittest_doc_dir": "doc_unittest"
 }
 DEFAULT_AUTHOR = getpass.getuser()

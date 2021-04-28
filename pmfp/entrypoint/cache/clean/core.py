@@ -11,7 +11,7 @@ class Clean(EndPoint):
         "properties": {
             "mode": {
                 "type": "string",
-                "title": "-m",
+                "title": "m",
                 "description": "清除模式",
                 "enum": ["all", "only_hash", "except_latest"],
                 "default": "except_latest"
@@ -22,17 +22,17 @@ class Clean(EndPoint):
             },
             "repo_namespace": {
                 "type": "string",
-                "title": "-s",
+                "title": "s",
                 "description": "指定带删除的缓存命名空间"
             },
             "repo_name": {
                 "type": "string",
-                "title": "-n",
+                "title": "n",
                 "description": "指定带删除的缓存仓库名,如果未指定则使用mode方式针对全部缓存"
             },
             "tags": {
                 "type": "array",
-                "title": "-t",
+                "title": "t",
                 "description": "指定带删除的tag,如果不指定又有repo_name则删除全部",
                 "items": {
                     "type": "string"
