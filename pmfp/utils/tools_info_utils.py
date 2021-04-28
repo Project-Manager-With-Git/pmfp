@@ -115,7 +115,7 @@ def get_config_info() -> Dict[str, Any]:
     try:
         validate(instance=config, schema=PMFP_CONFIG_SCHEMA)
     except Exception:
-        warnings.warn("配置文件`PMFP_CONFIG_PATH`不符合规范,使用默认")
+        warnings.warn(f"配置文件{PMFP_CONFIG_PATH}不符合规范,使用默认")
         return DEFAULT_PMFPRC
     else:
         conf = {}

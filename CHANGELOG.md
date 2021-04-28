@@ -1,5 +1,9 @@
 # v4.0.1
 
+## bug修复
+
+1. 修正了cache clean命令无法执行的bug
+
 ## 改进
 
 1. 修改protocol,支持不声明language的组件
