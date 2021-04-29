@@ -3,7 +3,7 @@ import json
 import shutil
 import warnings
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Any
 from pmfp.const import GOLBAL_PYTHON_VERSION, DEFAULT_AUTHOR
 from pmfp.utils.endpoint import EndPoint
 from pmfp.utils.fs_utils import iter_dir_to_end, get_abs_path, tempdir, remove_readonly
@@ -111,12 +111,13 @@ class AsTemp(EndPoint):
         template_info["author"] = self.config.get("author", DEFAULT_AUTHOR)
         template_info["template_type"] = self.config.get("template_type")
         template_info["requires"] = self.config.get("requires")
+        template_info["test_requires"] = self.config.get("test_requires")
         if self.config.get("command"):
             template_info["command"] = self.config.get("command")
         parttens = self.config.get("parttens")
         trans_keys: Dict[str, str] = {}
         if parttens:
-            template_keys: Dict[str, str] = {}
+            template_keys: Dict[str, Any] = {}
             for pt in parttens:
                 partten_key, template_key, default_value = pt.split("::")
                 template_keys[template_key] = {
