@@ -28,7 +28,7 @@ TEMPLATE_INFO_SCHEMA = {
         "template_type": {
             "type": "string",
             "description": "模板库的类型,components表示是组件集合,不能用作模板独立构建项目",
-            "enum": ["server", "client", "c&s", "GUI", "script", "cmd", "module", "components"]
+            "enum": ["server", "client", "c&s", "GUI", "task", "module", "components"]
         },
         "env": {
             "type": "string",
