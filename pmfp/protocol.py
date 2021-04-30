@@ -11,7 +11,7 @@ TEMPLATE_INFO_SCHEMA = {
         "language": {
             "type": "string",
             "description": "模板使用的编程语言",
-            "enum": ["py", "go", "C", "CXX", "js"]
+            "enum": ["py", "cython", "go", "C", "CXX", "js", "md"]
         },
         "mini_language_version": {
             "type": "string",
@@ -28,12 +28,12 @@ TEMPLATE_INFO_SCHEMA = {
         "template_type": {
             "type": "string",
             "description": "模板库的类型,components表示是组件集合,不能用作模板独立构建项目",
-            "enum": ["server", "client", "c&s", "GUI", "task", "module", "components"]
+            "enum": ["server", "client", "c&s", "GUI", "task", "watcher", "module", "components", "doc"]
         },
         "env": {
             "type": "string",
             "description": "模板推荐的执行环境",
-            "enum": ["venv", "conda", "gomod"]
+            "enum": ["venv", "conda", "pypy", "gomod", "cmake", "node", "webpack", "http"]
         },
         "requires": {
             "type": "array",

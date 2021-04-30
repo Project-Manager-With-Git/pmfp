@@ -8,16 +8,13 @@ from typing import Dict, Any, List, Optional, Union
 from pmfp.const import DEFAULT_AUTHOR, PMFP_CONFIG_DEFAULT_NAME
 from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.template_utils import template_2_content
-from .env_py import (
-    new_env_py_manifest,
-    new_env_py_venv,
-    new_env_py_conda,
-    new_env_py_setup
-)
-from .env_go import new_env_go
-from .env_cmake import new_env_cmake
-from .env_node import new_env_node
-from .env_webpack import new_env_webpack
+from .env_py import init_py_env
+from .env_cython import init_cython_env
+from .env_go import init_go_env
+from .env_c import init_c_env
+from .env_cxx import init_cxx_env
+from .env_js import init_js_env
+from .env_md import init_md_env
 from .core import env_new
 
 
@@ -67,7 +64,7 @@ def makechangelog(cwd: Path) -> None:
         print("根据模板创建CHANGELOG.md文件完成")
 
 
-def freeze(env: str, *, cwd: Path,
+def freeze(env: str, language: str, *, cwd: Path,
            project_name: Optional[str] = None,
            version: Optional[str] = None,
            author: Optional[str] = None,
@@ -118,6 +115,23 @@ def freeze(env: str, *, cwd: Path,
             content.update({"setup_requires": setup_requires})
         if extras_requires:
             content.update({"extras_requires": extras_requires})
+
+    if env == "http":
+        if author:
+            content.update({"author": author})
+        if author_email:
+            content.update({"author_email": author_email})
+        if keywords:
+            content.update({"keywords": keywords})
+
+    if env == "":
+        if author:
+            content.update({"author": author})
+        if author_email:
+            content.update({"author_email": author_email})
+        if keywords:
+            content.update({"keywords": keywords})
+
     if ppmrc.exists():
         with open(ppmrc) as f:
             old = json.load(f)
@@ -130,54 +144,60 @@ def freeze(env: str, *, cwd: Path,
     return None
 
 
-def _new_nev(e: str, cwd: Path,
+def _new_nev(env: str, language: str, cwd: Path,
              project_name: str,
              version: str,
              author: str,
              author_email: str,
              description: str,
              keywords: str,
-             language: Optional[str] = None,
              requires: Optional[List[str]] = None,
              test_requires: Optional[List[str]] = None,
              setup_requires: Optional[List[str]] = None,
              extras_requires: Optional[List[str]] = None) -> None:
-    if e in ("venv", "conda"):
-        if e == "conda":
-            new_env_py_conda(cwd=cwd)
-        else:
-            new_env_py_venv(cwd=cwd)
-        new_env_py_manifest(cwd=cwd, project_name=project_name)
-        new_env_py_setup(cwd=cwd,
-                         project_name=project_name,
-                         version=version,
-                         author=author,
-                         author_email=author_email,
-                         description=description,
-                         keywords=keywords,
-                         requires=requires,
-                         test_requires=test_requires,
-                         setup_requires=setup_requires,
-                         extras_requires=extras_requires, cython=True if language == "cython" else False)
-        print("构造python环境完成")
+    if language == "py":
+        init_py_env(env=env, cwd=cwd,
+                    project_name=project_name,
+                    version=version,
+                    author=author,
+                    author_email=author_email,
+                    description=description,
+                    keywords=keywords,
+                    requires=requires,
+                    test_requires=test_requires,
+                    setup_requires=setup_requires,
+                    extras_requires=extras_requires)
+    elif language == "cython":
+        init_cython_env(env=env, cwd=cwd,
+                        project_name=project_name,
+                        version=version,
+                        author=author,
+                        author_email=author_email,
+                        description=description,
+                        keywords=keywords,
+                        requires=requires,
+                        test_requires=test_requires,
+                        setup_requires=setup_requires,
+                        extras_requires=extras_requires)
 
-    elif e == "gomod":
-        new_env_go(cwd=cwd, project_name=project_name)
-    elif e == "cmake":
-        new_env_cmake(cwd=cwd, project_name=project_name, version=version, description=description, language=language)
-    elif e == "node":
-        new_env_node(cwd=cwd, project_name=project_name, version=version, description=description, author=author, language=language, requires=requires,
-                     test_requires=test_requires)
-    elif e == "webpack":
-        new_env_webpack(cwd=cwd, project_name=project_name, version=version, description=description, author=author, language=language, requires=requires,
-                        test_requires=test_requires)
+    elif language == "go":
+        init_go_env(cwd=cwd, project_name=project_name)
+    elif language == "C":
+        init_c_env(cwd=cwd, project_name=project_name, version=version, description=description)
+    elif language == "CXX":
+        init_cxx_env(cwd=cwd, project_name=project_name, version=version, description=description)
+    elif language == "js":
+        init_js_env(env=env, cwd=cwd, project_name=project_name, version=version, description=description, author=author,
+                    author_email=author_email, keywords=keywords.split(", "), requires=requires, test_requires=test_requires)
+    elif language == "md":
+        init_md_env(cwd=cwd, project_name=project_name, description=description)
     else:
-        print(f"暂不支持初始化环境{e}")
+        print(f"暂不支持初始化{language}的环境")
 
 
 @ env_new.as_main
-def new_env(env: str, *,
-            language: Optional[str] = None,
+def new_env(language: str, *,
+            env: Optional[str] = None,
             project_name: Optional[str] = None,
             version: Optional[str] = None,
             author: Optional[str] = None,
@@ -192,6 +212,7 @@ def new_env(env: str, *,
     """构造不同执行环境.
 
     Args:
+        language (str): 目标项目使用的语言
         env (str): 目标执行环境
         project_name (str): 项目名
         version (str): 项目版本
@@ -230,8 +251,59 @@ def new_env(env: str, *,
             keywords=keywordstr
         )
         makechangelog(cwdp)
+        env = ""
+        if language == "py":
+            if not env:
+                env = "venv"
+            else:
+                if env not in ("venv", "conda", "pypy"):
+                    warnings.warn(f"python 只支持环境`venv, conda, pypy`,不支持环境`{env}`")
+                    return
+        elif language == "cython":
+            if not env:
+                env = "venv"
+            else:
+                if env not in ("venv", "conda",):
+                    warnings.warn(f"cython 只支持环境`venv, conda`,不支持环境`{env}`")
+                    return
+        elif language == "js":
+            if not env:
+                env = "node"
+            else:
+                if env not in ("node", "webpack",):
+                    warnings.warn(f"js 只支持环境`node, webpack`,不支持环境`{env}`")
+                    return
+
+        elif language == "go":
+            if not env:
+                env = "gomod"
+            else:
+                if env not in ("gomod", ):
+                    warnings.warn(f"golang 只支持环境`gomod`,不支持环境`{env}`")
+                    return
+        elif language == "CXX":
+            if not env:
+                env = "cmake"
+            else:
+                if env not in ("cmake", ):
+                    warnings.warn(f"CXX 只支持环境`cmake`,不支持环境`{env}`")
+                    return
+        elif language == "C":
+            if not env:
+                env = "cmake"
+            else:
+                if env not in ("cmake", ):
+                    warnings.warn(f"C 只支持环境`cmake`,不支持环境`{env}`")
+                    return
+        elif language == "md":
+            if not env:
+                env = "http"
+            else:
+                if env not in ("http", ):
+                    warnings.warn(f"md 只支持环境`http`,不支持环境`{env}`")
+                    return
         _new_nev(
-            e=env,
+            env=env,
             language=language,
             cwd=cwdp,
             project_name=project_name,
@@ -249,6 +321,7 @@ def new_env(env: str, *,
         raise e
     else:
         freeze(env=env,
+               language=language,
                project_name=project_name,
                version=version,
                author=author,

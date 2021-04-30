@@ -13,7 +13,7 @@ else:
     raise AttributeError("go.mod模板失败")
 
 
-def new_env_go(cwd: Path, project_name: str) -> None:
+def init_go_env(cwd: Path, project_name: str) -> None:
     """初始化golang默认的虚拟环境.
 
     Args:
@@ -34,3 +34,4 @@ def new_env_go(cwd: Path, project_name: str) -> None:
                 f.write(content)
         else:
             warnings.warn("""需要先安装go语言编译器.""")
+    print("构造go环境完成")
