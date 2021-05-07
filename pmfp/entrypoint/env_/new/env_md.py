@@ -28,12 +28,12 @@ else:
     raise AttributeError("sidebar.css.jinja模板失败")
 
 
-isidebar_folder_css = ""
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'isidebar-folder.css.jinja')
+sidebar_folder_css = ""
+template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'sidebar-folder.css.jinja')
 if template_io:
-    isidebar_folder_css = template_io.decode('utf-8')
+    sidebar_folder_css = template_io.decode('utf-8')
 else:
-    raise AttributeError("isidebar-folder.css.jinja模板失败")
+    raise AttributeError("sidebar-folder.css.jinja模板失败")
 
 
 def init_md_env(cwd: Path, project_name: str, description: str) -> None:
@@ -42,6 +42,7 @@ def init_md_env(cwd: Path, project_name: str, description: str) -> None:
         warnings.warn("docs已存在!")
         return
     else:
+        docs_path.mkdir(parents=True)
         index_html_path = docs_path.joinpath("index.html")
         if not index_html_path.exists():
             content = template_2_content(
@@ -77,6 +78,6 @@ def init_md_env(cwd: Path, project_name: str, description: str) -> None:
                 f.write(content)
         sidebar_folder_css_path = css_path.joinpath("sidebar-folder.css")
         if not sidebar_folder_css_path.exists():
-            content = isidebar_folder_css
+            content = sidebar_folder_css
             with open(sidebar_folder_css_path, "w", newline="", encoding="utf-8") as f:
                 f.write(content)
