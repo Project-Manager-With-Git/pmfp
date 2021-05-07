@@ -234,6 +234,11 @@ def gen_thirdpart_service_compose(service_name: str) -> ServicesSchema:
         zk_sers: ServiceSchema = {
             "image": "wurstmeister/zookeeper",
             "ports": ["2181:2181"],
+            "networks": {
+                "local": {
+                    "aliases": ["kafka.local"]
+                }
+            },
             "mem_limit": "500m",
             "restart": "on-failure",
         }
@@ -243,8 +248,14 @@ def gen_thirdpart_service_compose(service_name: str) -> ServicesSchema:
             "ports": ["9092:9092"],
             "mem_limit": "500m",
             "restart": "on-failure",
+            "networks": {
+                "local": {
+                    "aliases": ["kafka.local"]
+                }
+            },
+
             "environment": {
-                "KAFKA_ADVERTISED_HOST_NAME": "127.0.0.1",
+                "KAFKA_ADVERTISED_HOST_NAME": "kafka.local",
                 "KAFKA_ZOOKEEPER_CONNECT": "zookeeper: 2181",
                 "KAFKA_CREATE_TOPICS": "topic1:1:1"
             },
