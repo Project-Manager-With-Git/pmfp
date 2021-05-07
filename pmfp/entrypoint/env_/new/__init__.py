@@ -117,20 +117,16 @@ def freeze(env: str, language: str, *, cwd: Path,
             content.update({"extras_requires": extras_requires})
 
     if env == "http":
+        if version:
+            content.update({"version": version})
         if author:
             content.update({"author": author})
         if author_email:
             content.update({"author_email": author_email})
         if keywords:
             content.update({"keywords": keywords})
-
-    if env == "":
-        if author:
-            content.update({"author": author})
-        if author_email:
-            content.update({"author_email": author_email})
-        if keywords:
-            content.update({"keywords": keywords})
+        if description:
+            content.update({"description": description})
 
     if ppmrc.exists():
         with open(ppmrc) as f:
