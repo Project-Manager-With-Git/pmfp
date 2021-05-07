@@ -19,3 +19,6 @@ sphinx >= 3.5
 recommonmark >= 0.7.1
 sphinxcontrib-napoleon >= 0.7
 sphinx-intl >= 2.0.1
+wheel >= 0.36.2
+Pygments >= 2.9.0
+chardetect >= 4.0.0
