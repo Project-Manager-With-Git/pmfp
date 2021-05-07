@@ -22,10 +22,10 @@ copyright = '2021, hsz'
 author = 'hsz'
 
 # The short X.Y version
-version = '4.0.2'
+version = '4.0.3'
 
 # The full version, including alpha/beta/rc tags
-release = '4.0.2'
+release= '4.0.3'
 
 
 # -- General configuration ---------------------------------------------------
