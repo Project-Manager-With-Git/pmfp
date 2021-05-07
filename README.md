@@ -50,7 +50,7 @@ pmfp现在被设计为两个部分:
 6. 资源包中每个组件都有一个`source`字段,这个字段用于声明组件的位置,如果其中有`//`则说明它是引用的另一个资源项目的组件
 7. 根据模板包构造项目只要指定一个资源包路径即可,其形式为`[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]`
 8. 如果是已有项目要添加组件,则可以使用`[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]//{component_path_str}`
-9. 默认的host为`github.com`,默认的repo_namespace为`Project-Manager-With-Git`,默认的tag为`latest`,如果tag为latest它会拉取master分支的head
+9. 默认的host为`github.com`,默认的repo_namespace为`Project-Manager-With-Git`,默认的tag为`latest`,如果tag为latest它会拉取master分支的head.默认的资源仓库可以通过修改`~/.pmfprc/config.json`来修改,
 
 另外我们还可以使用`cache`子命令管理资源包缓存
 
