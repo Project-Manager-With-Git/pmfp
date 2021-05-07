@@ -96,7 +96,7 @@ common_schema_properties = {
         "description": "添加周边服务项",
         "items": {
             "type": "string",
-            # "enmu": ["redis", "postgres", "zookeeper", "envoy"]
+            "enmu": ["redis", "postgres", "zookeeper", "envoy", "kafka"]
         }
     },
     "add_networks": {

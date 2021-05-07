@@ -1,4 +1,5 @@
 import json
+import warnings
 from pathlib import Path
 from typing import Optional, List, Tuple, Dict, Any
 from pmfp.utils.fs_utils import get_abs_path
@@ -32,33 +33,29 @@ def check_and_cached(cached_sourcepack: List[str], template_string: str, cache_d
     return source_pack, sourcepackdir
 
 
-def check_source(pmfpconf: Dict[str, Any], env: str, sourcepackdir: Path, template_string: str, language: Optional[str] = None) -> Dict[str, Any]:
+def check_source(pmfpconf: Dict[str, Any], sourcepackdir: Path, template_string: str, env: Optional[str] = None, language: Optional[str] = None) -> Dict[str, Any]:
     """校验组件所在模板库的信息,通过的话返回模板库信息"""
-    if not language:
-        if env in ("venv", "conda"):
-            language = "py"
-        elif env == "gomod":
-            language = "go"
-        elif env == "cmake":
-            language = "CXX"
-        else:
-            raise AttributeError(f"env {env} not support")
     with open(sourcepackdir.joinpath(pmfpconf["template_config_name"]), encoding="utf-8") as f:
         sourcepack_config = json.load(f)
-    sourcepack_language = sourcepack_config["language"]
-    if sourcepack_language != language:
-        raise AttributeError(f"组件{template_string}语言{sourcepack_language}与项目语言{language}不匹配")
-    sourcepack_env = sourcepack_config.get("env")
-    if sourcepack_env and sourcepack_env != env:
-        raise AttributeError(f"组件{template_string}执行环境{sourcepack_env}与项目执行环境{env}不匹配")
-    sourcepack_template_type = sourcepack_config["template_type"]
-    if sourcepack_template_type == "components":
+    template_type = sourcepack_config.get("template_type")
+    if template_type == "components":
         raise AttributeError(f"资源包{template_string}是组件资源包,不能用于构造项目")
+    else:
+        sourcepack_language = sourcepack_config.get("language")
+        if not sourcepack_language:
+            raise AttributeError("模板资源未指明项目语言")
+        if language and sourcepack_language != language:
+            raise AttributeError(f"组件{template_string}语言{sourcepack_language}与项目语言{language}不匹配")
+
+        sourcepack_env = sourcepack_config.get("env")
+        if sourcepack_env and env and sourcepack_env != env:
+            raise AttributeError(f"组件{template_string}执行环境{sourcepack_env}与项目执行环境{env}不匹配")
+
     return sourcepack_config
 
 
 @project_new.as_main
-def new_project(env: str, *,
+def new_project(env: Optional[str] = None,
                 language: Optional[str] = None,
                 project_name: Optional[str] = None,
                 version: Optional[str] = None,
@@ -75,6 +72,9 @@ def new_project(env: str, *,
                 cwd: str = ".") -> None:
 
     if not template_string:
+        if not language:
+            warnings.warn("初始化如果没有指定模板则必须指定项目语言.")
+            return
         print("开始构造指定的执行环境")
         new_env(env=env,
                 language=language,
@@ -100,6 +100,9 @@ def new_project(env: str, *,
             sourcepackdir=sourcepackdir,
             template_string=template_string
         )
+        sourcepack_language = sourcepack_config.get("language")
+        if not language:
+            language = sourcepack_language
         print("开始构造指定的执行环境")
         new_env(env=env,
                 language=language,
@@ -113,7 +116,6 @@ def new_project(env: str, *,
                 test_requires=sourcepack_config.get("test_requires"),
                 setup_requires=sourcepack_config.get("setup_requires"),
                 cwd=cwd)
-
         projectinfo = InfoBase()
         projectinfo([])
         projectconfig = projectinfo.config

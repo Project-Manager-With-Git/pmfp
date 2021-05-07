@@ -9,7 +9,7 @@ from pmfp.utils.run_command_utils import run
 from pmfp.utils.tools_info_utils import get_global_python, get_config_info
 from pmfp.utils.template_utils import template_2_content
 from pmfp.const import GOLBAL_PYTHON_VERSION, GOLBAL_CC
-from .utils import manifest_in_template, PipConfSource, new_env_py_venv, new_env_py_conda, new_env_py_manifest
+from .utils import new_env_py_pypiconf, new_env_py_venv, new_env_py_conda, new_env_py_manifest
 
 setup_py_template = ""
 template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'setup.py.jinja')
@@ -178,6 +178,7 @@ def init_py_env(env: str,
         new_env_py_venv(cwd=cwd)
 
     new_env_py_manifest(cwd=cwd, project_name=project_name)
+    new_env_py_pypiconf(cwd=cwd)
     new_env_py_setup(cwd=cwd,
                      project_name=project_name,
                      version=version,

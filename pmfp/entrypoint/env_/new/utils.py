@@ -82,6 +82,22 @@ def new_env_py_manifest(cwd: Path, project_name: str) -> None:
             f.write(content)
         print("根据模板构造MANIFEST.in文件成功")
 
+
+def new_env_py_pypiconf(cwd: Path) -> None:
+    """在项目下创建pip.conf文件.
+
+    Args:
+        cwd (Path): 项目根目录
+    """
+    pip_conf_path = cwd.joinpath("pip.conf")
+    if pip_conf_path.exists():
+        warnings.warn("pip.conf文件已经存在")
+    else:
+        content = PipConfSource
+        with open(pip_conf_path, "w", newline="", encoding="utf-8") as f:
+            f.write(content)
+        print("根据模板构造pip.conf文件成功")
+
 # C/CXX公用
 
 

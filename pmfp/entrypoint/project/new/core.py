@@ -9,7 +9,6 @@ class New(EndPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["env"],
         "properties": {
             "env": {
                 "description": "执行环境",
