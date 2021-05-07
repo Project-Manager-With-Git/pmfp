@@ -8,6 +8,8 @@
 
 1. 修改了模板的类型枚举
 2. `project as_template`子命令现在也会生成测试依赖了
+3. 修改了`env new`的参数,改为必须有language而非env
+4. 修改`project new`,现在env不是必填的参数,如果指定了template则可以不再指定language,如果没有则必须指定language
 
 # v4.0.1
 
