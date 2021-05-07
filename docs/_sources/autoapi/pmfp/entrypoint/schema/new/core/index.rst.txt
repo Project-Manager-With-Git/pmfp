@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.schema.new.core`
+======================================
+
+.. py:module:: pmfp.entrypoint.schema.new.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.new.core.New
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.new.core.schema_new
+
+
+.. class:: New
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   创建一个json schema 模板.
+
+   .. attribute:: argparse_noflag
+      :annotation: = name
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: schema_new
+   
+
+   
+

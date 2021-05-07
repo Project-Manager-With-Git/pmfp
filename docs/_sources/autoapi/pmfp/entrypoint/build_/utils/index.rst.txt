@@ -1,0 +1,22 @@
+:mod:`pmfp.entrypoint.build_.utils`
+===================================
+
+.. py:module:: pmfp.entrypoint.build_.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.build_.utils.upx_process
+
+
+
+.. function:: upx_process(target: str, cwd: pathlib.Path) -> None
+
+

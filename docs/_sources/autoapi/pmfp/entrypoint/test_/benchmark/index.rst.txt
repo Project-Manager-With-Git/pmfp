@@ -1,0 +1,92 @@
+:mod:`pmfp.entrypoint.test_.benchmark`
+======================================
+
+.. py:module:: pmfp.entrypoint.test_.benchmark
+
+.. autoapi-nested-parse::
+
+   性能基准测试.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   test_go/index.rst
+   test_py/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.benchmark.benchmark_test_py
+   pmfp.entrypoint.test_.benchmark.benchmark_test_go
+   pmfp.entrypoint.test_.benchmark.benchmark_test
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.benchmark.test_benchmark
+
+
+.. function:: benchmark_test_py(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+
+   对python代码做静态检测.
+
+   :param benchmark_code: 待检测测试代码
+   :type benchmark_code: str
+   :param model: 是否是模块
+   :type model: bool
+   :param coverage: 是否输出覆盖率文档
+   :type coverage: bool
+   :param output: 覆盖率文档位置
+   :type output: str
+
+
+.. function:: benchmark_test_go(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+
+   对python代码做静态检测.
+
+   :param benchmark_code: 待检测测试代码
+   :type benchmark_code: str
+   :param model: 是否是模块
+   :type model: bool
+   :param coverage: 是否输出覆盖率文档
+   :type coverage: bool
+   :param output: 覆盖率文档位置
+   :type output: str
+
+
+.. data:: test_benchmark
+   
+
+   
+
+.. function:: benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+
+   对指定语言的代码做性能测试.
+
+   :param language: 指定的编程语言
+   :type language: str
+   :param benchmark_code: 待测代码
+   :type benchmark_code: str
+   :param mem: 是否测试内存性能. Defaults to False.
+   :type mem: bool, optional
+   :param cwd: 执行时的根目录. Defaults to None.
+   :type cwd: Optional[str]
+
+

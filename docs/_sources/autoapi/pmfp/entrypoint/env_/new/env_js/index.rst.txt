@@ -1,0 +1,54 @@
+:mod:`pmfp.entrypoint.env_.new.env_js`
+======================================
+
+.. py:module:: pmfp.entrypoint.env_.new.env_js
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   env_node/index.rst
+   env_webpack/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_js.new_env_node
+   pmfp.entrypoint.env_.new.env_js.new_env_webpack
+   pmfp.entrypoint.env_.new.env_js.init_js_env
+
+
+
+.. function:: new_env_node(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+
+   初始化golang默认的虚拟环境.
+
+   :param cwd: 虚拟环境所在的根目录
+   :type cwd: Path
+   :param project_name: 项目名
+   :type project_name: str
+
+
+.. function:: new_env_webpack(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+
+   初始化golang默认的虚拟环境.
+
+   :param cwd: 虚拟环境所在的根目录
+   :type cwd: Path
+   :param project_name: 项目名
+   :type project_name: str
+
+
+.. function:: init_js_env(cwd: pathlib.Path, env: str, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+
+

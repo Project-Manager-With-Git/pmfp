@@ -1,0 +1,19 @@
+:mod:`pmfp.utils.project_rc_utils`
+==================================
+
+.. py:module:: pmfp.utils.project_rc_utils
+
+.. autoapi-nested-parse::
+
+   项目配置相关的公用组件.
+
+
+
+Module Contents
+---------------
+
+.. data:: DEFAULTRCSCHEMA
+   
+
+   
+

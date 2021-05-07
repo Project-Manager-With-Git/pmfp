@@ -1,0 +1,119 @@
+:mod:`pmfp.entrypoint.docker_.compose.new.typedef`
+==================================================
+
+.. py:module:: pmfp.entrypoint.docker_.compose.new.typedef
+
+
+Module Contents
+---------------
+
+.. data:: LogSchema
+   
+
+   
+
+.. data:: DriverOptsSchema
+   
+
+   
+
+.. data:: ExternalSchema
+   
+
+   
+
+.. data:: VolumeSchema
+   
+
+   
+
+.. data:: VolumesSchema
+   
+
+   
+
+.. data:: IpamConfigSchema
+   
+
+   
+
+.. data:: IpamSchema
+   
+
+   
+
+.. data:: NetworkSchema
+   
+
+   
+
+.. data:: NetworksSchema
+   
+
+   
+
+.. data:: ConfigAndSecretSchema
+   
+
+   
+
+.. data:: BuildSchema
+   
+
+   
+
+.. data:: PortSchema
+   
+
+   
+
+.. data:: ResourceSchema
+   
+
+   
+
+.. data:: ResourcesSchema
+   
+
+   
+
+.. data:: RestartPolicySchema
+   
+
+   
+
+.. data:: PlacementSchema
+   
+
+   
+
+.. data:: UpdateAndRollbackConfigSchema
+   
+
+   
+
+.. data:: DeploySchema
+   
+
+   
+
+.. data:: LoggingAliasSchema
+   
+
+   
+
+.. data:: ServiceSchema
+   
+
+   
+
+.. data:: ServicesSchema
+   
+
+   
+
+.. data:: ComposeSchema
+   
+
+   
+

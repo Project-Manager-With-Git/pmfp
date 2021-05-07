@@ -1,0 +1,35 @@
+:mod:`pmfp.entrypoint.docker_.compose.new.save_compose`
+=======================================================
+
+.. py:module:: pmfp.entrypoint.docker_.compose.new.save_compose
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.new.save_compose.compose_dict_to_str
+   pmfp.entrypoint.docker_.compose.new.save_compose.save_compose
+
+
+
+.. function:: compose_dict_to_str(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema) -> str
+
+
+.. function:: save_compose(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, cwdp: pathlib.Path, dockercompose_name: str = 'docker-compose.yml') -> None
+
+   保存compose为文件.
+
+   :param compose: compose字典
+   :type compose: ComposeSchema
+   :param cwdp: 保存目录
+   :type cwdp: Path
+   :param dockercompose_name: compose名. Defaults to "docker-compose.yml".
+   :type dockercompose_name: str, optional
+
+

@@ -1,0 +1,109 @@
+:mod:`pmfp.entrypoint.http`
+===========================
+
+.. py:module:: pmfp.entrypoint.http
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   query/index.rst
+   serv/index.rst
+   test_/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.http.query_http
+   pmfp.entrypoint.http.serv_http
+   pmfp.entrypoint.http.test_http
+
+
+
+.. function:: query_http(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None, cb: Optional[Callable[[str], None]] = None) -> None
+
+   http请求并打印结果.
+
+   :param url: 要访问的http资源的地址
+   :type url: str
+   :param method: 访问资源的方法
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+   :param cb: 获取到数据后的处理回调. Defaults to None.
+   :type cb: Optional[Callable[[str],None]], optional
+
+
+.. function:: serv_http(port: int, root: str, bind: str) -> None
+
+   启动http静态服务.
+
+   :param port: 端口
+   :type port: int
+   :param root: 启动的根目录
+   :type root: str
+   :param bind: 绑定的ip
+   :type bind: str
+
+
+.. function:: test_http(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+
+   检测http请求的结果是否满足模式.
+
+   :param schema: 模式的地址,可以是url或者文件路径.
+   :type schema: str
+   :param serialization: 使用的序列化协议.
+   :type serialization: str
+   :param url: 要访问的http资源的地址.
+   :type url: str
+   :param method: 访问资源的方法.
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+   :param cb: 获取到数据后的处理回调. Defaults to None.
+   :type cb: Optional[Callable[[str],]], optional
+
+

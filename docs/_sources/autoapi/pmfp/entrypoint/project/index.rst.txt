@@ -1,0 +1,73 @@
+:mod:`pmfp.entrypoint.project`
+==============================
+
+.. py:module:: pmfp.entrypoint.project
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   add/index.rst
+   new/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   as_template/index.rst
+   core/index.rst
+   info/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.add_component
+   pmfp.entrypoint.project.new_project
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.project_info
+   pmfp.entrypoint.project.project_as_temp
+
+
+.. data:: project_info
+   
+
+   
+
+.. function:: add_component(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') -> None
+
+   为项目添加组件.
+
+   :param component_string: 描述组件资源包的字符串,格式为"[{host}::]{repo_namespace}::{repo_name}[@{tag}]//{component_path}".
+   :type component_string: str
+   :param located_path: 放在本地的位置.
+   :type located_path: Optional[str], optional
+
+
+.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+
+
+.. data:: project_as_temp
+   
+
+   
+

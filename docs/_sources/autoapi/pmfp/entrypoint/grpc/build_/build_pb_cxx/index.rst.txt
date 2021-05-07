@@ -1,0 +1,158 @@
+:mod:`pmfp.entrypoint.grpc.build_.build_pb_cxx`
+===============================================
+
+.. py:module:: pmfp.entrypoint.grpc.build_.build_pb_cxx
+
+.. autoapi-nested-parse::
+
+   编译c++语言模块.
+
+   和其他不同为了照顾windows下的使用,cpp的grpc使用docker编译.
+   由于使用cpp写grpc一定是作为计算密集型任务的处理终端使用的,所以只提供了同步服务端
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.gen_serv
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.build_pb_cxx
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.MainSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.ServSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.ServHeadSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.DockerfileSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.FindGRPCCmakeSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.FindProtobufCmakeSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.FindGRPCCmakeSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.FindProtobufCmakeSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.MainSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.ServSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.ServHeadSource
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_cxx.DockerfileSource
+
+
+.. data:: MainSource
+   :annotation: = 
+
+   
+
+.. data:: ServSource
+   :annotation: = 
+
+   
+
+.. data:: ServHeadSource
+   :annotation: = 
+
+   
+
+.. data:: DockerfileSource
+   :annotation: = 
+
+   
+
+.. data:: FindGRPCCmakeSource
+   :annotation: = 
+
+   
+
+.. data:: FindProtobufCmakeSource
+   :annotation: = 
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: FindGRPCCmakeSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: FindProtobufCmakeSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: MainSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: ServSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: ServHeadSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: DockerfileSource
+   
+
+   
+
+.. function:: gen_serv(service_name_lower: str, service_name: str, to: pathlib.Path) -> None
+
+
+.. function:: build_pb_cxx(files: List[str], cwd: pathlib.Path) -> None
+
+   为c++版本的grpc构造模板.
+
+   由于使用cmake管理,而cmake难以解析所以只能给个大致
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param cwd: 执行时候的根目录
+   :type cwd: Path
+
+

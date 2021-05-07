@@ -1,0 +1,78 @@
+:mod:`pmfp.entrypoint.cache`
+============================
+
+.. py:module:: pmfp.entrypoint.cache
+
+.. autoapi-nested-parse::
+
+   管理资源包缓存
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   clean/index.rst
+   get/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   info/index.rst
+   list/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.get_sourcepack
+   pmfp.entrypoint.cache.sourcepack_clean
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.cache_list
+   pmfp.entrypoint.cache.cache_info
+
+
+.. function:: get_sourcepack(source_pack_string: str) -> None
+
+   从远程指定位置获取资源包.
+
+   :param source_pack_string: 描述资源包的字符串,格式为"[{host}::]{repo_namespace}::{repo_name}[@{tag}]".
+   :type source_pack_string: str
+
+
+.. data:: cache_list
+   
+
+   
+
+.. function:: sourcepack_clean(mode: str = 'except_latest', host: Optional[str] = None, repo_namespace: Optional[str] = None, repo_name: Optional[str] = None, tags: Optional[List[str]] = None) -> None
+
+   清除资源包的缓存.
+
+
+.. data:: cache_info
+   
+
+   
+

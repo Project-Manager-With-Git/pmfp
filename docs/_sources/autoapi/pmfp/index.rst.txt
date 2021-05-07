@@ -1,0 +1,671 @@
+:mod:`pmfp`
+===========
+
+.. py:module:: pmfp
+
+.. autoapi-nested-parse::
+
+   pmfp项目.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   entrypoint/index.rst
+   utils/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   __main__/index.rst
+   const/index.rst
+   protocol/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.build
+   pmfp.pack
+   pmfp.run_cmd
+   pmfp.add_component
+   pmfp.new_project
+   pmfp.get_sourcepack
+   pmfp.sourcepack_clean
+   pmfp.new_doc
+   pmfp.build_doc
+   pmfp.new_dockerfile
+   pmfp.build_dockerimage
+   pmfp.pack_dockerimage
+   pmfp.new_dockercompose
+   pmfp.deploy_dockercompose
+   pmfp.new_env
+   pmfp.build_grpc
+   pmfp.new_grpc
+   pmfp.list_grpc
+   pmfp.desc_grpc
+   pmfp.query_grpc
+   pmfp.tress_test_grpc
+   pmfp.query_http
+   pmfp.serv_http
+   pmfp.test_http
+   pmfp.build_pb
+   pmfp.new_pb
+   pmfp.install_requires
+   pmfp.uninstall_requires
+   pmfp.check_schema
+   pmfp.clone_schema
+   pmfp.move_schema
+   pmfp.new_schema
+   pmfp.test_schema
+   pmfp.static_test
+   pmfp.unittest_test
+   pmfp.benchmark_test
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.ppm
+   pmfp.info
+   pmfp.__VERSION__
+   pmfp.project_info
+   pmfp.project_as_temp
+   pmfp.cache_list
+   pmfp.cache_info
+   pmfp.requires_list
+
+
+.. data:: ppm
+   
+
+   
+
+.. function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, cwd: str = '.') -> None
+
+   编译指定代码.
+
+   只支持对linux的交叉编译.
+
+   :param language: 编译的代码语言,支持go
+   :type language: str
+   :param code: 语言源码位置或者入口文件位置
+   :type code: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param output_dir: 编译结果放置的目录
+   :type output_dir: str
+   :param upx: 是否使用upx给可执行文件加壳. Defaults to False.
+   :type upx: bool, optional
+   :param static: 是否编译为无依赖的静态文件. Defaults to True.
+   :type static: bool, optional
+   :param mini: 是否最小化编译. Defaults to False.
+   :type mini: bool, optional
+   :param includes: 包含的头文件路径. Defaults to None.
+   :type includes: Optional[List[str]], optional
+   :param libs: 使用的库名. Defaults to None.
+   :type libs: Optional[List[str]], optional
+   :param lib_dir: 使用的库的位置. Defaults to None.
+   :type lib_dir: Optional[List[str]], optional
+   :param build_as: 编译为的目标,可选有exec(可执行文件),alib(静态库),dlib(动态库). Defaults to "exec".
+   :type build_as: str, optional
+   :param for_linux_arch: 是否交叉编译支持其他指令集版本的linux,支持amd64和arm64. Defaults to None.
+   :type for_linux_arch: str, optional
+   :param cwd: 执行编译操作时的执行位置. Defaults to ".".
+   :type cwd: str, optional
+
+
+.. function:: pack(language: str, code: str, project_name: str, *, output_dir: str = '.', pypi_mirror: Optional[str] = None, pack_as: str = 'exec', cwd: str = '.') -> None
+
+   编译指定代码.
+
+   只支持对linux的交叉编译.
+
+   :param language: 打包的代码语言,支持py
+   :type language: str
+   :param code: 语言源码位置或者入口文件位置
+   :type code: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param output_dir: 打包结果放置的目录
+   :type output_dir: str
+   :param pypi_mirror: 安装python依赖时使用的pypi的镜像
+   :type pypi_mirror: str, optional
+   :param build_as: 编译为的目标,可选有exec(可执行文件),lib(库). Defaults to "exec".
+   :type build_as: str, optional
+   :param cwd: 执行编译操作时的执行位置. Defaults to ".".
+   :type cwd: str, optional
+
+
+.. data:: info
+   
+
+   
+
+.. function:: run_cmd(command: str, *, cwd: str = '.', env_args: Optional[List[str]] = None) -> None
+
+
+.. data:: __VERSION__
+   :annotation: = 4.0.0
+
+   
+
+.. data:: project_info
+   
+
+   
+
+.. function:: add_component(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') -> None
+
+   为项目添加组件.
+
+   :param component_string: 描述组件资源包的字符串,格式为"[{host}::]{repo_namespace}::{repo_name}[@{tag}]//{component_path}".
+   :type component_string: str
+   :param located_path: 放在本地的位置.
+   :type located_path: Optional[str], optional
+
+
+.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+
+
+.. data:: project_as_temp
+   
+
+   
+
+.. function:: get_sourcepack(source_pack_string: str) -> None
+
+   从远程指定位置获取资源包.
+
+   :param source_pack_string: 描述资源包的字符串,格式为"[{host}::]{repo_namespace}::{repo_name}[@{tag}]".
+   :type source_pack_string: str
+
+
+.. data:: cache_list
+   
+
+   
+
+.. function:: sourcepack_clean(mode: str = 'except_latest', host: Optional[str] = None, repo_namespace: Optional[str] = None, repo_name: Optional[str] = None, tags: Optional[List[str]] = None) -> None
+
+   清除资源包的缓存.
+
+
+.. data:: cache_info
+   
+
+   
+
+.. function:: new_doc(language: str, code: str, output: str, doc_source_dir: str, *, project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
+
+   为项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param doc_source_dir: 文档源码位置
+   :type doc_source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行项目时的位置
+   :type cwd: str
+
+
+.. function:: build_doc(language: str, output: str, doc_source_dir: str, *, version: Optional[str] = None, cwd: str = '.') -> None
+
+   为项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param doc_source_dir: 文档源码位置
+   :type doc_source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行项目时的位置
+   :type cwd: str
+
+
+.. function:: new_dockerfile(language: str, dockerfile_name: str = 'Dockerfile', cross_compiling: bool = False, extend: bool = False, app_name: Optional[str] = None, project_name: Optional[str] = None, cwd: str = '.') -> None
+
+
+.. function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+
+
+.. function:: pack_dockerimage(docker_register_namespace: str, project_name: str, version: str, docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+
+
+.. function:: new_dockercompose(compose_version: str, dockercompose_name: str = 'docker-compose.yml', updatemode: str = 'level5', dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
+
+
+.. function:: deploy_dockercompose(portainer_url: Optional[str] = None, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, rebuild: bool = False, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
+
+
+.. function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
+
+   构造不同执行环境.
+
+   :param language: 目标项目使用的语言
+   :type language: str
+   :param env: 目标执行环境
+   :type env: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param version: 项目版本
+   :type version: str
+   :param author: 项目作者
+   :type author: str
+   :param author_email: 项目作者email. Defaults to "".
+   :type author_email: str, optional
+   :param description: 项目简介. Defaults to "".
+   :type description: str, optional
+   :param keywords: 项目关键字. Defaults to None.
+   :type keywords: Optional[List[str]], optional
+   :param cwd: 命令执行根目录. Defaults to ".".
+   :type cwd: str, optional
+
+
+.. function:: build_grpc(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.', as_type: Optional[List[str]] = None) -> None
+
+   编译grpc的protobuf的schema为不同语言的代码.
+
+   :param language: 编译到的执行环境,可选的有"go","py","js"
+   :type language: List[str]
+   :param files: 待编译的文件列表
+   :type files: List[str]
+   :param pb_includes: 待编译文件及其依赖所在文件夹列表
+   :type pb_includes: List[str]
+   :param to: 编译到的模块所在文件夹.
+   :type to: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+   :param kwargs: Default: None,
+   :type kwargs: Optional[str]
+   :param cwd: 执行的根目录. Default: "."
+   :type cwd: str
+   :param as_type: 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
+   :type as_type: Optional[List[str]]
+
+
+.. function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+
+   新建一个protpbuf文件.
+
+   :param name: 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名
+   :type name: str
+   :param pb_include: protobuf文件存放文件夹路径
+   :type pb_include: str
+   :param parent_package: 父包名. Defaults to None.
+   :type parent_package: Optional[str], optional
+   :param cwd: 执行位置. Defaults to `.`.
+   :type cwd: str, optional
+
+
+.. function:: list_grpc(url: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   列出grpc支持的服务.
+
+   :param url: grpc的url
+   :type url: str
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+
+.. function:: desc_grpc(url: str, service: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   描述grpc支持的服务.
+
+   :param url: grpc的url
+   :type url: str
+   :param service: 要查看的服务名
+   :type service: str
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+
+.. function:: query_grpc(url: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   请求grpc.
+
+   :param url: grpc的url
+   :type url: str
+   :param method: 要请求的方法
+   :type method: str
+   :param payload: 请求的负载
+   :type payload: str
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+
+.. function:: tress_test_grpc(url: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   列出grpc支持的服务.
+
+   :param url: grpc的url
+   :type url: str
+   :param method: 要请求的方法
+   :type method: str
+   :param payload: 请求的负载
+   :type payload: str
+   :param requests: 总请求量
+   :type requests: int
+   :param concurrency: 并发量
+   :type concurrency: int
+   :param duration: 并发间隔
+   :type duration: int
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+
+.. function:: query_http(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None, cb: Optional[Callable[[str], None]] = None) -> None
+
+   http请求并打印结果.
+
+   :param url: 要访问的http资源的地址
+   :type url: str
+   :param method: 访问资源的方法
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+   :param cb: 获取到数据后的处理回调. Defaults to None.
+   :type cb: Optional[Callable[[str],None]], optional
+
+
+.. function:: serv_http(port: int, root: str, bind: str) -> None
+
+   启动http静态服务.
+
+   :param port: 端口
+   :type port: int
+   :param root: 启动的根目录
+   :type root: str
+   :param bind: 绑定的ip
+   :type bind: str
+
+
+.. function:: test_http(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+
+   检测http请求的结果是否满足模式.
+
+   :param schema: 模式的地址,可以是url或者文件路径.
+   :type schema: str
+   :param serialization: 使用的序列化协议.
+   :type serialization: str
+   :param url: 要访问的http资源的地址.
+   :type url: str
+   :param method: 访问资源的方法.
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+   :param cb: 获取到数据后的处理回调. Defaults to None.
+   :type cb: Optional[Callable[[str],]], optional
+
+
+.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.') -> None
+
+   编译protobuf的schema为不同语言的代码.
+
+   :param language: 编译到的执行环境,可选的有"go","py","js"
+   :type language: str
+   :param files: 待编译的文件列表
+   :type files: List[str]
+   :param pb_includes: 待编译文件及其依赖所在文件夹列表
+   :type pb_includes: List[str]
+   :param to: 编译到的模块所在文件夹.
+   :type to: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+   :param kwargs: Default: None,
+   :type kwargs: Optional[str]
+   :param cwd: 执行的根目录. Default: "."
+   :type cwd: str
+
+
+.. function:: new_pb(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+
+   新建一个protpbuf文件.
+
+   :param name: 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名
+   :type name: str
+   :param pb_include: protobuf文件存放的文件夹路径
+   :type pb_include: str
+   :param parent_package: 父包名. Defaults to None.
+   :type parent_package: Optional[str], optional
+   :param cwd: 执行位置. Defaults to `.`.
+   :type cwd: str, optional
+
+
+.. data:: requires_list
+   
+
+   
+
+.. function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+
+
+.. function:: uninstall_requires(package_name: str, env: str, *, cwd: str = '.') -> None
+
+
+.. function:: check_schema(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+
+   检测指定的数据是否满足模式.
+
+   :param schema: 模式的地址,可以是url或者文件路径.
+   :type schema: str
+   :param serialization: 使用的序列化协议.
+   :type serialization: str
+   :param url: "请求的路径,可以是http/file的url或者文件系统的路径".
+   :type url: str
+   :param method: 访问资源的方法.
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+
+
+.. function:: clone_schema(url: str, method: str, out: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, verify: bool = False, cert: Optional[str] = None) -> None
+
+   克隆一个json schema到本地文本.
+
+   :param name: 模式名
+   :type name: str
+   :param path: 从根目录起的路径
+   :type path: str
+   :param version: 模式版本
+   :type version: str
+   :param root: 根目录.
+   :type root: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+
+.. function:: move_schema(file: str, old_cwd: str, *, name: Optional[str] = None, to: Optional[str] = None, version: Optional[str] = None, cwd: Optional[str] = None, addr: Optional[str] = None, remove_old: bool = False) -> None
+
+   新建一个json schema文件.
+
+   :param name: 模式名
+   :type name: str
+   :param to: 从根目录起的路径
+   :type to: str
+   :param version: 模式版本
+   :type version: str
+   :param cwd: 根目录.
+   :type cwd: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+
+.. function:: new_schema(name: str, to: str, version: str, *, cwd: str = '.', addr: Optional[str] = None) -> None
+
+   新建一个json schema文件.
+
+   :param name: 模式名
+   :type name: str
+   :param to: 目标路径
+   :type to: str
+   :param version: 模式版本
+   :type version: str
+   :param cwd: 执行目录.
+   :type cwd: str
+   :param addr: 网站域名.
+   :type addr: Optional[str]
+
+
+.. function:: test_schema(file: str) -> None
+
+   检查一个json schema文件中的例子是否符合自身的schema.
+
+   :param file: 模式文件地址
+   :type file: str
+
+
+.. function:: static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = '.') -> None
+
+   对动态语言做静态类型检验.
+
+   :param language: 目标语言
+   :type language: str
+   :param code: 目标检测代码
+   :type code: str
+   :param model: 目标检测代码是否为模块
+   :type model: bool
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: bool
+   :param output: 覆盖率文档位置
+   :type output: str
+   :param cwd: 执行时的根目录
+   :type cwd: str
+
+
+.. function:: unittest_test(language: str, test_code: str, code: str, *, cwd: str = '.', coverage: bool = False, output: str = 'doc_unittest') -> None
+
+   对指定代码做单元测试.
+
+   :param language: 目标语言
+   :type language: str
+   :param test_code: 测试代码
+   :type test_code: str
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: Optional[bool]
+   :param code: 测试源码
+   :type code: str
+   :param output: 覆盖率文档位置
+   :type output: Optional[str]
+   :param cwd: 执行测试时的位置
+   :type cwd: str
+
+
+.. function:: benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+
+   对指定语言的代码做性能测试.
+
+   :param language: 指定的编程语言
+   :type language: str
+   :param benchmark_code: 待测代码
+   :type benchmark_code: str
+   :param mem: 是否测试内存性能. Defaults to False.
+   :type mem: bool, optional
+   :param cwd: 执行时的根目录. Defaults to None.
+   :type cwd: Optional[str]
+
+

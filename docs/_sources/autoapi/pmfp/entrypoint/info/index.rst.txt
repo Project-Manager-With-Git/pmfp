@@ -1,0 +1,52 @@
+:mod:`pmfp.entrypoint.info`
+===========================
+
+.. py:module:: pmfp.entrypoint.info
+
+.. autoapi-nested-parse::
+
+   info命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.info.Info
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.info.info
+
+
+.. class:: Info
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   获取当前基本配置信息.
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. data:: info
+   
+
+   
+

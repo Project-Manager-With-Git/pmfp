@@ -1,0 +1,27 @@
+:mod:`pmfp.entrypoint.env_.new.env_c`
+=====================================
+
+.. py:module:: pmfp.entrypoint.env_.new.env_c
+
+.. autoapi-nested-parse::
+
+   初始化c的执行环境.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_c.init_c_env
+
+
+
+.. function:: init_c_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
+
+

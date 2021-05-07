@@ -1,0 +1,59 @@
+:mod:`pmfp.entrypoint.requires`
+===============================
+
+.. py:module:: pmfp.entrypoint.requires
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   install/index.rst
+   uninstall/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   list/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.install_requires
+   pmfp.entrypoint.requires.uninstall_requires
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.requires_list
+
+
+.. data:: requires_list
+   
+
+   
+
+.. function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+
+
+.. function:: uninstall_requires(package_name: str, env: str, *, cwd: str = '.') -> None
+
+

@@ -1,0 +1,40 @@
+:mod:`pmfp.entrypoint.test_.unittest.test_py`
+=============================================
+
+.. py:module:: pmfp.entrypoint.test_.unittest.test_py
+
+.. autoapi-nested-parse::
+
+   编译python语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.unittest.test_py.unittest_test_py
+
+
+
+.. function:: unittest_test_py(test_code: str, code: str, *, coverage: Optional[bool] = False, output: Optional[str] = 'doc_unittest', cwd: Optional[str] = '.') -> None
+
+   对python代码做单元测试.
+
+   :param test_code: 测试代码
+   :type test_code: str
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: Optional[bool]
+   :param code: 项目源码
+   :type code: Optional[str]
+   :param output: 覆盖率文档位置
+   :type output: Optional[str]
+   :param cwd: 执行测试时的位置
+   :type cwd: Optional[str]
+
+

@@ -1,0 +1,51 @@
+:mod:`pmfp.entrypoint.grpc.descservice.core`
+============================================
+
+.. py:module:: pmfp.entrypoint.grpc.descservice.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.descservice.core.DescService
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.descservice.core.grpc_descservice
+
+
+.. class:: DescService
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   查看指定grpc的服务详情.
+
+   需要本地有`grpcurl`,可以在`https://github.com/fullstorydev/grpcurl/releases`下载安装
+
+   .. attribute:: argparse_noflag
+      :annotation: = url
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: grpc_descservice
+   
+
+   
+

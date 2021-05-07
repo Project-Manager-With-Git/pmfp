@@ -1,0 +1,337 @@
+:mod:`pmfp.entrypoint.project.add`
+==================================
+
+.. py:module:: pmfp.entrypoint.project.add
+
+.. autoapi-nested-parse::
+
+   ppm project add命令的处理.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.add.ComponentTemplate
+   pmfp.entrypoint.project.add.SourcePack
+   pmfp.entrypoint.project.add.InfoBase
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.add.iter_dir_to_end
+   pmfp.entrypoint.project.add.get_abs_path
+   pmfp.entrypoint.project.add.get_cache_dir
+   pmfp.entrypoint.project.add.get_config_info
+   pmfp.entrypoint.project.add.template_2_content
+   pmfp.entrypoint.project.add.sourcepack_check_and_cached
+   pmfp.entrypoint.project.add.check_and_cached
+   pmfp.entrypoint.project.add.make_template_kv
+   pmfp.entrypoint.project.add.check_source
+   pmfp.entrypoint.project.add.check_component
+   pmfp.entrypoint.project.add.to_target_source
+   pmfp.entrypoint.project.add.save_to_components
+   pmfp.entrypoint.project.add._add_component
+   pmfp.entrypoint.project.add.add_component
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.add.PMFP_CONFIG_DEFAULT_NAME
+   pmfp.entrypoint.project.add.project_add
+
+
+.. data:: PMFP_CONFIG_DEFAULT_NAME
+   :annotation: = pmfprc.json
+
+   
+
+.. function:: iter_dir_to_end(path: pathlib.Path, match: Callable[[pathlib.Path], bool], *, skip_dir: Optional[Callable[[pathlib.Path], bool]] = None, succ_cb: Optional[Callable[[pathlib.Path], None]] = None, fail_cb: Optional[Callable[[pathlib.Path], None]] = None, skip_dir_handdler: Optional[Callable[[pathlib.Path], None]] = None) -> None
+
+   遍历文件夹到底,并按指定的函数来做区分.
+
+   :param path: 文件夹路径
+   :type path: Path
+   :param match: 筛选条件
+   :type match: Callable[[Path],bool]
+   :param succ_cb: 路径满足筛选条件后执行的回调函数. Defaults to None.
+   :type succ_cb: Optional[Callable[[Path],None]], optional
+   :param fail_cb: 路径不满足筛选条件执行的回调函数. Defaults to None.
+   :type fail_cb: Optional[Callable[[Path],None]], optional
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. class:: ComponentTemplate(component_path_str: str, source_pack: SourcePack)
+
+
+   组件模板类.
+
+   .. attribute:: TENPLATE_URL
+      :annotation: = [{host}::]{repo_namespace}::{repo_name}[@{tag}]//{component_path}
+
+      
+
+   .. method:: from_component_string(cls, component_string: str) -> ComponentTemplate
+      :classmethod:
+
+      从组件模板字符串构造组件模板对象.
+
+      组件模板字符串的形式为`"[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]//{component_path_str}"`
+
+      :returns: 组件模板对象
+      :rtype: [ComponentTemplate]
+
+
+   .. method:: as_component_string(self) -> str
+
+      构造组件模板字符串.
+
+
+
+.. class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
+
+
+   资源包类.
+
+   .. attribute:: TENPLATE_URL
+      :annotation: = {host}::{repo_namespace}::{repo_name}@{tag}
+
+      
+
+   .. method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
+      :classmethod:
+
+      从资源包字符串构造资源包对象.
+
+      :param sourcepack_string: 用于描述资源包的字符串,其形式为`"[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]"`
+      :type sourcepack_string: str
+
+      :returns: 资源包对象.
+      :rtype: [SourcePack]
+
+
+   .. method:: as_sourcepack_string(self) -> str
+
+      构造资源包字符串.
+
+
+   .. method:: git_url(self, schema: str = 'https') -> str
+
+      构造资源包的git仓库地址url.
+
+      :param schema: url协议. Defaults to "https".
+      :type schema: str, optional
+
+      :returns: git的仓库地址字符串.
+      :rtype: str
+
+
+   .. method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
+
+      拉取最新镜像,并将原来的版本以hash为tag保存
+
+      :param temp_dir: [description]
+      :type temp_dir: Path
+      :param throw: 是否抛出异常
+      :type throw: bool
+
+
+   .. method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
+
+      克隆资源包到本地缓存临时文件夹.
+
+      如果资源包的tag不是latest则clone下来后删除.git文件夹,否则保存
+
+      :param cache_dir: 缓存文件夹地址.
+      :type cache_dir: Path
+      :param throw: 是否抛出异常
+      :type throw: bool
+
+
+   .. method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
+
+      构造资源包的本地路径.
+
+      :param cache_dir: 缓存文件夹路径.
+      :type cache_dir: Path
+
+      :returns: 资源包所在的文件夹路径
+      :rtype: Path
+
+
+   .. method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
+
+      缓存资源包到本地.
+
+      :param cache_dir: 缓存文件夹地址.
+      :type cache_dir: Path
+      :param throw: 是否抛出异常
+      :type throw: bool
+
+
+
+.. function:: get_cache_dir() -> pathlib.Path
+
+   获取缓存根目录.
+
+
+.. function:: get_config_info() -> Dict[str, Any]
+
+   获取配置信息.
+
+
+.. function:: template_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. class:: InfoBase
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   获取本目录下项目的基本信息.
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. attribute:: load_all_config_file
+      :annotation: = True
+
+      
+
+   .. attribute:: config_file_only_get_need
+      :annotation: = False
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. data:: project_add
+   
+
+   
+
+.. function:: sourcepack_check_and_cached(cached_sourcepack: List[str], source_pack: pmfp.utils.remote_cache_utils.SourcePack, cache_dir: pathlib.Path) -> pathlib.Path
+
+   检测资源包是否已经有缓存,没有就缓存.
+
+   :param cached_sourcepack: 已经缓存过的资源包列表
+   :type cached_sourcepack: List[str]
+   :param source_pack: 资源包对象
+   :type source_pack: SourcePack
+   :param cache_dir: 缓存根目录
+   :type cache_dir: Path
+
+   :raises AttributeError: 不是目录,请确认情况
+
+   :returns: 资源包的本地缓存路径
+   :rtype: Path
+
+
+.. function:: check_and_cached(cached_sourcepack: List[str], component_string: str, cache_dir: pathlib.Path) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, pathlib.Path]
+
+   检查组件的模板库是否有缓存,没有的话进行缓存.
+
+   `latest`标签的模板库都会进行缓存更新.
+
+   :param cached_sourcepack: 已经缓存过的资源包列表
+   :type cached_sourcepack: List[str]
+   :param component_string: 组件字符串
+   :type component_string: str
+   :param cache_dir: 缓存根目录
+   :type cache_dir: Path
+
+   :raises AttributeError: 组件缓存位置不是目录
+   :raises e: 其他执行中的异常
+
+   :returns: 组件对象
+   :rtype: ComponentTemplate
+
+
+.. function:: make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None) -> Dict[str, str]
+
+   构造模板中匹配的kv.
+
+   :param kv: 外部输入的kv对. Defaults to None.
+   :type kv: Optional[List[str]], optional
+
+   :returns: 模板render时的输入
+   :rtype: Dict[str, str]
+
+
+.. function:: check_source(pmfpconf: Dict[str, Any], projectconfig: Dict[str, Any], sourcepackdir: pathlib.Path, component_string: str) -> Dict[str, Any]
+
+   校验组件所在模板库的信息,通过的话返回模板库信息
+
+
+.. function:: check_component(sourcepack_config: Dict[str, Any], componentpack: pmfp.utils.remote_cache_utils.ComponentTemplate, component_string: str) -> Dict[str, Any]
+
+   校验组件信息,通过的话返回组件信息.
+
+
+.. function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None) -> str
+
+   将目标组件模板转换到项目目录.
+
+
+.. function:: save_to_components(cwdp: pathlib.Path, component_string: str, located_path_str: str) -> None
+
+   保存组件信息到项目配置.
+
+
+.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
+
+
+.. function:: add_component(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') -> None
+
+   为项目添加组件.
+
+   :param component_string: 描述组件资源包的字符串,格式为"[{host}::]{repo_namespace}::{repo_name}[@{tag}]//{component_path}".
+   :type component_string: str
+   :param located_path: 放在本地的位置.
+   :type located_path: Optional[str], optional
+
+

@@ -1,0 +1,55 @@
+:mod:`pmfp.entrypoint.test_.static.core`
+========================================
+
+.. py:module:: pmfp.entrypoint.test_.static.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.static.core.Static
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.static.core.pmfpinfo
+   pmfp.entrypoint.test_.static.core.test_static
+
+
+.. data:: pmfpinfo
+   
+
+   
+
+.. class:: Static
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   对动态语言的源码做静态类型检验.
+
+   .. attribute:: argparse_noflag
+      :annotation: = code
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: test_static
+   
+
+   
+

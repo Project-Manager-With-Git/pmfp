@@ -1,0 +1,767 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.docker_.compose.new.merge_compose_dict &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">模块代码</a> &raquo;</li>
+        
+          <li><a href="../new.html">pmfp.entrypoint.docker_.compose.new</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.docker_.compose.new.merge_compose_dict</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.docker_.compose.new.merge_compose_dict 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">.typedef</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">NetworksSchema</span><span class="p">,</span>
+    <span class="n">ServiceSchema</span><span class="p">,</span>
+    <span class="n">ServicesSchema</span><span class="p">,</span>
+    <span class="n">ComposeSchema</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="level1"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/merge_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.level1">[文档]</a><span class="k">def</span> <span class="nf">level1</span><span class="p">(</span><span class="n">old</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">new</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;尽量更新.&quot;&quot;&quot;</span>
+    <span class="n">old_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">old_services</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ServicesSchema</span><span class="p">]</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">old_networks</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">old_volumes</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">old_configs</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">old_secrets</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">new_version</span> <span class="o">=</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">new_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">new_services</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">new_networks</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">new_volumes</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">new_configs</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">new_secrets</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="p">:</span> <span class="n">ComposeSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+
+    <span class="c1"># log</span>
+    <span class="k">if</span> <span class="n">new_log</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_log</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">old_log</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_log</span>
+    <span class="c1"># services</span>
+    <span class="n">services</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_services</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_services</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_services</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_services</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">services</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">services</span>
+    <span class="c1"># networks</span>
+    <span class="n">networks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_networks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_networks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">networks</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;networks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">networks</span>
+
+    <span class="c1"># volumes</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_volumes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_volumes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">volumes</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;volumes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">volumes</span>
+
+    <span class="c1"># configs</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_configs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_configs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">configs</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;configs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+
+    <span class="c1"># secrets</span>
+    <span class="n">secrets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_secrets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_secrets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">secrets</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;secrets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="level2"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/merge_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.level2">[文档]</a><span class="k">def</span> <span class="nf">level2</span><span class="p">(</span><span class="n">old</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">new</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeSchema</span><span class="p">:</span>
+    <span class="n">old_version</span> <span class="o">=</span> <span class="n">old</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">old_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">old_services</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ServicesSchema</span><span class="p">]</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">old_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">old_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">old_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">old_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">old_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+    <span class="n">old_networks</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">old_volumes</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">old_configs</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">old_secrets</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">new_version</span> <span class="o">=</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">new_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">new_services</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">new_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">new_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">new_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">new_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+
+    <span class="n">new_networks</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">new_volumes</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">new_configs</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">new_secrets</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="p">:</span> <span class="n">ComposeSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+
+    <span class="c1"># log</span>
+    <span class="k">if</span> <span class="n">new_log</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_log</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">old_log</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_log</span>
+
+    <span class="c1"># services</span>
+    <span class="n">services</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_other_servs</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_other_servs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_other_servs</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_other_servs</span><span class="p">)</span>
+    <span class="n">project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_project_serv</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_project_serv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_project_serv</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_project_serv</span><span class="p">)</span>
+    <span class="n">services</span><span class="p">[</span><span class="n">project_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_serv</span>
+    <span class="k">if</span> <span class="n">services</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">services</span>
+    <span class="c1"># networks</span>
+    <span class="n">networks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_networks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_networks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">networks</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;networks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">networks</span>
+
+    <span class="c1"># volumes</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_volumes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_volumes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">volumes</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;volumes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">volumes</span>
+
+    <span class="c1"># configs</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_configs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_configs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">configs</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;configs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+
+    <span class="c1"># secrets</span>
+    <span class="n">secrets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_secrets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_secrets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">secrets</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;secrets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="level3"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/merge_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.level3">[文档]</a><span class="k">def</span> <span class="nf">level3</span><span class="p">(</span><span class="n">old</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">new</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeSchema</span><span class="p">:</span>
+    <span class="n">old_version</span> <span class="o">=</span> <span class="n">old</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">old_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">old_services</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ServicesSchema</span><span class="p">]</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">old_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">old_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">old_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">old_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">old_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+    <span class="n">old_networks</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">old_volumes</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">old_configs</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">old_secrets</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">new_version</span> <span class="o">=</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">new_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">new_services</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">new_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">new_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">new_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">new_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+
+    <span class="n">new_networks</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">new_volumes</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">new_configs</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">new_secrets</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="p">:</span> <span class="n">ComposeSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+
+    <span class="c1"># log</span>
+    <span class="k">if</span> <span class="n">old_log</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_log</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">new_log</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_log</span>
+
+    <span class="c1"># services</span>
+    <span class="n">services</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_other_servs</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_other_servs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_other_servs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">sn</span><span class="p">,</span> <span class="n">sc</span> <span class="ow">in</span> <span class="n">new_other_servs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">sn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_other_servs</span><span class="p">:</span>
+                <span class="n">services</span><span class="p">[</span><span class="n">sn</span><span class="p">]</span> <span class="o">=</span> <span class="n">sc</span>
+    <span class="n">project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_project_serv</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_project_serv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_project_serv</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_project_serv</span><span class="p">)</span>
+    <span class="n">services</span><span class="p">[</span><span class="n">project_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_serv</span>
+    <span class="k">if</span> <span class="n">services</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">services</span>
+    <span class="c1"># networks</span>
+    <span class="n">networks</span><span class="p">:</span> <span class="n">NetworksSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_networks</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_networks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_networks</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">nn</span><span class="p">,</span> <span class="n">nc</span> <span class="ow">in</span> <span class="n">new_networks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">nn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_networks</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">networks</span><span class="p">[</span><span class="n">nn</span><span class="p">]</span> <span class="o">=</span> <span class="n">nc</span>
+    <span class="k">if</span> <span class="n">networks</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;networks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">networks</span>
+
+    <span class="c1"># volumes</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_volumes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_volumes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_volumes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">vn</span><span class="p">,</span> <span class="n">vc</span> <span class="ow">in</span> <span class="n">new_volumes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">vn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_volumes</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">volumes</span><span class="p">[</span><span class="n">vn</span><span class="p">]</span> <span class="o">=</span> <span class="n">vc</span>
+    <span class="k">if</span> <span class="n">volumes</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;volumes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">volumes</span>
+
+    <span class="c1"># configs</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_configs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_configs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cn</span><span class="p">,</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">new_configs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_configs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">configs</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span>
+    <span class="k">if</span> <span class="n">configs</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;configs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+
+    <span class="c1"># secrets</span>
+    <span class="n">secrets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_secrets</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_secrets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_secrets</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cn</span><span class="p">,</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">new_secrets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_secrets</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">secrets</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span>
+    <span class="k">if</span> <span class="n">secrets</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;secrets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="level4"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/merge_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.level4">[文档]</a><span class="k">def</span> <span class="nf">level4</span><span class="p">(</span><span class="n">old</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">new</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeSchema</span><span class="p">:</span>
+    <span class="n">old_version</span> <span class="o">=</span> <span class="n">old</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">old_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">old_services</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ServicesSchema</span><span class="p">]</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">old_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">old_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">old_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">old_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">old_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+    <span class="n">old_networks</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">old_volumes</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">old_configs</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">old_secrets</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">new_version</span> <span class="o">=</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">new_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">new_services</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">new_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">new_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">new_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">new_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+
+    <span class="n">new_networks</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">new_volumes</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">new_configs</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">new_secrets</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="p">:</span> <span class="n">ComposeSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+
+    <span class="c1"># log</span>
+    <span class="k">if</span> <span class="n">new_log</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_log</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">old_log</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_log</span>
+    <span class="c1"># services</span>
+    <span class="n">services</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_other_servs</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_other_servs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_other_servs</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_other_servs</span><span class="p">)</span>
+    <span class="n">project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_project_serv</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_project_serv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_project_serv</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">project_serv</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">))</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                    <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">project_serv</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">services</span><span class="p">[</span><span class="n">project_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_serv</span>
+
+    <span class="k">if</span> <span class="n">services</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">services</span>
+
+    <span class="c1"># networks</span>
+    <span class="n">networks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_networks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_networks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">networks</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;networks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">networks</span>
+
+    <span class="c1"># volumes</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_volumes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_volumes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">volumes</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;volumes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">volumes</span>
+
+    <span class="c1"># configs</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_configs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_configs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">configs</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;configs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+
+    <span class="c1"># secrets</span>
+    <span class="n">secrets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_secrets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_secrets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">secrets</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;secrets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="level5"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/merge_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.level5">[文档]</a><span class="k">def</span> <span class="nf">level5</span><span class="p">(</span><span class="n">old</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">new</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeSchema</span><span class="p">:</span>
+    <span class="n">old_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">old_services</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ServicesSchema</span><span class="p">]</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">old_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">old_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">old_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">old_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">old_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+    <span class="n">old_networks</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">old_volumes</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">old_configs</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">old_secrets</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">new_version</span> <span class="o">=</span> <span class="n">new</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+    <span class="n">new_log</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-log&quot;</span><span class="p">)</span>
+    <span class="n">new_services</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;services&quot;</span><span class="p">)</span>
+    <span class="n">new_other_servs</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">new_project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_services</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">service_conf</span> <span class="ow">in</span> <span class="n">new_services</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="n">project_name</span><span class="p">:</span>
+                <span class="n">new_project_serv</span> <span class="o">=</span> <span class="n">service_conf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_other_servs</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">service_conf</span>
+
+    <span class="n">new_networks</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;networks&quot;</span><span class="p">)</span>
+    <span class="n">new_volumes</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volumes&quot;</span><span class="p">)</span>
+    <span class="n">new_configs</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;configs&quot;</span><span class="p">)</span>
+    <span class="n">new_secrets</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;secrets&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="p">:</span> <span class="n">ComposeSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_version</span>
+
+    <span class="c1"># log</span>
+    <span class="k">if</span> <span class="n">old_log</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_log</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">new_log</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;x-log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_log</span>
+
+    <span class="c1"># services</span>
+    <span class="n">services</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_other_servs</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_other_servs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_other_servs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">sn</span><span class="p">,</span> <span class="n">sc</span> <span class="ow">in</span> <span class="n">new_other_servs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">sn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_other_servs</span><span class="p">:</span>
+                <span class="n">services</span><span class="p">[</span><span class="n">sn</span><span class="p">]</span> <span class="o">=</span> <span class="n">sc</span>
+    <span class="n">project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_project_serv</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_project_serv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_project_serv</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">project_serv</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;deploy&quot;</span><span class="p">,</span> <span class="s2">&quot;cpus&quot;</span><span class="p">,</span> <span class="s2">&quot;mem_limit&quot;</span><span class="p">,</span> <span class="s2">&quot;mem_reservation&quot;</span><span class="p">,</span> <span class="s2">&quot;restart&quot;</span><span class="p">,):</span>
+                <span class="k">continue</span>
+            <span class="n">new_project_compose</span> <span class="o">=</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">new_project_compose</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_project_compose</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">new_project_compose</span><span class="p">)</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_project_compose</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_project_compose</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_project_serv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_project_compose</span>
+                <span class="k">else</span><span class="p">:</span>
+
+                    <span class="n">project_serv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_project_compose</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_project_serv</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">project_serv</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">services</span><span class="p">[</span><span class="n">project_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_serv</span>
+    <span class="k">if</span> <span class="n">services</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;services&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">services</span>
+    <span class="c1"># networks</span>
+    <span class="n">networks</span><span class="p">:</span> <span class="n">NetworksSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_networks</span><span class="p">:</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_networks</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_networks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_networks</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">nn</span><span class="p">,</span> <span class="n">nc</span> <span class="ow">in</span> <span class="n">new_networks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">nn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_networks</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">networks</span><span class="p">[</span><span class="n">nn</span><span class="p">]</span> <span class="o">=</span> <span class="n">nc</span>
+    <span class="k">if</span> <span class="n">networks</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;networks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">networks</span>
+
+    <span class="c1"># volumes</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_volumes</span><span class="p">:</span>
+        <span class="n">volumes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_volumes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_volumes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_volumes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">vn</span><span class="p">,</span> <span class="n">vc</span> <span class="ow">in</span> <span class="n">new_volumes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">vn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_volumes</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">volumes</span><span class="p">[</span><span class="n">vn</span><span class="p">]</span> <span class="o">=</span> <span class="n">vc</span>
+    <span class="k">if</span> <span class="n">volumes</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;volumes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">volumes</span>
+
+    <span class="c1"># configs</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_configs</span><span class="p">:</span>
+        <span class="n">configs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_configs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_configs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cn</span><span class="p">,</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">new_configs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_configs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">configs</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span>
+    <span class="k">if</span> <span class="n">configs</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;configs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+
+    <span class="c1"># secrets</span>
+    <span class="n">secrets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">old_secrets</span><span class="p">:</span>
+        <span class="n">secrets</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">old_secrets</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">old_secrets</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">new_secrets</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cn</span><span class="p">,</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">new_secrets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_secrets</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">secrets</span><span class="p">[</span><span class="n">cn</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span>
+    <span class="k">if</span> <span class="n">secrets</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;secrets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="merge_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/merge_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.merge_compose">[文档]</a><span class="k">def</span> <span class="nf">merge_compose</span><span class="p">(</span><span class="n">old</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">new</span><span class="p">:</span> <span class="n">ComposeSchema</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="n">updatemode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;level5&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeSchema</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">updatemode</span> <span class="o">==</span> <span class="s2">&quot;cover&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">new</span>
+    <span class="k">elif</span> <span class="n">updatemode</span> <span class="o">==</span> <span class="s2">&quot;level1&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">level1</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">updatemode</span> <span class="o">==</span> <span class="s2">&quot;level2&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">level2</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">updatemode</span> <span class="o">==</span> <span class="s2">&quot;level3&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">level3</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">updatemode</span> <span class="o">==</span> <span class="s2">&quot;level4&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">level4</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">updatemode</span> <span class="o">==</span> <span class="s2">&quot;level5&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">level5</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;un support updatemode </span><span class="si">{</span><span class="n">updatemode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

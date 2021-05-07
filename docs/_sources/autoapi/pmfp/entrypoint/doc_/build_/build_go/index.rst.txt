@@ -1,0 +1,36 @@
+:mod:`pmfp.entrypoint.doc_.build_.build_go`
+===========================================
+
+.. py:module:: pmfp.entrypoint.doc_.build_.build_go
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.build_.build_go.move_doc
+   pmfp.entrypoint.doc_.build_.build_go.doc_build_go
+
+
+
+.. function:: move_doc(sourcep: pathlib.Path, outputp: pathlib.Path) -> None
+
+
+.. function:: doc_build_go(output: str, source_dir: str, *, cwd: str = '.') -> None
+
+   为go项目更新api文档.
+   :param output: html文档位置
+   :type output: str
+   :param source_dir: 文档源码位置
+   :type source_dir: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行命令的根目录
+   :type cwd: str
+
+

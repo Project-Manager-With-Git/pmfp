@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.utils.endpoint &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.utils.endpoint</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/autoapi/pmfp/utils/endpoint/index.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pmfp.utils.endpoint">
+<span id="pmfp-utils-endpoint"></span><h1><a class="reference internal" href="#module-pmfp.utils.endpoint" title="pmfp.utils.endpoint"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.utils.endpoint</span></code></a><a class="headerlink" href="#module-pmfp.utils.endpoint" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="永久链接至标题">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="永久链接至标题">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.endpoint.EndPoint" title="pmfp.utils.endpoint.EndPoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EndPoint</span></code></a></p></td>
+<td><p>程序入口类.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="永久链接至标题">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.endpoint.setup_cfg_handdler" title="pmfp.utils.endpoint.setup_cfg_handdler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_cfg_handdler</span></code></a>(p: pathlib.Path) → Dict[str, Any]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.utils.endpoint.go_mod_handdler" title="pmfp.utils.endpoint.go_mod_handdler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">go_mod_handdler</span></code></a>(p: pathlib.Path) → Dict[str, Any]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.endpoint.cmake_handdler" title="pmfp.utils.endpoint.cmake_handdler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmake_handdler</span></code></a>(p: pathlib.Path) → Dict[str, Any]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.utils.endpoint.package_json_handdler" title="pmfp.utils.endpoint.package_json_handdler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">package_json_handdler</span></code></a>(p: pathlib.Path) → Dict[str, Any]</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="pmfp.utils.endpoint.setup_cfg_handdler">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.endpoint.</span></code><code class="sig-name descname"><span class="pre">setup_cfg_handdler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#setup_cfg_handdler"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.setup_cfg_handdler" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.utils.endpoint.go_mod_handdler">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.endpoint.</span></code><code class="sig-name descname"><span class="pre">go_mod_handdler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#go_mod_handdler"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.go_mod_handdler" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.utils.endpoint.cmake_handdler">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.endpoint.</span></code><code class="sig-name descname"><span class="pre">cmake_handdler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#cmake_handdler"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.cmake_handdler" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.utils.endpoint.package_json_handdler">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.endpoint.</span></code><code class="sig-name descname"><span class="pre">package_json_handdler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#package_json_handdler"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.package_json_handdler" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="pmfp.utils.endpoint.EndPoint">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pmfp.utils.endpoint.</span></code><code class="sig-name descname"><span class="pre">EndPoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epilog</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usage</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">schema_entry.entrypoint_base.SchemaType</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_schema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_config_file_paths</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file_only_get_need</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_all_config_file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_prefix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_env</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argparse_check_required</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argparse_noflag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file_parser_map</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="pre">Ellipsis</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint" title="永久链接至目标">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">schema_entry.EntryPoint</span></code></p>
+<p>程序入口类.</p>
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.epilog">
+<code class="sig-name descname"><span class="pre">epilog</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.epilog"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.epilog" title="永久链接至目标">¶</a></dt>
+<dd><p>命令行展示介绍时的epilog部分</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.usage">
+<code class="sig-name descname"><span class="pre">usage</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.usage"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.usage" title="永久链接至目标">¶</a></dt>
+<dd><p>命令行展示介绍时的使用方法介绍</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.parent">
+<code class="sig-name descname"><span class="pre">parent</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.parent"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.parent" title="永久链接至目标">¶</a></dt>
+<dd><p>入口节点的父节点.Default None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[“EntryPointABC”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.schema">
+<code class="sig-name descname"><span class="pre">schema</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.schema"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.schema" title="永久链接至目标">¶</a></dt>
+<dd><p>入口节点的设置需要满足的json schema对应字典.Default None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[Dict[str, Any]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.verify_schema">
+<code class="sig-name descname"><span class="pre">verify_schema</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.verify_schema"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.verify_schema" title="永久链接至目标">¶</a></dt>
+<dd><p>获得设置后节点是否校验设置是否满足定义的json schema模式</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.default_config_file_paths">
+<code class="sig-name descname"><span class="pre">default_config_file_paths</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.default_config_file_paths"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.default_config_file_paths" title="永久链接至目标">¶</a></dt>
+<dd><p>设置默认的配置文件位置.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Sequence[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.config_file_only_get_need">
+<code class="sig-name descname"><span class="pre">config_file_only_get_need</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.config_file_only_get_need"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.config_file_only_get_need" title="永久链接至目标">¶</a></dt>
+<dd><p>设置是否只从配置文件中获取schema中定义的配置项</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.load_all_config_file">
+<code class="sig-name descname"><span class="pre">load_all_config_file</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.load_all_config_file"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.load_all_config_file" title="永久链接至目标">¶</a></dt>
+<dd><p>设置的默认配置文件全部加载.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.env_prefix">
+<code class="sig-name descname"><span class="pre">env_prefix</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.env_prefix"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.env_prefix" title="永久链接至目标">¶</a></dt>
+<dd><p>设置环境变量的前缀</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.parse_env">
+<code class="sig-name descname"><span class="pre">parse_env</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.parse_env"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.parse_env" title="永久链接至目标">¶</a></dt>
+<dd><p>展示是否解析环境变量</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.argparse_check_required">
+<code class="sig-name descname"><span class="pre">argparse_check_required</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.argparse_check_required"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.argparse_check_required" title="永久链接至目标">¶</a></dt>
+<dd><p>命令行参数是否解析必填项为必填项</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint.argparse_noflag">
+<code class="sig-name descname"><span class="pre">argparse_noflag</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.argparse_noflag"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint.argparse_noflag" title="永久链接至目标">¶</a></dt>
+<dd><p>命令行参数解析哪个字段为无`–<a href="#id1"><span class="problematic" id="id2">`</span></a>的参数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="id0">
+<code class="sig-name descname"><span class="pre">load_all_config_file</span></code><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.load_all_config_file"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#id0" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id3">
+<code class="sig-name descname"><span class="pre">config_file_only_get_need</span></code><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.config_file_only_get_need"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#id3" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id4">
+<code class="sig-name descname"><span class="pre">default_config_file_paths</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint.default_config_file_paths"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#id4" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.endpoint.EndPoint._config_file_parser_map">
+<code class="sig-name descname"><span class="pre">_config_file_parser_map</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/endpoint.html#EndPoint._config_file_parser_map"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.endpoint.EndPoint._config_file_parser_map" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

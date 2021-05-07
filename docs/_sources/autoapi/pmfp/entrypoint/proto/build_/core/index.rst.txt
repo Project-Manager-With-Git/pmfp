@@ -1,0 +1,50 @@
+:mod:`pmfp.entrypoint.proto.build_.core`
+========================================
+
+.. py:module:: pmfp.entrypoint.proto.build_.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.proto.build_.core.Build
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.proto.build_.core.proto_build
+
+
+.. class:: Build
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   创建protobuf文件.
+   需要本地有`protoc`,可以在`https://github.com/protocolbuffers/protobuf/releases`下载安装
+
+   .. attribute:: argparse_noflag
+      :annotation: = files
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: proto_build
+   
+
+   
+

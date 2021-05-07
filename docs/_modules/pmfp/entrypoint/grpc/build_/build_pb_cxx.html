@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.grpc.build_.build_pb_cxx &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">模块代码</a> &raquo;</li>
+        
+          <li><a href="../build_.html">pmfp.entrypoint.grpc.build_</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.grpc.build_.build_pb_cxx</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.grpc.build_.build_pb_cxx 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;编译c++语言模块.</span>
+
+<span class="sd">和其他不同为了照顾windows下的使用,cpp的grpc使用docker编译.</span>
+<span class="sd">由于使用cpp写grpc一定是作为计算密集型任务的处理终端使用的,所以只提供了同步服务端</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.template_utils</span> <span class="kn">import</span> <span class="n">template_2_content</span>
+
+<span class="n">MainSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">ServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">ServHeadSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">DockerfileSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">FindGRPCCmakeSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">FindProtobufCmakeSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="c1"># cmake</span>
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;FindGRPC.cmake.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="FindGRPCCmakeSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.FindGRPCCmakeSource">[文档]</a>    <span class="n">FindGRPCCmakeSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载FindGRPC.cmake.jinja模板失败&quot;</span><span class="p">)</span>
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;FindProtobuf.cmake.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="FindProtobufCmakeSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.FindProtobufCmakeSource">[文档]</a>    <span class="n">FindProtobufCmakeSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载FindProtobuf.cmake.jinja模板失败&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># main</span>
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;rpc.cc.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="MainSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.MainSource">[文档]</a>    <span class="n">MainSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载rpc.cc.jinja模板失败&quot;</span><span class="p">)</span>
+
+<span class="c1"># serv</span>
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;rpc_serv.cc.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="ServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.ServSource">[文档]</a>    <span class="n">ServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载rpc_serv.cc.jinja模板失败&quot;</span><span class="p">)</span>
+
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;rpc_serv.h.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="ServHeadSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.ServHeadSource">[文档]</a>    <span class="n">ServHeadSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载rpc_serv.h.jinja模板失败&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># dockerfile</span>
+<div class="viewcode-block" id="source_io"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.source_io">[文档]</a><span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;Dockerfile.jinja&#39;</span><span class="p">)</span></div>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="DockerfileSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.DockerfileSource">[文档]</a>    <span class="n">DockerfileSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载Dockerfile.jinja模板失败&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="gen_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_cxx/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.gen_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># 先创建cmake的grpc工具</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cmake&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cmake&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cmake/FindGRPC.cmake&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;cmake/FindGRPC.cmake已经存在,不生成&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">FindGRPCCmakeSource</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cmake/FindGRPC.cmake&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cmake/FindProtobuf.cmake&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;cmake/FindProtobuf.cmake已经存在,不生成&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">FindProtobufCmakeSource</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cmake/FindProtobuf.cmake&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="c1"># 再创建dockerfile</span>
+    <span class="k">if</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;Dockerflie&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Dockerflie已经存在,不生成&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+            <span class="n">DockerfileSource</span><span class="p">,</span>
+            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
+            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;Dockerfile&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="c1"># 再创建serv</span>
+    <span class="n">src_dir</span> <span class="o">=</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">src_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">src_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">src_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">.cc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">.cc已经存在,不生成&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+            <span class="n">MainSource</span><span class="p">,</span>
+            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
+            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">.cc&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">src_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">_serv.cc&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">_serv.cc已经存在,不生成&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+            <span class="n">ServSource</span><span class="p">,</span>
+            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
+            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">_serv.cc&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">src_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">_serv.h&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">_serv.h已经存在,不生成&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+            <span class="n">ServHeadSource</span><span class="p">,</span>
+            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
+            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name_lower</span><span class="si">}</span><span class="s2">_serv.h&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;C++的grpc项目由cmake管理,请确保已经安装好了protobuf和grpc++.</span></div>
+<span class="s2">    取消本工具cmake环境配置中protobuf和grpc部分的内容配置相应路径以激活对应支持.</span>
+<span class="s2">    本项目只提供c++版本的服务端模板.</span>
+<span class="s2">    同时提供一个dockerfile用于在docker中编译可执行文件.</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="build_pb_cxx"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_.build_pb_cxx.build_pb_cxx">[文档]</a><span class="k">def</span> <span class="nf">build_pb_cxx</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;为c++版本的grpc构造模板.</span>
+
+<span class="sd">    由于使用cmake管理,而cmake难以解析所以只能给个大致</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        files (List[str]): 待编译的protobuffer文件</span>
+<span class="sd">        cwd (Path): 执行时候的根目录</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.proto&quot;</span><span class="p">):</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.proto&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">service_name_lower</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">service_name</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="n">gen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

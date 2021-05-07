@@ -1,0 +1,36 @@
+:mod:`pmfp.entrypoint.proto.build_.build_pb_js`
+===============================================
+
+.. py:module:: pmfp.entrypoint.proto.build_.build_pb_js
+
+.. autoapi-nested-parse::
+
+   编译js语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.proto.build_.build_pb_js.build_pb_js
+
+
+
+.. function:: build_pb_js(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+
+   编译js语言模块.
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+
+

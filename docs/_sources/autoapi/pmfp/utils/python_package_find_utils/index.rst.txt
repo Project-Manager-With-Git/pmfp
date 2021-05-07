@@ -1,0 +1,34 @@
+:mod:`pmfp.utils.python_package_find_utils`
+===========================================
+
+.. py:module:: pmfp.utils.python_package_find_utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.python_package_find_utils._find_pypackage
+   pmfp.utils.python_package_find_utils.find_pypackage_string
+
+
+
+.. function:: _find_pypackage(final_path: pathlib.Path, packs: List[str]) -> None
+
+
+.. function:: find_pypackage_string(to_path: str) -> str
+
+   find_pypackage_string.
+
+   :param to_path: 目标地址
+   :type to_path: str
+
+   :returns: package地址
+   :rtype: str
+
+

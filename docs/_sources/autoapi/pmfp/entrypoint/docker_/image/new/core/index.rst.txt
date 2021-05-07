@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.docker_.image.new.core`
+=============================================
+
+.. py:module:: pmfp.entrypoint.docker_.image.new.core
+
+.. autoapi-nested-parse::
+
+   ppm docker image new命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.new.core.New
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.new.core.dockerfile_new
+
+
+.. class:: New
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   创建一个dockerfile文件.
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: dockerfile_new
+   
+
+   
+

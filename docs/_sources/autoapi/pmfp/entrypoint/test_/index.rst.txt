@@ -1,0 +1,91 @@
+:mod:`pmfp.entrypoint.test_`
+============================
+
+.. py:module:: pmfp.entrypoint.test_
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   benchmark/index.rst
+   static/index.rst
+   unittest/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.static_test
+   pmfp.entrypoint.test_.unittest_test
+   pmfp.entrypoint.test_.benchmark_test
+
+
+
+.. function:: static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = '.') -> None
+
+   对动态语言做静态类型检验.
+
+   :param language: 目标语言
+   :type language: str
+   :param code: 目标检测代码
+   :type code: str
+   :param model: 目标检测代码是否为模块
+   :type model: bool
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: bool
+   :param output: 覆盖率文档位置
+   :type output: str
+   :param cwd: 执行时的根目录
+   :type cwd: str
+
+
+.. function:: unittest_test(language: str, test_code: str, code: str, *, cwd: str = '.', coverage: bool = False, output: str = 'doc_unittest') -> None
+
+   对指定代码做单元测试.
+
+   :param language: 目标语言
+   :type language: str
+   :param test_code: 测试代码
+   :type test_code: str
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: Optional[bool]
+   :param code: 测试源码
+   :type code: str
+   :param output: 覆盖率文档位置
+   :type output: Optional[str]
+   :param cwd: 执行测试时的位置
+   :type cwd: str
+
+
+.. function:: benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+
+   对指定语言的代码做性能测试.
+
+   :param language: 指定的编程语言
+   :type language: str
+   :param benchmark_code: 待测代码
+   :type benchmark_code: str
+   :param mem: 是否测试内存性能. Defaults to False.
+   :type mem: bool, optional
+   :param cwd: 执行时的根目录. Defaults to None.
+   :type cwd: Optional[str]
+
+

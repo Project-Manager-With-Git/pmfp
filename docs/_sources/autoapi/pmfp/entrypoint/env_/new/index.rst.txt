@@ -1,0 +1,213 @@
+:mod:`pmfp.entrypoint.env_.new`
+===============================
+
+.. py:module:: pmfp.entrypoint.env_.new
+
+.. autoapi-nested-parse::
+
+   构造不同执行环境.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   env_js/index.rst
+   source_temp/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   env_c/index.rst
+   env_cxx/index.rst
+   env_cython/index.rst
+   env_go/index.rst
+   env_md/index.rst
+   env_py/index.rst
+   utils/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.get_abs_path
+   pmfp.entrypoint.env_.new.template_2_content
+   pmfp.entrypoint.env_.new.init_py_env
+   pmfp.entrypoint.env_.new.init_cython_env
+   pmfp.entrypoint.env_.new.init_go_env
+   pmfp.entrypoint.env_.new.init_c_env
+   pmfp.entrypoint.env_.new.init_cxx_env
+   pmfp.entrypoint.env_.new.init_js_env
+   pmfp.entrypoint.env_.new.init_md_env
+   pmfp.entrypoint.env_.new.makereadme
+   pmfp.entrypoint.env_.new.makechangelog
+   pmfp.entrypoint.env_.new.freeze
+   pmfp.entrypoint.env_.new._new_nev
+   pmfp.entrypoint.env_.new.new_env
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.DEFAULT_AUTHOR
+   pmfp.entrypoint.env_.new.PMFP_CONFIG_DEFAULT_NAME
+   pmfp.entrypoint.env_.new.env_new
+   pmfp.entrypoint.env_.new.readme_template
+   pmfp.entrypoint.env_.new.changelog_template
+   pmfp.entrypoint.env_.new.template_io
+   pmfp.entrypoint.env_.new.readme_template
+   pmfp.entrypoint.env_.new.template_io
+   pmfp.entrypoint.env_.new.changelog_template
+
+
+.. data:: DEFAULT_AUTHOR
+   
+
+   
+
+.. data:: PMFP_CONFIG_DEFAULT_NAME
+   :annotation: = pmfprc.json
+
+   
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: template_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. function:: init_py_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+
+.. function:: init_cython_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+
+.. function:: init_go_env(cwd: pathlib.Path, project_name: str) -> None
+
+   初始化golang默认的虚拟环境.
+
+   :param cwd: 虚拟环境所在的根目录
+   :type cwd: Path
+   :param project_name: 项目名
+   :type project_name: str
+
+
+.. function:: init_c_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
+
+
+.. function:: init_cxx_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
+
+
+.. function:: init_js_env(cwd: pathlib.Path, env: str, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+
+
+.. function:: init_md_env(cwd: pathlib.Path, project_name: str, description: str) -> None
+
+
+.. data:: env_new
+   
+
+   
+
+.. data:: readme_template
+   :annotation: = 
+
+   
+
+.. data:: changelog_template
+   :annotation: = 
+
+   
+
+.. data:: template_io
+   
+
+   
+
+.. data:: readme_template
+   
+
+   
+
+.. data:: template_io
+   
+
+   
+
+.. data:: changelog_template
+   
+
+   
+
+.. function:: makereadme(cwd: pathlib.Path, project_name: str, author: str, author_email: str, description: str, keywords: str) -> None
+
+
+.. function:: makechangelog(cwd: pathlib.Path) -> None
+
+
+.. function:: freeze(env: str, language: str, *, cwd: pathlib.Path, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+   将创建的环境信息保存到目录下的对应`pmfprc.json`中.
+
+
+.. function:: _new_nev(env: str, language: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+
+.. function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
+
+   构造不同执行环境.
+
+   :param language: 目标项目使用的语言
+   :type language: str
+   :param env: 目标执行环境
+   :type env: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param version: 项目版本
+   :type version: str
+   :param author: 项目作者
+   :type author: str
+   :param author_email: 项目作者email. Defaults to "".
+   :type author_email: str, optional
+   :param description: 项目简介. Defaults to "".
+   :type description: str, optional
+   :param keywords: 项目关键字. Defaults to None.
+   :type keywords: Optional[List[str]], optional
+   :param cwd: 命令执行根目录. Defaults to ".".
+   :type cwd: str, optional
+
+

@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.cache.clean.core`
+=======================================
+
+.. py:module:: pmfp.entrypoint.cache.clean.core
+
+.. autoapi-nested-parse::
+
+   ppm cache管理资源包缓存
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.clean.core.Clean
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.clean.core.cache_clean
+
+
+.. class:: Clean
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   清除所有资源包.
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: cache_clean
+   
+
+   
+

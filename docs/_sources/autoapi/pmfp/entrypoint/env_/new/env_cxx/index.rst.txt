@@ -1,0 +1,27 @@
+:mod:`pmfp.entrypoint.env_.new.env_cxx`
+=======================================
+
+.. py:module:: pmfp.entrypoint.env_.new.env_cxx
+
+.. autoapi-nested-parse::
+
+   初始化cpp的执行环境.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_cxx.init_cxx_env
+
+
+
+.. function:: init_cxx_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
+
+

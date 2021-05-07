@@ -1,0 +1,57 @@
+:mod:`pmfp.entrypoint.cache.info`
+=================================
+
+.. py:module:: pmfp.entrypoint.cache.info
+
+.. autoapi-nested-parse::
+
+   ppm cache info命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.info.Info
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.info.cache_info
+
+
+.. class:: Info
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   获取当前基本环境信息.
+
+   .. attribute:: argparse_noflag
+      :annotation: = source_pack_string
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. data:: cache_info
+   
+
+   
+

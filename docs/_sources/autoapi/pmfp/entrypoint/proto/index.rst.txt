@@ -1,0 +1,78 @@
+:mod:`pmfp.entrypoint.proto`
+============================
+
+.. py:module:: pmfp.entrypoint.proto
+
+.. autoapi-nested-parse::
+
+   子命令ppm proto.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   build_/index.rst
+   new/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.proto.build_pb
+   pmfp.entrypoint.proto.new_pb
+
+
+
+.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.') -> None
+
+   编译protobuf的schema为不同语言的代码.
+
+   :param language: 编译到的执行环境,可选的有"go","py","js"
+   :type language: str
+   :param files: 待编译的文件列表
+   :type files: List[str]
+   :param pb_includes: 待编译文件及其依赖所在文件夹列表
+   :type pb_includes: List[str]
+   :param to: 编译到的模块所在文件夹.
+   :type to: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+   :param kwargs: Default: None,
+   :type kwargs: Optional[str]
+   :param cwd: 执行的根目录. Default: "."
+   :type cwd: str
+
+
+.. function:: new_pb(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+
+   新建一个protpbuf文件.
+
+   :param name: 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名
+   :type name: str
+   :param pb_include: protobuf文件存放的文件夹路径
+   :type pb_include: str
+   :param parent_package: 父包名. Defaults to None.
+   :type parent_package: Optional[str], optional
+   :param cwd: 执行位置. Defaults to `.`.
+   :type cwd: str, optional
+
+

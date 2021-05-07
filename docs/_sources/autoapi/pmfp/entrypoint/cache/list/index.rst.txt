@@ -1,0 +1,52 @@
+:mod:`pmfp.entrypoint.cache.list`
+=================================
+
+.. py:module:: pmfp.entrypoint.cache.list
+
+.. autoapi-nested-parse::
+
+   ppm cache list命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.list.List
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.list.cache_list
+
+
+.. class:: List
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   获取当前基本环境信息.
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. data:: cache_list
+   
+
+   
+

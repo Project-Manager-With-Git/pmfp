@@ -1,0 +1,89 @@
+:mod:`pmfp.entrypoint.pack`
+===========================
+
+.. py:module:: pmfp.entrypoint.pack
+
+.. autoapi-nested-parse::
+
+   打包指定项目.
+
+   打包操作只对动态语言有效
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   pack_py/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.pack.get_abs_path
+   pmfp.entrypoint.pack.py_pack
+   pmfp.entrypoint.pack.pack
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.pack.pack_cmd
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: py_pack(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, pypi_mirror: Optional[str] = None, pack_as: str = 'exec') -> None
+
+
+.. data:: pack_cmd
+   
+
+   
+
+.. function:: pack(language: str, code: str, project_name: str, *, output_dir: str = '.', pypi_mirror: Optional[str] = None, pack_as: str = 'exec', cwd: str = '.') -> None
+
+   编译指定代码.
+
+   只支持对linux的交叉编译.
+
+   :param language: 打包的代码语言,支持py
+   :type language: str
+   :param code: 语言源码位置或者入口文件位置
+   :type code: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param output_dir: 打包结果放置的目录
+   :type output_dir: str
+   :param pypi_mirror: 安装python依赖时使用的pypi的镜像
+   :type pypi_mirror: str, optional
+   :param build_as: 编译为的目标,可选有exec(可执行文件),lib(库). Defaults to "exec".
+   :type build_as: str, optional
+   :param cwd: 执行编译操作时的执行位置. Defaults to ".".
+   :type cwd: str, optional
+
+

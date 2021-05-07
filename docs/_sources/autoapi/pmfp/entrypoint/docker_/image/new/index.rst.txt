@@ -1,0 +1,203 @@
+:mod:`pmfp.entrypoint.docker_.image.new`
+========================================
+
+.. py:module:: pmfp.entrypoint.docker_.image.new
+
+.. autoapi-nested-parse::
+
+   ppm docker image new命令的处理.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   source_temp/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.new.get_abs_path
+   pmfp.entrypoint.docker_.image.new.get_golang_version
+   pmfp.entrypoint.docker_.image.new.template_2_content
+   pmfp.entrypoint.docker_.image.new.new_dockerfile
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.new.GOLBAL_PYTHON_VERSION
+   pmfp.entrypoint.docker_.image.new.dockerfile_new
+   pmfp.entrypoint.docker_.image.new.PythonPureSource
+   pmfp.entrypoint.docker_.image.new.PythonExtendSource
+   pmfp.entrypoint.docker_.image.new.PipConfSource
+   pmfp.entrypoint.docker_.image.new.GoPureSource
+   pmfp.entrypoint.docker_.image.new.GoExtendSource
+   pmfp.entrypoint.docker_.image.new.CXXExtendSource
+   pmfp.entrypoint.docker_.image.new.source_io
+   pmfp.entrypoint.docker_.image.new.PythonPureSource
+   pmfp.entrypoint.docker_.image.new.source_io
+   pmfp.entrypoint.docker_.image.new.PythonExtendSource
+   pmfp.entrypoint.docker_.image.new.source_io
+   pmfp.entrypoint.docker_.image.new.PipConfSource
+   pmfp.entrypoint.docker_.image.new.source_io
+   pmfp.entrypoint.docker_.image.new.GoPureSource
+   pmfp.entrypoint.docker_.image.new.source_io
+   pmfp.entrypoint.docker_.image.new.GoExtendSource
+   pmfp.entrypoint.docker_.image.new.source_io
+   pmfp.entrypoint.docker_.image.new.CXXExtendSource
+
+
+.. data:: GOLBAL_PYTHON_VERSION
+   
+
+   
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: get_golang_version() -> Optional[str]
+
+   获取本地golang的版本.
+
+
+.. function:: template_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. data:: dockerfile_new
+   
+
+   
+
+.. data:: PythonPureSource
+   :annotation: = 
+
+   
+
+.. data:: PythonExtendSource
+   :annotation: = 
+
+   
+
+.. data:: PipConfSource
+   :annotation: = 
+
+   
+
+.. data:: GoPureSource
+   :annotation: = 
+
+   
+
+.. data:: GoExtendSource
+   :annotation: = 
+
+   
+
+.. data:: CXXExtendSource
+   :annotation: = 
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: PythonPureSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: PythonExtendSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: PipConfSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: GoPureSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: GoExtendSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: CXXExtendSource
+   
+
+   
+
+.. function:: new_dockerfile(language: str, dockerfile_name: str = 'Dockerfile', cross_compiling: bool = False, extend: bool = False, app_name: Optional[str] = None, project_name: Optional[str] = None, cwd: str = '.') -> None
+
+

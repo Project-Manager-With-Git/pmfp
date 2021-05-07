@@ -1,0 +1,191 @@
+:mod:`pmfp.entrypoint.schema.move`
+==================================
+
+.. py:module:: pmfp.entrypoint.schema.move
+
+.. autoapi-nested-parse::
+
+   迁移旧的json schema模式文件.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.move.jsontemplate_2_content
+   pmfp.entrypoint.schema.move.is_file_url
+   pmfp.entrypoint.schema.move.is_http_url
+   pmfp.entrypoint.schema.move.iter_dir_to_end
+   pmfp.entrypoint.schema.move.get_abs_path
+   pmfp.entrypoint.schema.move.copy_schema
+   pmfp.entrypoint.schema.move.make_url_id
+   pmfp.entrypoint.schema.move.parse_id_from_relative_path
+   pmfp.entrypoint.schema.move.parse_id
+   pmfp.entrypoint.schema.move._move_schema
+   pmfp.entrypoint.schema.move.move_schema
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.move.schema_move
+
+
+.. function:: jsontemplate_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. function:: is_file_url(url: str) -> bool
+
+   判断url是否是文件协议相关的url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: is_http_url(url: str) -> bool
+
+   判断url是否是http请求的url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: iter_dir_to_end(path: pathlib.Path, match: Callable[[pathlib.Path], bool], *, skip_dir: Optional[Callable[[pathlib.Path], bool]] = None, succ_cb: Optional[Callable[[pathlib.Path], None]] = None, fail_cb: Optional[Callable[[pathlib.Path], None]] = None, skip_dir_handdler: Optional[Callable[[pathlib.Path], None]] = None) -> None
+
+   遍历文件夹到底,并按指定的函数来做区分.
+
+   :param path: 文件夹路径
+   :type path: Path
+   :param match: 筛选条件
+   :type match: Callable[[Path],bool]
+   :param succ_cb: 路径满足筛选条件后执行的回调函数. Defaults to None.
+   :type succ_cb: Optional[Callable[[Path],None]], optional
+   :param fail_cb: 路径不满足筛选条件执行的回调函数. Defaults to None.
+   :type fail_cb: Optional[Callable[[Path],None]], optional
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
+
+   以一个json schema 为模板copy一个json schema文件.
+
+   :param name: 模式名
+   :type name: str
+   :param path: 从根目录起的路径
+   :type path: str
+   :param version_name: 模式版本,形式为`v0_0_0`
+   :type version_name: str
+   :param cwd: 根目录.
+   :type cwd: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+
+.. function:: make_url_id(name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> str
+
+   构造json schema 的id.
+
+   :param name: 模式名
+   :type name: str
+   :param path: 相对根路径的位置
+   :type path: str
+   :param version_name: 模式版本
+   :type version_name: str
+   :param cwd: 根路径
+   :type cwd: str
+   :param addr: 有addr则表明url为http的url,否则使用file url来定义id. Defaults to None.
+   :type addr: Optional[str], optional
+
+   :returns: [description]
+   :rtype: str
+
+
+.. data:: schema_move
+   
+
+   
+
+.. function:: parse_id_from_relative_path(relative_path: pathlib.Path) -> Dict[str, str]
+
+   从相对路劲来解析id中的构造参数.
+
+   :param relative_path: 相对路径
+   :type relative_path: Path
+
+   :returns: 构造id时的参数字段
+   :rtype: Dict[str,str]
+
+
+.. function:: parse_id(url: str, cwd: str) -> Dict[str, str]
+
+   从url中提取文件系统中的路径.
+
+   :param url: file url
+   :type url: str
+
+   :returns: file url中提取出的路径
+   :rtype: str
+
+
+.. function:: _move_schema(schema_file: str, old_cwd: str, *, new_name: Optional[str] = None, new_path: Optional[str] = None, new_version: Optional[str] = None, new_cwd: Optional[str] = None, new_addr: Optional[str] = None, remove_old: bool = False) -> None
+
+
+.. function:: move_schema(file: str, old_cwd: str, *, name: Optional[str] = None, to: Optional[str] = None, version: Optional[str] = None, cwd: Optional[str] = None, addr: Optional[str] = None, remove_old: bool = False) -> None
+
+   新建一个json schema文件.
+
+   :param name: 模式名
+   :type name: str
+   :param to: 从根目录起的路径
+   :type to: str
+   :param version: 模式版本
+   :type version: str
+   :param cwd: 根目录.
+   :type cwd: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+

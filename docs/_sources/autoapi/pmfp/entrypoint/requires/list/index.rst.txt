@@ -1,0 +1,52 @@
+:mod:`pmfp.entrypoint.requires.list`
+====================================
+
+.. py:module:: pmfp.entrypoint.requires.list
+
+.. autoapi-nested-parse::
+
+   ppm requires list命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.list.List
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.list.requires_list
+
+
+.. class:: List
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   列出已有依赖.
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. data:: requires_list
+   
+
+   
+

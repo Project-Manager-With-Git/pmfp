@@ -1,0 +1,86 @@
+:mod:`pmfp.entrypoint.project.as_template`
+==========================================
+
+.. py:module:: pmfp.entrypoint.project.as_template
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.as_template.AsTemp
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.as_template.acccept_suffix
+   pmfp.entrypoint.project.as_template.except_dir
+   pmfp.entrypoint.project.as_template.project_as_temp
+
+
+.. data:: acccept_suffix
+   :annotation: = ['.py', '.js', '.ts', '.go', '.c', '.cpp', '.h', '.hpp', '.pyd', '.pyx', '.scala', '.cmake',...
+
+   
+
+.. data:: except_dir
+   :annotation: = ['vendor', 'node_modules', 'dist', 'build', 'doc', 'docs', 'document', 'documents', 'coverage',...
+
+   
+
+.. class:: AsTemp
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   基于项目构造一个模板项目.
+
+   注意只是粗略构造,需要进一步加工.
+
+   .. attribute:: _name
+      :annotation: = as_temp
+
+      
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. attribute:: load_all_config_file
+      :annotation: = True
+
+      
+
+   .. attribute:: config_file_only_get_need
+      :annotation: = False
+
+      
+
+   .. attribute:: argparse_noflag
+      :annotation: = template_type
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. data:: project_as_temp
+   
+
+   
+

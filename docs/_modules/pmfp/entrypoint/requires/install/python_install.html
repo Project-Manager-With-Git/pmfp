@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.requires.install.python_install &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">模块代码</a> &raquo;</li>
+        
+          <li><a href="../install.html">pmfp.entrypoint.requires.install</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.requires.install.python_install</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.requires.install.python_install 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.tools_info_utils</span> <span class="kn">import</span> <span class="n">get_local_python</span><span class="p">,</span> <span class="n">get_config_info</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.run_command_utils</span> <span class="kn">import</span> <span class="n">run</span><span class="p">,</span> <span class="n">make_env_args</span>
+
+
+<div class="viewcode-block" id="get_req_package_name"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/requires/install/python_install/index.html#pmfp.entrypoint.requires.install.get_req_package_name">[文档]</a><span class="k">def</span> <span class="nf">get_req_package_name</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;==&quot;</span> <span class="ow">in</span> <span class="n">req</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;==&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="s2">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">req</span><span class="p">:</span>
+        <span class="n">p1</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;&gt;&quot;</span> <span class="ow">in</span> <span class="n">p1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s2">&quot;&lt;&quot;</span> <span class="ow">in</span> <span class="n">p1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can not parse </span><span class="si">{</span><span class="n">req</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s2">&quot;&gt;&quot;</span> <span class="ow">in</span> <span class="n">req</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="s2">&quot;&lt;&quot;</span> <span class="ow">in</span> <span class="n">req</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">req</span></div>
+
+
+<div class="viewcode-block" id="get_package_with_version"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/requires/install/python_install/index.html#pmfp.entrypoint.requires.install.get_package_with_version">[文档]</a><span class="k">def</span> <span class="nf">get_package_with_version</span><span class="p">(</span><span class="n">pakcage_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">local_package</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;=&quot;</span> <span class="ow">in</span> <span class="n">pakcage_name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pakcage_name</span>
+    <span class="k">if</span> <span class="n">local_package</span><span class="p">:</span>
+        <span class="n">python_cmd</span> <span class="o">=</span> <span class="n">get_local_python</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">python_cmd</span><span class="si">}</span><span class="s2"> -m pip show </span><span class="si">{</span><span class="n">pakcage_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;pip show </span><span class="si">{</span><span class="n">pakcage_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fail_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;Version: &quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Version: &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pakcage_name</span><span class="si">}</span><span class="s2"> &gt;= </span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pakcage_name</span></div>
+
+
+<div class="viewcode-block" id="_install"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/requires/install/python_install/index.html#pmfp.entrypoint.requires.install._install">[文档]</a><span class="k">def</span> <span class="nf">_install</span><span class="p">(</span><span class="n">package_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+             <span class="n">command_temp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+             <span class="n">env_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+             <span class="n">local_package</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+             <span class="n">config</span><span class="p">:</span> <span class="n">ConfigParser</span><span class="p">,</span>
+             <span class="n">target_section</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">target_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">installed</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">target_section</span><span class="p">,</span> <span class="n">target_key</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">installed</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">empty</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">empty</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">installed_lines</span> <span class="o">=</span> <span class="n">installed</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">req</span> <span class="ow">in</span> <span class="n">package_names</span><span class="p">:</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">package_name</span> <span class="o">=</span> <span class="n">get_req_package_name</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;==&quot;</span> <span class="ow">in</span> <span class="n">req</span><span class="p">:</span>
+            <span class="n">run</span><span class="p">(</span><span class="n">command_temp</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">req</span><span class="o">=</span><span class="n">req</span><span class="p">),</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env_dict</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fail_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">run</span><span class="p">(</span><span class="n">command_temp</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">req</span><span class="o">=</span><span class="n">package_name</span><span class="p">),</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env_dict</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fail_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">pkgname</span> <span class="o">=</span> <span class="n">get_package_with_version</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">local_package</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
+        <span class="n">add</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">installed_lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">package_name</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">add</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="n">package_name</span><span class="p">:</span>
+                    <span class="n">installed_lines</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">pkgname</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">installed_lines</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">installed_lines</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span>
+        <span class="k">if</span> <span class="n">add</span><span class="p">:</span>
+            <span class="n">installed_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pkgname</span><span class="p">)</span>
+    <span class="n">new_installed</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">installed_lines</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">empty</span><span class="p">:</span>
+        <span class="n">new_installed</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">new_installed</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">target_section</span><span class="p">,</span> <span class="n">target_key</span><span class="p">,</span> <span class="n">new_installed</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="python_install"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/requires/install/python_install/index.html#pmfp.entrypoint.requires.install.python_install">[文档]</a><span class="k">def</span> <span class="nf">python_install</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+                   <span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                   <span class="n">package_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                   <span class="n">test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="n">setup</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="n">extras</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">test_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">setup_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">extras_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">env_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">setupcfg_path</span> <span class="o">=</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;setup.cfg&quot;</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">setupcfg_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">setupcfg_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">pmfp_conf</span> <span class="o">=</span> <span class="n">get_config_info</span><span class="p">()</span>
+    <span class="n">env_dir</span> <span class="o">=</span> <span class="n">pmfp_conf</span><span class="p">[</span><span class="s2">&quot;python_local_env_dir&quot;</span><span class="p">]</span>
+    <span class="n">local_package</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">env</span> <span class="o">==</span> <span class="s2">&quot;conda&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">env_dir</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;即将安装到本地环境&quot;</span><span class="p">)</span>
+            <span class="n">local_package</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">command_temp</span> <span class="o">=</span> <span class="s2">&quot;conda install -y </span><span class="si">{req}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;-p </span><span class="si">{</span><span class="n">env_dir</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;安装到全局环境&quot;</span><span class="p">)</span>
+            <span class="n">command_temp</span> <span class="o">=</span> <span class="s2">&quot;conda install -y </span><span class="si">{req}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">env_dir</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;安装到本地环境&quot;</span><span class="p">)</span>
+            <span class="n">local_package</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">python_cmd</span> <span class="o">=</span> <span class="n">get_local_python</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+            <span class="n">command_temp</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">python_cmd</span><span class="si">}</span><span class="s2"> -m &quot;</span> <span class="o">+</span> <span class="s2">&quot;pip install </span><span class="si">{req}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;安装到全局环境&quot;</span><span class="p">)</span>
+            <span class="n">command_temp</span> <span class="o">=</span> <span class="s2">&quot;pip install </span><span class="si">{req}</span><span class="s2">&quot;</span>
+    <span class="n">env_dict</span> <span class="o">=</span> <span class="n">make_env_args</span><span class="p">(</span><span class="n">env_args</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;options&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s2">&quot;options&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">package_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+            <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options&quot;</span>
+            <span class="n">target_key</span> <span class="o">=</span> <span class="s2">&quot;tests_require&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">setup</span><span class="p">:</span>
+                <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options&quot;</span>
+                <span class="n">target_key</span> <span class="o">=</span> <span class="s2">&quot;setup_requires&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">extras</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s2">&quot;options.extras_require&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+                        <span class="n">config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s2">&quot;options.extras_require&quot;</span><span class="p">)</span>
+                    <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options.extras_require&quot;</span>
+                    <span class="n">target_key</span> <span class="o">=</span> <span class="n">extras</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options&quot;</span>
+                    <span class="n">target_key</span> <span class="o">=</span> <span class="s2">&quot;install_requires&quot;</span>
+        <span class="n">_install</span><span class="p">(</span><span class="n">package_names</span><span class="o">=</span><span class="n">package_names</span><span class="p">,</span>
+                 <span class="n">command_temp</span><span class="o">=</span><span class="n">command_temp</span><span class="p">,</span>
+                 <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                 <span class="n">env_dict</span><span class="o">=</span><span class="n">env_dict</span><span class="p">,</span>
+                 <span class="n">local_package</span><span class="o">=</span><span class="n">local_package</span><span class="p">,</span>
+                 <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                 <span class="n">target_section</span><span class="o">=</span><span class="n">target_section</span><span class="p">,</span>
+                 <span class="n">target_key</span><span class="o">=</span><span class="n">target_key</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">requires</span><span class="p">:</span>
+            <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options&quot;</span>
+            <span class="n">target_key</span> <span class="o">=</span> <span class="s2">&quot;install_requires&quot;</span>
+
+            <span class="n">_install</span><span class="p">(</span><span class="n">package_names</span><span class="o">=</span><span class="n">requires</span><span class="p">,</span>
+                     <span class="n">command_temp</span><span class="o">=</span><span class="n">command_temp</span><span class="p">,</span>
+                     <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                     <span class="n">env_dict</span><span class="o">=</span><span class="n">env_dict</span><span class="p">,</span>
+                     <span class="n">local_package</span><span class="o">=</span><span class="n">local_package</span><span class="p">,</span>
+                     <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                     <span class="n">target_section</span><span class="o">=</span><span class="n">target_section</span><span class="p">,</span>
+                     <span class="n">target_key</span><span class="o">=</span><span class="n">target_key</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">test_requires</span> <span class="ow">and</span> <span class="n">test</span><span class="p">:</span>
+            <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options&quot;</span>
+            <span class="n">target_key</span> <span class="o">=</span> <span class="s2">&quot;tests_require&quot;</span>
+            <span class="n">_install</span><span class="p">(</span><span class="n">package_names</span><span class="o">=</span><span class="n">test_requires</span><span class="p">,</span>
+                     <span class="n">command_temp</span><span class="o">=</span><span class="n">command_temp</span><span class="p">,</span>
+                     <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                     <span class="n">env_dict</span><span class="o">=</span><span class="n">env_dict</span><span class="p">,</span>
+                     <span class="n">local_package</span><span class="o">=</span><span class="n">local_package</span><span class="p">,</span>
+                     <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                     <span class="n">target_section</span><span class="o">=</span><span class="n">target_section</span><span class="p">,</span>
+                     <span class="n">target_key</span><span class="o">=</span><span class="n">target_key</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">setup_requires</span> <span class="ow">and</span> <span class="n">setup</span><span class="p">:</span>
+            <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options&quot;</span>
+            <span class="n">target_key</span> <span class="o">=</span> <span class="s2">&quot;setup_requires&quot;</span>
+            <span class="n">_install</span><span class="p">(</span><span class="n">package_names</span><span class="o">=</span><span class="n">setup_requires</span><span class="p">,</span>
+                     <span class="n">command_temp</span><span class="o">=</span><span class="n">command_temp</span><span class="p">,</span>
+                     <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                     <span class="n">env_dict</span><span class="o">=</span><span class="n">env_dict</span><span class="p">,</span>
+                     <span class="n">local_package</span><span class="o">=</span><span class="n">local_package</span><span class="p">,</span>
+                     <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                     <span class="n">target_section</span><span class="o">=</span><span class="n">target_section</span><span class="p">,</span>
+                     <span class="n">target_key</span><span class="o">=</span><span class="n">target_key</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">extras_requires</span> <span class="ow">and</span> <span class="n">extras</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;options.extras_require&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s2">&quot;options.extras_require&quot;</span><span class="p">)</span>
+            <span class="n">qurs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key_req</span> <span class="ow">in</span> <span class="n">extras_requires</span><span class="p">:</span>
+                <span class="n">key</span><span class="p">,</span> <span class="n">req</span> <span class="o">=</span> <span class="n">key_req</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">qurs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">qurs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">qurs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">req</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">reqs</span> <span class="ow">in</span> <span class="n">qurs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">target_section</span> <span class="o">=</span> <span class="s2">&quot;options.extras_require&quot;</span>
+                <span class="n">target_key</span> <span class="o">=</span> <span class="n">key</span>
+                <span class="n">_install</span><span class="p">(</span><span class="n">package_names</span><span class="o">=</span><span class="n">reqs</span><span class="p">,</span>
+                         <span class="n">command_temp</span><span class="o">=</span><span class="n">command_temp</span><span class="p">,</span>
+                         <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                         <span class="n">env_dict</span><span class="o">=</span><span class="n">env_dict</span><span class="p">,</span>
+                         <span class="n">local_package</span><span class="o">=</span><span class="n">local_package</span><span class="p">,</span>
+                         <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                         <span class="n">target_section</span><span class="o">=</span><span class="n">target_section</span><span class="p">,</span>
+                         <span class="n">target_key</span><span class="o">=</span><span class="n">target_key</span><span class="p">)</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">setupcfg_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

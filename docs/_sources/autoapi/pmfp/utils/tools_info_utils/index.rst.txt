@@ -1,0 +1,97 @@
+:mod:`pmfp.utils.tools_info_utils`
+==================================
+
+.. py:module:: pmfp.utils.tools_info_utils
+
+.. autoapi-nested-parse::
+
+   tools_info_utils
+
+   获取功能依赖工具信息的工具组
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.tools_info_utils.get_global_python
+   pmfp.utils.tools_info_utils.get_global_cc
+   pmfp.utils.tools_info_utils.get_global_cxx
+   pmfp.utils.tools_info_utils.get_node_version
+   pmfp.utils.tools_info_utils.get_golang_version
+   pmfp.utils.tools_info_utils.get_protoc_version
+   pmfp.utils.tools_info_utils.init_pmfprc
+   pmfp.utils.tools_info_utils.init_global_config
+   pmfp.utils.tools_info_utils.get_config_info
+   pmfp.utils.tools_info_utils.get_cache_dir
+   pmfp.utils.tools_info_utils.get_local_python
+
+
+
+.. function:: get_global_python() -> str
+
+   获取全局python.
+
+
+.. function:: get_global_cc() -> str
+
+   获取全局c编译器.
+
+
+.. function:: get_global_cxx() -> str
+
+   获取全局c++编译器.
+
+
+.. function:: get_node_version() -> Optional[str]
+
+   获取系统中node的版本.
+
+
+.. function:: get_golang_version() -> Optional[str]
+
+   获取本地golang的版本.
+
+
+.. function:: get_protoc_version() -> Optional[str]
+
+   获取本地protoc的版本.
+
+
+.. function:: init_pmfprc() -> None
+
+   初始化pmfp的配置.
+
+
+.. function:: init_global_config() -> None
+
+   初始化pmfp项目的全局配置.
+
+
+.. function:: get_config_info() -> Dict[str, Any]
+
+   获取配置信息.
+
+
+.. function:: get_cache_dir() -> pathlib.Path
+
+   获取缓存根目录.
+
+
+.. function:: get_local_python(cwdp: pathlib.Path) -> str
+
+   获取本地环境python解释器的地址.
+
+   :param cwdp: python本地环境目录.
+   :type cwdp: Path
+
+   :returns: python位置字符串
+   :rtype: str
+
+

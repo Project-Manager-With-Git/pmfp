@@ -1,0 +1,142 @@
+:mod:`pmfp.utils.endpoint`
+==========================
+
+.. py:module:: pmfp.utils.endpoint
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.endpoint.EndPoint
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.endpoint.setup_cfg_handdler
+   pmfp.utils.endpoint.go_mod_handdler
+   pmfp.utils.endpoint.cmake_handdler
+   pmfp.utils.endpoint.package_json_handdler
+
+
+
+.. function:: setup_cfg_handdler(p: pathlib.Path) -> Dict[str, Any]
+
+
+.. function:: go_mod_handdler(p: pathlib.Path) -> Dict[str, Any]
+
+
+.. function:: cmake_handdler(p: pathlib.Path) -> Dict[str, Any]
+
+
+.. function:: package_json_handdler(p: pathlib.Path) -> Dict[str, Any]
+
+
+.. class:: EndPoint(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
+
+   Bases: :py:obj:`schema_entry.EntryPoint`
+
+   程序入口类.
+
+   .. attribute:: epilog
+
+      命令行展示介绍时的epilog部分
+
+      :type: str
+
+   .. attribute:: usage
+
+      命令行展示介绍时的使用方法介绍
+
+      :type: str
+
+   .. attribute:: parent
+
+      入口节点的父节点.Default None
+
+      :type: Optional["EntryPointABC"]
+
+   .. attribute:: schema
+
+      入口节点的设置需要满足的json schema对应字典.Default None
+
+      :type: Optional[Dict[str, Any]]
+
+   .. attribute:: verify_schema
+
+      获得设置后节点是否校验设置是否满足定义的json schema模式
+
+      :type: bool
+
+   .. attribute:: default_config_file_paths
+
+      设置默认的配置文件位置.
+
+      :type: Sequence[str]
+
+   .. attribute:: config_file_only_get_need
+
+      设置是否只从配置文件中获取schema中定义的配置项
+
+      :type: bool
+
+   .. attribute:: load_all_config_file
+
+      设置的默认配置文件全部加载.
+
+      :type: bool
+
+   .. attribute:: env_prefix
+
+      设置环境变量的前缀
+
+      :type: str
+
+   .. attribute:: parse_env
+
+      展示是否解析环境变量
+
+      :type: bool
+
+   .. attribute:: argparse_check_required
+
+      命令行参数是否解析必填项为必填项
+
+      :type: bool
+
+   .. attribute:: argparse_noflag
+
+      命令行参数解析哪个字段为无`--`的参数
+
+      :type: Optional[str]
+
+   .. attribute:: load_all_config_file
+      :annotation: = True
+
+      
+
+   .. attribute:: config_file_only_get_need
+      :annotation: = True
+
+      
+
+   .. attribute:: default_config_file_paths
+      
+
+      
+
+   .. attribute:: _config_file_parser_map
+      
+
+      
+
+

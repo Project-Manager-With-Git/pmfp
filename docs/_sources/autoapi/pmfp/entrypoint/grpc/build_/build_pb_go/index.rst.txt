@@ -1,0 +1,127 @@
+:mod:`pmfp.entrypoint.grpc.build_.build_pb_go`
+==============================================
+
+.. py:module:: pmfp.entrypoint.grpc.build_.build_pb_go
+
+.. autoapi-nested-parse::
+
+   编译go语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_.build_pb_go.find_grpc_package
+   pmfp.entrypoint.grpc.build_.build_pb_go._build_grpc
+   pmfp.entrypoint.grpc.build_.build_pb_go.build_pb_go
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_.build_pb_go.ServiceSource
+   pmfp.entrypoint.grpc.build_.build_pb_go.HanddlerSource
+   pmfp.entrypoint.grpc.build_.build_pb_go.ExampleSource
+   pmfp.entrypoint.grpc.build_.build_pb_go.SDKSource
+   pmfp.entrypoint.grpc.build_.build_pb_go.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_go.ServiceSource
+   pmfp.entrypoint.grpc.build_.build_pb_go.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_go.HanddlerSource
+   pmfp.entrypoint.grpc.build_.build_pb_go.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_go.ExampleSource
+   pmfp.entrypoint.grpc.build_.build_pb_go.source_io
+   pmfp.entrypoint.grpc.build_.build_pb_go.SDKSource
+
+
+.. data:: ServiceSource
+   :annotation: = 
+
+   
+
+.. data:: HanddlerSource
+   :annotation: = 
+
+   
+
+.. data:: ExampleSource
+   :annotation: = 
+
+   
+
+.. data:: SDKSource
+   :annotation: = 
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: ServiceSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: HanddlerSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: ExampleSource
+   
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: SDKSource
+   
+
+   
+
+.. function:: find_grpc_package(to: str) -> Tuple[str, str, str, str]
+
+
+.. function:: _build_grpc(includes: str, flag: str, to: str, as_type: Optional[List[str]], target: str, cwd: pathlib.Path) -> None
+
+
+.. function:: build_pb_go(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], source_relative: bool, cwd: pathlib.Path, **kwargs: str) -> None
+
+   编译grpc的protobuffer定义文件为go语言模块.
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+   :param as_type: 执行的目的.
+   :type as_type: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+
+

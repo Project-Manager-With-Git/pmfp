@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.docker_.image.new &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">模块代码</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.docker_.image.new</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.docker_.image.new 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;ppm docker image new命令的处理.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">pmfp.const</span> <span class="kn">import</span> <span class="n">GOLBAL_PYTHON_VERSION</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">get_abs_path</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.tools_info_utils</span> <span class="kn">import</span> <span class="n">get_golang_version</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.template_utils</span> <span class="kn">import</span> <span class="n">template_2_content</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">dockerfile_new</span>
+
+<span class="n">PythonPureSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">PythonExtendSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">PipConfSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">GoPureSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">GoExtendSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">CXXExtendSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.docker_.image.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;python_pure.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="PythonPureSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.PythonPureSource">[文档]</a>    <span class="n">PythonPureSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载python_pure.jinja模板失败&quot;</span><span class="p">)</span>
+
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.docker_.image.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;python_extend.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="PythonExtendSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.PythonExtendSource">[文档]</a>    <span class="n">PythonExtendSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载python_extend.jinja模板失败&quot;</span><span class="p">)</span>
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.docker_.image.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;pip.conf.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="PipConfSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.PipConfSource">[文档]</a>    <span class="n">PipConfSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载pip.conf.jinja模板失败&quot;</span><span class="p">)</span>
+
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.docker_.image.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;go_pure.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="GoPureSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.GoPureSource">[文档]</a>    <span class="n">GoPureSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载go_pure.jinja模板失败&quot;</span><span class="p">)</span>
+
+<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.docker_.image.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;go_extend.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="GoExtendSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.GoExtendSource">[文档]</a>    <span class="n">GoExtendSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载go_extend.jinja模板失败&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="source_io"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.source_io">[文档]</a><span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.docker_.image.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;cxx_extend.jinja&#39;</span><span class="p">)</span></div>
+<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
+<div class="viewcode-block" id="CXXExtendSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.CXXExtendSource">[文档]</a>    <span class="n">CXXExtendSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载cxx_extend.jinja模板失败&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@dockerfile_new</span><span class="o">.</span><span class="n">as_main</span>
+<div class="viewcode-block" id="new_dockerfile"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/docker_/image/new/index.html#pmfp.entrypoint.docker_.image.new_dockerfile">[文档]</a><span class="k">def</span> <span class="nf">new_dockerfile</span><span class="p">(</span><span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dockerfile_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Dockerfile&quot;</span><span class="p">,</span>
+                   <span class="n">cross_compiling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">extend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                   <span class="n">app_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">cwdp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">app_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">project_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">app_name</span> <span class="o">=</span> <span class="s2">&quot;app&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">app_name</span> <span class="o">=</span> <span class="n">project_name</span>
+
+    <span class="k">if</span> <span class="n">language</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">,</span> <span class="s2">&quot;cython&quot;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cwdp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;pip.conf&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">PipConfSource</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extend</span> <span class="ow">or</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;cython&quot;</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+                <span class="n">PythonExtendSource</span><span class="p">,</span>
+                <span class="n">python_version</span><span class="o">=</span><span class="n">GOLBAL_PYTHON_VERSION</span><span class="p">,</span>
+                <span class="n">cross_compiling</span><span class="o">=</span><span class="s2">&quot;--platform=$TARGETPLATFORM &quot;</span> <span class="k">if</span> <span class="n">cross_compiling</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">app_name</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+                <span class="n">PythonPureSource</span><span class="p">,</span>
+                <span class="n">python_version</span><span class="o">=</span><span class="n">GOLBAL_PYTHON_VERSION</span><span class="p">,</span>
+                <span class="n">cross_compiling</span><span class="o">=</span><span class="s2">&quot;--platform=$TARGETPLATFORM &quot;</span> <span class="k">if</span> <span class="n">cross_compiling</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">app_name</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;go&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">extend</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+                <span class="n">GoExtendSource</span><span class="p">,</span>
+                <span class="n">golang_version</span><span class="o">=</span><span class="n">get_golang_version</span><span class="p">(),</span>
+                <span class="n">cross_compiling</span><span class="o">=</span><span class="s2">&quot;--platform=$TARGETPLATFORM &quot;</span> <span class="k">if</span> <span class="n">cross_compiling</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">app_name</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+                <span class="n">GoPureSource</span><span class="p">,</span>
+                <span class="n">golang_version</span><span class="o">=</span><span class="n">get_golang_version</span><span class="p">(),</span>
+                <span class="n">cross_compiling</span><span class="o">=</span><span class="s2">&quot;--platform=$TARGETPLATFORM &quot;</span> <span class="k">if</span> <span class="n">cross_compiling</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">app_name</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;CXX&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">extend</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+                <span class="n">CXXExtendSource</span><span class="p">,</span>
+                <span class="n">cross_compiling</span><span class="o">=</span><span class="s2">&quot;--platform=$TARGETPLATFORM &quot;</span> <span class="k">if</span> <span class="n">cross_compiling</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">app_name</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     content = template_2_content(</span>
+        <span class="c1">#         GoPureSource,</span>
+        <span class="c1">#         golang_version=get_golang_version(),</span>
+        <span class="c1">#         cross_compiling=&quot;--platform=$TARGETPLATFORM &quot; if cross_compiling else &quot;&quot;,</span>
+        <span class="c1">#         app_name=app_name)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未知的环境类型</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cwdp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">dockerfile_name</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+:mod:`pmfp.entrypoint.doc_.build_.core`
+=======================================
+
+.. py:module:: pmfp.entrypoint.doc_.build_.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.build_.core.Build
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.build_.core.doc_build
+
+
+.. class:: Build
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   为指定编程语言编译api文档.
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: doc_build
+   
+
+   
+

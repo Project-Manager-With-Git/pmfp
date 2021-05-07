@@ -1,0 +1,173 @@
+:mod:`pmfp.utils.git_utils`
+===========================
+
+.. py:module:: pmfp.utils.git_utils
+
+.. autoapi-nested-parse::
+
+   git相关的动作.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.git_utils.make_repod
+   pmfp.utils.git_utils.git_find_remotes
+   pmfp.utils.git_utils.git_find_origin
+   pmfp.utils.git_utils.git_add_remote
+   pmfp.utils.git_utils.git_add_origin
+   pmfp.utils.git_utils.git_init
+   pmfp.utils.git_utils.git_clone
+   pmfp.utils.git_utils.get_latest_commits
+   pmfp.utils.git_utils.get_master_latest_commit
+   pmfp.utils.git_utils.git_push
+   pmfp.utils.git_utils.git_pull_master
+   pmfp.utils.git_utils.git_new_tag
+
+
+
+.. function:: make_repod(p: pathlib.Path) -> pathlib.Path
+
+
+.. function:: git_find_remotes(p: pathlib.Path) -> Dict[str, str]
+
+   从git项目中找到远端仓库url.
+
+   :param p: 目标地址
+   :type p: Path
+
+   :raises AttributeError: 如果路径不是git项目则会抛出
+
+   :returns: 远程仓库的本地命名和对应地址
+   :rtype: Dict[str, str]
+
+
+.. function:: git_find_origin(p: pathlib.Path) -> Optional[str]
+
+   从git项目中找到远端origin仓库url.
+
+   :param p: 目标地址
+   :type p: Path
+
+   :raises AttributeError: 如果路径不是git项目则会抛出
+
+   :returns: 远程origin仓库的对应地址
+   :rtype: Optional[str]
+
+
+.. function:: git_add_remote(p: pathlib.Path, remote_name: str, remote_url: str) -> None
+
+   为本地git仓库关联远程仓库.
+
+   :param p: 本地仓库路径
+   :type p: Path
+   :param remote_name: 远程仓库名
+   :type remote_name: str
+   :param remote_url: 远程仓库url
+   :type remote_url: str
+
+   :raises AttributeError: 如果路径不是git项目则会抛出
+
+
+.. function:: git_add_origin(p: pathlib.Path, remote_url: str) -> None
+
+   为本地git仓库关联origin远程仓库
+
+   :param p: 本地仓库路径
+   :type p: Path
+   :param remote_url: 远程仓库url
+   :type remote_url: str
+
+   :raises AttributeError: 如果路径不是git项目则会抛出
+
+
+.. function:: git_init(p: pathlib.Path, *, remote_url: Optional[str] = None) -> None
+
+   初始化本地git仓库.
+
+   :param p: 本地git仓库位置
+   :type p: Path
+   :param remote_url: 远程关联仓库url. Defaults to None.
+   :type remote_url: Optional[str], optional
+
+
+.. function:: git_clone(url: str, to: pathlib.Path, *, branch: str = 'master') -> None
+
+   从远程克隆项目到本地.
+
+   :param url: 远程url
+   :type url: str
+   :param to: 本地项目路径
+   :type to: Path
+   :param branch: 拉取的分支. Defaults to "master".
+   :type branch: str, optional
+
+
+.. function:: get_latest_commits(p: pathlib.Path) -> Dict[str, str]
+
+   获取git项目的各个分支最近一次commit的hash值.
+
+   :param p: [description]
+   :type p: Path
+
+   :raises AttributeError: 如果路径不是git项目则会抛出
+
+   :returns: [description]
+   :rtype: Dict[str, str]
+
+
+.. function:: get_master_latest_commit(p: pathlib.Path) -> str
+
+   获取git项目的最近一个master分支的commit号.
+
+   :param p: git项目位置
+   :type p: Path
+
+   :raises AttributeError: 如果路径不是git项目则会抛出
+   :raises AttributeError: git仓库没有master或者main分支
+
+   :returns: commit号
+   :rtype: str
+
+
+.. function:: git_push(p: pathlib.Path, *, msg: str = 'update') -> None
+
+   git项目推代码到远端仓库.
+
+   :param p: 本地仓库位置
+   :type p: Path
+   :param msg: 注释消息
+   :type msg: str
+
+
+.. function:: git_pull_master(p: pathlib.Path) -> None
+
+   git项目推代码到远端仓库.
+
+   :param p: 本地仓库位置
+   :type p: Path
+   :param msg: 注释消息
+   :type msg: str
+
+
+.. function:: git_new_tag(p: pathlib.Path, version: str, message: Optional[str] = None, remote: bool = False) -> None
+
+   为代码打tag.
+
+   :param p: 本地仓库位置
+   :type p: Path
+   :param version: 项目代码版本
+   :type version: str
+   :param message: tag的消息
+   :type message: Optional[str]
+   :param remote: 是否推送到远程仓库origin
+   :type remote: bool
+
+

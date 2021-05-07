@@ -1,0 +1,83 @@
+:mod:`pmfp.entrypoint.project.info`
+===================================
+
+.. py:module:: pmfp.entrypoint.project.info
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.info.InfoBase
+   pmfp.entrypoint.project.info.Info
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.info.project_info
+
+
+.. class:: InfoBase
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   获取本目录下项目的基本信息.
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. attribute:: load_all_config_file
+      :annotation: = True
+
+      
+
+   .. attribute:: config_file_only_get_need
+      :annotation: = False
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. class:: Info
+
+   Bases: :py:obj:`InfoBase`
+
+   获取本目录下项目的基本信息.
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. attribute:: load_all_config_file
+      :annotation: = True
+
+      
+
+   .. attribute:: config_file_only_get_need
+      :annotation: = False
+
+      
+
+   .. method:: do_main(self) -> None
+
+
+
+.. data:: project_info
+   
+
+   
+

@@ -1,0 +1,59 @@
+:mod:`pmfp.entrypoint.env_.new.env_go`
+======================================
+
+.. py:module:: pmfp.entrypoint.env_.new.env_go
+
+.. autoapi-nested-parse::
+
+   使用go mod初始化golang的执行环境.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_go.init_go_env
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_go.go_mod_template
+   pmfp.entrypoint.env_.new.env_go.template_io
+   pmfp.entrypoint.env_.new.env_go.go_mod_template
+
+
+.. data:: go_mod_template
+   :annotation: = 
+
+   
+
+.. data:: template_io
+   
+
+   
+
+.. data:: go_mod_template
+   
+
+   
+
+.. function:: init_go_env(cwd: pathlib.Path, project_name: str) -> None
+
+   初始化golang默认的虚拟环境.
+
+   :param cwd: 虚拟环境所在的根目录
+   :type cwd: Path
+   :param project_name: 项目名
+   :type project_name: str
+
+

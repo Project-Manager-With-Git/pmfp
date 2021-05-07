@@ -1,0 +1,68 @@
+:mod:`pmfp.entrypoint.requires.uninstall`
+=========================================
+
+.. py:module:: pmfp.entrypoint.requires.uninstall
+
+.. autoapi-nested-parse::
+
+   不同执行环境安装依赖.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   python_uninstall/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.uninstall.get_abs_path
+   pmfp.entrypoint.requires.uninstall.python_uninstall
+   pmfp.entrypoint.requires.uninstall.uninstall_requires
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.uninstall.requires_uninstall
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. data:: requires_uninstall
+   
+
+   
+
+.. function:: python_uninstall(cwd: pathlib.Path, package_name: str, env: str) -> None
+
+
+.. function:: uninstall_requires(package_name: str, env: str, *, cwd: str = '.') -> None
+
+

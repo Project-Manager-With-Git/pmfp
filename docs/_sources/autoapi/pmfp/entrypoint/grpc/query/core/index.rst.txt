@@ -1,0 +1,51 @@
+:mod:`pmfp.entrypoint.grpc.query.core`
+======================================
+
+.. py:module:: pmfp.entrypoint.grpc.query.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.query.core.Query
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.query.core.grpc_query
+
+
+.. class:: Query
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   请求指定grpc的服务.
+
+   需要本地有`grpcurl`,可以在`https://github.com/fullstorydev/grpcurl/releases`下载安装
+
+   .. attribute:: argparse_noflag
+      :annotation: = url
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: grpc_query
+   
+
+   
+

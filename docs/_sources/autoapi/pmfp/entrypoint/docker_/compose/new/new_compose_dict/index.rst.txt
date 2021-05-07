@@ -1,0 +1,216 @@
+:mod:`pmfp.entrypoint.docker_.compose.new.new_compose_dict`
+===========================================================
+
+.. py:module:: pmfp.entrypoint.docker_.compose.new.new_compose_dict
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_default_log_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_default_extra_hosts_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_volume_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_network_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_config_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_secret_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_thirdpart_service_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_project_service_compose
+   pmfp.entrypoint.docker_.compose.new.new_compose_dict.gen_compose
+
+
+
+.. function:: gen_default_log_compose(fluentd_url: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.LogSchema
+
+   构造一级字段`x-log`默认的log配置.
+
+   :param fluentd_url: 如果设置了fluentd_url则使用fluennted维护log. Defaults to None.
+   :type fluentd_url: Optional[str], optional
+
+   :returns: 外部的全局log配置字段x-log的内容
+   :rtype: Dict[str, Union[str, Dict[str, str]]]
+
+
+.. function:: gen_default_extra_hosts_compose(extra_hosts: List[str]) -> List[str]
+
+   构造一级字段`x-extra_hosts`默认的域名映射.
+
+   :param extra_hosts: 映射列表
+   :type extra_hosts: List[str]
+
+   :returns: 外部的全局域名映射字段x-extra_hosts的内容
+   :rtype: List[str]
+
+
+.. function:: gen_volume_compose(add_volumes: Optional[List[str]] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.VolumesSchema
+
+   生成一级字段`volumes`的配置.
+
+   形式可以有3种:
+   <volume_name>::<path>;会在volumes种构造内部`volume_name`并挂载到服务的path目录
+   <volume_name>$$extra::<path>;会在volumes种构造外部`volume_name`并挂载到服务的path目录
+   <volume_name>$$path::<path>;直接挂载local路径到服务的path目录
+   <volume_name>$$nfs@<nfs_addr>@<nfs_shared_path>@<nfs_opts>::<path>;挂载nfs到服务的path目录
+
+   :param add_volumes: 添加挂载的配置字符串. Defaults to None.
+   :type add_volumes: Optional[List[str]], optional
+
+   :returns: volumes字段的配置字典
+   :rtype: VolumesSchema
+
+
+.. function:: gen_network_compose(compose_version: str, use_host_network: bool, add_networks: Optional[List[str]] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.NetworksSchema
+
+   生成一级字段`networks`的配置.
+
+   添加网络可以有如下两种形式:
+   + <network_name>添加内部网络
+   + <network_name>$$extra添加外部网络
+
+   如果使用的compose版本为3.7或者3.8,且使用宿主机网路,则还会添加一个`myhostnetwork`用于表示宿主机网络
+
+   :param compose_version: 使用的compose版本
+   :type compose_version: str
+   :param use_host_network: 是否使用宿主机网络
+   :type use_host_network: bool
+   :param add_networks: 添加网络的配置字符串. Defaults to None.
+   :type add_networks: Optional[List[str]], optional
+
+   :returns: networks字段的配置字典
+   :rtype: NetworksSchema
+
+
+.. function:: gen_config_compose(add_extra_configs: Optional[List[str]] = None) -> Dict[str, pmfp.entrypoint.docker_.compose.new.typedef.ConfigAndSecretSchema]
+
+   生成一级字段`configs`的配置.
+
+   :param add_extra_configs: 添加配置项的配置字符串. Defaults to None.
+   :type add_extra_configs: Optional[List[str]], optional
+
+   :returns: configs字段的配置字典
+   :rtype: Dict[str, Dict[str, bool]]
+
+
+.. function:: gen_secret_compose(add_extra_secrets: Optional[List[str]] = None) -> Dict[str, pmfp.entrypoint.docker_.compose.new.typedef.ConfigAndSecretSchema]
+
+   生成一级字段`secrets`的配置.
+
+   :param add_extra_secrets: 添加密码项的配置字符串. Defaults to None.
+   :type add_extra_secrets: Optional[List[str]], optional
+
+   :returns: secret字段的配置字典
+   :rtype: Dict[str, Dict[str, bool]]
+
+
+.. function:: gen_thirdpart_service_compose(service_name: str) -> pmfp.entrypoint.docker_.compose.new.typedef.ServicesSchema
+
+   为第三方服务构造compose.
+
+   :param service_name: 要生成的服务名
+   :type service_name: str
+
+   :raises AttributeError: 不支持的第三方服务名
+
+   :returns: compose配置的字典
+   :rtype: Dict[str, Dict[str, Any]]
+
+
+.. function:: gen_project_service_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, default_extra_hosts: Optional[List[str]] = None, default_log: Optional[pmfp.entrypoint.docker_.compose.new.typedef.LogSchema] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ServiceSchema
+
+   生成项目本身的service项.
+
+   :param compose_version: docker compose版本
+   :type compose_version: str
+   :param dockerfile_dir: dockerfile的存放目录. Defaults to None.
+   :type dockerfile_dir: Optional[str], optional
+   :param dockerfile_name: dockerfile名. Defaults to None.
+   :type dockerfile_name: Optional[str], optional
+   :param docker_register: 镜像库地址. Defaults to None.
+   :type docker_register: Optional[str], optional
+   :param docker_register_namespace: 项目在镜像仓库的命名空间. Defaults to None.
+   :type docker_register_namespace: Optional[str], optional
+   :param project_name: 项目名. Defaults to None.
+   :type project_name: Optional[str], optional
+   :param version: 项目版本,也是镜像版本,不填会使用latest. Defaults to None.
+   :type version: Optional[str], optional
+   :param command: 执行命令. Defaults to None.
+   :type command: Optional[str], optional
+   :param add_envs: 环境变量. Defaults to None.
+   :type add_envs: Optional[List[str]], optional
+   :param use_host_network: 是否使用宿主机网络. Defaults to False.
+   :type use_host_network: bool, optional
+   :param ports: 端口映射. Defaults to None.
+   :type ports: Optional[List[str]], optional
+   :param add_networks: 使用网络. Defaults to None.
+   :type add_networks: Optional[List[str]], optional
+   :param add_extra_secrets: 使用的密码. Defaults to None.
+   :type add_extra_secrets: Optional[List[str]], optional
+   :param add_extra_configs: 使用的配置. Defaults to None.
+   :type add_extra_configs: Optional[List[str]], optional
+   :param add_volumes: 使用的挂载. Defaults to None.
+   :type add_volumes: Optional[List[str]], optional
+   :param with_deploy_config: 是否添加部署项模板. Defaults to None.
+   :type with_deploy_config: Optional[str], optional
+   :param default_extra_hosts: 域名映射. Defaults to None.
+   :type default_extra_hosts: Optional[List[str]], optional
+   :param default_log: log配置. Defaults to None.
+   :type default_log: Optional[LogSchema], optional
+
+   :raises AttributeError: compose版本不支持
+
+   :returns: 项目自身的compose项
+   :rtype: Dict[str, Union[str, Dict[str, Any], List[str]]]
+
+
+.. function:: gen_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+
+   生成compose字典.
+
+   :param compose_version: docker compose版本
+   :type compose_version: str
+   :param dockerfile_dir: dockerfile的存放目录. Defaults to None.
+   :type dockerfile_dir: Optional[str], optional
+   :param dockerfile_name: dockerfile名. Defaults to None.
+   :type dockerfile_name: Optional[str], optional
+   :param docker_register: 镜像库地址. Defaults to None.
+   :type docker_register: Optional[str], optional
+   :param docker_register_namespace: 项目在镜像仓库的命名空间. Defaults to None.
+   :type docker_register_namespace: Optional[str], optional
+   :param project_name: 项目名. Defaults to None.
+   :type project_name: Optional[str], optional
+   :param version: 项目版本,也是镜像版本,不填会使用latest. Defaults to None.
+   :type version: Optional[str], optional
+   :param command: 执行命令. Defaults to None.
+   :type command: Optional[str], optional
+   :param add_envs: 环境变量. Defaults to None.
+   :type add_envs: Optional[List[str]], optional
+   :param use_host_network: 是否使用宿主机网络. Defaults to False.
+   :type use_host_network: bool, optional
+   :param ports: 端口映射. Defaults to None.
+   :type ports: Optional[List[str]], optional
+   :param add_networks: 使用网络. Defaults to None.
+   :type add_networks: Optional[List[str]], optional
+   :param add_extra_secrets: 使用的密码. Defaults to None.
+   :type add_extra_secrets: Optional[List[str]], optional
+   :param add_extra_configs: 使用的配置. Defaults to None.
+   :type add_extra_configs: Optional[List[str]], optional
+   :param add_volumes: 使用的挂载. Defaults to None.
+   :type add_volumes: Optional[List[str]], optional
+   :param extra_hosts: 全局extra域名映射. Defaults to None.
+   :type extra_hosts: Optional[List[str]], optional
+   :param fluentd_url: fluentd的地址. Defaults to None.
+   :type fluentd_url: Optional[str], optional
+   :param add_service: 添加的额外服务项
+   :type add_service: Optional[List[str]], optional
+   :param with_deploy_config: 是否添加部署项模板. Defaults to None.
+   :type with_deploy_config: Optional[str], optional
+
+   :returns: compose 文件整体
+   :rtype: ComposeSchema
+
+

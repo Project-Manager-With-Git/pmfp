@@ -15,3 +15,7 @@ mypy >= 0.800
 autopep8 >= 1.5.6
 pylint >= 2.8.0
 pydocstyle>=6.0.0
+sphinx >= 3.5
+recommonmark >= 0.7.1
+sphinxcontrib-napoleon >= 0.7
+sphinx-intl >= 2.0.1

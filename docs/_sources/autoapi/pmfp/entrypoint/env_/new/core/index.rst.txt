@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.env_.new.core`
+====================================
+
+.. py:module:: pmfp.entrypoint.env_.new.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.core.New
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.core.env_new
+
+
+.. class:: New
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   在目标文件夹构造执行环境.
+
+   .. attribute:: argparse_noflag
+      :annotation: = language
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: env_new
+   
+
+   
+

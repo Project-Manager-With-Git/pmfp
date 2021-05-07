@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.http.query.core`
+======================================
+
+.. py:module:: pmfp.entrypoint.http.query.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.http.query.core.Query
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.http.query.core.http_query
+
+
+.. class:: Query
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   使用http请求获取资源.
+
+   .. attribute:: argparse_noflag
+      :annotation: = url
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: http_query
+   
+
+   
+

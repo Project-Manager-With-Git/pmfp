@@ -1,0 +1,73 @@
+:mod:`pmfp.entrypoint.cache.clean`
+==================================
+
+.. py:module:: pmfp.entrypoint.cache.clean
+
+.. autoapi-nested-parse::
+
+   清除资源包缓存.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.clean.remove_readonly
+   pmfp.entrypoint.cache.clean.get_cache_dir
+   pmfp.entrypoint.cache.clean.get_config_info
+   pmfp.entrypoint.cache.clean.remove_by_mode
+   pmfp.entrypoint.cache.clean.sourcepack_clean
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.clean.cache_clean
+
+
+.. function:: remove_readonly(func: Callable, path: str, _: Any) -> None
+
+   Clear the readonly bit and reattempt the removal.
+
+
+.. function:: get_cache_dir() -> pathlib.Path
+
+   获取缓存根目录.
+
+
+.. function:: get_config_info() -> Dict[str, Any]
+
+   获取配置信息.
+
+
+.. data:: cache_clean
+   
+
+   
+
+.. function:: remove_by_mode(dirp: pathlib.Path, mode: str = 'except_latest') -> None
+
+
+.. function:: sourcepack_clean(mode: str = 'except_latest', host: Optional[str] = None, repo_namespace: Optional[str] = None, repo_name: Optional[str] = None, tags: Optional[List[str]] = None) -> None
+
+   清除资源包的缓存.
+
+

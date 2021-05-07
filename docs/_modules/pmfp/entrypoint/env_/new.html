@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.env_.new &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">模块代码</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.env_.new</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.env_.new 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;构造不同执行环境.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">pmfp.const</span> <span class="kn">import</span> <span class="n">DEFAULT_AUTHOR</span><span class="p">,</span> <span class="n">PMFP_CONFIG_DEFAULT_NAME</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">get_abs_path</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.template_utils</span> <span class="kn">import</span> <span class="n">template_2_content</span>
+<span class="kn">from</span> <span class="nn">.env_py</span> <span class="kn">import</span> <span class="n">init_py_env</span>
+<span class="kn">from</span> <span class="nn">.env_cython</span> <span class="kn">import</span> <span class="n">init_cython_env</span>
+<span class="kn">from</span> <span class="nn">.env_go</span> <span class="kn">import</span> <span class="n">init_go_env</span>
+<span class="kn">from</span> <span class="nn">.env_c</span> <span class="kn">import</span> <span class="n">init_c_env</span>
+<span class="kn">from</span> <span class="nn">.env_cxx</span> <span class="kn">import</span> <span class="n">init_cxx_env</span>
+<span class="kn">from</span> <span class="nn">.env_js</span> <span class="kn">import</span> <span class="n">init_js_env</span>
+<span class="kn">from</span> <span class="nn">.env_md</span> <span class="kn">import</span> <span class="n">init_md_env</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">env_new</span>
+
+
+<span class="n">readme_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">changelog_template</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">template_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.env_.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;readme.md.jinja&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">template_io</span><span class="p">:</span>
+<div class="viewcode-block" id="readme_template"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/env_/new/index.html#pmfp.entrypoint.env_.readme_template">[文档]</a>    <span class="n">readme_template</span> <span class="o">=</span> <span class="n">template_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载readme模板失败&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="template_io"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/env_/new/index.html#pmfp.entrypoint.env_.template_io">[文档]</a><span class="n">template_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.env_.new.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;changelog.md.jinja&#39;</span><span class="p">)</span></div>
+<span class="k">if</span> <span class="n">template_io</span><span class="p">:</span>
+<div class="viewcode-block" id="changelog_template"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/env_/new/index.html#pmfp.entrypoint.env_.changelog_template">[文档]</a>    <span class="n">changelog_template</span> <span class="o">=</span> <span class="n">template_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载changelog模板失败&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="makereadme"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/env_/new/index.html#pmfp.entrypoint.env_.makereadme">[文档]</a><span class="k">def</span> <span class="nf">makereadme</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">author</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">author_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">keywords</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">readmepath</span> <span class="o">=</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">readmepath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;readme文件已经存在&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">readme</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
+            <span class="n">readme_template</span><span class="p">,</span>
+            <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+            <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">readmepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">readme</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;根据模板创建README.md文件完成&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="makechangelog"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/env_/new/index.html#pmfp.entrypoint.env_.makechangelog">[文档]</a><span class="k">def</span> <span class="nf">makechangelog</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">changelogpath</span> <span class="o">=</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">changelogpath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;changelog文件已经存在&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">changelogpath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">changelog_template</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;根据模板创建CHANGELOG.md文件完成&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="freeze"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/env_/new/index.html#pmfp.entrypoint.env_.freeze">[文档]</a><span class="k">def</span> <span class="nf">freeze</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+           <span class="n">project_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">author</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">author_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">keywords</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">test_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">setup_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">extras_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;将创建的环境信息保存到目录下的对应`pmfprc.json`中.&quot;&quot;&quot;</span>
+    <span class="n">ppmrc</span> <span class="o">=</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">PMFP_CONFIG_DEFAULT_NAME</span><span class="p">)</span>
+    <span class="n">content</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="n">env</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">env</span> <span class="o">==</span> <span class="s2">&quot;gomod&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">author</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="n">author</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">author_email</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;author_email&quot;</span><span class="p">:</span> <span class="n">author_email</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">description</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">keywords</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">keywords</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;requires&quot;</span><span class="p">:</span> <span class="n">requires</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">test_requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;test_requires&quot;</span><span class="p">:</span> <span class="n">test_requires</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">setup_requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;setup_requires&quot;</span><span class="p">:</span> <span class="n">setup_requires</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">extras_requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;extras_requires&quot;</span><span class="p">:</span> <span class="n">extras_requires</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">env</span> <span class="o">==</span> <span class="s2">&quot;cmake&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">author</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="n">author</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">author_email</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;author_email&quot;</span><span class="p">:</span> <span class="n">author_email</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">keywords</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">keywords</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;requires&quot;</span><span class="p">:</span> <span class="n">requires</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">test_requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;test_requires&quot;</span><span class="p">:</span> <span class="n">test_requires</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">setup_requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;setup_requires&quot;</span><span class="p">:</span> <span class="n">setup_requires</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">extras_requires</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;extras_requires&quot;</span><span class="p">:</span> <span class="n">extras_requires</span><span class="p">})</span>
+
+    <span class="k">if</span> <span class="n">env</span> <span class="o">==</span> <span class="s2">&quot;http&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">version</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">author</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="n">author</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">author_email</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;author_email&quot;</span><span class="p">:</span> <span class="n">author_email</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">keywords</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">keywords</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">description</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">})</span>
+
+    <span class="k">if</span> <span class="n">ppmrc</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ppmrc</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">old</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ppmrc</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">old</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ppmrc</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="_new_nev"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/env_/new/index.html#pmfp.entrypoint.env_._new_nev">[文档]</a><span class="k">def</span> <span class="nf">_new_nev</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+             <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">author</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">author_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">keywords</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+             <span class="n">requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">test_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">setup_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">extras_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;py&quot;</span><span class="p">:</span>
+        <span class="n">init_py_env</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                    <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+                    <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+                    <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+                    <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+                    <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+                    <span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">,</span>
+                    <span class="n">requires</span><span class="o">=</span><span class="n">requires</span><span class="p">,</span>
+                    <span class="n">test_requires</span><span class="o">=</span><span class="n">test_requires</span><span class="p">,</span>
+                    <span class="n">setup_requires</span><span class="o">=</span><span class="n">setup_requires</span><span class="p">,</span>
+                    <span class="n">extras_requires</span><span class="o">=</span><span class="n">extras_requires</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;cython&quot;</span><span class="p">:</span>
+        <span class="n">init_cython_env</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                        <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+                        <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+                        <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+                        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+                        <span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">,</span>
+                        <span class="n">requires</span><span class="o">=</span><span class="n">requires</span><span class="p">,</span>
+                        <span class="n">test_requires</span><span class="o">=</span><span class="n">test_requires</span><span class="p">,</span>
+                        <span class="n">setup_requires</span><span class="o">=</span><span class="n">setup_requires</span><span class="p">,</span>
+                        <span class="n">extras_requires</span><span class="o">=</span><span class="n">extras_requires</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;go&quot;</span><span class="p">:</span>
+        <span class="n">init_go_env</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+        <span class="n">init_c_env</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;CXX&quot;</span><span class="p">:</span>
+        <span class="n">init_cxx_env</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;js&quot;</span><span class="p">:</span>
+        <span class="n">init_js_env</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+                    <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">),</span> <span class="n">requires</span><span class="o">=</span><span class="n">requires</span><span class="p">,</span> <span class="n">test_requires</span><span class="o">=</span><span class="n">test_requires</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;md&quot;</span><span class="p">:</span>
+        <span class="n">init_md_env</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;暂不支持初始化</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2">的环境&quot;</span><span class="p">)</span></div>
+
+
+<span class="o">@</span> <span class="n">env_new</span><span class="o">.</span><span class="n">as_main</span>
+<div class="viewcode-block" id="new_env"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/new/index.html#pmfp.entrypoint.env_.new_env">[文档]</a><span class="k">def</span> <span class="nf">new_env</span><span class="p">(</span><span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+            <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">project_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">author</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">author_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">keywords</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">test_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">setup_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">extras_requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;构造不同执行环境.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        language (str): 目标项目使用的语言</span>
+<span class="sd">        env (str): 目标执行环境</span>
+<span class="sd">        project_name (str): 项目名</span>
+<span class="sd">        version (str): 项目版本</span>
+<span class="sd">        author (str): 项目作者</span>
+<span class="sd">        author_email (str, optional): 项目作者email. Defaults to &quot;&quot;.</span>
+<span class="sd">        description (str, optional): 项目简介. Defaults to &quot;&quot;.</span>
+<span class="sd">        keywords (Optional[List[str]], optional): 项目关键字. Defaults to None.</span>
+<span class="sd">        cwd (str, optional): 命令执行根目录. Defaults to &quot;.&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cwd</span><span class="p">:</span>
+            <span class="n">cwdp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cwdp</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">author</span><span class="p">:</span>
+            <span class="n">author</span> <span class="o">=</span> <span class="n">DEFAULT_AUTHOR</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">project_name</span><span class="p">:</span>
+            <span class="n">project_name</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">version</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;0.0.0&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">author_email</span><span class="p">:</span>
+            <span class="n">author_email</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">description</span><span class="p">:</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">keywords</span><span class="p">:</span>
+            <span class="n">keywordstr</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">keywordstr</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span>
+
+        <span class="n">makereadme</span><span class="p">(</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>
+            <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+            <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">keywords</span><span class="o">=</span><span class="n">keywordstr</span>
+        <span class="p">)</span>
+        <span class="n">makechangelog</span><span class="p">(</span><span class="n">cwdp</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;py&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">env</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;venv&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">env</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;venv&quot;</span><span class="p">,</span> <span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;pypy&quot;</span><span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;python 只支持环境`venv, conda, pypy`,不支持环境`</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;cython&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">env</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;venv&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">env</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;venv&quot;</span><span class="p">,</span> <span class="s2">&quot;conda&quot;</span><span class="p">,):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cython 只支持环境`venv, conda`,不支持环境`</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;js&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">env</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">env</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;webpack&quot;</span><span class="p">,):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;js 只支持环境`node, webpack`,不支持环境`</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+        <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;go&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">env</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;gomod&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">env</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;gomod&quot;</span><span class="p">,</span> <span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;golang 只支持环境`gomod`,不支持环境`</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;CXX&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">env</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;cmake&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">env</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;cmake&quot;</span><span class="p">,</span> <span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CXX 只支持环境`cmake`,不支持环境`</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">env</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;cmake&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">env</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;cmake&quot;</span><span class="p">,</span> <span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;C 只支持环境`cmake`,不支持环境`</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;md&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">env</span><span class="p">:</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="s2">&quot;http&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">env</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">,</span> <span class="p">):</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;md 只支持环境`http`,不支持环境`</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+        <span class="n">_new_nev</span><span class="p">(</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>
+            <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+            <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+            <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">keywords</span><span class="o">=</span><span class="n">keywordstr</span><span class="p">,</span>
+            <span class="n">requires</span><span class="o">=</span><span class="n">requires</span><span class="p">,</span>
+            <span class="n">test_requires</span><span class="o">=</span><span class="n">test_requires</span><span class="p">,</span>
+            <span class="n">setup_requires</span><span class="o">=</span><span class="n">setup_requires</span><span class="p">,</span>
+            <span class="n">extras_requires</span><span class="o">=</span><span class="n">extras_requires</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">e</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">freeze</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+               <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+               <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+               <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+               <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+               <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+               <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+               <span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">,</span>
+               <span class="n">requires</span><span class="o">=</span><span class="n">requires</span><span class="p">,</span>
+               <span class="n">test_requires</span><span class="o">=</span><span class="n">test_requires</span><span class="p">,</span>
+               <span class="n">setup_requires</span><span class="o">=</span><span class="n">setup_requires</span><span class="p">,</span>
+               <span class="n">extras_requires</span><span class="o">=</span><span class="n">setup_requires</span><span class="p">,</span>
+               <span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;执行环境序列化完成&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

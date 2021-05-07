@@ -1,0 +1,27 @@
+:mod:`pmfp.entrypoint.build_.build_go`
+======================================
+
+.. py:module:: pmfp.entrypoint.build_.build_go
+
+.. autoapi-nested-parse::
+
+   编译go语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.build_.build_go.go_build
+
+
+
+.. function:: go_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, upx: bool = False, mini: bool = False, build_as: str = 'exec', for_linux_arch: Optional[str] = None) -> None
+
+

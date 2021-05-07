@@ -1,0 +1,117 @@
+:mod:`pmfp.entrypoint.doc_.new`
+===============================
+
+.. py:module:: pmfp.entrypoint.doc_.new
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   source_temp/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   new_go/index.rst
+   new_py/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.new.doc_new_py
+   pmfp.entrypoint.doc_.new.doc_new_go
+   pmfp.entrypoint.doc_.new.new_doc
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.new.DEFAULT_AUTHOR
+   pmfp.entrypoint.doc_.new.doc_new
+
+
+.. data:: DEFAULT_AUTHOR
+   
+
+   
+
+.. function:: doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
+
+   为python项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param source_dir: 文档源码位置
+   :type source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行命令的根目录
+   :type cwd: str
+
+
+.. function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
+
+   为go项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param source_dir: 文档源码位置
+   :type source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行命令的根目录
+   :type cwd: str
+
+
+.. data:: doc_new
+   
+
+   
+
+.. function:: new_doc(language: str, code: str, output: str, doc_source_dir: str, *, project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
+
+   为项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param doc_source_dir: 文档源码位置
+   :type doc_source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行项目时的位置
+   :type cwd: str
+
+

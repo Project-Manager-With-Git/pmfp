@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="v4.0.2" href="CHANGELOG.html" />
+    <link rel="prev" title="Welcome to pmfp’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">介绍</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">注意</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">项目管理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">资源仓库类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">项目语言及对应的环境</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">直接调用功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>pmfp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/README.md.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pmfp">
+<h1>pmfp<a class="headerlink" href="#pmfp" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><p>version: 4.0.2</p></li>
+<li><p>status: dev</p></li>
+<li><p>author: hsz</p></li>
+<li><p>email: hsz1273327&#64;gmail.com</p></li>
+</ul>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="永久链接至标题">¶</a></h2>
+<p>一个用于管理项目及相关开发的工具</p>
+<p>keywords: tool,project_manager</p>
+</div>
+<div class="section" id="id1">
+<h2>特点<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>可以独立使用功能模块</p></li>
+<li><p>根据模板快速构建项目</p></li>
+<li><p>简单的编译和打包指令</p></li>
+<li><p>快速测试</p></li>
+<li><p>文档维护,支持github page</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>注意<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>要支持grpc或者protobuf需要安装相关依赖</p>
+<ul>
+<li><p>通用的编译工具:protoc</p></li>
+<li><p>python: <code class="docutils literal notranslate"><span class="pre">grpcio</span></code>,<code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code></p></li>
+<li><p>node: <code class="docutils literal notranslate"><span class="pre">&#64;grpc/proto-loader</span></code>,<code class="docutils literal notranslate"><span class="pre">async</span></code>,<code class="docutils literal notranslate"><span class="pre">google-protobuf</span></code>,<code class="docutils literal notranslate"><span class="pre">grpc</span></code>,<code class="docutils literal notranslate"><span class="pre">lodash</span></code>,<code class="docutils literal notranslate"><span class="pre">minimist</span></code></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pmfp</span></code></p>
+</div>
+<div class="section" id="id3">
+<h2>使用<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>pmfp现在被设计为两个部分:</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">项目管理部分</span></code>用于快速根据托管在git仓库上的模板仓库项目构造项目</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">调用功能部分</span></code>用于为不同的项目提供特定功能</p></li>
+</ol>
+<div class="section" id="id4">
+<h3>项目管理<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>项目管理使用的子命令为<code class="docutils literal notranslate"><span class="pre">project</span></code>,其整体设计思路是这样:</p>
+<ol class="simple">
+<li><p>借助git仓库来保存组件模板.</p></li>
+<li><p>每个组件模板使用jinja2作为模板引擎,允许使用其模板语法</p></li>
+<li><p>用于保存组件模板的git仓库称为资源包(source pack)</p></li>
+<li><p>资源包需要使用一个文件来声明其中注册的组件和默认行为,默认这个文件为资源包根目录下的<code class="docutils literal notranslate"><span class="pre">.pmfp_template.json</span></code>文件.其具体schema可以查看项目的<code class="docutils literal notranslate"><span class="pre">protocol.py</span></code>文件中的<code class="docutils literal notranslate"><span class="pre">TEMPLATE_INFO_SCHEMA</span></code>对象定义</p></li>
+<li><p>如果资源包声明文件中<code class="docutils literal notranslate"><span class="pre">template_type</span></code>不为<code class="docutils literal notranslate"><span class="pre">components</span></code>则说明这是一个模板资源包,我们就可以根据其作为模板构造项目.</p></li>
+<li><p>资源包中每个组件都有一个<code class="docutils literal notranslate"><span class="pre">source</span></code>字段,这个字段用于声明组件的位置,如果其中有<code class="docutils literal notranslate"><span class="pre">//</span></code>则说明它是引用的另一个资源项目的组件</p></li>
+<li><p>根据模板包构造项目只要指定一个资源包路径即可,其形式为<code class="docutils literal notranslate"><span class="pre">[[{host}::]{repo_namespace}::]{repo_name}[&#64;{tag}]</span></code></p></li>
+<li><p>如果是已有项目要添加组件,则可以使用<code class="docutils literal notranslate"><span class="pre">[[{host}::]{repo_namespace}::]{repo_name}[&#64;{tag}]//{component_path_str}</span></code></p></li>
+<li><p>默认的host为<code class="docutils literal notranslate"><span class="pre">github.com</span></code>,默认的repo_namespace为<code class="docutils literal notranslate"><span class="pre">Project-Manager-With-Git</span></code>,默认的tag为<code class="docutils literal notranslate"><span class="pre">latest</span></code>,如果tag为latest它会拉取master分支的head.默认的资源仓库可以通过修改<code class="docutils literal notranslate"><span class="pre">~/.pmfprc/config.json</span></code>来修改,</p></li>
+</ol>
+<p>另外我们还可以使用<code class="docutils literal notranslate"><span class="pre">cache</span></code>子命令管理资源包缓存</p>
+<div class="section" id="id5">
+<h4>资源仓库类型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
+<p>本项目将所有资源仓库类型分为如下几种:</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">socket</span></code>,专指基于网络的通讯程序,包括http服务,websocket客户端与服务,各种rpc客户端与服务,以及zeromq,webrtc等</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GUI</span></code>,专指图形界面</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">task</span></code>专指主动执行的任务,比如一般脚本,定时任务</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">watcher</span></code>监听器,被动监听事件的任务,比如监听文件系统的任务,监听消息中间件的任务</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">module</span></code>模块,必须被其他程序调用的程序</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">components</span></code>组件集合,本身并不能执行</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">doc</span></code>文档型组件</p></li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h4>项目语言及对应的环境<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<p>本项目目前之前如下语言和执行环境组合:</p>
+<ul class="simple">
+<li><p>language为<code class="docutils literal notranslate"><span class="pre">py</span></code></p>
+<ul>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">venv</span></code>,即python的标准库venv生成的c python虚拟环境</p></li>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">conda</span></code>,即anaconda/miniconda生成的c python虚拟环境</p></li>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">pypy</span></code>,即python的标准库venv生成的pypy虚拟环境</p></li>
+</ul>
+</li>
+<li><p>language为<code class="docutils literal notranslate"><span class="pre">js</span></code></p>
+<ul>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">node</span></code>,即以node为执行环境的javascript的babel标准环境</p></li>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">webpack</span></code>,即以浏览器为执行环境,使用webpack编译项目的javascript的babel标准环境</p></li>
+</ul>
+</li>
+<li><p>language为<code class="docutils literal notranslate"><span class="pre">cython</span></code></p>
+<ul>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">venv</span></code>,即python的标准库venv生成的c python虚拟环境</p></li>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">conda</span></code>,即anaconda/miniconda生成的c python虚拟环境</p></li>
+</ul>
+</li>
+<li><p>language为<code class="docutils literal notranslate"><span class="pre">go</span></code></p>
+<ul>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">gomod</span></code>,即golang的gomod模式管理项目</p></li>
+</ul>
+</li>
+<li><p>language为<code class="docutils literal notranslate"><span class="pre">C</span></code></p>
+<ul>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">cmake</span></code>,即使用cmake作为c语言的项目管理工具</p></li>
+</ul>
+</li>
+<li><p>language为<code class="docutils literal notranslate"><span class="pre">CXX</span></code></p>
+<ul>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">cmake</span></code>,即使用cmake作为c语言的项目管理工具</p></li>
+</ul>
+</li>
+<li><p>language为<code class="docutils literal notranslate"><span class="pre">md</span></code></p>
+<ul>
+<li><p>env为<code class="docutils literal notranslate"><span class="pre">http</span></code>,即使用markdown作为目标语言托管到http服务器上的纯文档环境</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>直接调用功能<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>支持直接调用功能的子命令包括:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build</span></code>快速编译支持的静态语言项目</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">doc</span></code>快速构造项目的文档</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">image</span></code>快速构造docker镜像</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span></code>快速构造docker部署配置</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code>快速构建项目的独立执行环境</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grpc</span></code>快速构造了grpc的客户端和服务端</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">http</span></code>用于构造静态http服务和构造http请求和压测</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>打包动态语言构造的项目</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">proto</span></code>用于快速构建和编译protobuf文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schema</span></code>用于校验<code class="docutils literal notranslate"><span class="pre">jsonschema</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>用于对项目进行测试</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requires</span></code>用于管理依赖</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="v4.0.2" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to pmfp’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+:mod:`pmfp.entrypoint.doc_.build_`
+==================================
+
+.. py:module:: pmfp.entrypoint.doc_.build_
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   build_go/index.rst
+   build_py/index.rst
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.build_.doc_build_py
+   pmfp.entrypoint.doc_.build_.doc_build_go
+   pmfp.entrypoint.doc_.build_.build_doc
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.build_.DEFAULT_AUTHOR
+   pmfp.entrypoint.doc_.build_.doc_build
+
+
+.. data:: DEFAULT_AUTHOR
+   
+
+   
+
+.. function:: doc_build_py(output: str, source_dir: str, *, version: Optional[str] = None, cwd: str = '.') -> None
+
+   为python项目构造api文档.
+   :param output: html文档位置
+   :type output: str
+   :param source_dir: 文档源码位置
+   :type source_dir: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行命令的根目录
+   :type cwd: str
+
+
+.. function:: doc_build_go(output: str, source_dir: str, *, cwd: str = '.') -> None
+
+   为go项目更新api文档.
+   :param output: html文档位置
+   :type output: str
+   :param source_dir: 文档源码位置
+   :type source_dir: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行命令的根目录
+   :type cwd: str
+
+
+.. data:: doc_build
+   
+
+   
+
+.. function:: build_doc(language: str, output: str, doc_source_dir: str, *, version: Optional[str] = None, cwd: str = '.') -> None
+
+   为项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param doc_source_dir: 文档源码位置
+   :type doc_source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行项目时的位置
+   :type cwd: str
+
+

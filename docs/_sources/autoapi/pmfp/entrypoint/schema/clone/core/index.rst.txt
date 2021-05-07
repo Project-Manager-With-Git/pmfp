@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.schema.clone.core`
+========================================
+
+.. py:module:: pmfp.entrypoint.schema.clone.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.clone.core.Clone
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.clone.core.schema_clone
+
+
+.. class:: Clone
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   克隆json schema模式文本.
+
+   .. attribute:: argparse_noflag
+      :annotation: = url
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: schema_clone
+   
+
+   
+

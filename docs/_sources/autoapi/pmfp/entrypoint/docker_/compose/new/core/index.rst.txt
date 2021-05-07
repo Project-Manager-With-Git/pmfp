@@ -1,0 +1,70 @@
+:mod:`pmfp.entrypoint.docker_.compose.new.core`
+===============================================
+
+.. py:module:: pmfp.entrypoint.docker_.compose.new.core
+
+.. autoapi-nested-parse::
+
+   ppm docker compose new命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.new.core.New
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.new.core.properties
+   pmfp.entrypoint.docker_.compose.new.core.dockercompose_new
+
+
+.. data:: properties
+   :annotation: :Dict[str, object]
+
+   
+
+.. class:: New
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   创建一个docker-compose文件.
+
+   当指定的dockercompose文件存在时创建全新内容并覆盖原来老的compose文件,老的会被重新保存为`原名.{timestamp}_bak`;
+   当指定的dockercompose文件不存在时创建新的compose文件.
+   更新操作只能更新如下内容:
+
+   1. service
+   2. 外部networks声明
+   3. 外部volumes声明
+   4. 外部configs声明
+   5. 外部secrits声明
+
+   .. attribute:: argparse_noflag
+      :annotation: = compose_version
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: dockercompose_new
+   
+
+   
+

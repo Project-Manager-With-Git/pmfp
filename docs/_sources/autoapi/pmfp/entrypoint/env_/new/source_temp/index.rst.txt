@@ -1,0 +1,6 @@
+:mod:`pmfp.entrypoint.env_.new.source_temp`
+===========================================
+
+.. py:module:: pmfp.entrypoint.env_.new.source_temp
+
+

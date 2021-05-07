@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.schema.test_.core`
+========================================
+
+.. py:module:: pmfp.entrypoint.schema.test_.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.test_.core.Test
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.test_.core.schema_test
+
+
+.. class:: Test
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   检查json schema文件.
+
+   .. attribute:: argparse_noflag
+      :annotation: = file
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: schema_test
+   
+
+   
+

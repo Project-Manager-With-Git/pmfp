@@ -1,0 +1,54 @@
+:mod:`pmfp.entrypoint.build_.core`
+==================================
+
+.. py:module:: pmfp.entrypoint.build_.core
+
+.. autoapi-nested-parse::
+
+   ppm build命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.build_.core.Build
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.build_.core.build_cmd
+
+
+.. class:: Build
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   编译指定位置项目.
+
+   .. attribute:: argparse_noflag
+      :annotation: = code
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: build_cmd
+   
+
+   
+

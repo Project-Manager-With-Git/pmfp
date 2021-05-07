@@ -1,0 +1,83 @@
+:mod:`pmfp.entrypoint.docker_.image.build_`
+===========================================
+
+.. py:module:: pmfp.entrypoint.docker_.image.build_
+
+.. autoapi-nested-parse::
+
+   ppm docker image build命令的处理.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.build_.get_abs_path
+   pmfp.entrypoint.docker_.image.build_.run
+   pmfp.entrypoint.docker_.image.build_.build_dockerimage
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.build_.dockerimage_build
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+
+   执行命令行命令并返回其stdout的值
+
+   :param command: 命令行命令
+   :type command: str
+   :param cwd: 执行命令时的位置.Default: None
+   :type cwd: Optional[Path]
+   :param env: 执行命令时的环境变量. Default:None
+   :type env: Optional[Any]
+   :param visible: 命令结果的可见度. Default: False
+   :type visible: bool
+   :param fail_exit: 当执行失败时退出程序. Default: False
+   :type fail_exit: bool
+
+   :returns: stdout捕获的字符串
+   :rtype: str
+
+
+.. data:: dockerimage_build
+   
+
+   
+
+.. function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+
+

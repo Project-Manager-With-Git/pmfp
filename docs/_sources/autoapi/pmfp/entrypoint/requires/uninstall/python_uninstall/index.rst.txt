@@ -1,0 +1,22 @@
+:mod:`pmfp.entrypoint.requires.uninstall.python_uninstall`
+==========================================================
+
+.. py:module:: pmfp.entrypoint.requires.uninstall.python_uninstall
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.uninstall.python_uninstall.python_uninstall
+
+
+
+.. function:: python_uninstall(cwd: pathlib.Path, package_name: str, env: str) -> None
+
+

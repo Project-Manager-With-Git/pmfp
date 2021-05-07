@@ -1,0 +1,132 @@
+:mod:`pmfp.entrypoint.docker_.compose.new`
+==========================================
+
+.. py:module:: pmfp.entrypoint.docker_.compose.new
+
+.. autoapi-nested-parse::
+
+   ppm docker compose new命令的处理.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   merge_compose_dict/index.rst
+   new_compose_dict/index.rst
+   save_compose/index.rst
+   typedef/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.new.get_abs_path
+   pmfp.entrypoint.docker_.compose.new.gen_compose
+   pmfp.entrypoint.docker_.compose.new.merge_compose
+   pmfp.entrypoint.docker_.compose.new.save_compose
+   pmfp.entrypoint.docker_.compose.new.new_dockercompose
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.new.dockercompose_new
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. data:: dockercompose_new
+   
+
+   
+
+.. function:: gen_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+
+   生成compose字典.
+
+   :param compose_version: docker compose版本
+   :type compose_version: str
+   :param dockerfile_dir: dockerfile的存放目录. Defaults to None.
+   :type dockerfile_dir: Optional[str], optional
+   :param dockerfile_name: dockerfile名. Defaults to None.
+   :type dockerfile_name: Optional[str], optional
+   :param docker_register: 镜像库地址. Defaults to None.
+   :type docker_register: Optional[str], optional
+   :param docker_register_namespace: 项目在镜像仓库的命名空间. Defaults to None.
+   :type docker_register_namespace: Optional[str], optional
+   :param project_name: 项目名. Defaults to None.
+   :type project_name: Optional[str], optional
+   :param version: 项目版本,也是镜像版本,不填会使用latest. Defaults to None.
+   :type version: Optional[str], optional
+   :param command: 执行命令. Defaults to None.
+   :type command: Optional[str], optional
+   :param add_envs: 环境变量. Defaults to None.
+   :type add_envs: Optional[List[str]], optional
+   :param use_host_network: 是否使用宿主机网络. Defaults to False.
+   :type use_host_network: bool, optional
+   :param ports: 端口映射. Defaults to None.
+   :type ports: Optional[List[str]], optional
+   :param add_networks: 使用网络. Defaults to None.
+   :type add_networks: Optional[List[str]], optional
+   :param add_extra_secrets: 使用的密码. Defaults to None.
+   :type add_extra_secrets: Optional[List[str]], optional
+   :param add_extra_configs: 使用的配置. Defaults to None.
+   :type add_extra_configs: Optional[List[str]], optional
+   :param add_volumes: 使用的挂载. Defaults to None.
+   :type add_volumes: Optional[List[str]], optional
+   :param extra_hosts: 全局extra域名映射. Defaults to None.
+   :type extra_hosts: Optional[List[str]], optional
+   :param fluentd_url: fluentd的地址. Defaults to None.
+   :type fluentd_url: Optional[str], optional
+   :param add_service: 添加的额外服务项
+   :type add_service: Optional[List[str]], optional
+   :param with_deploy_config: 是否添加部署项模板. Defaults to None.
+   :type with_deploy_config: Optional[str], optional
+
+   :returns: compose 文件整体
+   :rtype: ComposeSchema
+
+
+.. function:: merge_compose(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app', updatemode: str = 'level5') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+
+
+.. function:: save_compose(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, cwdp: pathlib.Path, dockercompose_name: str = 'docker-compose.yml') -> None
+
+   保存compose为文件.
+
+   :param compose: compose字典
+   :type compose: ComposeSchema
+   :param cwdp: 保存目录
+   :type cwdp: Path
+   :param dockercompose_name: compose名. Defaults to "docker-compose.yml".
+   :type dockercompose_name: str, optional
+
+
+.. function:: new_dockercompose(compose_version: str, dockercompose_name: str = 'docker-compose.yml', updatemode: str = 'level5', dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
+
+

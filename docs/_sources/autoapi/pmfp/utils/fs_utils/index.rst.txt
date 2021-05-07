@@ -1,0 +1,102 @@
+:mod:`pmfp.utils.fs_utils`
+==========================
+
+.. py:module:: pmfp.utils.fs_utils
+
+.. autoapi-nested-parse::
+
+   文件系统相关的通用组件.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.fs_utils.get_abs_path
+   pmfp.utils.fs_utils.path_to_str
+   pmfp.utils.fs_utils.get_abs_path_str
+   pmfp.utils.fs_utils.iter_dir_to_end
+   pmfp.utils.fs_utils.remove_readonly
+   pmfp.utils.fs_utils.tempdir
+   pmfp.utils.fs_utils.delete_source
+
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: path_to_str(p: pathlib.Path) -> str
+
+
+.. function:: get_abs_path_str(path_str: str, cwd: Optional[pathlib.Path] = None) -> str
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径字符串
+   :rtype: str
+
+
+.. function:: iter_dir_to_end(path: pathlib.Path, match: Callable[[pathlib.Path], bool], *, skip_dir: Optional[Callable[[pathlib.Path], bool]] = None, succ_cb: Optional[Callable[[pathlib.Path], None]] = None, fail_cb: Optional[Callable[[pathlib.Path], None]] = None, skip_dir_handdler: Optional[Callable[[pathlib.Path], None]] = None) -> None
+
+   遍历文件夹到底,并按指定的函数来做区分.
+
+   :param path: 文件夹路径
+   :type path: Path
+   :param match: 筛选条件
+   :type match: Callable[[Path],bool]
+   :param succ_cb: 路径满足筛选条件后执行的回调函数. Defaults to None.
+   :type succ_cb: Optional[Callable[[Path],None]], optional
+   :param fail_cb: 路径不满足筛选条件执行的回调函数. Defaults to None.
+   :type fail_cb: Optional[Callable[[Path],None]], optional
+
+
+.. function:: remove_readonly(func: Callable, path: str, _: Any) -> None
+
+   Clear the readonly bit and reattempt the removal.
+
+
+.. function:: tempdir(p: pathlib.Path, cb: Callable[[pathlib.Path], None]) -> None
+
+   临时文件夹相关处理.
+
+   :param p: 临时文件夹所在的文件夹
+   :type p: Path
+   :param cb: 创建临时文件夹后的操作.
+   :type cb: Callable[[Path],None]
+
+
+.. function:: delete_source(root_path: pathlib.Path, *, file_predication: Optional[Callable[[pathlib.Path], bool]] = None, dir_predication: Optional[Callable[[pathlib.Path], bool]] = None, dir_iter_filter: Optional[Callable[[pathlib.Path], bool]] = None) -> None
+
+   删除源文件.
+   file_predication和dir_predication必须至少有一个.
+   :param root_path: [description]
+   :type root_path: Path
+   :param file_predication: 用于判断文件是否要被删除的谓词,参数为p:path
+   :type file_predication: Optional[Callable]
+   :param dir_predication: 用于判断文件夹是否要被删除的谓词,参数为p:path
+   :type dir_predication: Optional[Callable]
+   :param dir_iter_filter: 用于过夏季目录中不用迭代的部分
+   :type dir_iter_filter: Optional[Callable]
+
+

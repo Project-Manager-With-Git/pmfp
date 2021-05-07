@@ -1,0 +1,61 @@
+:mod:`pmfp.entrypoint.version`
+==============================
+
+.. py:module:: pmfp.entrypoint.version
+
+.. autoapi-nested-parse::
+
+   version命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.version.VERSION
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.version.__VERSION__
+   pmfp.entrypoint.version.version
+
+
+.. data:: __VERSION__
+   :annotation: = 4.0.0
+
+   
+
+.. class:: VERSION(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
+
+   Bases: :py:obj:`schema_entry.EntryPoint`
+
+   获取pmfp工具的版本.
+
+   .. attribute:: verify_schema
+      :annotation: = False
+
+      
+
+   .. method:: do_main(self) -> None
+
+      执行入口函数.
+
+
+
+.. data:: version
+   
+
+   
+

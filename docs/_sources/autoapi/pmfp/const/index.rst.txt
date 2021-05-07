@@ -1,0 +1,99 @@
+:mod:`pmfp.const`
+=================
+
+.. py:module:: pmfp.const
+
+.. autoapi-nested-parse::
+
+   维护常量.
+
+
+
+Module Contents
+---------------
+
+.. data:: PLATFORM
+   
+
+   
+
+.. data:: GOLBAL_PYTHON
+   
+
+   
+
+.. data:: GOLBAL_CC
+   
+
+   
+
+.. data:: GOLBAL_CXX
+   
+
+   
+
+.. data:: GOLBAL_PYTHON_VERSION
+   
+
+   
+
+.. data:: PMFP_CONFIG_DEFAULT_NAME
+   :annotation: = pmfprc.json
+
+   
+
+.. data:: PMFP_CONFIG_HOME
+   
+
+   
+
+.. data:: PMFP_CONFIG_PATH
+   
+
+   
+
+.. data:: GLOBAL_CONFIG_PATH
+   
+
+   
+
+.. data:: PY_ENV_PATH
+   :annotation: = env
+
+   
+
+.. data:: JS_ENV_PATH
+   :annotation: = package.json
+
+   
+
+.. data:: GO_ENV_PATH
+   :annotation: = go.mod
+
+   
+
+.. data:: DOC_PATH
+   :annotation: = document
+
+   
+
+.. data:: TEST_PATH
+   :annotation: = test
+
+   
+
+.. data:: TYPECHECK_PATH
+   :annotation: = typecheck
+
+   
+
+.. data:: DEFAULT_PMFPRC
+   
+
+   
+
+.. data:: DEFAULT_AUTHOR
+   
+
+   
+

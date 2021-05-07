@@ -1,0 +1,6 @@
+:mod:`pmfp.entrypoint._conf`
+============================
+
+.. py:module:: pmfp.entrypoint._conf
+
+

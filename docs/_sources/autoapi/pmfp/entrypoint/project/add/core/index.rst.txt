@@ -1,0 +1,54 @@
+:mod:`pmfp.entrypoint.project.add.core`
+=======================================
+
+.. py:module:: pmfp.entrypoint.project.add.core
+
+.. autoapi-nested-parse::
+
+   ppm test命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.add.core.Add
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.project.add.core.project_add
+
+
+.. class:: Add
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   为项目添加组件.
+
+   .. attribute:: argparse_noflag
+      :annotation: = component_string
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: project_add
+   
+
+   
+

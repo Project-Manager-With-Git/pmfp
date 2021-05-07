@@ -1,0 +1,150 @@
+:mod:`pmfp.entrypoint.docker_.compose.deploy.deploy_portainer`
+==============================================================
+
+.. py:module:: pmfp.entrypoint.docker_.compose.deploy.deploy_portainer
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.get_jwt
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.get_target_stack
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.get_endpoints_info
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.create_stack
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.update_image_version
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.update_satck
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.deploy_portainer
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.deploy.deploy_portainer.EndpointInfoSchema
+
+
+.. function:: get_jwt(portainer_url: str, portainer_username: str, portainer_password: str) -> str
+
+   登录portainer获取行动权限.
+
+   :param portainer_url: portainer的地址
+   :type portainer_url: str
+   :param portainer_username: 登录用户名
+   :type portainer_username: str
+   :param portainer_password: 登录密码
+   :type portainer_password: str
+
+   :returns: jwt令牌
+   :rtype: str
+
+
+.. function:: get_target_stack(portainer_url: str, jwt: str, deploy_stack: int) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+
+   获取目标stack用于更新.
+
+   :param portainer_url: portainer的地址
+   :type portainer_url: str
+   :param jwt: jwt令牌
+   :type jwt: str
+   :param deploy_stack: 要获取的stack id
+   :type deploy_stack: int
+
+   :returns: 旧stack的compose内容字典
+   :rtype: ComposeSchema
+
+
+.. data:: EndpointInfoSchema
+   
+
+   
+
+.. function:: get_endpoints_info(portainer_url: str, jwt: str, deploy_endpoint: int) -> EndpointInfoSchema
+
+   获取端点信息
+
+   :param portainer_url: portainer的地址
+   :type portainer_url: str
+   :param jwt: jwt令牌
+   :type jwt: str
+   :param deploy_endpoint: 端点id
+   :type deploy_endpoint: int
+
+   :raises AttributeError: 请求失败
+
+   :returns: `type`为端点类型,1为stand-alone,2为swarm;`swarmID`为swarm节点的集群id
+   :rtype: EndpointInfoSchema
+
+
+.. function:: create_stack(portainer_url: str, jwt: str, deploy_endpoint: int, compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, cwdp: pathlib.Path, stack_name: Optional[str] = None, swarmID: Optional[str] = None) -> None
+
+   在没有指定部署stack的情况下创建一个stack.
+
+   :param portainer_url: portainer的地址
+   :type portainer_url: str
+   :param jwt: jwt令牌
+   :type jwt: str
+   :param deploy_endpoint: 端点id
+   :type deploy_endpoint: int
+   :param compose: 要部署的stack的compose字典
+   :type compose: ComposeSchema
+   :param cwdp: 本地执行位置
+   :type cwdp: Path
+   :param stack_name: 部署的stack名. Defaults to None.
+   :type stack_name: Optional[str], optional
+   :param swarmID: swarm模式的集群id. Defaults to None.
+   :type swarmID: Optional[str], optional
+
+   :raises AttributeError: [description]
+   :raises AttributeError: [description]
+   :raises AttributeError: [description]
+
+
+.. function:: update_image_version(docker_register: str, docker_register_namespace: str, project_name: str, version: str, deploy_endpoint: int, deploy_stack: int, portainer_url: str, jwt: str) -> None
+
+   只更新旧compose中image的版本.
+
+   :param docker_register: 镜像仓库url
+   :type docker_register: str
+   :param docker_register_namespace: 在镜像仓库中的命名空间
+   :type docker_register_namespace: str
+   :param project_name: 项目名,也就是镜像名
+   :type project_name: str
+   :param version: 当前版本
+   :type version: str
+   :param deploy_endpoint: 部署的端点
+   :type deploy_endpoint: int
+   :param deploy_stack: 部署的stack
+   :type deploy_stack: int
+   :param portainer_url: 部署的portainer位置
+   :type portainer_url: str
+   :param jwt: 部署的令牌
+   :type jwt: str
+
+   :raises AttributeError: 请求失败
+
+
+.. function:: update_satck(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, deploy_endpoint: int, deploy_stack: int, portainer_url: str, jwt: str) -> None
+
+
+.. function:: deploy_portainer(portainer_url: str, cwdp: pathlib.Path, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> None
+
+   远程部署到portainer.
+   如果制定了`dockercompose_name`则:
+   1. 如果没有指定`deploy_stack`则根据本地docker-compose文件创建stack
+   2. 如果指定了`deploy_stack`则使用本地docker-compose文件融合已有的stack(默认level5方式融合)更新stack
+
+   如果没有指定dockercompose_name则:
+   1. 指定了`update_version`则只更新原始stack中的镜像版本
+   2. 没有指定`update_version`,则:
+       1. 如果没有指定`deploy_stack`则根据命令行指示创建stack并在本地保存,然后创建到portainer中
+       2. 如果指定了`deploy_stack`则根据命令行指示创建stack并与已有的融合(默认level5方式融合)然后保存到本地并更新stack
+
+

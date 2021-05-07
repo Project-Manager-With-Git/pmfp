@@ -1,0 +1,184 @@
+:mod:`pmfp.entrypoint.grpc`
+===========================
+
+.. py:module:: pmfp.entrypoint.grpc
+
+.. autoapi-nested-parse::
+
+   子命令ppm grpc.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   build_/index.rst
+   descservice/index.rst
+   listservice/index.rst
+   new/index.rst
+   query/index.rst
+   stress/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_grpc
+   pmfp.entrypoint.grpc.new_grpc
+   pmfp.entrypoint.grpc.list_grpc
+   pmfp.entrypoint.grpc.desc_grpc
+   pmfp.entrypoint.grpc.query_grpc
+   pmfp.entrypoint.grpc.tress_test_grpc
+
+
+
+.. function:: build_grpc(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.', as_type: Optional[List[str]] = None) -> None
+
+   编译grpc的protobuf的schema为不同语言的代码.
+
+   :param language: 编译到的执行环境,可选的有"go","py","js"
+   :type language: List[str]
+   :param files: 待编译的文件列表
+   :type files: List[str]
+   :param pb_includes: 待编译文件及其依赖所在文件夹列表
+   :type pb_includes: List[str]
+   :param to: 编译到的模块所在文件夹.
+   :type to: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+   :param kwargs: Default: None,
+   :type kwargs: Optional[str]
+   :param cwd: 执行的根目录. Default: "."
+   :type cwd: str
+   :param as_type: 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
+   :type as_type: Optional[List[str]]
+
+
+.. function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+
+   新建一个protpbuf文件.
+
+   :param name: 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名
+   :type name: str
+   :param pb_include: protobuf文件存放文件夹路径
+   :type pb_include: str
+   :param parent_package: 父包名. Defaults to None.
+   :type parent_package: Optional[str], optional
+   :param cwd: 执行位置. Defaults to `.`.
+   :type cwd: str, optional
+
+
+.. function:: list_grpc(url: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   列出grpc支持的服务.
+
+   :param url: grpc的url
+   :type url: str
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+
+.. function:: desc_grpc(url: str, service: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   描述grpc支持的服务.
+
+   :param url: grpc的url
+   :type url: str
+   :param service: 要查看的服务名
+   :type service: str
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+
+.. function:: query_grpc(url: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   请求grpc.
+
+   :param url: grpc的url
+   :type url: str
+   :param method: 要请求的方法
+   :type method: str
+   :param payload: 请求的负载
+   :type payload: str
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+
+.. function:: tress_test_grpc(url: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   列出grpc支持的服务.
+
+   :param url: grpc的url
+   :type url: str
+   :param method: 要请求的方法
+   :type method: str
+   :param payload: 请求的负载
+   :type payload: str
+   :param requests: 总请求量
+   :type requests: int
+   :param concurrency: 并发量
+   :type concurrency: int
+   :param duration: 并发间隔
+   :type duration: int
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+

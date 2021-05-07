@@ -1,0 +1,37 @@
+:mod:`pmfp.utils.schema_utils`
+==============================
+
+.. py:module:: pmfp.utils.schema_utils
+
+.. autoapi-nested-parse::
+
+   用于检测数据模式的公用组件.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.schema_utils.is_validated
+
+
+
+.. function:: is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool
+
+   检测数据是否符合模式.
+
+   :param instance: 待检测数据
+   :type instance: Dict[str,Any]
+   :param schema: 需要满足的模式
+   :type schema: Dict[str,Any]
+
+   :returns: 是否通过验证
+   :rtype: bool
+
+

@@ -1,0 +1,42 @@
+:mod:`pmfp.entrypoint.proto.build_.build_pb_go`
+===============================================
+
+.. py:module:: pmfp.entrypoint.proto.build_.build_pb_go
+
+.. autoapi-nested-parse::
+
+   编译go语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.proto.build_.build_pb_go._build_pb
+   pmfp.entrypoint.proto.build_.build_pb_go.build_pb_go
+
+
+
+.. function:: _build_pb(includes: str, flag: str, to: str, target: str, cwd: pathlib.Path) -> None
+
+
+.. function:: build_pb_go(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, source_relative: bool = False, **kwargs: str) -> None
+
+   编译protobuffer为go语言模块.
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+
+

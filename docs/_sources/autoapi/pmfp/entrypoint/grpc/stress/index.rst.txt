@@ -1,0 +1,96 @@
+:mod:`pmfp.entrypoint.grpc.stress`
+==================================
+
+.. py:module:: pmfp.entrypoint.grpc.stress
+
+.. autoapi-nested-parse::
+
+   压测grpc服务.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.stress.run
+   pmfp.entrypoint.grpc.stress.tress_test_grpc
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.stress.grpc_stress_test
+
+
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+
+   执行命令行命令并返回其stdout的值
+
+   :param command: 命令行命令
+   :type command: str
+   :param cwd: 执行命令时的位置.Default: None
+   :type cwd: Optional[Path]
+   :param env: 执行命令时的环境变量. Default:None
+   :type env: Optional[Any]
+   :param visible: 命令结果的可见度. Default: False
+   :type visible: bool
+   :param fail_exit: 当执行失败时退出程序. Default: False
+   :type fail_exit: bool
+
+   :returns: stdout捕获的字符串
+   :rtype: str
+
+
+.. data:: grpc_stress_test
+   
+
+   
+
+.. function:: tress_test_grpc(url: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+
+   列出grpc支持的服务.
+
+   :param url: grpc的url
+   :type url: str
+   :param method: 要请求的方法
+   :type method: str
+   :param payload: 请求的负载
+   :type payload: str
+   :param requests: 总请求量
+   :type requests: int
+   :param concurrency: 并发量
+   :type concurrency: int
+   :param duration: 并发间隔
+   :type duration: int
+   :param cwd: 执行操作时的操作目录. Defaults to ".".
+   :type cwd: str, optional
+   :param plaintext: 是否不使用TLS加密传输. Defaults to False.
+   :type plaintext: bool, optional
+   :param insecure: 跳过服务器证书和域验证. Defaults to False.
+   :type insecure: bool, optional
+   :param cacert: 根证书位置. Defaults to None.
+   :type cacert: Optional[str], optional
+   :param cert: 服务证书位置. Defaults to None.
+   :type cert: Optional[str], optional
+   :param key: 服务证书对应的私钥位置. Defaults to None.
+   :type key: Optional[str], optional
+
+

@@ -1,0 +1,64 @@
+:mod:`pmfp.entrypoint.http.serv`
+================================
+
+.. py:module:: pmfp.entrypoint.http.serv
+
+.. autoapi-nested-parse::
+
+   启动一个简易的http静态服务器.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.http.serv.get_global_python
+   pmfp.entrypoint.http.serv.serv_http
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.http.serv.http_serv
+
+
+.. function:: get_global_python() -> str
+
+   获取全局python.
+
+
+.. data:: http_serv
+   
+
+   
+
+.. function:: serv_http(port: int, root: str, bind: str) -> None
+
+   启动http静态服务.
+
+   :param port: 端口
+   :type port: int
+   :param root: 启动的根目录
+   :type root: str
+   :param bind: 绑定的ip
+   :type bind: str
+
+

@@ -1,0 +1,101 @@
+:mod:`pmfp.entrypoint.doc_.utils`
+=================================
+
+.. py:module:: pmfp.entrypoint.doc_.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.utils.sphinx_build
+   pmfp.entrypoint.doc_.utils.sphinx_new
+   pmfp.entrypoint.doc_.utils.sphinx_config
+   pmfp.entrypoint.doc_.utils.sphinx_config_update_version
+   pmfp.entrypoint.doc_.utils.no_jekyll
+   pmfp.entrypoint.doc_.utils._move_to_source
+   pmfp.entrypoint.doc_.utils.move_to_source
+   pmfp.entrypoint.doc_.utils.makeindex
+
+
+
+.. function:: sphinx_build(source_dir: pathlib.Path, doc_dir: pathlib.Path, *, cwd: pathlib.Path = Path('.')) -> None
+
+   编译更新文档.
+
+   :param source_dir: 文档源码位置
+   :type source_dir: Path
+   :param doc_dir: 文档输出目标位置
+   :type doc_dir: Path
+   :param cwd: 执行位置
+   :type cwd: Path
+
+
+.. function:: sphinx_new(source_dir: pathlib.Path, project_name: str, author: str, version: str, *, cwd: pathlib.Path = Path('.')) -> None
+
+   为python/c++项目构造api文档.
+
+   :param source_dir: 文档源码位置
+   :type source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+
+
+.. function:: sphinx_config(source_dir: pathlib.Path, append_content: str) -> None
+
+   为sphinx的配置增加配置项.
+
+   :param source_dir: 文档源文件地址
+   :type source_dir: Path
+   :param append_content: 要添加的配置文本.
+   :type append_content: str
+
+
+.. function:: sphinx_config_update_version(source_dir: pathlib.Path, version: str) -> None
+
+   为sphinx的配置增加配置项.
+
+   :param version: 要更新的版本好.
+   :type version: str
+
+
+.. function:: no_jekyll(output: pathlib.Path) -> None
+
+   为目录添加一个空文件`.nojekyll`.
+
+   :param output: 放置的目录位置
+   :type output: Path
+
+
+.. function:: _move_to_source(source_dir: pathlib.Path, file_name: str, *, root: pathlib.Path) -> None
+
+
+.. function:: move_to_source(source_dir: pathlib.Path, *, root: pathlib.Path) -> None
+
+   将项目根目录下的描述文件复制同步到项目下.
+
+   :param source_dir: 文档源文件所在文件夹位置
+   :type source_dir: Path
+   :param root: 要移动文档的项目根目录.
+   :type root: Path
+
+
+.. function:: makeindex(source_dir: pathlib.Path, template: str, **kwargs: Any) -> None
+
+   创建index.md.
+
+   :param source_dir: [description]
+   :type source_dir: Path
+   :param root: [description]
+   :type root: Path
+
+

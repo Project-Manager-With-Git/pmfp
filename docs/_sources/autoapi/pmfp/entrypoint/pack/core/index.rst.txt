@@ -1,0 +1,54 @@
+:mod:`pmfp.entrypoint.pack.core`
+================================
+
+.. py:module:: pmfp.entrypoint.pack.core
+
+.. autoapi-nested-parse::
+
+   ppm pack命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.pack.core.Pack
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.pack.core.pack_cmd
+
+
+.. class:: Pack
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   打包指定位置项目.
+
+   .. attribute:: argparse_noflag
+      :annotation: = code
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: pack_cmd
+   
+
+   
+

@@ -1,0 +1,98 @@
+:mod:`pmfp.entrypoint.test_.unittest`
+=====================================
+
+.. py:module:: pmfp.entrypoint.test_.unittest
+
+.. autoapi-nested-parse::
+
+   单元测试.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   test_go/index.rst
+   test_py/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.unittest.unittest_test_py
+   pmfp.entrypoint.test_.unittest.unittest_test_go
+   pmfp.entrypoint.test_.unittest.unittest_test
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.unittest.test_unittest
+
+
+.. function:: unittest_test_py(test_code: str, code: str, *, coverage: Optional[bool] = False, output: Optional[str] = 'doc_unittest', cwd: Optional[str] = '.') -> None
+
+   对python代码做单元测试.
+
+   :param test_code: 测试代码
+   :type test_code: str
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: Optional[bool]
+   :param code: 项目源码
+   :type code: Optional[str]
+   :param output: 覆盖率文档位置
+   :type output: Optional[str]
+   :param cwd: 执行测试时的位置
+   :type cwd: Optional[str]
+
+
+.. function:: unittest_test_go(test_code: str, *, coverage: bool = False, output: str = 'doc_unittest', cwd: str = '.') -> None
+
+   对python代码做单元测试.
+
+   :param test_code: 项目测试代码
+   :type test_code: str
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: Optional[bool]
+   :param output: 覆盖率文档位置
+   :type output: Optional[str]
+   :param cwd: 项目的根目录位置
+   :type cwd: Optional[str]
+
+
+.. data:: test_unittest
+   
+
+   
+
+.. function:: unittest_test(language: str, test_code: str, code: str, *, cwd: str = '.', coverage: bool = False, output: str = 'doc_unittest') -> None
+
+   对指定代码做单元测试.
+
+   :param language: 目标语言
+   :type language: str
+   :param test_code: 测试代码
+   :type test_code: str
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: Optional[bool]
+   :param code: 测试源码
+   :type code: str
+   :param output: 覆盖率文档位置
+   :type output: Optional[str]
+   :param cwd: 执行测试时的位置
+   :type cwd: str
+
+

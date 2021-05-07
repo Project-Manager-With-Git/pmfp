@@ -1,0 +1,130 @@
+:mod:`pmfp.entrypoint.schema`
+=============================
+
+.. py:module:: pmfp.entrypoint.schema
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   check/index.rst
+   clone/index.rst
+   move/index.rst
+   new/index.rst
+   test_/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   utils/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.check_schema
+   pmfp.entrypoint.schema.clone_schema
+   pmfp.entrypoint.schema.move_schema
+   pmfp.entrypoint.schema.new_schema
+   pmfp.entrypoint.schema.test_schema
+
+
+
+.. function:: check_schema(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+
+   检测指定的数据是否满足模式.
+
+   :param schema: 模式的地址,可以是url或者文件路径.
+   :type schema: str
+   :param serialization: 使用的序列化协议.
+   :type serialization: str
+   :param url: "请求的路径,可以是http/file的url或者文件系统的路径".
+   :type url: str
+   :param method: 访问资源的方法.
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+
+
+.. function:: clone_schema(url: str, method: str, out: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, verify: bool = False, cert: Optional[str] = None) -> None
+
+   克隆一个json schema到本地文本.
+
+   :param name: 模式名
+   :type name: str
+   :param path: 从根目录起的路径
+   :type path: str
+   :param version: 模式版本
+   :type version: str
+   :param root: 根目录.
+   :type root: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+
+.. function:: move_schema(file: str, old_cwd: str, *, name: Optional[str] = None, to: Optional[str] = None, version: Optional[str] = None, cwd: Optional[str] = None, addr: Optional[str] = None, remove_old: bool = False) -> None
+
+   新建一个json schema文件.
+
+   :param name: 模式名
+   :type name: str
+   :param to: 从根目录起的路径
+   :type to: str
+   :param version: 模式版本
+   :type version: str
+   :param cwd: 根目录.
+   :type cwd: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+
+.. function:: new_schema(name: str, to: str, version: str, *, cwd: str = '.', addr: Optional[str] = None) -> None
+
+   新建一个json schema文件.
+
+   :param name: 模式名
+   :type name: str
+   :param to: 目标路径
+   :type to: str
+   :param version: 模式版本
+   :type version: str
+   :param cwd: 执行目录.
+   :type cwd: str
+   :param addr: 网站域名.
+   :type addr: Optional[str]
+
+
+.. function:: test_schema(file: str) -> None
+
+   检查一个json schema文件中的例子是否符合自身的schema.
+
+   :param file: 模式文件地址
+   :type file: str
+
+

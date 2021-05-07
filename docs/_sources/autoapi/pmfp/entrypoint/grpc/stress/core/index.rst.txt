@@ -1,0 +1,51 @@
+:mod:`pmfp.entrypoint.grpc.stress.core`
+=======================================
+
+.. py:module:: pmfp.entrypoint.grpc.stress.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.stress.core.Stress
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.stress.core.grpc_stress_test
+
+
+.. class:: Stress
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   压测指定grpc的服务.
+
+   需要本地有`ghz`,可以在`https://github.com/bojand/ghz`下载安装
+
+   .. attribute:: argparse_noflag
+      :annotation: = url
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: grpc_stress_test
+   
+
+   
+

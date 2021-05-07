@@ -1,0 +1,78 @@
+:mod:`pmfp.entrypoint.doc_`
+===========================
+
+.. py:module:: pmfp.entrypoint.doc_
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   build_/index.rst
+   new/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   utils/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.new_doc
+   pmfp.entrypoint.doc_.build_doc
+
+
+
+.. function:: new_doc(language: str, code: str, output: str, doc_source_dir: str, *, project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
+
+   为项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param doc_source_dir: 文档源码位置
+   :type doc_source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行项目时的位置
+   :type cwd: str
+
+
+.. function:: build_doc(language: str, output: str, doc_source_dir: str, *, version: Optional[str] = None, cwd: str = '.') -> None
+
+   为项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param doc_source_dir: 文档源码位置
+   :type doc_source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行项目时的位置
+   :type cwd: str
+
+

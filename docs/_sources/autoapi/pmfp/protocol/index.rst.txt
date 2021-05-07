@@ -1,0 +1,26 @@
+:mod:`pmfp.protocol`
+====================
+
+.. py:module:: pmfp.protocol
+
+.. autoapi-nested-parse::
+
+   protocol.
+
+   用于定义模块支持的可以用于解析的json schema的模式.
+
+
+
+Module Contents
+---------------
+
+.. data:: TEMPLATE_INFO_SCHEMA
+   
+
+   
+
+.. data:: PMFP_CONFIG_SCHEMA
+   
+
+   
+

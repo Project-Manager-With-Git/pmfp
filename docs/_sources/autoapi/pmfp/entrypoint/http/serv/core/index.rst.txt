@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.http.serv.core`
+=====================================
+
+.. py:module:: pmfp.entrypoint.http.serv.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.http.serv.core.Serv
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.http.serv.core.http_serv
+
+
+.. class:: Serv
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   以指定位置作为http服务的根目录启动一个静态http服务器.
+
+   .. attribute:: argparse_noflag
+      :annotation: = port
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: http_serv
+   
+
+   
+

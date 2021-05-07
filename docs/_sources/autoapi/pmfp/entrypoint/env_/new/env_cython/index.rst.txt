@@ -1,0 +1,61 @@
+:mod:`pmfp.entrypoint.env_.new.env_cython`
+==========================================
+
+.. py:module:: pmfp.entrypoint.env_.new.env_cython
+
+.. autoapi-nested-parse::
+
+   初始化cython的执行环境.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_cython.new_env_cython_setup
+   pmfp.entrypoint.env_.new.env_cython.init_cython_env
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_cython.cython_setup_py_template
+   pmfp.entrypoint.env_.new.env_cython.template_io
+   pmfp.entrypoint.env_.new.env_cython.cython_setup_py_template
+
+
+.. data:: cython_setup_py_template
+   :annotation: = 
+
+   
+
+.. data:: template_io
+   
+
+   
+
+.. data:: cython_setup_py_template
+   
+
+   
+
+.. function:: new_env_cython_setup(cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+   初始化cython项目的setup.py和setup.cfg文件.
+
+   :param cwd: [description]
+   :type cwd: Path
+
+
+.. function:: init_cython_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+

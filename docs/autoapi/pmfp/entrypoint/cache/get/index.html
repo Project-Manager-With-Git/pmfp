@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.cache.get &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.cache.get</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/autoapi/pmfp/entrypoint/cache/get/index.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pmfp.entrypoint.cache.get">
+<span id="pmfp-entrypoint-cache-get"></span><h1><a class="reference internal" href="#module-pmfp.entrypoint.cache.get" title="pmfp.entrypoint.cache.get"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.cache.get</span></code></a><a class="headerlink" href="#module-pmfp.entrypoint.cache.get" title="永久链接至标题">¶</a></h1>
+<p>ppm cache get命令的处理.</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="永久链接至标题">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.cache.get.core</span></code></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="永久链接至标题">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="永久链接至标题">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.cache.get.SourcePack" title="pmfp.entrypoint.cache.get.SourcePack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourcePack</span></code></a></p></td>
+<td><p>资源包类.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="永久链接至标题">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.cache.get.get_cache_dir" title="pmfp.entrypoint.cache.get.get_cache_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cache_dir</span></code></a>() → pathlib.Path</p></td>
+<td><p>获取缓存根目录.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.cache.get.get_sourcepack" title="pmfp.entrypoint.cache.get.get_sourcepack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_sourcepack</span></code></a>(source_pack_string: str) → None</p></td>
+<td><p>从远程指定位置获取资源包.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="永久链接至标题">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.cache.get.cache_get" title="pmfp.entrypoint.cache.get.cache_get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cache_get</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="pmfp.entrypoint.cache.get.SourcePack">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.cache.get.</span></code><code class="sig-name descname"><span class="pre">SourcePack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_namespace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'latest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack" title="永久链接至目标">¶</a></dt>
+<dd><p>资源包类.</p>
+<dl class="py attribute">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.TENPLATE_URL">
+<code class="sig-name descname"><span class="pre">TENPLATE_URL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{host}::{repo_namespace}::{repo_name}&#64;{tag}</span></em><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.TENPLATE_URL" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.from_sourcepack_string">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_sourcepack_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourcepack_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pmfp.entrypoint.cache.get.SourcePack" title="pmfp.entrypoint.cache.get.SourcePack"><span class="pre">SourcePack</span></a><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.from_sourcepack_string" title="永久链接至目标">¶</a></dt>
+<dd><p>从资源包字符串构造资源包对象.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>sourcepack_string</strong> (<em>str</em>) – 用于描述资源包的字符串,其形式为`”[[{host}::]{repo_namespace}::]{repo_name}[&#64;{tag}]”`</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>资源包对象.</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>[<a class="reference internal" href="#pmfp.entrypoint.cache.get.SourcePack" title="pmfp.entrypoint.cache.get.SourcePack">SourcePack</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.as_sourcepack_string">
+<code class="sig-name descname"><span class="pre">as_sourcepack_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.as_sourcepack_string" title="永久链接至目标">¶</a></dt>
+<dd><p>构造资源包字符串.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.git_url">
+<code class="sig-name descname"><span class="pre">git_url</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'https'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.git_url" title="永久链接至目标">¶</a></dt>
+<dd><p>构造资源包的git仓库地址url.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>schema</strong> (<em>str</em><em>, </em><em>optional</em>) – url协议. Defaults to “https”.</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>git的仓库地址字符串.</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.pull_latest">
+<code class="sig-name descname"><span class="pre">pull_latest</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.pull_latest" title="永久链接至目标">¶</a></dt>
+<dd><p>拉取最新镜像,并将原来的版本以hash为tag保存</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>temp_dir</strong> (<em>Path</em>) – [description]</p></li>
+<li><p><strong>throw</strong> (<em>bool</em>) – 是否抛出异常</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.clone_source_pack">
+<code class="sig-name descname"><span class="pre">clone_source_pack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.clone_source_pack" title="永久链接至目标">¶</a></dt>
+<dd><p>克隆资源包到本地缓存临时文件夹.</p>
+<p>如果资源包的tag不是latest则clone下来后删除.git文件夹,否则保存</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cache_dir</strong> (<em>Path</em>) – 缓存文件夹地址.</p></li>
+<li><p><strong>throw</strong> (<em>bool</em>) – 是否抛出异常</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.source_pack_path">
+<code class="sig-name descname"><span class="pre">source_pack_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pathlib.Path</span><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.source_pack_path" title="永久链接至目标">¶</a></dt>
+<dd><p>构造资源包的本地路径.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>cache_dir</strong> (<em>Path</em>) – 缓存文件夹路径.</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>资源包所在的文件夹路径</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pmfp.entrypoint.cache.get.SourcePack.cache">
+<code class="sig-name descname"><span class="pre">cache</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_clone</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_pull</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_pull</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pmfp.entrypoint.cache.get.SourcePack.cache" title="永久链接至目标">¶</a></dt>
+<dd><p>缓存资源包到本地.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cache_dir</strong> (<em>Path</em>) – 缓存文件夹地址.</p></li>
+<li><p><strong>throw</strong> (<em>bool</em>) – 是否抛出异常</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.entrypoint.cache.get.get_cache_dir">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.cache.get.</span></code><code class="sig-name descname"><span class="pre">get_cache_dir</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pathlib.Path</span><a class="reference internal" href="../../../../../_modules/pmfp/utils/tools_info_utils.html#get_cache_dir"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.cache.get.get_cache_dir" title="永久链接至目标">¶</a></dt>
+<dd><p>获取缓存根目录.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="pmfp.entrypoint.cache.get.cache_get">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.cache.get.</span></code><code class="sig-name descname"><span class="pre">cache_get</span></code><a class="reference internal" href="../../../../../_modules/pmfp/entrypoint/cache/get/core.html#cache_get"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.cache.get.cache_get" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.entrypoint.cache.get.get_sourcepack">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.cache.get.</span></code><code class="sig-name descname"><span class="pre">get_sourcepack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_pack_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/pmfp/entrypoint/cache/get.html#get_sourcepack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.cache.get.get_sourcepack" title="永久链接至目标">¶</a></dt>
+<dd><p>从远程指定位置获取资源包.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>source_pack_string</strong> (<em>str</em>) – 描述资源包的字符串,格式为”[{host}::]{repo_namespace}::{repo_name}[&#64;{tag}]”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

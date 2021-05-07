@@ -1,0 +1,61 @@
+:mod:`pmfp.entrypoint.env_`
+===========================
+
+.. py:module:: pmfp.entrypoint.env_
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   new/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new_env
+
+
+
+.. function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
+
+   构造不同执行环境.
+
+   :param language: 目标项目使用的语言
+   :type language: str
+   :param env: 目标执行环境
+   :type env: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param version: 项目版本
+   :type version: str
+   :param author: 项目作者
+   :type author: str
+   :param author_email: 项目作者email. Defaults to "".
+   :type author_email: str, optional
+   :param description: 项目简介. Defaults to "".
+   :type description: str, optional
+   :param keywords: 项目关键字. Defaults to None.
+   :type keywords: Optional[List[str]], optional
+   :param cwd: 命令执行根目录. Defaults to ".".
+   :type cwd: str, optional
+
+

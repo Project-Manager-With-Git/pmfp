@@ -1,0 +1,149 @@
+:mod:`pmfp.entrypoint.schema.clone`
+===================================
+
+.. py:module:: pmfp.entrypoint.schema.clone
+
+.. autoapi-nested-parse::
+
+   克隆json schema模式文本.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.clone.jsontemplate_2_content
+   pmfp.entrypoint.schema.clone.query_http
+   pmfp.entrypoint.schema.clone.is_http_url
+   pmfp.entrypoint.schema.clone.parse_http_url
+   pmfp.entrypoint.schema.clone.is_file_url
+   pmfp.entrypoint.schema.clone.parse_file_url
+   pmfp.entrypoint.schema.clone.get_abs_path
+   pmfp.entrypoint.schema.clone.clone_schema
+
+
+
+.. function:: jsontemplate_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. function:: query_http(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None, cb: Optional[Callable[[str], None]] = None) -> None
+
+   http请求并打印结果.
+
+   :param url: 要访问的http资源的地址
+   :type url: str
+   :param method: 访问资源的方法
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+   :param cb: 获取到数据后的处理回调. Defaults to None.
+   :type cb: Optional[Callable[[str],None]], optional
+
+
+.. function:: is_http_url(url: str) -> bool
+
+   判断url是否是http请求的url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: parse_http_url(url: str) -> str
+
+   从file url中提取文件系统中的路径.
+
+   :param url: file url
+   :type url: str
+
+   :returns: file url中提取出的路径
+   :rtype: str
+
+
+.. function:: is_file_url(url: str) -> bool
+
+   判断url是否是文件协议相关的url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: parse_file_url(url: str) -> str
+
+   从file url中提取文件系统中的路径.
+
+   :param url: file url
+   :type url: str
+
+   :returns: file url中提取出的路径
+   :rtype: str
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: clone_schema(url: str, method: str, out: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, verify: bool = False, cert: Optional[str] = None) -> None
+
+   克隆一个json schema到本地文本.
+
+   :param name: 模式名
+   :type name: str
+   :param path: 从根目录起的路径
+   :type path: str
+   :param version: 模式版本
+   :type version: str
+   :param root: 根目录.
+   :type root: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+

@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.project.new &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">模块代码</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.project.new</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.project.new 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">get_abs_path</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.remote_cache_utils</span> <span class="kn">import</span> <span class="n">SourcePack</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.tools_info_utils</span> <span class="kn">import</span> <span class="n">get_cache_dir</span><span class="p">,</span> <span class="n">get_config_info</span>
+<span class="kn">from</span> <span class="nn">pmfp.entrypoint.env_.new</span> <span class="kn">import</span> <span class="n">new_env</span>
+<span class="kn">from</span> <span class="nn">pmfp.entrypoint.requires.install</span> <span class="kn">import</span> <span class="n">install_requires</span>
+<span class="kn">from</span> <span class="nn">pmfp.entrypoint.project.info</span> <span class="kn">import</span> <span class="n">InfoBase</span>
+<span class="kn">from</span> <span class="nn">pmfp.entrypoint.project.add</span> <span class="kn">import</span> <span class="n">_add_component</span><span class="p">,</span> <span class="n">make_template_kv</span><span class="p">,</span> <span class="n">to_target_source</span><span class="p">,</span> <span class="n">sourcepack_check_and_cached</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">project_new</span>
+
+
+<div class="viewcode-block" id="check_and_cached"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/new/index.html#pmfp.entrypoint.project.check_and_cached">[文档]</a><span class="k">def</span> <span class="nf">check_and_cached</span><span class="p">(</span><span class="n">cached_sourcepack</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">template_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">SourcePack</span><span class="p">,</span> <span class="n">Path</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;检查组件的模板库是否有缓存,没有的话进行缓存.</span>
+
+<span class="sd">    `latest`标签的模板库都会进行缓存更新.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        template_string (str): 模板仓库字符串</span>
+<span class="sd">        cache_dir (Path): 缓存根目录</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AttributeError: 组件缓存位置不是目录</span>
+<span class="sd">        e: 其他执行中的异常</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        ComponentTemplate: 组件对象</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">source_pack</span> <span class="o">=</span> <span class="n">SourcePack</span><span class="o">.</span><span class="n">from_sourcepack_string</span><span class="p">(</span><span class="n">template_string</span><span class="p">)</span>
+    <span class="n">sourcepackdir</span> <span class="o">=</span> <span class="n">sourcepack_check_and_cached</span><span class="p">(</span><span class="n">cached_sourcepack</span><span class="p">,</span> <span class="n">source_pack</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">source_pack</span><span class="p">,</span> <span class="n">sourcepackdir</span></div>
+
+
+<div class="viewcode-block" id="check_source"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/new/index.html#pmfp.entrypoint.project.check_source">[文档]</a><span class="k">def</span> <span class="nf">check_source</span><span class="p">(</span><span class="n">pmfpconf</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">sourcepackdir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">template_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;校验组件所在模板库的信息,通过的话返回模板库信息&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sourcepackdir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">pmfpconf</span><span class="p">[</span><span class="s2">&quot;template_config_name&quot;</span><span class="p">]),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">sourcepack_config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">template_type</span> <span class="o">=</span> <span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;template_type&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">template_type</span> <span class="o">==</span> <span class="s2">&quot;components&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;资源包</span><span class="si">{</span><span class="n">template_string</span><span class="si">}</span><span class="s2">是组件资源包,不能用于构造项目&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sourcepack_language</span> <span class="o">=</span> <span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sourcepack_language</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;模板资源未指明项目语言&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">language</span> <span class="ow">and</span> <span class="n">sourcepack_language</span> <span class="o">!=</span> <span class="n">language</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;组件</span><span class="si">{</span><span class="n">template_string</span><span class="si">}</span><span class="s2">语言</span><span class="si">{</span><span class="n">sourcepack_language</span><span class="si">}</span><span class="s2">与项目语言</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2">不匹配&quot;</span><span class="p">)</span>
+
+        <span class="n">sourcepack_env</span> <span class="o">=</span> <span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sourcepack_env</span> <span class="ow">and</span> <span class="n">env</span> <span class="ow">and</span> <span class="n">sourcepack_env</span> <span class="o">!=</span> <span class="n">env</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;组件</span><span class="si">{</span><span class="n">template_string</span><span class="si">}</span><span class="s2">执行环境</span><span class="si">{</span><span class="n">sourcepack_env</span><span class="si">}</span><span class="s2">与项目执行环境</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">不匹配&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sourcepack_config</span></div>
+
+
+<span class="nd">@project_new</span><span class="o">.</span><span class="n">as_main</span>
+<div class="viewcode-block" id="new_project"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/new/index.html#pmfp.entrypoint.project.new_project">[文档]</a><span class="k">def</span> <span class="nf">new_project</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">language</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">project_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">author</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">author_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">keywords</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">requires</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">template_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">with_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="n">install</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="n">kv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">install_env_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">template_string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">language</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;初始化如果没有指定模板则必须指定项目语言.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始构造指定的执行环境&quot;</span><span class="p">)</span>
+        <span class="n">new_env</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+                <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+                <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+                <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+                <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+                <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+                <span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">,</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 开始根据模板构造项目组件</span>
+        <span class="n">pmfpconf</span> <span class="o">=</span> <span class="n">get_config_info</span><span class="p">()</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">get_cache_dir</span><span class="p">()</span>
+        <span class="n">cwdp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
+        <span class="n">cached_sourcepacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">source_pack</span><span class="p">,</span> <span class="n">sourcepackdir</span> <span class="o">=</span> <span class="n">check_and_cached</span><span class="p">(</span><span class="n">cached_sourcepacks</span><span class="p">,</span> <span class="n">template_string</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">)</span>
+        <span class="n">sourcepack_config</span> <span class="o">=</span> <span class="n">check_source</span><span class="p">(</span>
+            <span class="n">pmfpconf</span><span class="o">=</span><span class="n">pmfpconf</span><span class="p">,</span>
+            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+            <span class="n">sourcepackdir</span><span class="o">=</span><span class="n">sourcepackdir</span><span class="p">,</span>
+            <span class="n">template_string</span><span class="o">=</span><span class="n">template_string</span>
+        <span class="p">)</span>
+        <span class="n">sourcepack_language</span> <span class="o">=</span> <span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">language</span><span class="p">:</span>
+            <span class="n">language</span> <span class="o">=</span> <span class="n">sourcepack_language</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始构造指定的执行环境&quot;</span><span class="p">)</span>
+        <span class="n">new_env</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+                <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+                <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+                <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+                <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">,</span>
+                <span class="n">author_email</span><span class="o">=</span><span class="n">author_email</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+                <span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">,</span>
+                <span class="n">requires</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;requires&quot;</span><span class="p">),</span>
+                <span class="n">test_requires</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test_requires&quot;</span><span class="p">),</span>
+                <span class="n">setup_requires</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;setup_requires&quot;</span><span class="p">),</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+        <span class="n">projectinfo</span> <span class="o">=</span> <span class="n">InfoBase</span><span class="p">()</span>
+        <span class="n">projectinfo</span><span class="p">([])</span>
+        <span class="n">projectconfig</span> <span class="o">=</span> <span class="n">projectinfo</span><span class="o">.</span><span class="n">config</span>
+        <span class="n">components</span> <span class="o">=</span> <span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;components&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">components</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始构造组件&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">component_name</span><span class="p">,</span> <span class="n">component_info</span> <span class="ow">in</span> <span class="n">components</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">component_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">template_string</span><span class="si">}</span><span class="s2">//</span><span class="si">{</span><span class="n">component_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">_add_component</span><span class="p">(</span>
+                    <span class="n">cached_sourcepacks</span><span class="o">=</span><span class="n">cached_sourcepacks</span><span class="p">,</span>
+                    <span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
+                    <span class="n">pmfpconf</span><span class="o">=</span><span class="n">pmfpconf</span><span class="p">,</span>
+                    <span class="n">cache_dir</span><span class="o">=</span><span class="n">cache_dir</span><span class="p">,</span>
+                    <span class="n">component_string</span><span class="o">=</span><span class="n">component_string</span><span class="p">,</span>
+                    <span class="n">cwdp</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span> <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;组件构造结束&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">with_test</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sourcepack_test_config</span> <span class="o">=</span> <span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">sourcepack_test_config</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;模板没有提供测试资源&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始构造测试模板&quot;</span><span class="p">)</span>
+                    <span class="n">target_source</span> <span class="o">=</span> <span class="n">sourcepack_test_config</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="s2">&quot;//&quot;</span> <span class="ow">in</span> <span class="n">target_source</span><span class="p">:</span>
+                        <span class="n">_add_component</span><span class="p">(</span>
+                            <span class="n">cached_sourcepacks</span><span class="o">=</span><span class="n">cached_sourcepacks</span><span class="p">,</span>
+                            <span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
+                            <span class="n">pmfpconf</span><span class="o">=</span><span class="n">pmfpconf</span><span class="p">,</span>
+                            <span class="n">cache_dir</span><span class="o">=</span><span class="n">cache_dir</span><span class="p">,</span>
+                            <span class="n">component_string</span><span class="o">=</span><span class="n">target_source</span><span class="p">,</span>
+                            <span class="n">cwdp</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>
+                            <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">,</span>
+                            <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">tempkv</span> <span class="o">=</span> <span class="n">make_template_kv</span><span class="p">(</span>
+                            <span class="n">sourcepack_config</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="p">,</span>
+                            <span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
+                            <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">)</span>
+                        <span class="n">located_path_str</span> <span class="o">=</span> <span class="n">to_target_source</span><span class="p">(</span><span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
+                                                            <span class="n">target_component_info</span><span class="o">=</span><span class="n">sourcepack_test_config</span><span class="p">,</span>
+                                                            <span class="n">cwdp</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>
+                                                            <span class="n">sourcepackdir</span><span class="o">=</span><span class="n">sourcepackdir</span><span class="p">,</span>
+                                                            <span class="n">target_source</span><span class="o">=</span><span class="n">target_source</span><span class="p">,</span>
+                                                            <span class="n">tempkv</span><span class="o">=</span><span class="n">tempkv</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;初始化测试模板错误:</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">install</span><span class="p">:</span>
+            <span class="n">install_requires</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+                             <span class="n">test</span><span class="o">=</span><span class="n">with_test</span><span class="p">,</span>
+                             <span class="n">requires</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;requires&quot;</span><span class="p">),</span>
+                             <span class="n">test_requires</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test_requires&quot;</span><span class="p">),</span>
+                             <span class="n">env_args</span><span class="o">=</span><span class="n">install_env_args</span><span class="p">,</span>
+                             <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

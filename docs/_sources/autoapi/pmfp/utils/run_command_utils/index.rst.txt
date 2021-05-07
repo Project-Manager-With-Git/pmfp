@@ -1,0 +1,55 @@
+:mod:`pmfp.utils.run_command_utils`
+===================================
+
+.. py:module:: pmfp.utils.run_command_utils
+
+.. autoapi-nested-parse::
+
+   执行命令行任务的通用组件.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.run_command_utils.make_env_args
+   pmfp.utils.run_command_utils.run
+
+
+
+.. function:: make_env_args(env_args: Optional[List[str]]) -> Dict[str, str]
+
+   构造环境变量字典
+
+   :param env_args: 外部添加环境变量字符串,以`::`区分键值
+   :type env_args: Optional[List[str]]
+
+   :returns: 执行时的环境变量字典
+   :rtype: Dict[str, str]
+
+
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+
+   执行命令行命令并返回其stdout的值
+
+   :param command: 命令行命令
+   :type command: str
+   :param cwd: 执行命令时的位置.Default: None
+   :type cwd: Optional[Path]
+   :param env: 执行命令时的环境变量. Default:None
+   :type env: Optional[Any]
+   :param visible: 命令结果的可见度. Default: False
+   :type visible: bool
+   :param fail_exit: 当执行失败时退出程序. Default: False
+   :type fail_exit: bool
+
+   :returns: stdout捕获的字符串
+   :rtype: str
+
+

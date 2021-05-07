@@ -1,0 +1,44 @@
+:mod:`pmfp.entrypoint.cache.core`
+=================================
+
+.. py:module:: pmfp.entrypoint.cache.core
+
+.. autoapi-nested-parse::
+
+   ppm cache管理资源包缓存
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.core.Cache
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.cache.core.cache
+
+
+.. class:: Cache
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   资源包缓存相关命令.
+
+
+.. data:: cache
+   
+
+   
+

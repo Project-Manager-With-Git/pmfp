@@ -1,0 +1,134 @@
+:mod:`pmfp.utils.remote_cache_utils`
+====================================
+
+.. py:module:: pmfp.utils.remote_cache_utils
+
+.. autoapi-nested-parse::
+
+   远程资源缓存相关的通用工具.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.remote_cache_utils.SourcePack
+   pmfp.utils.remote_cache_utils.ComponentTemplate
+
+
+
+
+.. class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
+
+
+   资源包类.
+
+   .. attribute:: TENPLATE_URL
+      :annotation: = {host}::{repo_namespace}::{repo_name}@{tag}
+
+      
+
+   .. method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
+      :classmethod:
+
+      从资源包字符串构造资源包对象.
+
+      :param sourcepack_string: 用于描述资源包的字符串,其形式为`"[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]"`
+      :type sourcepack_string: str
+
+      :returns: 资源包对象.
+      :rtype: [SourcePack]
+
+
+   .. method:: as_sourcepack_string(self) -> str
+
+      构造资源包字符串.
+
+
+   .. method:: git_url(self, schema: str = 'https') -> str
+
+      构造资源包的git仓库地址url.
+
+      :param schema: url协议. Defaults to "https".
+      :type schema: str, optional
+
+      :returns: git的仓库地址字符串.
+      :rtype: str
+
+
+   .. method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
+
+      拉取最新镜像,并将原来的版本以hash为tag保存
+
+      :param temp_dir: [description]
+      :type temp_dir: Path
+      :param throw: 是否抛出异常
+      :type throw: bool
+
+
+   .. method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
+
+      克隆资源包到本地缓存临时文件夹.
+
+      如果资源包的tag不是latest则clone下来后删除.git文件夹,否则保存
+
+      :param cache_dir: 缓存文件夹地址.
+      :type cache_dir: Path
+      :param throw: 是否抛出异常
+      :type throw: bool
+
+
+   .. method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
+
+      构造资源包的本地路径.
+
+      :param cache_dir: 缓存文件夹路径.
+      :type cache_dir: Path
+
+      :returns: 资源包所在的文件夹路径
+      :rtype: Path
+
+
+   .. method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
+
+      缓存资源包到本地.
+
+      :param cache_dir: 缓存文件夹地址.
+      :type cache_dir: Path
+      :param throw: 是否抛出异常
+      :type throw: bool
+
+
+
+.. class:: ComponentTemplate(component_path_str: str, source_pack: SourcePack)
+
+
+   组件模板类.
+
+   .. attribute:: TENPLATE_URL
+      :annotation: = [{host}::]{repo_namespace}::{repo_name}[@{tag}]//{component_path}
+
+      
+
+   .. method:: from_component_string(cls, component_string: str) -> ComponentTemplate
+      :classmethod:
+
+      从组件模板字符串构造组件模板对象.
+
+      组件模板字符串的形式为`"[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]//{component_path_str}"`
+
+      :returns: 组件模板对象
+      :rtype: [ComponentTemplate]
+
+
+   .. method:: as_component_string(self) -> str
+
+      构造组件模板字符串.
+
+
+

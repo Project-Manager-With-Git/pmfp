@@ -1,0 +1,34 @@
+:mod:`pmfp.entrypoint.requires.install.python_install`
+======================================================
+
+.. py:module:: pmfp.entrypoint.requires.install.python_install
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.install.python_install.get_req_package_name
+   pmfp.entrypoint.requires.install.python_install.get_package_with_version
+   pmfp.entrypoint.requires.install.python_install._install
+   pmfp.entrypoint.requires.install.python_install.python_install
+
+
+
+.. function:: get_req_package_name(req: str) -> str
+
+
+.. function:: get_package_with_version(pakcage_name: str, local_package: bool, cwd: pathlib.Path) -> str
+
+
+.. function:: _install(package_names: List[str], command_temp: str, cwd: pathlib.Path, env_dict: Dict[str, str], local_package: bool, config: configparser.ConfigParser, target_section: str, target_key: str) -> None
+
+
+.. function:: python_install(cwd: pathlib.Path, env: str, package_names: List[str], test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None) -> None
+
+

@@ -1,0 +1,57 @@
+:mod:`pmfp.entrypoint.test_.unittest.core`
+==========================================
+
+.. py:module:: pmfp.entrypoint.test_.unittest.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.unittest.core.Unittest
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.unittest.core.pmfpinfo
+   pmfp.entrypoint.test_.unittest.core.test_unittest
+
+
+.. data:: pmfpinfo
+   
+
+   
+
+.. class:: Unittest
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   对源码做单元测试.
+
+   单元测试的覆盖率会放到指定位置.
+
+   .. attribute:: argparse_noflag
+      :annotation: = test_code
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: test_unittest
+   
+
+   
+

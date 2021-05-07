@@ -1,0 +1,44 @@
+:mod:`pmfp.entrypoint.pack.pack_py`
+===================================
+
+.. py:module:: pmfp.entrypoint.pack.pack_py
+
+.. autoapi-nested-parse::
+
+   打包py语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.pack.pack_py._delete_py_source
+   pmfp.entrypoint.pack.pack_py.py_pack_lib
+   pmfp.entrypoint.pack.pack_py.py_pack_exec
+   pmfp.entrypoint.pack.pack_py.py_pack
+
+
+
+.. function:: _delete_py_source(root_path: pathlib.Path) -> None
+
+   将python源码的.py文件删除.
+   这是一个递归操作的函数.
+   :param p: 要删除py文件的文件夹
+   :type p: Path
+
+
+.. function:: py_pack_lib(output_dir: pathlib.Path, cwd: pathlib.Path) -> None
+
+
+.. function:: py_pack_exec(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, pypi_mirror: Optional[str] = None) -> None
+
+
+.. function:: py_pack(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, pypi_mirror: Optional[str] = None, pack_as: str = 'exec') -> None
+
+

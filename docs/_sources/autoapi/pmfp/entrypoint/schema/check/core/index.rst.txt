@@ -1,0 +1,50 @@
+:mod:`pmfp.entrypoint.schema.check.core`
+========================================
+
+.. py:module:: pmfp.entrypoint.schema.check.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.check.core.Check
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.check.core.schema_check
+
+
+.. class:: Check
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   检查请求结果是否符合指定的json schema模式.
+   这个schema文件可以是文件地址或者http/fiil的url
+
+   .. attribute:: argparse_noflag
+      :annotation: = url
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: schema_check
+   
+
+   
+

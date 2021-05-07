@@ -1,0 +1,1025 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.docker_.compose.new.new_compose_dict &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">模块代码</a> &raquo;</li>
+        
+          <li><a href="../new.html">pmfp.entrypoint.docker_.compose.new</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.docker_.compose.new.new_compose_dict</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.docker_.compose.new.new_compose_dict 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">.typedef</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LogSchema</span><span class="p">,</span>
+    <span class="n">VolumesSchema</span><span class="p">,</span>
+    <span class="n">NetworksSchema</span><span class="p">,</span>
+    <span class="n">ConfigAndSecretSchema</span><span class="p">,</span>
+    <span class="n">BuildSchema</span><span class="p">,</span>
+    <span class="n">ServiceSchema</span><span class="p">,</span>
+    <span class="n">ServicesSchema</span><span class="p">,</span>
+    <span class="n">ComposeSchema</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="gen_default_log_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_default_log_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_default_log_compose</span><span class="p">(</span><span class="n">fluentd_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LogSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;构造一级字段`x-log`默认的log配置.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fluentd_url (Optional[str], optional): 如果设置了fluentd_url则使用fluennted维护log. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dict[str, Union[str, Dict[str, str]]]: 外部的全局log配置字段x-log的内容</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">default_log</span><span class="p">:</span> <span class="n">LogSchema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;driver&quot;</span><span class="p">:</span> <span class="s2">&quot;json-file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;max-siz&quot;</span><span class="p">:</span> <span class="s2">&quot;10m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;max-file&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">fluentd_url</span><span class="p">:</span>
+        <span class="n">default_log</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;driver&quot;</span><span class="p">:</span> <span class="s2">&quot;fluentd&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;fluentd-address&quot;</span><span class="p">:</span> <span class="s2">&quot;fluentd_url&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="k">return</span> <span class="n">default_log</span></div>
+
+
+<div class="viewcode-block" id="gen_default_extra_hosts_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_default_extra_hosts_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_default_extra_hosts_compose</span><span class="p">(</span><span class="n">extra_hosts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;构造一级字段`x-extra_hosts`默认的域名映射.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        extra_hosts (List[str]): 映射列表</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">       List[str]: 外部的全局域名映射字段x-extra_hosts的内容</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">extra_hosts</span></div>
+
+
+<div class="viewcode-block" id="gen_volume_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_volume_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_volume_compose</span><span class="p">(</span><span class="n">add_volumes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VolumesSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;生成一级字段`volumes`的配置.</span>
+
+<span class="sd">    形式可以有3种:</span>
+<span class="sd">    &lt;volume_name&gt;::&lt;path&gt;;会在volumes种构造内部`volume_name`并挂载到服务的path目录</span>
+<span class="sd">    &lt;volume_name&gt;$$extra::&lt;path&gt;;会在volumes种构造外部`volume_name`并挂载到服务的path目录</span>
+<span class="sd">    &lt;volume_name&gt;$$path::&lt;path&gt;;直接挂载local路径到服务的path目录</span>
+<span class="sd">    &lt;volume_name&gt;$$nfs@&lt;nfs_addr&gt;@&lt;nfs_shared_path&gt;@&lt;nfs_opts&gt;::&lt;path&gt;;挂载nfs到服务的path目录</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        add_volumes (Optional[List[str]], optional): 添加挂载的配置字符串. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        VolumesSchema: volumes字段的配置字典</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span><span class="p">:</span> <span class="n">VolumesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">add_volumes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">volume_conf</span> <span class="ow">in</span> <span class="n">add_volumes</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">volume_info</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">volume_conf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip volumes config </span><span class="si">{</span><span class="n">volume_conf</span><span class="si">}</span><span class="s2">, something is wrong&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">):</span>
+                    <span class="n">volume_name</span> <span class="o">=</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">volume_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="kc">True</span>
+                    <span class="p">}</span>
+                <span class="k">elif</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;$$path&quot;</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="k">elif</span> <span class="s2">&quot;$$nfs@&quot;</span> <span class="ow">in</span> <span class="n">volume_info</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">volume_name</span><span class="p">,</span> <span class="n">confs</span> <span class="o">=</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;$$nfs@&quot;</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip nfs volumes config </span><span class="si">{</span><span class="n">volume_conf</span><span class="si">}</span><span class="s2">, something is wrong&quot;</span><span class="p">)</span>
+                        <span class="k">continue</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">nfs_addr</span><span class="p">,</span> <span class="n">nfs_shared_path</span><span class="p">,</span> <span class="n">nfs_opts</span> <span class="o">=</span> <span class="n">confs</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;@&quot;</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip nfs volumes config </span><span class="si">{</span><span class="n">volume_conf</span><span class="si">}</span><span class="s2">, something is wrong&quot;</span><span class="p">)</span>
+                            <span class="k">continue</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">result</span><span class="p">[</span><span class="n">volume_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                <span class="s2">&quot;driver_opts&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;nfs&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;o&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;addr=</span><span class="si">{</span><span class="n">nfs_addr</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">nfs_opts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="n">nfs_shared_path</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">volume_info</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="gen_network_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_network_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_network_compose</span><span class="p">(</span><span class="n">compose_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">use_host_network</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                        <span class="n">add_networks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NetworksSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;生成一级字段`networks`的配置.</span>
+
+<span class="sd">    添加网络可以有如下两种形式:</span>
+<span class="sd">    + &lt;network_name&gt;添加内部网络</span>
+<span class="sd">    + &lt;network_name&gt;$$extra添加外部网络</span>
+
+<span class="sd">    如果使用的compose版本为3.7或者3.8,且使用宿主机网路,则还会添加一个`myhostnetwork`用于表示宿主机网络</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        compose_version (str): 使用的compose版本</span>
+<span class="sd">        use_host_network (bool): 是否使用宿主机网络</span>
+<span class="sd">        add_networks (Optional[List[str]], optional): 添加网络的配置字符串. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NetworksSchema: networks字段的配置字典</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span><span class="p">:</span> <span class="n">NetworksSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">use_host_network</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">compose_version</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;3.7&quot;</span><span class="p">,</span> <span class="s2">&quot;3.8&quot;</span><span class="p">):</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;myhostnetwork&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;host&quot;</span>
+        <span class="p">}</span>
+    <span class="k">if</span> <span class="n">add_networks</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">network</span> <span class="ow">in</span> <span class="n">add_networks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">network</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">):</span>
+                <span class="n">network_name</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">network_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="kc">True</span>
+                <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">network</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="gen_config_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_config_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_config_compose</span><span class="p">(</span><span class="n">add_extra_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigAndSecretSchema</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;生成一级字段`configs`的配置.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        add_extra_configs (Optional[List[str]], optional): 添加配置项的配置字符串. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dict[str, Dict[str, bool]]: configs字段的配置字典</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigAndSecretSchema</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">add_extra_configs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">conf</span> <span class="ow">in</span> <span class="n">add_extra_configs</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">conf</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="gen_secret_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_secret_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_secret_compose</span><span class="p">(</span><span class="n">add_extra_secrets</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigAndSecretSchema</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;生成一级字段`secrets`的配置.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        add_extra_secrets (Optional[List[str]], optional): 添加密码项的配置字符串. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dict[str, Dict[str, bool]]: secret字段的配置字典</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigAndSecretSchema</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">add_extra_secrets</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">secret</span> <span class="ow">in</span> <span class="n">add_extra_secrets</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">secret</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="gen_thirdpart_service_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_thirdpart_service_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_thirdpart_service_compose</span><span class="p">(</span><span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ServicesSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;为第三方服务构造compose.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        service_name (str): 要生成的服务名</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AttributeError: 不支持的第三方服务名</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dict[str, Dict[str, Any]]: compose配置的字典</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;redis&quot;</span><span class="p">:</span>
+        <span class="n">redis_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;redis:latest&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;6379:6379&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;redis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">redis_compose</span>
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;postgres&quot;</span><span class="p">:</span>
+        <span class="n">postgres_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;timescale/timescaledb-postgis:latest-pg13&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;5432:5432&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;POSTGRES_PASSWORD&quot;</span><span class="p">:</span> <span class="s2">&quot;postgres&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;postgres_data:/var/lib/postgresql/data&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;max_connections=300&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;postgres&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">postgres_compose</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;zookeeper&quot;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="n">zookeeper_sers</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;zookeeper&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;zoo</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2181:2181&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;ZOO_MY_ID&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+                    <span class="s2">&quot;ZOO_SERVERS&quot;</span><span class="p">:</span> <span class="s2">&quot;server.1=0.0.0.0:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">result</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;zoo</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zookeeper_sers</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;kafka&quot;</span><span class="p">:</span>
+        <span class="n">zk_sers</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;wurstmeister/zookeeper&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2181:2181&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;kafka.local&quot;</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;zookeeper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zk_sers</span>
+        <span class="n">kafka_sers</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;wurstmeister/kafka&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;9092:9092&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;kafka.local&quot;</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+
+            <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;KAFKA_ADVERTISED_HOST_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;kafka.local&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;KAFKA_ZOOKEEPER_CONNECT&quot;</span><span class="p">:</span> <span class="s2">&quot;zookeeper: 2181&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;KAFKA_CREATE_TOPICS&quot;</span><span class="p">:</span> <span class="s2">&quot;topic1:1:1&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;kafka&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kafka_sers</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;envoy&quot;</span><span class="p">:</span>
+        <span class="n">envoy_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;envoyproxy/envoy-dev:76286f6152666c73d9379f21f43152bd03b00f78&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;zoo</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;10000:10000&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./envoy.yaml:/etc/envoy/envoy.yaml&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;envoy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">envoy_compose</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;unsupport service_name&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="gen_project_service_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_project_service_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_project_service_compose</span><span class="p">(</span><span class="n">compose_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                <span class="n">dockerfile_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dockerfile_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">docker_register</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">docker_register_namespace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">project_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">add_envs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">use_host_network</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ports</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">add_networks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">add_extra_secrets</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">add_extra_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">add_volumes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">with_deploy_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">default_extra_hosts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                <span class="n">default_log</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogSchema</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                                <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ServiceSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;生成项目本身的service项.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        compose_version (str): docker compose版本</span>
+<span class="sd">        dockerfile_dir (Optional[str], optional): dockerfile的存放目录. Defaults to None.</span>
+<span class="sd">        dockerfile_name (Optional[str], optional): dockerfile名. Defaults to None.</span>
+<span class="sd">        docker_register (Optional[str], optional): 镜像库地址. Defaults to None.</span>
+<span class="sd">        docker_register_namespace (Optional[str], optional): 项目在镜像仓库的命名空间. Defaults to None.</span>
+<span class="sd">        project_name (Optional[str], optional): 项目名. Defaults to None.</span>
+<span class="sd">        version (Optional[str], optional): 项目版本,也是镜像版本,不填会使用latest. Defaults to None.</span>
+<span class="sd">        command (Optional[str], optional): 执行命令. Defaults to None.</span>
+<span class="sd">        add_envs (Optional[List[str]], optional): 环境变量. Defaults to None.</span>
+<span class="sd">        use_host_network (bool, optional): 是否使用宿主机网络. Defaults to False.</span>
+<span class="sd">        ports (Optional[List[str]], optional): 端口映射. Defaults to None.</span>
+<span class="sd">        add_networks (Optional[List[str]], optional): 使用网络. Defaults to None.</span>
+<span class="sd">        add_extra_secrets (Optional[List[str]], optional): 使用的密码. Defaults to None.</span>
+<span class="sd">        add_extra_configs (Optional[List[str]], optional): 使用的配置. Defaults to None.</span>
+<span class="sd">        add_volumes (Optional[List[str]], optional): 使用的挂载. Defaults to None.</span>
+<span class="sd">        with_deploy_config (Optional[str], optional): 是否添加部署项模板. Defaults to None.</span>
+<span class="sd">        default_extra_hosts (Optional[List[str]], optional): 域名映射. Defaults to None.</span>
+<span class="sd">        default_log (Optional[LogSchema], optional): log配置. Defaults to None.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AttributeError: compose版本不支持</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dict[str, Union[str, Dict[str, Any], List[str]]]: 项目自身的compose项</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">project_serv</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># build and image</span>
+    <span class="k">if</span> <span class="n">docker_register_namespace</span> <span class="ow">and</span> <span class="n">project_name</span><span class="p">:</span>
+        <span class="n">docker_register</span> <span class="o">=</span> <span class="n">docker_register</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="k">if</span> <span class="n">docker_register</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">img_version</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;:</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">version</span> <span class="k">else</span> <span class="s2">&quot;latest&quot;</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">docker_register</span><span class="si">}{</span><span class="n">docker_register_namespace</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">project_name</span><span class="si">}{</span><span class="n">img_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dockerfile_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dockerfile_dir</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+    <span class="k">if</span> <span class="n">dockerfile_dir</span><span class="p">:</span>
+        <span class="n">build_block</span><span class="p">:</span> <span class="n">BuildSchema</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="n">dockerfile_dir</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">dockerfile_name</span><span class="p">:</span>
+            <span class="n">build_block</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;dockerfile&quot;</span><span class="p">:</span> <span class="n">dockerfile_name</span>
+
+            <span class="p">})</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;build&quot;</span><span class="p">:</span> <span class="n">build_block</span>
+        <span class="p">})</span>
+    <span class="c1"># set logging</span>
+    <span class="k">if</span> <span class="n">default_log</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;logging&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;&lt;&lt;&quot;</span><span class="p">:</span> <span class="n">default_log</span>
+            <span class="p">},</span>
+        <span class="p">})</span>
+
+    <span class="c1"># network</span>
+    <span class="n">networks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">add_networks</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">network</span> <span class="ow">in</span> <span class="n">add_networks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">network</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">):</span>
+                <span class="n">network_name</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">networks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">network_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">networks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">network</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">compose_version</span> <span class="o">==</span> <span class="s2">&quot;2.4&quot;</span><span class="p">:</span>
+        <span class="c1"># 2.4 special</span>
+        <span class="c1"># network</span>
+        <span class="k">if</span> <span class="n">use_host_network</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;network_mode&quot;</span><span class="p">:</span> <span class="s2">&quot;host&quot;</span>
+            <span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ports</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="n">ports</span>
+                <span class="p">})</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">networks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="n">networks</span>
+                <span class="p">})</span>
+
+    <span class="k">elif</span> <span class="n">compose_version</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;3.7&quot;</span><span class="p">,</span> <span class="s2">&quot;3.8&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">use_host_network</span><span class="p">:</span>
+            <span class="n">networks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;myhostnetwork&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ports</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="n">ports</span>
+                <span class="p">})</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">networks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="n">networks</span>
+            <span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupport compose_version </span><span class="si">{</span><span class="n">compose_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">default_extra_hosts</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;extra_hosts&quot;</span><span class="p">:</span> <span class="n">default_extra_hosts</span>
+        <span class="p">})</span>
+
+    <span class="c1"># volumes</span>
+    <span class="n">volumes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">add_volumes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">volume_conf</span> <span class="ow">in</span> <span class="n">add_volumes</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">volume_info</span><span class="p">,</span> <span class="n">bind_path</span> <span class="o">=</span> <span class="n">volume_conf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip volumes config </span><span class="si">{</span><span class="n">volume_conf</span><span class="si">}</span><span class="s2">, something is wrong&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">):</span>
+                    <span class="n">volume_name</span> <span class="o">=</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;$$extra&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;$$path&quot;</span><span class="p">):</span>
+                    <span class="n">volume_name</span> <span class="o">=</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;$$path&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="s2">&quot;$$nfs@&quot;</span> <span class="ow">in</span> <span class="n">volume_info</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">volume_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">volume_info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;$$nfs@&quot;</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip nfs volumes config </span><span class="si">{</span><span class="n">volume_conf</span><span class="si">}</span><span class="s2">, something is wrong&quot;</span><span class="p">)</span>
+                        <span class="k">continue</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">volume_name</span> <span class="o">=</span> <span class="n">volume_info</span>
+                <span class="n">volumes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">volume_name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">bind_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">volumes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="n">volumes</span>
+        <span class="p">})</span>
+    <span class="c1"># config&amp;secrets</span>
+    <span class="k">if</span> <span class="n">compose_version</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;3.7&quot;</span><span class="p">,</span> <span class="s2">&quot;3.8&quot;</span><span class="p">):</span>
+        <span class="c1"># config</span>
+        <span class="n">configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">add_extra_configs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">conf</span> <span class="ow">in</span> <span class="n">add_extra_configs</span><span class="p">:</span>
+                <span class="n">configs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">configs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;configs&quot;</span><span class="p">:</span> <span class="n">configs</span>
+            <span class="p">})</span>
+
+        <span class="c1"># secrets</span>
+        <span class="n">secrets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">add_extra_secrets</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">secret</span> <span class="ow">in</span> <span class="n">add_extra_secrets</span><span class="p">:</span>
+                <span class="n">secrets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">secrets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;secrets&quot;</span><span class="p">:</span> <span class="n">secrets</span>
+            <span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">compose_version</span><span class="si">}</span><span class="s2"> 不支持 configs 和 secrets&quot;</span><span class="p">)</span>
+
+    <span class="c1"># env</span>
+    <span class="k">if</span> <span class="n">add_envs</span><span class="p">:</span>
+        <span class="n">environments</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">add_envs</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip env config </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">, something is wrong&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">environments</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">environments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="n">environments</span>
+            <span class="p">})</span>
+
+    <span class="c1"># cmd</span>
+    <span class="k">if</span> <span class="n">command</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">command</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">command_list</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip cmd </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">, SyntaxError&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;skip cmd </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">, something is wrong&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="n">command_list</span>
+                <span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="n">command</span>
+            <span class="p">})</span>
+
+    <span class="c1"># deploy</span>
+    <span class="k">if</span> <span class="n">with_deploy_config</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">compose_version</span> <span class="o">==</span> <span class="s2">&quot;2.4&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">with_deploy_config</span> <span class="o">==</span> <span class="s2">&quot;replicated&quot;</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;256m&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;mem_reservation&quot;</span><span class="p">:</span> <span class="s2">&quot;64m&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;256m&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;mem_reservation&quot;</span><span class="p">:</span> <span class="s2">&quot;64m&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                <span class="p">})</span>
+
+        <span class="k">elif</span> <span class="n">compose_version</span> <span class="o">==</span> <span class="s2">&quot;3.7&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">with_deploy_config</span> <span class="o">==</span> <span class="s2">&quot;replicated&quot;</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;deploy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;replicated&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;replicas&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                        <span class="s2">&quot;resources&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;limits&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;400M&quot;</span>
+                            <span class="p">},</span>
+                            <span class="s2">&quot;reservations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.25&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;20M&quot;</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;restart_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;5s&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;max_attempts&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                            <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="s2">&quot;100s&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;node.role==manager&quot;</span><span class="p">],</span>
+                            <span class="s2">&quot;preferences&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;spread: node.labels.zone&quot;</span><span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;update_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                            <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;failure_action&quot;</span><span class="p">:</span> <span class="s2">&quot;rollback&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;rollback_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                            <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;2s&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+            <span class="k">elif</span> <span class="n">with_deploy_config</span> <span class="o">==</span> <span class="s2">&quot;global&quot;</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;deploy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;resources&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;limits&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;400M&quot;</span>
+                            <span class="p">},</span>
+                            <span class="s2">&quot;reservations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.25&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;20M&quot;</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;restart_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;5s&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;max_attempts&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                            <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="s2">&quot;100s&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;node.role==manager&quot;</span><span class="p">],</span>
+                            <span class="s2">&quot;preferences&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;spread: node.labels.zone&quot;</span><span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;update_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                            <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;failure_action&quot;</span><span class="p">:</span> <span class="s2">&quot;rollback&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;rollback_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                            <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;2s&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                    <span class="s2">&quot;deploy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;resources&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;limits&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;400M&quot;</span>
+                            <span class="p">},</span>
+                            <span class="s2">&quot;reservations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.25&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;20M&quot;</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;restart_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;5s&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;max_attempts&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                            <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="s2">&quot;100s&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;node.role==manager&quot;</span><span class="p">],</span>
+                            <span class="s2">&quot;preferences&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;spread: node.labels.zone&quot;</span><span class="p">]</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+    <span class="k">elif</span> <span class="n">compose_version</span> <span class="o">==</span> <span class="s2">&quot;3.8&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">with_deploy_config</span> <span class="o">==</span> <span class="s2">&quot;replicated&quot;</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;deploy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;replicated&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;replicas&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                    <span class="s2">&quot;resources&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;limits&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;400M&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;reservations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.25&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;20M&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;restart_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;5s&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;max_attempts&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                        <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="s2">&quot;100s&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;node.role==manager&quot;</span><span class="p">,</span> <span class="s2">&quot;engine.labels.operatingsystem==ubuntu 18.04&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;preferences&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;spread: node.labels.zone&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;max_replicas_per_node&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;update_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;failure_action&quot;</span><span class="p">:</span> <span class="s2">&quot;rollback&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;rollback_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;2s&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+        <span class="k">elif</span> <span class="n">with_deploy_config</span> <span class="o">==</span> <span class="s2">&quot;global&quot;</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;deploy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;resources&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;limits&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;400M&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;reservations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.25&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;20M&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;restart_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;5s&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;max_attempts&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                        <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="s2">&quot;100s&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;node.role==manager&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;preferences&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;spread: node.labels.zone&quot;</span><span class="p">]</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;update_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;10s&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;failure_action&quot;</span><span class="p">:</span> <span class="s2">&quot;rollback&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;rollback_config&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;2s&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="s2">&quot;stop-first&quot;</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">project_serv</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s2">&quot;deploy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;resources&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;limits&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;400M&quot;</span>
+                                <span class="p">},</span>
+                        <span class="s2">&quot;reservations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="s2">&quot;0.25&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="s2">&quot;20M&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;restart_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="s2">&quot;5s&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;max_attempts&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                        <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="s2">&quot;100s&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;node.role==manager&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;preferences&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;spread: node.labels.zone&quot;</span><span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupport compose_version </span><span class="si">{</span><span class="n">compose_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">project_serv</span></div>
+
+
+<div class="viewcode-block" id="gen_compose"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/new_compose_dict/index.html#pmfp.entrypoint.docker_.compose.new.gen_compose">[文档]</a><span class="k">def</span> <span class="nf">gen_compose</span><span class="p">(</span><span class="n">compose_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="n">dockerfile_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dockerfile_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">docker_register</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">docker_register_namespace</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">project_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">add_envs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">use_host_network</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ports</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">add_networks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">add_extra_secrets</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">add_extra_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">add_volumes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">fluentd_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">extra_hosts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">add_service</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">with_deploy_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComposeSchema</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;生成compose字典.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        compose_version (str): docker compose版本</span>
+<span class="sd">        dockerfile_dir (Optional[str], optional): dockerfile的存放目录. Defaults to None.</span>
+<span class="sd">        dockerfile_name (Optional[str], optional): dockerfile名. Defaults to None.</span>
+<span class="sd">        docker_register (Optional[str], optional): 镜像库地址. Defaults to None.</span>
+<span class="sd">        docker_register_namespace (Optional[str], optional): 项目在镜像仓库的命名空间. Defaults to None.</span>
+<span class="sd">        project_name (Optional[str], optional): 项目名. Defaults to None.</span>
+<span class="sd">        version (Optional[str], optional): 项目版本,也是镜像版本,不填会使用latest. Defaults to None.</span>
+<span class="sd">        command (Optional[str], optional): 执行命令. Defaults to None.</span>
+<span class="sd">        add_envs (Optional[List[str]], optional): 环境变量. Defaults to None.</span>
+<span class="sd">        use_host_network (bool, optional): 是否使用宿主机网络. Defaults to False.</span>
+<span class="sd">        ports (Optional[List[str]], optional): 端口映射. Defaults to None.</span>
+<span class="sd">        add_networks (Optional[List[str]], optional): 使用网络. Defaults to None.</span>
+<span class="sd">        add_extra_secrets (Optional[List[str]], optional): 使用的密码. Defaults to None.</span>
+<span class="sd">        add_extra_configs (Optional[List[str]], optional): 使用的配置. Defaults to None.</span>
+<span class="sd">        add_volumes (Optional[List[str]], optional): 使用的挂载. Defaults to None.</span>
+<span class="sd">        extra_hosts (Optional[List[str]], optional): 全局extra域名映射. Defaults to None.</span>
+<span class="sd">        fluentd_url (Optional[str], optional): fluentd的地址. Defaults to None.</span>
+<span class="sd">        add_service (Optional[List[str]], optional): 添加的额外服务项</span>
+<span class="sd">        with_deploy_config (Optional[str], optional): 是否添加部署项模板. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ComposeSchema: compose 文件整体</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">default_log</span> <span class="o">=</span> <span class="n">gen_default_log_compose</span><span class="p">(</span><span class="n">fluentd_url</span><span class="p">)</span>
+
+    <span class="n">compose</span><span class="p">:</span> <span class="n">ComposeSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">compose</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">compose_version</span><span class="p">,</span>
+        <span class="s2">&quot;x-log&quot;</span><span class="p">:</span> <span class="n">default_log</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="n">default_extra_hosts</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">extra_hosts</span><span class="p">:</span>
+        <span class="n">default_extra_hosts</span> <span class="o">=</span> <span class="n">gen_default_extra_hosts_compose</span><span class="p">(</span><span class="n">extra_hosts</span><span class="p">)</span>
+        <span class="c1"># compose.update({</span>
+        <span class="c1">#     &quot;x-extra_hosts&quot;: default_extra_hosts,</span>
+        <span class="c1"># })</span>
+    <span class="c1"># service</span>
+    <span class="n">services</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">project_service</span> <span class="o">=</span> <span class="n">gen_project_service_compose</span><span class="p">(</span>
+        <span class="n">compose_version</span><span class="o">=</span><span class="n">compose_version</span><span class="p">,</span>
+        <span class="n">dockerfile_dir</span><span class="o">=</span><span class="n">dockerfile_dir</span><span class="p">,</span>
+        <span class="n">dockerfile_name</span><span class="o">=</span><span class="n">dockerfile_name</span><span class="p">,</span>
+        <span class="n">docker_register</span><span class="o">=</span><span class="n">docker_register</span><span class="p">,</span>
+        <span class="n">docker_register_namespace</span><span class="o">=</span><span class="n">docker_register_namespace</span><span class="p">,</span>
+        <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">,</span>
+        <span class="n">add_envs</span><span class="o">=</span><span class="n">add_envs</span><span class="p">,</span>
+        <span class="n">use_host_network</span><span class="o">=</span><span class="n">use_host_network</span><span class="p">,</span>
+        <span class="n">ports</span><span class="o">=</span><span class="n">ports</span><span class="p">,</span>
+        <span class="n">add_networks</span><span class="o">=</span><span class="n">add_networks</span><span class="p">,</span>
+        <span class="n">add_extra_secrets</span><span class="o">=</span><span class="n">add_extra_secrets</span><span class="p">,</span>
+        <span class="n">add_extra_configs</span><span class="o">=</span><span class="n">add_extra_configs</span><span class="p">,</span>
+        <span class="n">add_volumes</span><span class="o">=</span><span class="n">add_volumes</span><span class="p">,</span>
+        <span class="n">with_deploy_config</span><span class="o">=</span><span class="n">with_deploy_config</span><span class="p">,</span>
+        <span class="n">default_extra_hosts</span><span class="o">=</span><span class="n">default_extra_hosts</span><span class="p">,</span>
+        <span class="n">default_log</span><span class="o">=</span><span class="n">default_log</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">project_name</span><span class="p">:</span>
+        <span class="n">services</span><span class="p">[</span><span class="n">project_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_service</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">services</span><span class="p">[</span><span class="s2">&quot;app&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_service</span>
+    <span class="k">if</span> <span class="n">add_service</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">service_name</span> <span class="ow">in</span> <span class="n">add_service</span><span class="p">:</span>
+            <span class="n">service_compose</span> <span class="o">=</span> <span class="n">gen_thirdpart_service_compose</span><span class="p">(</span><span class="n">service_name</span><span class="p">)</span>
+            <span class="n">services</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">service_compose</span><span class="p">)</span>
+    <span class="n">compose</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;services&quot;</span><span class="p">:</span> <span class="n">services</span><span class="p">})</span>
+    <span class="c1"># networks</span>
+    <span class="n">networks</span> <span class="o">=</span> <span class="n">gen_network_compose</span><span class="p">(</span><span class="n">use_host_network</span><span class="o">=</span><span class="n">use_host_network</span><span class="p">,</span> <span class="n">compose_version</span><span class="o">=</span><span class="n">compose_version</span><span class="p">,</span> <span class="n">add_networks</span><span class="o">=</span><span class="n">add_networks</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">networks</span><span class="p">:</span>
+        <span class="n">compose</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="n">networks</span><span class="p">})</span>
+    <span class="c1"># volumes</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="n">gen_volume_compose</span><span class="p">(</span><span class="n">add_volumes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">volumes</span><span class="p">:</span>
+        <span class="n">compose</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="n">volumes</span><span class="p">})</span>
+    <span class="c1"># configs</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="n">gen_config_compose</span><span class="p">(</span><span class="n">add_extra_configs</span><span class="o">=</span><span class="n">add_extra_configs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">configs</span><span class="p">:</span>
+        <span class="n">compose</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;configs&quot;</span><span class="p">:</span> <span class="n">configs</span><span class="p">})</span>
+    <span class="c1"># secrets</span>
+    <span class="n">secrets</span> <span class="o">=</span> <span class="n">gen_secret_compose</span><span class="p">(</span><span class="n">add_extra_secrets</span><span class="o">=</span><span class="n">add_extra_secrets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">secrets</span><span class="p">:</span>
+        <span class="n">compose</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;secrets&quot;</span><span class="p">:</span> <span class="n">secrets</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">compose</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

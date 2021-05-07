@@ -1,0 +1,6 @@
+:mod:`pmfp.entrypoint.grpc.build_.source_temp`
+==============================================
+
+.. py:module:: pmfp.entrypoint.grpc.build_.source_temp
+
+

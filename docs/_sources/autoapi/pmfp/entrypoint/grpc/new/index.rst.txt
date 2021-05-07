@@ -1,0 +1,112 @@
+:mod:`pmfp.entrypoint.grpc.new`
+===============================
+
+.. py:module:: pmfp.entrypoint.grpc.new
+
+.. autoapi-nested-parse::
+
+   创建grpc的protobuf文件.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   source_temp/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.new.template_2_content
+   pmfp.entrypoint.grpc.new.get_abs_path
+   pmfp.entrypoint.grpc.new.new_grpc
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.new.grpc_new
+   pmfp.entrypoint.grpc.new.grpc_template
+   pmfp.entrypoint.grpc.new.grpc_template_io
+   pmfp.entrypoint.grpc.new.grpc_template
+
+
+.. function:: template_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. data:: grpc_new
+   
+
+   
+
+.. data:: grpc_template
+   :annotation: = 
+
+   
+
+.. data:: grpc_template_io
+   
+
+   
+
+.. data:: grpc_template
+   
+
+   
+
+.. function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+
+   新建一个protpbuf文件.
+
+   :param name: 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名
+   :type name: str
+   :param pb_include: protobuf文件存放文件夹路径
+   :type pb_include: str
+   :param parent_package: 父包名. Defaults to None.
+   :type parent_package: Optional[str], optional
+   :param cwd: 执行位置. Defaults to `.`.
+   :type cwd: str, optional
+
+

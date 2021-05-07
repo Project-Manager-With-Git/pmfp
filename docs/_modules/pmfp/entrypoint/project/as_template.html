@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.project.as_template &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">模块代码</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.project.as_template</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.project.as_template 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">pmfp.const</span> <span class="kn">import</span> <span class="n">GOLBAL_PYTHON_VERSION</span><span class="p">,</span> <span class="n">DEFAULT_AUTHOR</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.endpoint</span> <span class="kn">import</span> <span class="n">EndPoint</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">iter_dir_to_end</span><span class="p">,</span> <span class="n">get_abs_path</span><span class="p">,</span> <span class="n">tempdir</span><span class="p">,</span> <span class="n">remove_readonly</span>
+<span class="kn">from</span> <span class="nn">pmfp.utils.tools_info_utils</span> <span class="kn">import</span> <span class="n">get_config_info</span><span class="p">,</span> <span class="n">get_golang_version</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">project</span>
+
+<div class="viewcode-block" id="acccept_suffix"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.acccept_suffix">[文档]</a><span class="n">acccept_suffix</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.js&quot;</span><span class="p">,</span> <span class="s2">&quot;.ts&quot;</span><span class="p">,</span> <span class="s2">&quot;.go&quot;</span><span class="p">,</span> <span class="s2">&quot;.c&quot;</span><span class="p">,</span> <span class="s2">&quot;.cpp&quot;</span><span class="p">,</span> <span class="s2">&quot;.h&quot;</span><span class="p">,</span> <span class="s2">&quot;.hpp&quot;</span><span class="p">,</span> <span class="s2">&quot;.pyd&quot;</span><span class="p">,</span> <span class="s2">&quot;.pyx&quot;</span><span class="p">,</span> <span class="s2">&quot;.scala&quot;</span><span class="p">,</span> <span class="s2">&quot;.cmake&quot;</span><span class="p">,</span> <span class="s2">&quot;.jinja&quot;</span><span class="p">,</span> <span class="s2">&quot;md&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="except_dir"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.except_dir">[文档]</a><span class="n">except_dir</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;vendor&quot;</span><span class="p">,</span> <span class="s2">&quot;node_modules&quot;</span><span class="p">,</span> <span class="s2">&quot;dist&quot;</span><span class="p">,</span> <span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="s2">&quot;doc&quot;</span><span class="p">,</span> <span class="s2">&quot;docs&quot;</span><span class="p">,</span> <span class="s2">&quot;document&quot;</span><span class="p">,</span> <span class="s2">&quot;documents&quot;</span><span class="p">,</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;__pycache__&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_typecheck&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_unittest&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsTemp"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp">[文档]</a><span class="k">class</span> <span class="nc">AsTemp</span><span class="p">(</span><span class="n">EndPoint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;基于项目构造一个模板项目.</span>
+
+<span class="sd">    注意只是粗略构造,需要进一步加工.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AsTemp._name"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp._name">[文档]</a>    <span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;as_temp&quot;</span></div>
+<div class="viewcode-block" id="AsTemp.verify_schema"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp.verify_schema">[文档]</a>    <span class="n">verify_schema</span> <span class="o">=</span> <span class="kc">False</span></div>
+<div class="viewcode-block" id="AsTemp.load_all_config_file"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp.load_all_config_file">[文档]</a>    <span class="n">load_all_config_file</span> <span class="o">=</span> <span class="kc">True</span></div>
+<div class="viewcode-block" id="AsTemp.config_file_only_get_need"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp.config_file_only_get_need">[文档]</a>    <span class="n">config_file_only_get_need</span> <span class="o">=</span> <span class="kc">False</span></div>
+<div class="viewcode-block" id="AsTemp.argparse_noflag"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp.argparse_noflag">[文档]</a>    <span class="n">argparse_noflag</span> <span class="o">=</span> <span class="s2">&quot;template_type&quot;</span></div>
+<div class="viewcode-block" id="AsTemp.schema"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp.schema">[文档]</a>    <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;http://json-schema.org/draft-07/schema#&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;template_type&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;template_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;模板库的类型,components表示是组件集合,不能用作模板独立构建项目&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;socket&quot;</span><span class="p">,</span> <span class="s2">&quot;GUI&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">,</span> <span class="s2">&quot;watcher&quot;</span><span class="p">,</span> <span class="s2">&quot;module&quot;</span><span class="p">,</span> <span class="s2">&quot;components&quot;</span><span class="p">,</span> <span class="s2">&quot;doc&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;parttens&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;替换源码中的字符串为指定字符串,格式为`&lt;partten_key&gt;::&lt;template_key&gt;::&lt;default_value&gt;`&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;cwd&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;项目目录&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;模板放置位置&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;template&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;yes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;执行过程中都使用默认填充&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span></div>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="AsTemp.do_main"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/as_template/index.html#pmfp.entrypoint.project.as_template.AsTemp.do_main">[文档]</a>    <span class="k">def</span> <span class="nf">do_main</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cwdp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;cwd&quot;</span><span class="p">])</span>
+        <span class="n">template_dir</span> <span class="o">=</span> <span class="n">cwdp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="s2">&quot;template&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">template_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;目标路径</span><span class="si">{</span><span class="n">template_dir</span><span class="si">}</span><span class="s2">已经存在,退出&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">yes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">)</span>
+        <span class="n">pmfpconfig</span> <span class="o">=</span> <span class="n">get_config_info</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">cwdp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;template_config_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;项目模板配置文件已经存在&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">template_info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">):</span>
+            <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;language&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;项目必须指定语言&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">yes</span><span class="p">:</span>
+                <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">yn</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;是否使用项目环境作为模板指定环境? [Y/N]&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">yn</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">):</span>
+                    <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;env&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+                <span class="n">yn</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">,</span> <span class="s2">&quot;go&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">yes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;py&quot;</span><span class="p">:</span>
+                    <span class="n">mini_language_version</span> <span class="o">=</span> <span class="n">GOLBAL_PYTHON_VERSION</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;go&quot;</span><span class="p">:</span>
+                    <span class="n">gv</span> <span class="o">=</span> <span class="n">get_golang_version</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">gv</span><span class="p">:</span>
+                        <span class="n">mini_language_version</span> <span class="o">=</span> <span class="n">gv</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">yn</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;是否使用当前环境的语言版本作为模板指定语言最低版本? [Y/N]&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">yn</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;py&quot;</span><span class="p">:</span>
+                        <span class="n">mini_language_version</span> <span class="o">=</span> <span class="n">GOLBAL_PYTHON_VERSION</span>
+                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;go&quot;</span><span class="p">:</span>
+                        <span class="n">gv</span> <span class="o">=</span> <span class="n">get_golang_version</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">gv</span><span class="p">:</span>
+                            <span class="n">mini_language_version</span> <span class="o">=</span> <span class="n">gv</span>
+                    <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;mini_language_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mini_language_version</span>
+                <span class="n">yn</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="n">DEFAULT_AUTHOR</span><span class="p">)</span>
+        <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;template_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;template_type&quot;</span><span class="p">)</span>
+        <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;requires&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;requires&quot;</span><span class="p">)</span>
+        <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;test_requires&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test_requires&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">):</span>
+            <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;command&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">)</span>
+        <span class="n">parttens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;parttens&quot;</span><span class="p">)</span>
+        <span class="n">trans_keys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">parttens</span><span class="p">:</span>
+            <span class="n">template_keys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">parttens</span><span class="p">:</span>
+                <span class="n">partten_key</span><span class="p">,</span> <span class="n">template_key</span><span class="p">,</span> <span class="n">default_value</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
+                <span class="n">template_keys</span><span class="p">[</span><span class="n">template_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">default_value</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="n">trans_keys</span><span class="p">[</span><span class="n">partten_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">template_key</span>
+            <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;template_keys&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">template_keys</span>
+
+        <span class="n">components</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">def</span> <span class="nf">tempcallback</span><span class="p">(</span><span class="n">tp</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">nonlocal</span> <span class="n">components</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">cwdp</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">tp</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;python_local_env_dir&quot;</span><span class="p">],</span>
+                                              <span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;default_unittest_doc_dir&quot;</span><span class="p">],</span>
+                                              <span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;default_typecheck_doc_dir&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">except_dir</span><span class="p">:</span>
+                                <span class="n">components</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;default_path&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+                                <span class="p">}</span>
+                                <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">tp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                        <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">acccept_suffix</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">,</span> <span class="s2">&quot;LICENSE&quot;</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">):</span>
+                                <span class="n">nameinfo</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+                                <span class="n">components</span><span class="p">[</span><span class="n">nameinfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+                                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;default_path&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+                                <span class="p">}</span>
+                                <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">tp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+                <span class="k">def</span> <span class="nf">sc</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">partten</span><span class="p">,</span> <span class="n">template_key</span> <span class="ow">in</span> <span class="n">trans_keys</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">partten</span><span class="p">,</span> <span class="s2">&quot;{{ &quot;</span> <span class="o">+</span> <span class="n">template_key</span> <span class="o">+</span> <span class="s2">&quot; }}&quot;</span><span class="p">)</span>
+                    <span class="n">pt</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.jinja&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">pt</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;名称冲突,保留原命名</span><span class="si">{p}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
+                            <span class="n">fw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
+                            <span class="n">fw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                <span class="n">iter_dir_to_end</span><span class="p">(</span>
+                    <span class="n">tp</span><span class="p">,</span>
+                    <span class="n">match</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">acccept_suffix</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">,</span> <span class="s2">&quot;LICENSE&quot;</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">),</span>
+                    <span class="n">skip_dir</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;python_local_env_dir&quot;</span><span class="p">],</span> <span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;default_unittest_doc_dir&quot;</span><span class="p">],</span> <span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;default_typecheck_doc_dir&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">except_dir</span><span class="p">,</span>
+                    <span class="n">skip_dir_handdler</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">),</span>
+                    <span class="n">fail_cb</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">),</span>
+                    <span class="n">succ_cb</span><span class="o">=</span><span class="n">sc</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="n">template_dir</span><span class="p">)</span>
+
+        <span class="n">tempdir</span><span class="p">(</span><span class="n">cwdp</span><span class="p">,</span> <span class="n">tempcallback</span><span class="p">)</span>
+
+        <span class="n">template_info</span><span class="p">[</span><span class="s2">&quot;components&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">components</span>
+        <span class="c1"># print(json.dumps(template_info, ensure_ascii=False, indent=4))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">template_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;template_config_name&quot;</span><span class="p">]),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fw</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">template_info</span><span class="p">,</span> <span class="n">fw</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;转换完成&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="project_as_temp"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/index.html#pmfp.entrypoint.project.as_template.project_as_temp">[文档]</a><span class="n">project_as_temp</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">regist_sub</span><span class="p">(</span><span class="n">AsTemp</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

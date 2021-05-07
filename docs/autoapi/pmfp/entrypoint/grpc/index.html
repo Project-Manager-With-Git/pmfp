@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.grpc &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/autoapi/pmfp/entrypoint/grpc/index.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pmfp.entrypoint.grpc">
+<span id="pmfp-entrypoint-grpc"></span><h1><a class="reference internal" href="#module-pmfp.entrypoint.grpc" title="pmfp.entrypoint.grpc"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc</span></code></a><a class="headerlink" href="#module-pmfp.entrypoint.grpc" title="永久链接至标题">¶</a></h1>
+<p>子命令ppm grpc.</p>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="永久链接至标题">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build_/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.build_</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="build_/source_temp/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.build_.source_temp</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_/build_pb_cxx/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.build_.build_pb_cxx</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_/build_pb_go/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.build_.build_pb_go</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_/build_pb_js/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.build_.build_pb_js</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_/build_pb_py/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.build_.build_pb_py</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.build_.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="descservice/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.descservice</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="descservice/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.descservice.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="listservice/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.listservice</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="listservice/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.listservice.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="new/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.new</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="new/source_temp/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.new.source_temp</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="new/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.new.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="query/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.query</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="query/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.query.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stress/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.stress</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stress/core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.stress.core</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="永久链接至标题">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pmfp.entrypoint.grpc.core</span></code></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="永久链接至标题">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="永久链接至标题">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.grpc.build_grpc" title="pmfp.entrypoint.grpc.build_grpc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_grpc</span></code></a>(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.', as_type: Optional[List[str]] = None) → None</p></td>
+<td><p>编译grpc的protobuf的schema为不同语言的代码.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.grpc.new_grpc" title="pmfp.entrypoint.grpc.new_grpc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_grpc</span></code></a>(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') → None</p></td>
+<td><p>新建一个protpbuf文件.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.grpc.list_grpc" title="pmfp.entrypoint.grpc.list_grpc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_grpc</span></code></a>(url: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) → None</p></td>
+<td><p>列出grpc支持的服务.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.grpc.desc_grpc" title="pmfp.entrypoint.grpc.desc_grpc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">desc_grpc</span></code></a>(url: str, service: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) → None</p></td>
+<td><p>描述grpc支持的服务.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.grpc.query_grpc" title="pmfp.entrypoint.grpc.query_grpc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query_grpc</span></code></a>(url: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) → None</p></td>
+<td><p>请求grpc.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.grpc.tress_test_grpc" title="pmfp.entrypoint.grpc.tress_test_grpc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tress_test_grpc</span></code></a>(url: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) → None</p></td>
+<td><p>列出grpc支持的服务.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="pmfp.entrypoint.grpc.build_grpc">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.grpc.</span></code><code class="sig-name descname"><span class="pre">build_grpc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pb_includes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_relative</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/entrypoint/grpc/build_.html#build_grpc"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.grpc.build_grpc" title="永久链接至目标">¶</a></dt>
+<dd><p>编译grpc的protobuf的schema为不同语言的代码.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>language</strong> (<a class="reference internal" href="../cache/list/index.html#pmfp.entrypoint.cache.list.List" title="pmfp.entrypoint.cache.list.List"><em>List</em></a><em>[</em><em>str</em><em>]</em>) – 编译到的执行环境,可选的有”go”,”py”,”js”</p></li>
+<li><p><strong>files</strong> (<a class="reference internal" href="../cache/list/index.html#pmfp.entrypoint.cache.list.List" title="pmfp.entrypoint.cache.list.List"><em>List</em></a><em>[</em><em>str</em><em>]</em>) – 待编译的文件列表</p></li>
+<li><p><strong>pb_includes</strong> (<a class="reference internal" href="../cache/list/index.html#pmfp.entrypoint.cache.list.List" title="pmfp.entrypoint.cache.list.List"><em>List</em></a><em>[</em><em>str</em><em>]</em>) – 待编译文件及其依赖所在文件夹列表</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – 编译到的模块所在文件夹.</p></li>
+<li><p><strong>source_relative</strong> (<em>bool</em>) – 是否使用路径作为包名,只针对go语言</p></li>
+<li><p><strong>kwargs</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Default: None,</p></li>
+<li><p><strong>cwd</strong> (<em>str</em>) – 执行的根目录. Default: “.”</p></li>
+<li><p><strong>as_type</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../cache/list/index.html#pmfp.entrypoint.cache.list.List" title="pmfp.entrypoint.cache.list.List"><em>List</em></a><em>[</em><em>str</em><em>]</em><em>]</em>) – 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.entrypoint.grpc.new_grpc">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.grpc.</span></code><code class="sig-name descname"><span class="pre">new_grpc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pb_include</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_package</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/entrypoint/grpc/new.html#new_grpc"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.grpc.new_grpc" title="永久链接至目标">¶</a></dt>
+<dd><p>新建一个protpbuf文件.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – 文件名,文件名也为package名,如果是grpc,则其大写也是rpc的服务名</p></li>
+<li><p><strong>pb_include</strong> (<em>str</em>) – protobuf文件存放文件夹路径</p></li>
+<li><p><strong>parent_package</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 父包名. Defaults to None.</p></li>
+<li><p><strong>cwd</strong> (<em>str</em><em>, </em><em>optional</em>) – 执行位置. Defaults to <cite>.</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.entrypoint.grpc.list_grpc">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.grpc.</span></code><code class="sig-name descname"><span class="pre">list_grpc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plaintext</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insecure</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/entrypoint/grpc/listservice.html#list_grpc"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.grpc.list_grpc" title="永久链接至目标">¶</a></dt>
+<dd><p>列出grpc支持的服务.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – grpc的url</p></li>
+<li><p><strong>cwd</strong> (<em>str</em><em>, </em><em>optional</em>) – 执行操作时的操作目录. Defaults to “.”.</p></li>
+<li><p><strong>plaintext</strong> (<em>bool</em><em>, </em><em>optional</em>) – 是否不使用TLS加密传输. Defaults to False.</p></li>
+<li><p><strong>insecure</strong> (<em>bool</em><em>, </em><em>optional</em>) – 跳过服务器证书和域验证. Defaults to False.</p></li>
+<li><p><strong>cacert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 根证书位置. Defaults to None.</p></li>
+<li><p><strong>cert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书位置. Defaults to None.</p></li>
+<li><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书对应的私钥位置. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.entrypoint.grpc.desc_grpc">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.grpc.</span></code><code class="sig-name descname"><span class="pre">desc_grpc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plaintext</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insecure</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/entrypoint/grpc/descservice.html#desc_grpc"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.grpc.desc_grpc" title="永久链接至目标">¶</a></dt>
+<dd><p>描述grpc支持的服务.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – grpc的url</p></li>
+<li><p><strong>service</strong> (<em>str</em>) – 要查看的服务名</p></li>
+<li><p><strong>cwd</strong> (<em>str</em><em>, </em><em>optional</em>) – 执行操作时的操作目录. Defaults to “.”.</p></li>
+<li><p><strong>plaintext</strong> (<em>bool</em><em>, </em><em>optional</em>) – 是否不使用TLS加密传输. Defaults to False.</p></li>
+<li><p><strong>insecure</strong> (<em>bool</em><em>, </em><em>optional</em>) – 跳过服务器证书和域验证. Defaults to False.</p></li>
+<li><p><strong>cacert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 根证书位置. Defaults to None.</p></li>
+<li><p><strong>cert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书位置. Defaults to None.</p></li>
+<li><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书对应的私钥位置. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.entrypoint.grpc.query_grpc">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.grpc.</span></code><code class="sig-name descname"><span class="pre">query_grpc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plaintext</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insecure</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/entrypoint/grpc/query.html#query_grpc"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.grpc.query_grpc" title="永久链接至目标">¶</a></dt>
+<dd><p>请求grpc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – grpc的url</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – 要请求的方法</p></li>
+<li><p><strong>payload</strong> (<em>str</em>) – 请求的负载</p></li>
+<li><p><strong>cwd</strong> (<em>str</em><em>, </em><em>optional</em>) – 执行操作时的操作目录. Defaults to “.”.</p></li>
+<li><p><strong>plaintext</strong> (<em>bool</em><em>, </em><em>optional</em>) – 是否不使用TLS加密传输. Defaults to False.</p></li>
+<li><p><strong>insecure</strong> (<em>bool</em><em>, </em><em>optional</em>) – 跳过服务器证书和域验证. Defaults to False.</p></li>
+<li><p><strong>cacert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 根证书位置. Defaults to None.</p></li>
+<li><p><strong>cert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书位置. Defaults to None.</p></li>
+<li><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书对应的私钥位置. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.entrypoint.grpc.tress_test_grpc">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.grpc.</span></code><code class="sig-name descname"><span class="pre">tress_test_grpc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requests</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrency</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plaintext</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insecure</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/entrypoint/grpc/stress.html#tress_test_grpc"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.grpc.tress_test_grpc" title="永久链接至目标">¶</a></dt>
+<dd><p>列出grpc支持的服务.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – grpc的url</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – 要请求的方法</p></li>
+<li><p><strong>payload</strong> (<em>str</em>) – 请求的负载</p></li>
+<li><p><strong>requests</strong> (<em>int</em>) – 总请求量</p></li>
+<li><p><strong>concurrency</strong> (<em>int</em>) – 并发量</p></li>
+<li><p><strong>duration</strong> (<em>int</em>) – 并发间隔</p></li>
+<li><p><strong>cwd</strong> (<em>str</em><em>, </em><em>optional</em>) – 执行操作时的操作目录. Defaults to “.”.</p></li>
+<li><p><strong>plaintext</strong> (<em>bool</em><em>, </em><em>optional</em>) – 是否不使用TLS加密传输. Defaults to False.</p></li>
+<li><p><strong>insecure</strong> (<em>bool</em><em>, </em><em>optional</em>) – 跳过服务器证书和域验证. Defaults to False.</p></li>
+<li><p><strong>cacert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 根证书位置. Defaults to None.</p></li>
+<li><p><strong>cert</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书位置. Defaults to None.</p></li>
+<li><p><strong>key</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 服务证书对应的私钥位置. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

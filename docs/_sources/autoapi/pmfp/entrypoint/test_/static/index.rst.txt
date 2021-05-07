@@ -1,0 +1,82 @@
+:mod:`pmfp.entrypoint.test_.static`
+===================================
+
+.. py:module:: pmfp.entrypoint.test_.static
+
+.. autoapi-nested-parse::
+
+   动态语言做静态类型检测.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+   test_py/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.static.static_test_py
+   pmfp.entrypoint.test_.static.static_test
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.static.test_static
+
+
+.. function:: static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None
+
+   对python代码做静态检测.
+
+   :param code: 待检测代码
+   :type code: str
+   :param model: 是否是模块
+   :type model: bool
+   :param coverage: 是否输出覆盖率文档
+   :type coverage: bool
+   :param output: 覆盖率文档位置
+   :type output: str
+   :param cwd: 执行任务的根目录
+   :type cwd: str
+
+
+.. data:: test_static
+   
+
+   
+
+.. function:: static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = '.') -> None
+
+   对动态语言做静态类型检验.
+
+   :param language: 目标语言
+   :type language: str
+   :param code: 目标检测代码
+   :type code: str
+   :param model: 目标检测代码是否为模块
+   :type model: bool
+   :param coverage: 是否输出检测的覆盖率文档
+   :type coverage: bool
+   :param output: 覆盖率文档位置
+   :type output: str
+   :param cwd: 执行时的根目录
+   :type cwd: str
+
+

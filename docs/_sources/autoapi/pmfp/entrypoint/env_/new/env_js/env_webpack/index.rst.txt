@@ -1,0 +1,363 @@
+:mod:`pmfp.entrypoint.env_.new.env_js.env_webpack`
+==================================================
+
+.. py:module:: pmfp.entrypoint.env_.new.env_js.env_webpack
+
+.. autoapi-nested-parse::
+
+   使用npm初始化node的执行环境.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_js.env_webpack.new_env_webpack
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_BASE_CONFIG
+   pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_PROD_CONFIG
+   pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_TEST_CONFIG
+   pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_DEV_CONFIG
+   pmfp.entrypoint.env_.new.env_js.env_webpack.PROD_CONFIG
+   pmfp.entrypoint.env_.new.env_js.env_webpack.TEST_CONFIG
+   pmfp.entrypoint.env_.new.env_js.env_webpack.DEV_CONFIG
+
+
+.. data:: WEBPACK_BASE_CONFIG
+   :annotation: = Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: text
+        :linenos:
+
+        const path = require('path')
+        const webpack = require('webpack')
+        const HtmlWebpackPlugin = require('html-webpack-plugin')
+        const CleanWebpackPlugin = require("clean-webpack-plugin")
+        module.exports = {
+            entry: path.resolve(__dirname, '../src/index.js'),
+            output: {
+                path: path.resolve(__dirname, '../build'),
+                filename: 'bundle-[hash].js'
+            },
+            devServer: {
+                contentBase: path.resolve(__dirname, '../build'), //本地服务器所加载的页面所在的目录
+                historyApiFallback: true, //不跳转
+                inline: true,
+                hot: true
+            },
+            module: {
+                rules: [{
+                        test: /\.js$/,
+                        use: {
+                            loader: 'babel-loader'
+                        },
+                        exclude: path.resolve(__dirname, '../node_modules'),
+                        include: path.resolve(__dirname, '../src')
+                    },
+                    {
+                        test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
+                        use: [{
+                                loader: 'url-loader',
+                                options: {
+                                    limit: 10000,
+                                    name: '[path][name].[ext]?[hash:6]!./dir/file.png'
+                                }
+                            },
+                            {
+                                loader: 'image-webpack-loader',
+                                query: {
+                                    progressive: true,
+                                    optimizationLevel: 7,
+                                    interlaced: false,
+                                    pngquant: {
+                                        quality: '65-90',
+                                        speed: 4
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            plugins: [
+                new HtmlWebpackPlugin({
+                    template: path.resolve(__dirname, '../src/index.tmpl.html') //new 一个这个插件的实例，并传入相关的参数
+                }),
+                new webpack.HotModuleReplacementPlugin(), //热加载插件
+                new CleanWebpackPlugin('build/*.*', {
+                    root: path.resolve(__dirname, ".."),
+                    verbose: true,
+                    dry: false
+                })
+            ]
+        }
+
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. data:: WEBPACK_PROD_CONFIG
+   :annotation: = Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: text
+        :linenos:
+
+        const webpack = require('webpack')
+        const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+        const ExtractTextPlugin = require('extract-text-webpack-plugin')
+        const merge = require('webpack-merge')
+        const base = require('./webpack.config.base.js')
+        const env = require("./conf/prod.json")
+        module.exports = merge(base,{
+            module: {
+                rules: [
+                    {
+                        test: /\.css$/,
+                        use: ExtractTextPlugin.extract({
+                            fallback: "style-loader",
+                            use: ["css-loader"]
+                        })
+                    },
+                    {
+                        test: /\.styl$/,
+                        use: ExtractTextPlugin.extract({
+                            fallback: "style-loader",
+                            use: ["css-loader", "stylus-loader"]
+                        })
+                    }
+                ]
+            },
+            plugins: [
+                new webpack.optimize.OccurrenceOrderPlugin(),
+                new ExtractTextPlugin("style.css"),
+                new webpack.DefinePlugin({
+                    'process.env': {
+                        'NODE_ENV': JSON.stringify(env)
+                    }
+                })
+            ],
+            optimization: {
+                minimizer: [
+                    new UglifyJSPlugin(),
+                ]
+            }
+        })
+
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. data:: WEBPACK_TEST_CONFIG
+   :annotation: = Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: text
+        :linenos:
+
+        
+        const webpack = require('webpack')
+        const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+        const ExtractTextPlugin = require('extract-text-webpack-plugin')
+        const merge = require('webpack-merge')
+        const base = require('./webpack.config.base.js')
+        const env = require("./conf/test.json")
+        module.exports = merge(base,{
+            devtool: 'eval-source-map',
+            module: {
+                rules: [
+                    {
+                        test: /\.css$/,
+                        use: ExtractTextPlugin.extract({
+                            fallback: "style-loader",
+                            use: ["css-loader"]
+                        })
+                    },
+                    {
+                        test: /\.styl$/,
+                        use: ExtractTextPlugin.extract({
+                            fallback: "style-loader",
+                            use: ["css-loader", "stylus-loader"]
+                        })
+                    }
+                ]
+            },
+            plugins: [
+                new webpack.optimize.OccurrenceOrderPlugin(),
+                new ExtractTextPlugin("style.css"),
+                new webpack.DefinePlugin({
+                    'process.env': {
+                        'NODE_ENV': JSON.stringify(env)
+                    }
+                })
+            ],
+            optimization: {
+                minimizer: [
+                    new UglifyJSPlugin(),
+                ]
+            }
+        })
+
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. data:: WEBPACK_DEV_CONFIG
+   :annotation: = Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: text
+        :linenos:
+
+        const webpack = require('webpack')
+        const merge = require('webpack-merge')
+        const base = require('./webpack.config.base.js')
+        const env = require("./conf/dev.json")
+        module.exports = merge(base,{
+            devtool: 'eval-source-map',
+            module: {
+                rules: [
+                    {
+                        test: /\.css$/,
+                        use: [{
+                            loader: "style-loader"
+                        }, {
+                            loader: "css-loader"
+                        }]
+                    },
+                    {
+                        test: /\.styl$/,
+                        use: [{
+                            loader: "style-loader"
+                        }, {
+                            loader: "css-loader"
+                        }, {
+                            loader: "stylus-loader"
+                        }]
+                    }
+                ]
+            },
+            plugins: [
+                new webpack.DefinePlugin({
+                    'process.env': {
+                        'NODE_ENV': JSON.stringify(env)
+                    }
+                })
+            ]
+        })
+
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. data:: PROD_CONFIG
+   :annotation: = Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: text
+        :linenos:
+
+        {
+            "env":"prod"
+        }
+
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. data:: TEST_CONFIG
+   :annotation: = Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: text
+        :linenos:
+
+        {
+            "env":"test"
+        }
+
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. data:: DEV_CONFIG
+   :annotation: = Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: text
+        :linenos:
+
+        {
+            "env":"dev"
+        }
+
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. function:: new_env_webpack(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+
+   初始化golang默认的虚拟环境.
+
+   :param cwd: 虚拟环境所在的根目录
+   :type cwd: Path
+   :param project_name: 项目名
+   :type project_name: str
+
+

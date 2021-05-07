@@ -1,0 +1,97 @@
+:mod:`pmfp.entrypoint.schema.test_`
+===================================
+
+.. py:module:: pmfp.entrypoint.schema.test_
+
+.. autoapi-nested-parse::
+
+   检测json schema的example是否符合定义的模式schema.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.test_.is_url
+   pmfp.entrypoint.schema.test_.get_source_from_url
+   pmfp.entrypoint.schema.test_.is_validated
+   pmfp.entrypoint.schema.test_.test_schema
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.test_.schema_test
+
+
+.. function:: is_url(url: str) -> bool
+
+   判断url是否是url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: get_source_from_url(url: str) -> str
+
+   从指定url中回去源数据.
+
+   注意只能获取静态http资源.
+
+   :param url: url地址
+   :type url: str
+
+   :raises AttributeError: url未成功返回
+   :raises AttributeError: 未支持的类型
+
+   :returns: 内容文本
+   :rtype: str
+
+
+.. function:: is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool
+
+   检测数据是否符合模式.
+
+   :param instance: 待检测数据
+   :type instance: Dict[str,Any]
+   :param schema: 需要满足的模式
+   :type schema: Dict[str,Any]
+
+   :returns: 是否通过验证
+   :rtype: bool
+
+
+.. data:: schema_test
+   
+
+   
+
+.. function:: test_schema(file: str) -> None
+
+   检查一个json schema文件中的例子是否符合自身的schema.
+
+   :param file: 模式文件地址
+   :type file: str
+
+

@@ -1,0 +1,81 @@
+:mod:`pmfp.entrypoint.doc_.new.new_py`
+======================================
+
+.. py:module:: pmfp.entrypoint.doc_.new.new_py
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.new.new_py.doc_new_py
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.doc_.new.new_py.AppendConfig
+   pmfp.entrypoint.doc_.new.new_py.source_io
+   pmfp.entrypoint.doc_.new.new_py.AppendConfig
+   pmfp.entrypoint.doc_.new.new_py.pyindexmd
+   pmfp.entrypoint.doc_.new.new_py.source_io
+   pmfp.entrypoint.doc_.new.new_py.pyindexmd
+
+
+.. data:: AppendConfig
+   :annotation: = 
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: AppendConfig
+   
+
+   
+
+.. data:: pyindexmd
+   :annotation: = 
+
+   
+
+.. data:: source_io
+   
+
+   
+
+.. data:: pyindexmd
+   
+
+   
+
+.. function:: doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
+
+   为python项目构造api文档.
+   :param code: 项目源码位置
+   :type code: str
+   :param output: html文档位置
+   :type output: str
+   :param source_dir: 文档源码位置
+   :type source_dir: str
+   :param project_name: 项目名
+   :type project_name: str
+   :param author: 项目作者
+   :type author: str
+   :param version: 项目版本
+   :type version: str
+   :param cwd: 执行命令的根目录
+   :type cwd: str
+
+

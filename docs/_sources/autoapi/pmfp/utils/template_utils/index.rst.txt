@@ -1,0 +1,58 @@
+:mod:`pmfp.utils.template_utils`
+================================
+
+.. py:module:: pmfp.utils.template_utils
+
+.. autoapi-nested-parse::
+
+   模板相关的通用工具.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.template_utils.template_2_content
+   pmfp.utils.template_utils.jsontemplate_2_content
+   pmfp.utils.template_utils.cfgtemplate_2_file
+
+
+
+.. function:: template_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. function:: jsontemplate_2_content(template: str, **kwargs: Any) -> str
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+
+.. function:: cfgtemplate_2_file(template: str, file: pathlib.Path, **kwargs: Any) -> None
+
+   将模板转换为文件内容.
+
+   :param template: 模板字符串
+   :type template: str
+   :param file: 文件保存位置
+   :type file: Path
+   :param kwargs: 由模板构造内容的关键字
+   :type kwargs: Dict[str,str]
+
+

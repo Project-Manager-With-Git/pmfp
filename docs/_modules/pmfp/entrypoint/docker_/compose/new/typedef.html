@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pmfp.entrypoint.docker_.compose.new.typedef &mdash; pmfp 4.0.2 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> pmfp
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html">v4.0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-1">v4.0.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-0">v4.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">pmfp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../index.html">模块代码</a> &raquo;</li>
+        
+          <li><a href="../new.html">pmfp.entrypoint.docker_.compose.new</a> &raquo;</li>
+        
+      <li>pmfp.entrypoint.docker_.compose.new.typedef</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>pmfp.entrypoint.docker_.compose.new.typedef 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">mypy_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+
+
+<div class="viewcode-block" id="LogSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.LogSchema">[文档]</a><span class="n">LogSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;LogSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;driver&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DriverOptsSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.DriverOptsSchema">[文档]</a><span class="n">DriverOptsSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;DriverOptsSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;o&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExternalSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.ExternalSchema">[文档]</a><span class="n">ExternalSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;ExternalSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span></div>
+<span class="p">})</span>
+
+
+<div class="viewcode-block" id="VolumeSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.VolumeSchema">[文档]</a><span class="n">VolumeSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;VolumeSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">ExternalSchema</span><span class="p">],</span>
+    <span class="s2">&quot;driver&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;driver_opts&quot;</span><span class="p">:</span> <span class="n">DriverOptsSchema</span><span class="p">,</span>
+    <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VolumesSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.VolumesSchema">[文档]</a><span class="n">VolumesSchema</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">VolumeSchema</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="IpamConfigSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.IpamConfigSchema">[文档]</a><span class="n">IpamConfigSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;IpamConfigSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;subnet&quot;</span><span class="p">:</span> <span class="nb">str</span></div>
+<span class="p">})</span>
+
+
+<div class="viewcode-block" id="IpamSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.IpamSchema">[文档]</a><span class="n">IpamSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;IpamSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;driver&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="n">IpamConfigSchema</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NetworkSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.NetworkSchema">[文档]</a><span class="n">NetworkSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;NetworkSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;driver&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;driver_opts&quot;</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;attachable&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s2">&quot;enable_ipv6&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s2">&quot;ipam&quot;</span><span class="p">:</span> <span class="n">IpamSchema</span><span class="p">,</span>
+    <span class="s2">&quot;internal&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">ExternalSchema</span><span class="p">],</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NetworksSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.NetworksSchema">[文档]</a><span class="n">NetworksSchema</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NetworkSchema</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="ConfigAndSecretSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.ConfigAndSecretSchema">[文档]</a><span class="n">ConfigAndSecretSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;ConfigAndSecretSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;external&quot;</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">ExternalSchema</span><span class="p">],</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BuildSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.BuildSchema">[文档]</a><span class="n">BuildSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;BuildSchema&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;dockerfile&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PortSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.PortSchema">[文档]</a><span class="n">PortSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;PortSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;published&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;protocol&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.ResourceSchema">[文档]</a><span class="n">ResourceSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;ResourceSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourcesSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.ResourcesSchema">[文档]</a><span class="n">ResourcesSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;ResourcesSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;limits&quot;</span><span class="p">:</span> <span class="n">ResourceSchema</span><span class="p">,</span>
+    <span class="s2">&quot;reservations&quot;</span><span class="p">:</span> <span class="n">ResourceSchema</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RestartPolicySchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.RestartPolicySchema">[文档]</a><span class="n">RestartPolicySchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;RestartPolicySchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;max_attempts&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PlacementSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.PlacementSchema">[文档]</a><span class="n">PlacementSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;PlacementSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;preferences&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;max_replicas_per_node&quot;</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UpdateAndRollbackConfigSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.UpdateAndRollbackConfigSchema">[文档]</a><span class="n">UpdateAndRollbackConfigSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;UpdateAndRollbackConfigSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;parallelism&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;failure_action&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;monitor&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;max_failure_ratio&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DeploySchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.DeploySchema">[文档]</a><span class="n">DeploySchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;DeploySchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;replicas&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;resources&quot;</span><span class="p">:</span> <span class="n">ResourcesSchema</span><span class="p">,</span>
+    <span class="s2">&quot;restart_policy&quot;</span><span class="p">:</span> <span class="n">RestartPolicySchema</span><span class="p">,</span>
+    <span class="s2">&quot;placement&quot;</span><span class="p">:</span> <span class="n">PlacementSchema</span><span class="p">,</span>
+    <span class="s2">&quot;update_config&quot;</span><span class="p">:</span> <span class="n">UpdateAndRollbackConfigSchema</span><span class="p">,</span>
+    <span class="s2">&quot;rollback_config&quot;</span><span class="p">:</span> <span class="n">UpdateAndRollbackConfigSchema</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LoggingAliasSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.LoggingAliasSchema">[文档]</a><span class="n">LoggingAliasSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;LoggingAliasSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;&lt;&lt;&quot;</span><span class="p">:</span> <span class="n">LogSchema</span></div>
+<span class="p">})</span>
+
+
+<div class="viewcode-block" id="ServiceSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.ServiceSchema">[文档]</a><span class="n">ServiceSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;ServiceSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;build&quot;</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BuildSchema</span><span class="p">],</span>
+    <span class="s2">&quot;logging&quot;</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LogSchema</span><span class="p">,</span> <span class="n">LoggingAliasSchema</span><span class="p">],</span>
+    <span class="s2">&quot;network_mode&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;extra_hosts&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PortSchema</span><span class="p">]],</span>
+    <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;configs&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;secrets&quot;</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="s2">&quot;cpus&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;mem_reservation&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;deploy&quot;</span><span class="p">:</span> <span class="n">DeploySchema</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ServicesSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.ServicesSchema">[文档]</a><span class="n">ServicesSchema</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ServiceSchema</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ComposeSchema"><a class="viewcode-back" href="../../../../../../autoapi/pmfp/entrypoint/docker_/compose/new/typedef/index.html#pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema">[文档]</a><span class="n">ComposeSchema</span> <span class="o">=</span> <span class="n">TypedDict</span><span class="p">(</span><span class="s2">&quot;ComposeSchema&quot;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;x-log&quot;</span><span class="p">:</span> <span class="n">LogSchema</span><span class="p">,</span>
+    <span class="s2">&quot;services&quot;</span><span class="p">:</span> <span class="n">ServicesSchema</span><span class="p">,</span>
+    <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="n">NetworksSchema</span><span class="p">,</span>
+    <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="n">VolumesSchema</span><span class="p">,</span>
+    <span class="s2">&quot;configs&quot;</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigAndSecretSchema</span><span class="p">],</span>
+    <span class="s2">&quot;secrets&quot;</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigAndSecretSchema</span><span class="p">],</span>
+<span class="p">},</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2021, hsz.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

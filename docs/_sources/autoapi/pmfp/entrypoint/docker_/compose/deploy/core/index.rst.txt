@@ -1,0 +1,59 @@
+:mod:`pmfp.entrypoint.docker_.compose.deploy.core`
+==================================================
+
+.. py:module:: pmfp.entrypoint.docker_.compose.deploy.core
+
+.. autoapi-nested-parse::
+
+   ppm docker compose deploy命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.deploy.core.Deploy
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.compose.deploy.core.properties
+   pmfp.entrypoint.docker_.compose.deploy.core.dockercompose_deploy
+
+
+.. data:: properties
+   :annotation: :Dict[str, object]
+
+   
+
+.. class:: Deploy(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
+
+   Bases: :py:obj:`schema_entry.EntryPoint`
+
+   执行部署相关的工具.
+
+   如果指定`portainer_url`则会尝试部署到portainer上,如果没有指定则尝试命令行部署.
+   如果指定`dockercompose_name`则会使用找到的docker-compose更新,否则根据命令行创建compose更新.
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: dockercompose_deploy
+   
+
+   
+

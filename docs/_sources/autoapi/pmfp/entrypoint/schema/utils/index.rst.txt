@@ -1,0 +1,60 @@
+:mod:`pmfp.entrypoint.schema.utils`
+===================================
+
+.. py:module:: pmfp.entrypoint.schema.utils
+
+.. autoapi-nested-parse::
+
+   schema模块的公用工具.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.utils.make_url_id
+   pmfp.entrypoint.schema.utils.copy_schema
+
+
+
+.. function:: make_url_id(name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> str
+
+   构造json schema 的id.
+
+   :param name: 模式名
+   :type name: str
+   :param path: 相对根路径的位置
+   :type path: str
+   :param version_name: 模式版本
+   :type version_name: str
+   :param cwd: 根路径
+   :type cwd: str
+   :param addr: 有addr则表明url为http的url,否则使用file url来定义id. Defaults to None.
+   :type addr: Optional[str], optional
+
+   :returns: [description]
+   :rtype: str
+
+
+.. function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
+
+   以一个json schema 为模板copy一个json schema文件.
+
+   :param name: 模式名
+   :type name: str
+   :param path: 从根目录起的路径
+   :type path: str
+   :param version_name: 模式版本,形式为`v0_0_0`
+   :type version_name: str
+   :param cwd: 根目录.
+   :type cwd: str
+   :param addr: 网站域名.
+   :type addr: str, optional
+
+

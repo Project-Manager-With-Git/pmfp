@@ -1,0 +1,184 @@
+:mod:`pmfp.entrypoint.schema.check`
+===================================
+
+.. py:module:: pmfp.entrypoint.schema.check
+
+.. autoapi-nested-parse::
+
+   检测json schema的example是否符合定义的模式schema.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.check.is_url
+   pmfp.entrypoint.schema.check.is_http_url
+   pmfp.entrypoint.schema.check.is_file_url
+   pmfp.entrypoint.schema.check.parse_file_url
+   pmfp.entrypoint.schema.check.get_source_from_url
+   pmfp.entrypoint.schema.check.is_validated
+   pmfp.entrypoint.schema.check.test_http
+   pmfp.entrypoint.schema.check.check_schema
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.check.schema_check
+
+
+.. function:: is_url(url: str) -> bool
+
+   判断url是否是url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: is_http_url(url: str) -> bool
+
+   判断url是否是http请求的url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: is_file_url(url: str) -> bool
+
+   判断url是否是文件协议相关的url.
+
+   :param url: 待判断的url字符串
+   :type url: str
+
+   :returns: 是否是url
+   :rtype: bool
+
+
+.. function:: parse_file_url(url: str) -> str
+
+   从file url中提取文件系统中的路径.
+
+   :param url: file url
+   :type url: str
+
+   :returns: file url中提取出的路径
+   :rtype: str
+
+
+.. function:: get_source_from_url(url: str) -> str
+
+   从指定url中回去源数据.
+
+   注意只能获取静态http资源.
+
+   :param url: url地址
+   :type url: str
+
+   :raises AttributeError: url未成功返回
+   :raises AttributeError: 未支持的类型
+
+   :returns: 内容文本
+   :rtype: str
+
+
+.. function:: is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool
+
+   检测数据是否符合模式.
+
+   :param instance: 待检测数据
+   :type instance: Dict[str,Any]
+   :param schema: 需要满足的模式
+   :type schema: Dict[str,Any]
+
+   :returns: 是否通过验证
+   :rtype: bool
+
+
+.. function:: test_http(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+
+   检测http请求的结果是否满足模式.
+
+   :param schema: 模式的地址,可以是url或者文件路径.
+   :type schema: str
+   :param serialization: 使用的序列化协议.
+   :type serialization: str
+   :param url: 要访问的http资源的地址.
+   :type url: str
+   :param method: 访问资源的方法.
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+   :param cb: 获取到数据后的处理回调. Defaults to None.
+   :type cb: Optional[Callable[[str],]], optional
+
+
+.. data:: schema_check
+   
+
+   
+
+.. function:: check_schema(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+
+   检测指定的数据是否满足模式.
+
+   :param schema: 模式的地址,可以是url或者文件路径.
+   :type schema: str
+   :param serialization: 使用的序列化协议.
+   :type serialization: str
+   :param url: "请求的路径,可以是http/file的url或者文件系统的路径".
+   :type url: str
+   :param method: 访问资源的方法.
+   :type method: str
+   :param auth: 用户身份验证字符串. Defaults to None.
+   :type auth: Optional[str], optional
+   :param auth_type: 用户身份的验证类型. Defaults to None.
+   :type auth_type: Optional[str], optional
+   :param payload: 请求负载. Defaults to None.
+   :type payload: Optional[str], optional
+   :param payload_type: 请求的负载类型. Defaults to None.
+   :type payload_type: Optional[str], optional
+   :param stream: 返回是否为流数据. Defaults to False.
+   :type stream: bool, optional
+   :param verify: https请求是否验证. Defaults to False.
+   :type verify: bool, optional
+   :param cert: https请求的客户端认证文件. Defaults to None.
+   :type cert: Optional[str], optional
+
+

@@ -1,0 +1,54 @@
+:mod:`pmfp.entrypoint.requires.uninstall.core`
+==============================================
+
+.. py:module:: pmfp.entrypoint.requires.uninstall.core
+
+.. autoapi-nested-parse::
+
+   ppm requires uninstall命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.uninstall.core.Uninstall
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.uninstall.core.requires_uninstall
+
+
+.. class:: Uninstall
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   为执行环境卸载依赖.
+
+   .. attribute:: argparse_noflag
+      :annotation: = package_name
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: requires_uninstall
+   
+
+   
+

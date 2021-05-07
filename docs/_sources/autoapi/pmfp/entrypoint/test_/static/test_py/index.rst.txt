@@ -1,0 +1,40 @@
+:mod:`pmfp.entrypoint.test_.static.test_py`
+===========================================
+
+.. py:module:: pmfp.entrypoint.test_.static.test_py
+
+.. autoapi-nested-parse::
+
+   编译python语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.static.test_py.static_test_py
+
+
+
+.. function:: static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None
+
+   对python代码做静态检测.
+
+   :param code: 待检测代码
+   :type code: str
+   :param model: 是否是模块
+   :type model: bool
+   :param coverage: 是否输出覆盖率文档
+   :type coverage: bool
+   :param output: 覆盖率文档位置
+   :type output: str
+   :param cwd: 执行任务的根目录
+   :type cwd: str
+
+

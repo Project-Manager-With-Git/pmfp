@@ -1,0 +1,51 @@
+:mod:`pmfp.entrypoint.grpc.build_.core`
+=======================================
+
+.. py:module:: pmfp.entrypoint.grpc.build_.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_.core.Build
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_.core.grpc_build
+
+
+.. class:: Build
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   根据grpc的定义protobuf文件编译指定语言的模块.
+
+   需要本地有`protoc`,可以在`https://github.com/protocolbuffers/protobuf/releases`下载安装
+
+   .. attribute:: argparse_noflag
+      :annotation: = files
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: grpc_build
+   
+
+   
+

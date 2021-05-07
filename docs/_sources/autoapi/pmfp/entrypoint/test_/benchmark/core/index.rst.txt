@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.test_.benchmark.core`
+===========================================
+
+.. py:module:: pmfp.entrypoint.test_.benchmark.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.benchmark.core.Benchmark
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.test_.benchmark.core.test_benchmark
+
+
+.. class:: Benchmark
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   对指定语言的源码做性能检验.
+
+   .. attribute:: argparse_noflag
+      :annotation: = benchmark_code
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: test_benchmark
+   
+
+   
+

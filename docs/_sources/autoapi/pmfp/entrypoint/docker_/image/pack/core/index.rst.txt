@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.docker_.image.pack.core`
+==============================================
+
+.. py:module:: pmfp.entrypoint.docker_.image.pack.core
+
+.. autoapi-nested-parse::
+
+   ppm docker image pack命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.pack.core.Pack
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.docker_.image.pack.core.dockerimage_pack
+
+
+.. class:: Pack
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   将多个不同平台的同名镜像打包到同一个manifest list.
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: dockerimage_pack
+   
+
+   
+

@@ -1,0 +1,70 @@
+:mod:`pmfp.entrypoint.env_.new.env_py`
+======================================
+
+.. py:module:: pmfp.entrypoint.env_.new.env_py
+
+.. autoapi-nested-parse::
+
+   初始化python的执行环境.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_py.new_env_py_pypy
+   pmfp.entrypoint.env_.new.env_py.new_env_py_setup
+   pmfp.entrypoint.env_.new.env_py.init_py_env
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.env_.new.env_py.setup_py_template
+   pmfp.entrypoint.env_.new.env_py.template_io
+   pmfp.entrypoint.env_.new.env_py.setup_py_template
+
+
+.. data:: setup_py_template
+   :annotation: = 
+
+   
+
+.. data:: template_io
+   
+
+   
+
+.. data:: setup_py_template
+   
+
+   
+
+.. function:: new_env_py_pypy(cwd: pathlib.Path) -> None
+
+   初始化pypy的虚拟环境.
+
+   :param cwd: 虚拟环境所在的根目录
+   :type cwd: Path
+
+
+.. function:: new_env_py_setup(cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+   初始化python项目的setup.py和setup.cfg文件.
+
+   :param cwd: [description]
+   :type cwd: Path
+
+
+.. function:: init_py_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+

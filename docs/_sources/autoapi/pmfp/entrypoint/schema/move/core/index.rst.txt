@@ -1,0 +1,49 @@
+:mod:`pmfp.entrypoint.schema.move.core`
+=======================================
+
+.. py:module:: pmfp.entrypoint.schema.move.core
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.move.core.Move
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.schema.move.core.schema_move
+
+
+.. class:: Move
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   迁移旧的json schema模式文件.
+
+   .. attribute:: argparse_noflag
+      :annotation: = file
+
+      
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: schema_move
+   
+
+   
+

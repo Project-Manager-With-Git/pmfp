@@ -1,0 +1,156 @@
+:mod:`pmfp.entrypoint.proto.build_`
+===================================
+
+.. py:module:: pmfp.entrypoint.proto.build_
+
+.. autoapi-nested-parse::
+
+   编译protobuf的schema为不同语言的代码.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   build_pb_cpp/index.rst
+   build_pb_go/index.rst
+   build_pb_js/index.rst
+   build_pb_py/index.rst
+   core/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.proto.build_.get_abs_path
+   pmfp.entrypoint.proto.build_.get_abs_path_str
+   pmfp.entrypoint.proto.build_.build_pb_go
+   pmfp.entrypoint.proto.build_.build_pb_js
+   pmfp.entrypoint.proto.build_.build_pb_py
+   pmfp.entrypoint.proto.build_.build_pb_cpp
+   pmfp.entrypoint.proto.build_._build_pb
+   pmfp.entrypoint.proto.build_.build_pb
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.proto.build_.proto_build
+
+
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
+.. function:: get_abs_path_str(path_str: str, cwd: Optional[pathlib.Path] = None) -> str
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径字符串
+   :rtype: str
+
+
+.. function:: build_pb_go(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, source_relative: bool = False, **kwargs: str) -> None
+
+   编译protobuffer为go语言模块.
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+
+
+.. function:: build_pb_js(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+
+   编译js语言模块.
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+
+
+.. function:: build_pb_py(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+
+   编译python语言模块.
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+
+
+.. function:: build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+
+   编译c++语言模块.
+
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+
+
+.. data:: proto_build
+   
+
+   
+
+.. function:: _build_pb(language: str, files: List[str], includes: List[str], to: str, source_relative: bool, cwd: pathlib.Path, **kwargs: str) -> None
+
+
+.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.') -> None
+
+   编译protobuf的schema为不同语言的代码.
+
+   :param language: 编译到的执行环境,可选的有"go","py","js"
+   :type language: str
+   :param files: 待编译的文件列表
+   :type files: List[str]
+   :param pb_includes: 待编译文件及其依赖所在文件夹列表
+   :type pb_includes: List[str]
+   :param to: 编译到的模块所在文件夹.
+   :type to: str
+   :param source_relative: 是否使用路径作为包名,只针对go语言
+   :type source_relative: bool
+   :param kwargs: Default: None,
+   :type kwargs: Optional[str]
+   :param cwd: 执行的根目录. Default: "."
+   :type cwd: str
+
+

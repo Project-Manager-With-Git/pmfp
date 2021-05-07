@@ -1,0 +1,54 @@
+:mod:`pmfp.entrypoint.requires.install.core`
+============================================
+
+.. py:module:: pmfp.entrypoint.requires.install.core
+
+.. autoapi-nested-parse::
+
+   ppm requires install命令的处理.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.install.core.Install
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.requires.install.core.requires_install
+
+
+.. class:: Install
+
+   Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
+
+   为执行环境安装依赖.
+
+   当指定package_names或者requirements时作为单独安装,否则作为批处理.
+
+   当单独安装时test,setup,extras用于指示作为什么进行安装,优先级为test->setup->extras->requires
+   当作为批处理时则使用test,setup,extras用于指示除了requires外需要安装的部分.此时extras的值不会使用到
+
+   .. attribute:: schema
+      
+
+      
+
+
+.. data:: requires_install
+   
+
+   
+
