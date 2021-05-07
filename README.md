@@ -50,9 +50,50 @@ pmfp现在被设计为两个部分:
 6. 资源包中每个组件都有一个`source`字段,这个字段用于声明组件的位置,如果其中有`//`则说明它是引用的另一个资源项目的组件
 7. 根据模板包构造项目只要指定一个资源包路径即可,其形式为`[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]`
 8. 如果是已有项目要添加组件,则可以使用`[[{host}::]{repo_namespace}::]{repo_name}[@{tag}]//{component_path_str}`
-9. 默认的host为`github.com`,默认的repo_namespace为`Project-Manager-With-Git`,默认的tag为`latest`,如果tag为latest它会拉取master分支的head
+9. 默认的host为`github.com`,默认的repo_namespace为`Project-Manager-With-Git`,默认的tag为`latest`,如果tag为latest它会拉取master分支的head.默认的资源仓库可以通过修改`~/.pmfprc/config.json`来修改,
 
 另外我们还可以使用`cache`子命令管理资源包缓存
+
+#### 资源仓库类型
+
+本项目将所有资源仓库类型分为如下几种:
+
+1. `socket`,专指基于网络的通讯程序,包括http服务,websocket客户端与服务,各种rpc客户端与服务,以及zeromq,webrtc等
+2. `GUI`,专指图形界面
+3. `task`专指主动执行的任务,比如一般脚本,定时任务
+4. `watcher`监听器,被动监听事件的任务,比如监听文件系统的任务,监听消息中间件的任务
+5. `module`模块,必须被其他程序调用的程序
+6. `components`组件集合,本身并不能执行
+7. `doc`文档型组件
+
+#### 项目语言及对应的环境
+
+本项目目前之前如下语言和执行环境组合:
+
++ language为`py`
+    + env为`venv`,即python的标准库venv生成的c python虚拟环境
+    + env为`conda`,即anaconda/miniconda生成的c python虚拟环境
+    + env为`pypy`,即python的标准库venv生成的pypy虚拟环境
+
++ language为`js`
+    + env为`node`,即以node为执行环境的javascript的babel标准环境
+    + env为`webpack`,即以浏览器为执行环境,使用webpack编译项目的javascript的babel标准环境
+
++ language为`cython`
+    + env为`venv`,即python的标准库venv生成的c python虚拟环境
+    + env为`conda`,即anaconda/miniconda生成的c python虚拟环境
+
++ language为`go`
+    + env为`gomod`,即golang的gomod模式管理项目
+
++ language为`C`
+    + env为`cmake`,即使用cmake作为c语言的项目管理工具
+
++ language为`CXX`
+    + env为`cmake`,即使用cmake作为c语言的项目管理工具
+
++ language为`md`
+    + env为`http`,即使用markdown作为目标语言托管到http服务器上的纯文档环境
 
 ### 直接调用功能
 

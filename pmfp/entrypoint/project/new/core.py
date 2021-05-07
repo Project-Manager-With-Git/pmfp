@@ -6,23 +6,21 @@ from ..core import project
 class New(EndPoint):
     """根据模板创建项目."""
 
-    argparse_noflag = "env"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["env"],
         "properties": {
             "env": {
                 "description": "执行环境",
                 "title": "e",
                 "type": "string",
-                "enum": ["venv", "conda", "gomod", "cmake"]
+                "enum": ["venv", "conda", "pypy", "gomod", "cmake", "node", "webpack", "http"]
             },
             "language": {
                 "type": "string",
                 "title": "l",
                 "description": "初始化的语言",
-                "enum": ["py", "cython", "go", "CXX", "C"]
+                "enum": ["py", "cython", "go", "CXX", "C", "js", "md"]
             },
             "project_name": {
                 "type": "string",

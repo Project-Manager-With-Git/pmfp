@@ -4,23 +4,23 @@ from ..core import env
 
 class New(EndPoint):
     """在目标文件夹构造执行环境."""
-    argparse_noflag = "env"
+    argparse_noflag = "language"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["env"],
+        "required": ["language"],
         "properties": {
             "env": {
                 "description": "执行环境",
                 "title": "e",
                 "type": "string",
-                "enum": ["venv", "conda", "gomod", "cmake", "node"]
+                "enum": ["venv", "conda", "pypy", "gomod", "cmake", "node", "webpack", "http"]
             },
             "language": {
                 "type": "string",
                 "title": "l",
                 "description": "初始化的语言",
-                "enum": ["py", "cython", "go", "CXX", "C", "js"]
+                "enum": ["py", "cython", "go", "CXX", "C", "js", "md"]
             },
             "project_name": {
                 "type": "string",

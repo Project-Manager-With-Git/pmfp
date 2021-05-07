@@ -210,7 +210,9 @@ DEV_CONFIG = """{
 
 
 def new_env_webpack(cwd: Path, project_name: str, version: str, description: str, author: str,
-                    language: Optional[str] = None, requires: Optional[List[str]] = None,
+                    author_email: Optional[str] = None,
+                    keywords: Optional[List[str]] = None,
+                    requires: Optional[List[str]] = None,
                     test_requires: Optional[List[str]] = None) -> None:
     """初始化golang默认的虚拟环境.
 
@@ -219,64 +221,71 @@ def new_env_webpack(cwd: Path, project_name: str, version: str, description: str
         project_name (str): 项目名
 
     """
-    if not language:
-        language = "js"
+
     js_env_path = cwd.joinpath("package.json")
     if js_env_path.exists():
         warnings.warn("package.json已存在!")
     else:
-        if language == "js":
-            jsenv = {
-                "name": project_name,
-                "version": version,
-                "description": description,
-                "main": "index.js",
-                "author": author,
-                "license": "MIT",
-                "scripts": {
-                    "start": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.dev.js",
-                    "serv:dev": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.dev.js",
-                    "serv:test": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.test.js",
-                    "serv:prod": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.prod.js",
-                    "build": "./node_modules/.bin/webpack --config env/webpack.config.prod.js",
-                    "build:dev": "./node_modules/.bin/webpack --config env/webpack.config.dev.js",
-                    "build:test": "./node_modules/.bin/webpack --config env/webpack.config.test.js",
-                    "build:prod": "./node_modules/.bin/webpack --config env/webpack.config.prod.js",
-                },
+        jsenv = {
+            "name": project_name,
+            "version": version,
+            "description": description,
+            "main": "index.js",
+            "license": "MIT",
+            "scripts": {
+                "start": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.dev.js",
+                "serv:dev": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.dev.js",
+                "serv:test": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.test.js",
+                "serv:prod": "./node_modules/.bin/webpack-dev-server --open --config env/webpack.config.prod.js",
+                "build": "./node_modules/.bin/webpack --config env/webpack.config.prod.js",
+                "build:dev": "./node_modules/.bin/webpack --config env/webpack.config.dev.js",
+                "build:test": "./node_modules/.bin/webpack --config env/webpack.config.test.js",
+                "build:prod": "./node_modules/.bin/webpack --config env/webpack.config.prod.js",
+            },
 
-                "babel": {
-                    "presets": [
-                        ["@babel/preset-env"]
-                    ]
-                }
+            "babel": {
+                "presets": [
+                    ["@babel/preset-env"]
+                ]
             }
-            with open(js_env_path, "w", encoding="utf-8") as fw:
-                json.dump(jsenv, fw, indent=4)
-
-            if not cwd.joinpath("env").is_dir():
-                cwd.joinpath("env").mkdir()
-            with open(str(cwd.joinpath("env/webpack.config.base.js")), "w", encoding="utf-8") as f:
-                f.write(WEBPACK_BASE_CONFIG)
-            with open(str(cwd.joinpath("env/webpack.config.dev.js")), "w", encoding="utf-8") as f:
-                f.write(WEBPACK_DEV_CONFIG)
-            with open(str(cwd.joinpath("env/webpack.config.prod.js")), "w", encoding="utf-8") as f:
-                f.write(WEBPACK_PROD_CONFIG)
-            with open(str(cwd.joinpath("env/webpack.config.test.js")), "w", encoding="utf-8") as f:
-                f.write(WEBPACK_TEST_CONFIG)
-
-            if not cwd.joinpath("env/conf").is_dir():
-                cwd.joinpath("env/conf").mkdir()
-
-            with open(str(cwd.joinpath("env/conf/dev.json")), "w", encoding="utf-8") as f:
-                f.write(DEV_CONFIG)
-            with open(str(cwd.joinpath("env/conf/prod.json")), "w", encoding="utf-8") as f:
-                f.write(PROD_CONFIG)
-            with open(str(cwd.joinpath("env/conf/test.json")), "w", encoding="utf-8") as f:
-                f.write(TEST_CONFIG)
-            run("npm install --save-dev babel-loader @babel/core @babel/cli @babel/preset-env @babel/register webpack webpack-cli style-loader css-loader stylus stylus-loader url-loader file-loader image-webpack-loader html-webpack-plugin webpack-dev-server clean-webpack-plugin extract-text-webpack-plugin@next uglifyjs-webpack-plugin webpack-merge", cwd=cwd, visible=True, fail_exit=True)
+        }
+        if author_email:
+            jsenv.update({
+                "author": {"name": author, "email": author_email}
+            })
         else:
-            warnings.warn(f"未知语言{language}")
-            return
+            jsenv.update({
+                "author": author
+            })
+
+        if keywords:
+            jsenv.update({
+                "keywords": keywords
+            })
+        with open(js_env_path, "w", encoding="utf-8") as fw:
+            json.dump(jsenv, fw, indent=4)
+
+        if not cwd.joinpath("env").is_dir():
+            cwd.joinpath("env").mkdir()
+        with open(str(cwd.joinpath("env/webpack.config.base.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_BASE_CONFIG)
+        with open(str(cwd.joinpath("env/webpack.config.dev.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_DEV_CONFIG)
+        with open(str(cwd.joinpath("env/webpack.config.prod.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_PROD_CONFIG)
+        with open(str(cwd.joinpath("env/webpack.config.test.js")), "w", encoding="utf-8") as f:
+            f.write(WEBPACK_TEST_CONFIG)
+
+        if not cwd.joinpath("env/conf").is_dir():
+            cwd.joinpath("env/conf").mkdir()
+
+        with open(str(cwd.joinpath("env/conf/dev.json")), "w", encoding="utf-8") as f:
+            f.write(DEV_CONFIG)
+        with open(str(cwd.joinpath("env/conf/prod.json")), "w", encoding="utf-8") as f:
+            f.write(PROD_CONFIG)
+        with open(str(cwd.joinpath("env/conf/test.json")), "w", encoding="utf-8") as f:
+            f.write(TEST_CONFIG)
+        run("npm install --save-dev babel-loader @babel/core @babel/cli @babel/preset-env @babel/register webpack webpack-cli style-loader css-loader stylus stylus-loader url-loader file-loader image-webpack-loader html-webpack-plugin webpack-dev-server clean-webpack-plugin extract-text-webpack-plugin@next uglifyjs-webpack-plugin webpack-merge", cwd=cwd, visible=True, fail_exit=True)
         if requires:
             for i in requires:
                 run(f"npm install {i}", cwd=cwd, visible=True, fail_exit=True)

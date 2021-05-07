@@ -229,6 +229,40 @@ def gen_thirdpart_service_compose(service_name: str) -> ServicesSchema:
                 }
             }
             result[f"zoo{i}"] = zookeeper_sers
+
+    elif service_name == "kafka":
+        zk_sers: ServiceSchema = {
+            "image": "wurstmeister/zookeeper",
+            "ports": ["2181:2181"],
+            "networks": {
+                "local": {
+                    "aliases": ["kafka.local"]
+                }
+            },
+            "mem_limit": "500m",
+            "restart": "on-failure",
+        }
+        result["zookeeper"] = zk_sers
+        kafka_sers: ServiceSchema = {
+            "image": "wurstmeister/kafka",
+            "ports": ["9092:9092"],
+            "mem_limit": "500m",
+            "restart": "on-failure",
+            "networks": {
+                "local": {
+                    "aliases": ["kafka.local"]
+                }
+            },
+
+            "environment": {
+                "KAFKA_ADVERTISED_HOST_NAME": "kafka.local",
+                "KAFKA_ZOOKEEPER_CONNECT": "zookeeper: 2181",
+                "KAFKA_CREATE_TOPICS": "topic1:1:1"
+            },
+            "volumes": ["/var/run/docker.sock:/var/run/docker.sock"]
+        }
+        result["kafka"] = kafka_sers
+
     elif service_name == "envoy":
         envoy_compose: ServiceSchema = {
             "image": "envoyproxy/envoy-dev:76286f6152666c73d9379f21f43152bd03b00f78",
