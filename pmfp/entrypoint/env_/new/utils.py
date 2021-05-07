@@ -14,13 +14,6 @@ else:
     raise AttributeError("MANIFEST.in模板失败")
 
 
-cython_setup_py_template = ""
-template_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'cython_setup.py.jinja')
-if template_io:
-    cython_setup_py_template = template_io.decode('utf-8')
-else:
-    raise AttributeError("cython_setup.py模板失败")
-
 PipConfSource = ""
 source_io = pkgutil.get_data('pmfp.entrypoint.env_.new.source_temp', 'pip.conf.jinja')
 if source_io:
