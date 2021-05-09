@@ -110,8 +110,10 @@ class AsTemp(EndPoint):
         template_info["description"] = ""
         template_info["author"] = self.config.get("author", DEFAULT_AUTHOR)
         template_info["template_type"] = self.config.get("template_type")
-        template_info["requires"] = self.config.get("requires")
-        template_info["test_requires"] = self.config.get("test_requires")
+        if self.config.get("requires"):
+            template_info["requires"] = self.config.get("requires")
+        if self.config.get("test_requires"):
+            template_info["test_requires"] = self.config.get("test_requires")
         if self.config.get("command"):
             template_info["command"] = self.config.get("command")
         parttens = self.config.get("parttens")

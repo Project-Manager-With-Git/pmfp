@@ -75,7 +75,7 @@ def go_mod_handdler(p: Path) -> Dict[str, Any]:
     _, req1 = con.split("require (")
     infos = req1.split(")")
     requirements = infos[0].strip()
-    result["install_requires"] = [i.strip().replace(" ", "@") for i in requirements.splitlines()]
+    result["requires"] = [i.strip().replace(" ", "@") for i in requirements.splitlines()]
     return result
 
 
