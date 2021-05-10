@@ -5,7 +5,7 @@ from pathlib import Path
 from schema_entry import EntryPoint
 from .core import ppm
 
-__VERSION__ = "4.0.0"
+__VERSION__ = "4.0.6"
 
 
 class VERSION(EntryPoint):
