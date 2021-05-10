@@ -224,7 +224,8 @@ Attributes
    :type kwargs: Dict[str,str]
 
 
-.. class:: InfoBase
+.. class:: InfoBase(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
@@ -246,6 +247,8 @@ Attributes
       
 
    .. method:: do_main(self) -> None
+
+      执行入口函数.
 
 
 
@@ -312,7 +315,7 @@ Attributes
    校验组件信息,通过的话返回组件信息.
 
 
-.. function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None) -> str
+.. function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None, root_default_path: Optional[str] = None) -> str
 
    将目标组件模板转换到项目目录.
 
@@ -322,7 +325,7 @@ Attributes
    保存组件信息到项目配置.
 
 
-.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
+.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
 
 
 .. function:: add_component(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') -> None

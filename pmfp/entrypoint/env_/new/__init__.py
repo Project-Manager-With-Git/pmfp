@@ -191,6 +191,84 @@ def _new_nev(env: str, language: str, cwd: Path,
         print(f"暂不支持初始化{language}的环境")
 
 
+def make_project_info_with_default(cwdp: Path, language: str,
+                                   env: Optional[str] = None,
+                                   project_name: Optional[str] = None,
+                                   version: Optional[str] = None,
+                                   author: Optional[str] = None,
+                                   author_email: Optional[str] = None,
+                                   description: Optional[str] = None,
+                                   ) -> Dict[str, str]:
+    result: Dict[str, str] = {"language": language}
+    if not author:
+        result["author"] = DEFAULT_AUTHOR
+    if not project_name:
+        result["project_name"] = cwdp.resolve().name
+    if not version:
+        result["version"] = "0.0.0"
+    if not author_email:
+        result["author_email"] = ""
+    if not description:
+        result["description"] = ""
+    if language == "py":
+        if not env:
+            result["env"] = "venv"
+        else:
+            if env not in ("venv", "conda", "pypy"):
+                raise AttributeError(f"python 只支持环境`venv, conda, pypy`,不支持环境`{env}`")
+            else:
+                result["env"] = env
+    elif language == "cython":
+        if not env:
+            result["env"] = "venv"
+        else:
+            if env not in ("venv", "conda",):
+                raise AttributeError(f"cython 只支持环境`venv, conda`,不支持环境`{env}`")
+            else:
+                result["env"] = env
+    elif language == "js":
+        if not env:
+            result["env"] = "node"
+        else:
+            if env not in ("node", "webpack",):
+                raise AttributeError(f"js 只支持环境`node, webpack`,不支持环境`{env}`")
+            else:
+                result["env"] = env
+    elif language == "go":
+        if not env:
+            result["env"] = "gomod"
+        else:
+            if env not in ("gomod", ):
+                raise AttributeError(f"golang 只支持环境`gomod`,不支持环境`{env}`")
+            else:
+                result["env"] = env
+    elif language == "CXX":
+        if not env:
+            result["env"] = "cmake"
+        else:
+            if env not in ("cmake", ):
+                raise AttributeError(f"CXX 只支持环境`cmake`,不支持环境`{env}`")
+            else:
+                result["env"] = env
+    elif language == "C":
+        if not env:
+            result["env"] = "cmake"
+        else:
+            if env not in ("cmake", ):
+                raise AttributeError(f"C 只支持环境`cmake`,不支持环境`{env}`")
+            else:
+                result["env"] = env
+    elif language == "md":
+        if not env:
+            result["env"] = "http"
+        else:
+            if env not in ("http", ):
+                raise AttributeError(f"md 只支持环境`http`,不支持环境`{env}`")
+            else:
+                result["env"] = env
+    return result
+
+
 @ env_new.as_main
 def new_env(language: str, *,
             env: Optional[str] = None,
@@ -223,16 +301,15 @@ def new_env(language: str, *,
             cwdp = get_abs_path(cwd)
         else:
             cwdp = Path(".")
-        if not author:
-            author = DEFAULT_AUTHOR
-        if not project_name:
-            project_name = Path(cwd).resolve().name
-        if not version:
-            version = "0.0.0"
-        if not author_email:
-            author_email = ""
-        if not description:
-            description = ""
+        project_info_with_default = make_project_info_with_default(
+            cwdp=cwdp,
+            language=language,
+            env=env,
+            project_name=project_name,
+            version=version,
+            author=author,
+            author_email=author_email,
+            description=description)
         if not keywords:
             keywordstr = ""
         else:
@@ -240,73 +317,22 @@ def new_env(language: str, *,
 
         makereadme(
             cwd=cwdp,
-            project_name=project_name,
-            author=author,
-            author_email=author_email,
-            description=description,
+            project_name=project_info_with_default["project_name"],
+            author=project_info_with_default["author"],
+            author_email=project_info_with_default["author_email"],
+            description=project_info_with_default["description"],
             keywords=keywordstr
         )
         makechangelog(cwdp)
-        env = ""
-        if language == "py":
-            if not env:
-                env = "venv"
-            else:
-                if env not in ("venv", "conda", "pypy"):
-                    warnings.warn(f"python 只支持环境`venv, conda, pypy`,不支持环境`{env}`")
-                    return
-        elif language == "cython":
-            if not env:
-                env = "venv"
-            else:
-                if env not in ("venv", "conda",):
-                    warnings.warn(f"cython 只支持环境`venv, conda`,不支持环境`{env}`")
-                    return
-        elif language == "js":
-            if not env:
-                env = "node"
-            else:
-                if env not in ("node", "webpack",):
-                    warnings.warn(f"js 只支持环境`node, webpack`,不支持环境`{env}`")
-                    return
-
-        elif language == "go":
-            if not env:
-                env = "gomod"
-            else:
-                if env not in ("gomod", ):
-                    warnings.warn(f"golang 只支持环境`gomod`,不支持环境`{env}`")
-                    return
-        elif language == "CXX":
-            if not env:
-                env = "cmake"
-            else:
-                if env not in ("cmake", ):
-                    warnings.warn(f"CXX 只支持环境`cmake`,不支持环境`{env}`")
-                    return
-        elif language == "C":
-            if not env:
-                env = "cmake"
-            else:
-                if env not in ("cmake", ):
-                    warnings.warn(f"C 只支持环境`cmake`,不支持环境`{env}`")
-                    return
-        elif language == "md":
-            if not env:
-                env = "http"
-            else:
-                if env not in ("http", ):
-                    warnings.warn(f"md 只支持环境`http`,不支持环境`{env}`")
-                    return
         _new_nev(
-            env=env,
-            language=language,
+            env=project_info_with_default["env"],
+            language=project_info_with_default["language"],
             cwd=cwdp,
-            project_name=project_name,
-            version=version,
-            author=author,
-            author_email=author_email,
-            description=description,
+            project_name=project_info_with_default["project_name"],
+            version=project_info_with_default["version"],
+            author=project_info_with_default["author"],
+            author_email=project_info_with_default["author_email"],
+            description=project_info_with_default["description"],
             keywords=keywordstr,
             requires=requires,
             test_requires=test_requires,
@@ -316,13 +342,13 @@ def new_env(language: str, *,
     except Exception as e:
         raise e
     else:
-        freeze(env=env,
-               language=language,
-               project_name=project_name,
-               version=version,
-               author=author,
-               author_email=author_email,
-               description=description,
+        freeze(env=project_info_with_default["env"],
+               language=project_info_with_default["language"],
+               project_name=project_info_with_default["project_name"],
+               version=project_info_with_default["version"],
+               author=project_info_with_default["author"],
+               author_email=project_info_with_default["author_email"],
+               description=project_info_with_default["description"],
                keywords=keywords,
                requires=requires,
                test_requires=test_requires,

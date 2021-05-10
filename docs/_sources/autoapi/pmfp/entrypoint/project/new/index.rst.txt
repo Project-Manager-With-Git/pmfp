@@ -32,9 +32,11 @@ Functions
 .. autoapisummary::
 
    pmfp.entrypoint.project.new.get_abs_path
+   pmfp.entrypoint.project.new.remove_readonly
    pmfp.entrypoint.project.new.get_cache_dir
    pmfp.entrypoint.project.new.get_config_info
    pmfp.entrypoint.project.new.new_env
+   pmfp.entrypoint.project.new.make_project_info_with_default
    pmfp.entrypoint.project.new.install_requires
    pmfp.entrypoint.project.new._add_component
    pmfp.entrypoint.project.new.make_template_kv
@@ -65,6 +67,11 @@ Attributes
 
    :returns: 路径字符串的绝对路径
    :rtype: Path
+
+
+.. function:: remove_readonly(func: Callable, path: str, _: Any) -> None
+
+   Clear the readonly bit and reattempt the removal.
 
 
 .. class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
@@ -183,10 +190,14 @@ Attributes
    :type cwd: str, optional
 
 
+.. function:: make_project_info_with_default(cwdp: pathlib.Path, language: str, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None) -> Dict[str, str]
+
+
 .. function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 
-.. class:: InfoBase
+.. class:: InfoBase(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
@@ -209,9 +220,11 @@ Attributes
 
    .. method:: do_main(self) -> None
 
+      执行入口函数.
 
 
-.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
+
+.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
 
 
 .. function:: make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None) -> Dict[str, str]
@@ -225,7 +238,7 @@ Attributes
    :rtype: Dict[str, str]
 
 
-.. function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None) -> str
+.. function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None, root_default_path: Optional[str] = None) -> str
 
    将目标组件模板转换到项目目录.
 

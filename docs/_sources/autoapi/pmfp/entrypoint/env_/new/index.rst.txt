@@ -57,6 +57,7 @@ Functions
    pmfp.entrypoint.env_.new.makechangelog
    pmfp.entrypoint.env_.new.freeze
    pmfp.entrypoint.env_.new._new_nev
+   pmfp.entrypoint.env_.new.make_project_info_with_default
    pmfp.entrypoint.env_.new.new_env
 
 
@@ -185,6 +186,9 @@ Attributes
 
 
 .. function:: _new_nev(env: str, language: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+
+
+.. function:: make_project_info_with_default(cwdp: pathlib.Path, language: str, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None) -> Dict[str, str]
 
 
 .. function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None

@@ -1,3 +1,25 @@
+# v4.0.7
+
+## 改进
+
+1. 修改了project new的执行顺序,现在先拉取模板再创建执行环境
+2. 现在project new执行报错后会删除这步操作时创建文件和文件夹
+
+# v4.0.6
+
+## bug修复
+
+1. 修正了version命令展示过期版本问题
+2. 修正了project add和project new时无法使用自定义key作为路径参数的bug
+3. 修正了project new时外部组件不能使用模板定义的参数的问题
+
+# v4.0.5
+
+## bug修复
+
+1. 修正了gomod中加载项目依赖信息的错误
+2. 修正了project as_temp在没有依赖时也会添加null的错误
+
 # v4.0.4
 
 ## bug修复
