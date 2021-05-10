@@ -147,7 +147,7 @@ def to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[
         located_path_t = target_component_info["default_path"]
     else:
         located_path_t = located_path
-    located_path_str = template_2_content(located_path_t, **projectconfig)
+    located_path_str = template_2_content(located_path_t, **tempkv)
     target_located_path = cwdp.joinpath(located_path_str)
     if target_component_path.is_dir():
         if not target_located_path.exists():
@@ -187,7 +187,7 @@ def save_to_components(cwdp: Path, component_string: str, located_path_str: str)
     with open(cwdp.joinpath(PMFP_CONFIG_DEFAULT_NAME), "w", encoding='utf-8') as cfw:
         json.dump(c, cfw, indent=4)
 
-
+# TODO 加上根配置
 def _add_component(cached_sourcepacks: List[str],
                    projectconfig: Dict[str, Any],
                    pmfpconf: Dict[str, Any],
