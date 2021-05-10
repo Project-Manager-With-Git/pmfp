@@ -163,7 +163,7 @@ Attributes
 
 
 .. data:: __VERSION__
-   :annotation: = 4.0.7
+   :annotation: = 4.0.8
 
    
 

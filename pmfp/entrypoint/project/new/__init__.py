@@ -184,6 +184,15 @@ def new_project(env: Optional[str] = None,
                                  test_requires=sourcepack_config.get("test_requires"),
                                  env_args=install_env_args,
                                  cwd=cwd)
+    except (KeyboardInterrupt, SystemExit):
+        print(f"初始化项目中断")
+        print("开始清理初始化的残余")
+        for p in cwdp.iterdir():
+            if p.name not in orgs:
+                if p.is_dir():
+                    shutil.rmtree(p, onerror=remove_readonly)
+                if p.is_file():
+                    os.remove(p)
     except Exception as e:
         print(f"初始化项目错误:{str(e)}")
         print("开始清理初始化的残余")

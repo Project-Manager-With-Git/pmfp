@@ -1,3 +1,9 @@
+# v4.0.8
+
+## 改进
+
+1. 现在project new执行过程中使用Ctrl+Break或者Ctrl+C(KeyboardInterrupt, SystemExit)终端执行时也会删除这步操作时创建的文件和文件夹
+
 # v4.0.7
 
 ## 改进

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.project.new &mdash; pmfp 4.0.7 文档</title>
+  <title>pmfp.entrypoint.project.new &mdash; pmfp 4.0.8 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.7
+                4.0.8
               </div>
             
           
@@ -90,7 +90,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-6">v4.0.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-5">v4.0.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-4">v4.0.4</a></li>
@@ -351,6 +352,15 @@
                                  <span class="n">test_requires</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;test_requires&quot;</span><span class="p">),</span>
                                  <span class="n">env_args</span><span class="o">=</span><span class="n">install_env_args</span><span class="p">,</span>
                                  <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="ne">SystemExit</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;初始化项目中断&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始清理初始化的残余&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">cwdp</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">orgs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;初始化项目错误:</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始清理初始化的残余&quot;</span><span class="p">)</span>
