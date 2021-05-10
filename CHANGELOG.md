@@ -1,15 +1,10 @@
-# v4.0.8
-
-## 改进
-
-1. 现在project new执行过程中使用Ctrl+Break或者Ctrl+C(KeyboardInterrupt, SystemExit)终端执行时也会删除这步操作时创建的文件和文件夹
-
 # v4.0.7
 
 ## 改进
 
 1. 修改了project new的执行顺序,现在先拉取模板再创建执行环境
 2. 现在project new执行报错后会删除这步操作时创建文件和文件夹
+3. 现在project new执行过程中使用Ctrl+Break或者Ctrl+C(KeyboardInterrupt, SystemExit)终端执行时也会删除这步操作时创建的文件和文件夹
 
 # v4.0.6
 
