@@ -130,7 +130,14 @@ def check_component(sourcepack_config: Dict[str, Any], componentpack: ComponentT
     return target_component_info
 
 
-def to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: Path, sourcepackdir: Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None) -> str:
+def to_target_source(projectconfig: Dict[str, Any],
+                     target_component_info: Dict[str, Any],
+                     cwdp: Path,
+                     sourcepackdir: Path,
+                     target_source: str,
+                     tempkv: Dict[str, Any],
+                     located_path: Optional[str] = None,
+                     root_default_path: Optional[str] = None) -> str:
     """将目标组件模板转换到项目目录."""
     def succ_callback(p: Path,) -> None:
         with open(p, encoding="utf-8") as f:
@@ -144,7 +151,10 @@ def to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[
     if not target_component_path.exists():
         raise AttributeError(f"组件不存在")
     if not located_path:
-        located_path_t = target_component_info["default_path"]
+        if root_default_path:
+            located_path_t = root_default_path
+        else:
+            located_path_t = target_component_info["default_path"]
     else:
         located_path_t = located_path
     located_path_str = template_2_content(located_path_t, **tempkv)
@@ -187,7 +197,7 @@ def save_to_components(cwdp: Path, component_string: str, located_path_str: str)
     with open(cwdp.joinpath(PMFP_CONFIG_DEFAULT_NAME), "w", encoding='utf-8') as cfw:
         json.dump(c, cfw, indent=4)
 
-# TODO 加上根配置
+
 def _add_component(cached_sourcepacks: List[str],
                    projectconfig: Dict[str, Any],
                    pmfpconf: Dict[str, Any],
@@ -196,7 +206,8 @@ def _add_component(cached_sourcepacks: List[str],
                    cwdp: Path, *,
                    located_path: Optional[str] = None,
                    save: bool = True,
-                   kv: Optional[List[str]] = None) -> Tuple[ComponentTemplate, Dict[str, Any]]:
+                   kv: Optional[List[str]] = None,
+                   root_default_path: Optional[str] = None) -> Tuple[ComponentTemplate, Dict[str, Any]]:
     componentpack, sourcepackdir = check_and_cached(
         cached_sourcepack=cached_sourcepacks,
         component_string=component_string,
@@ -215,7 +226,7 @@ def _add_component(cached_sourcepacks: List[str],
     )
     target_source = target_component_info["source"]
     if "//" in target_source:
-        _add_component(
+        return _add_component(
             cached_sourcepacks=cached_sourcepacks,
             projectconfig=projectconfig,
             pmfpconf=pmfpconf,
@@ -224,7 +235,8 @@ def _add_component(cached_sourcepacks: List[str],
             cwdp=cwdp,
             located_path=located_path,
             save=save,
-            kv=kv)
+            kv=kv,
+            root_default_path=root_default_path)
     else:
         tempkv = make_template_kv(
             sourcepack_config=sourcepack_config,
@@ -236,7 +248,8 @@ def _add_component(cached_sourcepacks: List[str],
                                             sourcepackdir=sourcepackdir,
                                             target_source=target_source,
                                             tempkv=tempkv,
-                                            located_path=located_path)
+                                            located_path=located_path,
+                                            root_default_path=root_default_path)
         if save:
             save_to_components(cwdp=cwdp, component_string=component_string, located_path_str=located_path_str)
         return componentpack, sourcepack_config

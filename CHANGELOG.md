@@ -3,11 +3,8 @@
 ## bug修复
 
 1. 修正了version命令展示过期版本问题
-
-## 改进
-
-
-
+2. 修正了project add和project new时无法使用自定义key作为路径参数的bug
+3. 修正了project new时外部组件不能使用模板定义的参数的问题
 
 # v4.0.5
 

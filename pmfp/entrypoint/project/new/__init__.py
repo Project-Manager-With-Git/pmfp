@@ -130,7 +130,8 @@ def new_project(env: Optional[str] = None,
                     pmfpconf=pmfpconf,
                     cache_dir=cache_dir,
                     component_string=component_string,
-                    cwdp=cwdp, kv=kv)
+                    cwdp=cwdp, kv=kv,
+                    root_default_path=component_info.get("default_path"))
             print("组件构造结束")
         if with_test:
             try:
