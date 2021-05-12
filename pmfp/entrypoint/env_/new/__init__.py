@@ -202,14 +202,24 @@ def make_project_info_with_default(cwdp: Path, language: str,
     result: Dict[str, str] = {"language": language}
     if not author:
         result["author"] = DEFAULT_AUTHOR
+    else:
+        result["author"] = author
     if not project_name:
         result["project_name"] = cwdp.resolve().name
+    else:
+        result["project_name"] = project_name
     if not version:
         result["version"] = "0.0.0"
+    else:
+        result["version"] = version
     if not author_email:
         result["author_email"] = ""
+    else:
+        result["author_email"] = author_email
     if not description:
         result["description"] = ""
+    else:
+        result["description"] = description
     if language == "py":
         if not env:
             result["env"] = "venv"
