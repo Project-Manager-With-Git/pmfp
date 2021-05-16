@@ -21,6 +21,8 @@ def build(language: str, code: str, project_name: str, *,
           lib_dir: Optional[List[str]] = None,
           build_as: str = "exec",
           for_linux_arch: Optional[str] = None,
+          pypi_mirror: Optional[str] = None,
+          requires: Optional[List[str]] = None,
           cwd: str = ".") -> None:
     """编译指定代码.
 

@@ -1,17 +1,14 @@
 
 """不同执行环境安装依赖."""
-import sys
-import json
 import warnings
-from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import List, Optional
 from pmfp.utils.fs_utils import get_abs_path
-from .core import requires_install
+from .core import requires_install, ppm_install
 from .go_install import go_install
 from .python_install import python_install
+from .node_install import node_install
 
 
-@requires_install.as_main
 def install_requires(env: str, *,
                      package_names: Optional[List[str]] = None,
                      requirements: Optional[str] = None,
@@ -61,6 +58,10 @@ def install_requires(env: str, *,
                        env_args=env_args)
     if env in ("node", "webpack"):
         node_install(cwd=cwdp,
-                       package_names=package_names,
-                       test=test,
-                       env_args=env_args)
+                     package_names=package_names,
+                     test=test,
+                     env_args=env_args)
+
+
+requires_install.as_main(install_requires)
+ppm_install.as_main(install_requires)

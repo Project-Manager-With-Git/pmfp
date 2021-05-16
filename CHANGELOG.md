@@ -6,8 +6,8 @@
 
 ## 改进
 
-
-
+1. 新增快捷命令`install`相当于`requires install`
+2. 新增快捷命令`uninstall`相当于`requires uninstall`
 
 
 # v4.0.7

@@ -1,6 +1,7 @@
 """ppm requires install命令的处理."""
 from pmfp.utils.endpoint import EndPoint
 from ..core import requires
+from ...core import ppm
 
 
 class Install(EndPoint):
@@ -97,3 +98,4 @@ class Install(EndPoint):
 
 
 requires_install = requires.regist_sub(Install)
+ppm_install = ppm.regist_sub(Install)

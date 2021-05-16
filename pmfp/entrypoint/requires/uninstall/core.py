@@ -1,6 +1,7 @@
 """ppm requires uninstall命令的处理."""
 from pmfp.utils.endpoint import EndPoint
 from ..core import requires
+from ...core import ppm
 
 
 class Uninstall(EndPoint):
@@ -30,3 +31,4 @@ class Uninstall(EndPoint):
 
 
 requires_uninstall = requires.regist_sub(Uninstall)
+ppm_uninstall = ppm.regist_sub(Uninstall)

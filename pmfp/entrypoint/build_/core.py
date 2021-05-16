@@ -4,7 +4,25 @@ from ..core import ppm
 
 
 class Build(EndPoint):
-    """编译指定位置项目."""
+    """打包指定位置项目为便于分发的形式.
+
+    需要指定形式为: 
+        exec--可执行程序,可以通过static来指定是否为纯静态可执行程序
+        alib--静态库
+        dlib-动态库
+
+    go语言:
+        可以编译为上面三种
+
+    cython语言:
+        可以编译为exec和dlib
+
+    python语言:
+        由于python本身为脚本语言所以其打包只是将源码放入zip包中
+        exec--打包为.pyz文件,如果声明为`static`则将依赖也放入zip中,如果声明`mini`则代码先编译为pyc再打包
+        alib/dlib--wheel打包
+
+    """
     argparse_noflag = "code"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
@@ -25,7 +43,7 @@ class Build(EndPoint):
                 "type": "string",
                 "title": "t",
                 "description": "编译结果目录",
-                "default": "."
+                "default": "dist"
             },
             "project_name": {
                 "type": "string",
@@ -84,6 +102,19 @@ class Build(EndPoint):
                 "title": "f",
                 "description": "是否交叉编译支持其他指令集版本的linux",
                 "enum": ["arm64", "amd64"]
+            },
+            "pypi_mirror": {
+                "type": "string",
+                "title": "m",
+                "description": "pypi的镜像源,比如https://pypi.tuna.tsinghua.edu.cn/simple",
+            },
+            "requires": {
+                "type": "array",
+                "title": "r",
+                "description": "依赖,只有python打包时有效,注意有c扩展的依赖时打包出来的pyz也无法执行",
+                "items": {
+                    "type": "string"
+                }
             },
             "cwd": {
                 "type": "string",

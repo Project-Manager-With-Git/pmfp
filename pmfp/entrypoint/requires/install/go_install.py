@@ -1,4 +1,3 @@
-import warnings
 from pathlib import Path
 from typing import Optional, List
 from pmfp.utils.run_command_utils import run, make_env_args
