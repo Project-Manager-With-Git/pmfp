@@ -36,30 +36,58 @@ def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, s
                  mini: bool = False, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None) -> None:
     python = get_local_python(cwd)
     code_path = get_abs_path(code, cwd)
-    temp_path = cwd.joinpath("temp_app")
     try:
-        shutil.copytree(
-            code_path,
-            temp_path
-        )
-        if mini:
-            for p in temp_path.iterdir():
-                compileall.compile_dir(p, force=True, legacy=True, optimize=2)
-                if p.is_dir():
-                    _delete_py_source(p)
-        if static and requires:
-            for require in requires:
-                if pypi_mirror and is_http_url(pypi_mirror):
-                    command = f'{python} -m pip install -i {pypi_mirror} "{require}" --target temp_app'
-                else:
-                    command = f'{python} -m pip install "{require}" --target temp_app'
-                run(command, cwd=cwd, visible=True, fail_exit=True)
+        if len([p for p in code_path.iterdir() if p.name == "__init__.py"]) == 0:
+            print("不是模块")
+            temp_path = cwd.joinpath("temp_app")
+            shutil.copytree(
+                code_path,
+                temp_path
+            )
+            if mini:
+                for p in temp_path.iterdir():
+                    compileall.compile_dir(p, force=True, legacy=True, optimize=2)
+                    if p.is_dir():
+                        _delete_py_source(p)
+            if static and requires:
+                for require in requires:
+                    if pypi_mirror and is_http_url(pypi_mirror):
+                        command = f'{python} -m pip install -i {pypi_mirror} "{require}" --target temp_app'
+                    else:
+                        command = f'{python} -m pip install "{require}" --target temp_app'
+                    run(command, cwd=cwd, visible=True, fail_exit=True)
+            zipapp.create_archive(
+                temp_path,
+                target=output_dir.joinpath(f"{project_name}.pyz"),
+                interpreter='/usr/bin/env python3'
+            )
+        else:
+            print("是模块")
+            temp_path = cwd.joinpath(f"temp_app")
+            temp_module_path = temp_path.joinpath(code_path.name)
+            shutil.copytree(
+                code_path,
+                temp_module_path
+            )
+            if mini:
+                for p in temp_module_path.iterdir():
+                    compileall.compile_dir(p, force=True, legacy=True, optimize=2)
+                    if p.is_dir():
+                        _delete_py_source(p)
+            if static and requires:
+                for require in requires:
+                    if pypi_mirror and is_http_url(pypi_mirror):
+                        command = f'{python} -m pip install -i {pypi_mirror} "{require}" --target temp_app'
+                    else:
+                        command = f'{python} -m pip install "{require}" --target temp_app'
+                    run(command, cwd=cwd, visible=True, fail_exit=True)
 
-        zipapp.create_archive(
-            temp_path,
-            target=output_dir.joinpath(f"{project_name}.pyz"),
-            interpreter='/usr/bin/env python3'
-        )
+            zipapp.create_archive(
+                temp_path,
+                target=output_dir.joinpath(f"{project_name}.pyz"),
+                interpreter='/usr/bin/env python3',
+                main=f"{code_path.name}.__main__:main"
+            )
     except Exception as e:
         print(f"发生错误{type(e)}:{str(e)}")
         raise e
