@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Optional, List
 from pmfp.utils.fs_utils import get_abs_path
 from .build_go import go_build
+from .build_py import py_build
 from .core import build_cmd
 
 
@@ -67,3 +68,13 @@ def build(language: str, code: str, project_name: str, *,
                  build_as=build_as,
                  for_linux_arch=for_linux_arch,
                  cwd=cwdp)
+    elif language == "py":
+        py_build(code=code,
+                 project_name=project_name,
+                 output_dir=output_dirp,
+                 cwd=cwdp,
+                 pypi_mirror=pypi_mirror,
+                 requires=requires,
+                 build_as=build_as,
+                 static=static,
+                 mini=mini)

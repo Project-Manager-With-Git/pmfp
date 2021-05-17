@@ -3,7 +3,7 @@ import zipapp
 import shutil
 import compileall
 import warnings
-from typing import Optional
+from typing import Optional, List
 from pathlib import Path
 from pmfp.utils.run_command_utils import run
 from pmfp.utils.tools_info_utils import get_local_python
@@ -27,31 +27,33 @@ def _delete_py_source(root_path: Path) -> None:
 
 def py_pack_lib(output_dir: Path, cwd: Path) -> None:
     python = get_local_python(cwd)
-    output_dir_str = path_to_str(output_dir)
+    output_dir_str = output_dir.relative_to(cwd).as_posix()
     command = f"{python} setup.py bdist_wheel --dist-dir={output_dir_str}"
     run(command, cwd=cwd, visible=True, fail_exit=True)
 
 
-def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, pypi_mirror: Optional[str] = None) -> None:
+def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, static: bool = False,
+                 mini: bool = False, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None) -> None:
     python = get_local_python(cwd)
     code_path = get_abs_path(code, cwd)
-    temp_path = cwd.joinpath("app")
+    temp_path = cwd.joinpath("temp_app")
     try:
         shutil.copytree(
             code_path,
             temp_path
         )
-        for p in temp_path.iterdir():
-            compileall.compile_dir(p, force=True, legacy=True, optimize=2)
-            if p.is_dir():
-                _delete_py_source(p)
-        requirements_path = cwd.joinpath("requirements.txt")
-        if requirements_path.exists():
-            if pypi_mirror and is_http_url(pypi_mirror):
-                command = f"{python} -m pip install -i {pypi_mirror}  -r requirements.txt --target app"
-            else:
-                command = f"{python} -m pip install  -r requirements.txt --target app"
-            run(command, cwd=cwd, visible=True, fail_exit=True)
+        if mini:
+            for p in temp_path.iterdir():
+                compileall.compile_dir(p, force=True, legacy=True, optimize=2)
+                if p.is_dir():
+                    _delete_py_source(p)
+        if static and requires:
+            for require in requires:
+                if pypi_mirror and is_http_url(pypi_mirror):
+                    command = f'{python} -m pip install -i {pypi_mirror} "{require}" --target temp_app'
+                else:
+                    command = f'{python} -m pip install "{require}" --target temp_app'
+                run(command, cwd=cwd, visible=True, fail_exit=True)
 
         zipapp.create_archive(
             temp_path,
@@ -69,19 +71,19 @@ def py_pack_exec(code: str, project_name: str, *, output_dir: Path, cwd: Path, p
             shutil.rmtree(temp_path)
 
 
-def py_pack(code: str, project_name: str, *,
-            output_dir: Path,
-            cwd: Path,
-            pypi_mirror: Optional[str] = None,
-            pack_as: str = "exec",
-            ) -> None:
+def py_build(code: str, project_name: str, *,
+             output_dir: Path,
+             cwd: Path,
+             pypi_mirror: Optional[str] = None,
+             requires: Optional[List[str]] = None,
+             build_as: str = "exec",
+             static: bool = False,
+             mini: bool = False,
+             ) -> None:
 
-    if not cwd.joinpath("go.mod").exists():
-        warnings.warn("go语言项目需要先有go.mod")
-        return
-    if pack_as == "exec":
+    if build_as == "exec":
         py_pack_exec(code=code, project_name=project_name, output_dir=output_dir, cwd=cwd, pypi_mirror=pypi_mirror)
-    elif pack_as == "lib":
+    elif build_as == "zip":
         py_pack_lib(output_dir=output_dir, cwd=cwd)
     else:
-        warnings.warn(f"python语言不支持打包类型{pack_as}")
+        warnings.warn(f"python语言不支持打包类型{build_as}")

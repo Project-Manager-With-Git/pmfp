@@ -68,7 +68,7 @@ def go_mod_handdler(p: Path) -> Dict[str, Any]:
     result: Dict[str, Union[str, List[str]]] = {"language": "go"}
     with open(p, encoding="utf-8") as f:
         con = f.read()
-    r = re.search(r"module \w+\s", con)
+    r = re.search(r"module [\w|.|\-|/]+\s", con)
     if r:
         s = r.group(0)
         result.update(project_name=s.replace("module ", "").strip())

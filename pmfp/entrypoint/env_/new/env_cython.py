@@ -112,12 +112,27 @@ def new_env_cython_setup(cwd: Path,
                 "tests_require": """
     """ + """
     """.join(test_requires)})
+        else:
+            options.update({
+                "tests_require": """
+    coverage >= 5.5
+    mypy >= 0.800
+    autopep8 >= 1.5.6
+    pylint >= 2.8.0
+    pydocstyle>=6.0.0
+    """})
 
         if setup_requires:
             options.update({
                 "setup_requires": """
     """ + """
     """.join(setup_requires)})
+        else:
+            options.update({
+                "setup_requires": """
+    wheel >= 0.36.2
+    setuptools >= 47.1.0
+    """})
         setup: Dict[str, Any] = {
             "metadata": metadata,
             "options": options,

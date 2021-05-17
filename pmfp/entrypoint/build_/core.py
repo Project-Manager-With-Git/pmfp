@@ -9,10 +9,14 @@ class Build(EndPoint):
     需要指定形式为: 
         exec--可执行程序,可以通过static来指定是否为纯静态可执行程序
         alib--静态库
-        dlib-动态库
+        dlib--动态库
+        zip--将文件打包为zip包
 
     go语言:
-        可以编译为上面三种
+        exec--可执行程序,可以通过static来指定是否为纯静态可执行程序
+        alib--静态库
+        dlib--动态库
+        zip--将文件打包为zip包
 
     cython语言:
         可以编译为exec和dlib
@@ -20,7 +24,7 @@ class Build(EndPoint):
     python语言:
         由于python本身为脚本语言所以其打包只是将源码放入zip包中
         exec--打包为.pyz文件,如果声明为`static`则将依赖也放入zip中,如果声明`mini`则代码先编译为pyc再打包
-        alib/dlib--wheel打包
+        zip--wheel打包
 
     """
     argparse_noflag = "code"
@@ -33,7 +37,7 @@ class Build(EndPoint):
                 "type": "string",
                 "title": "l",
                 "description": "编译的代码语言,如果language为`cython则只能编译为动态链接库`",
-                "enum": ["go", "cython"]
+                "enum": ["go", "cython", "py"]
             },
             "code": {
                 "description": "语言源码位置或者入口文件位置",
@@ -94,7 +98,7 @@ class Build(EndPoint):
                 "type": "string",
                 "title": "a",
                 "description": "编译为的目标,可选有exec,alib,dlib",
-                "enum": ["exec", "alib", "dlib"],
+                "enum": ["exec", "alib", "dlib", "zip"],
                 "default": "exec"
             },
             "for_linux_arch": {
@@ -105,7 +109,6 @@ class Build(EndPoint):
             },
             "pypi_mirror": {
                 "type": "string",
-                "title": "m",
                 "description": "pypi的镜像源,比如https://pypi.tuna.tsinghua.edu.cn/simple",
             },
             "requires": {

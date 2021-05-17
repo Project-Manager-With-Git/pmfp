@@ -8,7 +8,8 @@
 
 1. 新增快捷命令`install`相当于`requires install`
 2. 新增快捷命令`uninstall`相当于`requires uninstall`
-
+3. 命令`build`和`pack`合并,重新整理,这条命令现在用于打包项目到可分发状态
+4. 命令`env new`针对python,当对应参数没有填时会添加默认的`tests_require`和`setup_requires`
 
 # v4.0.7
 
