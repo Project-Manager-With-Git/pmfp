@@ -92,6 +92,7 @@ def new_project(env: Optional[str] = None,
 
         else:
             # 开始根据模板构造项目组件
+
             pmfpconf = get_config_info()
             cache_dir = get_cache_dir()
             cached_sourcepacks: List[str] = []
@@ -118,6 +119,8 @@ def new_project(env: Optional[str] = None,
                 author=author,
                 author_email=author_email,
                 description=description)
+            print("^^^^^^^^^^^^^^^^^^^^^^")
+            print(projectconfig)
             components = sourcepack_config.get("components")
             if components:
                 print("开始构造组件")

@@ -149,7 +149,7 @@ def to_target_source(projectconfig: Dict[str, Any],
 
     target_component_path = sourcepackdir.joinpath(target_source)
     if not target_component_path.exists():
-        raise AttributeError(f"组件不存在")
+        raise AttributeError(f"组件{ target_source }不存在")
     if not located_path:
         if root_default_path:
             located_path_t = root_default_path

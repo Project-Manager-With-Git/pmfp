@@ -4,6 +4,7 @@
 
 1. 修正了`env new`无法给已经初始化过的项目创建执行环境的bug
 2. 修正了`project as_temp`无法转换dockerfile和docker-compose的问题
+3. 修正了`project as_temp`转换文件后source字段不加`.jinja`的问题
 
 ## 改进
 
@@ -12,6 +13,7 @@
 3. 命令`build`和`pack`合并,重新整理,这条命令现在用于打包项目到可分发状态
 4. 命令`env new`针对python,当对应参数没有填时会添加默认的`tests_require`和`setup_requires`
 5. 命令`env new`针对cython,当对应参数没有填时会添加默认的`tests_require`和`setup_requires`
+6. `project new`现在当组件不存在时会提示是什么组件
 
 # v4.0.7
 

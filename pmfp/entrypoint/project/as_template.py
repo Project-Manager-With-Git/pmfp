@@ -152,7 +152,7 @@ class AsTemp(EndPoint):
                             if p.name.lower() in ("dockerfile", "docker-compose.yml") or (p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE", "README.md", "CHANGELOG.md")):
                                 nameinfo = p.name.split(".")
                                 components[nameinfo[0]] = {
-                                    "source": p.name,
+                                    "source": f"{p.name}.jinja",
                                     "description": "",
                                     "default_path": p.name
                                 }
