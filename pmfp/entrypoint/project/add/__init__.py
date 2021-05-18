@@ -98,11 +98,13 @@ def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str,
             else:
                 kvs[k] = v
     tempkv = {}
+    tempkv.update(projectconfig)
     for key, info in sourcepack_kws.items():
         t = info["default"]
         if kvs.get(key):
             t = kvs.get(key)
         tempkv[key] = template_2_content(t, **projectconfig)
+
     return tempkv
 
 

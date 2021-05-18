@@ -119,8 +119,6 @@ def new_project(env: Optional[str] = None,
                 author=author,
                 author_email=author_email,
                 description=description)
-            print("^^^^^^^^^^^^^^^^^^^^^^")
-            print(projectconfig)
             components = sourcepack_config.get("components")
             if components:
                 print("开始构造组件")
