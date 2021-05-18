@@ -149,7 +149,7 @@ class AsTemp(EndPoint):
                                 }
                                 shutil.copytree(p, tp.joinpath(p.name))
                         elif p.is_file():
-                            if p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE", "README.md", "CHANGELOG.md"):
+                            if p.name.lower() in ("dockerfile", "docker-compose.yml") or (p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE", "README.md", "CHANGELOG.md")):
                                 nameinfo = p.name.split(".")
                                 components[nameinfo[0]] = {
                                     "source": p.name,
@@ -175,7 +175,7 @@ class AsTemp(EndPoint):
 
                 iter_dir_to_end(
                     tp,
-                    match=lambda p: p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE", "README.md", "CHANGELOG.md"),
+                    match=lambda p: p.name.lower() in ("dockerfile", "docker-compose.yml") or (p.suffix in acccept_suffix and p.name not in ("setup.py", "LICENSE", "README.md", "CHANGELOG.md")),
                     skip_dir=lambda p: p.name in (pmfpconfig["python_local_env_dir"], pmfpconfig["default_unittest_doc_dir"], pmfpconfig["default_typecheck_doc_dir"]) or p.name in except_dir,
                     skip_dir_handdler=lambda p: shutil.rmtree(p, onerror=remove_readonly),
                     fail_cb=lambda p: os.remove(p),

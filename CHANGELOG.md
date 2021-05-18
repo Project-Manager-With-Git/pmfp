@@ -3,6 +3,7 @@
 ## bug修复
 
 1. 修正了`env new`无法给已经初始化过的项目创建执行环境的bug
+2. 修正了`project as_temp`无法转换dockerfile和docker-compose的问题
 
 ## 改进
 
