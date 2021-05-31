@@ -1,3 +1,9 @@
+# v4.0.9
+
+## 改进
+
+1. 改进了grpc query和grpc stress的使用,`-d/--payload`现在指向一个写着请求json的地址,默认为`query.json`,新增`-s/--service`,用户不再需要记怎么将service和method组合了
+
 # v4.0.8
 
 ## bug修复

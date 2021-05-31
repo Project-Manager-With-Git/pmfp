@@ -1,14 +1,15 @@
-
 """压测grpc服务."""
+import json
 import warnings
 from pathlib import Path
 from typing import Optional
 from pmfp.utils.run_command_utils import run
+from pmfp.utils.fs_utils import get_abs_path
 from .core import grpc_stress_test
 
 
 @grpc_stress_test.as_main
-def tress_test_grpc(url: str, method: str, payload: str, *,
+def tress_test_grpc(url: str, service: str, method: str, payload: str, *,
                     requests: int = 200, concurrency: int = 10, duration: int = 0,
                     cwd: str = ".", plaintext: bool = False, insecure: bool = False,
                     cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None:
@@ -16,6 +17,7 @@ def tress_test_grpc(url: str, method: str, payload: str, *,
 
     Args:
         url (str): grpc的url
+        service (str): 指定grpc提供的service使用.
         method (str): 要请求的方法
         payload (str): 请求的负载
         requests (int): 总请求量
@@ -28,6 +30,9 @@ def tress_test_grpc(url: str, method: str, payload: str, *,
         cert (Optional[str], optional): 服务证书位置. Defaults to None.
         key (Optional[str], optional): 服务证书对应的私钥位置. Defaults to None.
     """
+    pp = get_abs_path(payload, Path(cwd))
+    with open(pp) as f:
+        p = json.load(f)
     flags = " "
     if plaintext:
         flags += "--insecure "
@@ -38,8 +43,10 @@ def tress_test_grpc(url: str, method: str, payload: str, *,
     if key:
         flags += "--key={key} "
     if cacert:
-        flags += "--cacert={cacert} "
-    command = f"ghz --duration={duration} --concurrency={concurrency} --total={requests} --call={method} -d '{payload}'{flags}{url}"
+        flags += "--cacert={cacert} "\
+
+    c = json.dumps(p).replace('"', r'\"')
+    command = f'ghz --duration={duration} --concurrency={concurrency} --total={requests} --call={service}.{method}-d="{c}"{flags}{url}'
     try:
         run(command, cwd=Path(cwd), visible=True)
     except Exception:

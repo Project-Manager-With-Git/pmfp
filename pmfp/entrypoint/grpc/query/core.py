@@ -11,11 +11,16 @@ class Query(EndPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["url", "method", "payload"],
+        "required": ["url", "method", "payload", "service"],
         "properties": {
             "url": {
                 "type": "string",
                 "description": "grpc的服务位置.",
+            },
+            "service": {
+                "type": "string",
+                "title": "s",
+                "description": "指定grpc提供的service使用.",
             },
             "method": {
                 "type": "string",
@@ -25,7 +30,8 @@ class Query(EndPoint):
             "payload": {
                 "type": "string",
                 "title": "d",
-                "description": "请求grpc的负载.",
+                "description": "请求grpc的负载.需要是一个json文件的地址",
+                "default": "query.json"
             },
             "cwd": {
                 "type": "string",
