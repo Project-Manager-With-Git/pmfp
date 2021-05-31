@@ -20,7 +20,7 @@ class DescService(EndPoint):
             "service": {
                 "type": "string",
                 "title": "s",
-                "description": "grpc的服务位置.",
+                "description": "指定grpc提供的service使用.",
             },
             "cwd": {
                 "type": "string",
