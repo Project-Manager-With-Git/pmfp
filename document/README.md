@@ -1,6 +1,6 @@
 # pmfp
 
-+ version: 4.0.7
++ version: 4.0.10
 + status: dev
 + author: hsz
 + email: hsz1273327@gmail.com
@@ -99,15 +99,29 @@ pmfp现在被设计为两个部分:
 
 支持直接调用功能的子命令包括:
 
-+ `build`快速编译支持的静态语言项目
++ `build`打包项目到可分发状态.
 + `doc`快速构造项目的文档
 + `docker image`快速构造docker镜像
 + `docker compose`快速构造docker部署配置
 + `env`快速构建项目的独立执行环境
 + `grpc`快速构造了grpc的客户端和服务端
 + `http`用于构造静态http服务和构造http请求和压测
-+ `pack`打包动态语言构造的项目
 + `proto`用于快速构建和编译protobuf文件
 + `schema`用于校验`jsonschema`
 + `test`用于对项目进行测试
 + `requires`用于管理依赖
+
+#### `build`打包项目到可分发状态
+
+这条命令的含义为--打包项目到可以分发的状态.不同编程语言可以打包到的状态并不相同:
+
++ golang:
+
+    + `exec`可执行文件
+    + `alib`静态库
+    + `dlib`动态库(linux专用)
+    + `zip`源码压缩归档
+
++ python:
+    + `exec`,可执行的`.pyz`文件
+    + `zip`,wheel归档

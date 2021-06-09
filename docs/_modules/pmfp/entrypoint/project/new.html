@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.project.new &mdash; pmfp 4.0.7 文档</title>
+  <title>pmfp.entrypoint.project.new &mdash; pmfp 4.0.10 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.7
+                4.0.10
               </div>
             
           
@@ -90,7 +90,10 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-6">v4.0.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-5">v4.0.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-4">v4.0.4</a></li>
@@ -307,6 +310,10 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;开始构造测试模板&quot;</span><span class="p">)</span>
                         <span class="n">target_source</span> <span class="o">=</span> <span class="n">sourcepack_test_config</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+                        <span class="n">tempkv</span> <span class="o">=</span> <span class="n">make_template_kv</span><span class="p">(</span>
+                            <span class="n">sourcepack_config</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="p">,</span>
+                            <span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
+                            <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">)</span>
                         <span class="k">if</span> <span class="s2">&quot;//&quot;</span> <span class="ow">in</span> <span class="n">target_source</span><span class="p">:</span>
                             <span class="n">_add_component</span><span class="p">(</span>
                                 <span class="n">cached_sourcepacks</span><span class="o">=</span><span class="n">cached_sourcepacks</span><span class="p">,</span>
@@ -316,18 +323,15 @@
                                 <span class="n">component_string</span><span class="o">=</span><span class="n">target_source</span><span class="p">,</span>
                                 <span class="n">cwdp</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>
                                 <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">,</span>
-                                <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                                <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">oldtemplate_kw</span><span class="o">=</span><span class="n">tempkv</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">tempkv</span> <span class="o">=</span> <span class="n">make_template_kv</span><span class="p">(</span>
-                                <span class="n">sourcepack_config</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="p">,</span>
-                                <span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
-                                <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">)</span>
-                            <span class="n">located_path_str</span> <span class="o">=</span> <span class="n">to_target_source</span><span class="p">(</span><span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
-                                                                <span class="n">target_component_info</span><span class="o">=</span><span class="n">sourcepack_test_config</span><span class="p">,</span>
-                                                                <span class="n">cwdp</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>
-                                                                <span class="n">sourcepackdir</span><span class="o">=</span><span class="n">sourcepackdir</span><span class="p">,</span>
-                                                                <span class="n">target_source</span><span class="o">=</span><span class="n">target_source</span><span class="p">,</span>
-                                                                <span class="n">tempkv</span><span class="o">=</span><span class="n">tempkv</span><span class="p">)</span>
+                            <span class="n">to_target_source</span><span class="p">(</span><span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
+                                             <span class="n">target_component_info</span><span class="o">=</span><span class="n">sourcepack_test_config</span><span class="p">,</span>
+                                             <span class="n">cwdp</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>
+                                             <span class="n">sourcepackdir</span><span class="o">=</span><span class="n">sourcepackdir</span><span class="p">,</span>
+                                             <span class="n">target_source</span><span class="o">=</span><span class="n">target_source</span><span class="p">,</span>
+                                             <span class="n">tempkv</span><span class="o">=</span><span class="n">tempkv</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;初始化测试模板错误:</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="c1"># 初始化执行环境</span>

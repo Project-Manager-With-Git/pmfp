@@ -18,6 +18,7 @@ Submodules
    :maxdepth: 1
 
    build_go/index.rst
+   build_py/index.rst
    core/index.rst
    utils/index.rst
 
@@ -33,6 +34,7 @@ Functions
 
    pmfp.entrypoint.build_.get_abs_path
    pmfp.entrypoint.build_.go_build
+   pmfp.entrypoint.build_.py_build
    pmfp.entrypoint.build_.build
 
 
@@ -61,12 +63,15 @@ Attributes
 .. function:: go_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, upx: bool = False, mini: bool = False, build_as: str = 'exec', for_linux_arch: Optional[str] = None) -> None
 
 
+.. function:: py_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, build_as: str = 'exec', static: bool = False, mini: bool = False) -> None
+
+
 .. data:: build_cmd
    
 
    
 
-.. function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, cwd: str = '.') -> None
+.. function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译指定代码.
 

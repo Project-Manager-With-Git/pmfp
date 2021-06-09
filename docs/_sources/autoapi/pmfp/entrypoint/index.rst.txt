@@ -22,7 +22,6 @@ Subpackages
    env_/index.rst
    grpc/index.rst
    http/index.rst
-   pack/index.rst
    project/index.rst
    proto/index.rst
    requires/index.rst
@@ -74,7 +73,6 @@ Functions
    pmfp.entrypoint.query_http
    pmfp.entrypoint.serv_http
    pmfp.entrypoint.test_http
-   pmfp.entrypoint.pack
    pmfp.entrypoint.build_pb
    pmfp.entrypoint.new_pb
    pmfp.entrypoint.install_requires
@@ -134,7 +132,7 @@ Attributes
 
    
 
-.. function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, cwd: str = '.') -> None
+.. function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译指定代码.
 
@@ -346,12 +344,14 @@ Attributes
    :type key: Optional[str], optional
 
 
-.. function:: query_grpc(url: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: query_grpc(url: str, service: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    请求grpc.
 
    :param url: grpc的url
    :type url: str
+   :param service: 指定grpc提供的service使用
+   :type service: str
    :param method: 要请求的方法
    :type method: str
    :param payload: 请求的负载
@@ -370,12 +370,14 @@ Attributes
    :type key: Optional[str], optional
 
 
-.. function:: tress_test_grpc(url: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: tress_test_grpc(url: str, service: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    列出grpc支持的服务.
 
    :param url: grpc的url
    :type url: str
+   :param service: 指定grpc提供的service使用.
+   :type service: str
    :param method: 要请求的方法
    :type method: str
    :param payload: 请求的负载
@@ -466,28 +468,6 @@ Attributes
    :type cert: Optional[str], optional
    :param cb: 获取到数据后的处理回调. Defaults to None.
    :type cb: Optional[Callable[[str],]], optional
-
-
-.. function:: pack(language: str, code: str, project_name: str, *, output_dir: str = '.', pypi_mirror: Optional[str] = None, pack_as: str = 'exec', cwd: str = '.') -> None
-
-   编译指定代码.
-
-   只支持对linux的交叉编译.
-
-   :param language: 打包的代码语言,支持py
-   :type language: str
-   :param code: 语言源码位置或者入口文件位置
-   :type code: str
-   :param project_name: 项目名
-   :type project_name: str
-   :param output_dir: 打包结果放置的目录
-   :type output_dir: str
-   :param pypi_mirror: 安装python依赖时使用的pypi的镜像
-   :type pypi_mirror: str, optional
-   :param build_as: 编译为的目标,可选有exec(可执行文件),lib(库). Defaults to "exec".
-   :type build_as: str, optional
-   :param cwd: 执行编译操作时的执行位置. Defaults to ".".
-   :type cwd: str, optional
 
 
 .. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.') -> None
@@ -678,7 +658,7 @@ Attributes
 
 
 .. data:: __VERSION__
-   :annotation: = 4.0.7
+   :annotation: = 4.0.10
 
    
 

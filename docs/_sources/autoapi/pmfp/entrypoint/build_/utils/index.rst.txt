@@ -14,9 +14,17 @@ Functions
 .. autoapisummary::
 
    pmfp.entrypoint.build_.utils.upx_process
+   pmfp.entrypoint.build_.utils.addToZip
+   pmfp.entrypoint.build_.utils.zip_pack
 
 
 
 .. function:: upx_process(target: str, cwd: pathlib.Path) -> None
+
+
+.. function:: addToZip(zf: zipfile.ZipFile, cwd: pathlib.Path, path: pathlib.Path, output_dir: pathlib.Path) -> None
+
+
+.. function:: zip_pack(code: str, output_dir: pathlib.Path, cwd: pathlib.Path, project_name: str) -> None
 
 

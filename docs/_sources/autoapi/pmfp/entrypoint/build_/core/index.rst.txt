@@ -35,7 +35,27 @@ Attributes
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
-   编译指定位置项目.
+   打包指定位置项目为便于分发的形式.
+
+   需要指定形式为:
+       exec--可执行程序,可以通过static来指定是否为纯静态可执行程序
+       alib--静态库
+       dlib--动态库
+       zip--将文件打包为zip包
+
+   go语言:
+       exec--可执行程序,可以通过static来指定是否为纯静态可执行程序
+       alib--静态库
+       dlib--动态库
+       zip--将文件打包为zip包
+
+   cython语言:
+       可以编译为exec和dlib
+
+   python语言:
+       由于python本身为脚本语言所以其打包只是将源码放入zip包中
+       exec--打包为.pyz文件,如果声明为`static`则将依赖也放入zip中,如果声明`mini`则代码先编译为pyc再打包
+       zip--wheel打包
 
    .. attribute:: argparse_noflag
       :annotation: = code

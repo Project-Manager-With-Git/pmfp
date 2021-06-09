@@ -22,10 +22,10 @@ copyright = '2021, hsz'
 author = 'hsz'
 
 # The short X.Y version
-version = '4.0.7'
+version = '4.0.10'
 
 # The full version, including alpha/beta/rc tags
-release= '4.0.7'
+release= '4.0.10'
 
 
 # -- General configuration ---------------------------------------------------
@@ -114,4 +114,4 @@ def setup(app):
 extensions.append('autoapi.extension')
 extensions.append("sphinx.ext.napoleon")
 autoapi_type = 'python'
-autoapi_dirs = ["D:\\WorkSpace\\Prtoject-Manager-With-Git\\pmfp\\pmfp"]
+autoapi_dirs = ["../pmfp"]

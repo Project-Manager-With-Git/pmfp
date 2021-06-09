@@ -1,3 +1,33 @@
+# v4.0.10
+
+## bug修复
+
+1. 修正`project new`时参数覆盖顺序的问题,现在越浅层会覆盖深层
+
+# v4.0.9
+
+## 改进
+
+1. 改进了grpc query和grpc stress的使用,`-d/--payload`现在指向一个写着请求json的地址,默认为`query.json`,新增`-s/--service`,用户不再需要记怎么将service和method组合了
+
+# v4.0.8
+
+## bug修复
+
+1. 修正了`env new`无法给已经初始化过的项目创建执行环境的bug
+2. 修正了`project as_temp`无法转换dockerfile和docker-compose的问题
+3. 修正了`project as_temp`转换文件后source字段不加`.jinja`的问题
+4. 修正了`project new`和`project add`不会将项目信息作为参数的问题
+
+## 改进
+
+1. 新增快捷命令`install`相当于`requires install`
+2. 新增快捷命令`uninstall`相当于`requires uninstall`
+3. 命令`build`和`pack`合并,重新整理,这条命令现在用于打包项目到可分发状态
+4. 命令`env new`针对python,当对应参数没有填时会添加默认的`tests_require`和`setup_requires`
+5. 命令`env new`针对cython,当对应参数没有填时会添加默认的`tests_require`和`setup_requires`
+6. `project new`现在当组件不存在时会提示是什么组件
+
 # v4.0.7
 
 ## 改进

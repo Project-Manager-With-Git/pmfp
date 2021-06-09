@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp &mdash; pmfp 4.0.7 文档</title>
+  <title>pmfp &mdash; pmfp 4.0.10 文档</title>
   
 
   
@@ -40,7 +40,7 @@
     
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="v4.0.7" href="CHANGELOG.html" />
+    <link rel="next" title="v4.0.10" href="CHANGELOG.html" />
     <link rel="prev" title="Welcome to pmfp’s documentation!" href="index.html" /> 
 </head>
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                4.0.7
+                4.0.10
               </div>
             
           
@@ -102,12 +102,18 @@
 <li class="toctree-l4"><a class="reference internal" href="#id6">项目语言及对应的环境</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">直接调用功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">直接调用功能</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#build"><code class="docutils literal notranslate"><span class="pre">build</span></code>打包项目到可分发状态</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">v4.0.7</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-9">v4.0.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-8">v4.0.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-7">v4.0.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-6">v4.0.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-5">v4.0.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html#v4-0-4">v4.0.4</a></li>
@@ -186,7 +192,7 @@
   <div class="section" id="pmfp">
 <h1>pmfp<a class="headerlink" href="#pmfp" title="永久链接至标题">¶</a></h1>
 <ul class="simple">
-<li><p>version: 4.0.7</p></li>
+<li><p>version: 4.0.10</p></li>
 <li><p>status: dev</p></li>
 <li><p>author: hsz</p></li>
 <li><p>email: hsz1273327&#64;gmail.com</p></li>
@@ -307,19 +313,38 @@
 <h3>直接调用功能<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <p>支持直接调用功能的子命令包括:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">build</span></code>快速编译支持的静态语言项目</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build</span></code>打包项目到可分发状态.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">doc</span></code>快速构造项目的文档</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">image</span></code>快速构造docker镜像</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span></code>快速构造docker部署配置</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">env</span></code>快速构建项目的独立执行环境</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">grpc</span></code>快速构造了grpc的客户端和服务端</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">http</span></code>用于构造静态http服务和构造http请求和压测</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pack</span></code>打包动态语言构造的项目</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">proto</span></code>用于快速构建和编译protobuf文件</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">schema</span></code>用于校验<code class="docutils literal notranslate"><span class="pre">jsonschema</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>用于对项目进行测试</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">requires</span></code>用于管理依赖</p></li>
 </ul>
+<div class="section" id="build">
+<h4><code class="docutils literal notranslate"><span class="pre">build</span></code>打包项目到可分发状态<a class="headerlink" href="#build" title="永久链接至标题">¶</a></h4>
+<p>这条命令的含义为–打包项目到可以分发的状态.不同编程语言可以打包到的状态并不相同:</p>
+<ul class="simple">
+<li><p>golang:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">exec</span></code>可执行文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alib</span></code>静态库</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dlib</span></code>动态库(linux专用)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zip</span></code>源码压缩归档</p></li>
+</ul>
+</li>
+<li><p>python:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">exec</span></code>,可执行的<code class="docutils literal notranslate"><span class="pre">.pyz</span></code>文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zip</span></code>,wheel归档</p></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -330,7 +355,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="v4.0.7" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="v4.0.10" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to pmfp’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
 

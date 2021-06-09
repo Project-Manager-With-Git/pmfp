@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.build_.build_go &mdash; pmfp 4.0.7 文档</title>
+  <title>pmfp.entrypoint.build_.build_go &mdash; pmfp 4.0.10 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.7
+                4.0.10
               </div>
             
           
@@ -90,7 +90,10 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-6">v4.0.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-5">v4.0.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-4">v4.0.4</a></li>
@@ -169,30 +172,26 @@
   <h1>pmfp.entrypoint.build_.build_go 源代码</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;编译go语言模块.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># from pmfp.entrypoint.build_ import build</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">pmfp.utils.run_command_utils</span> <span class="kn">import</span> <span class="n">run</span>
 <span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">path_to_str</span>
 <span class="kn">from</span> <span class="nn">pmfp.const</span> <span class="kn">import</span> <span class="n">PLATFORM</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">upx_process</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">upx_process</span><span class="p">,</span> <span class="n">zip_pack</span>
 
 
-<div class="viewcode-block" id="go_build"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/build_/index.html#pmfp.entrypoint.build_.build_go.go_build">[文档]</a><span class="k">def</span> <span class="nf">go_build</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
-             <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-             <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-             <span class="n">upx</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-             <span class="n">mini</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-             <span class="n">build_as</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span>
-             <span class="n">for_linux_arch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-             <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">default_environ</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">build_as</span> <span class="o">!=</span> <span class="s2">&quot;exec&quot;</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;go语言只支持编译为可执行文件&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+<div class="viewcode-block" id="build_exec"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/build_/build_go/index.html#pmfp.entrypoint.build_.build_go.build_exec">[文档]</a><span class="k">def</span> <span class="nf">build_exec</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+               <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+               <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+               <span class="n">upx</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+               <span class="n">mini</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+               <span class="n">for_linux_arch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;go.mod&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;go语言项目需要先有go.mod&quot;</span><span class="p">)</span>
         <span class="k">return</span>
+    <span class="n">default_environ</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
     <span class="n">env</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;GO111MODULE&quot;</span><span class="p">:</span> <span class="s2">&quot;on&quot;</span><span class="p">,</span> <span class="s2">&quot;GOPROXY&quot;</span><span class="p">:</span> <span class="s2">&quot;https://goproxy.io&quot;</span><span class="p">}</span>
     <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">default_environ</span><span class="p">)</span>
     <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;go build&quot;</span>
@@ -212,6 +211,83 @@
     <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fail_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">upx</span><span class="p">:</span>
         <span class="n">upx_process</span><span class="p">(</span><span class="n">target_str</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="build_alib"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/build_/build_go/index.html#pmfp.entrypoint.build_.build_go.build_alib">[文档]</a><span class="k">def</span> <span class="nf">build_alib</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+               <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+               <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+               <span class="n">for_linux_arch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;go.mod&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;go语言项目需要先有go.mod&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">default_environ</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;GO111MODULE&quot;</span><span class="p">:</span> <span class="s2">&quot;on&quot;</span><span class="p">,</span> <span class="s2">&quot;GOPROXY&quot;</span><span class="p">:</span> <span class="s2">&quot;https://goproxy.io&quot;</span><span class="p">}</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">default_environ</span><span class="p">)</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;go build&quot;</span>
+    <span class="n">bin_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">project_name</span><span class="si">}</span><span class="s2">.a&quot;</span>
+    <span class="n">target_str</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">output_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">bin_name</span><span class="p">))</span>
+    <span class="n">command</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; -o </span><span class="si">{</span><span class="n">target_str</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">for_linux_arch</span><span class="p">:</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;GOARCH&quot;</span><span class="p">:</span> <span class="n">for_linux_arch</span><span class="p">,</span>
+            <span class="s2">&quot;GOOS&quot;</span><span class="p">:</span> <span class="s2">&quot;linux&quot;</span>
+        <span class="p">})</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fail_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="build_dlib"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/build_/build_go/index.html#pmfp.entrypoint.build_.build_go.build_dlib">[文档]</a><span class="k">def</span> <span class="nf">build_dlib</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+               <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+               <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+               <span class="n">for_linux_arch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;go.mod&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;go语言项目需要先有go.mod&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">default_environ</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;GO111MODULE&quot;</span><span class="p">:</span> <span class="s2">&quot;on&quot;</span><span class="p">,</span> <span class="s2">&quot;GOPROXY&quot;</span><span class="p">:</span> <span class="s2">&quot;https://goproxy.io&quot;</span><span class="p">}</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">default_environ</span><span class="p">)</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;go build -buildmode=plugin&quot;</span>
+    <span class="n">bin_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">project_name</span><span class="si">}</span><span class="s2">.plugin&quot;</span>
+    <span class="n">target_str</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">output_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">bin_name</span><span class="p">))</span>
+    <span class="n">command</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; -o </span><span class="si">{</span><span class="n">target_str</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">for_linux_arch</span><span class="p">:</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;GOARCH&quot;</span><span class="p">:</span> <span class="n">for_linux_arch</span><span class="p">,</span>
+            <span class="s2">&quot;GOOS&quot;</span><span class="p">:</span> <span class="s2">&quot;linux&quot;</span>
+        <span class="p">})</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fail_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="go_build"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/build_/index.html#pmfp.entrypoint.build_.build_go.go_build">[文档]</a><span class="k">def</span> <span class="nf">go_build</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+             <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+             <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+             <span class="n">upx</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="n">mini</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="n">build_as</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span>
+             <span class="n">for_linux_arch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">build_as</span> <span class="o">==</span> <span class="s2">&quot;exec&quot;</span><span class="p">:</span>
+        <span class="n">build_exec</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span>
+                   <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+                   <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+                   <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                   <span class="n">upx</span><span class="o">=</span><span class="n">upx</span><span class="p">,</span>
+                   <span class="n">mini</span><span class="o">=</span><span class="n">mini</span><span class="p">,</span>
+                   <span class="n">for_linux_arch</span><span class="o">=</span><span class="n">for_linux_arch</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">build_as</span> <span class="o">==</span> <span class="s2">&quot;zip&quot;</span><span class="p">:</span>
+        <span class="n">zip_pack</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">build_as</span> <span class="o">==</span> <span class="s2">&quot;alib&quot;</span><span class="p">:</span>
+        <span class="n">build_alib</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span>
+                   <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+                   <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+                   <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                   <span class="n">for_linux_arch</span><span class="o">=</span><span class="n">for_linux_arch</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">build_as</span> <span class="o">==</span> <span class="s2">&quot;dlib&quot;</span><span class="p">:</span>
+        <span class="n">build_dlib</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span>
+                   <span class="n">project_name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span>
+                   <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
+                   <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span>
+                   <span class="n">for_linux_arch</span><span class="o">=</span><span class="n">for_linux_arch</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

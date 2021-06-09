@@ -92,7 +92,6 @@ def new_project(env: Optional[str] = None,
 
         else:
             # 开始根据模板构造项目组件
-
             pmfpconf = get_config_info()
             cache_dir = get_cache_dir()
             cached_sourcepacks: List[str] = []
@@ -141,6 +140,10 @@ def new_project(env: Optional[str] = None,
                     else:
                         print("开始构造测试模板")
                         target_source = sourcepack_test_config["source"]
+                        tempkv = make_template_kv(
+                            sourcepack_config=sourcepack_config,
+                            projectconfig=projectconfig,
+                            kv=kv)
                         if "//" in target_source:
                             _add_component(
                                 cached_sourcepacks=cached_sourcepacks,
@@ -150,18 +153,15 @@ def new_project(env: Optional[str] = None,
                                 component_string=target_source,
                                 cwdp=cwdp,
                                 kv=kv,
-                                save=False)
+                                save=False,
+                                oldtemplate_kw=tempkv)
                         else:
-                            tempkv = make_template_kv(
-                                sourcepack_config=sourcepack_config,
-                                projectconfig=projectconfig,
-                                kv=kv)
-                            located_path_str = to_target_source(projectconfig=projectconfig,
-                                                                target_component_info=sourcepack_test_config,
-                                                                cwdp=cwdp,
-                                                                sourcepackdir=sourcepackdir,
-                                                                target_source=target_source,
-                                                                tempkv=tempkv)
+                            to_target_source(projectconfig=projectconfig,
+                                             target_component_info=sourcepack_test_config,
+                                             cwdp=cwdp,
+                                             sourcepackdir=sourcepackdir,
+                                             target_source=target_source,
+                                             tempkv=tempkv)
                 except Exception as e:
                     print(f"初始化测试模板错误:{str(e)}")
             # 初始化执行环境
