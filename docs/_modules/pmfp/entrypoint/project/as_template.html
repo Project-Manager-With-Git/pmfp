@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.project.as_template &mdash; pmfp 4.0.7 文档</title>
+  <title>pmfp.entrypoint.project.as_template &mdash; pmfp 4.0.10 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.7
+                4.0.10
               </div>
             
           
@@ -90,7 +90,10 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-6">v4.0.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-5">v4.0.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-4">v4.0.4</a></li>
@@ -316,10 +319,10 @@
                                 <span class="p">}</span>
                                 <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">tp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                         <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-                            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">acccept_suffix</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">,</span> <span class="s2">&quot;LICENSE&quot;</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;dockerfile&quot;</span><span class="p">,</span> <span class="s2">&quot;docker-compose.yml&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">acccept_suffix</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">,</span> <span class="s2">&quot;LICENSE&quot;</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">)):</span>
                                 <span class="n">nameinfo</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
                                 <span class="n">components</span><span class="p">[</span><span class="n">nameinfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-                                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.jinja&quot;</span><span class="p">,</span>
                                     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
                                     <span class="s2">&quot;default_path&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
                                 <span class="p">}</span>
@@ -342,7 +345,7 @@
 
                 <span class="n">iter_dir_to_end</span><span class="p">(</span>
                     <span class="n">tp</span><span class="p">,</span>
-                    <span class="n">match</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">acccept_suffix</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">,</span> <span class="s2">&quot;LICENSE&quot;</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">),</span>
+                    <span class="n">match</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;dockerfile&quot;</span><span class="p">,</span> <span class="s2">&quot;docker-compose.yml&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">acccept_suffix</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup.py&quot;</span><span class="p">,</span> <span class="s2">&quot;LICENSE&quot;</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;CHANGELOG.md&quot;</span><span class="p">)),</span>
                     <span class="n">skip_dir</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;python_local_env_dir&quot;</span><span class="p">],</span> <span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;default_unittest_doc_dir&quot;</span><span class="p">],</span> <span class="n">pmfpconfig</span><span class="p">[</span><span class="s2">&quot;default_typecheck_doc_dir&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">except_dir</span><span class="p">,</span>
                     <span class="n">skip_dir_handdler</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">),</span>
                     <span class="n">fail_cb</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">),</span>

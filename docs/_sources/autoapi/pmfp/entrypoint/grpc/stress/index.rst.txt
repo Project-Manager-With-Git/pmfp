@@ -28,6 +28,7 @@ Functions
 .. autoapisummary::
 
    pmfp.entrypoint.grpc.stress.run
+   pmfp.entrypoint.grpc.stress.get_abs_path
    pmfp.entrypoint.grpc.stress.tress_test_grpc
 
 
@@ -59,17 +60,32 @@ Attributes
    :rtype: str
 
 
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
 .. data:: grpc_stress_test
    
 
    
 
-.. function:: tress_test_grpc(url: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: tress_test_grpc(url: str, service: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    列出grpc支持的服务.
 
    :param url: grpc的url
    :type url: str
+   :param service: 指定grpc提供的service使用.
+   :type service: str
    :param method: 要请求的方法
    :type method: str
    :param payload: 请求的负载

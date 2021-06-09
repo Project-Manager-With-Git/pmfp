@@ -40,6 +40,7 @@ Attributes
 .. autoapisummary::
 
    pmfp.entrypoint.requires.uninstall.requires_uninstall
+   pmfp.entrypoint.requires.uninstall.ppm_uninstall
 
 
 .. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
@@ -56,6 +57,11 @@ Attributes
 
 
 .. data:: requires_uninstall
+   
+
+   
+
+.. data:: ppm_uninstall
    
 
    

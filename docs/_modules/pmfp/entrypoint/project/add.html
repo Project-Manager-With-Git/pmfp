@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.project.add &mdash; pmfp 4.0.7 文档</title>
+  <title>pmfp.entrypoint.project.add &mdash; pmfp 4.0.10 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.7
+                4.0.10
               </div>
             
           
@@ -90,7 +90,10 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-6">v4.0.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-5">v4.0.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-4">v4.0.4</a></li>
@@ -244,7 +247,7 @@
     <span class="k">return</span> <span class="n">componentpack</span><span class="p">,</span> <span class="n">sourcepackdir</span></div>
 
 
-<div class="viewcode-block" id="make_template_kv"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/new/index.html#pmfp.entrypoint.project.add.make_template_kv">[文档]</a><span class="k">def</span> <span class="nf">make_template_kv</span><span class="p">(</span><span class="n">sourcepack_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">projectconfig</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">kv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="make_template_kv"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/new/index.html#pmfp.entrypoint.project.add.make_template_kv">[文档]</a><span class="k">def</span> <span class="nf">make_template_kv</span><span class="p">(</span><span class="n">sourcepack_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">projectconfig</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">kv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">oldtemplate_kw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;构造模板中匹配的kv.</span>
 
 <span class="sd">    Args:</span>
@@ -265,11 +268,15 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">kvs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
     <span class="n">tempkv</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">tempkv</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">projectconfig</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">sourcepack_kws</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">kvs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-            <span class="n">t</span> <span class="o">=</span> <span class="n">kvs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="n">tempkv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">projectconfig</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">oldtemplate_kw</span> <span class="ow">and</span> <span class="n">oldtemplate_kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">tempkv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">oldtemplate_kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;default&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">kvs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">kvs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">tempkv</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">projectconfig</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tempkv</span></div>
 
 
@@ -316,7 +323,7 @@
 
     <span class="n">target_component_path</span> <span class="o">=</span> <span class="n">sourcepackdir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">target_source</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">target_component_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;组件不存在&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;组件</span><span class="si">{</span> <span class="n">target_source</span> <span class="si">}</span><span class="s2">不存在&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">located_path</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">root_default_path</span><span class="p">:</span>
             <span class="n">located_path_t</span> <span class="o">=</span> <span class="n">root_default_path</span>
@@ -374,7 +381,8 @@
                    <span class="n">located_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                    <span class="n">save</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                    <span class="n">kv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                   <span class="n">root_default_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ComponentTemplate</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+                   <span class="n">root_default_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">oldtemplate_kw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ComponentTemplate</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
     <span class="n">componentpack</span><span class="p">,</span> <span class="n">sourcepackdir</span> <span class="o">=</span> <span class="n">check_and_cached</span><span class="p">(</span>
         <span class="n">cached_sourcepack</span><span class="o">=</span><span class="n">cached_sourcepacks</span><span class="p">,</span>
         <span class="n">component_string</span><span class="o">=</span><span class="n">component_string</span><span class="p">,</span>
@@ -392,6 +400,11 @@
         <span class="n">component_string</span><span class="o">=</span><span class="n">component_string</span>
     <span class="p">)</span>
     <span class="n">target_source</span> <span class="o">=</span> <span class="n">target_component_info</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+    <span class="n">tempkv</span> <span class="o">=</span> <span class="n">make_template_kv</span><span class="p">(</span>
+        <span class="n">sourcepack_config</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="p">,</span>
+        <span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
+        <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">,</span>
+        <span class="n">oldtemplate_kw</span><span class="o">=</span><span class="n">oldtemplate_kw</span><span class="p">)</span>
     <span class="k">if</span> <span class="s2">&quot;//&quot;</span> <span class="ow">in</span> <span class="n">target_source</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_add_component</span><span class="p">(</span>
             <span class="n">cached_sourcepacks</span><span class="o">=</span><span class="n">cached_sourcepacks</span><span class="p">,</span>
@@ -403,12 +416,9 @@
             <span class="n">located_path</span><span class="o">=</span><span class="n">located_path</span><span class="p">,</span>
             <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
             <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">,</span>
-            <span class="n">root_default_path</span><span class="o">=</span><span class="n">root_default_path</span><span class="p">)</span>
+            <span class="n">root_default_path</span><span class="o">=</span><span class="n">root_default_path</span><span class="p">,</span>
+            <span class="n">oldtemplate_kw</span><span class="o">=</span><span class="n">tempkv</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">tempkv</span> <span class="o">=</span> <span class="n">make_template_kv</span><span class="p">(</span>
-            <span class="n">sourcepack_config</span><span class="o">=</span><span class="n">sourcepack_config</span><span class="p">,</span>
-            <span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
-            <span class="n">kv</span><span class="o">=</span><span class="n">kv</span><span class="p">)</span>
         <span class="n">located_path_str</span> <span class="o">=</span> <span class="n">to_target_source</span><span class="p">(</span><span class="n">projectconfig</span><span class="o">=</span><span class="n">projectconfig</span><span class="p">,</span>
                                             <span class="n">target_component_info</span><span class="o">=</span><span class="n">target_component_info</span><span class="p">,</span>
                                             <span class="n">cwdp</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span>

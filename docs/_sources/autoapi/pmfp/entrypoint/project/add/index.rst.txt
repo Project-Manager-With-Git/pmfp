@@ -294,7 +294,7 @@ Attributes
    :rtype: ComponentTemplate
 
 
-.. function:: make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None) -> Dict[str, str]
+.. function:: make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Dict[str, str]
 
    构造模板中匹配的kv.
 
@@ -325,7 +325,7 @@ Attributes
    保存组件信息到项目配置.
 
 
-.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
+.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
 
 
 .. function:: add_component(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') -> None

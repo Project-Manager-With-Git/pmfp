@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.requires.uninstall &mdash; pmfp 4.0.7 文档</title>
+  <title>pmfp.entrypoint.requires.uninstall &mdash; pmfp 4.0.10 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.7
+                4.0.10
               </div>
             
           
@@ -90,7 +90,10 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-6">v4.0.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-5">v4.0.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-4">v4.0.4</a></li>
@@ -165,23 +168,20 @@
            <div itemprop="articleBody">
             
   <h1>pmfp.entrypoint.requires.uninstall 源代码</h1><div class="highlight"><pre>
-<span></span>
-<span class="sd">&quot;&quot;&quot;不同执行环境安装依赖.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="sd">&quot;&quot;&quot;不同执行环境安装依赖.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">get_abs_path</span>
-<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">requires_uninstall</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">requires_uninstall</span><span class="p">,</span> <span class="n">ppm_uninstall</span>
 <span class="kn">from</span> <span class="nn">.python_uninstall</span> <span class="kn">import</span> <span class="n">python_uninstall</span>
 
 
-<span class="nd">@requires_uninstall</span><span class="o">.</span><span class="n">as_main</span>
 <div class="viewcode-block" id="uninstall_requires"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/requires/uninstall/index.html#pmfp.entrypoint.requires.uninstall_requires">[文档]</a><span class="k">def</span> <span class="nf">uninstall_requires</span><span class="p">(</span><span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">cwdp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">env</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;venv&quot;</span><span class="p">):</span>
         <span class="n">python_uninstall</span><span class="p">(</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">package_name</span><span class="o">=</span><span class="n">package_name</span><span class="p">)</span></div>
+
+
+<span class="n">requires_uninstall</span><span class="o">.</span><span class="n">as_main</span><span class="p">(</span><span class="n">uninstall_requires</span><span class="p">)</span>
+<span class="n">ppm_uninstall</span><span class="o">.</span><span class="n">as_main</span><span class="p">(</span><span class="n">uninstall_requires</span><span class="p">)</span>
 </pre></div>
 
            </div>

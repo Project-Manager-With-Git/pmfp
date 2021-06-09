@@ -18,8 +18,20 @@ Functions
 
 .. autoapisummary::
 
+   pmfp.entrypoint.build_.build_go.build_exec
+   pmfp.entrypoint.build_.build_go.build_alib
+   pmfp.entrypoint.build_.build_go.build_dlib
    pmfp.entrypoint.build_.build_go.go_build
 
+
+
+.. function:: build_exec(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, upx: bool = False, mini: bool = False, for_linux_arch: Optional[str] = None) -> None
+
+
+.. function:: build_alib(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, for_linux_arch: Optional[str] = None) -> None
+
+
+.. function:: build_dlib(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, for_linux_arch: Optional[str] = None) -> None
 
 
 .. function:: go_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, upx: bool = False, mini: bool = False, build_as: str = 'exec', for_linux_arch: Optional[str] = None) -> None

@@ -28,6 +28,7 @@ Functions
 .. autoapisummary::
 
    pmfp.entrypoint.grpc.query.run
+   pmfp.entrypoint.grpc.query.get_abs_path
    pmfp.entrypoint.grpc.query.query_grpc
 
 
@@ -59,17 +60,32 @@ Attributes
    :rtype: str
 
 
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+
+   由路径字符串获取绝对路径.
+
+   :param path_str: 路径字符创
+   :type path_str: str
+   :param cwd: 指定执行时的位置
+   :type cwd: Optional[Path]
+
+   :returns: 路径字符串的绝对路径
+   :rtype: Path
+
+
 .. data:: grpc_query
    
 
    
 
-.. function:: query_grpc(url: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: query_grpc(url: str, service: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    请求grpc.
 
    :param url: grpc的url
    :type url: str
+   :param service: 指定grpc提供的service使用
+   :type service: str
    :param method: 要请求的方法
    :type method: str
    :param payload: 请求的负载

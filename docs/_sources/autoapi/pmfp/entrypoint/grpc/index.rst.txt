@@ -128,12 +128,14 @@ Functions
    :type key: Optional[str], optional
 
 
-.. function:: query_grpc(url: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: query_grpc(url: str, service: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    请求grpc.
 
    :param url: grpc的url
    :type url: str
+   :param service: 指定grpc提供的service使用
+   :type service: str
    :param method: 要请求的方法
    :type method: str
    :param payload: 请求的负载
@@ -152,12 +154,14 @@ Functions
    :type key: Optional[str], optional
 
 
-.. function:: tress_test_grpc(url: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: tress_test_grpc(url: str, service: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    列出grpc支持的服务.
 
    :param url: grpc的url
    :type url: str
+   :param service: 指定grpc提供的service使用.
+   :type service: str
    :param method: 要请求的方法
    :type method: str
    :param payload: 请求的负载
