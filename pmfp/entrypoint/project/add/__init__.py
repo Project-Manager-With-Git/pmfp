@@ -77,7 +77,7 @@ def check_and_cached(cached_sourcepack: List[str], component_string: str, cache_
     return componentpack, sourcepackdir
 
 
-def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None) -> Dict[str, str]:
+def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Dict[str, str]:
     """构造模板中匹配的kv.
 
     Args:
@@ -100,11 +100,13 @@ def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str,
     tempkv = {}
     tempkv.update(projectconfig)
     for key, info in sourcepack_kws.items():
-        t = info["default"]
-        if kvs.get(key):
-            t = kvs.get(key)
-        tempkv[key] = template_2_content(t, **projectconfig)
-
+        if oldtemplate_kw and oldtemplate_kw.get(key):
+            tempkv[key] = oldtemplate_kw.get(key)
+        else:
+            t = info["default"]
+            if kvs.get(key):
+                t = kvs.get(key)
+            tempkv[key] = template_2_content(t, **projectconfig)
     return tempkv
 
 
@@ -209,7 +211,8 @@ def _add_component(cached_sourcepacks: List[str],
                    located_path: Optional[str] = None,
                    save: bool = True,
                    kv: Optional[List[str]] = None,
-                   root_default_path: Optional[str] = None) -> Tuple[ComponentTemplate, Dict[str, Any]]:
+                   root_default_path: Optional[str] = None,
+                   oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Tuple[ComponentTemplate, Dict[str, Any]]:
     componentpack, sourcepackdir = check_and_cached(
         cached_sourcepack=cached_sourcepacks,
         component_string=component_string,
@@ -227,6 +230,11 @@ def _add_component(cached_sourcepacks: List[str],
         component_string=component_string
     )
     target_source = target_component_info["source"]
+    tempkv = make_template_kv(
+        sourcepack_config=sourcepack_config,
+        projectconfig=projectconfig,
+        kv=kv,
+        oldtemplate_kw=oldtemplate_kw)
     if "//" in target_source:
         return _add_component(
             cached_sourcepacks=cached_sourcepacks,
@@ -238,12 +246,9 @@ def _add_component(cached_sourcepacks: List[str],
             located_path=located_path,
             save=save,
             kv=kv,
-            root_default_path=root_default_path)
+            root_default_path=root_default_path,
+            oldtemplate_kw=tempkv)
     else:
-        tempkv = make_template_kv(
-            sourcepack_config=sourcepack_config,
-            projectconfig=projectconfig,
-            kv=kv)
         located_path_str = to_target_source(projectconfig=projectconfig,
                                             target_component_info=target_component_info,
                                             cwdp=cwdp,
