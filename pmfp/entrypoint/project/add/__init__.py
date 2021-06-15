@@ -103,10 +103,17 @@ def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str,
         if oldtemplate_kw and oldtemplate_kw.get(key):
             tempkv[key] = oldtemplate_kw.get(key)
         else:
-            t = info["default"]
             if kvs.get(key):
                 t = kvs.get(key)
-            tempkv[key] = template_2_content(t, **projectconfig)
+            else:
+                if info.get("ask"):
+                    t = input(f"set {key} as:")
+                    if not t:
+                        t = info["default"]
+                else:
+                    t = info["default"]
+
+                tempkv[key] = template_2_content(t, **projectconfig)
     return tempkv
 
 
