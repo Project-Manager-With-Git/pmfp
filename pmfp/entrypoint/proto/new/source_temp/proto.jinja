@@ -1,6 +1,6 @@
 syntax = "proto3";
 package {{ parent_package }}{{ name }};
-option go_package = "{{ package_go }}";
+option go_package = "./{{ package_go }}_pb";
 enum ExampleEnum {
     UNIVERSAL = 0;
     WEB = 1;
