@@ -7,3 +7,4 @@ class PPM(EntryPoint):
 
 
 ppm = PPM()
+__all__ = ["ppm"]

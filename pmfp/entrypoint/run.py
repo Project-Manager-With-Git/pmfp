@@ -51,3 +51,6 @@ def run_cmd(command: str, *, cwd: str = ".", env_args: Optional[List[str]] = Non
         run_command(command, cwd=Path(cwd), env=e, visible=True, fail_exit=True)
     else:
         run_command(command, cwd=Path(cwd), visible=True, fail_exit=True)
+
+
+__all__ = ["run_cmd"]
