@@ -6,7 +6,12 @@
 
 ## 变动
 
-1. grpc现在不再用于构造基于模板的项目,grpc项目现在也将使用project命名构造.grpc的build命令将只用于编译proto到目标语言的模块
+1. grpc现在不再用于构造基于模板的项目,grpc项目现在也将使用project命名构造.grpc的build命令将只用于编译grpc的proto到目标语言的模块
+
+## bug修复
+
+1. 修复`docker image build --push`报错的问题
+2. 修复`docker image build`逻辑错误
 
 # v4.0.10
 
