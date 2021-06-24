@@ -78,3 +78,6 @@ def build(language: str, code: str, project_name: str, *,
                  build_as=build_as,
                  static=static,
                  mini=mini)
+
+
+__all__ = ["build"]

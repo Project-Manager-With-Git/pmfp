@@ -14,3 +14,5 @@ class Info(EndPoint):
 
 
 info = ppm.regist_sub(Info)
+
+__all__ = ["info"]

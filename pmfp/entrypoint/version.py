@@ -1,7 +1,4 @@
 """version命令的处理."""
-import json
-import configparser
-from pathlib import Path
 from schema_entry import EntryPoint
 from .core import ppm
 
@@ -17,3 +14,5 @@ class VERSION(EntryPoint):
 
 
 version = ppm.regist_sub(VERSION)
+
+__all__ = ["__VERSION__"]
