@@ -3,6 +3,7 @@
 ## 新增特性
 
 1. 现在模板配置的`template_keys`字段支持新字段`ask(boolean)`,用于让pmfp提示用户输入key的取值
+2. go语言的env new 可以指定依赖了
 
 ## 变动
 

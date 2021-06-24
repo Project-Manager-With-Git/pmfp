@@ -65,7 +65,6 @@ def new_project(env: Optional[str] = None,
                 author_email: Optional[str] = None,
                 description: Optional[str] = None,
                 keywords: Optional[List[str]] = None,
-                requires: Optional[List[str]] = None,
                 template_string: Optional[str] = None,
                 with_test: bool = False,
                 install: bool = False,
@@ -119,10 +118,17 @@ def new_project(env: Optional[str] = None,
                 author_email=author_email,
                 description=description)
             components = sourcepack_config.get("components")
+            tempkv = make_template_kv(
+                sourcepack_config=sourcepack_config,
+                projectconfig=projectconfig,
+                kv=kv)
+            print("#####")
+            print(tempkv)
             if components:
                 print("开始构造组件")
                 for component_name, component_info in components.items():
                     component_string = f"{template_string}//{component_name}"
+
                     _add_component(
                         cached_sourcepacks=cached_sourcepacks,
                         projectconfig=projectconfig,
@@ -130,7 +136,8 @@ def new_project(env: Optional[str] = None,
                         cache_dir=cache_dir,
                         component_string=component_string,
                         cwdp=cwdp, kv=kv,
-                        root_default_path=component_info.get("default_path"))
+                        root_default_path=component_info.get("default_path"),
+                        oldtemplate_kw=tempkv)
                 print("组件构造结束")
             if with_test:
                 try:
@@ -140,10 +147,6 @@ def new_project(env: Optional[str] = None,
                     else:
                         print("开始构造测试模板")
                         target_source = sourcepack_test_config["source"]
-                        tempkv = make_template_kv(
-                            sourcepack_config=sourcepack_config,
-                            projectconfig=projectconfig,
-                            kv=kv)
                         if "//" in target_source:
                             _add_component(
                                 cached_sourcepacks=cached_sourcepacks,
@@ -179,7 +182,7 @@ def new_project(env: Optional[str] = None,
                     cwd=cwd)
             # 安装依赖
             if install:
-                install_requires(env=env,
+                install_requires(env=projectconfig["env"],
                                  test=with_test,
                                  requires=sourcepack_config.get("requires"),
                                  test_requires=sourcepack_config.get("test_requires"),

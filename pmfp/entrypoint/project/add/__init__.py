@@ -104,7 +104,7 @@ def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str,
             tempkv[key] = oldtemplate_kw.get(key)
         else:
             if kvs.get(key):
-                t = kvs.get(key)
+                t = kvs[key]
             else:
                 if info.get("ask"):
                     t = input(f"set {key} as:")

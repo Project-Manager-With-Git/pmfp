@@ -2,6 +2,7 @@
 import pkgutil
 import warnings
 from pathlib import Path
+from typing import Optional, List
 from pmfp.utils.tools_info_utils import get_golang_version
 from pmfp.utils.template_utils import template_2_content
 
@@ -13,7 +14,10 @@ else:
     raise AttributeError("go.mod模板失败")
 
 
-def init_go_env(cwd: Path, project_name: str) -> None:
+def init_go_env(cwd: Path, project_name: str, requires: Optional[List[str]] = None,
+                test_requires: Optional[List[str]] = None,
+                setup_requires: Optional[List[str]] = None,
+                extras_requires: Optional[List[str]] = None) -> None:
     """初始化golang默认的虚拟环境.
 
     Args:
@@ -29,7 +33,29 @@ def init_go_env(cwd: Path, project_name: str) -> None:
         language_version = get_golang_version()
         if language_version:
             language_version = ".".join(language_version.split(".")[:2])
-            content = template_2_content(template=go_mod_template, project_name=project_name, language_version=language_version)
+
+            require_strs = set([])
+            if requires:
+                for require in requires:
+                    require_strs.add(require.replace("@", " "))
+            if test_requires:
+                for require in test_requires:
+                    require_strs.add(require.replace("@", " "))
+            if setup_requires:
+                for require in setup_requires:
+                    require_strs.add(require.replace("@", " "))
+
+            if extras_requires:
+                for require in extras_requires:
+                    require_strs.add(require.replace("@", " "))
+            require_str = """
+\t
+""".join(list(require_strs))
+            content = template_2_content(
+                template=go_mod_template,
+                project_name=project_name,
+                language_version=language_version,
+                require_str=require_str)
             with open(go_env_path, "w", newline="", encoding="utf-8") as f:
                 f.write(content)
         else:
