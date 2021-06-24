@@ -9,14 +9,14 @@ from .build_pb_cxx import build_pb_cxx
 from .core import grpc_build
 
 
-def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_type: Optional[List[str]],
+def _build_pb(language: str, files: List[str], includes: List[str], to: str,
               source_relative: bool, cwd: Path, **kwargs: str) -> None:
     if language.lower() == "go":
-        build_pb_go(files, includes, to, as_type, source_relative, cwd=cwd, **kwargs)
+        build_pb_go(files, includes, to, source_relative, cwd=cwd, **kwargs)
     elif language.lower() in ("py", "cython"):
-        build_pb_py(files, includes, to, as_type, cwd=cwd, **kwargs)
+        build_pb_py(files, includes, to, cwd=cwd, **kwargs)
     elif language == "js":
-        build_pb_js(files, includes, to, as_type, cwd=cwd, **kwargs)
+        build_pb_js(files, includes, to, cwd=cwd, **kwargs)
     elif language == "CXX":
         build_pb_cxx(files, cwd=cwd)
     else:
@@ -26,7 +26,7 @@ def _build_pb(language: str, files: List[str], includes: List[str], to: str, as_
 @grpc_build.as_main
 def build_grpc(language: str, files: List[str], pb_includes: List[str], to: str,
                source_relative: bool, kwargs: Optional[str] = None,
-               cwd: str = ".", as_type: Optional[List[str]] = None) -> None:
+               cwd: str = ".") -> None:
     """编译grpc的protobuf的schema为不同语言的代码.
 
     Args:
@@ -37,7 +37,6 @@ def build_grpc(language: str, files: List[str], pb_includes: List[str], to: str,
         source_relative (bool): 是否使用路径作为包名,只针对go语言
         kwargs (Optional[str]): Default: None,
         cwd (str): 执行的根目录. Default: "."
-        as_type (Optional[List[str]]): 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
 
     """
     cwdp = get_abs_path(cwd)
@@ -51,4 +50,4 @@ def build_grpc(language: str, files: List[str], pb_includes: List[str], to: str,
         kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}
     else:
         kw = {}
-    _build_pb(language, files, includes, to, as_type, source_relative, cwd=cwdp, **kw)
+    _build_pb(language, files, includes, to, source_relative, cwd=cwdp, **kw)

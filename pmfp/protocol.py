@@ -130,6 +130,10 @@ TEMPLATE_INFO_SCHEMA = {
                         "default": {
                             "type": "string",
                             "description": "默认值,如果以`{{ 字段名 }}`包裹则表示使用项目配置中的对应字段,支持指定函数`upper(字段名)/lower(字段名)/Title(字段名)`处理变量"
+                        },
+                        "ask": {
+                            "type": "boolean",
+                            "description": "是否在命令行中询问取值"
                         }
                     }
                 }

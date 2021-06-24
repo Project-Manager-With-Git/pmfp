@@ -177,7 +177,11 @@ def _new_nev(env: str, language: str, cwd: Path,
                         extras_requires=extras_requires)
 
     elif language == "go":
-        init_go_env(cwd=cwd, project_name=project_name)
+        init_go_env(cwd=cwd, project_name=project_name,
+                    requires=requires,
+                    test_requires=test_requires,
+                    setup_requires=setup_requires,
+                    extras_requires=extras_requires)
     elif language == "C":
         init_c_env(cwd=cwd, project_name=project_name, version=version, description=description)
     elif language == "CXX":

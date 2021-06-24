@@ -58,6 +58,11 @@ class Build(EndPoint):
                 "description": "是否打上latest标签",
                 "default": False
             },
+            "only_manifest": {
+                "type": "boolean",
+                "description": "交叉编译时是否直接编译为manifest,为True会执行push操作",
+                "default": False
+            },
             "push": {
                 "type": "boolean",
                 "description": "是否编译完后推送去仓库",

@@ -1,3 +1,20 @@
+# v4.1.0
+
+## 新增特性
+
+1. 现在模板配置的`template_keys`字段支持新字段`ask(boolean)`,用于让pmfp提示用户输入key的取值
+2. go语言的`env new`可以指定依赖了
+
+## 变动
+
+1. grpc现在不再用于构造基于模板的项目,grpc项目现在也将使用project命名构造.grpc的build命令将只用于编译grpc的proto到目标语言的模块
+2. go语言的`require install`命令当不指定`-n`时使用`go mod tidy`更新依赖
+
+## bug修复
+
+1. 修复`docker image build --push`报错的问题
+2. 修复`docker image build`逻辑错误
+
 # v4.0.10
 
 ## bug修复

@@ -22,16 +22,17 @@ def go_install(cwd: Path,
         for package_name in package_names:
             run(command_temp.format(req=package_name), cwd=cwd, env=env, visible=True, fail_exit=True)
     else:
-        if requires is not None:
-            for req in requires:
-                run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
-        if test_requires is not None and test:
-            for req in test_requires:
-                run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
-        if setup_requires is not None and setup:
-            for req in setup_requires:
-                run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
-        if extras_requires is not None and extras:
-            for key_req in extras_requires:
-                _, req = key_req.split(":")
-                run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
+        run("go mod tidy", cwd=cwd, env=env, visible=True, fail_exit=True)
+        # if requires is not None:
+        #     for req in requires:
+        #         run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
+        # if test_requires is not None and test:
+        #     for req in test_requires:
+        #         run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
+        # if setup_requires is not None and setup:
+        #     for req in setup_requires:
+        #         run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
+        # if extras_requires is not None and extras:
+        #     for key_req in extras_requires:
+        #         _, req = key_req.split(":")
+        #         run(command_temp.format(req=req), cwd=cwd, env=env, visible=True, fail_exit=True)
