@@ -112,8 +112,7 @@ def make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str,
                         t = info["default"]
                 else:
                     t = info["default"]
-
-                tempkv[key] = template_2_content(t, **projectconfig)
+            tempkv[key] = template_2_content(t, **projectconfig)
     return tempkv
 
 

@@ -49,8 +49,7 @@ def init_go_env(cwd: Path, project_name: str, requires: Optional[List[str]] = No
                 for require in extras_requires:
                     require_strs.add(require.replace("@", " "))
             require_str = """
-\t
-""".join(list(require_strs))
+\t""".join(list(require_strs))
             content = template_2_content(
                 template=go_mod_template,
                 project_name=project_name,
