@@ -1,7 +1,7 @@
 """编译go语言模块."""
 import warnings
-from typing import List
-from pathlib import Path, Optional
+from typing import List, Optional
+from pathlib import Path
 from pmfp.utils.run_command_utils import run
 
 

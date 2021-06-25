@@ -31,6 +31,10 @@ def trans_grpc_model_py(to: str) -> None:
 
     """
     to_path = get_abs_path(to)
+    init_path = to_path.joinpath("__init__.py")
+    init = False
+    if not init_path.exists():
+        init = True
     for p in to_path.iterdir():
         if p.is_file() and p.suffix == ".py" and p.name != "__init__.py":
             x = p.name.split("_")
@@ -39,14 +43,14 @@ def trans_grpc_model_py(to: str) -> None:
                 grpc_name = p.name
                 grpc_package = grpc_name.split(".")[0]
                 pb_package = "_".join(x[:-1])
-                to_path.joinpath("__init__.py").open(
-                    "a", encoding="utf-8", newline=""
-                ).write(
-                    TRANS_GRPC_MODEL_IMPORT_TEMP.format(
-                        pb_package=pb_package, grpc_package=grpc_package
+                if init is True:
+                    init_path.open(
+                        "a", encoding="utf-8", newline=""
+                    ).write(
+                        TRANS_GRPC_MODEL_IMPORT_TEMP.format(
+                            pb_package=pb_package, grpc_package=grpc_package
+                        )
                     )
-                )
-
                 with open(str(grpc_file), "r", encoding='utf-8') as f:
                     lines = f.readlines()
                 new_lines = []
@@ -82,8 +86,8 @@ def gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: Pa
         """)
         sys.exit(1)
     else:
+        print(f"编译grpc项目 {target_str} 为python模块完成!")
         try:
-            print(f"编译grpc项目 {target_str} 为python模块完成!")
             trans_grpc_model_py(to)
         except Exception as e:
             warnings.warn(f"""转换python的grpc输出为一个模块失败:
@@ -126,6 +130,9 @@ def build_pb_py(serv_file: str, includes: List[str], to: str, cwd: Path,
         target_str += " " + " ".join(files)
     flag_str = ""
     to = f"{to}/{serv_name}_pb"
+    topath = Path(to)
+    if not topath.exists():
+        topath.mkdir(parents=True)
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
     gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd)
