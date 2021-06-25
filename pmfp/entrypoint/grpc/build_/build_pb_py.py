@@ -109,8 +109,8 @@ def find_grpc_package(to: Path) -> Tuple[str, str]:
     return service_name_lower, service_name
 
 
-def build_pb_py(files: List[str], includes: List[str], to: str, cwd: Path,
-                **kwargs: str) -> None:
+def build_pb_py(serv_file: str, includes: List[str], to: str, cwd: Path,
+                files: Optional[List[str]] = None, **kwargs: str) -> None:
     """编译grpc的protobuf定义文件为python语言模块.
 
     Args:
@@ -120,8 +120,12 @@ def build_pb_py(files: List[str], includes: List[str], to: str, cwd: Path,
 
     """
     includes_str = " ".join([f"-I {include}" for include in includes])
-    target_str = " ".join(files)
+    target_str = serv_file
+    serv_name = serv_file.replace(".proto", "")
+    if files:
+        target_str += " " + " ".join(files)
     flag_str = ""
+    to = f"{to}/{serv_name}_pb"
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
     gen_code(includes_str=includes_str, to=to, flag_str=flag_str, target_str=target_str, cwd=cwd)

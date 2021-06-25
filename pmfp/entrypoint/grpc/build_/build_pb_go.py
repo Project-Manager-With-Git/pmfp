@@ -1,7 +1,7 @@
 """编译go语言模块."""
 import warnings
 from typing import List
-from pathlib import Path
+from pathlib import Path, Optional
 from pmfp.utils.run_command_utils import run
 
 
@@ -22,8 +22,8 @@ def _build_grpc(includes: str, flag: str, to: str, target: str, cwd: Path) -> No
         print(f"编译grpc项目 {target} 为go语言模块完成!")
 
 
-def build_pb_go(files: List[str], includes: List[str], to: str,
-                source_relative: bool, cwd: Path, **kwargs: str) -> None:
+def build_pb_go(serv_file: str, includes: List[str], to: str,
+                source_relative: bool, cwd: Path, files: Optional[List[str]] = None, **kwargs: str) -> None:
     """编译grpc的protobuffer定义文件为go语言模块.
 
     Args:
@@ -34,7 +34,9 @@ def build_pb_go(files: List[str], includes: List[str], to: str,
 
     """
     includes_str = " ".join([f"-I {include}" for include in includes])
-    target_str = " ".join(files)
+    target_str = serv_file
+    if files:
+        target_str += " " + " ".join(files)
     flag_str = ""
     if source_relative:
         flag_str += " --go_opt=paths=source_relative"

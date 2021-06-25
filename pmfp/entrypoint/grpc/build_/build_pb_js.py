@@ -6,8 +6,8 @@ from typing import List, Optional
 from pmfp.utils.run_command_utils import run
 
 
-def build_pb_js(files: List[str], includes: List[str], to: str, cwd: Path,
-                ** kwargs: str) -> None:
+def build_pb_js(serv_file: str, includes: List[str], to: str, cwd: Path,
+                files: Optional[List[str]] = None, ** kwargs: str) -> None:
     """编译grpc的protobuf定义文件为js语言模块.
 
     Args:
@@ -18,7 +18,11 @@ def build_pb_js(files: List[str], includes: List[str], to: str, cwd: Path,
 
     """
     includes_str = " ".join([f"-I {include}" for include in includes])
-    target_str = " ".join(files)
+
+    target_str = serv_file
+    if files:
+        target_str += " " + " ".join(files)
+
     flag_str = ""
     if kwargs:
         flag_str += " ".join([f"{k}={v}" for k, v in kwargs.items()])
