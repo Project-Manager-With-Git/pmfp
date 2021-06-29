@@ -1,8 +1,6 @@
 """编译python语言模块."""
 import re
 import sys
-import shutil
-import pkgutil
 import warnings
 from pathlib import Path
 from typing import List, Optional, Tuple
