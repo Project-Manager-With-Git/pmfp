@@ -7,11 +7,11 @@ class Build(EndPoint):
 
     需要本地有`protoc`,可以在`https://github.com/protocolbuffers/protobuf/releases`下载安装
     """
-    argparse_noflag = "files"
+    argparse_noflag = "serv_file"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["language", "source_relative", "pb_includes", "files"],
+        "required": ["language", "source_relative", "pb_includes", "serv_file"],
         "properties": {
             "cwd": {
                 "type": "string",
@@ -24,15 +24,6 @@ class Build(EndPoint):
                 "type": "string",
                 "enum": ["py", "cython", "go", "js", "CXX"]
             },
-            # "as_type": {
-            #     "type": "array",
-            #     "title": "a",
-            #     "items": {
-            #         "type": "string",
-            #         "enum": ["serv", "cli", "aio", "nogen", "mp"]
-            #     },
-            #     "description": "目的,为空时不会生成代码,当有`serv`时会生成服务端代码;当有`cli`时会生成客户端代码;当有`nogen`只是将proto文件复制到目标文件夹"
-            # },
             "to": {
                 "type": "string",
                 "title": "t",
@@ -60,10 +51,15 @@ class Build(EndPoint):
             },
             "files": {
                 "type": "array",
+                "title": "f",
                 "description": "待编译的文件名",
                 "items": {
                     "type": "string"
                 }
+            },
+            "serv_file": {
+                "type": "string",
+                "description": "待编译的文件名",
             }
         }
     }

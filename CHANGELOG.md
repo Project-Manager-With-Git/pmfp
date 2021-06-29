@@ -1,3 +1,15 @@
+# v4.1.1
+
+## 变动
+
+1. `grpc build`接口变动,新增字段`serv_file`用于指定定义rpc接口的文件.针对python的编译会将两个文件放在`{serv_file}_pb`模块下
+2. 删除`grpc build`使用的jinja2模板
+3. 暂时取消了`grpc build`对c++的支持
+
+## bug修复
+
+1. 修复`grpc build`对python时会一直往`__init__.py`中写东西的bug
+
 # v4.1.0
 
 ## 新增特性

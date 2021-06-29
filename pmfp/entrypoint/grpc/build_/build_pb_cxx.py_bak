@@ -123,7 +123,7 @@ def gen_serv(service_name_lower: str, service_name: str, to: Path) -> None:
     """)
 
 
-def build_pb_cxx(files: List[str], cwd: Path) -> None:
+def build_pb_cxx(serv_file: str, files: Optional[List[str]] = None, cwd: Path) -> None:
     """为c++版本的grpc构造模板.
 
     由于使用cmake管理,而cmake难以解析所以只能给个大致
