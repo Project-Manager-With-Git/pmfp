@@ -30,12 +30,6 @@ class Build(EndPoint):
                 "description": "存放的地方",
                 "default": "."
             },
-            "source_relative": {
-                "type": "boolean",
-                "title": "r",
-                "description": "使用路径作为包名,只针对go语言",
-                "default": False
-            },
             "pb_includes": {
                 "type": "array",
                 "title": "i",
@@ -57,10 +51,40 @@ class Build(EndPoint):
                     "type": "string"
                 }
             },
+            "go_source_relative": {
+                "type": "boolean",
+                "title": "r",
+                "description": "使用路径作为包名,只针对go语言",
+                "default": False
+            },
+            "js_import_style": {
+                "type": "string",
+                "description": "编译出来的js模块形式",
+                "enum": ["commonjs", "closure"],
+                "default": "commonjs"
+            },
+            "web": {
+                "type": "boolean",
+                "description": "只针对js,是否编译为grpc-web使用的js模块,grpc-web是针对浏览器用的",
+                "default": False
+            },
+            "web_import_style": {
+                "type": "string",
+                "description": "js编译出来的模块形式,只针对js",
+                "enum": ["commonjs", "closure", "commonjs+dts", "typescript"],
+                "default": "commonjs"
+            },
+            "web_mode": {
+                "type": "string",
+                "description": "传输的形式",
+                "enum": ["grpcwebtext", "grpcweb"],
+                "default": "grpc-web-text"
+            },
             "serv_file": {
                 "type": "string",
                 "description": "待编译的文件名",
-            }
+            },
+
         }
     }
 

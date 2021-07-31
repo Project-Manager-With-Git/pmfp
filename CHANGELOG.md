@@ -1,3 +1,13 @@
+# v4.1.2
+
+## 变动
+
++ `proto build`命令针对js语言增加了参数`js_import_style`
++ `proto build`命令针对go语言增参数`source_relative`改为`go_source_relative`
++ `grpc build`命令针对js语言增加了参数`js_import_style`,`web`,`web_import_style`和`web_mode`来细化js模块的使用环境
++ `grpc build`命令针对go语言增参数`source_relative`改为`go_source_relative`
++ `grpc build`命令现在加回了对c++的支持
+
 # v4.1.1
 
 ## 变动

@@ -116,9 +116,11 @@ def build_pb_py(serv_file: str, includes: List[str], to: str, cwd: Path,
     """编译grpc的protobuf定义文件为python语言模块.
 
     Args:
-        files (List[str]): 待编译的protobuffer文件
+        serv_file (str): 定义grpc service的目标proto文件
         includes (List[str]): 待编译的protobuffer文件所在的文件夹
         to (str): 编译成的模块文件放到的路径
+        cwd (Path): 执行目录.
+        files (List[str]): 待编译的protobuffer文件
 
     """
     includes_str = " ".join([f"-I {include}" for include in includes])

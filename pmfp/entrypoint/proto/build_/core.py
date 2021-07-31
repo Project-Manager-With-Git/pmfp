@@ -29,12 +29,6 @@ class Build(EndPoint):
                 "description": "存放的地方",
                 "default": "."
             },
-            "source_relative": {
-                "type": "boolean",
-                "title": "s",
-                "description": "使用路径作为包名,只针对go语言",
-                "default": False
-            },
             "pb_includes": {
                 "type": "array",
                 "title": "i",
@@ -54,6 +48,18 @@ class Build(EndPoint):
                 "items": {
                     "type": "string"
                 }
+            },
+            "go_source_relative": {
+                "type": "boolean",
+                "title": "s",
+                "description": "使用路径作为包名,只针对go语言",
+                "default": False
+            },
+            "js_import_style": {
+                "type": "string",
+                "description": "编译出来的js模块形式",
+                "enum": ["commonjs", "closure"],
+                "default": "commonjs"
             }
         }
     }
