@@ -5,27 +5,34 @@ from pmfp.utils.fs_utils import get_abs_path, get_abs_path_str
 from .build_pb_go import build_pb_go
 from .build_pb_js import build_pb_js
 from .build_pb_py import build_pb_py
-# from .build_pb_cxx import build_pb_cxx
+from .build_pb_cpp import build_pb_cpp
 from .core import grpc_build
 
 
 def _build_pb(language: str, serv_file: str, includes: List[str], to: str,
-              source_relative: bool, cwd: Path, files: Optional[List[str]] = None, **kwargs: str) -> None:
+              go_source_relative: bool,
+              js_import_style: str, web_import_style: str, web_mode: str,
+              cwd: Path, web: bool = False, files: Optional[List[str]] = None, **kwargs: str) -> None:
     if language.lower() == "go":
-        build_pb_go(serv_file, includes, to, source_relative, cwd=cwd, files=files, **kwargs)
+        build_pb_go(serv_file, includes, to, go_source_relative, cwd=cwd, files=files, **kwargs)
     elif language.lower() in ("py", "cython"):
         build_pb_py(serv_file, includes, to, cwd=cwd, files=files, **kwargs)
     elif language == "js":
-        build_pb_js(serv_file, includes, to, cwd=cwd, files=files, **kwargs)
-    # elif language == "CXX":
-    #     build_pb_cxx(files, cwd=cwd)
+        build_pb_js(serv_file, includes, to, cwd=cwd, files=files,
+                    js_import_style=js_import_style,
+                    web_import_style=web_import_style,
+                    web_mode=web_mode, web=web, **kwargs)
+    elif language == "CXX":
+        build_pb_cpp(serv_file, includes, to, cwd=cwd, files=files, **kwargs)
     else:
         print(f"未知的环境类型{language}")
 
 
 @grpc_build.as_main
 def build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str,
-               source_relative: bool, kwargs: Optional[str] = None, files: Optional[List[str]] = None,
+               go_source_relative: bool,
+               js_import_style: str, web_import_style: str, web_mode: str, web: bool = False,
+               kwargs: Optional[str] = None, files: Optional[List[str]] = None,
                cwd: str = ".") -> None:
     """编译grpc的protobuf的schema为不同语言的代码.
 
@@ -54,4 +61,12 @@ def build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str,
         kw = {i.split("::")[0]: i.split("::")[1] for i in kwpairs}
     else:
         kw = {}
-    _build_pb(language, serv_file, includes, to, source_relative, cwd=cwdp, files=files, ** kw)
+    _build_pb(language=language,
+              serv_file=serv_file,
+              includes=includes,
+              to=to,
+              go_source_relative=go_source_relative,
+              js_import_style=js_import_style,
+              web_import_style=web_import_style,
+              web_mode=web_mode, web=web,
+              cwd=cwdp, files=files, ** kw)
