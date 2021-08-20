@@ -1,3 +1,9 @@
+# v4.1.3
+
+## bug修复
+
++ 修正`proto build`和`grpc build`因为`source_relative`字段改动造成无法使用的问题
+
 # v4.1.2
 
 ## 变动

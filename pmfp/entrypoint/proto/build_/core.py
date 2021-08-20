@@ -10,7 +10,7 @@ class Build(EndPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["language", "source_relative", "pb_includes", "files"],
+        "required": ["language", "pb_includes", "files"],
         "properties": {
             "cwd": {
                 "type": "string",

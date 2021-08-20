@@ -30,8 +30,9 @@ def _build_pb(language: str, serv_file: str, includes: List[str], to: str,
 
 @grpc_build.as_main
 def build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str,
-               go_source_relative: bool,
-               js_import_style: str, web_import_style: str, web_mode: str, web: bool = False,
+               js_import_style: str, web_import_style: str, web_mode: str,  
+               go_source_relative: bool = False,
+               web: bool = False,
                kwargs: Optional[str] = None, files: Optional[List[str]] = None,
                cwd: str = ".") -> None:
     """编译grpc的protobuf的schema为不同语言的代码.
