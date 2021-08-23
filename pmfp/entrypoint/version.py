@@ -2,7 +2,7 @@
 from schema_entry import EntryPoint
 from .core import ppm
 
-__VERSION__ = "4.1.3"
+__VERSION__ = "4.1.4"
 
 
 class VERSION(EntryPoint):

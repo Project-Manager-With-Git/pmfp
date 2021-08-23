@@ -23,6 +23,9 @@ def build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: Path,
     target_str = serv_file
     serv_name = serv_file.replace(".proto", "")
     to = f"{to}/{serv_name}_pb"
+    topath = Path(to)
+    if not topath.exists():
+        topath.mkdir(parents=True)
     if files:
         target_str += " " + " ".join(files)
     flag_str = ""
