@@ -11,7 +11,7 @@ class Build(EndPoint):
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "required": ["language", "source_relative", "pb_includes", "serv_file"],
+        "required": ["language", "pb_includes", "serv_file"],
         "properties": {
             "cwd": {
                 "type": "string",
@@ -78,7 +78,7 @@ class Build(EndPoint):
                 "type": "string",
                 "description": "传输的形式",
                 "enum": ["grpcwebtext", "grpcweb"],
-                "default": "grpc-web-text"
+                "default": "grpcwebtext"
             },
             "serv_file": {
                 "type": "string",

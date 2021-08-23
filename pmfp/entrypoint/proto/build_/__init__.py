@@ -27,8 +27,8 @@ def _build_pb(language: str, files: List[str], includes: List[str], to: str,
 
 @proto_build.as_main
 def build_pb(language: str, files: List[str], pb_includes: List[str], to: str,
-             go_source_relative: bool,
              js_import_style: str,
+             go_source_relative: bool = False,
              kwargs: Optional[str] = None, cwd: str = ".") -> None:
     """编译protobuf的schema为不同语言的代码.
 
