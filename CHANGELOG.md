@@ -3,6 +3,7 @@
 ## bug修复
 
 + `grpc build`针对C++的方式行为修改为类似python的方式,`to`会被自动加上指定proto文件的文件名,当路径不存在时会创建
++ `grpc listservice`删除了无效参数`service`
 
 # v4.1.3
 

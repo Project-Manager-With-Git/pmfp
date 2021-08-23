@@ -17,11 +17,6 @@ class ListService(EndPoint):
                 "type": "string",
                 "description": "grpc的服务位置.",
             },
-            "service": {
-                "type": "string",
-                "title": "s",
-                "description": "grpc的服务名.",
-            },
             "cwd": {
                 "type": "string",
                 "description": "执行操作时的操作目录.",
