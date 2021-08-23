@@ -50,14 +50,14 @@ Functions
 
 
 
-.. function:: build_grpc(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.', as_type: Optional[List[str]] = None) -> None
+.. function:: build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str, js_import_style: str, web_import_style: str, web_mode: str, go_source_relative: bool = False, web: bool = False, kwargs: Optional[str] = None, files: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译grpc的protobuf的schema为不同语言的代码.
 
    :param language: 编译到的执行环境,可选的有"go","py","js"
    :type language: List[str]
-   :param files: 待编译的文件列表
-   :type files: List[str]
+   :param serv_file: 服务文件名.
+   :type serv_file: str
    :param pb_includes: 待编译文件及其依赖所在文件夹列表
    :type pb_includes: List[str]
    :param to: 编译到的模块所在文件夹.
@@ -66,10 +66,10 @@ Functions
    :type source_relative: bool
    :param kwargs: Default: None,
    :type kwargs: Optional[str]
+   :param files: 待编译的其他文件列表
+   :type files: Optional[List[str]]
    :param cwd: 执行的根目录. Default: "."
    :type cwd: str
-   :param as_type: 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
-   :type as_type: Optional[List[str]]
 
 
 .. function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None

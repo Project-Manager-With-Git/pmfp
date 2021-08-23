@@ -32,44 +32,9 @@ Functions
 
 .. autoapisummary::
 
-   pmfp.entrypoint.build_.get_abs_path
-   pmfp.entrypoint.build_.go_build
-   pmfp.entrypoint.build_.py_build
    pmfp.entrypoint.build_.build
 
 
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   pmfp.entrypoint.build_.build_cmd
-
-
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
-
-   由路径字符串获取绝对路径.
-
-   :param path_str: 路径字符创
-   :type path_str: str
-   :param cwd: 指定执行时的位置
-   :type cwd: Optional[Path]
-
-   :returns: 路径字符串的绝对路径
-   :rtype: Path
-
-
-.. function:: go_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, upx: bool = False, mini: bool = False, build_as: str = 'exec', for_linux_arch: Optional[str] = None) -> None
-
-
-.. function:: py_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, build_as: str = 'exec', static: bool = False, mini: bool = False) -> None
-
-
-.. data:: build_cmd
-   
-
-   
 
 .. function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, cwd: str = '.') -> None
 

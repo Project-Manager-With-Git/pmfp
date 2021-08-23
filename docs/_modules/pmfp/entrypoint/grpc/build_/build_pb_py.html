@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.grpc.build_.build_pb_py &mdash; pmfp 4.0.10 文档</title>
+  <title>pmfp.entrypoint.grpc.build_.build_pb_py &mdash; pmfp 4.1.3 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.10
+                4.1.3
               </div>
             
           
@@ -90,7 +90,11 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-1">v4.1.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-0">v4.1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-10">v4.0.10</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
@@ -173,8 +177,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;编译python语言模块.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">import</span> <span class="nn">pkgutil</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
@@ -182,161 +184,11 @@
 <span class="kn">from</span> <span class="nn">pmfp.utils.run_command_utils</span> <span class="kn">import</span> <span class="n">run</span>
 <span class="kn">from</span> <span class="nn">pmfp.utils.tools_info_utils</span> <span class="kn">import</span> <span class="n">get_global_python</span>
 <span class="kn">from</span> <span class="nn">pmfp.utils.python_package_find_utils</span> <span class="kn">import</span> <span class="n">find_pypackage_string</span>
-<span class="kn">from</span> <span class="nn">pmfp.utils.template_utils</span> <span class="kn">import</span> <span class="n">template_2_content</span>
 
 <div class="viewcode-block" id="TRANS_GRPC_MODEL_IMPORT_TEMP"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.TRANS_GRPC_MODEL_IMPORT_TEMP">[文档]</a><span class="n">TRANS_GRPC_MODEL_IMPORT_TEMP</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span></div>
 <span class="s2">from .</span><span class="si">{pb_package}</span><span class="s2"> import *</span>
 <span class="s2">from .</span><span class="si">{grpc_package}</span><span class="s2"> import *</span>
 <span class="s2">&quot;&quot;&quot;</span>
-
-<span class="n">HanddlerSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">NogenHanddlerSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioHanddlerSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioNogenHanddlerSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="n">CliExampleSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">NogenCliExampleSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioCliExampleSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioNogenCliExampleSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="n">ServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">MpServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">NogenServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">NogenMpServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioMpServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioNogenServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioNogenMpServSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="n">CliSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">NogenCliSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioCliSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">AioNogenCliSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="c1"># handdler</span>
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;handdler.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="HanddlerSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.HanddlerSource">[文档]</a>    <span class="n">HanddlerSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载handdler.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aiohanddler.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioHanddlerSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioHanddlerSource">[文档]</a>    <span class="n">AioHanddlerSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aiohanddler.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;nogenhanddler.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="NogenHanddlerSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.NogenHanddlerSource">[文档]</a>    <span class="n">NogenHanddlerSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载nogenhanddler.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aionogenhanddler.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioNogenHanddlerSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioNogenHanddlerSource">[文档]</a>    <span class="n">AioNogenHanddlerSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aionogenhanddler.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="c1"># example</span>
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;cli_example.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="CliExampleSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.CliExampleSource">[文档]</a>    <span class="n">CliExampleSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载cli_example.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;nogencli_example.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="NogenCliExampleSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.NogenCliExampleSource">[文档]</a>    <span class="n">NogenCliExampleSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载nogencli_example.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aiocli_example.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioCliExampleSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioCliExampleSource">[文档]</a>    <span class="n">AioCliExampleSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aiocli_example.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aionogencli_example.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioNogenCliExampleSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioNogenCliExampleSource">[文档]</a>    <span class="n">AioNogenCliExampleSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aionogencli_example.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-
-<span class="c1"># serv</span>
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;serv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="ServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.ServSource">[文档]</a>    <span class="n">ServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载serv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;mpserv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="MpServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.MpServSource">[文档]</a>    <span class="n">MpServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载mpserv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;nogenserv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="NogenServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.NogenServSource">[文档]</a>    <span class="n">NogenServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载nogenserv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;nogenmpserv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="NogenMpServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.NogenMpServSource">[文档]</a>    <span class="n">NogenMpServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载nogenmpserv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aioserv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioServSource">[文档]</a>    <span class="n">AioServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aioserv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aiompserv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioMpServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioMpServSource">[文档]</a>    <span class="n">AioMpServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aiompserv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aionogenserv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioNogenServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioNogenServSource">[文档]</a>    <span class="n">AioNogenServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aionogenserv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aionogenmpserv.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioNogenMpServSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioNogenMpServSource">[文档]</a>    <span class="n">AioNogenMpServSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aionogenmpserv.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="c1"># cli</span>
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;cli.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="CliSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.CliSource">[文档]</a>    <span class="n">CliSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载cli.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;nogencli.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="NogenCliSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.NogenCliSource">[文档]</a>    <span class="n">NogenCliSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载nogencli.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aiocli.py.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioCliSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioCliSource">[文档]</a>    <span class="n">AioCliSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aiocli.py.jinja模板失败&quot;</span><span class="p">)</span>
-
-<div class="viewcode-block" id="source_io"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.source_io">[文档]</a><span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;aionogencli.py.jinja&#39;</span><span class="p">)</span></div>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="AioNogenCliSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.AioNogenCliSource">[文档]</a>    <span class="n">AioNogenCliSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载aionogencli.py.jinja模板失败&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="find_py_grpc_pb2_import_string"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.find_py_grpc_pb2_import_string">[文档]</a><span class="k">def</span> <span class="nf">find_py_grpc_pb2_import_string</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -352,6 +204,10 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">to_path</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+    <span class="n">init_path</span> <span class="o">=</span> <span class="n">to_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">)</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">init_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">init</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">to_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.py&quot;</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
@@ -360,14 +216,14 @@
                 <span class="n">grpc_name</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
                 <span class="n">grpc_package</span> <span class="o">=</span> <span class="n">grpc_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">pb_package</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-                <span class="n">to_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
-                    <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-                <span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                    <span class="n">TRANS_GRPC_MODEL_IMPORT_TEMP</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="n">pb_package</span><span class="o">=</span><span class="n">pb_package</span><span class="p">,</span> <span class="n">grpc_package</span><span class="o">=</span><span class="n">grpc_package</span>
+                <span class="k">if</span> <span class="n">init</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">init_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                        <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="n">TRANS_GRPC_MODEL_IMPORT_TEMP</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">pb_package</span><span class="o">=</span><span class="n">pb_package</span><span class="p">,</span> <span class="n">grpc_package</span><span class="o">=</span><span class="n">grpc_package</span>
+                        <span class="p">)</span>
                     <span class="p">)</span>
-                <span class="p">)</span>
-
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">grpc_file</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
                 <span class="n">new_lines</span> <span class="o">=</span> <span class="p">[]</span>
@@ -389,11 +245,6 @@
     <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">python</span><span class="si">}</span><span class="s2"> -m grpc_tools.protoc </span><span class="si">{</span><span class="n">includes_str</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">flag_str</span><span class="si">}</span><span class="s2"> --python_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> --grpc_python_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">target_str</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译命令:</span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译grpc项目 </span><span class="si">{</span><span class="n">target_str</span><span class="si">}</span><span class="s2"> 为python模块完成!&quot;</span><span class="p">)</span>
-        <span class="n">trans_grpc_model_py</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;转换python项目的grpc文件为python模块完成!&quot;</span><span class="p">)</span>
-
     <span class="k">try</span><span class="p">:</span>
         <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
@@ -408,8 +259,8 @@
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译grpc项目 </span><span class="si">{</span><span class="n">target_str</span><span class="si">}</span><span class="s2"> 为python模块完成!&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译grpc项目 </span><span class="si">{</span><span class="n">target_str</span><span class="si">}</span><span class="s2"> 为python模块完成!&quot;</span><span class="p">)</span>
             <span class="n">trans_grpc_model_py</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;转换python的grpc输出为一个模块失败:</span>
@@ -435,428 +286,31 @@
     <span class="k">return</span> <span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span></div>
 
 
-<div class="viewcode-block" id="gen_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="k">if</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;handdler.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;handdler已经存在,不生成&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-            <span class="n">HanddlerSource</span><span class="p">,</span>
-            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;handdler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">ServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;serv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .serv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_mp_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_mp_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_mp_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="k">if</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;handdler.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;handdler已经存在,不生成&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-            <span class="n">HanddlerSource</span><span class="p">,</span>
-            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;handdler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">MpServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;mpserv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .mpserv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_nogen_mp_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_nogen_mp_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_nogen_mp_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="k">if</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;handdler.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;handdler已经存在,不生成&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-            <span class="n">NogenHanddlerSource</span><span class="p">,</span>
-            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;nogenhanddler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">NogenMpServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;nogenmpserv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .nogenmpserv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_nogen_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_nogen_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_nogen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="k">if</span> <span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;handdler.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;handdler已经存在,不生成&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-            <span class="n">NogenHanddlerSource</span><span class="p">,</span>
-            <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-            <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;nogenhanddler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">NogenMpServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;nogenserv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .nogenserv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_aio_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_aio_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_aio_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioHanddlerSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aiohanddler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aioserv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .aioserv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    uvloop</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_aio_mp_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_aio_mp_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_aio_mp_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioHanddlerSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aiohanddler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioMpServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aiompserv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .aiompserv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    uvloop</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_aio_nogen_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_aio_nogen_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_aio_nogen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioNogenHanddlerSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aiohanddler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioNogenServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aionogenserv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .aionogenserv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    uvloop</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_aio_nogen_mp_serv"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_aio_nogen_mp_serv">[文档]</a><span class="k">def</span> <span class="nf">gen_aio_nogen_mp_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建handdler</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioNogenHanddlerSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aiohanddler.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="c1"># 再创建serv</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioNogenMpServSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aionogenmpserv.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .aionogenmpserv import Serv</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc serv需要安装依赖:</span></div>
-<span class="s2">    grpcio --no-binary grpcio</span>
-<span class="s2">    grpcio-reflection</span>
-<span class="s2">    grpcio-health-checking</span>
-<span class="s2">    schema-entry</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    uvloop</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_cli"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_cli">[文档]</a><span class="k">def</span> <span class="nf">gen_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建cli</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">CliSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cli.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .cli import client</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># 再创建example</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">CliExampleSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;cli_example.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc cli需要安装依赖:</span></div>
-<span class="s2">    grpcio</span>
-<span class="s2">    pyproxypattern</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_nogen_cli"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_nogen_cli">[文档]</a><span class="k">def</span> <span class="nf">gen_nogen_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建cli</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">NogenCliSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;nogencli.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .nogencli import client</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># 再创建example</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">NogenCliExampleSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;nogencli_example.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc cli需要安装依赖:</span></div>
-<span class="s2">    grpcio</span>
-<span class="s2">    pyproxypattern</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_aio_cli"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_aio_cli">[文档]</a><span class="k">def</span> <span class="nf">gen_aio_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建cli</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioCliSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aiocli.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .aiocli import aio_client</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="c1"># 再创建example</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioCliExampleSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aiocli_example.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc cli需要安装依赖:</span></div>
-<span class="s2">    grpcio</span>
-<span class="s2">    pyproxypattern</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    uvloop</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="gen_aio_nogen_cli"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.gen_aio_nogen_cli">[文档]</a><span class="k">def</span> <span class="nf">gen_aio_nogen_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># 先创建cli</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioNogenCliSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aionogencli.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;__init__.py&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;from .aionogencli import aio_client</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="c1"># 再创建example</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-        <span class="n">AioNogenCliExampleSource</span><span class="p">,</span>
-        <span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span>
-        <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;aionogencli_example.py&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;grpc cli需要安装依赖:</span></div>
-<span class="s2">    grpcio</span>
-<span class="s2">    pyproxypattern</span>
-
-<span class="s2">    通常还会使用到依赖:</span>
-<span class="s2">    grpcio-tools</span>
-<span class="s2">    uvloop</span>
-<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="_build_grpc_py_more"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_py/index.html#pmfp.entrypoint.grpc.build_.build_pb_py._build_grpc_py_more">[文档]</a><span class="k">def</span> <span class="nf">_build_grpc_py_more</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">as_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">as_type</span><span class="p">:</span>
-        <span class="k">return</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
-    <span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span> <span class="o">=</span> <span class="n">find_grpc_package</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;serv&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;aio&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;mp&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s2">&quot;nogen&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                    <span class="k">pass</span>
-                    <span class="c1"># gen_aio_nogen_mp_serv(service_name_lower=service_name_lower, service_name=service_name, to=path)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">gen_aio_mp_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s2">&quot;nogen&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                    <span class="n">gen_aio_nogen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">gen_aio_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;mp&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s2">&quot;nogen&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                    <span class="n">gen_nogen_mp_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">gen_mp_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s2">&quot;nogen&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                    <span class="n">gen_nogen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">gen_serv</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;cli&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;aio&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;nogen&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                <span class="n">gen_aio_nogen_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">gen_aio_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;nogen&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                <span class="n">gen_nogen_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">gen_cli</span><span class="p">(</span><span class="n">service_name_lower</span><span class="o">=</span><span class="n">service_name_lower</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="n">service_name</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">path</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="build_pb_py"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.build_pb_py">[文档]</a><span class="k">def</span> <span class="nf">build_pb_py</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">as_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-                <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="build_pb_py"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_.build_pb_py.build_pb_py">[文档]</a><span class="k">def</span> <span class="nf">build_pb_py</span><span class="p">(</span><span class="n">serv_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+                <span class="n">files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;编译grpc的protobuf定义文件为python语言模块.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        files (List[str]): 待编译的protobuffer文件</span>
+<span class="sd">        serv_file (str): 定义grpc service的目标proto文件</span>
 <span class="sd">        includes (List[str]): 待编译的protobuffer文件所在的文件夹</span>
 <span class="sd">        to (str): 编译成的模块文件放到的路径</span>
-<span class="sd">        as_type (str): 执行的目的. Default: &quot;source&quot;</span>
+<span class="sd">        cwd (Path): 执行目录.</span>
+<span class="sd">        files (List[str]): 待编译的protobuffer文件</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">includes_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;-I </span><span class="si">{</span><span class="n">include</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">includes</span><span class="p">])</span>
-    <span class="n">target_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">target_str</span> <span class="o">=</span> <span class="n">serv_file</span>
+    <span class="n">serv_name</span> <span class="o">=</span> <span class="n">serv_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.proto&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">target_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
     <span class="n">flag_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">to</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">serv_name</span><span class="si">}</span><span class="s2">_pb&quot;</span>
+    <span class="n">topath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">topath</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">topath</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
-    <span class="k">if</span> <span class="n">as_type</span> <span class="ow">and</span> <span class="s2">&quot;nogen&quot;</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-        <span class="n">topp</span> <span class="o">=</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">to</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
-        <span class="k">for</span> <span class="n">include_dir</span> <span class="ow">in</span> <span class="n">includes</span><span class="p">:</span>
-            <span class="n">include_dirp</span> <span class="o">=</span> <span class="n">cwd</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">include_dir</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-                <span class="n">file_p</span> <span class="o">=</span> <span class="n">include_dirp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">file_p</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-                    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">file_p</span><span class="p">,</span> <span class="n">topp</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">gen_code</span><span class="p">(</span><span class="n">includes_str</span><span class="o">=</span><span class="n">includes_str</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">to</span><span class="p">,</span> <span class="n">flag_str</span><span class="o">=</span><span class="n">flag_str</span><span class="p">,</span> <span class="n">target_str</span><span class="o">=</span><span class="n">target_str</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
-    <span class="n">_build_grpc_py_more</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="n">to</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target_str</span><span class="p">,</span> <span class="n">as_type</span><span class="o">=</span><span class="n">as_type</span><span class="p">)</span></div>
+    <span class="n">gen_code</span><span class="p">(</span><span class="n">includes_str</span><span class="o">=</span><span class="n">includes_str</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">to</span><span class="p">,</span> <span class="n">flag_str</span><span class="o">=</span><span class="n">flag_str</span><span class="p">,</span> <span class="n">target_str</span><span class="o">=</span><span class="n">target_str</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -22,7 +22,7 @@ Functions
 
 
 
-.. function:: build_pb_js(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: build_pb_js(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, js_import_style: str, **kwargs: str) -> None
 
    编译js语言模块.
 
@@ -32,5 +32,7 @@ Functions
    :type includes: List[str]
    :param to: 编译成的模块文件放到的路径
    :type to: str
+   :param js_import_style: 编译出来的js模块形式
+   :type js_import_style: str
 
 

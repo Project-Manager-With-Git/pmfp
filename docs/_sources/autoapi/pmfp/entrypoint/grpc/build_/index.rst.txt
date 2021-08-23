@@ -9,22 +9,13 @@
 
 
 
-Subpackages
------------
-.. toctree::
-   :titlesonly:
-   :maxdepth: 3
-
-   source_temp/index.rst
-
-
 Submodules
 ----------
 .. toctree::
    :titlesonly:
    :maxdepth: 1
 
-   build_pb_cxx/index.rst
+   build_pb_cpp/index.rst
    build_pb_go/index.rst
    build_pb_js/index.rst
    build_pb_py/index.rst
@@ -45,7 +36,7 @@ Functions
    pmfp.entrypoint.grpc.build_.build_pb_go
    pmfp.entrypoint.grpc.build_.build_pb_js
    pmfp.entrypoint.grpc.build_.build_pb_py
-   pmfp.entrypoint.grpc.build_.build_pb_cxx
+   pmfp.entrypoint.grpc.build_.build_pb_cpp
    pmfp.entrypoint.grpc.build_._build_pb
    pmfp.entrypoint.grpc.build_.build_grpc
 
@@ -85,60 +76,78 @@ Attributes
    :rtype: str
 
 
-.. function:: build_pb_go(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], source_relative: bool, cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: build_pb_go(serv_file: str, includes: List[str], to: str, source_relative: bool, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
 
    编译grpc的protobuffer定义文件为go语言模块.
 
-   :param files: 待编译的protobuffer文件
-   :type files: List[str]
+   :param serv_file: 定义grpc service的目标proto文件
+   :type serv_file: str
    :param includes: 待编译的protobuffer文件所在的文件夹
    :type includes: List[str]
    :param to: 编译成的模块文件放到的路径
    :type to: str
-   :param as_type: 执行的目的.
-   :type as_type: str
    :param source_relative: 是否使用路径作为包名,只针对go语言
    :type source_relative: bool
+   :param cwd: 执行目录.
+   :type cwd: Path
+   :param files: 其他待编译的protobuffer文件
+   :type files: Optional[List[str]]
 
 
-.. function:: build_pb_js(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: build_pb_js(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, js_import_style: str, web_import_style: str, web_mode: str, files: Optional[List[str]] = None, web: bool = False, **kwargs: str) -> None
 
    编译grpc的protobuf定义文件为js语言模块.
 
-   :param files: 待编译的protobuffer文件
-   :type files: List[str]
+   :param serv_file: 定义grpc service的目标proto文件
+   :type serv_file: str
    :param includes: 待编译的protobuffer文件所在的文件夹
    :type includes: List[str]
    :param to: 编译成的模块文件放到的路径
    :type to: str
-   :param as_type: 执行的目的. Default: "source"
-   :type as_type: str
+   :param cwd: 执行目录.
+   :type cwd: Path
+   :param js_import_style: 生成的js/ts文件类型
+   :type js_import_style: str
+   :param web_import_style: 使用grpc-web时的导入模式
+   :type web_import_style: str
+   :param web_mode: 使用grpc-web时的
+   :type web_mode: str
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param web: 是否使用grpc-web编译
+   :type web: bool
 
 
-.. function:: build_pb_py(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: build_pb_py(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
 
    编译grpc的protobuf定义文件为python语言模块.
 
-   :param files: 待编译的protobuffer文件
-   :type files: List[str]
+   :param serv_file: 定义grpc service的目标proto文件
+   :type serv_file: str
    :param includes: 待编译的protobuffer文件所在的文件夹
    :type includes: List[str]
    :param to: 编译成的模块文件放到的路径
    :type to: str
-   :param as_type: 执行的目的. Default: "source"
-   :type as_type: str
-
-
-.. function:: build_pb_cxx(files: List[str], cwd: pathlib.Path) -> None
-
-   为c++版本的grpc构造模板.
-
-   由于使用cmake管理,而cmake难以解析所以只能给个大致
-
+   :param cwd: 执行目录.
+   :type cwd: Path
    :param files: 待编译的protobuffer文件
    :type files: List[str]
-   :param cwd: 执行时候的根目录
+
+
+.. function:: build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+
+   编译grpc的protobuffer定义文件为C++语言模块.
+
+   :param serv_file: 定义grpc service的目标proto文件
+   :type serv_file: str
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+   :param cwd: 执行目录.
    :type cwd: Path
+   :param files: 其他待编译的protobuffer文件
+   :type files: Optional[List[str]]
 
 
 .. data:: grpc_build
@@ -146,17 +155,17 @@ Attributes
 
    
 
-.. function:: _build_pb(language: str, files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], source_relative: bool, cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: _build_pb(language: str, serv_file: str, includes: List[str], to: str, go_source_relative: bool, js_import_style: str, web_import_style: str, web_mode: str, cwd: pathlib.Path, web: bool = False, files: Optional[List[str]] = None, **kwargs: str) -> None
 
 
-.. function:: build_grpc(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.', as_type: Optional[List[str]] = None) -> None
+.. function:: build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str, js_import_style: str, web_import_style: str, web_mode: str, go_source_relative: bool = False, web: bool = False, kwargs: Optional[str] = None, files: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译grpc的protobuf的schema为不同语言的代码.
 
    :param language: 编译到的执行环境,可选的有"go","py","js"
    :type language: List[str]
-   :param files: 待编译的文件列表
-   :type files: List[str]
+   :param serv_file: 服务文件名.
+   :type serv_file: str
    :param pb_includes: 待编译文件及其依赖所在文件夹列表
    :type pb_includes: List[str]
    :param to: 编译到的模块所在文件夹.
@@ -165,9 +174,9 @@ Attributes
    :type source_relative: bool
    :param kwargs: Default: None,
    :type kwargs: Optional[str]
+   :param files: 待编译的其他文件列表
+   :type files: Optional[List[str]]
    :param cwd: 执行的根目录. Default: "."
    :type cwd: str
-   :param as_type: 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
-   :type as_type: Optional[List[str]]
 
 
