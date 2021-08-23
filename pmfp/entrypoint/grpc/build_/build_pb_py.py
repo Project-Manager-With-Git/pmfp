@@ -8,7 +8,6 @@ from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run
 from pmfp.utils.tools_info_utils import get_global_python
 from pmfp.utils.python_package_find_utils import find_pypackage_string
-from pmfp.utils.template_utils import template_2_content
 
 TRANS_GRPC_MODEL_IMPORT_TEMP = """
 from .{pb_package} import *

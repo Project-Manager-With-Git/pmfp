@@ -3,9 +3,7 @@ import os
 import warnings
 from pathlib import Path
 from typing import List, Optional
-from pmfp.utils.fs_utils import get_abs_path
 from pmfp.utils.run_command_utils import run
-from pmfp.utils.tools_info_utils import get_global_python
 
 
 def build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: Path,
@@ -23,6 +21,8 @@ def build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: Path,
     PROTOC_GEN_GRPC_CXX_PATH = os.getenv('PROTOC_GEN_GRPC_CXX_PATH')
     includes_str = " ".join([f"-I {include}" for include in includes])
     target_str = serv_file
+    serv_name = serv_file.replace(".proto", "")
+    to = f"{to}/{serv_name}_pb"
     if files:
         target_str += " " + " ".join(files)
     flag_str = ""
