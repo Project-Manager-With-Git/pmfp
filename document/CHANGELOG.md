@@ -1,3 +1,52 @@
+# v4.1.3
+
+## 变动
+
++ `grpc build`针对C++的方式行为修改为类似python的方式,`to`会被自动加上指定proto文件的文件名
+
+## bug修复
+
++ 修正`proto build`和`grpc build`因为`source_relative`字段改动造成无法使用的问题
+
+# v4.1.2
+
+## 变动
+
++ `proto build`命令针对js语言增加了参数`js_import_style`
++ `proto build`命令针对go语言增参数`source_relative`改为`go_source_relative`
++ `grpc build`命令针对js语言增加了参数`js_import_style`,`web`,`web_import_style`和`web_mode`来细化js模块的使用环境
++ `grpc build`命令针对go语言增参数`source_relative`改为`go_source_relative`
++ `grpc build`命令现在加回了对c++的支持
+
+# v4.1.1
+
+## 变动
+
+1. `grpc build`接口变动,新增字段`serv_file`用于指定定义rpc接口的文件.针对python的编译会将两个文件放在`{serv_file}_pb`模块下
+2. 删除`grpc build`使用的jinja2模板
+3. 暂时取消了`grpc build`对c++的支持
+
+## bug修复
+
+1. 修复`grpc build`对python时会一直往`__init__.py`中写东西的bug
+
+# v4.1.0
+
+## 新增特性
+
+1. 现在模板配置的`template_keys`字段支持新字段`ask(boolean)`,用于让pmfp提示用户输入key的取值
+2. go语言的`env new`可以指定依赖了
+
+## 变动
+
+1. grpc现在不再用于构造基于模板的项目,grpc项目现在也将使用project命名构造.grpc的build命令将只用于编译grpc的proto到目标语言的模块
+2. go语言的`require install`命令当不指定`-n`时使用`go mod tidy`更新依赖
+
+## bug修复
+
+1. 修复`docker image build --push`报错的问题
+2. 修复`docker image build`逻辑错误
+
 # v4.0.10
 
 ## bug修复

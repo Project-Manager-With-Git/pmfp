@@ -35,7 +35,7 @@ Attributes
    需要本地有`protoc`,可以在`https://github.com/protocolbuffers/protobuf/releases`下载安装
 
    .. attribute:: argparse_noflag
-      :annotation: = files
+      :annotation: = serv_file
 
       
 

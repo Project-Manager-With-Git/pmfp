@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.grpc.build_.build_pb_go &mdash; pmfp 4.0.10 文档</title>
+  <title>pmfp.entrypoint.grpc.build_.build_pb_go &mdash; pmfp 4.1.3 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.10
+                4.1.3
               </div>
             
           
@@ -90,7 +90,11 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-1">v4.1.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-0">v4.1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-10">v4.0.10</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
@@ -171,172 +175,46 @@
             
   <h1>pmfp.entrypoint.grpc.build_.build_pb_go 源代码</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;编译go语言模块.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">pkgutil</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">pmfp.utils.fs_utils</span> <span class="kn">import</span> <span class="n">get_abs_path</span>
 <span class="kn">from</span> <span class="nn">pmfp.utils.run_command_utils</span> <span class="kn">import</span> <span class="n">run</span>
-<span class="kn">from</span> <span class="nn">pmfp.utils.template_utils</span> <span class="kn">import</span> <span class="n">template_2_content</span>
-
-<span class="n">ServiceSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">HanddlerSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">ExampleSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">SDKSource</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;serv.go.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="ServiceSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.ServiceSource">[文档]</a>    <span class="n">ServiceSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载serv.go.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;handdler.go.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="HanddlerSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.HanddlerSource">[文档]</a>    <span class="n">HanddlerSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载handdler.go.jinja模板失败&quot;</span><span class="p">)</span>
-
-<span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;example.go.jinja&#39;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="ExampleSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.ExampleSource">[文档]</a>    <span class="n">ExampleSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载localresolver.go.jinja模板失败&quot;</span><span class="p">)</span>
-
-<div class="viewcode-block" id="source_io"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.source_io">[文档]</a><span class="n">source_io</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s1">&#39;pmfp.entrypoint.grpc.build_.source_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;sdk.go.jinja&#39;</span><span class="p">)</span></div>
-<span class="k">if</span> <span class="n">source_io</span><span class="p">:</span>
-<div class="viewcode-block" id="SDKSource"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.SDKSource">[文档]</a>    <span class="n">SDKSource</span> <span class="o">=</span> <span class="n">source_io</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;加载sdk.go.jinja模板失败&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="find_grpc_package"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.find_grpc_package">[文档]</a><span class="k">def</span> <span class="nf">find_grpc_package</span><span class="p">(</span><span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
-    <span class="n">package</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">registservice</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">registclient</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">registclient_new</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.pb.go&quot;</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;package \w+\s&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">package_new</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                    <span class="n">package</span> <span class="o">=</span> <span class="n">package_new</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;package &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-                <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Register\w+Server&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">registservice</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;New\w+Client&quot;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">registclient_new</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                    <span class="n">registclient</span> <span class="o">=</span> <span class="n">registclient_new</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;New&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">package</span><span class="p">,</span> <span class="n">registservice</span><span class="p">,</span> <span class="n">registclient</span><span class="p">,</span> <span class="n">registclient_new</span></div>
-
-
-<div class="viewcode-block" id="_build_grpc"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go._build_grpc">[文档]</a><span class="k">def</span> <span class="nf">_build_grpc</span><span class="p">(</span><span class="n">includes</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">as_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">topath</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">to</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_make_server_temp</span><span class="p">(</span><span class="n">package</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">registservice</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;如果已经存在`serv.go则不会执行`&quot;&quot;&quot;</span>
-        <span class="c1"># 创建serv.go</span>
-        <span class="n">target_path</span> <span class="o">=</span> <span class="n">topath</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;serv.go&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">target_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;项目已存在serv.go,不会重复初始化&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">servcontent</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span><span class="n">ServiceSource</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="n">package</span><span class="p">,</span> <span class="n">registservice</span><span class="o">=</span><span class="n">registservice</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">servcontent</span><span class="p">)</span>
-
-        <span class="c1"># 创建hanndler.go</span>
-        <span class="n">target_path</span> <span class="o">=</span> <span class="n">topath</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;handdler.go&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">target_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;项目已存在handdler.go,不会重复初始化&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">package_upper</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-            <span class="n">handdlercontent</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span><span class="n">HanddlerSource</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="n">package</span><span class="p">,</span> <span class="n">package_upper</span><span class="o">=</span><span class="n">package_upper</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">handdlercontent</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_make_client_temp</span><span class="p">(</span><span class="n">package</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">registclient</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">registclient_new</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;如果已经存在`sdk.go则不会执行`&quot;&quot;&quot;</span>
-        <span class="c1"># 创建sdk.go</span>
-        <span class="n">target_path</span> <span class="o">=</span> <span class="n">topath</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;sdk.go&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">target_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;项目已存在sdk.go,不会重复初始化&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">sdkcontent</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-                <span class="n">SDKSource</span><span class="p">,</span>
-                <span class="n">package</span><span class="o">=</span><span class="n">package</span><span class="p">,</span>
-                <span class="n">registclient</span><span class="o">=</span><span class="n">registclient</span><span class="p">,</span>
-                <span class="n">registclient_new</span><span class="o">=</span><span class="n">registclient_new</span>
-            <span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sdkcontent</span><span class="p">)</span>
-
-        <span class="c1"># 创建example.go</span>
-        <span class="n">target_path</span> <span class="o">=</span> <span class="n">topath</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;example.go&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">target_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;项目已存在example.go,不会重复初始化&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">examplecontent</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span>
-                <span class="n">ExampleSource</span><span class="p">,</span>
-                <span class="n">package</span><span class="o">=</span><span class="n">package</span><span class="p">,</span>
-                <span class="n">registclient</span><span class="o">=</span><span class="n">registclient</span><span class="p">,</span>
-                <span class="n">registclient_new</span><span class="o">=</span><span class="n">registclient_new</span>
-            <span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">examplecontent</span><span class="p">)</span>
-        <span class="c1"># Localresolvercontent = template_2_content(LocalresolverSource, package=package)</span>
-        <span class="c1"># with open(topath.joinpath(&quot;localresolver.go&quot;), &quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as f:</span>
-        <span class="c1">#     f.write(Localresolvercontent)</span>
-
+<div class="viewcode-block" id="_build_grpc"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go._build_grpc">[文档]</a><span class="k">def</span> <span class="nf">_build_grpc</span><span class="p">(</span><span class="n">includes</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;protoc </span><span class="si">{</span><span class="n">includes</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2"> --go_out=plugins=grpc:</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;根据模板构造grpc项目失败</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;根据模板构造grpc项目失败</span>
+
+<span class="s2">        </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2"></span>
+
+<span class="s2">        编译为go语言依赖如下插件,请检查是否安装:</span>
+<span class="s2">        &quot;google.golang.org/protobuf/cmd/protoc-gen-go&quot;</span>
+<span class="s2">        &quot;google.golang.org/grpc/cmd/protoc-gen-go-grpc&quot;</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译grpc项目 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> 为go语言模块完成!&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">as_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;根据模板构造grpc项目&quot;</span><span class="p">)</span>
-                <span class="n">package</span><span class="p">,</span> <span class="n">registservice</span><span class="p">,</span> <span class="n">registclient</span><span class="p">,</span> <span class="n">registclient_new</span> <span class="o">=</span> <span class="n">find_grpc_package</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">registservice</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">registclient</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">registclient_new</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">as_type</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;serv&quot;</span><span class="p">:</span>
-                        <span class="n">_make_server_temp</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">registservice</span><span class="p">)</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;为grpc项目 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> 构造</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">模板成功!&quot;</span><span class="p">)</span>
-                    <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;cli&quot;</span><span class="p">:</span>
-                        <span class="n">_make_client_temp</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">registclient</span><span class="p">,</span> <span class="n">registclient_new</span><span class="p">)</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;为grpc项目 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> 构造</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">端模板成功!&quot;</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;为grpc项目 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> 构造</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">模板失败,go语言不支持&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;编译grpc项目 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> 为go语言模块失败:</span></div>
-
-<span class="s2">            </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2"></span>
-
-<span class="s2">            编译为go语言依赖如下插件,请检查是否安装:</span>
-<span class="s2">            &quot;google.golang.org/protobuf/cmd/protoc-gen-go&quot;</span>
-<span class="s2">            &quot;google.golang.org/grpc/cmd/protoc-gen-go-grpc&quot;</span>
-<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译grpc项目 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> 为go语言模块完成!&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="build_pb_go"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.build_pb_go">[文档]</a><span class="k">def</span> <span class="nf">build_pb_go</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">as_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
-                <span class="n">source_relative</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="build_pb_go"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.build_pb_go">[文档]</a><span class="k">def</span> <span class="nf">build_pb_go</span><span class="p">(</span><span class="n">serv_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="n">source_relative</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;编译grpc的protobuffer定义文件为go语言模块.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        files (List[str]): 待编译的protobuffer文件</span>
+<span class="sd">        serv_file (str): 定义grpc service的目标proto文件</span>
 <span class="sd">        includes (List[str]): 待编译的protobuffer文件所在的文件夹</span>
 <span class="sd">        to (str): 编译成的模块文件放到的路径</span>
-<span class="sd">        as_type (str): 执行的目的.</span>
 <span class="sd">        source_relative (bool): 是否使用路径作为包名,只针对go语言</span>
+<span class="sd">        cwd (Path): 执行目录.</span>
+<span class="sd">        files (Optional[List[str]]): 其他待编译的protobuffer文件</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">includes_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;-I </span><span class="si">{</span><span class="n">include</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">includes</span><span class="p">])</span>
-    <span class="n">target_str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">target_str</span> <span class="o">=</span> <span class="n">serv_file</span>
+    <span class="k">if</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">target_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
     <span class="n">flag_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">source_relative</span><span class="p">:</span>
         <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; --go_opt=paths=source_relative&quot;</span>
@@ -344,7 +222,7 @@
         <span class="k">if</span> <span class="n">flag_str</span><span class="p">:</span>
             <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span>
         <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
-    <span class="n">_build_grpc</span><span class="p">(</span><span class="n">includes_str</span><span class="p">,</span> <span class="n">flag_str</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">as_type</span><span class="p">,</span> <span class="n">target_str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span></div>
+    <span class="n">_build_grpc</span><span class="p">(</span><span class="n">includes_str</span><span class="p">,</span> <span class="n">flag_str</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">target_str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

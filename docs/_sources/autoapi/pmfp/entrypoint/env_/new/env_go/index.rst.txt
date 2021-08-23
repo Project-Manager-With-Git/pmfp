@@ -47,7 +47,7 @@ Attributes
 
    
 
-.. function:: init_go_env(cwd: pathlib.Path, project_name: str) -> None
+.. function:: init_go_env(cwd: pathlib.Path, project_name: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
    初始化golang默认的虚拟环境.
 

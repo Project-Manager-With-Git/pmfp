@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.grpc.build_ &mdash; pmfp 4.0.10 文档</title>
+  <title>pmfp.entrypoint.grpc.build_ &mdash; pmfp 4.1.3 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.10
+                4.1.3
               </div>
             
           
@@ -90,7 +90,11 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.1.3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-1">v4.1.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-0">v4.1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-10">v4.0.10</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
@@ -175,53 +179,72 @@
 <span class="kn">from</span> <span class="nn">.build_pb_go</span> <span class="kn">import</span> <span class="n">build_pb_go</span>
 <span class="kn">from</span> <span class="nn">.build_pb_js</span> <span class="kn">import</span> <span class="n">build_pb_js</span>
 <span class="kn">from</span> <span class="nn">.build_pb_py</span> <span class="kn">import</span> <span class="n">build_pb_py</span>
-<span class="kn">from</span> <span class="nn">.build_pb_cxx</span> <span class="kn">import</span> <span class="n">build_pb_cxx</span>
+<span class="kn">from</span> <span class="nn">.build_pb_cpp</span> <span class="kn">import</span> <span class="n">build_pb_cpp</span>
 <span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">grpc_build</span>
 
 
-<div class="viewcode-block" id="_build_pb"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_._build_pb">[文档]</a><span class="k">def</span> <span class="nf">_build_pb</span><span class="p">(</span><span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">as_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
-              <span class="n">source_relative</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_build_pb"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_._build_pb">[文档]</a><span class="k">def</span> <span class="nf">_build_pb</span><span class="p">(</span><span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">serv_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+              <span class="n">go_source_relative</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+              <span class="n">js_import_style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">web_import_style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">web_mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+              <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">web</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">language</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;go&quot;</span><span class="p">:</span>
-        <span class="n">build_pb_go</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">as_type</span><span class="p">,</span> <span class="n">source_relative</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">build_pb_go</span><span class="p">(</span><span class="n">serv_file</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">go_source_relative</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">language</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;py&quot;</span><span class="p">,</span> <span class="s2">&quot;cython&quot;</span><span class="p">):</span>
-        <span class="n">build_pb_py</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">as_type</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">build_pb_py</span><span class="p">(</span><span class="n">serv_file</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;js&quot;</span><span class="p">:</span>
-        <span class="n">build_pb_js</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">as_type</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">build_pb_js</span><span class="p">(</span><span class="n">serv_file</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span>
+                    <span class="n">js_import_style</span><span class="o">=</span><span class="n">js_import_style</span><span class="p">,</span>
+                    <span class="n">web_import_style</span><span class="o">=</span><span class="n">web_import_style</span><span class="p">,</span>
+                    <span class="n">web_mode</span><span class="o">=</span><span class="n">web_mode</span><span class="p">,</span> <span class="n">web</span><span class="o">=</span><span class="n">web</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">language</span> <span class="o">==</span> <span class="s2">&quot;CXX&quot;</span><span class="p">:</span>
-        <span class="n">build_pb_cxx</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+        <span class="n">build_pb_cpp</span><span class="p">(</span><span class="n">serv_file</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未知的环境类型</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <span class="nd">@grpc_build</span><span class="o">.</span><span class="n">as_main</span>
-<div class="viewcode-block" id="build_grpc"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/grpc/index.html#pmfp.entrypoint.grpc.build_.build_grpc">[文档]</a><span class="k">def</span> <span class="nf">build_grpc</span><span class="p">(</span><span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">pb_includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-               <span class="n">source_relative</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-               <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">as_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="build_grpc"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/grpc/index.html#pmfp.entrypoint.grpc.build_.build_grpc">[文档]</a><span class="k">def</span> <span class="nf">build_grpc</span><span class="p">(</span><span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">serv_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pb_includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+               <span class="n">js_import_style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">web_import_style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">web_mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  
+               <span class="n">go_source_relative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+               <span class="n">web</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+               <span class="n">kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+               <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;编译grpc的protobuf的schema为不同语言的代码.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        language (List[str]): 编译到的执行环境,可选的有&quot;go&quot;,&quot;py&quot;,&quot;js&quot;</span>
-<span class="sd">        files (List[str]): 待编译的文件列表</span>
+<span class="sd">        serv_file (str): 服务文件名.</span>
 <span class="sd">        pb_includes (List[str]): 待编译文件及其依赖所在文件夹列表</span>
 <span class="sd">        to (str): 编译到的模块所在文件夹.</span>
 <span class="sd">        source_relative (bool): 是否使用路径作为包名,只针对go语言</span>
 <span class="sd">        kwargs (Optional[str]): Default: None,</span>
+<span class="sd">        files (Optional[List[str]]): 待编译的其他文件列表</span>
 <span class="sd">        cwd (str): 执行的根目录. Default: &quot;.&quot;</span>
-<span class="sd">        as_type (Optional[List[str]]): 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cwdp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
     <span class="n">topath</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">to</span><span class="p">,</span> <span class="n">cwdp</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">topath</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
         <span class="n">topath</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span> <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.proto&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.proto&quot;</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+
+    <span class="n">serv_file</span> <span class="o">=</span> <span class="n">serv_file</span> <span class="k">if</span> <span class="n">serv_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.proto&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">serv_file</span><span class="si">}</span><span class="s2">.proto&quot;</span>
+    <span class="k">if</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span> <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.proto&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.proto&quot;</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
     <span class="n">includes</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_abs_path_str</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">cwd</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pb_includes</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="n">kwpairs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
         <span class="n">kw</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">kwpairs</span><span class="p">}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">kw</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">_build_pb</span><span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">includes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">as_type</span><span class="p">,</span> <span class="n">source_relative</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+    <span class="n">_build_pb</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+              <span class="n">serv_file</span><span class="o">=</span><span class="n">serv_file</span><span class="p">,</span>
+              <span class="n">includes</span><span class="o">=</span><span class="n">includes</span><span class="p">,</span>
+              <span class="n">to</span><span class="o">=</span><span class="n">to</span><span class="p">,</span>
+              <span class="n">go_source_relative</span><span class="o">=</span><span class="n">go_source_relative</span><span class="p">,</span>
+              <span class="n">js_import_style</span><span class="o">=</span><span class="n">js_import_style</span><span class="p">,</span>
+              <span class="n">web_import_style</span><span class="o">=</span><span class="n">web_import_style</span><span class="p">,</span>
+              <span class="n">web_mode</span><span class="o">=</span><span class="n">web_mode</span><span class="p">,</span> <span class="n">web</span><span class="o">=</span><span class="n">web</span><span class="p">,</span>
+              <span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="o">**</span> <span class="n">kw</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

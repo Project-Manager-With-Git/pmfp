@@ -42,7 +42,7 @@ Functions
 
 
 
-.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.') -> None
+.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, js_import_style: str, go_source_relative: bool = False, kwargs: Optional[str] = None, cwd: str = '.') -> None
 
    编译protobuf的schema为不同语言的代码.
 
@@ -54,10 +54,12 @@ Functions
    :type pb_includes: List[str]
    :param to: 编译到的模块所在文件夹.
    :type to: str
-   :param source_relative: 是否使用路径作为包名,只针对go语言
-   :type source_relative: bool
-   :param kwargs: Default: None,
-   :type kwargs: Optional[str]
+   :param go_source_relative: 是否使用路径作为包名,只针对go语言
+   :type go_source_relative: bool
+   :param js_import_style: 编译出来的js模块形式
+   :type js_import_style: str
+   :param web: 是否使用grpc-web编译. Default: False
+   :type web: bool
    :param cwd: 执行的根目录. Default: "."
    :type cwd: str
 

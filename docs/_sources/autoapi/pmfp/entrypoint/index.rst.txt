@@ -35,7 +35,6 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
-   _conf/index.rst
    core/index.rst
    info/index.rst
    run/index.rst
@@ -124,7 +123,7 @@ Attributes
    :type located_path: Optional[str], optional
 
 
-.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 
 .. data:: project_as_temp
@@ -230,7 +229,7 @@ Attributes
 .. function:: new_dockerfile(language: str, dockerfile_name: str = 'Dockerfile', cross_compiling: bool = False, extend: bool = False, app_name: Optional[str] = None, project_name: Optional[str] = None, cwd: str = '.') -> None
 
 
-.. function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+.. function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], only_manifest: bool = False, cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
 
 
 .. function:: pack_dockerimage(docker_register_namespace: str, project_name: str, version: str, docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
@@ -266,14 +265,14 @@ Attributes
    :type cwd: str, optional
 
 
-.. function:: build_grpc(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.', as_type: Optional[List[str]] = None) -> None
+.. function:: build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str, js_import_style: str, web_import_style: str, web_mode: str, go_source_relative: bool = False, web: bool = False, kwargs: Optional[str] = None, files: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译grpc的protobuf的schema为不同语言的代码.
 
    :param language: 编译到的执行环境,可选的有"go","py","js"
    :type language: List[str]
-   :param files: 待编译的文件列表
-   :type files: List[str]
+   :param serv_file: 服务文件名.
+   :type serv_file: str
    :param pb_includes: 待编译文件及其依赖所在文件夹列表
    :type pb_includes: List[str]
    :param to: 编译到的模块所在文件夹.
@@ -282,10 +281,10 @@ Attributes
    :type source_relative: bool
    :param kwargs: Default: None,
    :type kwargs: Optional[str]
+   :param files: 待编译的其他文件列表
+   :type files: Optional[List[str]]
    :param cwd: 执行的根目录. Default: "."
    :type cwd: str
-   :param as_type: 执行的目的,可以是client,service,aioclient,aioserv,nogencli,nogenserv. Default: None
-   :type as_type: Optional[List[str]]
 
 
 .. function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
@@ -470,7 +469,7 @@ Attributes
    :type cb: Optional[Callable[[str],]], optional
 
 
-.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, source_relative: bool, kwargs: Optional[str] = None, cwd: str = '.') -> None
+.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, js_import_style: str, go_source_relative: bool = False, kwargs: Optional[str] = None, cwd: str = '.') -> None
 
    编译protobuf的schema为不同语言的代码.
 
@@ -482,10 +481,12 @@ Attributes
    :type pb_includes: List[str]
    :param to: 编译到的模块所在文件夹.
    :type to: str
-   :param source_relative: 是否使用路径作为包名,只针对go语言
-   :type source_relative: bool
-   :param kwargs: Default: None,
-   :type kwargs: Optional[str]
+   :param go_source_relative: 是否使用路径作为包名,只针对go语言
+   :type go_source_relative: bool
+   :param js_import_style: 编译出来的js模块形式
+   :type js_import_style: str
+   :param web: 是否使用grpc-web编译. Default: False
+   :type web: bool
    :param cwd: 执行的根目录. Default: "."
    :type cwd: str
 
@@ -658,7 +659,7 @@ Attributes
 
 
 .. data:: __VERSION__
-   :annotation: = 4.0.10
+   :annotation: = 4.1.3
 
    
 

@@ -63,7 +63,7 @@ Attributes
    :type located_path: Optional[str], optional
 
 
-.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 
 .. data:: project_as_temp

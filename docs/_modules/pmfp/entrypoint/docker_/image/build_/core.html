@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.docker_.image.build_.core &mdash; pmfp 4.0.10 文档</title>
+  <title>pmfp.entrypoint.docker_.image.build_.core &mdash; pmfp 4.1.3 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.0.10
+                4.1.3
               </div>
             
           
@@ -90,7 +90,11 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html">v4.0.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html">v4.1.3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-1">v4.1.1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-0">v4.1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-10">v4.0.10</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-9">v4.0.9</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-8">v4.0.8</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-0-7">v4.0.7</a></li>
@@ -228,6 +232,11 @@
                 <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;是否打上latest标签&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;only_manifest&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;交叉编译时是否直接编译为manifest,为True会执行push操作&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">False</span>
             <span class="p">},</span>
             <span class="s2">&quot;push&quot;</span><span class="p">:</span> <span class="p">{</span>

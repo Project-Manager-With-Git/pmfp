@@ -22,17 +22,27 @@ Functions
 
 
 
-.. function:: build_pb_js(files: List[str], includes: List[str], to: str, as_type: Optional[List[str]], cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: build_pb_js(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, js_import_style: str, web_import_style: str, web_mode: str, files: Optional[List[str]] = None, web: bool = False, **kwargs: str) -> None
 
    编译grpc的protobuf定义文件为js语言模块.
 
-   :param files: 待编译的protobuffer文件
-   :type files: List[str]
+   :param serv_file: 定义grpc service的目标proto文件
+   :type serv_file: str
    :param includes: 待编译的protobuffer文件所在的文件夹
    :type includes: List[str]
    :param to: 编译成的模块文件放到的路径
    :type to: str
-   :param as_type: 执行的目的. Default: "source"
-   :type as_type: str
+   :param cwd: 执行目录.
+   :type cwd: Path
+   :param js_import_style: 生成的js/ts文件类型
+   :type js_import_style: str
+   :param web_import_style: 使用grpc-web时的导入模式
+   :type web_import_style: str
+   :param web_mode: 使用grpc-web时的
+   :type web_mode: str
+   :param files: 待编译的protobuffer文件
+   :type files: List[str]
+   :param web: 是否使用grpc-web编译
+   :type web: bool
 
 

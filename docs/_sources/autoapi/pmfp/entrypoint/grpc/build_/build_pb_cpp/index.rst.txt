@@ -1,0 +1,40 @@
+:mod:`pmfp.entrypoint.grpc.build_.build_pb_cpp`
+===============================================
+
+.. py:module:: pmfp.entrypoint.grpc.build_.build_pb_cpp
+
+.. autoapi-nested-parse::
+
+   编译python语言模块.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.entrypoint.grpc.build_.build_pb_cpp.build_pb_cpp
+
+
+
+.. function:: build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+
+   编译grpc的protobuffer定义文件为C++语言模块.
+
+   :param serv_file: 定义grpc service的目标proto文件
+   :type serv_file: str
+   :param includes: 待编译的protobuffer文件所在的文件夹
+   :type includes: List[str]
+   :param to: 编译成的模块文件放到的路径
+   :type to: str
+   :param cwd: 执行目录.
+   :type cwd: Path
+   :param files: 其他待编译的protobuffer文件
+   :type files: Optional[List[str]]
+
+
