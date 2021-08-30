@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.http.serv`
-================================
+:py:mod:`pmfp.entrypoint.http.serv`
+===================================
 
 .. py:module:: pmfp.entrypoint.http.serv
 
@@ -40,17 +40,17 @@ Attributes
    pmfp.entrypoint.http.serv.http_serv
 
 
-.. function:: get_global_python() -> str
+.. py:function:: get_global_python() -> str
 
    获取全局python.
 
 
-.. data:: http_serv
+.. py:data:: http_serv
    
 
    
 
-.. function:: serv_http(port: int, root: str, bind: str) -> None
+.. py:function:: serv_http(port: int, root: str, bind: str) -> None
 
    启动http静态服务.
 

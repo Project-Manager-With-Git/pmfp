@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.proto.build_.build_pb_cpp`
-================================================
+:py:mod:`pmfp.entrypoint.proto.build_.build_pb_cpp`
+===================================================
 
 .. py:module:: pmfp.entrypoint.proto.build_.build_pb_cpp
 
@@ -23,10 +23,10 @@ Functions
 
 
 
-.. function:: _build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+.. py:function:: _build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
 
 
-.. function:: build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+.. py:function:: build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
 
    编译c++语言模块.
 

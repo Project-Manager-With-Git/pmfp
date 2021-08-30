@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.test_`
-============================
+:py:mod:`pmfp.entrypoint.test_`
+===============================
 
 .. py:module:: pmfp.entrypoint.test_
 
@@ -39,7 +39,7 @@ Functions
 
 
 
-.. function:: static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = '.') -> None
+.. py:function:: static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = '.') -> None
 
    对动态语言做静态类型检验.
 
@@ -57,7 +57,7 @@ Functions
    :type cwd: str
 
 
-.. function:: unittest_test(language: str, test_code: str, code: str, *, cwd: str = '.', coverage: bool = False, output: str = 'doc_unittest') -> None
+.. py:function:: unittest_test(language: str, test_code: str, code: str, *, cwd: str = '.', coverage: bool = False, output: str = 'doc_unittest') -> None
 
    对指定代码做单元测试.
 
@@ -75,7 +75,7 @@ Functions
    :type cwd: str
 
 
-.. function:: benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+.. py:function:: benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
 
    对指定语言的代码做性能测试.
 

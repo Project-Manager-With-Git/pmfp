@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.docker_.image.new`
-========================================
+:py:mod:`pmfp.entrypoint.docker_.image.new`
+===========================================
 
 .. py:module:: pmfp.entrypoint.docker_.image.new
 
@@ -70,12 +70,12 @@ Attributes
    pmfp.entrypoint.docker_.image.new.CXXExtendSource
 
 
-.. data:: GOLBAL_PYTHON_VERSION
+.. py:data:: GOLBAL_PYTHON_VERSION
    
 
    
 
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -88,12 +88,12 @@ Attributes
    :rtype: Path
 
 
-.. function:: get_golang_version() -> Optional[str]
+.. py:function:: get_golang_version() -> Optional[str]
 
    获取本地golang的版本.
 
 
-.. function:: template_2_content(template: str, **kwargs: Any) -> str
+.. py:function:: template_2_content(template: str, **kwargs: Any) -> str
 
    将模板转换为文件内容.
 
@@ -103,101 +103,101 @@ Attributes
    :type kwargs: Dict[str,str]
 
 
-.. data:: dockerfile_new
+.. py:data:: dockerfile_new
    
 
    
 
-.. data:: PythonPureSource
+.. py:data:: PythonPureSource
    :annotation: = 
 
    
 
-.. data:: PythonExtendSource
+.. py:data:: PythonExtendSource
    :annotation: = 
 
    
 
-.. data:: PipConfSource
+.. py:data:: PipConfSource
    :annotation: = 
 
    
 
-.. data:: GoPureSource
+.. py:data:: GoPureSource
    :annotation: = 
 
    
 
-.. data:: GoExtendSource
+.. py:data:: GoExtendSource
    :annotation: = 
 
    
 
-.. data:: CXXExtendSource
+.. py:data:: CXXExtendSource
    :annotation: = 
 
    
 
-.. data:: source_io
+.. py:data:: source_io
    
 
    
 
-.. data:: PythonPureSource
+.. py:data:: PythonPureSource
    
 
    
 
-.. data:: source_io
+.. py:data:: source_io
    
 
    
 
-.. data:: PythonExtendSource
+.. py:data:: PythonExtendSource
    
 
    
 
-.. data:: source_io
+.. py:data:: source_io
    
 
    
 
-.. data:: PipConfSource
+.. py:data:: PipConfSource
    
 
    
 
-.. data:: source_io
+.. py:data:: source_io
    
 
    
 
-.. data:: GoPureSource
+.. py:data:: GoPureSource
    
 
    
 
-.. data:: source_io
+.. py:data:: source_io
    
 
    
 
-.. data:: GoExtendSource
+.. py:data:: GoExtendSource
    
 
    
 
-.. data:: source_io
+.. py:data:: source_io
    
 
    
 
-.. data:: CXXExtendSource
+.. py:data:: CXXExtendSource
    
 
    
 
-.. function:: new_dockerfile(language: str, dockerfile_name: str = 'Dockerfile', cross_compiling: bool = False, extend: bool = False, app_name: Optional[str] = None, project_name: Optional[str] = None, cwd: str = '.') -> None
+.. py:function:: new_dockerfile(language: str, dockerfile_name: str = 'Dockerfile', cross_compiling: bool = False, extend: bool = False, app_name: Optional[str] = None, project_name: Optional[str] = None, cwd: str = '.') -> None
 
 

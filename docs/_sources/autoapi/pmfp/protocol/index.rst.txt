@@ -1,5 +1,5 @@
-:mod:`pmfp.protocol`
-====================
+:py:mod:`pmfp.protocol`
+=======================
 
 .. py:module:: pmfp.protocol
 
@@ -14,12 +14,12 @@
 Module Contents
 ---------------
 
-.. data:: TEMPLATE_INFO_SCHEMA
+.. py:data:: TEMPLATE_INFO_SCHEMA
    
 
    
 
-.. data:: PMFP_CONFIG_SCHEMA
+.. py:data:: PMFP_CONFIG_SCHEMA
    
 
    

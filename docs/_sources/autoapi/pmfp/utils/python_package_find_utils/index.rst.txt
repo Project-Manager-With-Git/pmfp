@@ -1,5 +1,5 @@
-:mod:`pmfp.utils.python_package_find_utils`
-===========================================
+:py:mod:`pmfp.utils.python_package_find_utils`
+==============================================
 
 .. py:module:: pmfp.utils.python_package_find_utils
 
@@ -18,10 +18,10 @@ Functions
 
 
 
-.. function:: _find_pypackage(final_path: pathlib.Path, packs: List[str]) -> None
+.. py:function:: _find_pypackage(final_path: pathlib.Path, packs: List[str]) -> None
 
 
-.. function:: find_pypackage_string(to_path: str) -> str
+.. py:function:: find_pypackage_string(to_path: str) -> str
 
    find_pypackage_string.
 

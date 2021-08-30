@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.env_.new`
-===============================
+:py:mod:`pmfp.entrypoint.env_.new`
+==================================
 
 .. py:module:: pmfp.entrypoint.env_.new
 
@@ -78,17 +78,17 @@ Attributes
    pmfp.entrypoint.env_.new.changelog_template
 
 
-.. data:: DEFAULT_AUTHOR
+.. py:data:: DEFAULT_AUTHOR
    
 
    
 
-.. data:: PMFP_CONFIG_DEFAULT_NAME
+.. py:data:: PMFP_CONFIG_DEFAULT_NAME
    :annotation: = pmfprc.json
 
    
 
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -101,7 +101,7 @@ Attributes
    :rtype: Path
 
 
-.. function:: template_2_content(template: str, **kwargs: Any) -> str
+.. py:function:: template_2_content(template: str, **kwargs: Any) -> str
 
    将模板转换为文件内容.
 
@@ -111,13 +111,13 @@ Attributes
    :type kwargs: Dict[str,str]
 
 
-.. function:: init_py_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: init_py_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
 
-.. function:: init_cython_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: init_cython_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
 
-.. function:: init_go_env(cwd: pathlib.Path, project_name: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: init_go_env(cwd: pathlib.Path, project_name: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
    初始化golang默认的虚拟环境.
 
@@ -127,71 +127,71 @@ Attributes
    :type project_name: str
 
 
-.. function:: init_c_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
+.. py:function:: init_c_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
 
 
-.. function:: init_cxx_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
+.. py:function:: init_cxx_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
 
 
-.. function:: init_js_env(cwd: pathlib.Path, env: str, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+.. py:function:: init_js_env(cwd: pathlib.Path, env: str, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
 
 
-.. function:: init_md_env(cwd: pathlib.Path, project_name: str, description: str) -> None
+.. py:function:: init_md_env(cwd: pathlib.Path, project_name: str, description: str) -> None
 
 
-.. data:: env_new
+.. py:data:: env_new
    
 
    
 
-.. data:: readme_template
+.. py:data:: readme_template
    :annotation: = 
 
    
 
-.. data:: changelog_template
+.. py:data:: changelog_template
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: readme_template
+.. py:data:: readme_template
    
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: changelog_template
+.. py:data:: changelog_template
    
 
    
 
-.. function:: makereadme(cwd: pathlib.Path, project_name: str, author: str, author_email: str, description: str, keywords: str) -> None
+.. py:function:: makereadme(cwd: pathlib.Path, project_name: str, author: str, author_email: str, description: str, keywords: str) -> None
 
 
-.. function:: makechangelog(cwd: pathlib.Path) -> None
+.. py:function:: makechangelog(cwd: pathlib.Path) -> None
 
 
-.. function:: freeze(env: str, language: str, *, cwd: pathlib.Path, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: freeze(env: str, language: str, *, cwd: pathlib.Path, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
    将创建的环境信息保存到目录下的对应`pmfprc.json`中.
 
 
-.. function:: _new_nev(env: str, language: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: _new_nev(env: str, language: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
 
-.. function:: make_project_info_with_default(cwdp: pathlib.Path, language: str, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None) -> Dict[str, str]
+.. py:function:: make_project_info_with_default(cwdp: pathlib.Path, language: str, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None) -> Dict[str, str]
 
 
-.. function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
+.. py:function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
 
    构造不同执行环境.
 

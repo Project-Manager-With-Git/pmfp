@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.test_.benchmark.core`
-===========================================
+:py:mod:`pmfp.entrypoint.test_.benchmark.core`
+==============================================
 
 .. py:module:: pmfp.entrypoint.test_.benchmark.core
 
@@ -25,25 +25,24 @@ Attributes
    pmfp.entrypoint.test_.benchmark.core.test_benchmark
 
 
-.. class:: Benchmark(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
-
+.. py:class:: Benchmark(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
    对指定语言的源码做性能检验.
 
-   .. attribute:: argparse_noflag
+   .. py:attribute:: argparse_noflag
       :annotation: = benchmark_code
 
       
 
-   .. attribute:: schema
+   .. py:attribute:: schema
       
 
       
 
 
-.. data:: test_benchmark
+.. py:data:: test_benchmark
    
 
    

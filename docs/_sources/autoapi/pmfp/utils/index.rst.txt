@@ -1,5 +1,5 @@
-:mod:`pmfp.utils`
-=================
+:py:mod:`pmfp.utils`
+====================
 
 .. py:module:: pmfp.utils
 

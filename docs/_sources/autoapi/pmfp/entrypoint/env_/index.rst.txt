@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.env_`
-===========================
+:py:mod:`pmfp.entrypoint.env_`
+==============================
 
 .. py:module:: pmfp.entrypoint.env_
 
@@ -35,7 +35,7 @@ Functions
 
 
 
-.. function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
+.. py:function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
 
    构造不同执行环境.
 

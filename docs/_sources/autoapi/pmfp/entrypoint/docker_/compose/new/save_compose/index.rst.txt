@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.docker_.compose.new.save_compose`
-=======================================================
+:py:mod:`pmfp.entrypoint.docker_.compose.new.save_compose`
+==========================================================
 
 .. py:module:: pmfp.entrypoint.docker_.compose.new.save_compose
 
@@ -18,10 +18,10 @@ Functions
 
 
 
-.. function:: compose_dict_to_str(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema) -> str
+.. py:function:: compose_dict_to_str(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema) -> str
 
 
-.. function:: save_compose(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, cwdp: pathlib.Path, dockercompose_name: str = 'docker-compose.yml') -> None
+.. py:function:: save_compose(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, cwdp: pathlib.Path, dockercompose_name: str = 'docker-compose.yml') -> None
 
    保存compose为文件.
 

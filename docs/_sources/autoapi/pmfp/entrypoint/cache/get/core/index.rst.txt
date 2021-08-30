@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.cache.get.core`
-=====================================
+:py:mod:`pmfp.entrypoint.cache.get.core`
+========================================
 
 .. py:module:: pmfp.entrypoint.cache.get.core
 
@@ -25,8 +25,7 @@ Attributes
    pmfp.entrypoint.cache.get.core.cache_get
 
 
-.. class:: Get(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
-
+.. py:class:: Get(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
 
    Bases: :py:obj:`schema_entry.EntryPoint`
 
@@ -35,18 +34,18 @@ Attributes
    source_pack_string的格式为"[{host}::]{repo_namespace}::{repo_name}[@{tag}]"
    tag为latest时如果已经存在会更新
 
-   .. attribute:: argparse_noflag
+   .. py:attribute:: argparse_noflag
       :annotation: = source_pack_string
 
       
 
-   .. attribute:: schema
+   .. py:attribute:: schema
       
 
       
 
 
-.. data:: cache_get
+.. py:data:: cache_get
    
 
    

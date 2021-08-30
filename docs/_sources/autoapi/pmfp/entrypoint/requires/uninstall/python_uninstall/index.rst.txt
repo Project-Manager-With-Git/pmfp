@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.requires.uninstall.python_uninstall`
-==========================================================
+:py:mod:`pmfp.entrypoint.requires.uninstall.python_uninstall`
+=============================================================
 
 .. py:module:: pmfp.entrypoint.requires.uninstall.python_uninstall
 
@@ -17,6 +17,6 @@ Functions
 
 
 
-.. function:: python_uninstall(cwd: pathlib.Path, package_name: str, env: str) -> None
+.. py:function:: python_uninstall(cwd: pathlib.Path, package_name: str, env: str) -> None
 
 

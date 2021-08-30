@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.test_.static.test_py`
-===========================================
+:py:mod:`pmfp.entrypoint.test_.static.test_py`
+==============================================
 
 .. py:module:: pmfp.entrypoint.test_.static.test_py
 
@@ -22,7 +22,7 @@ Functions
 
 
 
-.. function:: static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None
+.. py:function:: static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None
 
    对python代码做静态检测.
 

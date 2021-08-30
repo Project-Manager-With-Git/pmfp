@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.env_.new.env_js.env_webpack`
-==================================================
+:py:mod:`pmfp.entrypoint.env_.new.env_js.env_webpack`
+=====================================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_js.env_webpack
 
@@ -36,7 +36,7 @@ Attributes
    pmfp.entrypoint.env_.new.env_js.env_webpack.DEV_CONFIG
 
 
-.. data:: WEBPACK_BASE_CONFIG
+.. py:data:: WEBPACK_BASE_CONFIG
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -116,7 +116,7 @@ Attributes
 
    
 
-.. data:: WEBPACK_PROD_CONFIG
+.. py:data:: WEBPACK_PROD_CONFIG
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -174,7 +174,7 @@ Attributes
 
    
 
-.. data:: WEBPACK_TEST_CONFIG
+.. py:data:: WEBPACK_TEST_CONFIG
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -234,7 +234,7 @@ Attributes
 
    
 
-.. data:: WEBPACK_DEV_CONFIG
+.. py:data:: WEBPACK_DEV_CONFIG
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -288,7 +288,7 @@ Attributes
 
    
 
-.. data:: PROD_CONFIG
+.. py:data:: PROD_CONFIG
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -309,7 +309,7 @@ Attributes
 
    
 
-.. data:: TEST_CONFIG
+.. py:data:: TEST_CONFIG
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -330,7 +330,7 @@ Attributes
 
    
 
-.. data:: DEV_CONFIG
+.. py:data:: DEV_CONFIG
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -351,7 +351,7 @@ Attributes
 
    
 
-.. function:: new_env_webpack(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+.. py:function:: new_env_webpack(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
 
    初始化golang默认的虚拟环境.
 

@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.build_`
-=============================
+:py:mod:`pmfp.entrypoint.build_`
+================================
 
 .. py:module:: pmfp.entrypoint.build_
 
@@ -36,7 +36,7 @@ Functions
 
 
 
-.. function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, cwd: str = '.') -> None
+.. py:function:: build(language: str, code: str, project_name: str, *, output_dir: str = '.', upx: bool = False, static: bool = True, mini: bool = False, includes: Optional[List[str]] = None, libs: Optional[List[str]] = None, lib_dir: Optional[List[str]] = None, build_as: str = 'exec', for_linux_arch: Optional[str] = None, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译指定代码.
 

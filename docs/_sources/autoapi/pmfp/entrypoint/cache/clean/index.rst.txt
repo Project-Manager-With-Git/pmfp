@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.cache.clean`
-==================================
+:py:mod:`pmfp.entrypoint.cache.clean`
+=====================================
 
 .. py:module:: pmfp.entrypoint.cache.clean
 
@@ -43,30 +43,30 @@ Attributes
    pmfp.entrypoint.cache.clean.cache_clean
 
 
-.. function:: remove_readonly(func: Callable, path: str, _: Any) -> None
+.. py:function:: remove_readonly(func: Callable, path: str, _: Any) -> None
 
    Clear the readonly bit and reattempt the removal.
 
 
-.. function:: get_cache_dir() -> pathlib.Path
+.. py:function:: get_cache_dir() -> pathlib.Path
 
    获取缓存根目录.
 
 
-.. function:: get_config_info() -> Dict[str, Any]
+.. py:function:: get_config_info() -> Dict[str, Any]
 
    获取配置信息.
 
 
-.. data:: cache_clean
+.. py:data:: cache_clean
    
 
    
 
-.. function:: remove_by_mode(dirp: pathlib.Path, mode: str = 'except_latest') -> None
+.. py:function:: remove_by_mode(dirp: pathlib.Path, mode: str = 'except_latest') -> None
 
 
-.. function:: sourcepack_clean(mode: str = 'except_latest', host: Optional[str] = None, repo_namespace: Optional[str] = None, repo_name: Optional[str] = None, tags: Optional[List[str]] = None) -> None
+.. py:function:: sourcepack_clean(mode: str = 'except_latest', host: Optional[str] = None, repo_namespace: Optional[str] = None, repo_name: Optional[str] = None, tags: Optional[List[str]] = None) -> None
 
    清除资源包的缓存.
 

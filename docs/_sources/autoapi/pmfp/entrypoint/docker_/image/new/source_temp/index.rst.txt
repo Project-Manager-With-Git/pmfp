@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.docker_.image.new.source_temp`
-====================================================
+:py:mod:`pmfp.entrypoint.docker_.image.new.source_temp`
+=======================================================
 
 .. py:module:: pmfp.entrypoint.docker_.image.new.source_temp
 

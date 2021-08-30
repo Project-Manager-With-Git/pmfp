@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.docker_.image.pack`
-=========================================
+:py:mod:`pmfp.entrypoint.docker_.image.pack`
+============================================
 
 .. py:module:: pmfp.entrypoint.docker_.image.pack
 
@@ -42,7 +42,7 @@ Attributes
    pmfp.entrypoint.docker_.image.pack.dockerimage_pack
 
 
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -55,7 +55,7 @@ Attributes
    :rtype: Path
 
 
-.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+.. py:function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
 
    执行命令行命令并返回其stdout的值
 
@@ -74,14 +74,14 @@ Attributes
    :rtype: str
 
 
-.. data:: dockerimage_pack
+.. py:data:: dockerimage_pack
    
 
    
 
-.. function:: pack(image_name: str, version: str, cwdp: pathlib.Path, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+.. py:function:: pack(image_name: str, version: str, cwdp: pathlib.Path, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
 
 
-.. function:: pack_dockerimage(docker_register_namespace: str, project_name: str, version: str, docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+.. py:function:: pack_dockerimage(docker_register_namespace: str, project_name: str, version: str, docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
 
 

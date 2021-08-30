@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.cache.list`
-=================================
+:py:mod:`pmfp.entrypoint.cache.list`
+====================================
 
 .. py:module:: pmfp.entrypoint.cache.list
 
@@ -30,25 +30,24 @@ Attributes
    pmfp.entrypoint.cache.list.cache_list
 
 
-.. class:: List(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
-
+.. py:class:: List(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
    获取当前基本环境信息.
 
-   .. attribute:: verify_schema
+   .. py:attribute:: verify_schema
       :annotation: = False
 
       
 
-   .. method:: do_main(self) -> None
+   .. py:method:: do_main(self) -> None
 
       执行入口函数.
 
 
 
-.. data:: cache_list
+.. py:data:: cache_list
    
 
    

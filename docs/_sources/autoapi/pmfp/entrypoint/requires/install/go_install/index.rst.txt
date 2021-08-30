@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.requires.install.go_install`
-==================================================
+:py:mod:`pmfp.entrypoint.requires.install.go_install`
+=====================================================
 
 .. py:module:: pmfp.entrypoint.requires.install.go_install
 
@@ -17,6 +17,6 @@ Functions
 
 
 
-.. function:: go_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None) -> None
+.. py:function:: go_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None) -> None
 
 
