@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.grpc`
-===========================
+:py:mod:`pmfp.entrypoint.grpc`
+==============================
 
 .. py:module:: pmfp.entrypoint.grpc
 
@@ -50,7 +50,7 @@ Functions
 
 
 
-.. function:: build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str, js_import_style: str, web_import_style: str, web_mode: str, go_source_relative: bool = False, web: bool = False, kwargs: Optional[str] = None, files: Optional[List[str]] = None, cwd: str = '.') -> None
+.. py:function:: build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str, js_import_style: str, web_import_style: str, web_mode: str, go_source_relative: bool = False, web: bool = False, kwargs: Optional[str] = None, files: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译grpc的protobuf的schema为不同语言的代码.
 
@@ -72,7 +72,7 @@ Functions
    :type cwd: str
 
 
-.. function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+.. py:function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
 
    新建一个protpbuf文件.
 
@@ -86,7 +86,7 @@ Functions
    :type cwd: str, optional
 
 
-.. function:: list_grpc(url: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. py:function:: list_grpc(url: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    列出grpc支持的服务.
 
@@ -106,7 +106,7 @@ Functions
    :type key: Optional[str], optional
 
 
-.. function:: desc_grpc(url: str, service: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. py:function:: desc_grpc(url: str, service: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    描述grpc支持的服务.
 
@@ -128,7 +128,7 @@ Functions
    :type key: Optional[str], optional
 
 
-.. function:: query_grpc(url: str, service: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. py:function:: query_grpc(url: str, service: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    请求grpc.
 
@@ -154,7 +154,7 @@ Functions
    :type key: Optional[str], optional
 
 
-.. function:: tress_test_grpc(url: str, service: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. py:function:: tress_test_grpc(url: str, service: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    列出grpc支持的服务.
 

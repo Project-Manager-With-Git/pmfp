@@ -1,5 +1,5 @@
-:mod:`pmfp.utils.remote_cache_utils`
-====================================
+:py:mod:`pmfp.utils.remote_cache_utils`
+=======================================
 
 .. py:module:: pmfp.utils.remote_cache_utils
 
@@ -23,17 +23,16 @@ Classes
 
 
 
-.. class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
-
+.. py:class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
 
    资源包类.
 
-   .. attribute:: TENPLATE_URL
+   .. py:attribute:: TENPLATE_URL
       :annotation: = {host}::{repo_namespace}::{repo_name}@{tag}
 
       
 
-   .. method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
+   .. py:method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
       :classmethod:
 
       从资源包字符串构造资源包对象.
@@ -45,12 +44,12 @@ Classes
       :rtype: [SourcePack]
 
 
-   .. method:: as_sourcepack_string(self) -> str
+   .. py:method:: as_sourcepack_string(self) -> str
 
       构造资源包字符串.
 
 
-   .. method:: git_url(self, schema: str = 'https') -> str
+   .. py:method:: git_url(self, schema: str = 'https') -> str
 
       构造资源包的git仓库地址url.
 
@@ -61,7 +60,7 @@ Classes
       :rtype: str
 
 
-   .. method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
+   .. py:method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
 
       拉取最新镜像,并将原来的版本以hash为tag保存
 
@@ -71,7 +70,7 @@ Classes
       :type throw: bool
 
 
-   .. method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
+   .. py:method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
 
       克隆资源包到本地缓存临时文件夹.
 
@@ -83,7 +82,7 @@ Classes
       :type throw: bool
 
 
-   .. method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
+   .. py:method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
 
       构造资源包的本地路径.
 
@@ -94,7 +93,7 @@ Classes
       :rtype: Path
 
 
-   .. method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
+   .. py:method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
 
       缓存资源包到本地.
 
@@ -105,17 +104,16 @@ Classes
 
 
 
-.. class:: ComponentTemplate(component_path_str: str, source_pack: SourcePack)
-
+.. py:class:: ComponentTemplate(component_path_str: str, source_pack: SourcePack)
 
    组件模板类.
 
-   .. attribute:: TENPLATE_URL
+   .. py:attribute:: TENPLATE_URL
       :annotation: = [{host}::]{repo_namespace}::{repo_name}[@{tag}]//{component_path}
 
       
 
-   .. method:: from_component_string(cls, component_string: str) -> ComponentTemplate
+   .. py:method:: from_component_string(cls, component_string: str) -> ComponentTemplate
       :classmethod:
 
       从组件模板字符串构造组件模板对象.
@@ -126,7 +124,7 @@ Classes
       :rtype: [ComponentTemplate]
 
 
-   .. method:: as_component_string(self) -> str
+   .. py:method:: as_component_string(self) -> str
 
       构造组件模板字符串.
 

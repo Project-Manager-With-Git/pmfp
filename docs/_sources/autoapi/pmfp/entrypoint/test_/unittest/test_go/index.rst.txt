@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.test_.unittest.test_go`
-=============================================
+:py:mod:`pmfp.entrypoint.test_.unittest.test_go`
+================================================
 
 .. py:module:: pmfp.entrypoint.test_.unittest.test_go
 
@@ -22,7 +22,7 @@ Functions
 
 
 
-.. function:: unittest_test_go(test_code: str, *, coverage: bool = False, output: str = 'doc_unittest', cwd: str = '.') -> None
+.. py:function:: unittest_test_go(test_code: str, *, coverage: bool = False, output: str = 'doc_unittest', cwd: str = '.') -> None
 
    对python代码做单元测试.
 

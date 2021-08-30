@@ -1,5 +1,5 @@
-:mod:`pmfp.__main__`
-====================
+:py:mod:`pmfp.__main__`
+=======================
 
 .. py:module:: pmfp.__main__
 
@@ -24,7 +24,7 @@ Functions
 
 
 
-.. function:: main(argv: List[str] = sys.argv[1:]) -> None
+.. py:function:: main(argv: List[str] = sys.argv[1:]) -> None
 
    服务启动入口.
 

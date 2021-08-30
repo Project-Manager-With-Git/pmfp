@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.grpc.build_`
-==================================
+:py:mod:`pmfp.entrypoint.grpc.build_`
+=====================================
 
 .. py:module:: pmfp.entrypoint.grpc.build_
 
@@ -50,7 +50,7 @@ Attributes
    pmfp.entrypoint.grpc.build_.grpc_build
 
 
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -63,7 +63,7 @@ Attributes
    :rtype: Path
 
 
-.. function:: get_abs_path_str(path_str: str, cwd: Optional[pathlib.Path] = None) -> str
+.. py:function:: get_abs_path_str(path_str: str, cwd: Optional[pathlib.Path] = None) -> str
 
    由路径字符串获取绝对路径.
 
@@ -76,7 +76,7 @@ Attributes
    :rtype: str
 
 
-.. function:: build_pb_go(serv_file: str, includes: List[str], to: str, source_relative: bool, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+.. py:function:: build_pb_go(serv_file: str, includes: List[str], to: str, source_relative: bool, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
 
    编译grpc的protobuffer定义文件为go语言模块.
 
@@ -94,7 +94,7 @@ Attributes
    :type files: Optional[List[str]]
 
 
-.. function:: build_pb_js(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, js_import_style: str, web_import_style: str, web_mode: str, files: Optional[List[str]] = None, web: bool = False, **kwargs: str) -> None
+.. py:function:: build_pb_js(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, js_import_style: str, web_import_style: str, web_mode: str, files: Optional[List[str]] = None, web: bool = False, **kwargs: str) -> None
 
    编译grpc的protobuf定义文件为js语言模块.
 
@@ -118,7 +118,7 @@ Attributes
    :type web: bool
 
 
-.. function:: build_pb_py(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+.. py:function:: build_pb_py(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
 
    编译grpc的protobuf定义文件为python语言模块.
 
@@ -134,7 +134,7 @@ Attributes
    :type files: List[str]
 
 
-.. function:: build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+.. py:function:: build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
 
    编译grpc的protobuffer定义文件为C++语言模块.
 
@@ -150,15 +150,15 @@ Attributes
    :type files: Optional[List[str]]
 
 
-.. data:: grpc_build
+.. py:data:: grpc_build
    
 
    
 
-.. function:: _build_pb(language: str, serv_file: str, includes: List[str], to: str, go_source_relative: bool, js_import_style: str, web_import_style: str, web_mode: str, cwd: pathlib.Path, web: bool = False, files: Optional[List[str]] = None, **kwargs: str) -> None
+.. py:function:: _build_pb(language: str, serv_file: str, includes: List[str], to: str, go_source_relative: bool, js_import_style: str, web_import_style: str, web_mode: str, cwd: pathlib.Path, web: bool = False, files: Optional[List[str]] = None, **kwargs: str) -> None
 
 
-.. function:: build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str, js_import_style: str, web_import_style: str, web_mode: str, go_source_relative: bool = False, web: bool = False, kwargs: Optional[str] = None, files: Optional[List[str]] = None, cwd: str = '.') -> None
+.. py:function:: build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str, js_import_style: str, web_import_style: str, web_mode: str, go_source_relative: bool = False, web: bool = False, kwargs: Optional[str] = None, files: Optional[List[str]] = None, cwd: str = '.') -> None
 
    编译grpc的protobuf的schema为不同语言的代码.
 

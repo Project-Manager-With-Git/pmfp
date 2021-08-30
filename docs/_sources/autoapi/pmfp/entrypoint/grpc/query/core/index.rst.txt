@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.grpc.query.core`
-======================================
+:py:mod:`pmfp.entrypoint.grpc.query.core`
+=========================================
 
 .. py:module:: pmfp.entrypoint.grpc.query.core
 
@@ -25,8 +25,7 @@ Attributes
    pmfp.entrypoint.grpc.query.core.grpc_query
 
 
-.. class:: Query(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
-
+.. py:class:: Query(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
@@ -34,18 +33,18 @@ Attributes
 
    需要本地有`grpcurl`,可以在`https://github.com/fullstorydev/grpcurl/releases`下载安装
 
-   .. attribute:: argparse_noflag
+   .. py:attribute:: argparse_noflag
       :annotation: = url
 
       
 
-   .. attribute:: schema
+   .. py:attribute:: schema
       
 
       
 
 
-.. data:: grpc_query
+.. py:data:: grpc_query
    
 
    

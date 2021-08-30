@@ -1,5 +1,5 @@
-:mod:`pmfp.utils.tools_info_utils`
-==================================
+:py:mod:`pmfp.utils.tools_info_utils`
+=====================================
 
 .. py:module:: pmfp.utils.tools_info_utils
 
@@ -34,57 +34,57 @@ Functions
 
 
 
-.. function:: get_global_python() -> str
+.. py:function:: get_global_python() -> str
 
    获取全局python.
 
 
-.. function:: get_global_cc() -> str
+.. py:function:: get_global_cc() -> str
 
    获取全局c编译器.
 
 
-.. function:: get_global_cxx() -> str
+.. py:function:: get_global_cxx() -> str
 
    获取全局c++编译器.
 
 
-.. function:: get_node_version() -> Optional[str]
+.. py:function:: get_node_version() -> Optional[str]
 
    获取系统中node的版本.
 
 
-.. function:: get_golang_version() -> Optional[str]
+.. py:function:: get_golang_version() -> Optional[str]
 
    获取本地golang的版本.
 
 
-.. function:: get_protoc_version() -> Optional[str]
+.. py:function:: get_protoc_version() -> Optional[str]
 
    获取本地protoc的版本.
 
 
-.. function:: init_pmfprc() -> None
+.. py:function:: init_pmfprc() -> None
 
    初始化pmfp的配置.
 
 
-.. function:: init_global_config() -> None
+.. py:function:: init_global_config() -> None
 
    初始化pmfp项目的全局配置.
 
 
-.. function:: get_config_info() -> Dict[str, Any]
+.. py:function:: get_config_info() -> Dict[str, Any]
 
    获取配置信息.
 
 
-.. function:: get_cache_dir() -> pathlib.Path
+.. py:function:: get_cache_dir() -> pathlib.Path
 
    获取缓存根目录.
 
 
-.. function:: get_local_python(cwdp: pathlib.Path) -> str
+.. py:function:: get_local_python(cwdp: pathlib.Path) -> str
 
    获取本地环境python解释器的地址.
 

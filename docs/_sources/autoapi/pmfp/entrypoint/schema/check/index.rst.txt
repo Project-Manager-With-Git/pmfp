@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.schema.check`
-===================================
+:py:mod:`pmfp.entrypoint.schema.check`
+======================================
 
 .. py:module:: pmfp.entrypoint.schema.check
 
@@ -46,7 +46,7 @@ Attributes
    pmfp.entrypoint.schema.check.schema_check
 
 
-.. function:: is_url(url: str) -> bool
+.. py:function:: is_url(url: str) -> bool
 
    判断url是否是url.
 
@@ -57,7 +57,7 @@ Attributes
    :rtype: bool
 
 
-.. function:: is_http_url(url: str) -> bool
+.. py:function:: is_http_url(url: str) -> bool
 
    判断url是否是http请求的url.
 
@@ -68,7 +68,7 @@ Attributes
    :rtype: bool
 
 
-.. function:: is_file_url(url: str) -> bool
+.. py:function:: is_file_url(url: str) -> bool
 
    判断url是否是文件协议相关的url.
 
@@ -79,7 +79,7 @@ Attributes
    :rtype: bool
 
 
-.. function:: parse_file_url(url: str) -> str
+.. py:function:: parse_file_url(url: str) -> str
 
    从file url中提取文件系统中的路径.
 
@@ -90,7 +90,7 @@ Attributes
    :rtype: str
 
 
-.. function:: get_source_from_url(url: str) -> str
+.. py:function:: get_source_from_url(url: str) -> str
 
    从指定url中回去源数据.
 
@@ -106,7 +106,7 @@ Attributes
    :rtype: str
 
 
-.. function:: is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool
+.. py:function:: is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool
 
    检测数据是否符合模式.
 
@@ -119,7 +119,7 @@ Attributes
    :rtype: bool
 
 
-.. function:: test_http(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+.. py:function:: test_http(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
 
    检测http请求的结果是否满足模式.
 
@@ -149,12 +149,12 @@ Attributes
    :type cb: Optional[Callable[[str],]], optional
 
 
-.. data:: schema_check
+.. py:data:: schema_check
    
 
    
 
-.. function:: check_schema(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+.. py:function:: check_schema(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
 
    检测指定的数据是否满足模式.
 

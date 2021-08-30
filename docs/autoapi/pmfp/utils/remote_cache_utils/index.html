@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.utils.remote_cache_utils &mdash; pmfp 4.1.3 文档</title>
+  <title>pmfp.utils.remote_cache_utils &mdash; pmfp 4.1.4 文档</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -63,7 +66,7 @@
             
             
               <div class="version">
-                4.1.3
+                4.1.4
               </div>
             
           
@@ -90,7 +93,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.1.3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.1.4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-1">v4.1.1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-0">v4.1.0</a></li>
@@ -195,17 +199,17 @@
 </tbody>
 </table>
 <dl class="py class">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pmfp.utils.remote_cache_utils.</span></code><code class="sig-name descname"><span class="pre">SourcePack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_namespace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'latest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pmfp.utils.remote_cache_utils.</span></span><span class="sig-name descname"><span class="pre">SourcePack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_namespace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'latest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack" title="永久链接至目标">¶</a></dt>
 <dd><p>资源包类.</p>
 <dl class="py attribute">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.TENPLATE_URL">
-<code class="sig-name descname"><span class="pre">TENPLATE_URL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">{host}::{repo_namespace}::{repo_name}&#64;{tag}</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.TENPLATE_URL"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.TENPLATE_URL" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.TENPLATE_URL">
+<span class="sig-name descname"><span class="pre">TENPLATE_URL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{host}::{repo_namespace}::{repo_name}&#64;{tag}</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.TENPLATE_URL"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.TENPLATE_URL" title="永久链接至目标">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.from_sourcepack_string">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_sourcepack_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourcepack_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pmfp.utils.remote_cache_utils.SourcePack" title="pmfp.utils.remote_cache_utils.SourcePack"><span class="pre">SourcePack</span></a><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.from_sourcepack_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.from_sourcepack_string" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.from_sourcepack_string">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_sourcepack_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourcepack_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pmfp.utils.remote_cache_utils.SourcePack" title="pmfp.utils.remote_cache_utils.SourcePack"><span class="pre">SourcePack</span></a><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.from_sourcepack_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.from_sourcepack_string" title="永久链接至目标">¶</a></dt>
 <dd><p>从资源包字符串构造资源包对象.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -221,14 +225,14 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.as_sourcepack_string">
-<code class="sig-name descname"><span class="pre">as_sourcepack_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.as_sourcepack_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.as_sourcepack_string" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.as_sourcepack_string">
+<span class="sig-name descname"><span class="pre">as_sourcepack_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.as_sourcepack_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.as_sourcepack_string" title="永久链接至目标">¶</a></dt>
 <dd><p>构造资源包字符串.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.git_url">
-<code class="sig-name descname"><span class="pre">git_url</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'https'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.git_url"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.git_url" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.git_url">
+<span class="sig-name descname"><span class="pre">git_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'https'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.git_url"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.git_url" title="永久链接至目标">¶</a></dt>
 <dd><p>构造资源包的git仓库地址url.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -244,8 +248,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.pull_latest">
-<code class="sig-name descname"><span class="pre">pull_latest</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.pull_latest"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.pull_latest" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.pull_latest">
+<span class="sig-name descname"><span class="pre">pull_latest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.pull_latest"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.pull_latest" title="永久链接至目标">¶</a></dt>
 <dd><p>拉取最新镜像,并将原来的版本以hash为tag保存</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -258,8 +262,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.clone_source_pack">
-<code class="sig-name descname"><span class="pre">clone_source_pack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.clone_source_pack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.clone_source_pack" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.clone_source_pack">
+<span class="sig-name descname"><span class="pre">clone_source_pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.clone_source_pack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.clone_source_pack" title="永久链接至目标">¶</a></dt>
 <dd><p>克隆资源包到本地缓存临时文件夹.</p>
 <p>如果资源包的tag不是latest则clone下来后删除.git文件夹,否则保存</p>
 <dl class="field-list simple">
@@ -273,8 +277,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.source_pack_path">
-<code class="sig-name descname"><span class="pre">source_pack_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pathlib.Path</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.source_pack_path"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.source_pack_path" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.source_pack_path">
+<span class="sig-name descname"><span class="pre">source_pack_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pathlib.Path</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.source_pack_path"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.source_pack_path" title="永久链接至目标">¶</a></dt>
 <dd><p>构造资源包的本地路径.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -290,8 +294,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.SourcePack.cache">
-<code class="sig-name descname"><span class="pre">cache</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_clone</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_pull</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_pull</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.cache"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.cache" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.SourcePack.cache">
+<span class="sig-name descname"><span class="pre">cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_clone</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_pull</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_pull</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#SourcePack.cache"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.SourcePack.cache" title="永久链接至目标">¶</a></dt>
 <dd><p>缓存资源包到本地.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -306,17 +310,17 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="pmfp.utils.remote_cache_utils.ComponentTemplate">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pmfp.utils.remote_cache_utils.</span></code><code class="sig-name descname"><span class="pre">ComponentTemplate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_path_str</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_pack</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pmfp.utils.remote_cache_utils.SourcePack" title="pmfp.utils.remote_cache_utils.SourcePack"><span class="pre">SourcePack</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.ComponentTemplate">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pmfp.utils.remote_cache_utils.</span></span><span class="sig-name descname"><span class="pre">ComponentTemplate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_path_str</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_pack</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pmfp.utils.remote_cache_utils.SourcePack" title="pmfp.utils.remote_cache_utils.SourcePack"><span class="pre">SourcePack</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate" title="永久链接至目标">¶</a></dt>
 <dd><p>组件模板类.</p>
 <dl class="py attribute">
-<dt id="pmfp.utils.remote_cache_utils.ComponentTemplate.TENPLATE_URL">
-<code class="sig-name descname"><span class="pre">TENPLATE_URL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">[{host}::]{repo_namespace}::{repo_name}[&#64;{tag}]//{component_path}</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate.TENPLATE_URL"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate.TENPLATE_URL" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.ComponentTemplate.TENPLATE_URL">
+<span class="sig-name descname"><span class="pre">TENPLATE_URL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[{host}::]{repo_namespace}::{repo_name}[&#64;{tag}]//{component_path}</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate.TENPLATE_URL"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate.TENPLATE_URL" title="永久链接至目标">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.ComponentTemplate.from_component_string">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_component_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pmfp.utils.remote_cache_utils.ComponentTemplate" title="pmfp.utils.remote_cache_utils.ComponentTemplate"><span class="pre">ComponentTemplate</span></a><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate.from_component_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate.from_component_string" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.ComponentTemplate.from_component_string">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_component_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pmfp.utils.remote_cache_utils.ComponentTemplate" title="pmfp.utils.remote_cache_utils.ComponentTemplate"><span class="pre">ComponentTemplate</span></a><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate.from_component_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate.from_component_string" title="永久链接至目标">¶</a></dt>
 <dd><p>从组件模板字符串构造组件模板对象.</p>
 <p>组件模板字符串的形式为`”[[{host}::]{repo_namespace}::]{repo_name}[&#64;{tag}]//{component_path_str}”`</p>
 <dl class="field-list simple">
@@ -330,8 +334,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="pmfp.utils.remote_cache_utils.ComponentTemplate.as_component_string">
-<code class="sig-name descname"><span class="pre">as_component_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate.as_component_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate.as_component_string" title="永久链接至目标">¶</a></dt>
+<dt class="sig sig-object py" id="pmfp.utils.remote_cache_utils.ComponentTemplate.as_component_string">
+<span class="sig-name descname"><span class="pre">as_component_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/remote_cache_utils.html#ComponentTemplate.as_component_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.remote_cache_utils.ComponentTemplate.as_component_string" title="永久链接至目标">¶</a></dt>
 <dd><p>构造组件模板字符串.</p>
 </dd></dl>
 

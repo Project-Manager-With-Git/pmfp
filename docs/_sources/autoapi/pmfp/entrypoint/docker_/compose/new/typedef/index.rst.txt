@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.docker_.compose.new.typedef`
-==================================================
+:py:mod:`pmfp.entrypoint.docker_.compose.new.typedef`
+=====================================================
 
 .. py:module:: pmfp.entrypoint.docker_.compose.new.typedef
 
@@ -7,112 +7,112 @@
 Module Contents
 ---------------
 
-.. data:: LogSchema
+.. py:data:: LogSchema
    
 
    
 
-.. data:: DriverOptsSchema
+.. py:data:: DriverOptsSchema
    
 
    
 
-.. data:: ExternalSchema
+.. py:data:: ExternalSchema
    
 
    
 
-.. data:: VolumeSchema
+.. py:data:: VolumeSchema
    
 
    
 
-.. data:: VolumesSchema
+.. py:data:: VolumesSchema
    
 
    
 
-.. data:: IpamConfigSchema
+.. py:data:: IpamConfigSchema
    
 
    
 
-.. data:: IpamSchema
+.. py:data:: IpamSchema
    
 
    
 
-.. data:: NetworkSchema
+.. py:data:: NetworkSchema
    
 
    
 
-.. data:: NetworksSchema
+.. py:data:: NetworksSchema
    
 
    
 
-.. data:: ConfigAndSecretSchema
+.. py:data:: ConfigAndSecretSchema
    
 
    
 
-.. data:: BuildSchema
+.. py:data:: BuildSchema
    
 
    
 
-.. data:: PortSchema
+.. py:data:: PortSchema
    
 
    
 
-.. data:: ResourceSchema
+.. py:data:: ResourceSchema
    
 
    
 
-.. data:: ResourcesSchema
+.. py:data:: ResourcesSchema
    
 
    
 
-.. data:: RestartPolicySchema
+.. py:data:: RestartPolicySchema
    
 
    
 
-.. data:: PlacementSchema
+.. py:data:: PlacementSchema
    
 
    
 
-.. data:: UpdateAndRollbackConfigSchema
+.. py:data:: UpdateAndRollbackConfigSchema
    
 
    
 
-.. data:: DeploySchema
+.. py:data:: DeploySchema
    
 
    
 
-.. data:: LoggingAliasSchema
+.. py:data:: LoggingAliasSchema
    
 
    
 
-.. data:: ServiceSchema
+.. py:data:: ServiceSchema
    
 
    
 
-.. data:: ServicesSchema
+.. py:data:: ServicesSchema
    
 
    
 
-.. data:: ComposeSchema
+.. py:data:: ComposeSchema
    
 
    

@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.env_.new.env_cython`
-==========================================
+:py:mod:`pmfp.entrypoint.env_.new.env_cython`
+=============================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_cython
 
@@ -33,22 +33,22 @@ Attributes
    pmfp.entrypoint.env_.new.env_cython.cython_setup_py_template
 
 
-.. data:: cython_setup_py_template
+.. py:data:: cython_setup_py_template
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: cython_setup_py_template
+.. py:data:: cython_setup_py_template
    
 
    
 
-.. function:: new_env_cython_setup(cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: new_env_cython_setup(cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
    初始化cython项目的setup.py和setup.cfg文件.
 
@@ -56,6 +56,6 @@ Attributes
    :type cwd: Path
 
 
-.. function:: init_cython_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: init_cython_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
 

@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.env_.new.utils`
-=====================================
+:py:mod:`pmfp.entrypoint.env_.new.utils`
+========================================
 
 .. py:module:: pmfp.entrypoint.env_.new.utils
 
@@ -37,37 +37,37 @@ Attributes
    pmfp.entrypoint.env_.new.utils.CMakeLists_txt_template
 
 
-.. data:: manifest_in_template
+.. py:data:: manifest_in_template
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: manifest_in_template
+.. py:data:: manifest_in_template
    
 
    
 
-.. data:: PipConfSource
+.. py:data:: PipConfSource
    :annotation: = 
 
    
 
-.. data:: source_io
+.. py:data:: source_io
    
 
    
 
-.. data:: PipConfSource
+.. py:data:: PipConfSource
    
 
    
 
-.. function:: new_env_py_venv(cwd: pathlib.Path) -> None
+.. py:function:: new_env_py_venv(cwd: pathlib.Path) -> None
 
    初始化python默认的虚拟环境.
 
@@ -75,7 +75,7 @@ Attributes
    :type cwd: Path
 
 
-.. function:: new_env_py_conda(cwd: pathlib.Path) -> None
+.. py:function:: new_env_py_conda(cwd: pathlib.Path) -> None
 
    初始化anaconda的python虚拟环境.
 
@@ -83,7 +83,7 @@ Attributes
    :type cwd: Path
 
 
-.. function:: new_env_py_manifest(cwd: pathlib.Path, project_name: str) -> None
+.. py:function:: new_env_py_manifest(cwd: pathlib.Path, project_name: str) -> None
 
    在项目下创建MANIFEST.in文件.
 
@@ -93,7 +93,7 @@ Attributes
    :type project_name: str
 
 
-.. function:: new_env_py_pypiconf(cwd: pathlib.Path) -> None
+.. py:function:: new_env_py_pypiconf(cwd: pathlib.Path) -> None
 
    在项目下创建pip.conf文件.
 
@@ -101,22 +101,22 @@ Attributes
    :type cwd: Path
 
 
-.. data:: CMakeLists_txt_template
+.. py:data:: CMakeLists_txt_template
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: CMakeLists_txt_template
+.. py:data:: CMakeLists_txt_template
    
 
    
 
-.. function:: new_env_cmake(cwd: pathlib.Path, language: str, project_name: str, version: str, description: str) -> None
+.. py:function:: new_env_cmake(cwd: pathlib.Path, language: str, project_name: str, version: str, description: str) -> None
 
    初始化C++默认的虚拟环境.
 

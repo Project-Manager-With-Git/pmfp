@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.requires.install`
-=======================================
+:py:mod:`pmfp.entrypoint.requires.install`
+==========================================
 
 .. py:module:: pmfp.entrypoint.requires.install
 
@@ -47,7 +47,7 @@ Attributes
    pmfp.entrypoint.requires.install.ppm_install
 
 
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -60,25 +60,25 @@ Attributes
    :rtype: Path
 
 
-.. data:: requires_install
+.. py:data:: requires_install
    
 
    
 
-.. data:: ppm_install
+.. py:data:: ppm_install
    
 
    
 
-.. function:: go_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None) -> None
+.. py:function:: go_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None) -> None
 
 
-.. function:: python_install(cwd: pathlib.Path, env: str, package_names: List[str], test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None) -> None
+.. py:function:: python_install(cwd: pathlib.Path, env: str, package_names: List[str], test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None) -> None
 
 
-.. function:: node_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, env_args: Optional[List[str]] = None) -> None
+.. py:function:: node_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, env_args: Optional[List[str]] = None) -> None
 
 
-.. function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+.. py:function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 

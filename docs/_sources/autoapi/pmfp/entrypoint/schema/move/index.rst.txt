@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.schema.move`
-==================================
+:py:mod:`pmfp.entrypoint.schema.move`
+=====================================
 
 .. py:module:: pmfp.entrypoint.schema.move
 
@@ -49,7 +49,7 @@ Attributes
    pmfp.entrypoint.schema.move.schema_move
 
 
-.. function:: jsontemplate_2_content(template: str, **kwargs: Any) -> str
+.. py:function:: jsontemplate_2_content(template: str, **kwargs: Any) -> str
 
    将模板转换为文件内容.
 
@@ -59,7 +59,7 @@ Attributes
    :type kwargs: Dict[str,str]
 
 
-.. function:: is_file_url(url: str) -> bool
+.. py:function:: is_file_url(url: str) -> bool
 
    判断url是否是文件协议相关的url.
 
@@ -70,7 +70,7 @@ Attributes
    :rtype: bool
 
 
-.. function:: is_http_url(url: str) -> bool
+.. py:function:: is_http_url(url: str) -> bool
 
    判断url是否是http请求的url.
 
@@ -81,7 +81,7 @@ Attributes
    :rtype: bool
 
 
-.. function:: iter_dir_to_end(path: pathlib.Path, match: Callable[[pathlib.Path], bool], *, skip_dir: Optional[Callable[[pathlib.Path], bool]] = None, succ_cb: Optional[Callable[[pathlib.Path], None]] = None, fail_cb: Optional[Callable[[pathlib.Path], None]] = None, skip_dir_handdler: Optional[Callable[[pathlib.Path], None]] = None) -> None
+.. py:function:: iter_dir_to_end(path: pathlib.Path, match: Callable[[pathlib.Path], bool], *, skip_dir: Optional[Callable[[pathlib.Path], bool]] = None, succ_cb: Optional[Callable[[pathlib.Path], None]] = None, fail_cb: Optional[Callable[[pathlib.Path], None]] = None, skip_dir_handdler: Optional[Callable[[pathlib.Path], None]] = None) -> None
 
    遍历文件夹到底,并按指定的函数来做区分.
 
@@ -95,7 +95,7 @@ Attributes
    :type fail_cb: Optional[Callable[[Path],None]], optional
 
 
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -108,7 +108,7 @@ Attributes
    :rtype: Path
 
 
-.. function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
+.. py:function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
 
    以一个json schema 为模板copy一个json schema文件.
 
@@ -124,7 +124,7 @@ Attributes
    :type addr: str, optional
 
 
-.. function:: make_url_id(name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> str
+.. py:function:: make_url_id(name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> str
 
    构造json schema 的id.
 
@@ -143,12 +143,12 @@ Attributes
    :rtype: str
 
 
-.. data:: schema_move
+.. py:data:: schema_move
    
 
    
 
-.. function:: parse_id_from_relative_path(relative_path: pathlib.Path) -> Dict[str, str]
+.. py:function:: parse_id_from_relative_path(relative_path: pathlib.Path) -> Dict[str, str]
 
    从相对路劲来解析id中的构造参数.
 
@@ -159,7 +159,7 @@ Attributes
    :rtype: Dict[str,str]
 
 
-.. function:: parse_id(url: str, cwd: str) -> Dict[str, str]
+.. py:function:: parse_id(url: str, cwd: str) -> Dict[str, str]
 
    从url中提取文件系统中的路径.
 
@@ -170,10 +170,10 @@ Attributes
    :rtype: str
 
 
-.. function:: _move_schema(schema_file: str, old_cwd: str, *, new_name: Optional[str] = None, new_path: Optional[str] = None, new_version: Optional[str] = None, new_cwd: Optional[str] = None, new_addr: Optional[str] = None, remove_old: bool = False) -> None
+.. py:function:: _move_schema(schema_file: str, old_cwd: str, *, new_name: Optional[str] = None, new_path: Optional[str] = None, new_version: Optional[str] = None, new_cwd: Optional[str] = None, new_addr: Optional[str] = None, remove_old: bool = False) -> None
 
 
-.. function:: move_schema(file: str, old_cwd: str, *, name: Optional[str] = None, to: Optional[str] = None, version: Optional[str] = None, cwd: Optional[str] = None, addr: Optional[str] = None, remove_old: bool = False) -> None
+.. py:function:: move_schema(file: str, old_cwd: str, *, name: Optional[str] = None, to: Optional[str] = None, version: Optional[str] = None, cwd: Optional[str] = None, addr: Optional[str] = None, remove_old: bool = False) -> None
 
    新建一个json schema文件.
 

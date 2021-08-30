@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.info`
-===========================
+:py:mod:`pmfp.entrypoint.info`
+==============================
 
 .. py:module:: pmfp.entrypoint.info
 
@@ -12,7 +12,7 @@
 Module Contents
 ---------------
 
-.. data:: info
+.. py:data:: info
    
 
    

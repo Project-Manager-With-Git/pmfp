@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.schema.new`
-=================================
+:py:mod:`pmfp.entrypoint.schema.new`
+====================================
 
 .. py:module:: pmfp.entrypoint.schema.new
 
@@ -52,7 +52,7 @@ Attributes
    pmfp.entrypoint.schema.new.schema_template
 
 
-.. function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
+.. py:function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
 
    以一个json schema 为模板copy一个json schema文件.
 
@@ -68,27 +68,27 @@ Attributes
    :type addr: str, optional
 
 
-.. data:: schema_new
+.. py:data:: schema_new
    
 
    
 
-.. data:: schema_template
+.. py:data:: schema_template
    :annotation: = 
 
    
 
-.. data:: schema_template_io
+.. py:data:: schema_template_io
    
 
    
 
-.. data:: schema_template
+.. py:data:: schema_template
    
 
    
 
-.. function:: new_schema(name: str, to: str, version: str, *, cwd: str = '.', addr: Optional[str] = None) -> None
+.. py:function:: new_schema(name: str, to: str, version: str, *, cwd: str = '.', addr: Optional[str] = None) -> None
 
    新建一个json schema文件.
 

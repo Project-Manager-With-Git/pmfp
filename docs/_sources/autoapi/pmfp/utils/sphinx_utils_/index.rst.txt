@@ -1,5 +1,5 @@
-:mod:`pmfp.utils.sphinx_utils_`
-===============================
+:py:mod:`pmfp.utils.sphinx_utils_`
+==================================
 
 .. py:module:: pmfp.utils.sphinx_utils_
 
@@ -28,7 +28,7 @@ Functions
 
 
 
-.. function:: sphinx_config(source_dir: pathlib.Path, append_content: str) -> None
+.. py:function:: sphinx_config(source_dir: pathlib.Path, append_content: str) -> None
 
    为sphinx的配置增加配置项.
 
@@ -38,7 +38,7 @@ Functions
    :type append_content: str
 
 
-.. function:: sphinx_index(source_dir: pathlib.Path, project_name: str) -> None
+.. py:function:: sphinx_index(source_dir: pathlib.Path, project_name: str) -> None
 
    为sphinx的配置增加配置项.
 
@@ -48,7 +48,7 @@ Functions
    :type project_name: str
 
 
-.. function:: no_jekyll(output: pathlib.Path) -> None
+.. py:function:: no_jekyll(output: pathlib.Path) -> None
 
    为目录添加一个空文件`.nojekyll`.
 
@@ -56,10 +56,10 @@ Functions
    :type output: Path
 
 
-.. function:: _move_to_source(source_dir: pathlib.Path, file_name: str, *, root: pathlib.Path) -> None
+.. py:function:: _move_to_source(source_dir: pathlib.Path, file_name: str, *, root: pathlib.Path) -> None
 
 
-.. function:: move_to_source(source_dir: pathlib.Path, *, root: pathlib.Path) -> None
+.. py:function:: move_to_source(source_dir: pathlib.Path, *, root: pathlib.Path) -> None
 
    将项目根目录下的描述文件复制同步到项目下.
 
@@ -69,7 +69,7 @@ Functions
    :type root: Path
 
 
-.. function:: sphinx_new(code: pathlib.Path, source_dir: pathlib.Path, project_name: str, author: str, version: str, *, cwd: Optional[pathlib.Path] = None) -> None
+.. py:function:: sphinx_new(code: pathlib.Path, source_dir: pathlib.Path, project_name: str, author: str, version: str, *, cwd: Optional[pathlib.Path] = None) -> None
 
    为python/c++项目构造api文档.
 
@@ -85,7 +85,7 @@ Functions
    :type version: str
 
 
-.. function:: sphinx_build(source_dir: pathlib.Path, doc_dir: pathlib.Path, *, cwd: pathlib.Path = Path('.')) -> None
+.. py:function:: sphinx_build(source_dir: pathlib.Path, doc_dir: pathlib.Path, *, cwd: pathlib.Path = Path('.')) -> None
 
    根据源码更新文档的源文件.
 

@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.grpc.listservice`
-=======================================
+:py:mod:`pmfp.entrypoint.grpc.listservice`
+==========================================
 
 .. py:module:: pmfp.entrypoint.grpc.listservice
 
@@ -40,7 +40,7 @@ Attributes
    pmfp.entrypoint.grpc.listservice.grpc_listservice
 
 
-.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+.. py:function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
 
    执行命令行命令并返回其stdout的值
 
@@ -59,12 +59,12 @@ Attributes
    :rtype: str
 
 
-.. data:: grpc_listservice
+.. py:data:: grpc_listservice
    
 
    
 
-.. function:: list_grpc(url: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. py:function:: list_grpc(url: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    列出grpc支持的服务.
 

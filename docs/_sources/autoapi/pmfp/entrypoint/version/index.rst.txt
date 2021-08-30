@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.version`
-==============================
+:py:mod:`pmfp.entrypoint.version`
+=================================
 
 .. py:module:: pmfp.entrypoint.version
 
@@ -12,8 +12,8 @@
 Module Contents
 ---------------
 
-.. data:: __VERSION__
-   :annotation: = 4.1.3
+.. py:data:: __VERSION__
+   :annotation: = 4.1.4
 
    
 

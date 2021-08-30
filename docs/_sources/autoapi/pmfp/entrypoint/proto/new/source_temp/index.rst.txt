@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.proto.new.source_temp`
-============================================
+:py:mod:`pmfp.entrypoint.proto.new.source_temp`
+===============================================
 
 .. py:module:: pmfp.entrypoint.proto.new.source_temp
 

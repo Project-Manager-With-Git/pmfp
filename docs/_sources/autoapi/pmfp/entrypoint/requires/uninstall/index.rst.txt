@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.requires.uninstall`
-=========================================
+:py:mod:`pmfp.entrypoint.requires.uninstall`
+============================================
 
 .. py:module:: pmfp.entrypoint.requires.uninstall
 
@@ -43,7 +43,7 @@ Attributes
    pmfp.entrypoint.requires.uninstall.ppm_uninstall
 
 
-.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -56,19 +56,19 @@ Attributes
    :rtype: Path
 
 
-.. data:: requires_uninstall
+.. py:data:: requires_uninstall
    
 
    
 
-.. data:: ppm_uninstall
+.. py:data:: ppm_uninstall
    
 
    
 
-.. function:: python_uninstall(cwd: pathlib.Path, package_name: str, env: str) -> None
+.. py:function:: python_uninstall(cwd: pathlib.Path, package_name: str, env: str) -> None
 
 
-.. function:: uninstall_requires(package_name: str, env: str, *, cwd: str = '.') -> None
+.. py:function:: uninstall_requires(package_name: str, env: str, *, cwd: str = '.') -> None
 
 

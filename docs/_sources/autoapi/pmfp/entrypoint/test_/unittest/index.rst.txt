@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.test_.unittest`
-=====================================
+:py:mod:`pmfp.entrypoint.test_.unittest`
+========================================
 
 .. py:module:: pmfp.entrypoint.test_.unittest
 
@@ -43,7 +43,7 @@ Attributes
    pmfp.entrypoint.test_.unittest.test_unittest
 
 
-.. function:: unittest_test_py(test_code: str, code: str, *, coverage: Optional[bool] = False, output: Optional[str] = 'doc_unittest', cwd: Optional[str] = '.') -> None
+.. py:function:: unittest_test_py(test_code: str, code: str, *, coverage: Optional[bool] = False, output: Optional[str] = 'doc_unittest', cwd: Optional[str] = '.') -> None
 
    对python代码做单元测试.
 
@@ -59,7 +59,7 @@ Attributes
    :type cwd: Optional[str]
 
 
-.. function:: unittest_test_go(test_code: str, *, coverage: bool = False, output: str = 'doc_unittest', cwd: str = '.') -> None
+.. py:function:: unittest_test_go(test_code: str, *, coverage: bool = False, output: str = 'doc_unittest', cwd: str = '.') -> None
 
    对python代码做单元测试.
 
@@ -73,12 +73,12 @@ Attributes
    :type cwd: Optional[str]
 
 
-.. data:: test_unittest
+.. py:data:: test_unittest
    
 
    
 
-.. function:: unittest_test(language: str, test_code: str, code: str, *, cwd: str = '.', coverage: bool = False, output: str = 'doc_unittest') -> None
+.. py:function:: unittest_test(language: str, test_code: str, code: str, *, cwd: str = '.', coverage: bool = False, output: str = 'doc_unittest') -> None
 
    对指定代码做单元测试.
 

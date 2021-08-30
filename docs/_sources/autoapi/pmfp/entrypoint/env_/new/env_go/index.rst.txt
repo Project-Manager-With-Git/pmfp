@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.env_.new.env_go`
-======================================
+:py:mod:`pmfp.entrypoint.env_.new.env_go`
+=========================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_go
 
@@ -32,22 +32,22 @@ Attributes
    pmfp.entrypoint.env_.new.env_go.go_mod_template
 
 
-.. data:: go_mod_template
+.. py:data:: go_mod_template
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: go_mod_template
+.. py:data:: go_mod_template
    
 
    
 
-.. function:: init_go_env(cwd: pathlib.Path, project_name: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. py:function:: init_go_env(cwd: pathlib.Path, project_name: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
    初始化golang默认的虚拟环境.
 

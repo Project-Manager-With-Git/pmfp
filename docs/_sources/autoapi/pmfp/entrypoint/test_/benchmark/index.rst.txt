@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.test_.benchmark`
-======================================
+:py:mod:`pmfp.entrypoint.test_.benchmark`
+=========================================
 
 .. py:module:: pmfp.entrypoint.test_.benchmark
 
@@ -43,7 +43,7 @@ Attributes
    pmfp.entrypoint.test_.benchmark.test_benchmark
 
 
-.. function:: benchmark_test_py(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+.. py:function:: benchmark_test_py(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
 
    对python代码做静态检测.
 
@@ -57,7 +57,7 @@ Attributes
    :type output: str
 
 
-.. function:: benchmark_test_go(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+.. py:function:: benchmark_test_go(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
 
    对python代码做静态检测.
 
@@ -71,12 +71,12 @@ Attributes
    :type output: str
 
 
-.. data:: test_benchmark
+.. py:data:: test_benchmark
    
 
    
 
-.. function:: benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+.. py:function:: benchmark_test(language: str, benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
 
    对指定语言的代码做性能测试.
 

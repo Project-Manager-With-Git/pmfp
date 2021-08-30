@@ -1,5 +1,5 @@
-:mod:`pmfp.utils.git_utils`
-===========================
+:py:mod:`pmfp.utils.git_utils`
+==============================
 
 .. py:module:: pmfp.utils.git_utils
 
@@ -33,10 +33,10 @@ Functions
 
 
 
-.. function:: make_repod(p: pathlib.Path) -> pathlib.Path
+.. py:function:: make_repod(p: pathlib.Path) -> pathlib.Path
 
 
-.. function:: git_find_remotes(p: pathlib.Path) -> Dict[str, str]
+.. py:function:: git_find_remotes(p: pathlib.Path) -> Dict[str, str]
 
    从git项目中找到远端仓库url.
 
@@ -49,7 +49,7 @@ Functions
    :rtype: Dict[str, str]
 
 
-.. function:: git_find_origin(p: pathlib.Path) -> Optional[str]
+.. py:function:: git_find_origin(p: pathlib.Path) -> Optional[str]
 
    从git项目中找到远端origin仓库url.
 
@@ -62,7 +62,7 @@ Functions
    :rtype: Optional[str]
 
 
-.. function:: git_add_remote(p: pathlib.Path, remote_name: str, remote_url: str) -> None
+.. py:function:: git_add_remote(p: pathlib.Path, remote_name: str, remote_url: str) -> None
 
    为本地git仓库关联远程仓库.
 
@@ -76,7 +76,7 @@ Functions
    :raises AttributeError: 如果路径不是git项目则会抛出
 
 
-.. function:: git_add_origin(p: pathlib.Path, remote_url: str) -> None
+.. py:function:: git_add_origin(p: pathlib.Path, remote_url: str) -> None
 
    为本地git仓库关联origin远程仓库
 
@@ -88,7 +88,7 @@ Functions
    :raises AttributeError: 如果路径不是git项目则会抛出
 
 
-.. function:: git_init(p: pathlib.Path, *, remote_url: Optional[str] = None) -> None
+.. py:function:: git_init(p: pathlib.Path, *, remote_url: Optional[str] = None) -> None
 
    初始化本地git仓库.
 
@@ -98,7 +98,7 @@ Functions
    :type remote_url: Optional[str], optional
 
 
-.. function:: git_clone(url: str, to: pathlib.Path, *, branch: str = 'master') -> None
+.. py:function:: git_clone(url: str, to: pathlib.Path, *, branch: str = 'master') -> None
 
    从远程克隆项目到本地.
 
@@ -110,7 +110,7 @@ Functions
    :type branch: str, optional
 
 
-.. function:: get_latest_commits(p: pathlib.Path) -> Dict[str, str]
+.. py:function:: get_latest_commits(p: pathlib.Path) -> Dict[str, str]
 
    获取git项目的各个分支最近一次commit的hash值.
 
@@ -123,7 +123,7 @@ Functions
    :rtype: Dict[str, str]
 
 
-.. function:: get_master_latest_commit(p: pathlib.Path) -> str
+.. py:function:: get_master_latest_commit(p: pathlib.Path) -> str
 
    获取git项目的最近一个master分支的commit号.
 
@@ -137,7 +137,7 @@ Functions
    :rtype: str
 
 
-.. function:: git_push(p: pathlib.Path, *, msg: str = 'update') -> None
+.. py:function:: git_push(p: pathlib.Path, *, msg: str = 'update') -> None
 
    git项目推代码到远端仓库.
 
@@ -147,7 +147,7 @@ Functions
    :type msg: str
 
 
-.. function:: git_pull_master(p: pathlib.Path) -> None
+.. py:function:: git_pull_master(p: pathlib.Path) -> None
 
    git项目推代码到远端仓库.
 
@@ -157,7 +157,7 @@ Functions
    :type msg: str
 
 
-.. function:: git_new_tag(p: pathlib.Path, version: str, message: Optional[str] = None, remote: bool = False) -> None
+.. py:function:: git_new_tag(p: pathlib.Path, version: str, message: Optional[str] = None, remote: bool = False) -> None
 
    为代码打tag.
 

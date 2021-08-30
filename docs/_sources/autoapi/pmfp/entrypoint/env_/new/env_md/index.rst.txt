@@ -1,5 +1,5 @@
-:mod:`pmfp.entrypoint.env_.new.env_md`
-======================================
+:py:mod:`pmfp.entrypoint.env_.new.env_md`
+=========================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_md
 
@@ -36,66 +36,66 @@ Attributes
    pmfp.entrypoint.env_.new.env_md.sidebar_folder_css
 
 
-.. data:: sidebar_template
+.. py:data:: sidebar_template
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: sidebar_template
+.. py:data:: sidebar_template
    
 
    
 
-.. data:: index_html_template
+.. py:data:: index_html_template
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: index_html_template
+.. py:data:: index_html_template
    
 
    
 
-.. data:: sidebar_css
+.. py:data:: sidebar_css
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: sidebar_css
+.. py:data:: sidebar_css
    
 
    
 
-.. data:: sidebar_folder_css
+.. py:data:: sidebar_folder_css
    :annotation: = 
 
    
 
-.. data:: template_io
+.. py:data:: template_io
    
 
    
 
-.. data:: sidebar_folder_css
+.. py:data:: sidebar_folder_css
    
 
    
 
-.. function:: init_md_env(cwd: pathlib.Path, project_name: str, description: str) -> None
+.. py:function:: init_md_env(cwd: pathlib.Path, project_name: str, description: str) -> None
 
 
