@@ -1,3 +1,9 @@
+# v4.1.5
+
+## bug修复
+
++ `grpc build`针对go语言的的接口更新到满足`protobuf-go@1.26+`和`protoc-gen-go-grpc@v1.1+`
+
 # v4.1.4
 
 ## bug修复
