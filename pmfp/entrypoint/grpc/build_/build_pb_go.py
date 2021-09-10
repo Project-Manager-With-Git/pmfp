@@ -6,7 +6,7 @@ from pmfp.utils.run_command_utils import run
 
 
 def _build_grpc(includes: str, flag: str, to: str, target: str, cwd: Path) -> None:
-    command = f"protoc {includes} {flag} --go_out=plugins=grpc:{to} {target}"
+    command = f"protoc {includes} {flag} --go_out={to} --go-grpc_out={to} {target}"
     try:
         run(command, cwd=cwd, visible=True)
     except Exception as e:
@@ -41,7 +41,7 @@ def build_pb_go(serv_file: str, includes: List[str], to: str,
         target_str += " " + " ".join(files)
     flag_str = ""
     if source_relative:
-        flag_str += " --go_opt=paths=source_relative"
+        flag_str += " --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative"
     if kwargs:
         if flag_str:
             flag_str += " "
