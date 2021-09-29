@@ -6,21 +6,6 @@ from pmfp.utils.run_command_utils import run
 from ..utils import no_jekyll
 
 
-def move_doc(sourcep: Path, outputp: Path) -> None:
-    p = None
-    for i in sourcep.iterdir():
-        if i.name.startswith("generated-"):
-            p = i
-            break
-    if p is None:
-        raise AttributeError("not generated")
-
-    shutil.move(path_to_str(p), outputp)
-    shutil.rmtree(path_to_str(sourcep))
-    no_jekyll(outputp)
-    print("文档构建成功")
-
-
 def doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = ".") -> None:
     """为go项目构造api文档.
     Args:
@@ -40,9 +25,10 @@ def doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, au
     if outputp.exists():
         warnings.warn("文档已存在!")
         return
-    source_dirp = get_abs_path(source_dir, cwd=cwdp)
-    source_dirp_str = path_to_str(source_dirp)
-    command = f"golds -gen -dir={source_dirp_str} -wdpkgs-listing=solo -nouses ./..."
+    if code == "":
+        command = f"golds -gen -dir={outputp} -source-code-reading=rich -wdpkgs-listing=solo -nouses ./..."
+    else:
+        command = f"golds -gen -dir={outputp} -source-code-reading=rich -wdpkgs-listing=solo -nouses {code}"
     try:
         run(command, cwd=cwdp, visible=True)
     except Exception as e:
@@ -52,7 +38,5 @@ def doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, au
         `go get -v -u go101.org/golds`""")
         return
     else:
-        try:
-            move_doc(source_dirp, outputp)
-        except Exception as e:
-            warnings.warn(f"move doc get error {str(e)}")
+        no_jekyll(outputp)
+        print("文档构建成功")
