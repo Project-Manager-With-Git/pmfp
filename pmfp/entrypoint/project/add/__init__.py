@@ -3,6 +3,7 @@ import os
 import warnings
 import json
 import shutil
+from pathlib import Path
 import subprocess
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Tuple
@@ -140,6 +141,20 @@ def check_component(sourcepack_config: Dict[str, Any], componentpack: ComponentT
     return target_component_info
 
 
+def iter_dir_rename(path: Path, **kwargs: Any) -> None:
+    for p in list(path.iterdir()):
+        if p.is_dir():
+            name = p.name
+            if name.startswith("ref_") and name.endswith("_ref"):
+                newname_temp = '{{' + name[4:-4] + '}}'
+                newname = template_2_content(newname_temp, **kwargs)
+                newpath = p.parent.joinpath(newname)
+                pp = p.rename(newpath)
+                iter_dir_rename(pp, **kwargs)
+            else:
+                iter_dir_rename(p, **kwargs)
+
+
 def to_target_source(projectconfig: Dict[str, Any],
                      target_component_info: Dict[str, Any],
                      cwdp: Path,
@@ -175,6 +190,7 @@ def to_target_source(projectconfig: Dict[str, Any],
             iter_dir_to_end(target_located_path,
                             match=lambda p: p.suffix == ".jinja" and ".jinja" not in p.stem,
                             succ_cb=succ_callback)
+            iter_dir_rename(target_located_path, **tempkv)
         else:
             raise AttributeError(f"放置位置{target_located_path}已经存在")
     else:
