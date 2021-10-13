@@ -3,7 +3,7 @@ from ..core import doc
 
 
 class New(EndPoint):
-    """为指定编程语言构造api文档.
+    """为指定编程语言构造新的api文档.
     如果不指定项目名则项目名为cwd目录名,不指定version则为0.0.0,不指定author则为系统用户.
     """
     argparse_noflag = "code"
@@ -48,6 +48,11 @@ class New(EndPoint):
                 "type": "string",
                 "title": "v",
                 "description": "文档源码位置"
+            },
+            "is_web": {
+                "type": "boolean",
+                "description": "当language为go且is_web为真时执行`swag init --parseDependency --parseInternal`",
+                "default": False
             },
             "cwd": {
                 "type": "string",

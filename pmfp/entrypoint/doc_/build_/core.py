@@ -3,7 +3,7 @@ from ..core import doc
 
 
 class Build(EndPoint):
-    """为指定编程语言编译api文档."""
+    """为指定编程语言编译api文档覆盖原来的."""
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
@@ -13,7 +13,7 @@ class Build(EndPoint):
                 "type": "string",
                 "title": "l",
                 "description": "文档针对的语言",
-                "enum": ["py"]
+                "enum": ["py", "go"]
             },
             "output": {
                 "type": "string",
@@ -30,6 +30,11 @@ class Build(EndPoint):
                 "type": "string",
                 "title": "v",
                 "description": "项目版本"
+            },
+            "is_web": {
+                "type": "boolean",
+                "description": "当language为go且is_web为真时执行`swag init --parseDependency --parseInternal`",
+                "default": False
             },
             "cwd": {
                 "type": "string",

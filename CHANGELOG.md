@@ -3,6 +3,13 @@
 ## bug修复
 
 + `doc new`针对go语言的接口参数修正了字段含义弄混的bug
++ `doc build`针对go语言的接口参数修正了字段含义弄混的bug
+
+## 新特性
+
++ `project add`和`project new`中会处理模板文件夹中文件或文件夹名中含有`_ref_`和`_fre_`的对象,将他们的名字也作为jinja模板处理
++ `doc new`新增一个参数`is_web`,当language为go且is_web为真时执行`swag init --parseDependency --parseInternal`
++ `doc build`新增一个参数`is_web`,当language为go且is_web为真时执行`swag init --parseDependency --parseInternal`
 
 # v4.1.5
 

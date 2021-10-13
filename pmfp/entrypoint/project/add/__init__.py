@@ -142,17 +142,33 @@ def check_component(sourcepack_config: Dict[str, Any], componentpack: ComponentT
 
 
 def iter_dir_rename(path: Path, **kwargs: Any) -> None:
+    """遍历目标文件夹,将`_ref_`和`_fre_`包裹的文件或文件夹名作为模板重命名.
+
+    Args:
+        path (Path): 根目录路径
+    """
     for p in list(path.iterdir()):
         if p.is_dir():
             name = p.name
-            if name.startswith("ref_") and name.endswith("_ref"):
-                newname_temp = '{{' + name[4:-4] + '}}'
+            if "_ref_" in name and "_fer_" in name:
+                newname_temp = name.replace("_ref_", "{{ ").replace("_fer_", " }}")
                 newname = template_2_content(newname_temp, **kwargs)
+                if newname == "":
+                    newname = name
                 newpath = p.parent.joinpath(newname)
                 pp = p.rename(newpath)
                 iter_dir_rename(pp, **kwargs)
             else:
                 iter_dir_rename(p, **kwargs)
+        if p.is_file():
+            name = p.name
+            if "_ref_" in name and "_fer_" in name:
+                newname_temp = name.replace("_ref_", "{{ ").replace("_fer_", " }}")
+                newname = template_2_content(newname_temp, **kwargs)
+                if newname == "":
+                    newname = name
+                newpath = p.parent.joinpath(newname)
+                pp = p.rename(newpath)
 
 
 def to_target_source(projectconfig: Dict[str, Any],

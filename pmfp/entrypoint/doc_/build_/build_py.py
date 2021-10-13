@@ -9,7 +9,7 @@ from ..utils import (
 )
 
 
-def doc_build_py(output: str, source_dir: str, *, version: Optional[str] = None, cwd: str = ".") -> None:
+def doc_build_py(output: str, *, source_dir: Optional[str] = None, version: Optional[str] = None, cwd: str = ".") -> None:
     """为python项目构造api文档.
     Args:
         output (str): html文档位置
@@ -21,7 +21,8 @@ def doc_build_py(output: str, source_dir: str, *, version: Optional[str] = None,
         cwdp = get_abs_path(cwd)
     else:
         cwdp = Path(".")
-
+    if not source_dir:
+        source_dir = "document"
     outputp = get_abs_path(output, cwd=cwdp)
     source_dirp = get_abs_path(source_dir, cwd=cwdp)
     if version:

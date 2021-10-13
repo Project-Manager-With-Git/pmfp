@@ -9,7 +9,7 @@ from .core import doc_new
 
 @doc_new.as_main
 def new_doc(language: str, code: str, output: str, doc_source_dir: str, *,
-            project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, cwd: str = ".") -> None:
+            project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, is_web: bool = False, cwd: str = ".") -> None:
     """为项目构造api文档.
     Args:
         code (str): 项目源码位置
@@ -18,6 +18,7 @@ def new_doc(language: str, code: str, output: str, doc_source_dir: str, *,
         project_name (str): 项目名
         author (str): 项目作者
         version (str): 项目版本
+        is_web (bool): 当language为go且is_web为真时执行`swag init --parseDependency --parseInternal`
         cwd (str): 执行项目时的位置
     """
     if not author:
@@ -29,6 +30,6 @@ def new_doc(language: str, code: str, output: str, doc_source_dir: str, *,
     if language == "py":
         doc_new_py(code=code, output=output, source_dir=doc_source_dir, project_name=project_name, author=author, version=version, cwd=cwd)
     elif language == "go":
-        doc_new_go(code=code, output=output, source_dir=doc_source_dir, project_name=project_name, author=author, version=version, cwd=cwd)
+        doc_new_go(code=code, output=output, source_dir=doc_source_dir, project_name=project_name, author=author, version=version, is_web=is_web, cwd=cwd)
     else:
         warnings.warn(f"不支持的语言{language}")
