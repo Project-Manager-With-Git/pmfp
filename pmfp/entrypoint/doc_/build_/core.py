@@ -23,8 +23,7 @@ class Build(EndPoint):
             },
             "doc_source_dir": {
                 "type": "string",
-                "description": "文档源码位置",
-                "default": "document"
+                "description": "文档源码位置"
             },
             "version": {
                 "type": "string",
