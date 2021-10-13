@@ -27,7 +27,7 @@ def doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, au
         warnings.warn("文档已存在!")
         return
     if is_web:
-        if code:
+        if code != ".":
             command = f"swag init --parseDependency --parseInternal --output {outputp} --dir {code}"
         else:
             command = f"swag init --parseDependency --parseInternal --output {outputp}"
@@ -42,7 +42,7 @@ def doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, au
         else:
             print("文档构建成功")
     else:
-        if code:
+        if code != "./...":
             command = f"golds -gen -dir={outputp} -source-code-reading=rich -wdpkgs-listing=solo -nouses {code}"
         else:
 
