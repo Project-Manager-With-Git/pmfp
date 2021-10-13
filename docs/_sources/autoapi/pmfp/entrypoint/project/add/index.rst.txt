@@ -47,6 +47,7 @@ Functions
    pmfp.entrypoint.project.add.make_template_kv
    pmfp.entrypoint.project.add.check_source
    pmfp.entrypoint.project.add.check_component
+   pmfp.entrypoint.project.add.iter_dir_rename
    pmfp.entrypoint.project.add.to_target_source
    pmfp.entrypoint.project.add.save_to_components
    pmfp.entrypoint.project.add._add_component
@@ -310,6 +311,14 @@ Attributes
 .. py:function:: check_component(sourcepack_config: Dict[str, Any], componentpack: pmfp.utils.remote_cache_utils.ComponentTemplate, component_string: str) -> Dict[str, Any]
 
    校验组件信息,通过的话返回组件信息.
+
+
+.. py:function:: iter_dir_rename(path: pathlib.Path, **kwargs: Any) -> None
+
+   遍历目标文件夹,将`_ref_`和`_fre_`包裹的文件或文件夹名作为模板重命名.
+
+   :param path: 根目录路径
+   :type path: Path
 
 
 .. py:function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None, root_default_path: Optional[str] = None) -> str

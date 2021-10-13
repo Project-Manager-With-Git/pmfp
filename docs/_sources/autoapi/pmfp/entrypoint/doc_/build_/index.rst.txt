@@ -35,16 +35,10 @@ Attributes
 
 .. autoapisummary::
 
-   pmfp.entrypoint.doc_.build_.DEFAULT_AUTHOR
    pmfp.entrypoint.doc_.build_.doc_build
 
 
-.. py:data:: DEFAULT_AUTHOR
-   
-
-   
-
-.. py:function:: doc_build_py(output: str, source_dir: str, *, version: Optional[str] = None, cwd: str = '.') -> None
+.. py:function:: doc_build_py(output: str, *, source_dir: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
 
    为python项目构造api文档.
    :param output: html文档位置
@@ -57,7 +51,7 @@ Attributes
    :type cwd: str
 
 
-.. py:function:: doc_build_go(output: str, source_dir: str, *, cwd: str = '.') -> None
+.. py:function:: doc_build_go(output: str, *, source_dir: str, is_web: bool = False, cwd: str = '.') -> None
 
    为go项目更新api文档.
    :param output: html文档位置
@@ -66,6 +60,8 @@ Attributes
    :type source_dir: str
    :param version: 项目版本
    :type version: str
+   :param is_web: 为真时执行`swag init --parseDependency --parseInternal`
+   :type is_web: bool
    :param cwd: 执行命令的根目录
    :type cwd: str
 
@@ -75,14 +71,14 @@ Attributes
 
    
 
-.. py:function:: build_doc(language: str, output: str, doc_source_dir: str, *, version: Optional[str] = None, cwd: str = '.') -> None
+.. py:function:: build_doc(language: str, output: str, *, doc_source_dir: str, version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
 
    为项目构造api文档.
    :param code: 项目源码位置
    :type code: str
    :param output: html文档位置
    :type output: str
-   :param doc_source_dir: 文档源码位置
+   :param doc_source_dir: 文档源码位置,注意使用sphinx的比如python含义是那个文档项目的路径,而其他的则是源码路径
    :type doc_source_dir: str
    :param project_name: 项目名
    :type project_name: str
@@ -90,6 +86,8 @@ Attributes
    :type author: str
    :param version: 项目版本
    :type version: str
+   :param is_web: 当language为go且is_web为真时执行`swag init --parseDependency --parseInternal`
+   :type is_web: bool
    :param cwd: 执行项目时的位置
    :type cwd: str
 

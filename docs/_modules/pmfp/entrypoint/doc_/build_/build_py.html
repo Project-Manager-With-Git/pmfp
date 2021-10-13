@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.doc_.build_.build_py &mdash; pmfp 4.1.5 文档</title>
+  <title>pmfp.entrypoint.doc_.build_.build_py &mdash; pmfp 4.1.6 文档</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                4.1.5
+                4.1.6
               </div>
             
           
@@ -93,7 +93,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-4">v4.1.4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
@@ -190,7 +191,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="doc_build_py"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/doc_/build_/index.html#pmfp.entrypoint.doc_.build_.build_py.doc_build_py">[文档]</a><span class="k">def</span> <span class="nf">doc_build_py</span><span class="p">(</span><span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="doc_build_py"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/doc_/build_/index.html#pmfp.entrypoint.doc_.build_.build_py.doc_build_py">[文档]</a><span class="k">def</span> <span class="nf">doc_build_py</span><span class="p">(</span><span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">source_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;为python项目构造api文档.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        output (str): html文档位置</span>
@@ -202,7 +203,8 @@
         <span class="n">cwdp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">cwdp</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">source_dir</span><span class="p">:</span>
+        <span class="n">source_dir</span> <span class="o">=</span> <span class="s2">&quot;document&quot;</span>
     <span class="n">outputp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">)</span>
     <span class="n">source_dirp</span> <span class="o">=</span> <span class="n">get_abs_path</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwdp</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">version</span><span class="p">:</span>

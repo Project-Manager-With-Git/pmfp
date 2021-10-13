@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.project.add &mdash; pmfp 4.1.5 文档</title>
+  <title>pmfp.entrypoint.project.add &mdash; pmfp 4.1.6 文档</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                4.1.5
+                4.1.6
               </div>
             
           
@@ -93,7 +93,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.1.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.1.6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-4">v4.1.4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
@@ -182,6 +183,7 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
@@ -319,6 +321,36 @@
     <span class="k">return</span> <span class="n">target_component_info</span></div>
 
 
+<div class="viewcode-block" id="iter_dir_rename"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/add/index.html#pmfp.entrypoint.project.add.iter_dir_rename">[文档]</a><span class="k">def</span> <span class="nf">iter_dir_rename</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;遍历目标文件夹,将`_ref_`和`_fre_`包裹的文件或文件夹名作为模板重命名.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (Path): 根目录路径</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="s2">&quot;_ref_&quot;</span> <span class="ow">in</span> <span class="n">name</span> <span class="ow">and</span> <span class="s2">&quot;_fer_&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">newname_temp</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_ref_&quot;</span><span class="p">,</span> <span class="s2">&quot;{{ &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_fer_&quot;</span><span class="p">,</span> <span class="s2">&quot; }}&quot;</span><span class="p">)</span>
+                <span class="n">newname</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span><span class="n">newname_temp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">newname</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">newname</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="n">newpath</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">newname</span><span class="p">)</span>
+                <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span>
+                <span class="n">iter_dir_rename</span><span class="p">(</span><span class="n">pp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">iter_dir_rename</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="s2">&quot;_ref_&quot;</span> <span class="ow">in</span> <span class="n">name</span> <span class="ow">and</span> <span class="s2">&quot;_fer_&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+                <span class="n">newname_temp</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_ref_&quot;</span><span class="p">,</span> <span class="s2">&quot;{{ &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_fer_&quot;</span><span class="p">,</span> <span class="s2">&quot; }}&quot;</span><span class="p">)</span>
+                <span class="n">newname</span> <span class="o">=</span> <span class="n">template_2_content</span><span class="p">(</span><span class="n">newname_temp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">newname</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">newname</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="n">newpath</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">newname</span><span class="p">)</span>
+                <span class="n">pp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="to_target_source"><a class="viewcode-back" href="../../../../autoapi/pmfp/entrypoint/project/new/index.html#pmfp.entrypoint.project.add.to_target_source">[文档]</a><span class="k">def</span> <span class="nf">to_target_source</span><span class="p">(</span><span class="n">projectconfig</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
                      <span class="n">target_component_info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
                      <span class="n">cwdp</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
@@ -354,6 +386,7 @@
             <span class="n">iter_dir_to_end</span><span class="p">(</span><span class="n">target_located_path</span><span class="p">,</span>
                             <span class="n">match</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.jinja&quot;</span> <span class="ow">and</span> <span class="s2">&quot;.jinja&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
                             <span class="n">succ_cb</span><span class="o">=</span><span class="n">succ_callback</span><span class="p">)</span>
+            <span class="n">iter_dir_rename</span><span class="p">(</span><span class="n">target_located_path</span><span class="p">,</span> <span class="o">**</span><span class="n">tempkv</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;放置位置</span><span class="si">{</span><span class="n">target_located_path</span><span class="si">}</span><span class="s2">已经存在&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>

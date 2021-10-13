@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.project.add &mdash; pmfp 4.1.5 文档</title>
+  <title>pmfp.entrypoint.project.add &mdash; pmfp 4.1.6 文档</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                4.1.5
+                4.1.6
               </div>
             
           
@@ -93,7 +93,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-4">v4.1.4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-2">v4.1.2</a></li>
@@ -249,16 +250,19 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.check_component" title="pmfp.entrypoint.project.add.check_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_component</span></code></a>(sourcepack_config: Dict[str, Any], componentpack: pmfp.utils.remote_cache_utils.ComponentTemplate, component_string: str) → Dict[str, Any]</p></td>
 <td><p>校验组件信息,通过的话返回组件信息.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.to_target_source" title="pmfp.entrypoint.project.add.to_target_source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_target_source</span></code></a>(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None, root_default_path: Optional[str] = None) → str</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.iter_dir_rename" title="pmfp.entrypoint.project.add.iter_dir_rename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iter_dir_rename</span></code></a>(path: pathlib.Path, **kwargs: Any) → None</p></td>
+<td><p>遍历目标文件夹,将`_ref_`和`_fre_`包裹的文件或文件夹名作为模板重命名.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.to_target_source" title="pmfp.entrypoint.project.add.to_target_source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_target_source</span></code></a>(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None, root_default_path: Optional[str] = None) → str</p></td>
 <td><p>将目标组件模板转换到项目目录.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.save_to_components" title="pmfp.entrypoint.project.add.save_to_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_to_components</span></code></a>(cwdp: pathlib.Path, component_string: str, located_path_str: str) → None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.save_to_components" title="pmfp.entrypoint.project.add.save_to_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_to_components</span></code></a>(cwdp: pathlib.Path, component_string: str, located_path_str: str) → None</p></td>
 <td><p>保存组件信息到项目配置.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add._add_component" title="pmfp.entrypoint.project.add._add_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_add_component</span></code></a>(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) → Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add._add_component" title="pmfp.entrypoint.project.add._add_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_add_component</span></code></a>(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) → Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.add_component" title="pmfp.entrypoint.project.add.add_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_component</span></code></a>(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') → None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.entrypoint.project.add.add_component" title="pmfp.entrypoint.project.add.add_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_component</span></code></a>(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') → None</p></td>
 <td><p>为项目添加组件.</p></td>
 </tr>
 </tbody>
@@ -602,6 +606,17 @@
 <dt class="sig sig-object py" id="pmfp.entrypoint.project.add.check_component">
 <span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.project.add.</span></span><span class="sig-name descname"><span class="pre">check_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sourcepack_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">componentpack</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../../utils/remote_cache_utils/index.html#pmfp.utils.remote_cache_utils.ComponentTemplate" title="pmfp.utils.remote_cache_utils.ComponentTemplate"><span class="pre">pmfp.utils.remote_cache_utils.ComponentTemplate</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/pmfp/entrypoint/project/add.html#check_component"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.project.add.check_component" title="永久链接至目标">¶</a></dt>
 <dd><p>校验组件信息,通过的话返回组件信息.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pmfp.entrypoint.project.add.iter_dir_rename">
+<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.project.add.</span></span><span class="sig-name descname"><span class="pre">iter_dir_rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/pmfp/entrypoint/project/add.html#iter_dir_rename"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.project.add.iter_dir_rename" title="永久链接至目标">¶</a></dt>
+<dd><p>遍历目标文件夹,将`_ref_`和`_fre_`包裹的文件或文件夹名作为模板重命名.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path</em>) – 根目录路径</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

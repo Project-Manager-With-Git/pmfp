@@ -13,15 +13,11 @@ Functions
 
 .. autoapisummary::
 
-   pmfp.entrypoint.doc_.new.new_go.move_doc
    pmfp.entrypoint.doc_.new.new_go.doc_new_go
 
 
 
-.. py:function:: move_doc(sourcep: pathlib.Path, outputp: pathlib.Path) -> None
-
-
-.. py:function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
+.. py:function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, is_web: bool = False, cwd: str = '.') -> None
 
    为go项目构造api文档.
    :param code: 项目源码位置
@@ -36,6 +32,8 @@ Functions
    :type author: str
    :param version: 项目版本
    :type version: str
+   :param is_web: 为真时执行`swag init --parseDependency --parseInternal`
+   :type is_web: bool
    :param cwd: 执行命令的根目录
    :type cwd: str
 

@@ -72,7 +72,7 @@ Attributes
    :type cwd: str
 
 
-.. py:function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
+.. py:function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, is_web: bool = False, cwd: str = '.') -> None
 
    为go项目构造api文档.
    :param code: 项目源码位置
@@ -87,6 +87,8 @@ Attributes
    :type author: str
    :param version: 项目版本
    :type version: str
+   :param is_web: 为真时执行`swag init --parseDependency --parseInternal`
+   :type is_web: bool
    :param cwd: 执行命令的根目录
    :type cwd: str
 
@@ -96,7 +98,7 @@ Attributes
 
    
 
-.. py:function:: new_doc(language: str, code: str, output: str, doc_source_dir: str, *, project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
+.. py:function:: new_doc(language: str, code: str, output: str, doc_source_dir: str, *, project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
 
    为项目构造api文档.
    :param code: 项目源码位置
@@ -111,6 +113,8 @@ Attributes
    :type author: str
    :param version: 项目版本
    :type version: str
+   :param is_web: 当language为go且is_web为真时执行`swag init --parseDependency --parseInternal`
+   :type is_web: bool
    :param cwd: 执行项目时的位置
    :type cwd: str
 

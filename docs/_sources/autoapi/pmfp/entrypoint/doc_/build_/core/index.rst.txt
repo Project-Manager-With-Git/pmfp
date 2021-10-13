@@ -29,7 +29,7 @@ Attributes
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
-   为指定编程语言编译api文档.
+   为指定编程语言编译api文档覆盖原来的.
 
    .. py:attribute:: schema
       

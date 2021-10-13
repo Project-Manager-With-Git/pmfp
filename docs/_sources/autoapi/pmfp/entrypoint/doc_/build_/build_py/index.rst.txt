@@ -17,7 +17,7 @@ Functions
 
 
 
-.. py:function:: doc_build_py(output: str, source_dir: str, *, version: Optional[str] = None, cwd: str = '.') -> None
+.. py:function:: doc_build_py(output: str, *, source_dir: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
 
    为python项目构造api文档.
    :param output: html文档位置
