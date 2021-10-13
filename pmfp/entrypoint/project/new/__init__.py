@@ -122,8 +122,6 @@ def new_project(env: Optional[str] = None,
                 sourcepack_config=sourcepack_config,
                 projectconfig=projectconfig,
                 kv=kv)
-            print("#####")
-            print(tempkv)
             if components:
                 print("开始构造组件")
                 for component_name, component_info in components.items():
