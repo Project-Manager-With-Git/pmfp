@@ -5,7 +5,7 @@ from .core import doc_build
 
 
 @doc_build.as_main
-def build_doc(language: str, output: str, *, doc_source_dir: str, version: Optional[str] = None, is_web: bool = False, cwd: str = ".") -> None:
+def build_doc(language: str, output: str, *, doc_source_dir: str = "", version: Optional[str] = None, is_web: bool = False, cwd: str = ".") -> None:
     """为项目构造api文档.
     Args:
         code (str): 项目源码位置

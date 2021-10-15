@@ -1,3 +1,9 @@
+# v4.1.7
+
+## bug修复
+
++ `doc build`中`doc_source_dir`参数现在有了默认值`""`
+
 # v4.1.6
 
 ## bug修复
