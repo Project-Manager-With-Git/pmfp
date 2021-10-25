@@ -1,5 +1,4 @@
 """文件系统相关的通用组件."""
-import json
 import os
 import stat
 import shutil

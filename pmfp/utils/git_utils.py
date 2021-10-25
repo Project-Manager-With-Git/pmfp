@@ -1,10 +1,7 @@
 """git相关的动作."""
-import os
-import warnings
-import configparser
 import time
 from pathlib import Path
-from typing import Optional, Callable, Dict, List
+from typing import Optional, Dict
 from git import Repo
 from git.repo.fun import is_git_dir
 import git

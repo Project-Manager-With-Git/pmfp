@@ -44,24 +44,28 @@ def get_global_cxx() -> str:
         return pmfprc.get("cxx", GOLBAL_CXX)
 
 
-def get_node_version() -> Optional[str]:
+def get_node_version(exit: bool = False) -> Optional[str]:
     """获取系统中node的版本."""
     try:
         x = run("node -v")
     except Exception:
         warnings.warn("系统中未找到node环境,如有需要请安装")
-        sys.exit(1)
+        if exit:
+            sys.exit(1)
+        return
     else:
         return x[1:]
 
 
-def get_golang_version() -> Optional[str]:
+def get_golang_version(exit: bool = False) -> Optional[str]:
     """获取本地golang的版本."""
     try:
         content = run("go version")
     except Exception as e:
         warnings.warn("系统中未找到golang环境,如有需要请安装")
-        sys.exit(1)
+        if exit:
+            sys.exit(1)
+        return
     else:
         return [i for i in content.split(" ") if "." in i][0][2:]
 

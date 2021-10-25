@@ -4,6 +4,8 @@
 
 + `doc build`中`doc_source_dir`参数现在有了默认值`""`
 
++ 现在没装node或者go也可以使用了
+
 # v4.1.6
 
 ## bug修复

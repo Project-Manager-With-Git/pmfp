@@ -58,4 +58,3 @@ DEFAULTRCSCHEMA = {
 
 # def write_rc():
 #     pass
-
