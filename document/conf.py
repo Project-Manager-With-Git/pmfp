@@ -25,7 +25,7 @@ author = 'hsz'
 version = '4.1.7'
 
 # The full version, including alpha/beta/rc tags
-release= '4.1.7'
+release= '4.1.8'
 
 
 # -- General configuration ---------------------------------------------------
