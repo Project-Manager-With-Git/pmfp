@@ -7,14 +7,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.env_.new.env_js.env_webpack &mdash; pmfp 4.1.6 文档</title>
+  <title>pmfp.entrypoint.env_.new.env_js.env_webpack &mdash; pmfp 4.1.8 文档</title>
   
 
   
   <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -32,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../../" src="../../../../../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../../../../../" id="documentation_options" src="../../../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../../../_static/jquery.js"></script>
         <script src="../../../../../../../_static/underscore.js"></script>
         <script src="../../../../../../../_static/doctools.js"></script>
@@ -66,7 +63,7 @@
             
             
               <div class="version">
-                4.1.6
+                4.1.8
               </div>
             
           
@@ -93,7 +90,9 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../../CHANGELOG.html">v4.1.6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../CHANGELOG.html">v4.1.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../CHANGELOG.html#v4-1-7">v4.1.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../CHANGELOG.html#v4-1-6">v4.1.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../../CHANGELOG.html#v4-1-4">v4.1.4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
@@ -230,259 +229,440 @@
 </tbody>
 </table>
 <dl class="py data">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_BASE_CONFIG">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">WEBPACK_BASE_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_BASE_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_BASE_CONFIG" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_BASE_CONFIG">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">WEBPACK_BASE_CONFIG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_BASE_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_BASE_CONFIG" title="永久链接至目标">¶</a></dt>
 <dd><blockquote>
-<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>const path = require(&#39;path&#39;)
-<span class="linenos"> 2</span>const webpack = require(&#39;webpack&#39;)
-<span class="linenos"> 3</span>const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)
-<span class="linenos"> 4</span>const CleanWebpackPlugin = require(&quot;clean-webpack-plugin&quot;)
-<span class="linenos"> 5</span>module.exports = {
-<span class="linenos"> 6</span>    entry: path.resolve(__dirname, &#39;../src/index.js&#39;),
-<span class="linenos"> 7</span>    output: {
-<span class="linenos"> 8</span>        path: path.resolve(__dirname, &#39;../build&#39;),
-<span class="linenos"> 9</span>        filename: &#39;bundle-[hash].js&#39;
-<span class="linenos">10</span>    },
-<span class="linenos">11</span>    devServer: {
-<span class="linenos">12</span>        contentBase: path.resolve(__dirname, &#39;../build&#39;), //本地服务器所加载的页面所在的目录
-<span class="linenos">13</span>        historyApiFallback: true, //不跳转
-<span class="linenos">14</span>        inline: true,
-<span class="linenos">15</span>        hot: true
-<span class="linenos">16</span>    },
-<span class="linenos">17</span>    module: {
-<span class="linenos">18</span>        rules: [{
-<span class="linenos">19</span>                test: /\.js$/,
-<span class="linenos">20</span>                use: {
-<span class="linenos">21</span>                    loader: &#39;babel-loader&#39;
-<span class="linenos">22</span>                },
-<span class="linenos">23</span>                exclude: path.resolve(__dirname, &#39;../node_modules&#39;),
-<span class="linenos">24</span>                include: path.resolve(__dirname, &#39;../src&#39;)
-<span class="linenos">25</span>            },
-<span class="linenos">26</span>            {
-<span class="linenos">27</span>                test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
-<span class="linenos">28</span>                use: [{
-<span class="linenos">29</span>                        loader: &#39;url-loader&#39;,
-<span class="linenos">30</span>                        options: {
-<span class="linenos">31</span>                            limit: 10000,
-<span class="linenos">32</span>                            name: &#39;[path][name].[ext]?[hash:6]!./dir/file.png&#39;
-<span class="linenos">33</span>                        }
-<span class="linenos">34</span>                    },
-<span class="linenos">35</span>                    {
-<span class="linenos">36</span>                        loader: &#39;image-webpack-loader&#39;,
-<span class="linenos">37</span>                        query: {
-<span class="linenos">38</span>                            progressive: true,
-<span class="linenos">39</span>                            optimizationLevel: 7,
-<span class="linenos">40</span>                            interlaced: false,
-<span class="linenos">41</span>                            pngquant: {
-<span class="linenos">42</span>                                quality: &#39;65-90&#39;,
-<span class="linenos">43</span>                                speed: 4
-<span class="linenos">44</span>                            }
-<span class="linenos">45</span>                        }
-<span class="linenos">46</span>                    }
-<span class="linenos">47</span>                ]
-<span class="linenos">48</span>            }
-<span class="linenos">49</span>        ]
-<span class="linenos">50</span>    },
-<span class="linenos">51</span>    plugins: [
-<span class="linenos">52</span>        new HtmlWebpackPlugin({
-<span class="linenos">53</span>            template: path.resolve(__dirname, &#39;../src/index.tmpl.html&#39;) //new 一个这个插件的实例，并传入相关的参数
-<span class="linenos">54</span>        }),
-<span class="linenos">55</span>        new webpack.HotModuleReplacementPlugin(), //热加载插件
-<span class="linenos">56</span>        new CleanWebpackPlugin(&#39;build/*.*&#39;, {
-<span class="linenos">57</span>            root: path.resolve(__dirname, &quot;..&quot;),
-<span class="linenos">58</span>            verbose: true,
-<span class="linenos">59</span>            dry: false
-<span class="linenos">60</span>        })
-<span class="linenos">61</span>    ]
-<span class="linenos">62</span>}
+<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span>const path = require(&#39;path&#39;)
+const webpack = require(&#39;webpack&#39;)
+const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)
+const CleanWebpackPlugin = require(&quot;clean-webpack-plugin&quot;)
+module.exports = {
+    entry: path.resolve(__dirname, &#39;../src/index.js&#39;),
+    output: {
+        path: path.resolve(__dirname, &#39;../build&#39;),
+        filename: &#39;bundle-[hash].js&#39;
+    },
+    devServer: {
+        contentBase: path.resolve(__dirname, &#39;../build&#39;), //本地服务器所加载的页面所在的目录
+        historyApiFallback: true, //不跳转
+        inline: true,
+        hot: true
+    },
+    module: {
+        rules: [{
+                test: /\.js$/,
+                use: {
+                    loader: &#39;babel-loader&#39;
+                },
+                exclude: path.resolve(__dirname, &#39;../node_modules&#39;),
+                include: path.resolve(__dirname, &#39;../src&#39;)
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
+                use: [{
+                        loader: &#39;url-loader&#39;,
+                        options: {
+                            limit: 10000,
+                            name: &#39;[path][name].[ext]?[hash:6]!./dir/file.png&#39;
+                        }
+                    },
+                    {
+                        loader: &#39;image-webpack-loader&#39;,
+                        query: {
+                            progressive: true,
+                            optimizationLevel: 7,
+                            interlaced: false,
+                            pngquant: {
+                                quality: &#39;65-90&#39;,
+                                speed: 4
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, &#39;../src/index.tmpl.html&#39;) //new 一个这个插件的实例，并传入相关的参数
+        }),
+        new webpack.HotModuleReplacementPlugin(), //热加载插件
+        new CleanWebpackPlugin(&#39;build/*.*&#39;, {
+            root: path.resolve(__dirname, &quot;..&quot;),
+            verbose: true,
+            dry: false
+        })
+    ]
+}
 </pre></div>
-</div>
+</td></tr></table></div>
 </details></div></blockquote>
 </dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_PROD_CONFIG">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">WEBPACK_PROD_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_PROD_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_PROD_CONFIG" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_PROD_CONFIG">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">WEBPACK_PROD_CONFIG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_PROD_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_PROD_CONFIG" title="永久链接至目标">¶</a></dt>
 <dd><blockquote>
-<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>const webpack = require(&#39;webpack&#39;)
-<span class="linenos"> 2</span>const UglifyJSPlugin = require(&#39;uglifyjs-webpack-plugin&#39;)
-<span class="linenos"> 3</span>const ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
-<span class="linenos"> 4</span>const merge = require(&#39;webpack-merge&#39;)
-<span class="linenos"> 5</span>const base = require(&#39;./webpack.config.base.js&#39;)
-<span class="linenos"> 6</span>const env = require(&quot;./conf/prod.json&quot;)
-<span class="linenos"> 7</span>module.exports = merge(base,{
-<span class="linenos"> 8</span>    module: {
-<span class="linenos"> 9</span>        rules: [
-<span class="linenos">10</span>            {
-<span class="linenos">11</span>                test: /\.css$/,
-<span class="linenos">12</span>                use: ExtractTextPlugin.extract({
-<span class="linenos">13</span>                    fallback: &quot;style-loader&quot;,
-<span class="linenos">14</span>                    use: [&quot;css-loader&quot;]
-<span class="linenos">15</span>                })
-<span class="linenos">16</span>            },
-<span class="linenos">17</span>            {
-<span class="linenos">18</span>                test: /\.styl$/,
-<span class="linenos">19</span>                use: ExtractTextPlugin.extract({
-<span class="linenos">20</span>                    fallback: &quot;style-loader&quot;,
-<span class="linenos">21</span>                    use: [&quot;css-loader&quot;, &quot;stylus-loader&quot;]
-<span class="linenos">22</span>                })
-<span class="linenos">23</span>            }
-<span class="linenos">24</span>        ]
-<span class="linenos">25</span>    },
-<span class="linenos">26</span>    plugins: [
-<span class="linenos">27</span>        new webpack.optimize.OccurrenceOrderPlugin(),
-<span class="linenos">28</span>        new ExtractTextPlugin(&quot;style.css&quot;),
-<span class="linenos">29</span>        new webpack.DefinePlugin({
-<span class="linenos">30</span>            &#39;process.env&#39;: {
-<span class="linenos">31</span>                &#39;NODE_ENV&#39;: JSON.stringify(env)
-<span class="linenos">32</span>            }
-<span class="linenos">33</span>        })
-<span class="linenos">34</span>    ],
-<span class="linenos">35</span>    optimization: {
-<span class="linenos">36</span>        minimizer: [
-<span class="linenos">37</span>            new UglifyJSPlugin(),
-<span class="linenos">38</span>        ]
-<span class="linenos">39</span>    }
-<span class="linenos">40</span>})
+<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span>const webpack = require(&#39;webpack&#39;)
+const UglifyJSPlugin = require(&#39;uglifyjs-webpack-plugin&#39;)
+const ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
+const merge = require(&#39;webpack-merge&#39;)
+const base = require(&#39;./webpack.config.base.js&#39;)
+const env = require(&quot;./conf/prod.json&quot;)
+module.exports = merge(base,{
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: &quot;style-loader&quot;,
+                    use: [&quot;css-loader&quot;]
+                })
+            },
+            {
+                test: /\.styl$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: &quot;style-loader&quot;,
+                    use: [&quot;css-loader&quot;, &quot;stylus-loader&quot;]
+                })
+            }
+        ]
+    },
+    plugins: [
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new ExtractTextPlugin(&quot;style.css&quot;),
+        new webpack.DefinePlugin({
+            &#39;process.env&#39;: {
+                &#39;NODE_ENV&#39;: JSON.stringify(env)
+            }
+        })
+    ],
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin(),
+        ]
+    }
+})
 </pre></div>
-</div>
+</td></tr></table></div>
 </details></div></blockquote>
 </dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_TEST_CONFIG">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">WEBPACK_TEST_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_TEST_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_TEST_CONFIG" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_TEST_CONFIG">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">WEBPACK_TEST_CONFIG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_TEST_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_TEST_CONFIG" title="永久链接至目标">¶</a></dt>
 <dd><blockquote>
-<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>const webpack = require(&#39;webpack&#39;)
-<span class="linenos"> 2</span>const UglifyJSPlugin = require(&#39;uglifyjs-webpack-plugin&#39;)
-<span class="linenos"> 3</span>const ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
-<span class="linenos"> 4</span>const merge = require(&#39;webpack-merge&#39;)
-<span class="linenos"> 5</span>const base = require(&#39;./webpack.config.base.js&#39;)
-<span class="linenos"> 6</span>const env = require(&quot;./conf/test.json&quot;)
-<span class="linenos"> 7</span>module.exports = merge(base,{
-<span class="linenos"> 8</span>    devtool: &#39;eval-source-map&#39;,
-<span class="linenos"> 9</span>    module: {
-<span class="linenos">10</span>        rules: [
-<span class="linenos">11</span>            {
-<span class="linenos">12</span>                test: /\.css$/,
-<span class="linenos">13</span>                use: ExtractTextPlugin.extract({
-<span class="linenos">14</span>                    fallback: &quot;style-loader&quot;,
-<span class="linenos">15</span>                    use: [&quot;css-loader&quot;]
-<span class="linenos">16</span>                })
-<span class="linenos">17</span>            },
-<span class="linenos">18</span>            {
-<span class="linenos">19</span>                test: /\.styl$/,
-<span class="linenos">20</span>                use: ExtractTextPlugin.extract({
-<span class="linenos">21</span>                    fallback: &quot;style-loader&quot;,
-<span class="linenos">22</span>                    use: [&quot;css-loader&quot;, &quot;stylus-loader&quot;]
-<span class="linenos">23</span>                })
-<span class="linenos">24</span>            }
-<span class="linenos">25</span>        ]
-<span class="linenos">26</span>    },
-<span class="linenos">27</span>    plugins: [
-<span class="linenos">28</span>        new webpack.optimize.OccurrenceOrderPlugin(),
-<span class="linenos">29</span>        new ExtractTextPlugin(&quot;style.css&quot;),
-<span class="linenos">30</span>        new webpack.DefinePlugin({
-<span class="linenos">31</span>            &#39;process.env&#39;: {
-<span class="linenos">32</span>                &#39;NODE_ENV&#39;: JSON.stringify(env)
-<span class="linenos">33</span>            }
-<span class="linenos">34</span>        })
-<span class="linenos">35</span>    ],
-<span class="linenos">36</span>    optimization: {
-<span class="linenos">37</span>        minimizer: [
-<span class="linenos">38</span>            new UglifyJSPlugin(),
-<span class="linenos">39</span>        ]
-<span class="linenos">40</span>    }
-<span class="linenos">41</span>})
+<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span>const webpack = require(&#39;webpack&#39;)
+const UglifyJSPlugin = require(&#39;uglifyjs-webpack-plugin&#39;)
+const ExtractTextPlugin = require(&#39;extract-text-webpack-plugin&#39;)
+const merge = require(&#39;webpack-merge&#39;)
+const base = require(&#39;./webpack.config.base.js&#39;)
+const env = require(&quot;./conf/test.json&quot;)
+module.exports = merge(base,{
+    devtool: &#39;eval-source-map&#39;,
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: &quot;style-loader&quot;,
+                    use: [&quot;css-loader&quot;]
+                })
+            },
+            {
+                test: /\.styl$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: &quot;style-loader&quot;,
+                    use: [&quot;css-loader&quot;, &quot;stylus-loader&quot;]
+                })
+            }
+        ]
+    },
+    plugins: [
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new ExtractTextPlugin(&quot;style.css&quot;),
+        new webpack.DefinePlugin({
+            &#39;process.env&#39;: {
+                &#39;NODE_ENV&#39;: JSON.stringify(env)
+            }
+        })
+    ],
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin(),
+        ]
+    }
+})
 </pre></div>
-</div>
+</td></tr></table></div>
 </details></div></blockquote>
 </dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_DEV_CONFIG">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">WEBPACK_DEV_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_DEV_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_DEV_CONFIG" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_DEV_CONFIG">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">WEBPACK_DEV_CONFIG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#WEBPACK_DEV_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.WEBPACK_DEV_CONFIG" title="永久链接至目标">¶</a></dt>
 <dd><blockquote>
-<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>const webpack = require(&#39;webpack&#39;)
-<span class="linenos"> 2</span>const merge = require(&#39;webpack-merge&#39;)
-<span class="linenos"> 3</span>const base = require(&#39;./webpack.config.base.js&#39;)
-<span class="linenos"> 4</span>const env = require(&quot;./conf/dev.json&quot;)
-<span class="linenos"> 5</span>module.exports = merge(base,{
-<span class="linenos"> 6</span>    devtool: &#39;eval-source-map&#39;,
-<span class="linenos"> 7</span>    module: {
-<span class="linenos"> 8</span>        rules: [
-<span class="linenos"> 9</span>            {
-<span class="linenos">10</span>                test: /\.css$/,
-<span class="linenos">11</span>                use: [{
-<span class="linenos">12</span>                    loader: &quot;style-loader&quot;
-<span class="linenos">13</span>                }, {
-<span class="linenos">14</span>                    loader: &quot;css-loader&quot;
-<span class="linenos">15</span>                }]
-<span class="linenos">16</span>            },
-<span class="linenos">17</span>            {
-<span class="linenos">18</span>                test: /\.styl$/,
-<span class="linenos">19</span>                use: [{
-<span class="linenos">20</span>                    loader: &quot;style-loader&quot;
-<span class="linenos">21</span>                }, {
-<span class="linenos">22</span>                    loader: &quot;css-loader&quot;
-<span class="linenos">23</span>                }, {
-<span class="linenos">24</span>                    loader: &quot;stylus-loader&quot;
-<span class="linenos">25</span>                }]
-<span class="linenos">26</span>            }
-<span class="linenos">27</span>        ]
-<span class="linenos">28</span>    },
-<span class="linenos">29</span>    plugins: [
-<span class="linenos">30</span>        new webpack.DefinePlugin({
-<span class="linenos">31</span>            &#39;process.env&#39;: {
-<span class="linenos">32</span>                &#39;NODE_ENV&#39;: JSON.stringify(env)
-<span class="linenos">33</span>            }
-<span class="linenos">34</span>        })
-<span class="linenos">35</span>    ]
-<span class="linenos">36</span>})
+<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span>const webpack = require(&#39;webpack&#39;)
+const merge = require(&#39;webpack-merge&#39;)
+const base = require(&#39;./webpack.config.base.js&#39;)
+const env = require(&quot;./conf/dev.json&quot;)
+module.exports = merge(base,{
+    devtool: &#39;eval-source-map&#39;,
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [{
+                    loader: &quot;style-loader&quot;
+                }, {
+                    loader: &quot;css-loader&quot;
+                }]
+            },
+            {
+                test: /\.styl$/,
+                use: [{
+                    loader: &quot;style-loader&quot;
+                }, {
+                    loader: &quot;css-loader&quot;
+                }, {
+                    loader: &quot;stylus-loader&quot;
+                }]
+            }
+        ]
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            &#39;process.env&#39;: {
+                &#39;NODE_ENV&#39;: JSON.stringify(env)
+            }
+        })
+    ]
+})
 </pre></div>
-</div>
+</td></tr></table></div>
 </details></div></blockquote>
 </dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.PROD_CONFIG">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">PROD_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#PROD_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.PROD_CONFIG" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.PROD_CONFIG">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">PROD_CONFIG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#PROD_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.PROD_CONFIG" title="永久链接至目标">¶</a></dt>
 <dd><blockquote>
-<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>{
-<span class="linenos">2</span>    &quot;env&quot;:&quot;prod&quot;
-<span class="linenos">3</span>}
+<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span>{
+    &quot;env&quot;:&quot;prod&quot;
+}
 </pre></div>
-</div>
+</td></tr></table></div>
 </details></div></blockquote>
 </dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.TEST_CONFIG">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">TEST_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#TEST_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.TEST_CONFIG" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.TEST_CONFIG">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">TEST_CONFIG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#TEST_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.TEST_CONFIG" title="永久链接至目标">¶</a></dt>
 <dd><blockquote>
-<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>{
-<span class="linenos">2</span>    &quot;env&quot;:&quot;test&quot;
-<span class="linenos">3</span>}
+<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span>{
+    &quot;env&quot;:&quot;test&quot;
+}
 </pre></div>
-</div>
+</td></tr></table></div>
 </details></div></blockquote>
 </dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.DEV_CONFIG">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">DEV_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#DEV_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.DEV_CONFIG" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.DEV_CONFIG">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">DEV_CONFIG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">Multiline-String</span></em><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#DEV_CONFIG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.DEV_CONFIG" title="永久链接至目标">¶</a></dt>
 <dd><blockquote>
-<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>{
-<span class="linenos">2</span>    &quot;env&quot;:&quot;dev&quot;
-<span class="linenos">3</span>}
+<div><details><summary>Show Value</summary><div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span>{
+    &quot;env&quot;:&quot;dev&quot;
+}
 </pre></div>
-</div>
+</td></tr></table></div>
 </details></div></blockquote>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.entrypoint.env_.new.env_js.env_webpack.new_env_webpack">
-<span class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></span><span class="sig-name descname"><span class="pre">new_env_webpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author_email</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keywords</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_requires</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#new_env_webpack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.new_env_webpack" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.entrypoint.env_.new.env_js.env_webpack.new_env_webpack">
+<code class="sig-prename descclassname"><span class="pre">pmfp.entrypoint.env_.new.env_js.env_webpack.</span></code><code class="sig-name descname"><span class="pre">new_env_webpack</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author_email</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keywords</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_requires</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../../../_modules/pmfp/entrypoint/env_/new/env_js/env_webpack.html#new_env_webpack"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.entrypoint.env_.new.env_js.env_webpack.new_env_webpack" title="永久链接至目标">¶</a></dt>
 <dd><p>初始化golang默认的虚拟环境.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -508,7 +688,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; 版权所有 2021, hsz.
+        &#169; 版权所有 2022, hsz.
 
     </p>
   </div>

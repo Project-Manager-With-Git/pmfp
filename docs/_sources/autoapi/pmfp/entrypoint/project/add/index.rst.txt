@@ -276,7 +276,7 @@ Attributes
 
    检查组件的模板库是否有缓存,没有的话进行缓存.
 
-   `latest`标签的模板库都会进行缓存更新.
+   `latest`和`dev`标签的模板库都会进行缓存更新.
 
    :param cached_sourcepack: 已经缓存过的资源包列表
    :type cached_sourcepack: List[str]

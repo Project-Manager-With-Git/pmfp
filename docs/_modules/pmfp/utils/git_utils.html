@@ -7,14 +7,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.utils.git_utils &mdash; pmfp 4.1.6 文档</title>
+  <title>pmfp.utils.git_utils &mdash; pmfp 4.1.8 文档</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
 
   
@@ -32,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -66,7 +63,7 @@
             
             
               <div class="version">
-                4.1.6
+                4.1.8
               </div>
             
           
@@ -93,7 +90,9 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">v4.1.6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">v4.1.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-7">v4.1.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-6">v4.1.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-4">v4.1.4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
@@ -179,12 +178,11 @@
             
   <h1>pmfp.utils.git_utils 源代码</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;git相关的动作.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">E</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">Repo</span>
 <span class="kn">from</span> <span class="nn">git.repo.fun</span> <span class="kn">import</span> <span class="n">is_git_dir</span>
 <span class="kn">import</span> <span class="nn">git</span>
@@ -341,15 +339,36 @@
             <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="get_master_latest_commit"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.get_master_latest_commit">[文档]</a><span class="k">def</span> <span class="nf">get_master_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;获取git项目的最近一个master分支的commit号.</span>
+<div class="viewcode-block" id="BranchType"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.BranchType">[文档]</a><span class="k">class</span> <span class="nc">BranchType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;git分支的类型</span>
+
+<span class="sd">    + LOCAL 本地分支</span>
+<span class="sd">    + REMOTE 远程分支</span>
+<span class="sd">    + TAG 标签分支</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BranchType.LOCAL"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.BranchType.LOCAL">[文档]</a>    <span class="n">LOCAL</span> <span class="o">=</span> <span class="mi">1</span></div>
+<div class="viewcode-block" id="BranchType.REMOTE"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.BranchType.REMOTE">[文档]</a>    <span class="n">REMOTE</span> <span class="o">=</span> <span class="mi">2</span></div>
+<div class="viewcode-block" id="BranchType.TAG"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.BranchType.TAG">[文档]</a>    <span class="n">TAG</span> <span class="o">=</span> <span class="mi">3</span></div></div>
+
+
+<div class="viewcode-block" id="GitPathError"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.GitPathError">[文档]</a><span class="k">class</span> <span class="nc">GitPathError</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="GitBranchNotFound"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.GitBranchNotFound">[文档]</a><span class="k">class</span> <span class="nc">GitBranchNotFound</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_branch_latest_commit"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.get_branch_latest_commit">[文档]</a><span class="k">def</span> <span class="nf">get_branch_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">branch_type</span><span class="p">:</span> <span class="n">BranchType</span> <span class="o">=</span> <span class="n">BranchType</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;获取git项目本地保存的指定分支的最近一个commit号.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        p (Path): git项目位置</span>
-
+<span class="sd">        branch (str): 分支名</span>
+<span class="sd">        branch_type (BranchType): 分支类型</span>
 <span class="sd">    Raises:</span>
-<span class="sd">        AttributeError: 如果路径不是git项目则会抛出</span>
-<span class="sd">        AttributeError: git仓库没有master或者main分支</span>
+<span class="sd">        GitPathError: 如果路径不是git项目则会抛出</span>
+<span class="sd">        GitBranchNotFound: git仓库没有指定分支</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        str: commit号</span>
@@ -357,21 +376,78 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">make_repod</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_git_dir</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;目标路径</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">不是git仓库.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">GitPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;目标路径</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">不是git仓库.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">infos</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git show-ref master&quot;</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">infos</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;git show-ref </span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">infos</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
             <span class="n">hs</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">ref</span> <span class="o">==</span> <span class="s2">&quot;refs/heads/master&quot;</span> <span class="ow">or</span> <span class="n">ref</span> <span class="o">==</span> <span class="s2">&quot;refs/heads/main&quot;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">hs</span>
+            <span class="k">if</span> <span class="n">branch_type</span> <span class="ow">is</span> <span class="n">BranchType</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ref</span> <span class="o">==</span> <span class="sa">f</span><span class="s2">&quot;refs/heads/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">hs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">branch_type</span> <span class="ow">is</span> <span class="n">BranchType</span><span class="o">.</span><span class="n">REMOTE</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ref</span> <span class="o">==</span> <span class="sa">f</span><span class="s2">&quot;refs/remotes/origin/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">hs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">branch_type</span> <span class="ow">is</span> <span class="n">BranchType</span><span class="o">.</span><span class="n">TAG</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ref</span> <span class="o">==</span> <span class="sa">f</span><span class="s2">&quot;refs/tags/</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">hs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;git仓库没有master或者main分支&quot;</span><span class="p">)</span></div>
-        <span class="c1"># with Repo(d) as repo:</span>
-        <span class="c1">#     for i in repo.heads:</span>
-        <span class="c1">#         if i.name == &quot;master&quot; or i.name == &quot;main&quot;:</span>
-        <span class="c1">#             return i.commit.hexsha</span>
-        <span class="c1">#     else:</span>
-        <span class="c1">#         raise AttributeError(&quot;git仓库没有master或者main分支&quot;)</span>
+            <span class="k">raise</span> <span class="n">GitBranchNotFound</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;git仓库没有</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">分支&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_master_latest_commit"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.get_master_latest_commit">[文档]</a><span class="k">def</span> <span class="nf">get_master_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;获取git项目的最近一个master分支的commit号.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (Path): git项目位置</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        GitPathError: 如果路径不是git项目则会抛出</span>
+<span class="sd">        GitBranchNotFound: git仓库没有master或者main分支</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: commit号</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">get_branch_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;master&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">GitBranchNotFound</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">get_branch_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">GitBranchNotFound</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GitBranchNotFound</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;git仓库没有 master 分支或者 main&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">e</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">c</span></div>
+
+
+<div class="viewcode-block" id="get_dev_latest_commit"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.get_dev_latest_commit">[文档]</a><span class="k">def</span> <span class="nf">get_dev_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;获取git项目的最近一个master分支的commit号.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (Path): git项目位置</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        GitPathError: 如果路径不是git项目则会抛出</span>
+<span class="sd">        GitBranchNotFound: git仓库没有master或者main分支</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: commit号</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">get_branch_latest_commit</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="git_push"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.git_push">[文档]</a><span class="k">def</span> <span class="nf">git_push</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;update&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -395,20 +471,13 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;git push执行成功&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="git_pull_master"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.git_pull_master">[文档]</a><span class="k">def</span> <span class="nf">git_pull_master</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;git项目推代码到远端仓库.</span>
+<div class="viewcode-block" id="git_pull"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/git_utils/index.html#pmfp.utils.git_utils.git_pull">[文档]</a><span class="k">def</span> <span class="nf">git_pull</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;git项目拉取最近当前分支的的提交.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        p (Path): 本地仓库位置</span>
-<span class="sd">        msg (str): 注释消息</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># print(f&quot;pull path {p}********************&quot;)</span>
-    <span class="c1"># d = make_repod(p)</span>
-    <span class="c1"># with Repo() as repo:</span>
-    <span class="c1">#     if str(repo.active_branch) != &quot;master&quot;:</span>
-    <span class="c1">#         warnings.warn(f&quot;active_branch {repo.active_branch} not master&quot;)</span>
-    <span class="c1">#         return</span>
     <span class="n">run</span><span class="p">(</span><span class="s2">&quot;git pull&quot;</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">make_env_args</span><span class="p">([</span><span class="s2">&quot;GIT_SSL_NO_VERIFY::1&quot;</span><span class="p">]),</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fail_exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
@@ -443,7 +512,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; 版权所有 2021, hsz.
+        &#169; 版权所有 2022, hsz.
 
     </p>
   </div>

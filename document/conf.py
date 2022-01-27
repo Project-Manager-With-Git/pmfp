@@ -17,15 +17,17 @@
 
 # -- Project information -----------------------------------------------------
 
+from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
 project = 'pmfp'
-copyright = '2021, hsz'
+copyright = '2022, hsz'
 author = 'hsz'
 
 # The short X.Y version
-version = '4.1.7'
+version = '4.1.8'
 
 # The full version, including alpha/beta/rc tags
-release= '4.1.8'
+release = '4.1.8'
 
 
 # -- General configuration ---------------------------------------------------
@@ -74,10 +76,10 @@ html_static_path = ['_static']
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
-# 不进行编译的文件/文件夹 
+# 不进行编译的文件/文件夹
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-# 设置不同后缀的文件使用不同解析器(这个需要后加) 
+# 设置不同后缀的文件使用不同解析器(这个需要后加)
 source_suffix = {
     '.rst': 'restructuredtext'
 }
@@ -90,13 +92,13 @@ html_theme_options = {
 }
 
 # 使用插件支持markdowm
-from recommonmark.transform import AutoStructify
-from recommonmark.parser import CommonMarkParser
 extensions.append('recommonmark')
 # 针对`.md`为后缀的文件做markdown渲染
 source_suffix[".md"] = 'markdown'
 
 # 设置markdown渲染器的自定义项
+
+
 def setup(app):
     github_doc_root = 'https://localhost:5000'
     app.add_config_value('recommonmark_config', {
@@ -110,8 +112,9 @@ def setup(app):
 
     app.add_transform(AutoStructify)
 
+
 # autoapi-python
 extensions.append('autoapi.extension')
 extensions.append("sphinx.ext.napoleon")
 autoapi_type = 'python'
-autoapi_dirs = ["../pmfp"]
+autoapi_dirs = ["/Users/mac/WORKSPACE/GITHUB/ProjectManagerWithGit/pmfp/pmfp"]

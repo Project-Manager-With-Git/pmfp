@@ -8,7 +8,7 @@ from typing import Optional
 from jsonschema import validate
 from pmfp.protocol import TEMPLATE_INFO_SCHEMA
 from .fs_utils import remove_readonly
-from .git_utils import git_clone, get_master_latest_commit, git_pull_master, make_repod, is_git_dir
+from .git_utils import git_clone, get_master_latest_commit, get_dev_latest_commit, git_pull, make_repod, is_git_dir
 from .tools_info_utils import get_config_info
 
 
@@ -62,7 +62,7 @@ class SourcePack:
         Args:
             repo_namespace (str): 仓库的命名空间
             repo_name (str): 仓库名
-            tag (str): 标签或者"latest". Defaults to "latest".
+            tag (str): 标签或者"latest"或者"dev". Defaults to "latest".
             host (str, optional): git仓库的host. Defaults to "github.com".
 
         """
@@ -108,7 +108,7 @@ class SourcePack:
             throw (bool): 是否抛出异常
         """
         conf = get_config_info()
-        if self.tag != "latest":
+        if self.tag not in ("latest", "dev"):
             if throw:
                 raise AttributeError("only latest tag can pull latest")
             else:
@@ -123,7 +123,10 @@ class SourcePack:
                 warnings.warn("only latest tag can pull latest")
                 return None
         # 保存之前的版本
-        commit_hash = get_master_latest_commit(pack_dir)
+        if self.tag == "latest":
+            commit_hash = get_master_latest_commit(pack_dir)
+        else:
+            commit_hash = get_dev_latest_commit(pack_dir)
         copy_dir = pack_dir.parent.joinpath(commit_hash)
         if copy_dir.exists:
             if copy_dir.is_dir():
@@ -142,7 +145,7 @@ class SourcePack:
                     shutil.copyfile(str(p), copy_dir.joinpath(p.name))
         # 更新
         try:
-            git_pull_master(pack_dir)
+            git_pull(pack_dir)
         except Exception as e:
             if throw:
                 raise e
@@ -164,6 +167,8 @@ class SourcePack:
         url = self.git_url()
         if self.tag == "latest":
             branch = "master"
+        if self.tag == "dev":
+            branch = "dev"
         else:
             branch = self.tag
         pack_dir = self.source_pack_path(cache_dir)
@@ -200,7 +205,7 @@ class SourcePack:
                     else:
                         return None
                 else:
-                    if self.tag != "latest":
+                    if self.tag not in ("latest", "dev"):
                         for p in pack_dir.iterdir():
                             if p.name.startswith(".") and p.name != conf["template_config_name"]:
                                 if p.is_dir():
@@ -230,7 +235,7 @@ class SourcePack:
             throw (bool): 是否抛出异常
 
         """
-        if self.tag != "latest":
+        if self.tag not in ("latest", "dev"):
             if self.source_pack_path(cache_dir).exists():
                 warnings.warn(f"资源缓存{self.as_sourcepack_string()}已经存在")
             else:

@@ -1,3 +1,21 @@
+# v4.1.8
+
+## 新特性
+
++ project子功能中对dev分支的特殊支持,现在dev分支的行为也会和master分支一样
+
+## 变动
+
++ 修改docker-compse生成器中kafka和etcd等的配置,现在的常用服务包括"redis", "postgres", "zookeeper", "kafka", "etcd", "clickhouse", "cassandra", "envoy", "minio"
+
+# v4.1.7
+
+## bug修复
+
++ `doc build`中`doc_source_dir`参数现在有了默认值`""`
+
++ 现在没装node或者go也可以使用了
+
 # v4.1.6
 
 ## bug修复

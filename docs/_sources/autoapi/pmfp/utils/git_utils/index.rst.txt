@@ -12,6 +12,14 @@
 Module Contents
 ---------------
 
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pmfp.utils.git_utils.BranchType
+
+
 
 Functions
 ~~~~~~~~~
@@ -26,9 +34,11 @@ Functions
    pmfp.utils.git_utils.git_init
    pmfp.utils.git_utils.git_clone
    pmfp.utils.git_utils.get_latest_commits
+   pmfp.utils.git_utils.get_branch_latest_commit
    pmfp.utils.git_utils.get_master_latest_commit
+   pmfp.utils.git_utils.get_dev_latest_commit
    pmfp.utils.git_utils.git_push
-   pmfp.utils.git_utils.git_pull_master
+   pmfp.utils.git_utils.git_pull
    pmfp.utils.git_utils.git_new_tag
 
 
@@ -123,6 +133,64 @@ Functions
    :rtype: Dict[str, str]
 
 
+.. py:class:: BranchType
+
+   Bases: :py:obj:`enum.Enum`
+
+   git分支的类型
+
+   + LOCAL 本地分支
+   + REMOTE 远程分支
+   + TAG 标签分支
+
+   .. py:attribute:: LOCAL
+      :annotation: = 1
+
+      
+
+   .. py:attribute:: REMOTE
+      :annotation: = 2
+
+      
+
+   .. py:attribute:: TAG
+      :annotation: = 3
+
+      
+
+
+.. py:exception:: GitPathError
+
+   Bases: :py:obj:`AttributeError`
+
+   Attribute not found.
+
+
+.. py:exception:: GitBranchNotFound
+
+   Bases: :py:obj:`AttributeError`
+
+   Attribute not found.
+
+
+.. py:function:: get_branch_latest_commit(p: pathlib.Path, branch: str, branch_type: BranchType = BranchType.LOCAL) -> str
+
+   获取git项目本地保存的指定分支的最近一个commit号.
+
+   :param p: git项目位置
+   :type p: Path
+   :param branch: 分支名
+   :type branch: str
+   :param branch_type: 分支类型
+   :type branch_type: BranchType
+
+   :raises GitPathError: 如果路径不是git项目则会抛出
+   :raises GitBranchNotFound: git仓库没有指定分支
+
+   :returns: commit号
+   :rtype: str
+
+
 .. py:function:: get_master_latest_commit(p: pathlib.Path) -> str
 
    获取git项目的最近一个master分支的commit号.
@@ -130,8 +198,22 @@ Functions
    :param p: git项目位置
    :type p: Path
 
-   :raises AttributeError: 如果路径不是git项目则会抛出
-   :raises AttributeError: git仓库没有master或者main分支
+   :raises GitPathError: 如果路径不是git项目则会抛出
+   :raises GitBranchNotFound: git仓库没有master或者main分支
+
+   :returns: commit号
+   :rtype: str
+
+
+.. py:function:: get_dev_latest_commit(p: pathlib.Path) -> str
+
+   获取git项目的最近一个master分支的commit号.
+
+   :param p: git项目位置
+   :type p: Path
+
+   :raises GitPathError: 如果路径不是git项目则会抛出
+   :raises GitBranchNotFound: git仓库没有master或者main分支
 
    :returns: commit号
    :rtype: str
@@ -147,14 +229,12 @@ Functions
    :type msg: str
 
 
-.. py:function:: git_pull_master(p: pathlib.Path) -> None
+.. py:function:: git_pull(p: pathlib.Path) -> None
 
-   git项目推代码到远端仓库.
+   git项目拉取最近当前分支的的提交.
 
    :param p: 本地仓库位置
    :type p: Path
-   :param msg: 注释消息
-   :type msg: str
 
 
 .. py:function:: git_new_tag(p: pathlib.Path, version: str, message: Optional[str] = None, remote: bool = False) -> None

@@ -88,7 +88,7 @@ Attributes
    :rtype: Path
 
 
-.. py:function:: get_golang_version() -> Optional[str]
+.. py:function:: get_golang_version(exit: bool = False) -> Optional[str]
 
    获取本地golang的版本.
 

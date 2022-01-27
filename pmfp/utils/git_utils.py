@@ -1,6 +1,8 @@
 """git相关的动作."""
 import time
+from enum import Enum
 from pathlib import Path
+from tkinter import E
 from typing import Optional, Dict
 from git import Repo
 from git.repo.fun import is_git_dir
@@ -158,15 +160,36 @@ def get_latest_commits(p: Path) -> Dict[str, str]:
             return result
 
 
-def get_master_latest_commit(p: Path) -> str:
-    """获取git项目的最近一个master分支的commit号.
+class BranchType(Enum):
+    """git分支的类型
+
+    + LOCAL 本地分支
+    + REMOTE 远程分支
+    + TAG 标签分支
+    """
+    LOCAL = 1
+    REMOTE = 2
+    TAG = 3
+
+
+class GitPathError(AttributeError):
+    pass
+
+
+class GitBranchNotFound(AttributeError):
+    pass
+
+
+def get_branch_latest_commit(p: Path, branch: str, branch_type: BranchType = BranchType.LOCAL) -> str:
+    """获取git项目本地保存的指定分支的最近一个commit号.
 
     Args:
         p (Path): git项目位置
-
+        branch (str): 分支名
+        branch_type (BranchType): 分支类型
     Raises:
-        AttributeError: 如果路径不是git项目则会抛出
-        AttributeError: git仓库没有master或者main分支
+        GitPathError: 如果路径不是git项目则会抛出
+        GitBranchNotFound: git仓库没有指定分支
 
     Returns:
         str: commit号
@@ -174,21 +197,78 @@ def get_master_latest_commit(p: Path) -> str:
     """
     d = make_repod(p)
     if not is_git_dir(d):
-        raise AttributeError(f"目标路径{p}不是git仓库.")
+        raise GitPathError(f"目标路径{p}不是git仓库.")
     else:
-        infos = run("git show-ref master", cwd=p)
+        infos = run(f"git show-ref {branch}", cwd=p)
         for line in infos.splitlines():
             hs, ref = line.split(" ")
-            if ref == "refs/heads/master" or ref == "refs/heads/main":
-                return hs
+            if branch_type is BranchType.LOCAL:
+                if ref == f"refs/heads/{branch}":
+                    return hs
+                else:
+                    continue
+            elif branch_type is BranchType.REMOTE:
+                if ref == f"refs/remotes/origin/{branch}":
+                    return hs
+                else:
+                    continue
+            elif branch_type is BranchType.TAG:
+                if ref == f"refs/tags/{branch}":
+                    return hs
+                else:
+                    continue
+            else:
+                continue
         else:
-            raise AttributeError("git仓库没有master或者main分支")
-        # with Repo(d) as repo:
-        #     for i in repo.heads:
-        #         if i.name == "master" or i.name == "main":
-        #             return i.commit.hexsha
-        #     else:
-        #         raise AttributeError("git仓库没有master或者main分支")
+            raise GitBranchNotFound(f"git仓库没有{branch}分支")
+
+
+def get_master_latest_commit(p: Path) -> str:
+    """获取git项目的最近一个master分支的commit号.
+
+    Args:
+        p (Path): git项目位置
+
+    Raises:
+        GitPathError: 如果路径不是git项目则会抛出
+        GitBranchNotFound: git仓库没有master或者main分支
+
+    Returns:
+        str: commit号
+
+    """
+    try:
+        c = get_branch_latest_commit(p, branch="master")
+    except GitBranchNotFound:
+        try:
+            c = get_branch_latest_commit(p, branch="main")
+        except GitBranchNotFound:
+            raise GitBranchNotFound(f"git仓库没有 master 分支或者 main")
+        except Exception as e:
+            raise e
+        else:
+            return c
+    except Exception as e:
+        raise e
+    else:
+        return c
+
+
+def get_dev_latest_commit(p: Path) -> str:
+    """获取git项目的最近一个master分支的commit号.
+
+    Args:
+        p (Path): git项目位置
+
+    Raises:
+        GitPathError: 如果路径不是git项目则会抛出
+        GitBranchNotFound: git仓库没有master或者main分支
+
+    Returns:
+        str: commit号
+
+    """
+    return get_branch_latest_commit(p, branch="dev")
 
 
 def git_push(p: Path, *, msg: str = "update") -> None:
@@ -212,20 +292,13 @@ def git_push(p: Path, *, msg: str = "update") -> None:
         print("git push执行成功")
 
 
-def git_pull_master(p: Path) -> None:
-    """git项目推代码到远端仓库.
+def git_pull(p: Path) -> None:
+    """git项目拉取最近当前分支的的提交.
 
     Args:
         p (Path): 本地仓库位置
-        msg (str): 注释消息
 
     """
-    # print(f"pull path {p}********************")
-    # d = make_repod(p)
-    # with Repo() as repo:
-    #     if str(repo.active_branch) != "master":
-    #         warnings.warn(f"active_branch {repo.active_branch} not master")
-    #         return
     run("git pull", cwd=p, env=make_env_args(["GIT_SSL_NO_VERIFY::1"]), visible=True, fail_exit=False)
 
 

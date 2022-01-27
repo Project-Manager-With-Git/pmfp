@@ -193,15 +193,20 @@ def gen_thirdpart_service_compose(service_name: str) -> ServicesSchema:
     result: ServicesSchema = {}
     if service_name == "redis":
         redis_compose: ServiceSchema = {
-            "image": "redis:latest",
+            "image": "hsz1273327/redis-allinone:1.0.0",
             "mem_limit": "500m",
             "restart": "on-failure",
-            "ports": ["6379:6379"]
+            "ports": ["6379:6379"],
+            "volumes": [
+                "./redis/data:/data",
+                "./redis/redis.conf:/usr/local/etc/redis/redis.conf"
+            ],
+            "command": ["redis-server", "/usr/local/etc/redis/redis.conf"]
         }
         result["redis"] = redis_compose
     elif service_name == "postgres":
         postgres_compose: ServiceSchema = {
-            "image": "timescale/timescaledb-postgis:latest-pg13",
+            "image": "hsz1273327/pg-allinone:0.0.2",
             "mem_limit": "500m",
             "restart": "on-failure",
             "ports": ["5432:5432"],
@@ -214,65 +219,116 @@ def gen_thirdpart_service_compose(service_name: str) -> ServicesSchema:
             "command": ["-c", "max_connections=300"]
         }
         result["postgres"] = postgres_compose
-
-    elif service_name == "zookeeper":
-        for i in range(1, 4):
-            zookeeper_sers: ServiceSchema = {
-                "image": "zookeeper",
-                "hostname": f"zoo{i}",
-                "ports": ["2181:2181"],
-                "mem_limit": "500m",
-                "restart": "on-failure",
-                "environment": {
-                    "ZOO_MY_ID": str(i),
-                    "ZOO_SERVERS": "server.1=0.0.0.0:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181"
-                }
-            }
-            result[f"zoo{i}"] = zookeeper_sers
-
-    elif service_name == "kafka":
-        zk_sers: ServiceSchema = {
-            "image": "wurstmeister/zookeeper",
-            "ports": ["2181:2181"],
-            "networks": {
-                "local": {
-                    "aliases": ["kafka.local"]
-                }
-            },
+        pgadmin: ServiceSchema = {
+            "image": "dpage/pgadmin4:4.29",
             "mem_limit": "500m",
             "restart": "on-failure",
+            "ports": ["8180:80"],
+            "environment": {
+                "PGADMIN_DEFAULT_EMAIL": "",
+                "PGADMIN_DEFAULT_PASSWORD": ""
+            }
         }
-        result["zookeeper"] = zk_sers
+        result["pgadmin"] = pgadmin
+
+    elif service_name == "zookeeper":
+        zookeeper_sers: ServiceSchema = {
+            "image": "docker.io/bitnami/zookeeper:3.7",
+            "ports": ["2181:2181"],
+            "mem_limit": "500m",
+            "restart": "on-failure",
+            "environment": {
+                "ALLOW_ANONYMOUS_LOGIN": "yes"
+            },
+            "volumes": ["./zk/data:/bitnami"]
+        }
+        result[f"zookeeper"] = zookeeper_sers
+
+    elif service_name == "kafka":
+        zookeeper_sers_kfk: ServiceSchema = {
+            "image": "docker.io/bitnami/zookeeper:3.7",
+            "ports": ["2181:2181"],
+            "mem_limit": "500m",
+            "restart": "on-failure",
+            "environment": {
+                "ALLOW_ANONYMOUS_LOGIN": "yes"
+            },
+            "volumes": ["./zk/data:/bitnami"]
+        }
+        result[f"zookeeper"] = zookeeper_sers_kfk
         kafka_sers: ServiceSchema = {
-            "image": "wurstmeister/kafka",
+            "image": "docker.io/bitnami/kafka:3",
             "ports": ["9092:9092"],
             "mem_limit": "500m",
             "restart": "on-failure",
-            "networks": {
-                "local": {
-                    "aliases": ["kafka.local"]
-                }
-            },
-
             "environment": {
-                "KAFKA_ADVERTISED_HOST_NAME": "kafka.local",
-                "KAFKA_ZOOKEEPER_CONNECT": "zookeeper: 2181",
-                "KAFKA_CREATE_TOPICS": "topic1:1:1"
+                "KAFKA_ADVERTISED_HOST_NAME": "host.docker.internal",
+                "KAFKA_ZOOKEEPER_CONNECT": "zookeeper:2181",
+                "KAFKA_CREATE_TOPICS": "topic.test",
+                "KAFKA_AUTO_CREATE_TOPICS_ENABLE": "true",
+                "KAFKA_LOG_RETENTION_HOURS": "12",
+                "ALLOW_PLAINTEXT_LISTENER": "yes"
             },
-            "volumes": ["/var/run/docker.sock:/var/run/docker.sock"]
+            "volumes": ["./kafka/data:/bitnami"]
         }
         result["kafka"] = kafka_sers
+    elif service_name == "etcd":
+        etcd_compose: ServiceSchema = {
+            "image": "docker.io/bitnami/etcd:3.5.1",
+            "ports": ["12379:2379", "12380:2380"],
+            "mem_limit": "500m",
+            "restart": "on-failure",
+            "environment": {"ALLOW_NONE_AUTHENTICATION": "yes", "ETCDCTL_API": "3"},
+            "volumes": ["./etcd/data:/bitnami/etcd"]
+        }
+        result["etcd"] = etcd_compose
+
+    elif service_name == "clickhouse":
+        clickhouse_compose: ServiceSchema = {
+            "image": "yandex/clickhouse-server:21.11-alpine",
+            "ports": ["8123:8123", "19000:9000"],
+            "mem_limit": "500m",
+            "restart": "on-failure",
+            "volumes": ["./clickhouse/data:/var/lib/clickhouse"],
+            "ulimits": {
+                "nofile": {
+                    "soft": 262144,
+                    "hard": 262144
+                }
+            }
+        }
+        result["clickhouse"] = clickhouse_compose
+
+    elif service_name == "cassandra":
+        cassandra_compose: ServiceSchema = {
+            "image": "cassandra:4.0.1",
+            "ports": ["7000:7000"],
+            "mem_limit": "500m",
+            "restart": "on-failure",
+            "volumes": ["./cassandra/data:/var/lib/cassandra"]
+        }
+        result["cassandra"] = cassandra_compose
 
     elif service_name == "envoy":
         envoy_compose: ServiceSchema = {
-            "image": "envoyproxy/envoy-dev:76286f6152666c73d9379f21f43152bd03b00f78",
-            "hostname": f"zoo{i}",
-            "ports": ["10000:10000"],
+            "image": "envoyproxy/envoy:v1.21.0",
+            "ports": ["10000:10000", "9902:9902"],
             "mem_limit": "500m",
             "restart": "on-failure",
-            "volumes": ["./envoy.yaml:/etc/envoy/envoy.yaml"]
+            "volumes": ["./envoy/envoy-override.yaml:/envoy-override.yaml"]
         }
         result["envoy"] = envoy_compose
+
+    elif service_name == "minio":
+        minio_compose: ServiceSchema = {
+            "image": "minio/minio:RELEASE.2022-01-08T03-11-54Z",
+            "ports": ["9000:9000", "9001:9001"],
+            "mem_limit": "500m",
+            "restart": "on-failure",
+            "volumes": ["./minio/data:/data"],
+            "command": ["server", "/data", "--console-address", ":9001"]
+        }
+        result["minio"] = minio_compose
 
     else:
         raise AttributeError("unsupport service_name")

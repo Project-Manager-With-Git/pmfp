@@ -49,12 +49,12 @@ Functions
    获取全局c++编译器.
 
 
-.. py:function:: get_node_version() -> Optional[str]
+.. py:function:: get_node_version(exit: bool = False) -> Optional[str]
 
    获取系统中node的版本.
 
 
-.. py:function:: get_golang_version() -> Optional[str]
+.. py:function:: get_golang_version(exit: bool = False) -> Optional[str]
 
    获取本地golang的版本.
 

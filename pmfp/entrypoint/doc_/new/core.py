@@ -15,7 +15,7 @@ class New(EndPoint):
             "language": {
                 "type": "string",
                 "title": "l",
-                "description": "单元测试检验针对的语言",
+                "description": "项目的编程语言",
                 "enum": ["py", "go"]
             },
             "code": {

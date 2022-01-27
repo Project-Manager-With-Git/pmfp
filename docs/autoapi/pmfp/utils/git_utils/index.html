@@ -7,14 +7,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.utils.git_utils &mdash; pmfp 4.1.6 文档</title>
+  <title>pmfp.utils.git_utils &mdash; pmfp 4.1.8 文档</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -32,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -66,7 +63,7 @@
             
             
               <div class="version">
-                4.1.6
+                4.1.8
               </div>
             
           
@@ -93,7 +90,9 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.1.6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html">v4.1.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-7">v4.1.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-6">v4.1.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-4">v4.1.4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
@@ -184,6 +183,20 @@
 <p>git相关的动作.</p>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="永久链接至标题">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="永久链接至标题">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.BranchType" title="pmfp.utils.git_utils.BranchType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BranchType</span></code></a></p></td>
+<td><p>git分支的类型</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="永久链接至标题">¶</a></h3>
 <table class="longtable docutils align-default">
@@ -216,14 +229,20 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.get_latest_commits" title="pmfp.utils.git_utils.get_latest_commits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_latest_commits</span></code></a>(p: pathlib.Path) → Dict[str, str]</p></td>
 <td><p>获取git项目的各个分支最近一次commit的hash值.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.get_master_latest_commit" title="pmfp.utils.git_utils.get_master_latest_commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_master_latest_commit</span></code></a>(p: pathlib.Path) → str</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.get_branch_latest_commit" title="pmfp.utils.git_utils.get_branch_latest_commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_branch_latest_commit</span></code></a>(p: pathlib.Path, branch: str, branch_type: BranchType = BranchType.LOCAL) → str</p></td>
+<td><p>获取git项目本地保存的指定分支的最近一个commit号.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.get_master_latest_commit" title="pmfp.utils.git_utils.get_master_latest_commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_master_latest_commit</span></code></a>(p: pathlib.Path) → str</p></td>
+<td><p>获取git项目的最近一个master分支的commit号.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.get_dev_latest_commit" title="pmfp.utils.git_utils.get_dev_latest_commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dev_latest_commit</span></code></a>(p: pathlib.Path) → str</p></td>
 <td><p>获取git项目的最近一个master分支的commit号.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.git_push" title="pmfp.utils.git_utils.git_push"><code class="xref py py-obj docutils literal notranslate"><span class="pre">git_push</span></code></a>(p: pathlib.Path, *, msg: str = 'update') → None</p></td>
 <td><p>git项目推代码到远端仓库.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.git_pull_master" title="pmfp.utils.git_utils.git_pull_master"><code class="xref py py-obj docutils literal notranslate"><span class="pre">git_pull_master</span></code></a>(p: pathlib.Path) → None</p></td>
-<td><p>git项目推代码到远端仓库.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.git_pull" title="pmfp.utils.git_utils.git_pull"><code class="xref py py-obj docutils literal notranslate"><span class="pre">git_pull</span></code></a>(p: pathlib.Path) → None</p></td>
+<td><p>git项目拉取最近当前分支的的提交.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pmfp.utils.git_utils.git_new_tag" title="pmfp.utils.git_utils.git_new_tag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">git_new_tag</span></code></a>(p: pathlib.Path, version: str, message: Optional[str] = None, remote: bool = False) → None</p></td>
 <td><p>为代码打tag.</p></td>
@@ -231,13 +250,13 @@
 </tbody>
 </table>
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.make_repod">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">make_repod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pathlib.Path</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#make_repod"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.make_repod" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.make_repod">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">make_repod</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pathlib.Path</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#make_repod"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.make_repod" title="永久链接至目标">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_find_remotes">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_find_remotes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_find_remotes"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_find_remotes" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.git_find_remotes">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_find_remotes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_find_remotes"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_find_remotes" title="永久链接至目标">¶</a></dt>
 <dd><p>从git项目中找到远端仓库url.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -256,8 +275,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_find_origin">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_find_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_find_origin"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_find_origin" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.git_find_origin">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_find_origin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_find_origin"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_find_origin" title="永久链接至目标">¶</a></dt>
 <dd><p>从git项目中找到远端origin仓库url.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -276,8 +295,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_add_remote">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_add_remote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_add_remote"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_add_remote" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.git_add_remote">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_add_remote</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_add_remote"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_add_remote" title="永久链接至目标">¶</a></dt>
 <dd><p>为本地git仓库关联远程仓库.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -294,8 +313,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_add_origin">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_add_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_add_origin"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_add_origin" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.git_add_origin">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_add_origin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_add_origin"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_add_origin" title="永久链接至目标">¶</a></dt>
 <dd><p>为本地git仓库关联origin远程仓库</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -311,8 +330,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_init">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_init"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_init" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.git_init">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_init</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_init"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_init" title="永久链接至目标">¶</a></dt>
 <dd><p>初始化本地git仓库.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -325,8 +344,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_clone">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_clone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'master'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_clone"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_clone" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.git_clone">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_clone</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'master'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_clone"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_clone" title="永久链接至目标">¶</a></dt>
 <dd><p>从远程克隆项目到本地.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -340,8 +359,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.get_latest_commits">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">get_latest_commits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#get_latest_commits"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.get_latest_commits" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.get_latest_commits">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">get_latest_commits</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#get_latest_commits"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.get_latest_commits" title="永久链接至目标">¶</a></dt>
 <dd><p>获取git项目的各个分支最近一次commit的hash值.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -359,18 +378,63 @@
 </dl>
 </dd></dl>
 
+<dl class="py class">
+<dt id="pmfp.utils.git_utils.BranchType">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">BranchType</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#BranchType"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.BranchType" title="永久链接至目标">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>git分支的类型</p>
+<ul class="simple">
+<li><p>LOCAL 本地分支</p></li>
+<li><p>REMOTE 远程分支</p></li>
+<li><p>TAG 标签分支</p></li>
+</ul>
+<dl class="py attribute">
+<dt id="pmfp.utils.git_utils.BranchType.LOCAL">
+<code class="sig-name descname"><span class="pre">LOCAL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#BranchType.LOCAL"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.BranchType.LOCAL" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.git_utils.BranchType.REMOTE">
+<code class="sig-name descname"><span class="pre">REMOTE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#BranchType.REMOTE"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.BranchType.REMOTE" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pmfp.utils.git_utils.BranchType.TAG">
+<code class="sig-name descname"><span class="pre">TAG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#BranchType.TAG"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.BranchType.TAG" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="pmfp.utils.git_utils.GitPathError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">GitPathError</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#GitPathError"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.GitPathError" title="永久链接至目标">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">AttributeError</span></code></p>
+<p>Attribute not found.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="pmfp.utils.git_utils.GitBranchNotFound">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">GitBranchNotFound</span></code><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#GitBranchNotFound"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.GitBranchNotFound" title="永久链接至目标">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">AttributeError</span></code></p>
+<p>Attribute not found.</p>
+</dd></dl>
+
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.get_master_latest_commit">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">get_master_latest_commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#get_master_latest_commit"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.get_master_latest_commit" title="永久链接至目标">¶</a></dt>
-<dd><p>获取git项目的最近一个master分支的commit号.</p>
+<dt id="pmfp.utils.git_utils.get_branch_latest_commit">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">get_branch_latest_commit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pmfp.utils.git_utils.BranchType" title="pmfp.utils.git_utils.BranchType"><span class="pre">BranchType</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">BranchType.LOCAL</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#get_branch_latest_commit"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.get_branch_latest_commit" title="永久链接至目标">¶</a></dt>
+<dd><p>获取git项目本地保存的指定分支的最近一个commit号.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>p</strong> (<em>Path</em>) – git项目位置</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>Path</em>) – git项目位置</p></li>
+<li><p><strong>branch</strong> (<em>str</em>) – 分支名</p></li>
+<li><p><strong>branch_type</strong> (<a class="reference internal" href="#pmfp.utils.git_utils.BranchType" title="pmfp.utils.git_utils.BranchType"><em>BranchType</em></a>) – 分支类型</p></li>
+</ul>
 </dd>
 <dt class="field-even">引发</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>AttributeError</strong> – 如果路径不是git项目则会抛出</p></li>
-<li><p><strong>AttributeError</strong> – git仓库没有master或者main分支</p></li>
+<li><p><a class="reference internal" href="#pmfp.utils.git_utils.GitPathError" title="pmfp.utils.git_utils.GitPathError"><strong>GitPathError</strong></a> – 如果路径不是git项目则会抛出</p></li>
+<li><p><a class="reference internal" href="#pmfp.utils.git_utils.GitBranchNotFound" title="pmfp.utils.git_utils.GitBranchNotFound"><strong>GitBranchNotFound</strong></a> – git仓库没有指定分支</p></li>
 </ul>
 </dd>
 <dt class="field-odd">返回</dt>
@@ -383,8 +447,54 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_push">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_push</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'update'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_push"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_push" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.get_master_latest_commit">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">get_master_latest_commit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#get_master_latest_commit"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.get_master_latest_commit" title="永久链接至目标">¶</a></dt>
+<dd><p>获取git项目的最近一个master分支的commit号.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>p</strong> (<em>Path</em>) – git项目位置</p>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#pmfp.utils.git_utils.GitPathError" title="pmfp.utils.git_utils.GitPathError"><strong>GitPathError</strong></a> – 如果路径不是git项目则会抛出</p></li>
+<li><p><a class="reference internal" href="#pmfp.utils.git_utils.GitBranchNotFound" title="pmfp.utils.git_utils.GitBranchNotFound"><strong>GitBranchNotFound</strong></a> – git仓库没有master或者main分支</p></li>
+</ul>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>commit号</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.utils.git_utils.get_dev_latest_commit">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">get_dev_latest_commit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#get_dev_latest_commit"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.get_dev_latest_commit" title="永久链接至目标">¶</a></dt>
+<dd><p>获取git项目的最近一个master分支的commit号.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>p</strong> (<em>Path</em>) – git项目位置</p>
+</dd>
+<dt class="field-even">引发</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#pmfp.utils.git_utils.GitPathError" title="pmfp.utils.git_utils.GitPathError"><strong>GitPathError</strong></a> – 如果路径不是git项目则会抛出</p></li>
+<li><p><a class="reference internal" href="#pmfp.utils.git_utils.GitBranchNotFound" title="pmfp.utils.git_utils.GitBranchNotFound"><strong>GitBranchNotFound</strong></a> – git仓库没有master或者main分支</p></li>
+</ul>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>commit号</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pmfp.utils.git_utils.git_push">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_push</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'update'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_push"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_push" title="永久链接至目标">¶</a></dt>
 <dd><p>git项目推代码到远端仓库.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -397,22 +507,19 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_pull_master">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_pull_master</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_pull_master"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_pull_master" title="永久链接至目标">¶</a></dt>
-<dd><p>git项目推代码到远端仓库.</p>
+<dt id="pmfp.utils.git_utils.git_pull">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_pull</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_pull"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_pull" title="永久链接至目标">¶</a></dt>
+<dd><p>git项目拉取最近当前分支的的提交.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>p</strong> (<em>Path</em>) – 本地仓库位置</p></li>
-<li><p><strong>msg</strong> (<em>str</em>) – 注释消息</p></li>
-</ul>
+<dd class="field-odd"><p><strong>p</strong> (<em>Path</em>) – 本地仓库位置</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pmfp.utils.git_utils.git_new_tag">
-<span class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></span><span class="sig-name descname"><span class="pre">git_new_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_new_tag"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_new_tag" title="永久链接至目标">¶</a></dt>
+<dt id="pmfp.utils.git_utils.git_new_tag">
+<code class="sig-prename descclassname"><span class="pre">pmfp.utils.git_utils.</span></code><code class="sig-name descname"><span class="pre">git_new_tag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pathlib.Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/pmfp/utils/git_utils.html#git_new_tag"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pmfp.utils.git_utils.git_new_tag" title="永久链接至目标">¶</a></dt>
 <dd><p>为代码打tag.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -440,7 +547,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; 版权所有 2021, hsz.
+        &#169; 版权所有 2022, hsz.
 
     </p>
   </div>

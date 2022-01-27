@@ -13,7 +13,7 @@ Module Contents
 ---------------
 
 .. py:data:: __VERSION__
-   :annotation: = 4.1.6
+   :annotation: = 4.1.8
 
    
 

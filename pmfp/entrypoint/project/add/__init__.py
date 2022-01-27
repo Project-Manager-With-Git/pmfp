@@ -36,7 +36,7 @@ def sourcepack_check_and_cached(cached_sourcepack: List[str], source_pack: Sourc
         return sourcepackdir
     else:
         try:
-            if source_pack.tag == "latest":
+            if source_pack.tag in ("latest", "dev"):
                 source_pack.cache(cache_dir, throw_clone=True)
             else:
                 if not sourcepackdir.exists():
@@ -54,7 +54,7 @@ def sourcepack_check_and_cached(cached_sourcepack: List[str], source_pack: Sourc
 def check_and_cached(cached_sourcepack: List[str], component_string: str, cache_dir: Path) -> Tuple[ComponentTemplate, Path]:
     """检查组件的模板库是否有缓存,没有的话进行缓存.
 
-    `latest`标签的模板库都会进行缓存更新.
+    `latest`和`dev`标签的模板库都会进行缓存更新.
 
     Args:
         cached_sourcepack (List[str]): 已经缓存过的资源包列表

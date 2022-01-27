@@ -209,7 +209,7 @@ Attributes
    :type cwd: str
 
 
-.. py:function:: build_doc(language: str, output: str, *, doc_source_dir: str, version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
+.. py:function:: build_doc(language: str, output: str, *, doc_source_dir: str = '', version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
 
    为项目构造api文档.
    :param code: 项目源码位置
@@ -663,7 +663,7 @@ Attributes
 
 
 .. py:data:: __VERSION__
-   :annotation: = 4.1.6
+   :annotation: = 4.1.8
 
    
 

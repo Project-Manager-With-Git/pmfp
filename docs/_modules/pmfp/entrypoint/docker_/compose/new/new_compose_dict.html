@@ -7,14 +7,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.docker_.compose.new.new_compose_dict &mdash; pmfp 4.1.6 文档</title>
+  <title>pmfp.entrypoint.docker_.compose.new.new_compose_dict &mdash; pmfp 4.1.8 文档</title>
   
 
   
   <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -32,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../../../../" id="documentation_options" src="../../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../../_static/jquery.js"></script>
         <script src="../../../../../../_static/underscore.js"></script>
         <script src="../../../../../../_static/doctools.js"></script>
@@ -66,7 +63,7 @@
             
             
               <div class="version">
-                4.1.6
+                4.1.8
               </div>
             
           
@@ -93,7 +90,9 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html">v4.1.6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html">v4.1.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-7">v4.1.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-6">v4.1.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-4">v4.1.4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../CHANGELOG.html#v4-1-3">v4.1.3</a></li>
@@ -375,15 +374,20 @@
     <span class="n">result</span><span class="p">:</span> <span class="n">ServicesSchema</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;redis&quot;</span><span class="p">:</span>
         <span class="n">redis_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;redis:latest&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;hsz1273327/redis-allinone:1.0.0&quot;</span><span class="p">,</span>
             <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
             <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;6379:6379&quot;</span><span class="p">]</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;6379:6379&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;./redis/data:/data&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;./redis/redis.conf:/usr/local/etc/redis/redis.conf&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;redis-server&quot;</span><span class="p">,</span> <span class="s2">&quot;/usr/local/etc/redis/redis.conf&quot;</span><span class="p">]</span>
         <span class="p">}</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;redis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">redis_compose</span>
     <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;postgres&quot;</span><span class="p">:</span>
         <span class="n">postgres_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;timescale/timescaledb-postgis:latest-pg13&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;hsz1273327/pg-allinone:0.0.2&quot;</span><span class="p">,</span>
             <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
             <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
             <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;5432:5432&quot;</span><span class="p">],</span>
@@ -396,65 +400,116 @@
             <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;max_connections=300&quot;</span><span class="p">]</span>
         <span class="p">}</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;postgres&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">postgres_compose</span>
-
-    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;zookeeper&quot;</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-            <span class="n">zookeeper_sers</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;zookeeper&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;zoo</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2181:2181&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;ZOO_MY_ID&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
-                    <span class="s2">&quot;ZOO_SERVERS&quot;</span><span class="p">:</span> <span class="s2">&quot;server.1=0.0.0.0:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181&quot;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="n">result</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;zoo</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zookeeper_sers</span>
-
-    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;kafka&quot;</span><span class="p">:</span>
-        <span class="n">zk_sers</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;wurstmeister/zookeeper&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2181:2181&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;kafka.local&quot;</span><span class="p">]</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
+        <span class="n">pgadmin</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;dpage/pgadmin4:4.29&quot;</span><span class="p">,</span>
             <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
             <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;8180:80&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;PGADMIN_DEFAULT_EMAIL&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;PGADMIN_DEFAULT_PASSWORD&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
         <span class="p">}</span>
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;zookeeper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zk_sers</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;pgadmin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pgadmin</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;zookeeper&quot;</span><span class="p">:</span>
+        <span class="n">zookeeper_sers</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;docker.io/bitnami/zookeeper:3.7&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2181:2181&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;ALLOW_ANONYMOUS_LOGIN&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./zk/data:/bitnami&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;zookeeper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zookeeper_sers</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;kafka&quot;</span><span class="p">:</span>
+        <span class="n">zookeeper_sers_kfk</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;docker.io/bitnami/zookeeper:3.7&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2181:2181&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;ALLOW_ANONYMOUS_LOGIN&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./zk/data:/bitnami&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;zookeeper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zookeeper_sers_kfk</span>
         <span class="n">kafka_sers</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;wurstmeister/kafka&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;docker.io/bitnami/kafka:3&quot;</span><span class="p">,</span>
             <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;9092:9092&quot;</span><span class="p">],</span>
             <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
             <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;networks&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;kafka.local&quot;</span><span class="p">]</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-
             <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;KAFKA_ADVERTISED_HOST_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;kafka.local&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;KAFKA_ZOOKEEPER_CONNECT&quot;</span><span class="p">:</span> <span class="s2">&quot;zookeeper: 2181&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;KAFKA_CREATE_TOPICS&quot;</span><span class="p">:</span> <span class="s2">&quot;topic1:1:1&quot;</span>
+                <span class="s2">&quot;KAFKA_ADVERTISED_HOST_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;host.docker.internal&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;KAFKA_ZOOKEEPER_CONNECT&quot;</span><span class="p">:</span> <span class="s2">&quot;zookeeper:2181&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;KAFKA_CREATE_TOPICS&quot;</span><span class="p">:</span> <span class="s2">&quot;topic.test&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;KAFKA_AUTO_CREATE_TOPICS_ENABLE&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;KAFKA_LOG_RETENTION_HOURS&quot;</span><span class="p">:</span> <span class="s2">&quot;12&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ALLOW_PLAINTEXT_LISTENER&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span>
             <span class="p">},</span>
-            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span><span class="p">]</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./kafka/data:/bitnami&quot;</span><span class="p">]</span>
         <span class="p">}</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;kafka&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kafka_sers</span>
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;etcd&quot;</span><span class="p">:</span>
+        <span class="n">etcd_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;docker.io/bitnami/etcd:3.5.1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;12379:2379&quot;</span><span class="p">,</span> <span class="s2">&quot;12380:2380&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ALLOW_NONE_AUTHENTICATION&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;ETCDCTL_API&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./etcd/data:/bitnami/etcd&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;etcd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">etcd_compose</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;clickhouse&quot;</span><span class="p">:</span>
+        <span class="n">clickhouse_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;yandex/clickhouse-server:21.11-alpine&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;8123:8123&quot;</span><span class="p">,</span> <span class="s2">&quot;19000:9000&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./clickhouse/data:/var/lib/clickhouse&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;ulimits&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;nofile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;soft&quot;</span><span class="p">:</span> <span class="mi">262144</span><span class="p">,</span>
+                    <span class="s2">&quot;hard&quot;</span><span class="p">:</span> <span class="mi">262144</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;clickhouse&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clickhouse_compose</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;cassandra&quot;</span><span class="p">:</span>
+        <span class="n">cassandra_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;cassandra:4.0.1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;7000:7000&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./cassandra/data:/var/lib/cassandra&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;cassandra&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cassandra_compose</span>
 
     <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;envoy&quot;</span><span class="p">:</span>
         <span class="n">envoy_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;envoyproxy/envoy-dev:76286f6152666c73d9379f21f43152bd03b00f78&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;zoo</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;10000:10000&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;envoyproxy/envoy:v1.21.0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;10000:10000&quot;</span><span class="p">,</span> <span class="s2">&quot;9902:9902&quot;</span><span class="p">],</span>
             <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
             <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./envoy.yaml:/etc/envoy/envoy.yaml&quot;</span><span class="p">]</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./envoy/envoy-override.yaml:/envoy-override.yaml&quot;</span><span class="p">]</span>
         <span class="p">}</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;envoy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">envoy_compose</span>
+
+    <span class="k">elif</span> <span class="n">service_name</span> <span class="o">==</span> <span class="s2">&quot;minio&quot;</span><span class="p">:</span>
+        <span class="n">minio_compose</span><span class="p">:</span> <span class="n">ServiceSchema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;minio/minio:RELEASE.2022-01-08T03-11-54Z&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ports&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;9000:9000&quot;</span><span class="p">,</span> <span class="s2">&quot;9001:9001&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mem_limit&quot;</span><span class="p">:</span> <span class="s2">&quot;500m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;restart&quot;</span><span class="p">:</span> <span class="s2">&quot;on-failure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;volumes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;./minio/data:/data&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;/data&quot;</span><span class="p">,</span> <span class="s2">&quot;--console-address&quot;</span><span class="p">,</span> <span class="s2">&quot;:9001&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;minio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">minio_compose</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;unsupport service_name&quot;</span><span class="p">)</span>
@@ -1006,7 +1061,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; 版权所有 2021, hsz.
+        &#169; 版权所有 2022, hsz.
 
     </p>
   </div>
