@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_.image.pack.core`
-=================================================
+:mod:`pmfp.entrypoint.docker_.image.pack.core`
+==============================================
 
 .. py:module:: pmfp.entrypoint.docker_.image.pack.core
 
@@ -30,19 +30,20 @@ Attributes
    pmfp.entrypoint.docker_.image.pack.core.dockerimage_pack
 
 
-.. py:class:: Pack(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+.. class:: Pack(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
    将多个不同平台的同名镜像打包到同一个manifest list.
 
-   .. py:attribute:: schema
+   .. attribute:: schema
       
 
       
 
 
-.. py:data:: dockerimage_pack
+.. data:: dockerimage_pack
    
 
    

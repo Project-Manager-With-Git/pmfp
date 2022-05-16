@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.grpc.descservice`
-==========================================
+:mod:`pmfp.entrypoint.grpc.descservice`
+=======================================
 
 .. py:module:: pmfp.entrypoint.grpc.descservice
 
@@ -40,7 +40,7 @@ Attributes
    pmfp.entrypoint.grpc.descservice.grpc_descservice
 
 
-.. py:function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
 
    执行命令行命令并返回其stdout的值
 
@@ -59,12 +59,12 @@ Attributes
    :rtype: str
 
 
-.. py:data:: grpc_descservice
+.. data:: grpc_descservice
    
 
    
 
-.. py:function:: desc_grpc(url: str, service: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: desc_grpc(url: str, service: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    描述grpc支持的服务.
 

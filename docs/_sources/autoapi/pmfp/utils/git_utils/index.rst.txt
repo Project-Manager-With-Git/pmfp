@@ -1,5 +1,5 @@
-:py:mod:`pmfp.utils.git_utils`
-==============================
+:mod:`pmfp.utils.git_utils`
+===========================
 
 .. py:module:: pmfp.utils.git_utils
 
@@ -43,10 +43,10 @@ Functions
 
 
 
-.. py:function:: make_repod(p: pathlib.Path) -> pathlib.Path
+.. function:: make_repod(p: pathlib.Path) -> pathlib.Path
 
 
-.. py:function:: git_find_remotes(p: pathlib.Path) -> Dict[str, str]
+.. function:: git_find_remotes(p: pathlib.Path) -> Dict[str, str]
 
    从git项目中找到远端仓库url.
 
@@ -59,7 +59,7 @@ Functions
    :rtype: Dict[str, str]
 
 
-.. py:function:: git_find_origin(p: pathlib.Path) -> Optional[str]
+.. function:: git_find_origin(p: pathlib.Path) -> Optional[str]
 
    从git项目中找到远端origin仓库url.
 
@@ -72,7 +72,7 @@ Functions
    :rtype: Optional[str]
 
 
-.. py:function:: git_add_remote(p: pathlib.Path, remote_name: str, remote_url: str) -> None
+.. function:: git_add_remote(p: pathlib.Path, remote_name: str, remote_url: str) -> None
 
    为本地git仓库关联远程仓库.
 
@@ -86,7 +86,7 @@ Functions
    :raises AttributeError: 如果路径不是git项目则会抛出
 
 
-.. py:function:: git_add_origin(p: pathlib.Path, remote_url: str) -> None
+.. function:: git_add_origin(p: pathlib.Path, remote_url: str) -> None
 
    为本地git仓库关联origin远程仓库
 
@@ -98,7 +98,7 @@ Functions
    :raises AttributeError: 如果路径不是git项目则会抛出
 
 
-.. py:function:: git_init(p: pathlib.Path, *, remote_url: Optional[str] = None) -> None
+.. function:: git_init(p: pathlib.Path, *, remote_url: Optional[str] = None) -> None
 
    初始化本地git仓库.
 
@@ -108,7 +108,7 @@ Functions
    :type remote_url: Optional[str], optional
 
 
-.. py:function:: git_clone(url: str, to: pathlib.Path, *, branch: str = 'master') -> None
+.. function:: git_clone(url: str, to: pathlib.Path, *, branch: str = 'master') -> None
 
    从远程克隆项目到本地.
 
@@ -120,7 +120,7 @@ Functions
    :type branch: str, optional
 
 
-.. py:function:: get_latest_commits(p: pathlib.Path) -> Dict[str, str]
+.. function:: get_latest_commits(p: pathlib.Path) -> Dict[str, str]
 
    获取git项目的各个分支最近一次commit的hash值.
 
@@ -133,7 +133,7 @@ Functions
    :rtype: Dict[str, str]
 
 
-.. py:class:: BranchType
+.. class:: BranchType
 
    Bases: :py:obj:`enum.Enum`
 
@@ -143,37 +143,39 @@ Functions
    + REMOTE 远程分支
    + TAG 标签分支
 
-   .. py:attribute:: LOCAL
+   .. attribute:: LOCAL
       :annotation: = 1
 
       
 
-   .. py:attribute:: REMOTE
+   .. attribute:: REMOTE
       :annotation: = 2
 
       
 
-   .. py:attribute:: TAG
+   .. attribute:: TAG
       :annotation: = 3
 
       
 
 
-.. py:exception:: GitPathError
+.. exception:: GitPathError
+
 
    Bases: :py:obj:`AttributeError`
 
    Attribute not found.
 
 
-.. py:exception:: GitBranchNotFound
+.. exception:: GitBranchNotFound
+
 
    Bases: :py:obj:`AttributeError`
 
    Attribute not found.
 
 
-.. py:function:: get_branch_latest_commit(p: pathlib.Path, branch: str, branch_type: BranchType = BranchType.LOCAL) -> str
+.. function:: get_branch_latest_commit(p: pathlib.Path, branch: str, branch_type: BranchType = BranchType.LOCAL) -> str
 
    获取git项目本地保存的指定分支的最近一个commit号.
 
@@ -191,7 +193,7 @@ Functions
    :rtype: str
 
 
-.. py:function:: get_master_latest_commit(p: pathlib.Path) -> str
+.. function:: get_master_latest_commit(p: pathlib.Path) -> str
 
    获取git项目的最近一个master分支的commit号.
 
@@ -205,7 +207,7 @@ Functions
    :rtype: str
 
 
-.. py:function:: get_dev_latest_commit(p: pathlib.Path) -> str
+.. function:: get_dev_latest_commit(p: pathlib.Path) -> str
 
    获取git项目的最近一个master分支的commit号.
 
@@ -219,7 +221,7 @@ Functions
    :rtype: str
 
 
-.. py:function:: git_push(p: pathlib.Path, *, msg: str = 'update') -> None
+.. function:: git_push(p: pathlib.Path, *, msg: str = 'update') -> None
 
    git项目推代码到远端仓库.
 
@@ -229,7 +231,7 @@ Functions
    :type msg: str
 
 
-.. py:function:: git_pull(p: pathlib.Path) -> None
+.. function:: git_pull(p: pathlib.Path) -> None
 
    git项目拉取最近当前分支的的提交.
 
@@ -237,7 +239,7 @@ Functions
    :type p: Path
 
 
-.. py:function:: git_new_tag(p: pathlib.Path, version: str, message: Optional[str] = None, remote: bool = False) -> None
+.. function:: git_new_tag(p: pathlib.Path, version: str, message: Optional[str] = None, remote: bool = False) -> None
 
    为代码打tag.
 

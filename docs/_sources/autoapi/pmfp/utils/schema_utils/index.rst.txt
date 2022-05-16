@@ -1,5 +1,5 @@
-:py:mod:`pmfp.utils.schema_utils`
-=================================
+:mod:`pmfp.utils.schema_utils`
+==============================
 
 .. py:module:: pmfp.utils.schema_utils
 
@@ -22,7 +22,7 @@ Functions
 
 
 
-.. py:function:: is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool
+.. function:: is_validated(instance: Dict[str, Any], schema: Dict[str, Any]) -> bool
 
    检测数据是否符合模式.
 

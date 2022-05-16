@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.test_.benchmark.test_go`
-=================================================
+:mod:`pmfp.entrypoint.test_.benchmark.test_go`
+==============================================
 
 .. py:module:: pmfp.entrypoint.test_.benchmark.test_go
 
@@ -22,7 +22,7 @@ Functions
 
 
 
-.. py:function:: benchmark_test_go(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
+.. function:: benchmark_test_go(benchmark_code: str, *, cwd: Optional[str] = None, mem: bool = False) -> None
 
    对python代码做静态检测.
 

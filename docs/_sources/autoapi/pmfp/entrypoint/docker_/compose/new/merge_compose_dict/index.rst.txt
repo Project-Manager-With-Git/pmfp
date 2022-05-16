@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_.compose.new.merge_compose_dict`
-================================================================
+:mod:`pmfp.entrypoint.docker_.compose.new.merge_compose_dict`
+=============================================================
 
 .. py:module:: pmfp.entrypoint.docker_.compose.new.merge_compose_dict
 
@@ -22,23 +22,23 @@ Functions
 
 
 
-.. py:function:: level1(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: level1(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
    尽量更新.
 
 
-.. py:function:: level2(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: level2(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
 
-.. py:function:: level3(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: level3(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
 
-.. py:function:: level4(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: level4(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
 
-.. py:function:: level5(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: level5(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
 
-.. py:function:: merge_compose(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app', updatemode: str = 'level5') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: merge_compose(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app', updatemode: str = 'level5') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
 

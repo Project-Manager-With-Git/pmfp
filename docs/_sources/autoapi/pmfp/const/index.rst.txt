@@ -1,5 +1,5 @@
-:py:mod:`pmfp.const`
-====================
+:mod:`pmfp.const`
+=================
 
 .. py:module:: pmfp.const
 
@@ -12,87 +12,87 @@
 Module Contents
 ---------------
 
-.. py:data:: PLATFORM
+.. data:: PLATFORM
    
 
    
 
-.. py:data:: GOLBAL_PYTHON
+.. data:: GOLBAL_PYTHON
    
 
    
 
-.. py:data:: GOLBAL_CC
+.. data:: GOLBAL_CC
    
 
    
 
-.. py:data:: GOLBAL_CXX
+.. data:: GOLBAL_CXX
    
 
    
 
-.. py:data:: GOLBAL_PYTHON_VERSION
+.. data:: GOLBAL_PYTHON_VERSION
    
 
    
 
-.. py:data:: PMFP_CONFIG_DEFAULT_NAME
+.. data:: PMFP_CONFIG_DEFAULT_NAME
    :annotation: = pmfprc.json
 
    
 
-.. py:data:: PMFP_CONFIG_HOME
+.. data:: PMFP_CONFIG_HOME
    
 
    
 
-.. py:data:: PMFP_CONFIG_PATH
+.. data:: PMFP_CONFIG_PATH
    
 
    
 
-.. py:data:: GLOBAL_CONFIG_PATH
+.. data:: GLOBAL_CONFIG_PATH
    
 
    
 
-.. py:data:: PY_ENV_PATH
+.. data:: PY_ENV_PATH
    :annotation: = env
 
    
 
-.. py:data:: JS_ENV_PATH
+.. data:: JS_ENV_PATH
    :annotation: = package.json
 
    
 
-.. py:data:: GO_ENV_PATH
+.. data:: GO_ENV_PATH
    :annotation: = go.mod
 
    
 
-.. py:data:: DOC_PATH
+.. data:: DOC_PATH
    :annotation: = document
 
    
 
-.. py:data:: TEST_PATH
+.. data:: TEST_PATH
    :annotation: = test
 
    
 
-.. py:data:: TYPECHECK_PATH
+.. data:: TYPECHECK_PATH
    :annotation: = typecheck
 
    
 
-.. py:data:: DEFAULT_PMFPRC
+.. data:: DEFAULT_PMFPRC
    
 
    
 
-.. py:data:: DEFAULT_AUTHOR
+.. data:: DEFAULT_AUTHOR
    
 
    

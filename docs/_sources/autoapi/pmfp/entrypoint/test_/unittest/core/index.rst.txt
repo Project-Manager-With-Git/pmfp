@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.test_.unittest.core`
-=============================================
+:mod:`pmfp.entrypoint.test_.unittest.core`
+==========================================
 
 .. py:module:: pmfp.entrypoint.test_.unittest.core
 
@@ -26,12 +26,13 @@ Attributes
    pmfp.entrypoint.test_.unittest.core.test_unittest
 
 
-.. py:data:: pmfpinfo
+.. data:: pmfpinfo
    
 
    
 
-.. py:class:: Unittest(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+.. class:: Unittest(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
@@ -39,18 +40,18 @@ Attributes
 
    单元测试的覆盖率会放到指定位置.
 
-   .. py:attribute:: argparse_noflag
+   .. attribute:: argparse_noflag
       :annotation: = test_code
 
       
 
-   .. py:attribute:: schema
+   .. attribute:: schema
       
 
       
 
 
-.. py:data:: test_unittest
+.. data:: test_unittest
    
 
    

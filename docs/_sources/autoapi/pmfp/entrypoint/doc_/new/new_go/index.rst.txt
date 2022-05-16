@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.doc_.new.new_go`
-=========================================
+:mod:`pmfp.entrypoint.doc_.new.new_go`
+======================================
 
 .. py:module:: pmfp.entrypoint.doc_.new.new_go
 
@@ -17,7 +17,7 @@ Functions
 
 
 
-.. py:function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, is_web: bool = False, cwd: str = '.') -> None
+.. function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, is_web: bool = False, cwd: str = '.') -> None
 
    为go项目构造api文档.
    :param code: 项目源码位置

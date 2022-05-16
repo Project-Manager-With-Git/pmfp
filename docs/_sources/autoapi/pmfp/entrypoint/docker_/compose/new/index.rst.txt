@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_.compose.new`
-=============================================
+:mod:`pmfp.entrypoint.docker_.compose.new`
+==========================================
 
 .. py:module:: pmfp.entrypoint.docker_.compose.new
 
@@ -47,7 +47,7 @@ Attributes
    pmfp.entrypoint.docker_.compose.new.dockercompose_new
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -60,12 +60,12 @@ Attributes
    :rtype: Path
 
 
-.. py:data:: dockercompose_new
+.. data:: dockercompose_new
    
 
    
 
-.. py:function:: gen_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: gen_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
    生成compose字典.
 
@@ -112,10 +112,10 @@ Attributes
    :rtype: ComposeSchema
 
 
-.. py:function:: merge_compose(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app', updatemode: str = 'level5') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: merge_compose(old: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, new: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, project_name: str = 'app', updatemode: str = 'level5') -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
 
-.. py:function:: save_compose(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, cwdp: pathlib.Path, dockercompose_name: str = 'docker-compose.yml') -> None
+.. function:: save_compose(compose: pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema, cwdp: pathlib.Path, dockercompose_name: str = 'docker-compose.yml') -> None
 
    保存compose为文件.
 
@@ -127,6 +127,6 @@ Attributes
    :type dockercompose_name: str, optional
 
 
-.. py:function:: new_dockercompose(compose_version: str, dockercompose_name: str = 'docker-compose.yml', updatemode: str = 'level5', dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
+.. function:: new_dockercompose(compose_version: str, dockercompose_name: str = 'docker-compose.yml', updatemode: str = 'level5', dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
 
 

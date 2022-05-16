@@ -1,5 +1,5 @@
-:py:mod:`pmfp.utils.template_utils`
-===================================
+:mod:`pmfp.utils.template_utils`
+================================
 
 .. py:module:: pmfp.utils.template_utils
 
@@ -24,7 +24,7 @@ Functions
 
 
 
-.. py:function:: template_2_content(template: str, **kwargs: Any) -> str
+.. function:: template_2_content(template: str, **kwargs: Any) -> str
 
    将模板转换为文件内容.
 
@@ -34,7 +34,7 @@ Functions
    :type kwargs: Dict[str,str]
 
 
-.. py:function:: jsontemplate_2_content(template: str, **kwargs: Any) -> str
+.. function:: jsontemplate_2_content(template: str, **kwargs: Any) -> str
 
    将模板转换为文件内容.
 
@@ -44,7 +44,7 @@ Functions
    :type kwargs: Dict[str,str]
 
 
-.. py:function:: cfgtemplate_2_file(template: str, file: pathlib.Path, **kwargs: Any) -> None
+.. function:: cfgtemplate_2_file(template: str, file: pathlib.Path, **kwargs: Any) -> None
 
    将模板转换为文件内容.
 

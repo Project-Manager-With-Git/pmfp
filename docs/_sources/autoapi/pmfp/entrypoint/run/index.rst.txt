@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.run`
-=============================
+:mod:`pmfp.entrypoint.run`
+==========================
 
 .. py:module:: pmfp.entrypoint.run
 
@@ -22,6 +22,6 @@ Functions
 
 
 
-.. py:function:: run_cmd(command: str, *, cwd: str = '.', env_args: Optional[List[str]] = None) -> None
+.. function:: run_cmd(command: str, *, cwd: str = '.', env_args: Optional[List[str]] = None) -> None
 
 

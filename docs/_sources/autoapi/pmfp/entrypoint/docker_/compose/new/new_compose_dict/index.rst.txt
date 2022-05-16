@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_.compose.new.new_compose_dict`
-==============================================================
+:mod:`pmfp.entrypoint.docker_.compose.new.new_compose_dict`
+===========================================================
 
 .. py:module:: pmfp.entrypoint.docker_.compose.new.new_compose_dict
 
@@ -25,7 +25,7 @@ Functions
 
 
 
-.. py:function:: gen_default_log_compose(fluentd_url: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.LogSchema
+.. function:: gen_default_log_compose(fluentd_url: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.LogSchema
 
    构造一级字段`x-log`默认的log配置.
 
@@ -36,7 +36,7 @@ Functions
    :rtype: Dict[str, Union[str, Dict[str, str]]]
 
 
-.. py:function:: gen_default_extra_hosts_compose(extra_hosts: List[str]) -> List[str]
+.. function:: gen_default_extra_hosts_compose(extra_hosts: List[str]) -> List[str]
 
    构造一级字段`x-extra_hosts`默认的域名映射.
 
@@ -47,7 +47,7 @@ Functions
    :rtype: List[str]
 
 
-.. py:function:: gen_volume_compose(add_volumes: Optional[List[str]] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.VolumesSchema
+.. function:: gen_volume_compose(add_volumes: Optional[List[str]] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.VolumesSchema
 
    生成一级字段`volumes`的配置.
 
@@ -64,7 +64,7 @@ Functions
    :rtype: VolumesSchema
 
 
-.. py:function:: gen_network_compose(compose_version: str, use_host_network: bool, add_networks: Optional[List[str]] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.NetworksSchema
+.. function:: gen_network_compose(compose_version: str, use_host_network: bool, add_networks: Optional[List[str]] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.NetworksSchema
 
    生成一级字段`networks`的配置.
 
@@ -85,7 +85,7 @@ Functions
    :rtype: NetworksSchema
 
 
-.. py:function:: gen_config_compose(add_extra_configs: Optional[List[str]] = None) -> Dict[str, pmfp.entrypoint.docker_.compose.new.typedef.ConfigAndSecretSchema]
+.. function:: gen_config_compose(add_extra_configs: Optional[List[str]] = None) -> Dict[str, pmfp.entrypoint.docker_.compose.new.typedef.ConfigAndSecretSchema]
 
    生成一级字段`configs`的配置.
 
@@ -96,7 +96,7 @@ Functions
    :rtype: Dict[str, Dict[str, bool]]
 
 
-.. py:function:: gen_secret_compose(add_extra_secrets: Optional[List[str]] = None) -> Dict[str, pmfp.entrypoint.docker_.compose.new.typedef.ConfigAndSecretSchema]
+.. function:: gen_secret_compose(add_extra_secrets: Optional[List[str]] = None) -> Dict[str, pmfp.entrypoint.docker_.compose.new.typedef.ConfigAndSecretSchema]
 
    生成一级字段`secrets`的配置.
 
@@ -107,7 +107,7 @@ Functions
    :rtype: Dict[str, Dict[str, bool]]
 
 
-.. py:function:: gen_thirdpart_service_compose(service_name: str) -> pmfp.entrypoint.docker_.compose.new.typedef.ServicesSchema
+.. function:: gen_thirdpart_service_compose(service_name: str) -> pmfp.entrypoint.docker_.compose.new.typedef.ServicesSchema
 
    为第三方服务构造compose.
 
@@ -120,7 +120,7 @@ Functions
    :rtype: Dict[str, Dict[str, Any]]
 
 
-.. py:function:: gen_project_service_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, default_extra_hosts: Optional[List[str]] = None, default_log: Optional[pmfp.entrypoint.docker_.compose.new.typedef.LogSchema] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ServiceSchema
+.. function:: gen_project_service_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, default_extra_hosts: Optional[List[str]] = None, default_log: Optional[pmfp.entrypoint.docker_.compose.new.typedef.LogSchema] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ServiceSchema
 
    生成项目本身的service项.
 
@@ -167,7 +167,7 @@ Functions
    :rtype: Dict[str, Union[str, Dict[str, Any], List[str]]]
 
 
-.. py:function:: gen_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
+.. function:: gen_compose(compose_version: str, dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> pmfp.entrypoint.docker_.compose.new.typedef.ComposeSchema
 
    生成compose字典.
 

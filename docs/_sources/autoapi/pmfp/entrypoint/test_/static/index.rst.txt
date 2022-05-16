@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.test_.static`
-======================================
+:mod:`pmfp.entrypoint.test_.static`
+===================================
 
 .. py:module:: pmfp.entrypoint.test_.static
 
@@ -41,7 +41,7 @@ Attributes
    pmfp.entrypoint.test_.static.test_static
 
 
-.. py:function:: static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None
+.. function:: static_test_py(code: str, model: bool, coverage: bool, output: str, *, cwd: str) -> None
 
    对python代码做静态检测.
 
@@ -57,12 +57,12 @@ Attributes
    :type cwd: str
 
 
-.. py:data:: test_static
+.. data:: test_static
    
 
    
 
-.. py:function:: static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = '.') -> None
+.. function:: static_test(language: str, code: str, output: str, *, model: bool = False, coverage: bool = False, cwd: str = '.') -> None
 
    对动态语言做静态类型检验.
 

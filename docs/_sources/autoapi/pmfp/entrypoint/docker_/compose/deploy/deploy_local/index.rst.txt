@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_.compose.deploy.deploy_local`
-=============================================================
+:mod:`pmfp.entrypoint.docker_.compose.deploy.deploy_local`
+==========================================================
 
 .. py:module:: pmfp.entrypoint.docker_.compose.deploy.deploy_local
 
@@ -17,7 +17,7 @@ Functions
 
 
 
-.. py:function:: deploy_local(rebuild: bool, cwdp: pathlib.Path, dockercompose_name: Optional[str] = None, stack_name: Optional[str] = None, compose_version: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> None
+.. function:: deploy_local(rebuild: bool, cwdp: pathlib.Path, dockercompose_name: Optional[str] = None, stack_name: Optional[str] = None, compose_version: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> None
 
    本地部署.
 

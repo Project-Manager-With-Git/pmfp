@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.env_.new.env_js.env_node`
-==================================================
+:mod:`pmfp.entrypoint.env_.new.env_js.env_node`
+===============================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_js.env_node
 
@@ -22,7 +22,7 @@ Functions
 
 
 
-.. py:function:: new_env_node(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+.. function:: new_env_node(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
 
    初始化golang默认的虚拟环境.
 

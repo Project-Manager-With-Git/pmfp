@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.http.query`
-====================================
+:mod:`pmfp.entrypoint.http.query`
+=================================
 
 .. py:module:: pmfp.entrypoint.http.query
 
@@ -40,7 +40,7 @@ Attributes
    pmfp.entrypoint.http.query.http_query
 
 
-.. py:function:: query_http(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None, cb: Optional[Callable[[str], None]] = None) -> None
+.. function:: query_http(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None, cb: Optional[Callable[[str], None]] = None) -> None
 
    http请求并打印结果.
 
@@ -66,11 +66,11 @@ Attributes
    :type cb: Optional[Callable[[str],None]], optional
 
 
-.. py:data:: http_query
+.. data:: http_query
    
 
    
 
-.. py:function:: query(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+.. function:: query(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
 
 

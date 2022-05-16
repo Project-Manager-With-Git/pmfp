@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.project.info`
-======================================
+:mod:`pmfp.entrypoint.project.info`
+===================================
 
 .. py:module:: pmfp.entrypoint.project.info
 
@@ -26,61 +26,63 @@ Attributes
    pmfp.entrypoint.project.info.project_info
 
 
-.. py:class:: InfoBase(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+.. class:: InfoBase(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
    获取本目录下项目的基本信息.
 
-   .. py:attribute:: verify_schema
+   .. attribute:: verify_schema
       :annotation: = False
 
       
 
-   .. py:attribute:: load_all_config_file
+   .. attribute:: load_all_config_file
       :annotation: = True
 
       
 
-   .. py:attribute:: config_file_only_get_need
+   .. attribute:: config_file_only_get_need
       :annotation: = False
 
       
 
-   .. py:method:: do_main(self) -> None
+   .. method:: do_main(self) -> None
 
       执行入口函数.
 
 
 
-.. py:class:: Info(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+.. class:: Info(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`InfoBase`
 
    获取本目录下项目的基本信息.
 
-   .. py:attribute:: verify_schema
+   .. attribute:: verify_schema
       :annotation: = False
 
       
 
-   .. py:attribute:: load_all_config_file
+   .. attribute:: load_all_config_file
       :annotation: = True
 
       
 
-   .. py:attribute:: config_file_only_get_need
+   .. attribute:: config_file_only_get_need
       :annotation: = False
 
       
 
-   .. py:method:: do_main(self) -> None
+   .. method:: do_main(self) -> None
 
       执行入口函数.
 
 
 
-.. py:data:: project_info
+.. data:: project_info
    
 
    

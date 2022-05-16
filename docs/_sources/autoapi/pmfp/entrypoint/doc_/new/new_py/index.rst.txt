@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.doc_.new.new_py`
-=========================================
+:mod:`pmfp.entrypoint.doc_.new.new_py`
+======================================
 
 .. py:module:: pmfp.entrypoint.doc_.new.new_py
 
@@ -30,37 +30,37 @@ Attributes
    pmfp.entrypoint.doc_.new.new_py.pyindexmd
 
 
-.. py:data:: AppendConfig
+.. data:: AppendConfig
    :annotation: = 
 
    
 
-.. py:data:: source_io
+.. data:: source_io
    
 
    
 
-.. py:data:: AppendConfig
+.. data:: AppendConfig
    
 
    
 
-.. py:data:: pyindexmd
+.. data:: pyindexmd
    :annotation: = 
 
    
 
-.. py:data:: source_io
+.. data:: source_io
    
 
    
 
-.. py:data:: pyindexmd
+.. data:: pyindexmd
    
 
    
 
-.. py:function:: doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
+.. function:: doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
 
    为python项目构造api文档.
    :param code: 项目源码位置

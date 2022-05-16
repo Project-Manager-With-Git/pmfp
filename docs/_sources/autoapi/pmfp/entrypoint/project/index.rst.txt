@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.project`
-=================================
+:mod:`pmfp.entrypoint.project`
+==============================
 
 .. py:module:: pmfp.entrypoint.project
 
@@ -48,12 +48,12 @@ Attributes
    pmfp.entrypoint.project.project_as_temp
 
 
-.. py:data:: project_info
+.. data:: project_info
    
 
    
 
-.. py:function:: add_component(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: add_component(component_string: str, located_path: Optional[str] = None, kv: Optional[List[str]] = None, cwd: str = '.') -> None
 
    为项目添加组件.
 
@@ -63,10 +63,10 @@ Attributes
    :type located_path: Optional[str], optional
 
 
-.. py:function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 
-.. py:data:: project_as_temp
+.. data:: project_as_temp
    
 
    

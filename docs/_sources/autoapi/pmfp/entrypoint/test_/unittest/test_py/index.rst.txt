@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.test_.unittest.test_py`
-================================================
+:mod:`pmfp.entrypoint.test_.unittest.test_py`
+=============================================
 
 .. py:module:: pmfp.entrypoint.test_.unittest.test_py
 
@@ -22,7 +22,7 @@ Functions
 
 
 
-.. py:function:: unittest_test_py(test_code: str, code: str, *, coverage: Optional[bool] = False, output: Optional[str] = 'doc_unittest', cwd: Optional[str] = '.') -> None
+.. function:: unittest_test_py(test_code: str, code: str, *, coverage: Optional[bool] = False, output: Optional[str] = 'doc_unittest', cwd: Optional[str] = '.') -> None
 
    对python代码做单元测试.
 

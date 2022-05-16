@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.utils.endpoint &mdash; pmfp 4.1.8 文档</title>
+  <title>pmfp.utils.endpoint &mdash; pmfp 4.1.9 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.1.8
+                4.1.9
               </div>
             
           
@@ -90,7 +90,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">v4.1.8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html">v4.1.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-8">v4.1.8</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-7">v4.1.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-6">v4.1.6</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CHANGELOG.html#v4-1-5">v4.1.5</a></li>
@@ -251,11 +252,17 @@
     <span class="k">if</span> <span class="n">r</span><span class="p">:</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;module &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">req1</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;require (&quot;</span><span class="p">)</span>
-    <span class="n">infos</span> <span class="o">=</span> <span class="n">req1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">)</span>
-    <span class="n">requirements</span> <span class="o">=</span> <span class="n">infos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;requires&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;@&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">requirements</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
-    <span class="k">return</span> <span class="n">result</span></div>
+    <span class="n">req1_infos</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;require (&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">req1_infos</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># 没有依赖</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 有依赖,取第一个require中的内容</span>
+        <span class="n">req1</span> <span class="o">=</span> <span class="n">req1_infos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">infos</span> <span class="o">=</span> <span class="n">req1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="n">requirements</span> <span class="o">=</span> <span class="n">infos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;requires&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;@&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">requirements</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="cmake_handdler"><a class="viewcode-back" href="../../../autoapi/pmfp/utils/endpoint/index.html#pmfp.utils.endpoint.cmake_handdler">[文档]</a><span class="k">def</span> <span class="nf">cmake_handdler</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>

@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.env_.new.env_cxx`
-==========================================
+:mod:`pmfp.entrypoint.env_.new.env_cxx`
+=======================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_cxx
 
@@ -22,6 +22,6 @@ Functions
 
 
 
-.. py:function:: init_cxx_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
+.. function:: init_cxx_env(cwd: pathlib.Path, project_name: str, version: str, description: str) -> None
 
 

@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.grpc.new`
-==================================
+:mod:`pmfp.entrypoint.grpc.new`
+===============================
 
 .. py:module:: pmfp.entrypoint.grpc.new
 
@@ -53,7 +53,7 @@ Attributes
    pmfp.entrypoint.grpc.new.grpc_template
 
 
-.. py:function:: template_2_content(template: str, **kwargs: Any) -> str
+.. function:: template_2_content(template: str, **kwargs: Any) -> str
 
    将模板转换为文件内容.
 
@@ -63,7 +63,7 @@ Attributes
    :type kwargs: Dict[str,str]
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -76,27 +76,27 @@ Attributes
    :rtype: Path
 
 
-.. py:data:: grpc_new
+.. data:: grpc_new
    
 
    
 
-.. py:data:: grpc_template
+.. data:: grpc_template
    :annotation: = 
 
    
 
-.. py:data:: grpc_template_io
+.. data:: grpc_template_io
    
 
    
 
-.. py:data:: grpc_template
+.. data:: grpc_template
    
 
    
 
-.. py:function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+.. function:: new_grpc(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
 
    新建一个protpbuf文件.
 

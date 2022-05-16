@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.cache`
-===============================
+:mod:`pmfp.entrypoint.cache`
+============================
 
 .. py:module:: pmfp.entrypoint.cache
 
@@ -53,7 +53,7 @@ Attributes
    pmfp.entrypoint.cache.cache_info
 
 
-.. py:function:: get_sourcepack(source_pack_string: str) -> None
+.. function:: get_sourcepack(source_pack_string: str) -> None
 
    从远程指定位置获取资源包.
 
@@ -61,17 +61,17 @@ Attributes
    :type source_pack_string: str
 
 
-.. py:data:: cache_list
+.. data:: cache_list
    
 
    
 
-.. py:function:: sourcepack_clean(mode: str = 'except_latest', host: Optional[str] = None, repo_namespace: Optional[str] = None, repo_name: Optional[str] = None, tags: Optional[List[str]] = None) -> None
+.. function:: sourcepack_clean(mode: str = 'except_latest', host: Optional[str] = None, repo_namespace: Optional[str] = None, repo_name: Optional[str] = None, tags: Optional[List[str]] = None) -> None
 
    清除资源包的缓存.
 
 
-.. py:data:: cache_info
+.. data:: cache_info
    
 
    

@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.doc_.build_`
-=====================================
+:mod:`pmfp.entrypoint.doc_.build_`
+==================================
 
 .. py:module:: pmfp.entrypoint.doc_.build_
 
@@ -38,7 +38,7 @@ Attributes
    pmfp.entrypoint.doc_.build_.doc_build
 
 
-.. py:function:: doc_build_py(output: str, *, source_dir: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
+.. function:: doc_build_py(output: str, *, source_dir: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
 
    为python项目构造api文档.
    :param output: html文档位置
@@ -51,7 +51,7 @@ Attributes
    :type cwd: str
 
 
-.. py:function:: doc_build_go(output: str, *, source_dir: str, is_web: bool = False, cwd: str = '.') -> None
+.. function:: doc_build_go(output: str, *, source_dir: str, is_web: bool = False, cwd: str = '.') -> None
 
    为go项目更新api文档.
    :param output: html文档位置
@@ -66,12 +66,12 @@ Attributes
    :type cwd: str
 
 
-.. py:data:: doc_build
+.. data:: doc_build
    
 
    
 
-.. py:function:: build_doc(language: str, output: str, *, doc_source_dir: str = '', version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
+.. function:: build_doc(language: str, output: str, *, doc_source_dir: str = '', version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
 
    为项目构造api文档.
    :param code: 项目源码位置

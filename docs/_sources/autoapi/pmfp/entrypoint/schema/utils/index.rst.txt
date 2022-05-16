@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.schema.utils`
-======================================
+:mod:`pmfp.entrypoint.schema.utils`
+===================================
 
 .. py:module:: pmfp.entrypoint.schema.utils
 
@@ -23,7 +23,7 @@ Functions
 
 
 
-.. py:function:: make_url_id(name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> str
+.. function:: make_url_id(name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> str
 
    构造json schema 的id.
 
@@ -42,7 +42,7 @@ Functions
    :rtype: str
 
 
-.. py:function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
+.. function:: copy_schema(template: str, name: str, path: str, version_name: str, cwd: str, *, addr: Optional[str] = None) -> None
 
    以一个json schema 为模板copy一个json schema文件.
 

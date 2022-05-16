@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.core`
-==============================
+:mod:`pmfp.entrypoint.core`
+===========================
 
 .. py:module:: pmfp.entrypoint.core
 
@@ -12,7 +12,7 @@
 Module Contents
 ---------------
 
-.. py:data:: ppm
+.. data:: ppm
    
 
    

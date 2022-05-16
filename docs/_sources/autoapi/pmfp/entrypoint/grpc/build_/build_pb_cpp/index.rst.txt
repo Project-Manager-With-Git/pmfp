@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.grpc.build_.build_pb_cpp`
-==================================================
+:mod:`pmfp.entrypoint.grpc.build_.build_pb_cpp`
+===============================================
 
 .. py:module:: pmfp.entrypoint.grpc.build_.build_pb_cpp
 
@@ -22,7 +22,7 @@ Functions
 
 
 
-.. py:function:: build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+.. function:: build_pb_cpp(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
 
    编译grpc的protobuffer定义文件为C++语言模块.
 

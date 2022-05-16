@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.http`
-==============================
+:mod:`pmfp.entrypoint.http`
+===========================
 
 .. py:module:: pmfp.entrypoint.http
 
@@ -39,7 +39,7 @@ Functions
 
 
 
-.. py:function:: query_http(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None, cb: Optional[Callable[[str], None]] = None) -> None
+.. function:: query_http(url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None, cb: Optional[Callable[[str], None]] = None) -> None
 
    http请求并打印结果.
 
@@ -65,7 +65,7 @@ Functions
    :type cb: Optional[Callable[[str],None]], optional
 
 
-.. py:function:: serv_http(port: int, root: str, bind: str) -> None
+.. function:: serv_http(port: int, root: str, bind: str) -> None
 
    启动http静态服务.
 
@@ -77,7 +77,7 @@ Functions
    :type bind: str
 
 
-.. py:function:: test_http(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
+.. function:: test_http(schema: str, serialization: str, url: str, method: str, *, auth: Optional[str] = None, auth_type: Optional[str] = None, payload: Optional[str] = None, payload_type: Optional[str] = None, stream: bool = False, verify: bool = False, cert: Optional[str] = None) -> None
 
    检测http请求的结果是否满足模式.
 

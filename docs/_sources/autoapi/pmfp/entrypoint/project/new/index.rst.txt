@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.project.new`
-=====================================
+:mod:`pmfp.entrypoint.project.new`
+==================================
 
 .. py:module:: pmfp.entrypoint.project.new
 
@@ -56,7 +56,7 @@ Attributes
    pmfp.entrypoint.project.new.project_new
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -69,21 +69,22 @@ Attributes
    :rtype: Path
 
 
-.. py:function:: remove_readonly(func: Callable, path: str, _: Any) -> None
+.. function:: remove_readonly(func: Callable, path: str, _: Any) -> None
 
    Clear the readonly bit and reattempt the removal.
 
 
-.. py:class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
+.. class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
+
 
    资源包类.
 
-   .. py:attribute:: TENPLATE_URL
+   .. attribute:: TENPLATE_URL
       :annotation: = {host}::{repo_namespace}::{repo_name}@{tag}
 
       
 
-   .. py:method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
+   .. method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
       :classmethod:
 
       从资源包字符串构造资源包对象.
@@ -95,12 +96,12 @@ Attributes
       :rtype: [SourcePack]
 
 
-   .. py:method:: as_sourcepack_string(self) -> str
+   .. method:: as_sourcepack_string(self) -> str
 
       构造资源包字符串.
 
 
-   .. py:method:: git_url(self, schema: str = 'https') -> str
+   .. method:: git_url(self, schema: str = 'https') -> str
 
       构造资源包的git仓库地址url.
 
@@ -111,7 +112,7 @@ Attributes
       :rtype: str
 
 
-   .. py:method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
+   .. method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
 
       拉取最新镜像,并将原来的版本以hash为tag保存
 
@@ -121,7 +122,7 @@ Attributes
       :type throw: bool
 
 
-   .. py:method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
+   .. method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
 
       克隆资源包到本地缓存临时文件夹.
 
@@ -133,7 +134,7 @@ Attributes
       :type throw: bool
 
 
-   .. py:method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
+   .. method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
 
       构造资源包的本地路径.
 
@@ -144,7 +145,7 @@ Attributes
       :rtype: Path
 
 
-   .. py:method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
+   .. method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
 
       缓存资源包到本地.
 
@@ -155,17 +156,17 @@ Attributes
 
 
 
-.. py:function:: get_cache_dir() -> pathlib.Path
+.. function:: get_cache_dir() -> pathlib.Path
 
    获取缓存根目录.
 
 
-.. py:function:: get_config_info() -> Dict[str, Any]
+.. function:: get_config_info() -> Dict[str, Any]
 
    获取配置信息.
 
 
-.. py:function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: new_env(language: str, *, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, cwd: str = '.') -> None
 
    构造不同执行环境.
 
@@ -189,43 +190,44 @@ Attributes
    :type cwd: str, optional
 
 
-.. py:function:: make_project_info_with_default(cwdp: pathlib.Path, language: str, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None) -> Dict[str, str]
+.. function:: make_project_info_with_default(cwdp: pathlib.Path, language: str, env: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None) -> Dict[str, str]
 
 
-.. py:function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 
-.. py:class:: InfoBase(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+.. class:: InfoBase(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
    获取本目录下项目的基本信息.
 
-   .. py:attribute:: verify_schema
+   .. attribute:: verify_schema
       :annotation: = False
 
       
 
-   .. py:attribute:: load_all_config_file
+   .. attribute:: load_all_config_file
       :annotation: = True
 
       
 
-   .. py:attribute:: config_file_only_get_need
+   .. attribute:: config_file_only_get_need
       :annotation: = False
 
       
 
-   .. py:method:: do_main(self) -> None
+   .. method:: do_main(self) -> None
 
       执行入口函数.
 
 
 
-.. py:function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
+.. function:: _add_component(cached_sourcepacks: List[str], projectconfig: Dict[str, Any], pmfpconf: Dict[str, Any], cache_dir: pathlib.Path, component_string: str, cwdp: pathlib.Path, *, located_path: Optional[str] = None, save: bool = True, kv: Optional[List[str]] = None, root_default_path: Optional[str] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Tuple[pmfp.utils.remote_cache_utils.ComponentTemplate, Dict[str, Any]]
 
 
-.. py:function:: make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Dict[str, str]
+.. function:: make_template_kv(sourcepack_config: Dict[str, Any], projectconfig: Dict[str, Any], kv: Optional[List[str]] = None, oldtemplate_kw: Optional[Dict[str, Any]] = None) -> Dict[str, str]
 
    构造模板中匹配的kv.
 
@@ -236,12 +238,12 @@ Attributes
    :rtype: Dict[str, str]
 
 
-.. py:function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None, root_default_path: Optional[str] = None) -> str
+.. function:: to_target_source(projectconfig: Dict[str, Any], target_component_info: Dict[str, Any], cwdp: pathlib.Path, sourcepackdir: pathlib.Path, target_source: str, tempkv: Dict[str, Any], located_path: Optional[str] = None, root_default_path: Optional[str] = None) -> str
 
    将目标组件模板转换到项目目录.
 
 
-.. py:function:: sourcepack_check_and_cached(cached_sourcepack: List[str], source_pack: pmfp.utils.remote_cache_utils.SourcePack, cache_dir: pathlib.Path) -> pathlib.Path
+.. function:: sourcepack_check_and_cached(cached_sourcepack: List[str], source_pack: pmfp.utils.remote_cache_utils.SourcePack, cache_dir: pathlib.Path) -> pathlib.Path
 
    检测资源包是否已经有缓存,没有就缓存.
 
@@ -258,12 +260,12 @@ Attributes
    :rtype: Path
 
 
-.. py:data:: project_new
+.. data:: project_new
    
 
    
 
-.. py:function:: check_and_cached(cached_sourcepack: List[str], template_string: str, cache_dir: pathlib.Path) -> Tuple[pmfp.utils.remote_cache_utils.SourcePack, pathlib.Path]
+.. function:: check_and_cached(cached_sourcepack: List[str], template_string: str, cache_dir: pathlib.Path) -> Tuple[pmfp.utils.remote_cache_utils.SourcePack, pathlib.Path]
 
    检查组件的模板库是否有缓存,没有的话进行缓存.
 
@@ -281,11 +283,11 @@ Attributes
    :rtype: ComponentTemplate
 
 
-.. py:function:: check_source(pmfpconf: Dict[str, Any], sourcepackdir: pathlib.Path, template_string: str, env: Optional[str] = None, language: Optional[str] = None) -> Dict[str, Any]
+.. function:: check_source(pmfpconf: Dict[str, Any], sourcepackdir: pathlib.Path, template_string: str, env: Optional[str] = None, language: Optional[str] = None) -> Dict[str, Any]
 
    校验组件所在模板库的信息,通过的话返回模板库信息
 
 
-.. py:function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: new_project(env: Optional[str] = None, language: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, author: Optional[str] = None, author_email: Optional[str] = None, description: Optional[str] = None, keywords: Optional[List[str]] = None, template_string: Optional[str] = None, with_test: bool = False, install: bool = False, kv: Optional[List[str]] = None, install_env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 

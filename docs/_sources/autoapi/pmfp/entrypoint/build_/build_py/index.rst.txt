@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.build_.build_py`
-=========================================
+:mod:`pmfp.entrypoint.build_.build_py`
+======================================
 
 .. py:module:: pmfp.entrypoint.build_.build_py
 
@@ -25,7 +25,7 @@ Functions
 
 
 
-.. py:function:: _delete_py_source(root_path: pathlib.Path) -> None
+.. function:: _delete_py_source(root_path: pathlib.Path) -> None
 
    将python源码的.py文件删除.
    这是一个递归操作的函数.
@@ -33,12 +33,12 @@ Functions
    :type p: Path
 
 
-.. py:function:: py_pack_lib(output_dir: pathlib.Path, cwd: pathlib.Path) -> None
+.. function:: py_pack_lib(output_dir: pathlib.Path, cwd: pathlib.Path) -> None
 
 
-.. py:function:: py_pack_exec(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, static: bool = False, mini: bool = False, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None) -> None
+.. function:: py_pack_exec(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, static: bool = False, mini: bool = False, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None) -> None
 
 
-.. py:function:: py_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, build_as: str = 'exec', static: bool = False, mini: bool = False) -> None
+.. function:: py_build(code: str, project_name: str, *, output_dir: pathlib.Path, cwd: pathlib.Path, pypi_mirror: Optional[str] = None, requires: Optional[List[str]] = None, build_as: str = 'exec', static: bool = False, mini: bool = False) -> None
 
 

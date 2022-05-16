@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.proto.build_`
-======================================
+:mod:`pmfp.entrypoint.proto.build_`
+===================================
 
 .. py:module:: pmfp.entrypoint.proto.build_
 
@@ -50,7 +50,7 @@ Attributes
    pmfp.entrypoint.proto.build_.proto_build
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -63,7 +63,7 @@ Attributes
    :rtype: Path
 
 
-.. py:function:: get_abs_path_str(path_str: str, cwd: Optional[pathlib.Path] = None) -> str
+.. function:: get_abs_path_str(path_str: str, cwd: Optional[pathlib.Path] = None) -> str
 
    由路径字符串获取绝对路径.
 
@@ -76,7 +76,7 @@ Attributes
    :rtype: str
 
 
-.. py:function:: build_pb_go(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, source_relative: bool = False, **kwargs: str) -> None
+.. function:: build_pb_go(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, source_relative: bool = False, **kwargs: str) -> None
 
    编译protobuffer为go语言模块.
 
@@ -90,7 +90,7 @@ Attributes
    :type source_relative: bool
 
 
-.. py:function:: build_pb_js(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, js_import_style: str, **kwargs: str) -> None
+.. function:: build_pb_js(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, js_import_style: str, **kwargs: str) -> None
 
    编译js语言模块.
 
@@ -104,7 +104,7 @@ Attributes
    :type js_import_style: str
 
 
-.. py:function:: build_pb_py(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: build_pb_py(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
 
    编译python语言模块.
 
@@ -116,7 +116,7 @@ Attributes
    :type to: str
 
 
-.. py:function:: build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: build_pb_cpp(files: List[str], includes: List[str], to: str, cwd: pathlib.Path, **kwargs: str) -> None
 
    编译c++语言模块.
 
@@ -128,15 +128,15 @@ Attributes
    :type to: str
 
 
-.. py:data:: proto_build
+.. data:: proto_build
    
 
    
 
-.. py:function:: _build_pb(language: str, files: List[str], includes: List[str], to: str, go_source_relative: bool, js_import_style: str, cwd: pathlib.Path, **kwargs: str) -> None
+.. function:: _build_pb(language: str, files: List[str], includes: List[str], to: str, go_source_relative: bool, js_import_style: str, cwd: pathlib.Path, **kwargs: str) -> None
 
 
-.. py:function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, js_import_style: str, go_source_relative: bool = False, kwargs: Optional[str] = None, cwd: str = '.') -> None
+.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, js_import_style: str, go_source_relative: bool = False, kwargs: Optional[str] = None, cwd: str = '.') -> None
 
    编译protobuf的schema为不同语言的代码.
 

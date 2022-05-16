@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.env_.new.env_js`
-=========================================
+:mod:`pmfp.entrypoint.env_.new.env_js`
+======================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_js
 
@@ -29,7 +29,7 @@ Functions
 
 
 
-.. py:function:: new_env_node(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+.. function:: new_env_node(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
 
    初始化golang默认的虚拟环境.
 
@@ -39,7 +39,7 @@ Functions
    :type project_name: str
 
 
-.. py:function:: new_env_webpack(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+.. function:: new_env_webpack(cwd: pathlib.Path, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
 
    初始化golang默认的虚拟环境.
 
@@ -49,6 +49,6 @@ Functions
    :type project_name: str
 
 
-.. py:function:: init_js_env(cwd: pathlib.Path, env: str, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
+.. function:: init_js_env(cwd: pathlib.Path, env: str, project_name: str, version: str, description: str, author: str, author_email: Optional[str] = None, keywords: Optional[List[str]] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None) -> None
 
 

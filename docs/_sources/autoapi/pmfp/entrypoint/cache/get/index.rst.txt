@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.cache.get`
-===================================
+:mod:`pmfp.entrypoint.cache.get`
+================================
 
 .. py:module:: pmfp.entrypoint.cache.get
 
@@ -48,16 +48,17 @@ Attributes
    pmfp.entrypoint.cache.get.cache_get
 
 
-.. py:class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
+.. class:: SourcePack(repo_name: str, *, repo_namespace: Optional[str] = None, tag: str = 'latest', host: Optional[str] = None)
+
 
    资源包类.
 
-   .. py:attribute:: TENPLATE_URL
+   .. attribute:: TENPLATE_URL
       :annotation: = {host}::{repo_namespace}::{repo_name}@{tag}
 
       
 
-   .. py:method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
+   .. method:: from_sourcepack_string(cls, sourcepack_string: str) -> SourcePack
       :classmethod:
 
       从资源包字符串构造资源包对象.
@@ -69,12 +70,12 @@ Attributes
       :rtype: [SourcePack]
 
 
-   .. py:method:: as_sourcepack_string(self) -> str
+   .. method:: as_sourcepack_string(self) -> str
 
       构造资源包字符串.
 
 
-   .. py:method:: git_url(self, schema: str = 'https') -> str
+   .. method:: git_url(self, schema: str = 'https') -> str
 
       构造资源包的git仓库地址url.
 
@@ -85,7 +86,7 @@ Attributes
       :rtype: str
 
 
-   .. py:method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
+   .. method:: pull_latest(self, cache_dir: pathlib.Path, throw: bool = True) -> None
 
       拉取最新镜像,并将原来的版本以hash为tag保存
 
@@ -95,7 +96,7 @@ Attributes
       :type throw: bool
 
 
-   .. py:method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
+   .. method:: clone_source_pack(self, cache_dir: pathlib.Path, throw: bool = False) -> None
 
       克隆资源包到本地缓存临时文件夹.
 
@@ -107,7 +108,7 @@ Attributes
       :type throw: bool
 
 
-   .. py:method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
+   .. method:: source_pack_path(self, cache_dir: pathlib.Path) -> pathlib.Path
 
       构造资源包的本地路径.
 
@@ -118,7 +119,7 @@ Attributes
       :rtype: Path
 
 
-   .. py:method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
+   .. method:: cache(self, cache_dir: pathlib.Path, throw_clone: bool = False, throw_pull: bool = False, not_pull: bool = False) -> None
 
       缓存资源包到本地.
 
@@ -129,17 +130,17 @@ Attributes
 
 
 
-.. py:function:: get_cache_dir() -> pathlib.Path
+.. function:: get_cache_dir() -> pathlib.Path
 
    获取缓存根目录.
 
 
-.. py:data:: cache_get
+.. data:: cache_get
    
 
    
 
-.. py:function:: get_sourcepack(source_pack_string: str) -> None
+.. function:: get_sourcepack(source_pack_string: str) -> None
 
    从远程指定位置获取资源包.
 

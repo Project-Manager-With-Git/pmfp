@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.requires.install.node_install`
-=======================================================
+:mod:`pmfp.entrypoint.requires.install.node_install`
+====================================================
 
 .. py:module:: pmfp.entrypoint.requires.install.node_install
 
@@ -17,6 +17,6 @@ Functions
 
 
 
-.. py:function:: node_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, env_args: Optional[List[str]] = None) -> None
+.. function:: node_install(cwd: pathlib.Path, package_names: List[str], test: bool = False, env_args: Optional[List[str]] = None) -> None
 
 

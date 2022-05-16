@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.doc_.new`
-==================================
+:mod:`pmfp.entrypoint.doc_.new`
+===============================
 
 .. py:module:: pmfp.entrypoint.doc_.new
 
@@ -48,12 +48,12 @@ Attributes
    pmfp.entrypoint.doc_.new.doc_new
 
 
-.. py:data:: DEFAULT_AUTHOR
+.. data:: DEFAULT_AUTHOR
    
 
    
 
-.. py:function:: doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
+.. function:: doc_new_py(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, cwd: str = '.') -> None
 
    为python项目构造api文档.
    :param code: 项目源码位置
@@ -72,7 +72,7 @@ Attributes
    :type cwd: str
 
 
-.. py:function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, is_web: bool = False, cwd: str = '.') -> None
+.. function:: doc_new_go(code: str, output: str, source_dir: str, *, project_name: str, author: str, version: str, is_web: bool = False, cwd: str = '.') -> None
 
    为go项目构造api文档.
    :param code: 项目源码位置
@@ -93,12 +93,12 @@ Attributes
    :type cwd: str
 
 
-.. py:data:: doc_new
+.. data:: doc_new
    
 
    
 
-.. py:function:: new_doc(language: str, code: str, output: str, doc_source_dir: str, *, project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
+.. function:: new_doc(language: str, code: str, output: str, doc_source_dir: str, *, project_name: Optional[str] = None, author: Optional[str] = None, version: Optional[str] = None, is_web: bool = False, cwd: str = '.') -> None
 
    为项目构造api文档.
    :param code: 项目源码位置

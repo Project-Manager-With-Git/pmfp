@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.doc_.build_.build_py`
-==============================================
+:mod:`pmfp.entrypoint.doc_.build_.build_py`
+===========================================
 
 .. py:module:: pmfp.entrypoint.doc_.build_.build_py
 
@@ -17,7 +17,7 @@ Functions
 
 
 
-.. py:function:: doc_build_py(output: str, *, source_dir: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
+.. function:: doc_build_py(output: str, *, source_dir: Optional[str] = None, version: Optional[str] = None, cwd: str = '.') -> None
 
    为python项目构造api文档.
    :param output: html文档位置

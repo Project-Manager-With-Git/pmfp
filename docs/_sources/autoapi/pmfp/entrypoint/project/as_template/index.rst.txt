@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.project.as_template`
-=============================================
+:mod:`pmfp.entrypoint.project.as_template`
+==========================================
 
 .. py:module:: pmfp.entrypoint.project.as_template
 
@@ -27,17 +27,18 @@ Attributes
    pmfp.entrypoint.project.as_template.project_as_temp
 
 
-.. py:data:: acccept_suffix
+.. data:: acccept_suffix
    :annotation: = ['.py', '.js', '.ts', '.go', '.c', '.cpp', '.h', '.hpp', '.pyd', '.pyx', '.scala', '.cmake',...
 
    
 
-.. py:data:: except_dir
+.. data:: except_dir
    :annotation: = ['vendor', 'node_modules', 'dist', 'build', 'doc', 'docs', 'document', 'documents', 'coverage',...
 
    
 
-.. py:class:: AsTemp(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+.. class:: AsTemp(*, description: Optional[str] = None, epilog: Optional[str] = None, usage: Optional[str] = None, name: Optional[str] = None, schema: Optional[schema_entry.entrypoint_base.SchemaType] = None, verify_schema: Optional[bool] = None, default_config_file_paths: Optional[List[str]] = None, config_file_only_get_need: Optional[bool] = None, load_all_config_file: Optional[bool] = None, env_prefix: Optional[str] = None, parse_env: Optional[bool] = None, argparse_check_required: Optional[bool] = None, argparse_noflag: Optional[str] = None, config_file_parser_map: Optional[Dict[str, Callable[[pathlib.Path], Dict[str, Any]]]] = None, main: Optional[Callable[Ellipsis, None]] = None)
+
 
    Bases: :py:obj:`pmfp.utils.endpoint.EndPoint`
 
@@ -45,43 +46,43 @@ Attributes
 
    注意只是粗略构造,需要进一步加工.
 
-   .. py:attribute:: _name
+   .. attribute:: _name
       :annotation: = as_temp
 
       
 
-   .. py:attribute:: verify_schema
+   .. attribute:: verify_schema
       :annotation: = False
 
       
 
-   .. py:attribute:: load_all_config_file
+   .. attribute:: load_all_config_file
       :annotation: = True
 
       
 
-   .. py:attribute:: config_file_only_get_need
+   .. attribute:: config_file_only_get_need
       :annotation: = False
 
       
 
-   .. py:attribute:: argparse_noflag
+   .. attribute:: argparse_noflag
       :annotation: = template_type
 
       
 
-   .. py:attribute:: schema
+   .. attribute:: schema
       
 
       
 
-   .. py:method:: do_main(self) -> None
+   .. method:: do_main(self) -> None
 
       执行入口函数.
 
 
 
-.. py:data:: project_as_temp
+.. data:: project_as_temp
    
 
    

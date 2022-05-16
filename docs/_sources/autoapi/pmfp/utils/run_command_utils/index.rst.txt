@@ -1,5 +1,5 @@
-:py:mod:`pmfp.utils.run_command_utils`
-======================================
+:mod:`pmfp.utils.run_command_utils`
+===================================
 
 .. py:module:: pmfp.utils.run_command_utils
 
@@ -23,7 +23,7 @@ Functions
 
 
 
-.. py:function:: make_env_args(env_args: Optional[List[str]]) -> Dict[str, str]
+.. function:: make_env_args(env_args: Optional[List[str]]) -> Dict[str, str]
 
    构造环境变量字典
 
@@ -34,7 +34,7 @@ Functions
    :rtype: Dict[str, str]
 
 
-.. py:function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
 
    执行命令行命令并返回其stdout的值
 

@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.env_.new.env_py`
-=========================================
+:mod:`pmfp.entrypoint.env_.new.env_py`
+======================================
 
 .. py:module:: pmfp.entrypoint.env_.new.env_py
 
@@ -34,22 +34,22 @@ Attributes
    pmfp.entrypoint.env_.new.env_py.setup_py_template
 
 
-.. py:data:: setup_py_template
+.. data:: setup_py_template
    :annotation: = 
 
    
 
-.. py:data:: template_io
+.. data:: template_io
    
 
    
 
-.. py:data:: setup_py_template
+.. data:: setup_py_template
    
 
    
 
-.. py:function:: new_env_py_pypy(cwd: pathlib.Path) -> None
+.. function:: new_env_py_pypy(cwd: pathlib.Path) -> None
 
    初始化pypy的虚拟环境.
 
@@ -57,7 +57,7 @@ Attributes
    :type cwd: Path
 
 
-.. py:function:: new_env_py_setup(cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. function:: new_env_py_setup(cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
    初始化python项目的setup.py和setup.cfg文件.
 
@@ -65,6 +65,6 @@ Attributes
    :type cwd: Path
 
 
-.. py:function:: init_py_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
+.. function:: init_py_env(env: str, cwd: pathlib.Path, project_name: str, version: str, author: str, author_email: str, description: str, keywords: str, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None) -> None
 
 

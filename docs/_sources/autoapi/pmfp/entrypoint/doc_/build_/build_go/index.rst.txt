@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.doc_.build_.build_go`
-==============================================
+:mod:`pmfp.entrypoint.doc_.build_.build_go`
+===========================================
 
 .. py:module:: pmfp.entrypoint.doc_.build_.build_go
 
@@ -18,10 +18,10 @@ Functions
 
 
 
-.. py:function:: move_doc(sourcep: pathlib.Path, outputp: pathlib.Path) -> None
+.. function:: move_doc(sourcep: pathlib.Path, outputp: pathlib.Path) -> None
 
 
-.. py:function:: doc_build_go(output: str, *, source_dir: str, is_web: bool = False, cwd: str = '.') -> None
+.. function:: doc_build_go(output: str, *, source_dir: str, is_web: bool = False, cwd: str = '.') -> None
 
    为go项目更新api文档.
    :param output: html文档位置

@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.grpc.stress`
-=====================================
+:mod:`pmfp.entrypoint.grpc.stress`
+==================================
 
 .. py:module:: pmfp.entrypoint.grpc.stress
 
@@ -41,7 +41,7 @@ Attributes
    pmfp.entrypoint.grpc.stress.grpc_stress_test
 
 
-.. py:function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
 
    执行命令行命令并返回其stdout的值
 
@@ -60,7 +60,7 @@ Attributes
    :rtype: str
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -73,12 +73,12 @@ Attributes
    :rtype: Path
 
 
-.. py:data:: grpc_stress_test
+.. data:: grpc_stress_test
    
 
    
 
-.. py:function:: tress_test_grpc(url: str, service: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: tress_test_grpc(url: str, service: str, method: str, payload: str, *, requests: int = 200, concurrency: int = 10, duration: int = 0, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    列出grpc支持的服务.
 

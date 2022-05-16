@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.requires`
-==================================
+:mod:`pmfp.entrypoint.requires`
+===============================
 
 .. py:module:: pmfp.entrypoint.requires
 
@@ -46,14 +46,14 @@ Attributes
    pmfp.entrypoint.requires.requires_list
 
 
-.. py:data:: requires_list
+.. data:: requires_list
    
 
    
 
-.. py:function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
+.. function:: install_requires(env: str, *, package_names: Optional[List[str]] = None, requirements: Optional[str] = None, test: bool = False, setup: bool = False, extras: Optional[str] = None, requires: Optional[List[str]] = None, test_requires: Optional[List[str]] = None, setup_requires: Optional[List[str]] = None, extras_requires: Optional[List[str]] = None, env_args: Optional[List[str]] = None, cwd: str = '.') -> None
 
 
-.. py:function:: uninstall_requires(package_name: str, env: str, *, cwd: str = '.') -> None
+.. function:: uninstall_requires(package_name: str, env: str, *, cwd: str = '.') -> None
 
 

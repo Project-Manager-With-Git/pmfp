@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_`
-=================================
+:mod:`pmfp.entrypoint.docker_`
+==============================
 
 .. py:module:: pmfp.entrypoint.docker_
 
@@ -40,18 +40,18 @@ Functions
 
 
 
-.. py:function:: new_dockerfile(language: str, dockerfile_name: str = 'Dockerfile', cross_compiling: bool = False, extend: bool = False, app_name: Optional[str] = None, project_name: Optional[str] = None, cwd: str = '.') -> None
+.. function:: new_dockerfile(language: str, dockerfile_name: str = 'Dockerfile', cross_compiling: bool = False, extend: bool = False, app_name: Optional[str] = None, project_name: Optional[str] = None, cwd: str = '.') -> None
 
 
-.. py:function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], only_manifest: bool = False, cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+.. function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], only_manifest: bool = False, cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
 
 
-.. py:function:: pack_dockerimage(docker_register_namespace: str, project_name: str, version: str, docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+.. function:: pack_dockerimage(docker_register_namespace: str, project_name: str, version: str, docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
 
 
-.. py:function:: new_dockercompose(compose_version: str, dockercompose_name: str = 'docker-compose.yml', updatemode: str = 'level5', dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
+.. function:: new_dockercompose(compose_version: str, dockercompose_name: str = 'docker-compose.yml', updatemode: str = 'level5', dockerfile_dir: Optional[str] = None, dockerfile_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
 
 
-.. py:function:: deploy_dockercompose(portainer_url: Optional[str] = None, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, rebuild: bool = False, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
+.. function:: deploy_dockercompose(portainer_url: Optional[str] = None, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, rebuild: bool = False, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
 
 

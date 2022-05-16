@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_.compose.deploy`
-================================================
+:mod:`pmfp.entrypoint.docker_.compose.deploy`
+=============================================
 
 .. py:module:: pmfp.entrypoint.docker_.compose.deploy
 
@@ -44,7 +44,7 @@ Attributes
    pmfp.entrypoint.docker_.compose.deploy.dockercompose_deploy
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -57,12 +57,12 @@ Attributes
    :rtype: Path
 
 
-.. py:data:: dockercompose_deploy
+.. data:: dockercompose_deploy
    
 
    
 
-.. py:function:: deploy_local(rebuild: bool, cwdp: pathlib.Path, dockercompose_name: Optional[str] = None, stack_name: Optional[str] = None, compose_version: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> None
+.. function:: deploy_local(rebuild: bool, cwdp: pathlib.Path, dockercompose_name: Optional[str] = None, stack_name: Optional[str] = None, compose_version: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> None
 
    本地部署.
 
@@ -76,7 +76,7 @@ Attributes
    :type stack_name: Optional[str], optional
 
 
-.. py:function:: deploy_portainer(portainer_url: str, cwdp: pathlib.Path, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> None
+.. function:: deploy_portainer(portainer_url: str, cwdp: pathlib.Path, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None) -> None
 
    远程部署到portainer.
    如果制定了`dockercompose_name`则:
@@ -90,7 +90,6 @@ Attributes
        2. 如果指定了`deploy_stack`则根据命令行指示创建stack并与已有的融合(默认level5方式融合)然后保存到本地并更新stack
 
 
-
-.. py:function:: deploy_dockercompose(portainer_url: Optional[str] = None, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, rebuild: bool = False, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
+.. function:: deploy_dockercompose(portainer_url: Optional[str] = None, portainer_username: Optional[str] = None, portainer_password: Optional[str] = None, deploy_endpoint: Optional[int] = None, deploy_stack: Optional[int] = None, stack_name: Optional[str] = None, rebuild: bool = False, update_version: bool = False, dockercompose_name: Optional[str] = None, docker_register: Optional[str] = None, docker_register_namespace: Optional[str] = None, project_name: Optional[str] = None, version: Optional[str] = None, updatemode: str = 'level5', compose_version: Optional[str] = None, command: Optional[str] = None, add_envs: Optional[List[str]] = None, use_host_network: bool = False, ports: Optional[List[str]] = None, add_networks: Optional[List[str]] = None, add_extra_secrets: Optional[List[str]] = None, add_extra_configs: Optional[List[str]] = None, add_volumes: Optional[List[str]] = None, fluentd_url: Optional[str] = None, extra_hosts: Optional[List[str]] = None, add_service: Optional[List[str]] = None, with_deploy_config: Optional[str] = None, cwd: str = '.') -> None
 
 

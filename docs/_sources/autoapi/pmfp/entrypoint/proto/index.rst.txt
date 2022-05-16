@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.proto`
-===============================
+:mod:`pmfp.entrypoint.proto`
+============================
 
 .. py:module:: pmfp.entrypoint.proto
 
@@ -42,7 +42,7 @@ Functions
 
 
 
-.. py:function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, js_import_style: str, go_source_relative: bool = False, kwargs: Optional[str] = None, cwd: str = '.') -> None
+.. function:: build_pb(language: str, files: List[str], pb_includes: List[str], to: str, js_import_style: str, go_source_relative: bool = False, kwargs: Optional[str] = None, cwd: str = '.') -> None
 
    编译protobuf的schema为不同语言的代码.
 
@@ -64,7 +64,7 @@ Functions
    :type cwd: str
 
 
-.. py:function:: new_pb(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
+.. function:: new_pb(name: str, pb_include: str, *, parent_package: Optional[str] = None, cwd: str = '.') -> None
 
    新建一个protpbuf文件.
 

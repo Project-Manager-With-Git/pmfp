@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.docker_.image.build_`
-==============================================
+:mod:`pmfp.entrypoint.docker_.image.build_`
+===========================================
 
 .. py:module:: pmfp.entrypoint.docker_.image.build_
 
@@ -44,7 +44,7 @@ Attributes
    pmfp.entrypoint.docker_.image.build_.dockerimage_build
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -57,7 +57,7 @@ Attributes
    :rtype: Path
 
 
-.. py:function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
 
    执行命令行命令并返回其stdout的值
 
@@ -76,20 +76,20 @@ Attributes
    :rtype: str
 
 
-.. py:data:: dockerimage_build
+.. data:: dockerimage_build
    
 
    
 
-.. py:function:: build_no_cross_compiling(cwdp: pathlib.Path, dockerfile_name: str, image_name: str, version: str, as_latest_img: bool, push: bool, use_sudo: bool, sudo_pwd: Optional[str] = None) -> None
+.. function:: build_no_cross_compiling(cwdp: pathlib.Path, dockerfile_name: str, image_name: str, version: str, as_latest_img: bool, push: bool, use_sudo: bool, sudo_pwd: Optional[str] = None) -> None
 
 
-.. py:function:: build_cross_compiling_only_manifest(cwdp: pathlib.Path, dockerfile_name: str, image_name: str, version: str, platform: List[str], as_latest_img: bool, use_sudo: bool, sudo_pwd: Optional[str] = None) -> None
+.. function:: build_cross_compiling_only_manifest(cwdp: pathlib.Path, dockerfile_name: str, image_name: str, version: str, platform: List[str], as_latest_img: bool, use_sudo: bool, sudo_pwd: Optional[str] = None) -> None
 
 
-.. py:function:: build_cross_compiling(cwdp: pathlib.Path, dockerfile_name: str, image_name: str, version: str, platform: List[str], as_latest_img: bool, use_sudo: bool, push: bool, sudo_pwd: Optional[str] = None) -> None
+.. function:: build_cross_compiling(cwdp: pathlib.Path, dockerfile_name: str, image_name: str, version: str, platform: List[str], as_latest_img: bool, use_sudo: bool, push: bool, sudo_pwd: Optional[str] = None) -> None
 
 
-.. py:function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], only_manifest: bool = False, cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
+.. function:: build_dockerimage(docker_register_namespace: str, project_name: str, version: str, dockerfile_name: str = 'Dockerfile', docker_register: Optional[str] = None, as_latest_img: bool = False, push: bool = False, cross_compiling: bool = False, platform: List[str] = ['linux/amd64', 'linux/arm64', 'linux/arm/v7'], only_manifest: bool = False, cwd: str = '.', use_sudo: bool = False, sudo_pwd: Optional[str] = None) -> None
 
 

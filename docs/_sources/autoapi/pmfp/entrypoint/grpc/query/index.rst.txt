@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.grpc.query`
-====================================
+:mod:`pmfp.entrypoint.grpc.query`
+=================================
 
 .. py:module:: pmfp.entrypoint.grpc.query
 
@@ -41,7 +41,7 @@ Attributes
    pmfp.entrypoint.grpc.query.grpc_query
 
 
-.. py:function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
+.. function:: run(command: str, *, cwd: Optional[pathlib.Path] = None, env: Optional[Dict[str, str]] = None, visible: bool = False, fail_exit: bool = False) -> str
 
    执行命令行命令并返回其stdout的值
 
@@ -60,7 +60,7 @@ Attributes
    :rtype: str
 
 
-.. py:function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
+.. function:: get_abs_path(path_str: str, cwd: Optional[pathlib.Path] = None) -> pathlib.Path
 
    由路径字符串获取绝对路径.
 
@@ -73,12 +73,12 @@ Attributes
    :rtype: Path
 
 
-.. py:data:: grpc_query
+.. data:: grpc_query
    
 
    
 
-.. py:function:: query_grpc(url: str, service: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
+.. function:: query_grpc(url: str, service: str, method: str, payload: str, *, cwd: str = '.', plaintext: bool = False, insecure: bool = False, cacert: Optional[str] = None, cert: Optional[str] = None, key: Optional[str] = None) -> None
 
    请求grpc.
 

@@ -1,5 +1,5 @@
-:py:mod:`pmfp.entrypoint.grpc.build_.build_pb_py`
-=================================================
+:mod:`pmfp.entrypoint.grpc.build_.build_pb_py`
+==============================================
 
 .. py:module:: pmfp.entrypoint.grpc.build_.build_pb_py
 
@@ -34,7 +34,7 @@ Attributes
    pmfp.entrypoint.grpc.build_.build_pb_py.TRANS_GRPC_MODEL_IMPORT_TEMP
 
 
-.. py:data:: TRANS_GRPC_MODEL_IMPORT_TEMP
+.. data:: TRANS_GRPC_MODEL_IMPORT_TEMP
    :annotation: = Multiline-String
 
     .. raw:: html
@@ -55,12 +55,12 @@ Attributes
 
    
 
-.. py:function:: find_py_grpc_pb2_import_string(name: str) -> str
+.. function:: find_py_grpc_pb2_import_string(name: str) -> str
 
    python的grpc模块as的内容.
 
 
-.. py:function:: trans_grpc_model_py(to: str) -> None
+.. function:: trans_grpc_model_py(to: str) -> None
 
    转换python的grpc输出为一个python模块.
 
@@ -68,15 +68,15 @@ Attributes
    :type to: str
 
 
-.. py:function:: gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: pathlib.Path) -> None
+.. function:: gen_code(includes_str: str, to: str, flag_str: str, target_str: str, cwd: pathlib.Path) -> None
 
    生成python模块.
 
 
-.. py:function:: find_grpc_package(to: pathlib.Path) -> Tuple[str, str]
+.. function:: find_grpc_package(to: pathlib.Path) -> Tuple[str, str]
 
 
-.. py:function:: build_pb_py(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+.. function:: build_pb_py(serv_file: str, includes: List[str], to: str, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
 
    编译grpc的protobuf定义文件为python语言模块.
 
