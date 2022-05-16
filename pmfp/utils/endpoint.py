@@ -72,11 +72,17 @@ def go_mod_handdler(p: Path) -> Dict[str, Any]:
     if r:
         s = r.group(0)
         result.update(project_name=s.replace("module ", "").strip())
-    _, req1 = con.split("require (")
-    infos = req1.split(")")
-    requirements = infos[0].strip()
-    result["requires"] = [i.strip().replace(" ", "@") for i in requirements.splitlines()]
-    return result
+    req1_infos = con.split("require (")
+    if len(req1_infos) == 1:
+        # 没有依赖
+        return result
+    else:
+        # 有依赖,取第一个require中的内容
+        req1 = req1_infos[1]
+        infos = req1.split(")")
+        requirements = infos[0].strip()
+        result["requires"] = [i.strip().replace(" ", "@") for i in requirements.splitlines()]
+        return result
 
 
 def cmake_handdler(p: Path) -> Dict[str, Any]:
