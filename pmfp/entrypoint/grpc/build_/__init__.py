@@ -14,9 +14,9 @@ def _build_pb(language: str, serv_file: str, includes: List[str], to: str,
               js_import_style: str, web_import_style: str, web_mode: str,
               cwd: Path, web: bool = False, files: Optional[List[str]] = None, **kwargs: str) -> None:
     if language.lower() == "go":
-        build_pb_go(serv_file, includes, to, go_source_relative, cwd=cwd, files=files, **kwargs)
+        build_pb_go(serv_file, includes, to, go_source_relative, cwd=cwd, files=files, web=web, **kwargs)
     elif language.lower() in ("py", "cython"):
-        build_pb_py(serv_file, includes, to, cwd=cwd, files=files, **kwargs)
+        build_pb_py(serv_file, includes, to, cwd=cwd, files=files, ** kwargs)
     elif language == "js":
         build_pb_js(serv_file, includes, to, cwd=cwd, files=files,
                     js_import_style=js_import_style,
@@ -30,7 +30,7 @@ def _build_pb(language: str, serv_file: str, includes: List[str], to: str,
 
 @grpc_build.as_main
 def build_grpc(language: str, serv_file: str, pb_includes: List[str], to: str,
-               js_import_style: str, web_import_style: str, web_mode: str,  
+               js_import_style: str, web_import_style: str, web_mode: str,
                go_source_relative: bool = False,
                web: bool = False,
                kwargs: Optional[str] = None, files: Optional[List[str]] = None,

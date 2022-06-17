@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pmfp.entrypoint.grpc.build_.build_pb_go &mdash; pmfp 4.1.9 文档</title>
+  <title>pmfp.entrypoint.grpc.build_.build_pb_go &mdash; pmfp 4.1.10 文档</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.1.9
+                4.1.10
               </div>
             
           
@@ -90,7 +90,8 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">v4.1.10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-9">v4.1.9</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-8">v4.1.8</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-7">v4.1.7</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html#v4-1-6">v4.1.6</a></li>
@@ -187,8 +188,11 @@
 <span class="kn">from</span> <span class="nn">pmfp.utils.run_command_utils</span> <span class="kn">import</span> <span class="n">run</span>
 
 
-<div class="viewcode-block" id="_build_grpc"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go._build_grpc">[文档]</a><span class="k">def</span> <span class="nf">_build_grpc</span><span class="p">(</span><span class="n">includes</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;protoc </span><span class="si">{</span><span class="n">includes</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2"> --go_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> --go-grpc_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span>
+<div class="viewcode-block" id="_build_grpc"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/build_pb_go/index.html#pmfp.entrypoint.grpc.build_.build_pb_go._build_grpc">[文档]</a><span class="k">def</span> <span class="nf">_build_grpc</span><span class="p">(</span><span class="n">includes</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">web</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">web</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;protoc </span><span class="si">{</span><span class="n">includes</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2"> --go_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> --go-grpc_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> --grpc-gateway_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2">  --openapiv2_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;protoc </span><span class="si">{</span><span class="n">includes</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2"> --go_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> --go-grpc_out=</span><span class="si">{</span><span class="n">to</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -199,13 +203,23 @@
 <span class="s2">        编译为go语言依赖如下插件,请检查是否安装:</span>
 <span class="s2">        &quot;google.golang.org/protobuf/cmd/protoc-gen-go&quot;</span>
 <span class="s2">        &quot;google.golang.org/grpc/cmd/protoc-gen-go-grpc&quot;</span>
+
+<span class="s2">        若要支持grpc-gateway,需要额外安装如下依赖,请检查是否安装:</span>
+<span class="s2">        &quot;github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway&quot;</span>
+<span class="s2">        &quot;github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2&quot;</span>
+<span class="s2">        除此之外还需要将如下proto文件复制后放入includes,请检查是否存在</span>
+<span class="s2">        &quot;https://github.com/googleapis/googleapis/tree/master/google/api/annotations.proto&quot;</span>
+<span class="s2">        &quot;https://github.com/googleapis/googleapis/tree/master/google/api/field_behavior.proto&quot;</span>
+<span class="s2">        &quot;https://github.com/googleapis/googleapis/tree/master/google/api/http.proto&quot;</span>
+<span class="s2">        &quot;https://github.com/googleapis/googleapis/tree/master/google/api/httpbody.proto&quot;</span>
+<span class="s2">        &quot;https://github.com/grpc-ecosystem/grpc-gateway/tree/master/protoc-gen-openapiv2/options/*&quot;</span>
 <span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;编译grpc项目 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> 为go语言模块完成!&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="build_pb_go"><a class="viewcode-back" href="../../../../../autoapi/pmfp/entrypoint/grpc/build_/index.html#pmfp.entrypoint.grpc.build_.build_pb_go.build_pb_go">[文档]</a><span class="k">def</span> <span class="nf">build_pb_go</span><span class="p">(</span><span class="n">serv_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">includes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">to</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                <span class="n">source_relative</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">source_relative</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">web</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;编译grpc的protobuffer定义文件为go语言模块.</span>
 
 <span class="sd">    Args:</span>
@@ -224,11 +238,13 @@
     <span class="n">flag_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">source_relative</span><span class="p">:</span>
         <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative&quot;</span>
+        <span class="k">if</span> <span class="n">web</span><span class="p">:</span>
+            <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; --grpc-gateway_opt=paths=source_relative --openapiv2_opt=paths=source_relative&quot;</span>
     <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">flag_str</span><span class="p">:</span>
             <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span>
         <span class="n">flag_str</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
-    <span class="n">_build_grpc</span><span class="p">(</span><span class="n">includes_str</span><span class="p">,</span> <span class="n">flag_str</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">target_str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span></div>
+    <span class="n">_build_grpc</span><span class="p">(</span><span class="n">includes_str</span><span class="p">,</span> <span class="n">flag_str</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">target_str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">,</span> <span class="n">web</span><span class="o">=</span><span class="n">web</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

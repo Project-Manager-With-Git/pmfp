@@ -1,3 +1,9 @@
+# v4.1.10
+
+## 新增特性
+
++ `grpc build`子功能添加对grpc-gateway的支持,在--language设置为go时如果web设置为True则会编译grpc-gateway的支持文件
+
 # v4.1.9
 
 ## bug修复

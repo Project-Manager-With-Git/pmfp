@@ -76,7 +76,7 @@ Attributes
    :rtype: str
 
 
-.. function:: build_pb_go(serv_file: str, includes: List[str], to: str, source_relative: bool, cwd: pathlib.Path, files: Optional[List[str]] = None, **kwargs: str) -> None
+.. function:: build_pb_go(serv_file: str, includes: List[str], to: str, source_relative: bool, cwd: pathlib.Path, files: Optional[List[str]] = None, web: bool = False, **kwargs: str) -> None
 
    编译grpc的protobuffer定义文件为go语言模块.
 
