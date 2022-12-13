@@ -1,3 +1,9 @@
+# v4.1.11
+
+## bug修复
+
++ 修复project new 拉取latest标签时无法拉取master分支的问题
+
 # v4.1.10
 
 ## 新增特性

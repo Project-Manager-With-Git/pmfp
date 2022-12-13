@@ -157,7 +157,7 @@ class SourcePack:
     def clone_source_pack(self, cache_dir: Path, throw: bool = False) -> None:
         """克隆资源包到本地缓存临时文件夹.
 
-        如果资源包的tag不是latest则clone下来后删除.git文件夹,否则保存
+        如果资源包的tag不是latest或dev则clone下来后删除.git文件夹,否则保存
 
         Args:
             cache_dir (Path): 缓存文件夹地址.
@@ -167,10 +167,11 @@ class SourcePack:
         url = self.git_url()
         if self.tag == "latest":
             branch = "master"
-        if self.tag == "dev":
+        elif self.tag == "dev":
             branch = "dev"
         else:
             branch = self.tag
+        
         pack_dir = self.source_pack_path(cache_dir)
         try:
             git_clone(url, pack_dir, branch=branch)

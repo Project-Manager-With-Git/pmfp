@@ -3,7 +3,6 @@
 
 一个项目管理脚手架.
 """
-import warnings
 from .entrypoint import ppm
 import sys
 from typing import List
